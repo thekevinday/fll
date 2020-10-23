@@ -72,7 +72,7 @@
     {
       f_string_range_t input = f_macro_string_range_t_initialize(buffer->used);
 
-      status = fll_fss_basic_list_read(buffer, &input, objects, contents, &delimits);
+      status = fll_fss_basic_list_read(buffer, &input, objects, contents, &delimits, 0);
     }
 
     if (F_status_is_error(status)) {
@@ -112,7 +112,7 @@
     f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
     // @todo: resume replacing code below.
-    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0, &delimits);
+    status = fll_fss_extended_read(&buffer, input, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
 
     if (F_status_is_error_not(*status)) {
       status = fl_fss_apply_delimit(delimits, &buffer);
@@ -530,7 +530,7 @@
       location.stop = objects.array[position].stop;
       delimits.used = 0;
 
-      status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits);
+      status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits, 0);
 
       if (F_status_is_error_not(*status)) {
         status = fl_fss_apply_delimit(delimits, &buffer);
@@ -544,7 +544,7 @@
     /*
     delimits.used = 0;
 
-    status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits);
+    status = fll_fss_extended_read(&buffer, &location, &objects, &contents, 0, 0, &delimits, 0);
 
     if (F_status_is_error_not(status)) {
       status = fl_fss_apply_delimit(delimits, &buffer);
@@ -571,7 +571,7 @@
     f_status_t status  = F_none;
     delimits.used = 0;
 
-    status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0, &delimits);
+    status = fll_fss_extended_read(buffer, location, objects, contents, 0, 0, &delimits, 0);
 
     if (F_status_is_error_not(status)) {
       status = fl_fss_apply_delimit(delimits, &buffer);

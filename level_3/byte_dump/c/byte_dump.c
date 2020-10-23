@@ -6,70 +6,70 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_print_help_
-  f_return_status byte_dump_print_help(const f_file_t file, const f_color_context_t context) {
+  f_return_status byte_dump_print_help(const f_file_t output, const f_color_context_t context) {
 
-    fll_program_print_help_header(file, context, byte_dump_name_long, byte_dump_version);
+    fll_program_print_help_header(output, context, byte_dump_name_long, byte_dump_version);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(output, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(output, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(output, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fprintf(file.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(file, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
-    fll_program_print_help_option(file, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
-    fll_program_print_help_option(file, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, " Display duodecimal representation.");
-    fll_program_print_help_option(file, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
-    fll_program_print_help_option(file, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Display binary representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Display decimal representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, " Display duodecimal representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable, f_console_symbol_long_enable, "Display hexadecimal representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Display octal representation.");
 
-    fprintf(file.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(file, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Start reading at this byte offset.");
-    fll_program_print_help_option(file, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this (inclusive) byte offset.");
-    fll_program_print_help_option(file, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Set number of columns of Bytes to display.");
+    fll_program_print_help_option(output, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Start reading at this byte offset.");
+    fll_program_print_help_option(output, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Stop reading at this (inclusive) byte offset.");
+    fll_program_print_help_option(output, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Set number of columns of Bytes to display.");
 
-    fprintf(file.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(file, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Include a column of text when displaying the bytes.");
-    fll_program_print_help_option(file, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use a placeholder character instead of a space for placeholders.");
+    fll_program_print_help_option(output, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Include a column of text when displaying the bytes.");
+    fll_program_print_help_option(output, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable, f_console_symbol_long_enable, "Use a placeholder character instead of a space for placeholders.");
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fl_color_print(file.stream, context.set.important, " Special Options: ");
+    fl_color_print(output.stream, context.set.important, " Special Options: ");
 
-    fll_program_print_help_option_long(file, context, byte_dump_long_normal, f_console_symbol_long_enable, " Display UTF-8 symbols for ASCII control codes.");
-    fll_program_print_help_option_long(file, context, byte_dump_long_simple, f_console_symbol_long_enable, " Display spaces for ASCII control codes.");
-    fll_program_print_help_option_long(file, context, byte_dump_long_classic, f_console_symbol_long_enable, "Display periods for ASCII control codes.");
+    fll_program_print_help_option_long(output, context, byte_dump_long_normal, f_console_symbol_long_enable, " Display UTF-8 symbols for ASCII control codes.");
+    fll_program_print_help_option_long(output, context, byte_dump_long_simple, f_console_symbol_long_enable, " Display spaces for ASCII control codes.");
+    fll_program_print_help_option_long(output, context, byte_dump_long_classic, f_console_symbol_long_enable, "Display periods for ASCII control codes.");
 
-    fll_program_print_help_usage(file, context, byte_dump_name, "filename(s)");
+    fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
 
-    fprintf(file.stream, "  When using the ");
-    fl_color_print(file.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
-    fprintf(file.stream, " option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
+    fprintf(output.stream, "  When using the ");
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_text);
+    fprintf(output.stream, " option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fprintf(file.stream, "  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
-    fl_color_print(file.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
-    fprintf(file.stream, " option is used).");
+    fprintf(output.stream, "  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_placeholder);
+    fprintf(output.stream, " option is used).");
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fprintf(file.stream, "  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.");
+    fprintf(output.stream, "  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.");
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
-    fprintf(file.stream, "  When ");
-    fl_color_print(file.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
-    fprintf(file.stream, " is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
+    fprintf(output.stream, "  When ");
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, byte_dump_long_last);
+    fprintf(output.stream, " is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
 
     return F_none;
   }

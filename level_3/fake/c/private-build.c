@@ -1311,7 +1311,7 @@ extern "C" {
         f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0, &delimits);
+        *status = fll_fss_extended_read(&buffer, &range, &objects, &contents, 0, 0, &delimits, 0);
 
         if (F_status_is_error(*status)) {
           fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_settings.string, range, F_true);
@@ -2493,9 +2493,9 @@ extern "C" {
         fl_color_print(data.output.stream, data.context.set.important, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
 
         if (data_build.setting.project_name.used) {
-          fl_color_print_code(f_type_output, data.context.notable);
-          f_print_dynamic(f_type_output, data_build.setting.project_name);
-          fl_color_print_code(f_type_output, data.context.reset);
+          fl_color_print_code(data.output.stream, data.context.notable);
+          f_print_dynamic(data.output.stream, data_build.setting.project_name);
+          fl_color_print_code(data.output.stream, data.context.reset);
         }
 
         fl_color_print(data.output.stream, data.context.set.important, ".%c", f_string_eol[0]);

@@ -205,7 +205,7 @@ extern "C" {
       f_string_range_t range = f_macro_string_range_t_initialize(data_make->buffer.used);
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-      *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents, &delimits);
+      *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents, &delimits, 0);
 
       if (F_status_is_error(*status)) {
         fake_print_error_fss(data, *status, "fll_fss_basic_list_read", data.file_data_build_fakefile.string, range, F_true);
@@ -272,7 +272,7 @@ extern "C" {
             delimits.used = 0;
             content_range = list_contents.array[i].array[0];
 
-            *status = fll_fss_extended_read(&data_make->buffer, &content_range, &settings.objects, &settings.contents, 0, 0, &delimits);
+            *status = fll_fss_extended_read(&data_make->buffer, &content_range, &settings.objects, &settings.contents, 0, 0, &delimits, 0);
 
             if (F_status_is_error(*status)) {
               fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
@@ -304,7 +304,7 @@ extern "C" {
           delimits.used = 0;
           content_range = list_contents.array[i].array[0];
 
-          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits);
+          *status = fll_fss_extended_read(&data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
 
           if (F_status_is_error(*status)) {
             fake_print_error_fss(data, F_status_set_fine(*status), "fll_fss_extended_read", data.file_data_build_fakefile.string, content_range, F_true);
@@ -3573,7 +3573,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_print) {
       for (f_array_length_t i = 0; i < arguments.used; i++) {
-        f_print_dynamic(f_type_output, arguments.array[i]);
+        f_print_dynamic(data.output.stream, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
           fprintf(data.output.stream, " ");

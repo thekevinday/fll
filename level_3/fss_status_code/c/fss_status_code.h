@@ -129,7 +129,7 @@ extern "C" {
 /**
  * Print help.
  *
- * @param file
+ * @param output
  *   The file to print to.
  * @param context
  *   The color context settings.
@@ -138,7 +138,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_status_code_print_help_
-  extern f_return_status fss_status_code_print_help(const f_file_t file, const f_color_context_t context);
+  extern f_return_status fss_status_code_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_fss_status_code_print_help_
 
 /**

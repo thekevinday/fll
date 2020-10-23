@@ -12,44 +12,44 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_print_help_
-  f_return_status firewall_print_help(const f_file_t file, const f_color_context_t context) {
+  f_return_status firewall_print_help(const f_file_t output, const f_color_context_t context) {
 
-    fll_program_print_help_header(file, context, firewall_name_long, firewall_version);
+    fll_program_print_help_header(output, context, firewall_name_long, firewall_version);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(output, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(output, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(output, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c%c", f_string_eol[0], f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.important, " Available Commands: ");
+    fprintf(output.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fl_color_print(output.stream, context.set.important, " Available Commands: ");
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, firewall_command_start);
-    printf("    Turn on the firewall");
+    fprintf(output.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(output.stream, context.set.standout, firewall_command_start);
+    fprintf(output.stream, "    Turn on the firewall");
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, firewall_command_stop);
-    printf("     Turn off the firewall");
+    fprintf(output.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(output.stream, context.set.standout, firewall_command_stop);
+    fprintf(output.stream, "     Turn off the firewall");
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, firewall_command_restart);
-    printf("  Turn off and then turn on the firewall");
+    fprintf(output.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(output.stream, context.set.standout, firewall_command_restart);
+    fprintf(output.stream, "  Turn off and then turn on the firewall");
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, firewall_command_lock);
-    printf("     Prevent all communication");
+    fprintf(output.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(output.stream, context.set.standout, firewall_command_lock);
+    fprintf(output.stream, "     Prevent all communication");
 
-    printf("%c  ", f_string_eol[0]);
-    fl_color_print(f_type_output, context.set.standout, firewall_command_show);
-    printf("     Show active firewall settings");
+    fprintf(output.stream, "%c  ", f_string_eol[0]);
+    fl_color_print(output.stream, context.set.standout, firewall_command_show);
+    fprintf(output.stream, "     Show active firewall settings");
 
-    fll_program_print_help_usage(file, context, firewall_name, "command");
+    fll_program_print_help_usage(output, context, firewall_name, "command");
 
     return F_none;
   }
@@ -230,10 +230,10 @@ extern "C" {
         }
 
         if (show_nat) {
-          fl_color_print(f_type_output, data->context.set.standout, "=========================== ");
-          fl_color_print(f_type_output, data->context.set.title, "NAT");
-          fl_color_print(f_type_output, data->context.set.standout, " ============================%c", f_string_eol[0]);
-          fflush(f_type_output);
+          fl_color_print(data->output.stream, data->context.set.standout, "=========================== ");
+          fl_color_print(data->output.stream, data->context.set.title, "NAT");
+          fl_color_print(data->output.stream, data->context.set.standout, " ============================%c", f_string_eol[0]);
+          fflush(data->output.stream);
 
           parameters.used = 6;
 
@@ -253,15 +253,15 @@ extern "C" {
 
           status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
-          fprintf(f_type_output, "\n");
-          fflush(f_type_output);
+          fprintf(data->output.stream, "\n");
+          fflush(data->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
-          fl_color_print(f_type_output, data->context.set.standout, "========================== ");
-          fl_color_print(f_type_output, data->context.set.title, "MANGLE");
-          fl_color_print(f_type_output, data->context.set.standout, " ==========================%c", f_string_eol[0]);
-          fflush(f_type_output);
+          fl_color_print(data->output.stream, data->context.set.standout, "========================== ");
+          fl_color_print(data->output.stream, data->context.set.title, "MANGLE");
+          fl_color_print(data->output.stream, data->context.set.standout, " ==========================%c", f_string_eol[0]);
+          fflush(data->output.stream);
 
           parameters.used = 6;
 
@@ -281,15 +281,15 @@ extern "C" {
 
           status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
-          fprintf(f_type_output, "\n");
-          fflush(f_type_output);
+          fprintf(data->output.stream, "\n");
+          fflush(data->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
-          fl_color_print(f_type_output, data->context.set.standout, "========================== ");
-          fl_color_print(f_type_output, data->context.set.title, "FILTER");
-          fl_color_print(f_type_output, data->context.set.standout, " ==========================%c", f_string_eol[0]);
-          fflush(f_type_output);
+          fl_color_print(data->output.stream, data->context.set.standout, "========================== ");
+          fl_color_print(data->output.stream, data->context.set.title, "FILTER");
+          fl_color_print(data->output.stream, data->context.set.standout, " ==========================%c", f_string_eol[0]);
+          fflush(data->output.stream);
 
           parameters.used = 4;
 
@@ -305,8 +305,8 @@ extern "C" {
 
           status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
-          fprintf(f_type_output, "\n");
-          fflush(f_type_output);
+          fprintf(data->output.stream, "\n");
+          fflush(data->output.stream);
         }
 
         if (F_status_is_error(status)) {

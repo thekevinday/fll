@@ -14,36 +14,27 @@
 extern "C" {
 #endif
 
-// version printed may be used by scripts, so this will only print the version number and a newline, no extra information or colors
-#ifndef _di_init_print_version_
-  f_return_status init_print_version(const init_data_t data) {
-    printf("%s\n", init_version);
-
-    return F_none;
-  }
-#endif // _di_init_print_version_
-
 #ifndef _di_init_print_help_
-  f_return_status init_print_help(const f_file_t file, const f_color_context_t context) {
+  f_return_status init_print_help(const f_file_t output, const f_color_context_t context) {
 
-    fll_program_print_help_header(file, context, init_name_long, init_version);
+    fll_program_print_help_header(output, context, init_name_long, init_version);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(output, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
+    fll_program_print_help_option(output, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
+    fll_program_print_help_option(output, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    printf("%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(file, context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
-    fll_program_print_help_option(file, context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom run level, ignoring the kernel command line runlevel argument.");
+    fll_program_print_help_option(output, context, init_parameter_no_prepare_short_name, init_parameter_no_prepare_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Do not attempt to process kernel command line or perform any boot-time specific preparations.");
+    fll_program_print_help_option(output, context, init_parameter_runlevel_short_name, init_parameter_runlevel_long_name, f_console_symbol_short_enable, f_console_symbol_long_enable, " Specify a custom run level, ignoring the kernel command line runlevel argument.");
 
-    fll_program_print_help_usage(file, context, init_name, "");
+    fll_program_print_help_usage(output, context, init_name, "");
 
     return F_none;
   }
