@@ -42,6 +42,35 @@ extern "C" {
 #endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 /**
+ * Private implementation of f_print_except().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_print_except()
+ * @see f_print_except_dynamic()
+ * @see f_print_except_dynamic_partial()
+ */
+#if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
+  extern f_return_status private_f_print_except(FILE *output, const f_string_t string, const f_string_length_t length, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
+
+/**
  * Private implementation of f_print_to().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -69,9 +98,44 @@ extern "C" {
  * @see f_print_to_dynamic()
  * @see f_print_to_dynamic_partial()
  */
-#if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
+#if !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
   extern f_return_status private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
+#endif // !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
+
+/**
+ * Private implementation of f_print_to().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupted (with error bit) if interrupt was received.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_print_to_except()
+ * @see f_print_to_except_dynamic()
+ * @see f_print_to_except_dynamic_partial()
+ */
+#if !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
+  extern f_return_status private_f_print_to_except(const int id, const f_string_t string, const f_string_length_t length, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
 
 #ifdef __cplusplus
 } // extern "C"
