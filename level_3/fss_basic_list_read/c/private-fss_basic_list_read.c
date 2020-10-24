@@ -588,7 +588,12 @@ extern "C" {
       fprintf(data.output.stream, "%c", fss_basic_list_read_pipe_content_start);
     }
     else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
+      if (data.parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_basic_list_open, f_fss_basic_list_open_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
     }
   }
 #endif // _di_fss_basic_list_read_print_object_end_

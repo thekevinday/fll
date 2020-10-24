@@ -471,10 +471,7 @@ extern "C" {
 
             if (items->array[i].content.used > 0) {
               f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], *contents_delimits);
-
-              if (data->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-                fprintf(data->output.stream, "%c", fss_extended_list_read_pipe_content_end);
-              }
+              fss_extended_list_read_print_content_end(*data);
             }
             else if (include_empty) {
               fss_extended_list_read_print_set_end(*data);
@@ -803,7 +800,12 @@ extern "C" {
       fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
     }
     else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
+      if (data.parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_open, f_fss_extended_list_open_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
     }
   }
 #endif // _di_fss_extended_list_read_print_object_end_
@@ -815,7 +817,12 @@ extern "C" {
       fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
     }
     else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
+      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
     }
   }
 #endif // _di_fss_extended_list_read_print_content_end_
@@ -836,7 +843,12 @@ extern "C" {
       fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_end);
     }
     else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
+      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
     }
   }
 #endif // _di_fss_extended_list_read_print_set_end_
