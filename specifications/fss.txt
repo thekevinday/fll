@@ -129,6 +129,5 @@ Featureless Settings Specifications:
   - fss-0008: Embedded List
   - fss-0009: Reverse Mapping
   - fss-000A: Extended Reverse Mapping
-  - fss-000B: Simple Json
-  - fss-000C: Simple List
-  - fss-000D: Iki Text
+  - fss-000B: Simple List
+  - fss-000C: Iki Text

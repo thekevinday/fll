@@ -29,7 +29,7 @@ IKI Specifications:
     \x*\W~\o:\q\c\q
 
   Example\:
-    # fss-000d iki-0000
+    # fss-000c iki-0000
 
     This is my sentence, anything can go here but sometimes I want to emphasis:"emphasize some text".
 

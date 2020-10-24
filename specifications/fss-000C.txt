@@ -1,4 +1,61 @@
 # fss-0002
 
-Featureless Settings Specification: 000C - Simple List:
-  This might be similar to fss-0008 - Embedded List, except it is an fss-0003 Extended List with a (non-recursive) fss-0002 Basic List inside the Content.
+Featureless Settings Specification: 000C - Iki Text:
+  IKI is an unstructured WIKI-like syntax meant to be simpler than WIKI syntax.
+  This fss specification represents a plain text file not following any special FSS structure but instead supports the IKI syntax.
+  The IKI syntax may be used in any FSS specification and the specific vocabulary is defined by appending
+
+  For compatibility with the FSS terminology, the Vocabulary Name is to be considered the Object and the Vocabulary value is to be considered the Content.
+
+  There is no requirement for any specific IKI vocabulary by this standard only that the given syntax is supported.
+  To specify the IKI vocabulary being used append the IKI vocabulary header immediately after the fss header like such: "# fss-000c iki-0001".
+
+  The IKI syntax provides a vocabulary name with specific context associated with it followed by quoted code that is represented by the given vocabulary name.
+  The vocabulary represents a list of allowed object names that may also have specific contextual meaning defined by a given IKI specification.
+
+  When IKI is encapsulated inside any FSS format, the parent FSS format rules apply and must take precedence.
+  Therefore additional escaping may be required.
+  As for this FSS format (FSS-000C), there is no structure and therefore only the IKI syntax rules apply.
+
+  The IKI format will use IKI-0000 to represent an IKI with no explicitly defined vocabulary.
+  Whereas IKI-0001 and beyond represent a specific IKI vocabulary.
+
+  Whitespace, non-word (and non "_", "-", "+") character punctuations, or the start of file must exist before any valid variable name.
+  Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.
+  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (U+2010 and U+2011).
+
+  Unicode punctuation connector characters are supported just like "_", except when they connect outside the current line (such as U+FE33 "︳").
+  Unicode invisible punctuations (such as invisible plus: U+2064) are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid '_', '-', or '+' Unicode equivalents.
+
+  Key\:
+    \o = any printable word character, including "_", "-", "+" (and Unicode equivalents).
+    \c = any character, including whitespace and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
+    \q = either a single quote (') or a double quote (").
+    \x = any character.
+    \W = any non-word character, discluding "_", "-", "+" (and Unicode equivalents).
+    * = 0 or more occurrences.
+    ~ = one or more occurrences, or 0 if at start of file.
+
+  Structure\:
+    \x*\W~\o:\q\c\q
+
+  Example\:
+    # fss-000c iki-0000
+
+    This is my sentence, anything can go here but sometimes I want to emphasis:"emphasize some text".
+
+    Other times I want to render a url such as this example url: url:'http://www.example.com/url with space/'.
+
+    There are no comments, except for maybe the FSS header (which would not resolve to any IKI syntax anyway).
+
+    Quotes may be included, such as: code:"const char *string = \"My \\\"quoted\\\" C string.\";".
+
+  Objects would be\:
+    1) emphasis
+    2) url
+    3) code
+
+  Contents would be\:
+    1.1) emphasize some text
+    2.1) http://www.example.com/url with space/
+    3.1) const char *string = "My \"quoted\" C string.";

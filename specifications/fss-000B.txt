@@ -1,9 +1,4 @@
 # fss-0002
 
-Featureless Settings Specification: 000B - Simple Json:
-  TODO: this will be implemented such that it is as closely FSS compliant form of JSON.
-
-  It is not intended to be identical to JSON nor a JSON replacement.
-  It is intended to be a subset of JSON that follows the FSS practices.
-  (An FSS format that can be imported as JSON with no functional changes to the data).
-  This will likely be a more specific form of fss-0008 Embedded List, except additional tweaks added to accommodate JSON requirements.
+Featureless Settings Specification: 000C - Simple List:
+  This might be similar to fss-0008 - Embedded List, except it is an fss-0003 Extended List with a (non-recursive) fss-0002 Basic List inside the Content.
