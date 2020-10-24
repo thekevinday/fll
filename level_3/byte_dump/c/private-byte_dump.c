@@ -33,6 +33,10 @@ extern "C" {
     if (data.first > 0) {
       cell.row = data.first / data.width;
       offset = data.first % data.width;
+
+      char skip[data.first];
+
+      read(file.id, &skip, data.first);
     }
 
     memset(&character_array, 0, sizeof(f_utf_character_t) * data.width);
