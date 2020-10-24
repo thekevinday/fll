@@ -17,10 +17,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- *
- * @return
- *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_basic_write_error_parameter_same_times_print_
   void fss_basic_write_error_parameter_same_times_print(const fss_basic_write_data_t data) f_gcc_attribute_visibility_internal;
@@ -35,10 +31,6 @@ extern "C" {
  *   The console symbol, such as "--" in "--help".
  * @param parameter
  *   The parameter name, such as "help" in "--help".
- *
- * @return
- *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_basic_write_error_parameter_value_missing_print_
   void fss_basic_write_error_parameter_value_missing_print(const fss_basic_write_data_t data, const f_string_t symbol, const f_string_t parameter) f_gcc_attribute_visibility_internal;
@@ -49,10 +41,6 @@ extern "C" {
  *
  * @param data
  *   The program data.
- *
- * @return
- *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_basic_write_error_parameter_unsupported_eol_print_
   void fss_basic_write_error_parameter_unsupported_eol_print(const fss_basic_write_data_t data) f_gcc_attribute_visibility_internal;

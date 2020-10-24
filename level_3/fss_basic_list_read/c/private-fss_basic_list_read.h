@@ -171,6 +171,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_basic_list_read_main_preprocess_depth_
   extern f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_list_read_data_t data, fss_basic_list_read_depths_t *depths) f_gcc_attribute_visibility_internal;
