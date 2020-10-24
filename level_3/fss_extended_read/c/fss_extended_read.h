@@ -68,6 +68,7 @@ extern "C" {
 
   #define fss_extended_read_short_at      "a"
   #define fss_extended_read_short_content "c"
+  #define fss_extended_read_short_delimit "D"
   #define fss_extended_read_short_depth   "d"
   #define fss_extended_read_short_empty   "e"
   #define fss_extended_read_short_line    "l"
@@ -80,6 +81,7 @@ extern "C" {
 
   #define fss_extended_read_long_at      "at"
   #define fss_extended_read_long_content "content"
+  #define fss_extended_read_long_delimit "delimit"
   #define fss_extended_read_long_depth   "depth"
   #define fss_extended_read_long_empty   "empty"
   #define fss_extended_read_long_line    "line"
@@ -103,6 +105,7 @@ extern "C" {
 
     fss_extended_read_parameter_at,
     fss_extended_read_parameter_content,
+    fss_extended_read_parameter_delimit,
     fss_extended_read_parameter_depth,
     fss_extended_read_parameter_empty,
     fss_extended_read_parameter_line,
@@ -127,6 +130,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(fss_extended_read_short_at, fss_extended_read_long_at, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_content, fss_extended_read_long_content, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_read_short_delimit, fss_extended_read_long_delimit, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_depth, fss_extended_read_long_depth, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_empty, fss_extended_read_long_empty, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_read_short_line, fss_extended_read_long_line, 0, 1, f_console_type_normal), \
@@ -138,8 +142,28 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_read_short_trim, fss_extended_read_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_read_total_parameters 20
+  #define fss_extended_read_total_parameters 21
 #endif // _di_fss_extended_read_defines_
+
+#ifndef _di_fss_extended_read_delimit_mode_
+  #define fss_extended_read_delimit_mode_name_none    "none"
+  #define fss_extended_read_delimit_mode_name_all     "all"
+  #define fss_extended_read_delimit_mode_name_greater "+"
+  #define fss_extended_read_delimit_mode_name_lesser  "-"
+
+  #define fss_extended_read_delimit_mode_name_none_length    4
+  #define fss_extended_read_delimit_mode_name_all_length     3
+  #define fss_extended_read_delimit_mode_name_greater_length 1
+  #define fss_extended_read_delimit_mode_name_lesser_length  1
+
+  enum {
+    fss_extended_read_delimit_mode_none = 1,
+    fss_extended_read_delimit_mode_all,
+    fss_extended_read_delimit_mode_depth,
+    fss_extended_read_delimit_mode_depth_greater,
+    fss_extended_read_delimit_mode_depth_lesser,
+  };
+#endif // _di_fss_extended_read_delimit_modes_
 
 #ifndef _di_fss_extended_read_data_t_
   typedef struct {
@@ -156,6 +180,9 @@ extern "C" {
     f_fss_contents_t contents;
     f_string_quantity_t quantity;
 
+    uint8_t delimit_mode;
+    f_string_length_t delimit_depth;
+
     f_color_context_t context;
   } fss_extended_read_data_t;
 
@@ -170,6 +197,8 @@ extern "C" {
       f_fss_objects_t_initialize, \
       f_fss_contents_t_initialize, \
       f_string_quantity_t_initialize, \
+      fss_extended_read_delimit_mode_all, \
+      0, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_extended_read_data_t_
@@ -177,7 +206,7 @@ extern "C" {
 /**
  * Print help.
  *
- * @param file
+ * @param output
  *   The file to print to.
  * @param context
  *   The color context settings.
@@ -186,7 +215,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fss_extended_read_print_help_
-  extern f_return_status fss_extended_read_print_help(const f_file_t file, const f_color_context_t context);
+  extern f_return_status fss_extended_read_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_fss_extended_read_print_help_
 
 /**

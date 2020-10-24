@@ -173,46 +173,39 @@ extern "C" {
   f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits) {
     f_status_t status = F_none;
 
+    const f_string_lengths_t except_none = f_string_lengths_t_initialize;
+    bool delimited = F_true;
+
+    // for this standard, delimits would always be applied, except for when delimit_depth is greater than 0.
+    if (data->delimit_mode == fss_basic_list_read_delimit_mode_none || (data->delimit_depth && (data->delimit_mode == fss_basic_list_read_delimit_mode_depth || data->delimit_mode == fss_basic_list_read_delimit_mode_depth_greater))) {
+      delimited = F_false;
+    }
+
     {
       f_string_range_t input = f_macro_string_range_t_initialize(data->buffer.used);
 
       delimits->used = 0;
 
-      status = fll_fss_basic_list_read(&data->buffer, &input, &data->objects, &data->contents, delimits);
+      status = fll_fss_basic_list_read(&data->buffer, &input, &data->objects, &data->contents, delimits, 0);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
         fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, filename, "process", fll_error_file_type_file);
-
-        // Clear buffers, then attempt the next file.
-        f_macro_fss_contents_t_delete_simple(data->contents);
-        f_macro_fss_objects_t_delete_simple(data->objects);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
-
-        return status;
       }
-
-      if (status == F_data_not_stop || status == F_data_not_eos) {
-
-        // Clear buffers, then attempt the next file.
+      else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
         f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_type_output, "0%c", f_string_eol[0]);
+          fprintf(data->output.stream, "0%c", f_string_eol[0]);
           return F_none;
         }
 
         return F_status_set_warning(status);
       }
 
-      status = fl_fss_apply_delimit(*delimits, &data->buffer);
-
       if (F_status_is_error(status)) {
-        fll_error_file_print(data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, filename, "process", fll_error_file_type_file);
-
-        // Clear buffers, then attempt the next file.
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
         f_macro_string_dynamic_t_delete_simple(data->buffer);
@@ -262,28 +255,18 @@ extern "C" {
     if (depths.array[0].index_name > 0) {
       memset(names, 0, sizeof(bool) * data->objects.used);
 
-      f_string_length_t name_length = 0;
-
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
         for (i = 0; i < data->objects.used; i++) {
 
-          name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
-
-          if (name_length == depths.array[0].value_name.used) {
-            if (fl_string_compare_trim(data->buffer.string + data->objects.array[i].start, depths.array[0].value_name.string, name_length, depths.array[0].value_name.used) == F_equal_to) {
-              names[i] = 1;
-            }
+          if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, *delimits) == F_equal_to) {
+            names[i] = 1;
           }
         } // for
       }
       else {
         for (i = 0; i < data->objects.used; i++) {
-          name_length = (data->objects.array[i].stop - data->objects.array[i].start) + 1;
-
-          if (name_length == depths.array[0].value_name.used) {
-            if (fl_string_compare(data->buffer.string + data->objects.array[i].start, depths.array[0].value_name.string, name_length, depths.array[0].value_name.used) == F_equal_to) {
-              names[i] = 1;
-            }
+          if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, *delimits) == F_equal_to) {
+            names[i] = 1;
           }
         } // for
       }
@@ -302,10 +285,10 @@ extern "C" {
       if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
         if (depths.array[0].index_at > 0) {
           if (depths.array[0].value_at < data->objects.used && names[depths.array[0].value_at]) {
-            fprintf(f_type_output, "1%c", f_string_eol[0]);
+            fprintf(data->output.stream, "1%c", f_string_eol[0]);
           }
           else {
-            fprintf(f_type_output, "0%c", f_string_eol[0]);
+            fprintf(data->output.stream, "0%c", f_string_eol[0]);
           }
         }
         else if (depths.array[0].index_name > 0) {
@@ -317,19 +300,19 @@ extern "C" {
             total++;
           } // for
 
-          fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
+          fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
         }
         else {
-          fprintf(f_type_output, "%llu%c", data->objects.used, f_string_eol[0]);
+          fprintf(data->output.stream, "%llu%c", data->objects.used, f_string_eol[0]);
         }
 
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t) = &f_print_dynamic_partial;
+      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
-        print_object = &fl_print_trim_string_dynamic_partial;
+        print_object = &fl_print_trim_except_dynamic_partial;
       }
 
       if (depths.array[0].index_at > 0) {
@@ -340,13 +323,13 @@ extern "C" {
 
           if (names[i]) {
             if (at == depths.array[0].value_at) {
-              print_object(f_type_output, data->buffer, data->objects.array[i]);
+              print_object(data->output.stream, data->buffer, data->objects.array[i], delimited ? *delimits : except_none);
 
               fss_basic_list_read_print_object_end(*data);
 
               if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
                 if (data->contents.array[i].used) {
-                  f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
+                  f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
                 }
               }
 
@@ -362,15 +345,16 @@ extern "C" {
       }
 
       for (i = 0; i < data->objects.used; i++) {
+
         if (!names[i]) continue;
 
-        print_object(f_type_output, data->buffer, data->objects.array[i]);
+        print_object(data->output.stream, data->buffer, data->objects.array[i], delimited ? *delimits : except_none);
 
         fss_basic_list_read_print_object_end(*data);
 
         if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
           if (data->contents.array[i].used) {
-            f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
+            f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
           }
         }
 
@@ -383,7 +367,7 @@ extern "C" {
     if (depths.array[0].index_at > 0) {
       if (depths.array[0].value_at >= data->objects.used) {
         if (names[depths.array[0].value_at] && data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(f_type_output, "0%c", f_string_eol[0]);
+          fprintf(data->output.stream, "0%c", f_string_eol[0]);
         }
 
         return F_none;
@@ -397,7 +381,7 @@ extern "C" {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
               if (!data->contents.array[i].used) {
-                fprintf(f_type_output, "0%c", f_string_eol[0]);
+                fprintf(data->output.stream, "0%c", f_string_eol[0]);
               }
               else {
                 f_array_length_t total = 1;
@@ -410,7 +394,7 @@ extern "C" {
                   }
                 } // for
 
-                fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
+                fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
               }
 
               return F_none;
@@ -419,7 +403,7 @@ extern "C" {
             if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
               if (!data->contents.array[i].used) {
                 if (include_empty && !line) {
-                  fprintf(f_type_output, "%c", f_string_eol[0]);
+                  fprintf(data->output.stream, "%c", f_string_eol[0]);
                   fss_basic_list_read_print_set_end(*data);
                 }
               }
@@ -430,11 +414,11 @@ extern "C" {
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
                     if (!data->buffer.string[i]) continue;
                     if (data->buffer.string[i] == f_string_eol[0]) {
-                      fprintf(f_type_output, "%c", f_string_eol[0]);
+                      fprintf(data->output.stream, "%c", f_string_eol[0]);
                       break;
                     }
 
-                    fprintf(f_type_output, "%c", data->buffer.string[i]);
+                    fprintf(data->output.stream, "%c", data->buffer.string[i]);
                   } // for
                 }
                 else {
@@ -453,11 +437,11 @@ extern "C" {
                           if (!data->buffer.string[i]) continue;
 
                           if (data->buffer.string[i] == f_string_eol[0]) {
-                            fprintf(f_type_output, "%c", f_string_eol[0]);
+                            fprintf(data->output.stream, "%c", f_string_eol[0]);
                             break;
                           }
 
-                          fprintf(f_type_output, "%c", data->buffer.string[i]);
+                          fprintf(data->output.stream, "%c", data->buffer.string[i]);
                         } // for
 
                         break;
@@ -471,14 +455,14 @@ extern "C" {
             }
 
             if (data->contents.array[i].used > 0) {
-              f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
+              f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
 
               if (data->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
                 fprintf(data->output.stream, "%c", fss_basic_list_read_pipe_content_end);
               }
             }
             else if (include_empty) {
-              fprintf(f_type_output, "%c", f_string_eol[0]);
+              fprintf(data->output.stream, "%c", f_string_eol[0]);
               fss_basic_list_read_print_set_end(*data);
             }
 
@@ -515,7 +499,7 @@ extern "C" {
         } // for
       } // for
 
-      fprintf(f_type_output, "%llu%c", total, f_string_eol[0]);
+      fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
       return F_none;
     }
 
@@ -526,7 +510,7 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
-              fprintf(f_type_output, "%c", f_string_eol[0]);
+              fprintf(data->output.stream, "%c", f_string_eol[0]);
               fss_basic_list_read_print_set_end(*data);
               break;
             }
@@ -560,11 +544,11 @@ extern "C" {
             if (!data->buffer.string[j]) continue;
 
             if (data->buffer.string[j] == f_string_eol[0]) {
-              fprintf(f_type_output, "%c", f_string_eol[0]);
+              fprintf(data->output.stream, "%c", f_string_eol[0]);
               break;
             }
 
-            fprintf(f_type_output, "%c", data->buffer.string[j]);
+            fprintf(data->output.stream, "%c", data->buffer.string[j]);
           } // for
 
           break;
@@ -579,14 +563,14 @@ extern "C" {
 
       if (!data->contents.array[i].used) {
         if (include_empty) {
-          fprintf(f_type_output, "%c", f_string_eol[0]);
+          fprintf(data->output.stream, "%c", f_string_eol[0]);
           fss_basic_list_read_print_set_end(*data);
         }
 
         continue;
       }
 
-      f_print_dynamic_partial(f_type_output, data->buffer, data->contents.array[i].array[0]);
+      f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
 
       if (data->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
         fprintf(data->output.stream, "%c", fss_basic_list_read_pipe_content_end);

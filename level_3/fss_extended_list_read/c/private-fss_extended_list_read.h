@@ -158,6 +158,22 @@ extern "C" {
 #endif // _di_fss_extended_list_read_depths_t_
 
 /**
+ * Determine if the given depth is to be delimited or not.
+ *
+ * @param data
+ *   The program specific data.
+ * @param depth
+ *   The depth to check.
+ *
+ * @return
+ *   F_true if delimited.
+ *   F_false if not delimited.
+ */
+#ifndef _di_fss_extended_list_read_is_delimited_at_depth_
+  extern f_return_status fss_extended_list_read_is_delimited_at_depth(const fss_extended_list_read_data_t data, const f_string_length_t depth) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_is_delimited_at_depth_
+
+/**
  * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
@@ -188,14 +204,16 @@ extern "C" {
  *   The name of the file being processed.
  * @param depths
  *   The processed depth parameters.
- * @param delimits
- *   An array of delimits detected during processing.
+ * @param objects_delimits
+ *   An array of delimits detected during processing, for top-level objects.
+ * @param contents_delimits
+ *   An array of delimits detected during processing, for contents.
  *
  * @see fss_extended_list_read_main_preprocess_depth()
  * @see fss_extended_list_read_main_process_for_depth()
  */
 #ifndef _di_fss_extended_list_read_main_process_file_
-  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_file_
 
 /**
@@ -214,11 +232,15 @@ extern "C" {
  *   The depth settings specific to the desired depth.
  * @param line
  *   The line number parameter value, used for printing a specific line number for content.
+ * @param objects_delimits
+ *   An array of delimits detected during processing, for top-level objects.
+ * @param contents_delimits
+ *   An array of delimits detected during processing, for contents.
  *
  * @see fss_extended_list_read_main_process_file()
  */
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
 /**
