@@ -11,7 +11,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || length == 0) return F_data_not;
+    if (!string || !length) return F_data_not;
 
     return private_f_print(output, string, length);
   }
@@ -92,7 +92,7 @@ extern "C" {
 #ifndef _di_f_print_to_
   f_return_status f_print_to(const int id, const f_string_t string, const f_string_length_t length) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!string || length == 0) return F_data_not;
@@ -104,7 +104,7 @@ extern "C" {
 #ifndef _di_f_print_to_dynamic_
   f_return_status f_print_to_dynamic(const int id, const f_string_static_t buffer) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!buffer.used) return F_data_not;
@@ -116,7 +116,7 @@ extern "C" {
 #ifndef _di_f_print_to_dynamic_partial_
   f_return_status f_print_to_dynamic_partial(const int id, const f_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
@@ -134,7 +134,7 @@ extern "C" {
 #ifndef _di_f_print_to_except_
   f_return_status f_print_to_except(const int id, const f_string_t string, const f_string_length_t length, const f_string_lengths_t except) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!string || length == 0) return F_data_not;
@@ -146,7 +146,7 @@ extern "C" {
 #ifndef _di_f_print_to_except_dynamic_
   f_return_status f_print_to_except_dynamic(const int id, const f_string_static_t buffer, const f_string_lengths_t except) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!buffer.used) return F_data_not;
@@ -158,7 +158,7 @@ extern "C" {
 #ifndef _di_f_print_to_except_dynamic_partial_
   f_return_status f_print_to_except_dynamic_partial(const int id, const f_string_static_t buffer, const f_string_range_t range, const f_string_lengths_t except) {
     #ifndef _di_level_0_parameter_checking_
-      if (id != -1) return F_status_set_error(F_parameter);
+      if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
