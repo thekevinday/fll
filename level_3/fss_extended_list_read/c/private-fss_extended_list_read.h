@@ -158,22 +158,6 @@ extern "C" {
 #endif // _di_fss_extended_list_read_depths_t_
 
 /**
- * Determine if the given depth is to be delimited or not.
- *
- * @param data
- *   The program specific data.
- * @param depth
- *   The depth to check.
- *
- * @return
- *   F_true if delimited.
- *   F_false if not delimited.
- */
-#ifndef _di_fss_extended_list_read_is_delimited_at_depth_
-  extern f_return_status fss_extended_list_read_is_delimited_at_depth(const fss_extended_list_read_data_t data, const f_string_length_t depth) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_list_read_is_delimited_at_depth_
-
-/**
  * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
@@ -187,7 +171,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_extended_list_read_main_preprocess_depth_
   extern f_return_status fss_extended_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_extended_list_read_data_t data, fss_extended_list_read_depths_t *depths) f_gcc_attribute_visibility_internal;
@@ -211,6 +196,11 @@ extern "C" {
  *
  * @see fss_extended_list_read_main_preprocess_depth()
  * @see fss_extended_list_read_main_process_for_depth()
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_extended_list_read_main_process_file_
   extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
@@ -237,11 +227,93 @@ extern "C" {
  * @param contents_delimits
  *   An array of delimits detected during processing, for contents.
  *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
  * @see fss_extended_list_read_main_process_file()
  */
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
   extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
+
+/**
+ * Rewrite the object and content delimit ranges to be within the given depth range.
+ *
+ * @param data
+ *   The program specific data.
+ * @param objects_delimits
+ *   An array of delimits detected during processing, for top-level objects.
+ * @param contents_delimits
+ *   An array of delimits detected during processing, for contents.
+ *
+ * @see fss_extended_list_read_main_process_file()
+ */
+#ifndef _di_fss_extended_list_read_process_delimits_
+  extern void fss_extended_list_read_process_delimits(const fss_extended_list_read_data_t data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_process_delimits_
+
+/**
+ * Write the given delimits at the given depth back into the new delimits array, specifically for contents.
+ *
+ * @param data
+ *   The program specific data.
+ * @param depth
+ *   The depth in which to process.
+ * @param original_delimits
+ *   The original delimits structure.
+ * @param original_used
+ *   The size of the original delimits structure.
+ * @param delimits
+ *   The delimits array in which the delimits are written to.
+ *
+ * @see fss_extended_list_read_process_delimits()
+ */
+#ifndef _di_fss_extended_list_read_process_delimits_contents_
+  extern void fss_extended_list_read_process_delimits_contents(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_process_delimits_contents_
+
+/**
+ * Write the given delimits at the given depth back into the new delimits array, specifically for objects.
+ *
+ * @param data
+ *   The program specific data.
+ * @param depth
+ *   The depth in which to process.
+ * @param original_delimits
+ *   The original delimits structure.
+ * @param original_used
+ *   The size of the original delimits structure.
+ * @param delimits
+ *   The delimits array in which the delimits are written to.
+ *
+ * @see fss_extended_list_read_process_delimits()
+ */
+#ifndef _di_fss_extended_list_read_process_delimits_objects_
+  extern void fss_extended_list_read_process_delimits_objects(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_process_delimits_objects_
+
+/**
+ * Determine if the given location is actually within another depth.
+ *
+ * @param data
+ *   The program specific data.
+ * @param depth
+ *   The depth in which to process.
+ * @param location
+ *   The location to investigate.
+ *
+ * @return
+ *   TRUE if location is within a greater depth.
+ *   FALSE if location is not within a greater depth.
+ *
+ * @see fss_extended_list_read_process_delimits_objects()
+ * @see fss_extended_list_read_process_delimits_contents()
+ */
+#ifndef _di_fss_extended_list_read_process_delimits_within_greater_
+  extern f_return_status fss_extended_list_read_process_delimits_within_greater(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_process_delimits_within_greater_
 
 /**
  * Print the end of an object (which is essentially the start of a content).

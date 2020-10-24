@@ -5,33 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_extended_list_read_is_delimited_at_depth_
-  f_return_status fss_extended_list_read_is_delimited_at_depth(const fss_extended_list_read_data_t data, const f_string_length_t depth) {
-
-    if (data.delimit_mode == fss_extended_list_read_delimit_mode_none) {
-      return F_false;
-    }
-
-    if (data.delimit_mode == fss_extended_list_read_delimit_mode_all) {
-      return F_true;
-    }
-
-    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth) {
-      return depth == data.delimit_depth;
-    }
-
-    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_lesser) {
-      return depth <= data.delimit_depth;
-    }
-
-    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_greater) {
-      return depth >= data.delimit_depth;
-    }
-
-    return F_true;
-  }
-#endif // _di_fss_extended_list_read_is_delimited_at_depth_
-
 #ifndef _di_fss_extended_list_read_main_preprocess_depth_
   f_return_status fss_extended_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_extended_list_read_data_t data, fss_extended_list_read_depths_t *depths) {
     f_status_t status = F_none;
@@ -277,12 +250,10 @@ extern "C" {
       }
     }
 
-    // @fixme: this function currently prints the entire content without handling individual parts.
-    //         this is well and good, except that there is no way to determine when any given depth should or should not be delimited.
-    //         consider doing something like pre-processing the depths when depth mode is some specific depth (as opposed to "all" or "none").
-    //         this pre-process will build a new objects_delimits and contents_delimits that only contain the expected delimits.
-    //         futhermore, when set to "none" just pass something like "except_none" for both objects_delimits and contents_delimits.
     if (data->parameters[fss_extended_list_read_parameter_depth].result == f_console_result_none || (data->parameters[fss_extended_list_read_parameter_depth].result == f_console_result_additional && depths.used == 1)) {
+
+      fss_extended_list_read_process_delimits(*data, objects_delimits, contents_delimits);
+
       return fss_extended_list_read_main_process_for_depth(arguments, data, filename, depths.array[0], line, objects_delimits, contents_delimits);
     }
 
@@ -301,7 +272,6 @@ extern "C" {
     f_array_length_t j = 0;
 
     const f_string_lengths_t except_none = f_string_lengths_t_initialize;
-    bool delimited = fss_extended_list_read_is_delimited_at_depth(*data, depth_setting.depth);
 
     if (depth_setting.index_name > 0) {
       memset(names, 0, sizeof(bool) * items->used);
@@ -373,13 +343,13 @@ extern "C" {
 
       if (depth_setting.index_at > 0) {
         if (depth_setting.value_at < items->used && names[depth_setting.value_at]) {
-          print_object(data->output.stream, data->buffer, items->array[depth_setting.value_at].object, delimited ? *objects_delimits : except_none);
+          print_object(data->output.stream, data->buffer, items->array[depth_setting.value_at].object, *objects_delimits);
 
           if (data->parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
             fss_extended_list_read_print_object_end(*data);
 
             if (items->array[depth_setting.value_at].content.used) {
-              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[depth_setting.value_at].content.array[0], delimited ? *contents_delimits : except_none);
+              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[depth_setting.value_at].content.array[0], *contents_delimits);
             }
           }
 
@@ -392,13 +362,13 @@ extern "C" {
       for (i = 0; i < items->used; i++) {
 
         if (names[i]) {
-          print_object(data->output.stream, data->buffer, items->array[i].object, delimited ? *objects_delimits : except_none);
+          print_object(data->output.stream, data->buffer, items->array[i].object, *objects_delimits);
 
           if (data->parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
             fss_extended_list_read_print_object_end(*data);
 
             if (items->array[i].content.used) {
-              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], delimited ? *contents_delimits : except_none);
+              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], *contents_delimits);
             }
           }
 
@@ -500,7 +470,7 @@ extern "C" {
             }
 
             if (items->array[i].content.used > 0) {
-              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], delimited ? *contents_delimits : except_none);
+              f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], *contents_delimits);
 
               if (data->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
                 fprintf(data->output.stream, "%c", fss_extended_list_read_pipe_content_end);
@@ -613,7 +583,7 @@ extern "C" {
         continue;
       }
 
-      f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], delimited ? *contents_delimits : except_none);
+      f_print_except_dynamic_partial(data->output.stream, data->buffer, items->array[i].content.array[0], *contents_delimits);
 
       if (data->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
         fprintf(data->output.stream, "%c", fss_extended_list_read_pipe_content_end);
@@ -623,6 +593,208 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fss_extended_list_read_main_process_for_depth_
+
+#ifndef _di_fss_extended_list_read_process_delimits_
+  void fss_extended_list_read_process_delimits(const fss_extended_list_read_data_t data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+
+    if (!data.nest.used) return;
+
+    if ((!objects_delimits->used && !contents_delimits->used) || data.delimit_mode == fss_extended_list_read_delimit_mode_all) return;
+
+    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_lesser && data.nest.used < data.delimit_depth) return;
+    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_greater && data.delimit_depth == 0) return;
+
+    if (data.delimit_mode == fss_extended_list_read_delimit_mode_none) {
+      objects_delimits->used = 0;
+      contents_delimits->used = 0;
+      return;
+    }
+
+    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth || data.delimit_mode == fss_extended_list_read_delimit_mode_depth_greater) {
+      if (data.delimit_depth >= data.nest.used) {
+        objects_delimits->used = 0;
+        contents_delimits->used = 0;
+        return;
+      }
+    }
+
+    const f_string_length_t original_objects_used = objects_delimits->used;
+    const f_string_length_t original_contents_used = contents_delimits->used;
+
+    f_string_length_t original_objects_delimits[original_objects_used];
+    f_string_length_t original_contents_delimits[original_contents_used];
+
+    memcpy(&original_objects_delimits, objects_delimits->array, original_objects_used * sizeof(f_string_length_t));
+    memcpy(&original_contents_delimits, contents_delimits->array, original_contents_used * sizeof(f_string_length_t));
+
+    objects_delimits->used = 0;
+    contents_delimits->used = 0;
+
+    if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth) {
+
+      // only depth 0 objects are stored in objects_delimits.
+      if (data.delimit_depth) {
+        fss_extended_list_read_process_delimits_objects(data, data.delimit_depth, original_contents_delimits, original_contents_used, contents_delimits);
+      }
+      else {
+        fss_extended_list_read_process_delimits_objects(data, data.delimit_depth, original_objects_delimits, original_objects_used, objects_delimits);
+      }
+
+      fss_extended_list_read_process_delimits_contents(data, data.delimit_depth, original_contents_delimits, original_contents_used, contents_delimits);
+    }
+    else {
+
+      if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_lesser) {
+
+        // only depth 0 objects are stored in objects_delimits.
+        fss_extended_list_read_process_delimits_objects(data, 0, original_objects_delimits, original_objects_used, objects_delimits);
+        fss_extended_list_read_process_delimits_contents(data, 0, original_contents_delimits, original_contents_used, contents_delimits);
+
+        for (f_array_length_t i = 1; i <= data.delimit_depth && i < data.nest.used; ++i) {
+
+          fss_extended_list_read_process_delimits_objects(data, i, original_contents_delimits, original_contents_used, contents_delimits);
+          fss_extended_list_read_process_delimits_contents(data, i, original_contents_delimits, original_contents_used, contents_delimits);
+        } // for
+      }
+      else if (data.delimit_mode == fss_extended_list_read_delimit_mode_depth_greater) {
+        for (f_array_length_t i = data.delimit_depth; i < data.nest.used; ++i) {
+
+          fss_extended_list_read_process_delimits_objects(data, i, original_contents_delimits, original_contents_used, contents_delimits);
+          fss_extended_list_read_process_delimits_contents(data, i, original_contents_delimits, original_contents_used, contents_delimits);
+        } // for
+      }
+    }
+  }
+#endif // _di_fss_extended_list_read_process_delimits_
+
+#ifndef _di_fss_extended_list_read_process_delimits_contents_
+  void fss_extended_list_read_process_delimits_contents(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) {
+
+    if (!original_used) return;
+
+    f_fss_items_t *items = &data.nest.depth[depth];
+
+    if (!items->used) return;
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t l = 0;
+    f_array_length_t m = 0;
+
+    for (i = 0; i < items->used; ++i) {
+
+      for (j = 0; j < original_used; ++j) {
+        for (k = 0; k < items->array[i].content.used; ++k) {
+
+          if (original_delimits[j] >= items->array[i].content.array[k].start && original_delimits[j] <= items->array[i].content.array[k].stop) {
+
+            // preserve linear order when adding back delimits.
+            if (delimits->used) {
+              for (l = 0; l < delimits->used; ++l) {
+
+                if (original_delimits[j] > delimits->array[l]) continue;
+                if (original_delimits[j] == delimits->array[l]) break;
+
+                for (m = delimits->used; m > l; --m) {
+                  delimits->array[m] = delimits->array[m - 1];
+                } // for
+
+                if (fss_extended_list_read_process_delimits_within_greater(data, depth, original_delimits[j]) == F_false) {
+                  delimits->array[l] = original_delimits[j];
+                  delimits->used++;
+                }
+
+                break;
+              } // for
+            }
+            else if (fss_extended_list_read_process_delimits_within_greater(data, depth, original_delimits[j]) == F_false) {
+              delimits->array[0] = original_delimits[j];
+              delimits->used = 1;
+            }
+          }
+        }
+      } // for
+    } // for
+  }
+#endif // _di_fss_extended_list_read_process_delimits_contents_
+
+#ifndef _di_fss_extended_list_read_process_delimits_objects_
+  void fss_extended_list_read_process_delimits_objects(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) {
+
+    if (!original_used) return;
+
+    f_fss_items_t *items = &data.nest.depth[depth];
+
+    if (!items->used) return;
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t l = 0;
+
+    for (i = 0; i < items->used; ++i) {
+
+      for (j = 0; j < original_used; ++j) {
+
+        if (original_delimits[j] >= items->array[i].object.start && original_delimits[j] <= items->array[i].object.stop) {
+
+          // preserve linear order when adding back delimits.
+          if (delimits->used) {
+            for (k = 0; k < delimits->used; ++k) {
+
+              if (original_delimits[j] > delimits->array[k]) continue;
+              if (original_delimits[j] == delimits->array[k]) break;
+
+              for (l = delimits->used; l > k; --l) {
+                delimits->array[l] = delimits->array[l - 1];
+              } // for
+
+              if (fss_extended_list_read_process_delimits_within_greater(data, depth, original_delimits[j]) == F_false) {
+                delimits->array[k] = original_delimits[j];
+                delimits->used++;
+              }
+
+              break;
+            } // for
+          }
+          else if (fss_extended_list_read_process_delimits_within_greater(data, depth, original_delimits[j]) == F_false) {
+            delimits->array[0] = original_delimits[j];
+            delimits->used = 1;
+          }
+        }
+      } // for
+    } // for
+  }
+#endif // _di_fss_extended_list_read_process_delimits_objects_
+
+#ifndef _di_fss_extended_list_read_process_delimits_within_greater_
+  f_return_status fss_extended_list_read_process_delimits_within_greater(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) {
+
+    if (depth + 1 >= data.nest.used) return F_false;
+
+    f_fss_items_t *items = 0;
+
+    f_string_length_t i = 0;
+    f_string_length_t j = 0;
+
+    for (f_string_length_t d = depth + 1; d < data.nest.used; ++d) {
+      items = &data.nest.depth[d];
+
+      for (i = 0; i < items->used; ++i) {
+
+        for (j = 0; j < items->array[i].content.used; ++j) {
+
+          if (location >= items->array[i].content.array[j].start && location <= items->array[i].content.array[j].stop) {
+            return F_true;
+          }
+        } // for
+      } // for
+    } // for
+
+    return F_false;
+  }
+#endif // _di_fss_extended_list_read_process_delimits_within_greater_
 
 #ifndef _di_fss_extended_list_read_print_object_end_
   void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) {
