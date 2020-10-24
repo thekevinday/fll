@@ -121,7 +121,7 @@ extern "C" {
  *   The total number of characters to print.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -149,7 +149,7 @@ extern "C" {
  *   The string to output.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -179,7 +179,7 @@ extern "C" {
  *   The range within the provided string to print.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -306,7 +306,7 @@ extern "C" {
  *   The total number of characters to print.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -342,7 +342,7 @@ extern "C" {
  *   The string to output.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -380,7 +380,7 @@ extern "C" {
  *   The range within the provided string to print.
  * @param except
  *   An array of locations within the given string to not print.
- *   The array of locations is assumed to be in linear order.
+ *   The array of locations is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.

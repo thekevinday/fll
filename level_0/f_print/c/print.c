@@ -55,7 +55,7 @@ extern "C" {
 
     if (!string || length == 0) return F_data_not;
 
-    return private_f_print_except(output, string, length, except);
+    return private_f_print_except(output, string, 0, length, except);
   }
 #endif // _di_f_print_except_
 
@@ -67,7 +67,7 @@ extern "C" {
 
     if (!buffer.used) return F_data_not;
 
-    return private_f_print_except(output, buffer.string, buffer.used, except);
+    return private_f_print_except(output, buffer.string, 0, buffer.used, except);
   }
 #endif // _di_f_print_except_dynamic_
 
@@ -85,7 +85,7 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_f_print_except(output, buffer.string + range.start, length, except);
+    return private_f_print_except(output, buffer.string, range.start, range.start + length, except);
   }
 #endif // _di_f_print_except_dynamic_partial_
 
@@ -139,7 +139,7 @@ extern "C" {
 
     if (!string || length == 0) return F_data_not;
 
-    return private_f_print_to_except(id, string, length, except);
+    return private_f_print_to_except(id, string, 0, length, except);
   }
 #endif // _di_f_print_to_except_
 
@@ -151,7 +151,7 @@ extern "C" {
 
     if (!buffer.used) return F_data_not;
 
-    return private_f_print_to_except(id, buffer.string, buffer.used, except);
+    return private_f_print_to_except(id, buffer.string, 0, buffer.used, except);
   }
 #endif // _di_f_print_to_except_dynamic_
 
@@ -169,7 +169,7 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_f_print_to_except(id, buffer.string + range.start, length, except);
+    return private_f_print_to_except(id, buffer.string, range.start, range.start + length, except);
   }
 #endif // _di_f_print_to_except_dynamic_partial_
 

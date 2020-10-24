@@ -105,6 +105,82 @@ extern "C" {
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 
 /**
+ * Private implementation of fl_string_compare_except().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param offset1
+ *   Offset of string1 to start at.
+ * @param offset2
+ *   Offset of string2 to start at.
+ * @param stop1
+ *   Exclusive stop position for string1.
+ * @param stop2
+ *   Exclusive stop position for string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fl_string_compare_except()
+ * @see fl_string_dynamic_compare_except()
+ * @see fl_string_dynamic_partial_compare_except()
+ */
+#if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
+  extern f_return_status private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
+
+/**
+ * Private implementation of fl_string_compare_except_trim().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param offset1
+ *   Offset of string1 to start at.
+ * @param offset2
+ *   Offset of string2 to start at.
+ * @param stop1
+ *   Exclusive stop position for string1.
+ * @param stop2
+ *   Exclusive stop position for string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see fl_string_compare_except_trim()
+ * @see fl_string_dynamic_compare_except_trim()
+ * @see fl_string_dynamic_partial_compare_except_trim()
+ */
+#if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
+  extern f_return_status private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
+
+/**
  * Private implementation of fl_string_compare_trim().
  *
  * Intended to be shared to each of the different implementation variations.
