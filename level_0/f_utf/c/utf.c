@@ -9,12 +9,10 @@ extern "C" {
   f_return_status f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_string_length_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
-      if (range->start > range->stop) return F_status_set_error(F_parameter);
-      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) return F_data_not;
 
     f_string_length_t i = 0;
     uint8_t width = 0;
@@ -42,12 +40,10 @@ extern "C" {
   f_return_status f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_string_length_t step) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
-      if (range->start > range->stop) return F_status_set_error(F_parameter);
-      if (range->start >= buffer.used) return F_status_set_error(F_parameter);
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) return F_data_not;
 
     f_string_length_t i = 0;
     uint8_t width = 0;
