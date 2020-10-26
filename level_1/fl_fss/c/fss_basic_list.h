@@ -94,6 +94,10 @@ extern "C" {
  *   A set of all locations where a valid content was found.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
+ * @param comments
+ *   An array of ranges representing where comments are found within any valid content.
+ *   This only stores comments found within valid content only.
+ *   The comment range will include the trailing newline.
  *
  * @return
  *   FL_fss_found_content on success and content was found (start location is at end of content).
@@ -119,7 +123,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_basic_list_content_read_
-  extern f_return_status fl_fss_basic_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits);
+  extern f_return_status fl_fss_basic_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments);
 #endif // _di_fl_fss_basic_list_content_read_
 
 /**

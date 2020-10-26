@@ -5,12 +5,14 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_list_read_
-  f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
     #ifndef _di_level_3_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
       if (!objects_delimits) return F_status_set_error(F_parameter);
+      if (!contents_delimits) return F_status_set_error(F_parameter);
+      if (!comments) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
     f_status_t status = F_none;
@@ -63,7 +65,7 @@ extern "C" {
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
-          status = fl_fss_extended_list_content_read(buffer, range, nest, contents_delimits ? contents_delimits : objects_delimits);
+          status = fl_fss_extended_list_content_read(buffer, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
 
           break;
         }

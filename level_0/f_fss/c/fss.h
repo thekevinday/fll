@@ -25,6 +25,7 @@
 
 // fll-0 fss includes
 #include <level_0/fss-common.h>
+#include <level_0/fss_comment.h>
 #include <level_0/fss_delimit.h>
 #include <level_0/fss_quote.h>
 #include <level_0/fss_named.h>

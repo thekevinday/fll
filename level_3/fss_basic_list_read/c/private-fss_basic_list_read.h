@@ -191,6 +191,9 @@ extern "C" {
  *   The processed depth parameters.
  * @param delimits
  *   An array of delimits detected during processing.
+ * @param comments
+ *   An array of ranges representing where comments are found within any valid content.
+ *   This only stores comments found within valid content only.
  *
  * @return
  *   F_none on success.
@@ -200,7 +203,7 @@ extern "C" {
  * @see fss_basic_list_read_main_preprocess_depth()
  */
 #ifndef _di_fss_basic_list_read_main_process_file_
-  extern f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t file_name, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t file_name, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits, f_fss_comments_t *comments) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_main_process_file_
 
 /**
@@ -212,6 +215,18 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_object_end_
   extern void fss_basic_list_read_print_object_end(const fss_basic_list_read_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_basic_list_read_print_object_end_
+
+/**
+ * Print the ignore character for content.
+ *
+ * This is only used in pipe output mode.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_basic_list_read_print_content_ignore_
+  extern void fss_basic_list_read_print_content_ignore(const fss_basic_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_basic_list_read_print_content_ignore_
 
 /**
  * Print the end of an content.

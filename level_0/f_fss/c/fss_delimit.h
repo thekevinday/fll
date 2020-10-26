@@ -59,7 +59,7 @@ extern "C" {
 #ifndef _di_f_fss_delimitss_t_
   typedef f_string_lengthss_t f_fss_delimitss_t;
 
-  #define f_fss_delimitss_t_initialize f_f_string_lengthss_t_initialize
+  #define f_fss_delimitss_t_initialize f_string_lengthss_t_initialize
 
   #define f_macro_fss_delimitss_t_clear(quotess) f_macro_string_lengthss_t_clear(quotess)
 

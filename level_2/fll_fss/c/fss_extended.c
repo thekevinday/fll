@@ -12,6 +12,7 @@ extern "C" {
       if (!objects) return F_status_set_error(F_parameter);
       if (!contents) return F_status_set_error(F_parameter);
       if (!objects_delimits) return F_status_set_error(F_parameter);
+      if (!contents_delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;

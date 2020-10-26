@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_basic_list_read_main_process_file_
-  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits) {
+  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
     f_status_t status = F_none;
 
     const f_string_lengths_t except_none = f_string_lengths_t_initialize;
@@ -185,8 +185,9 @@ extern "C" {
       f_string_range_t input = f_macro_string_range_t_initialize(data->buffer.used);
 
       delimits->used = 0;
+      comments->used = 0;
 
-      status = fll_fss_basic_list_read(&data->buffer, &input, &data->objects, &data->contents, delimits, 0);
+      status = fll_fss_basic_list_read(&data->buffer, &input, &data->objects, &data->contents, delimits, 0, comments);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
@@ -212,6 +213,16 @@ extern "C" {
 
         return status;
       }
+
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+
+      // comments are not to be part of the file, so remove them.
+      for (; i < comments->used; ++i) {
+        for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
+          data->buffer.string[j] = f_fss_delimit_placeholder;
+        } // for
+      } // for
     }
 
     f_number_unsigned_t select = 0;
@@ -329,7 +340,9 @@ extern "C" {
 
               if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
                 if (data->contents.array[i].used) {
+                  fss_basic_list_read_print_content_ignore(*data);
                   f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
+                  fss_basic_list_read_print_content_ignore(*data);
                 }
               }
 
@@ -354,7 +367,9 @@ extern "C" {
 
         if (data->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {
           if (data->contents.array[i].used) {
+            fss_basic_list_read_print_content_ignore(*data);
             f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
+            fss_basic_list_read_print_content_ignore(*data);
           }
         }
 
@@ -374,6 +389,8 @@ extern "C" {
       }
 
       f_array_length_t at = 0;
+      f_array_length_t total = 0;
+      f_array_length_t line_current = 0;
 
       for (; i < data->objects.used; i++) {
 
@@ -384,7 +401,7 @@ extern "C" {
                 fprintf(data->output.stream, "0%c", f_string_eol[0]);
               }
               else {
-                f_array_length_t total = 1;
+                total = 1;
 
                 for (j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
                   if (!data->buffer.string[j]) continue;
@@ -422,7 +439,7 @@ extern "C" {
                   } // for
                 }
                 else {
-                  f_array_length_t line_current = 0;
+                  line_current = 0;
 
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
                     if (!data->buffer.string[i]) continue;
@@ -455,11 +472,11 @@ extern "C" {
             }
 
             if (data->contents.array[i].used > 0) {
+              fss_basic_list_read_print_content_ignore(*data);
               f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
+              fss_basic_list_read_print_content_ignore(*data);
 
-              if (data->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
-                fprintf(data->output.stream, "%c", fss_basic_list_read_pipe_content_end);
-              }
+              fss_basic_list_read_print_set_end(*data);
             }
             else if (include_empty) {
               fprintf(data->output.stream, "%c", f_string_eol[0]);
@@ -570,11 +587,11 @@ extern "C" {
         continue;
       }
 
+      fss_basic_list_read_print_content_ignore(*data);
       f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
+      fss_basic_list_read_print_content_ignore(*data);
 
-      if (data->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
-        fprintf(data->output.stream, "%c", fss_basic_list_read_pipe_content_end);
-      }
+      fss_basic_list_read_print_set_end(*data);
     } // for
 
     return F_none;
@@ -606,6 +623,15 @@ extern "C" {
     }
   }
 #endif // _di_fss_basic_list_read_print_content_end_
+
+#ifndef _di_fss_basic_list_read_print_content_ignore_
+  void fss_basic_list_read_print_content_ignore(const fss_basic_list_read_data_t data) {
+
+    if (data.parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_basic_list_read_pipe_content_ignore);
+    }
+  }
+#endif // _di_fss_basic_list_read_print_content_ignore_
 
 #ifndef _di_fss_basic_list_read_print_set_end_
   void fss_basic_list_read_print_set_end(const fss_basic_list_read_data_t data) {

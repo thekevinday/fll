@@ -11,6 +11,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
+      if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     const f_array_length_t delimits_used = delimits->used;
@@ -32,6 +33,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
+      if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = f_fss_skip_past_space(*buffer, range);

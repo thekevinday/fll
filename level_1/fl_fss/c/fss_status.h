@@ -8,6 +8,7 @@
  * Provides fss-specific status definitions.
  *
  * Warning: changing status codes will break abi, so recompile every file that includes and uses these error codes when this gets changed.
+ * @fixme this can be moved into level_0 because level_0/status is now a special case that can be included by other level_0 projects.
  */
 #ifndef _FL_fss_status_h
 #define _FL_fss_status_h

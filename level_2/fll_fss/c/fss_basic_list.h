@@ -46,6 +46,9 @@ extern "C" {
  *   (optional) An array of delimits for contents detected during processing.
  *   The caller is expected to decide if and when to process them.
  *   Set pointer address to 0 and all delimits will instead utilize objects_delimits.
+ * @param comments
+ *   An array of ranges representing where comments are found within any valid content.
+ *   This only stores comments found within valid content only.
  *
  * @return
  *   F_none on success.
@@ -64,7 +67,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_basic_list_object_read().
  */
 #ifndef _di_fll_fss_basic_list_read_
-  extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
+  extern f_return_status fll_fss_basic_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
 #endif // _di_fll_fss_basic_list_read_
 
 /**

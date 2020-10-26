@@ -385,6 +385,7 @@ extern "C" {
       fss_basic_list_read_depths_t depths = fss_basic_list_read_depths_t_initialize;
 
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+      f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       f_string_length_t original_size = data->quantity.total;
 
@@ -400,6 +401,7 @@ extern "C" {
       if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
         macro_fss_basic_list_read_depths_t_delete_simple(depths);
         f_macro_fss_delimits_t_delete_simple(delimits);
+        f_macro_fss_comments_t_delete_simple(comments);
 
         if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol[0]);
@@ -428,7 +430,7 @@ extern "C" {
           fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe);
         }
         else {
-          status = fss_basic_list_read_main_process_file(arguments, data, "-", depths, &delimits);
+          status = fss_basic_list_read_main_process_file(arguments, data, "-", depths, &delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe);
@@ -484,7 +486,7 @@ extern "C" {
             break;
           }
 
-          status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths, &delimits);
+          status = fss_basic_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths, &delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_list_read_main_process_file", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
@@ -506,6 +508,7 @@ extern "C" {
 
       macro_fss_basic_list_read_depths_t_delete_simple(depths);
       f_macro_fss_delimits_t_delete_simple(delimits);
+      f_macro_fss_comments_t_delete_simple(comments);
     }
     else {
       fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol[0]);

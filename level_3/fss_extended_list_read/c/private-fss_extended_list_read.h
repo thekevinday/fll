@@ -193,6 +193,9 @@ extern "C" {
  *   An array of delimits detected during processing, for top-level objects.
  * @param contents_delimits
  *   An array of delimits detected during processing, for contents.
+ * @param comments
+ *   An array of ranges representing where comments are found within any valid content.
+ *   This only stores comments found within valid content only.
  *
  * @see fss_extended_list_read_main_preprocess_depth()
  * @see fss_extended_list_read_main_process_for_depth()
@@ -203,7 +206,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_extended_list_read_main_process_file_
-  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t file_name, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_file_
 
 /**
@@ -237,6 +240,48 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
   extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
+
+/**
+ * Print the end of an content.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_content_end_
+  extern void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_content_end_
+
+/**
+ * Print the ignore character for content.
+ *
+ * This is only used in pipe output mode.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_content_ignore_
+  extern void fss_extended_list_read_print_content_ignore(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_content_ignore_
+
+/**
+ * Print the end of an object (which is essentially the start of a content).
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_object_end_
+  extern void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_object_end_
+
+/**
+ * Print the end of an object/content set.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_extended_list_read_print_set_end_
+  extern void fss_extended_list_read_print_set_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
+#endif // _di_fss_extended_list_read_print_set_end_
 
 /**
  * Rewrite the object and content delimit ranges to be within the given depth range.
@@ -314,48 +359,6 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_process_delimits_within_greater_
   extern f_return_status fss_extended_list_read_process_delimits_within_greater(const fss_extended_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_process_delimits_within_greater_
-
-/**
- * Print the end of an object (which is essentially the start of a content).
- *
- * @param data
- *   The program specific data.
- */
-#ifndef _di_fss_extended_list_read_print_object_end_
-  extern void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_list_read_print_object_end_
-
-/**
- * Print the end of an content.
- *
- * @param data
- *   The program specific data.
- */
-#ifndef _di_fss_extended_list_read_print_content_end_
-  extern void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_list_read_print_content_end_
-
-/**
- * Print the ignore character for content.
- *
- * This is only used in pipe output mode.
- *
- * @param data
- *   The program specific data.
- */
-#ifndef _di_fss_extended_list_read_print_content_ignore_
-  extern void fss_extended_list_read_print_content_ignore(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_list_read_print_content_ignore_
-
-/**
- * Print the end of an object/content set.
- *
- * @param data
- *   The program specific data.
- */
-#ifndef _di_fss_extended_list_read_print_set_end_
-  extern void fss_extended_list_read_print_set_end(const fss_extended_list_read_data_t data) f_gcc_attribute_visibility_internal;
-#endif // _di_fss_extended_list_read_print_set_end_
 
 #ifdef __cplusplus
 } // extern "C"

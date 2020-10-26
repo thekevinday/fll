@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fss_extended_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_extended_list_read_main_process_file_
-  f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_return_status fss_extended_list_read_main_process_file(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
     f_status_t status = F_none;
 
     {
@@ -178,8 +178,9 @@ extern "C" {
 
       objects_delimits->used = 0;
       contents_delimits->used = 0;
+      comments->used = 0;
 
-      status = fll_fss_extended_list_read(&data->buffer, &input, &data->nest, objects_delimits, contents_delimits);
+      status = fll_fss_extended_list_read(&data->buffer, &input, &data->nest, objects_delimits, contents_delimits, comments);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
@@ -203,6 +204,16 @@ extern "C" {
 
         return status;
       }
+
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+
+      // comments are not to be part of the file, so remove them.
+      for (; i < comments->used; ++i) {
+        for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
+          data->buffer.string[j] = f_fss_delimit_placeholder;
+        } // for
+      } // for
     }
 
     // Requested depths cannot be greater than contents depth.
@@ -591,6 +602,66 @@ extern "C" {
   }
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
+#ifndef _di_fss_extended_list_read_print_object_end_
+  void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) {
+
+    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
+    }
+    else {
+      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found && data.parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_open, f_fss_extended_list_open_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
+    }
+  }
+#endif // _di_fss_extended_list_read_print_object_end_
+
+#ifndef _di_fss_extended_list_read_print_content_end_
+  void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) {
+
+    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
+    }
+    else {
+      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found && data.parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
+    }
+  }
+#endif // _di_fss_extended_list_read_print_content_end_
+
+#ifndef _di_fss_extended_list_read_print_content_ignore_
+  void fss_extended_list_read_print_content_ignore(const fss_extended_list_read_data_t data) {
+
+    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_ignore);
+    }
+  }
+#endif // _di_fss_extended_list_read_print_content_ignore_
+
+#ifndef _di_fss_extended_list_read_print_set_end_
+  void fss_extended_list_read_print_set_end(const fss_extended_list_read_data_t data) {
+
+    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_end);
+    }
+    else {
+      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found && data.parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
+        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
+      }
+      else {
+        fprintf(data.output.stream, "%c", f_fss_eol);
+      }
+    }
+  }
+#endif // _di_fss_extended_list_read_print_set_end_
+
 #ifndef _di_fss_extended_list_read_process_delimits_
   void fss_extended_list_read_process_delimits(const fss_extended_list_read_data_t data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
 
@@ -682,6 +753,7 @@ extern "C" {
     for (i = 0; i < items->used; ++i) {
 
       for (j = 0; j < original_used; ++j) {
+
         for (k = 0; k < items->array[i].content.used; ++k) {
 
           if (original_delimits[j] >= items->array[i].content.array[k].start && original_delimits[j] <= items->array[i].content.array[k].stop) {
@@ -792,66 +864,6 @@ extern "C" {
     return F_false;
   }
 #endif // _di_fss_extended_list_read_process_delimits_within_greater_
-
-#ifndef _di_fss_extended_list_read_print_object_end_
-  void fss_extended_list_read_print_object_end(const fss_extended_list_read_data_t data) {
-
-    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
-    }
-    else {
-      if (data.parameters[fss_extended_list_read_parameter_content].result == f_console_result_found) {
-        fprintf(data.output.stream, "%c%c", f_fss_extended_list_open, f_fss_extended_list_open_end);
-      }
-      else {
-        fprintf(data.output.stream, "%c", f_fss_eol);
-      }
-    }
-  }
-#endif // _di_fss_extended_list_read_print_object_end_
-
-#ifndef _di_fss_extended_list_read_print_content_end_
-  void fss_extended_list_read_print_content_end(const fss_extended_list_read_data_t data) {
-
-    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_start);
-    }
-    else {
-      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
-        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
-      }
-      else {
-        fprintf(data.output.stream, "%c", f_fss_eol);
-      }
-    }
-  }
-#endif // _di_fss_extended_list_read_print_content_end_
-
-#ifndef _di_fss_extended_list_read_print_content_ignore_
-  void fss_extended_list_read_print_content_ignore(const fss_extended_list_read_data_t data) {
-
-    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_ignore);
-    }
-  }
-#endif // _di_fss_extended_list_read_print_content_ignore_
-
-#ifndef _di_fss_extended_list_read_print_set_end_
-  void fss_extended_list_read_print_set_end(const fss_extended_list_read_data_t data) {
-
-    if (data.parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_extended_list_read_pipe_content_end);
-    }
-    else {
-      if (data.parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
-        fprintf(data.output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
-      }
-      else {
-        fprintf(data.output.stream, "%c", f_fss_eol);
-      }
-    }
-  }
-#endif // _di_fss_extended_list_read_print_set_end_
 
 #ifdef __cplusplus
 } // extern "C"
