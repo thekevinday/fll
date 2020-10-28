@@ -200,7 +200,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < fss_status_code_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);

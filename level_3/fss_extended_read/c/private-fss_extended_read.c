@@ -40,7 +40,7 @@ extern "C" {
       f_array_length_t depth_size = 1;
 
       if (data.parameters[fss_extended_read_parameter_depth].result == f_console_result_additional) {
-        depth_size = data.parameters[fss_extended_read_parameter_depth].additional.used;
+        depth_size = data.parameters[fss_extended_read_parameter_depth].values.used;
       }
 
       macro_fss_extended_read_depths_t_new(status, (*depths), depth_size);
@@ -65,11 +65,11 @@ extern "C" {
 
       f_macro_string_dynamic_t_clear(depths->array[i].value_name);
 
-      if (!data.parameters[fss_extended_read_parameter_depth].additional.used) {
+      if (!data.parameters[fss_extended_read_parameter_depth].values.used) {
         position_depth = 0;
       }
       else {
-        position_depth = data.parameters[fss_extended_read_parameter_depth].additional.array[i];
+        position_depth = data.parameters[fss_extended_read_parameter_depth].values.array[i];
 
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[position_depth]));
 
@@ -82,17 +82,17 @@ extern "C" {
       }
 
       if (data.parameters[fss_extended_read_parameter_at].result == f_console_result_additional) {
-        for (; position_at < data.parameters[fss_extended_read_parameter_at].additional.used; position_at++) {
+        for (; position_at < data.parameters[fss_extended_read_parameter_at].values.used; position_at++) {
 
-          if (data.parameters[fss_extended_read_parameter_at].additional.array[position_at] < position_depth) {
+          if (data.parameters[fss_extended_read_parameter_at].values.array[position_at] < position_depth) {
             continue;
           }
 
-          if (i + 1 < depths->used && data.parameters[fss_extended_read_parameter_at].additional.array[position_at] > data.parameters[fss_extended_read_parameter_depth].additional.array[i + 1]) {
+          if (i + 1 < depths->used && data.parameters[fss_extended_read_parameter_at].values.array[position_at] > data.parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
             break;
           }
 
-          depths->array[i].index_at = data.parameters[fss_extended_read_parameter_at].additional.array[position_at];
+          depths->array[i].index_at = data.parameters[fss_extended_read_parameter_at].values.array[position_at];
 
           const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
@@ -106,17 +106,17 @@ extern "C" {
       }
 
       if (data.parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
-        for (; position_name < data.parameters[fss_extended_read_parameter_name].additional.used; position_name++) {
+        for (; position_name < data.parameters[fss_extended_read_parameter_name].values.used; position_name++) {
 
-          if (data.parameters[fss_extended_read_parameter_name].additional.array[position_name] < position_depth) {
+          if (data.parameters[fss_extended_read_parameter_name].values.array[position_name] < position_depth) {
             continue;
           }
 
-          if (i + 1 < depths->used && data.parameters[fss_extended_read_parameter_name].additional.array[position_name] > data.parameters[fss_extended_read_parameter_depth].additional.array[i + 1]) {
+          if (i + 1 < depths->used && data.parameters[fss_extended_read_parameter_name].values.array[position_name] > data.parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
             break;
           }
 
-          depths->array[i].index_name = data.parameters[fss_extended_read_parameter_name].additional.array[position_name];
+          depths->array[i].index_name = data.parameters[fss_extended_read_parameter_name].values.array[position_name];
 
           if (data.parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
             status = fl_string_rip(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
@@ -245,7 +245,7 @@ extern "C" {
     f_number_unsigned_t select = 0;
 
     if (data->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-      const f_array_length_t index = data->parameters[fss_extended_read_parameter_select].additional.array[data->parameters[fss_extended_read_parameter_select].additional.used - 1];
+      const f_array_length_t index = data->parameters[fss_extended_read_parameter_select].values.array[data->parameters[fss_extended_read_parameter_select].values.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
@@ -259,7 +259,7 @@ extern "C" {
     f_array_length_t line = 0;
 
     if (data->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-      const f_array_length_t index = data->parameters[fss_extended_read_parameter_line].additional.array[data->parameters[fss_extended_read_parameter_line].additional.used - 1];
+      const f_array_length_t index = data->parameters[fss_extended_read_parameter_line].values.array[data->parameters[fss_extended_read_parameter_line].values.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);

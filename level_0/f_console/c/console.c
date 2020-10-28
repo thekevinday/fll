@@ -64,13 +64,13 @@ extern "C" {
     f_string_length_t argument_length = 0;
 
     f_array_length_t i = 0;
-    f_array_length_t additional = 0;
+    f_array_length_t values = 0;
 
     uint8_t console_short = f_console_none;
     uint8_t console_long = f_console_none;
     uint8_t console_type = f_console_type_normal;
 
-    f_string_lengths_t needs_additional = f_string_lengths_t_initialize;
+    f_string_lengths_t needs_value = f_string_lengths_t_initialize;
 
     uint8_t width = 0;
 
@@ -78,26 +78,26 @@ extern "C" {
     while (location < arguments.argc) {
 
       // Additional parameters must always follow what requests them.
-      if (needs_additional.used > 0) {
-        i = needs_additional.array[0];
+      if (needs_value.used > 0) {
+        i = needs_value.array[0];
 
-        if (parameters.parameter[i].additional.used + 1 > parameters.parameter[i].additional.size) {
-          f_macro_array_lengths_t_resize(status, parameters.parameter[i].additional, parameters.parameter[i].additional.size + f_console_default_allocation_step);
+        if (parameters.parameter[i].values.used + 1 > parameters.parameter[i].values.size) {
+          f_macro_array_lengths_t_resize(status, parameters.parameter[i].values, parameters.parameter[i].values.size + f_console_default_allocation_step);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(needs_additional);
+            f_macro_string_lengths_t_delete_simple(needs_value);
             return status;
           }
         }
 
         parameters.parameter[i].result = f_console_result_additional;
-        parameters.parameter[i].additional.array[parameters.parameter[i].additional.used++] = location;
+        parameters.parameter[i].values.array[parameters.parameter[i].values.used++] = location;
 
-        needs_additional.used--;
+        needs_value.used--;
 
-        // Pop the matched parameter off of the top of the needs_additional array.
-        for (f_string_length_t i = 0; i < needs_additional.used; i++) {
-          needs_additional.array[i] = needs_additional.array[i + 1];
+        // Pop the matched parameter off of the top of the needs_value array.
+        for (f_string_length_t i = 0; i < needs_value.used; ++i) {
+          needs_value.array[i] = needs_value.array[i + 1];
         } // for
 
         location++;
@@ -167,7 +167,7 @@ extern "C" {
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
                 if (status != F_none) {
-                  f_macro_string_lengths_t_delete_simple(needs_additional);
+                  f_macro_string_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -176,7 +176,7 @@ extern "C" {
                 status = f_utf_char_to_character((f_string_t) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
                 if (status != F_none) {
-                  f_macro_string_lengths_t_delete_simple(needs_additional);
+                  f_macro_string_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -202,7 +202,7 @@ extern "C" {
               f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(needs_additional);
+                f_macro_string_lengths_t_delete_simple(needs_value);
                 return status;
               }
             }
@@ -211,7 +211,7 @@ extern "C" {
               f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(needs_additional);
+                f_macro_string_lengths_t_delete_simple(needs_value);
                 return status;
               }
             }
@@ -230,18 +230,18 @@ extern "C" {
               parameters.parameter[i].locations_sub.array[parameters.parameter[i].locations_sub.used++] = 0;
             }
 
-            if (parameters.parameter[i].has_additional) {
-              if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
-                f_macro_string_lengths_t_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
+            if (parameters.parameter[i].has_values) {
+              if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
+                f_macro_string_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
                 if (F_status_is_error(status)) {
-                  f_macro_string_lengths_t_delete_simple(needs_additional);
+                  f_macro_string_lengths_t_delete_simple(needs_value);
                   return status;
                 }
               }
 
-              for (additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
-                needs_additional.array[needs_additional.used++] = i;
+              for (values = 0; values < parameters.parameter[i].has_values; values++) {
+                needs_value.array[needs_value.used++] = i;
               } // for
             }
 
@@ -266,7 +266,7 @@ extern "C" {
             f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_additional);
+              f_macro_string_lengths_t_delete_simple(needs_value);
               return status;
             }
           }
@@ -275,7 +275,7 @@ extern "C" {
             f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_additional);
+              f_macro_string_lengths_t_delete_simple(needs_value);
               return status;
             }
           }
@@ -287,18 +287,18 @@ extern "C" {
           parameters.parameter[i].location = location;
           parameters.parameter[i].location_sub = 0;
 
-          if (parameters.parameter[i].has_additional) {
-            if (needs_additional.used + parameters.parameter[i].has_additional > needs_additional.size) {
-              f_macro_string_lengths_t_resize(status, needs_additional, needs_additional.used + parameters.parameter[i].has_additional);
+          if (parameters.parameter[i].has_values) {
+            if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
+              f_macro_string_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(needs_additional);
+                f_macro_string_lengths_t_delete_simple(needs_value);
                 return status;
               }
             }
 
-            for (additional = 0; additional < parameters.parameter[i].has_additional; additional++) {
-              needs_additional.array[needs_additional.used++] = i;
+            for (values = 0; values < parameters.parameter[i].has_values; values++) {
+              needs_value.array[needs_value.used++] = i;
             } // for
           }
 
@@ -312,7 +312,7 @@ extern "C" {
           if (remaining->used == remaining->size) {
             f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_t_resize, F_buffer_too_large);
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_additional);
+              f_macro_string_lengths_t_delete_simple(needs_value);
               return status;
             }
           }
@@ -324,14 +324,14 @@ extern "C" {
       location++;
     } // while
 
-    if (needs_additional.used > 0) {
+    if (needs_value.used > 0) {
       status = F_data_not;
     }
     else {
       status = F_none;
     }
 
-    f_macro_string_lengths_t_delete_simple(needs_additional);
+    f_macro_string_lengths_t_delete_simple(needs_value);
 
     return status;
   }

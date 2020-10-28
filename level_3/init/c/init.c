@@ -113,11 +113,11 @@ extern "C" {
     }
 
     if (data->parameters[init_parameter_runlevel].result == f_console_result_found) {
-      const unsigned int parameter_length = strlen(arguments.argv[data->parameters[init_parameter_runlevel].additional.array[0]]);
+      const unsigned int parameter_length = strlen(arguments.argv[data->parameters[init_parameter_runlevel].values.array[0]]);
 
       // if the run_level value is greater than the static buffer size, ignore the entire string rather than process a cut off value.
       if (parameter_length > 0 && parameter_length < init_kernel_runlevel_buffer) {
-        strncpy((char *) &run_level, arguments.argv[data->parameters[init_parameter_runlevel].additional.array[0]], parameter_length);
+        strncpy((char *) &run_level, arguments.argv[data->parameters[init_parameter_runlevel].values.array[0]], parameter_length);
       }
     }
 

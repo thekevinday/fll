@@ -164,7 +164,7 @@ extern "C" {
  *
  * - none: parameter not found.
  * - found: parameter found.
- * - additional: parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
+ * - values: parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
  *
  * - normal: parameters using minus sign, such as '--help'.
  * - inverse: parameters using plus sign, such as '++version'.
@@ -211,7 +211,7 @@ extern "C" {
  * - symbol_long: The multi-character string, such as 'help' in '--help'.
  * - symbol_other: The special meaning parameter, such as 'all' in 'make all'.
  *
- * - has_additional: Designates that a parameter will have a given number of additional arguments, such as 'blue' in '--color blue'.
+ * - has_values: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
  * - type: One of the f_console_type_* codes, defining how this parameter is to be processed.
  *
  * - result: A code representing that the parameter is found and how it is found ('-h' vs '--help').
@@ -220,7 +220,7 @@ extern "C" {
  * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
  * - locations: All locations within argv where this parameter is found (order is preserved).
  * - locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
- * - additional: An array of locations representing where in the argv[] the additional arguments are found.
+ * - values: An array of locations representing where in the argv[] the values arguments are found.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
@@ -228,7 +228,7 @@ extern "C" {
     const int8_t *symbol_long;
     const int8_t *symbol_other;
 
-    const uint8_t has_additional;
+    const uint8_t has_values;
     const uint8_t type;
 
     f_array_length_t result;
@@ -236,12 +236,12 @@ extern "C" {
     f_string_length_t location_sub;
     f_array_lengths_t locations;
     f_array_lengths_t locations_sub;
-    f_array_lengths_t additional;
+    f_array_lengths_t values;
   } f_console_parameter_t;
 
-  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value) { symbol_short, symbol_long, symbol_other, has_additional, type_value, f_console_result_none, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
+  #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
-  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_additional, type_value, result, location, location_sub, locations, locations_sub, additional) { symbol_short, symbol_long, symbol_other, has_additional, type_value, result, total, location, location_sub, locations, locations_sub, additional }
+  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
 #endif // _di_f_console_parameter_t_
 
 /**

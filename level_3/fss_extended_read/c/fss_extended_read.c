@@ -334,7 +334,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (data->parameters[fss_extended_read_parameter_delimit].result == f_console_result_additional) {
-          const f_string_length_t location = data->parameters[fss_extended_read_parameter_delimit].additional.array[0];
+          const f_string_length_t location = data->parameters[fss_extended_read_parameter_delimit].values.array[0];
           f_string_length_t length = strnlen(arguments.argv[location], f_console_length_size);
 
           if (length == 0) {
@@ -526,7 +526,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < fss_extended_read_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_fss_contents_t_delete_simple(data->contents);

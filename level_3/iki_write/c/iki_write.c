@@ -130,7 +130,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
-        if (data->parameters[iki_write_parameter_file].additional.used > 1) {
+        if (data->parameters[iki_write_parameter_file].values.used > 1) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_file);
@@ -140,7 +140,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_string_length_t location = data->parameters[iki_write_parameter_file].additional.array[0];
+          const f_string_length_t location = data->parameters[iki_write_parameter_file].values.array[0];
 
           output.id = -1;
           output.stream = 0;
@@ -199,7 +199,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[iki_write_parameter_object].additional.used != data->parameters[iki_write_parameter_content].additional.used) {
+      if (data->parameters[iki_write_parameter_object].values.used != data->parameters[iki_write_parameter_content].values.used) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameters '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, iki_write_long_content);
@@ -360,13 +360,13 @@ extern "C" {
         f_string_static_t object = f_string_static_t_initialize;
         f_string_static_t content = f_string_static_t_initialize;
 
-        for (f_array_length_t i = 0; i < data->parameters[iki_write_parameter_object].additional.used; i++) {
+        for (f_array_length_t i = 0; i < data->parameters[iki_write_parameter_object].values.used; i++) {
 
-          object.string = arguments.argv[data->parameters[iki_write_parameter_object].additional.array[i]];
+          object.string = arguments.argv[data->parameters[iki_write_parameter_object].values.array[i]];
           object.used = strnlen(object.string, f_console_length_size);
           object.size = object.used;
 
-          content.string = arguments.argv[data->parameters[iki_write_parameter_content].additional.array[i]];
+          content.string = arguments.argv[data->parameters[iki_write_parameter_content].values.array[i]];
           content.used = strnlen(content.string, f_console_length_size);
           content.size = content.used;
 
@@ -409,7 +409,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < iki_write_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);

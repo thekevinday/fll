@@ -29,7 +29,7 @@ extern "C" {
 #endif
 
 /**
- * Validate and convert a console parameter additional argument to a file directory in a dynamic string.
+ * Validate and convert a console parameter values argument to a file directory in a dynamic string.
  *
  * The directory path is validated to exist.
  *

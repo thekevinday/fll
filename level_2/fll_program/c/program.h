@@ -187,7 +187,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if "additional" parameters were expected but not found.
+ *   F_data_not if "values" parameters were expected but not found.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -214,7 +214,7 @@ extern "C" {
  *
  * @param argv
  *   The program argument array to parse.
- * @param additional
+ * @param values
  *   The string locations where the console parameters are found.
  * @param destination
  *   An array of dynamic strings each representing a console parameter.
@@ -232,11 +232,11 @@ extern "C" {
  * @see fl_string_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
-  extern f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamics_t *destination);
+  extern f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_append_
 
 /**
- * Mash together all additional arguments associated with a given console parameter.
+ * Mash together all values arguments associated with a given console parameter.
  *
  * @param glue
  *   A string to append between the source and destination, such as a space: ' '.
@@ -244,7 +244,7 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
- * @param additional
+ * @param values
  *   The string locations where the console parameters are found.
  * @param destination
  *   The destination string the source and glue are appended onto.
@@ -262,7 +262,7 @@ extern "C" {
  * @see fl_string_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
-  extern f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamic_t *destination);
+  extern f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_mash_
 
 /**
@@ -272,7 +272,7 @@ extern "C" {
  *
  * @param argv
  *   The program argument array to parse.
- * @param additional
+ * @param values
  *   The string locations where the console parameters are found.
  * @param destination
  *   An array of dynamic strings each representing a console parameter.
@@ -289,11 +289,11 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
-  extern f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamics_t *destination);
+  extern f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_
 
 /**
- * Mash together all additional arguments associated with a given console parameter.
+ * Mash together all values arguments associated with a given console parameter.
  *
  * The console parameter is trimmed before mashing.
  *
@@ -303,7 +303,7 @@ extern "C" {
  *   The number of bytes the glue takes up.
  * @param argv
  *   The program argument array to parse.
- * @param additional
+ * @param values
  *   The string locations where the console parameters are found.
  * @param destination
  *   The destination string the source and glue are appended onto.
@@ -323,7 +323,7 @@ extern "C" {
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  extern f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t additional, f_string_dynamic_t *destination);
+  extern f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 #ifdef __cplusplus

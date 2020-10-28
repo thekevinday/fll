@@ -132,7 +132,7 @@ extern "C" {
 
     if (data->parameters[firewall_parameter_command_stop].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_stop].additional.array[0]) {
+        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_stop].values.array[0]) {
           command = firewall_parameter_command_stop;
         }
       }
@@ -144,7 +144,7 @@ extern "C" {
 
     if (data->parameters[firewall_parameter_command_restart].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_restart].additional.array[0]) {
+        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_restart].values.array[0]) {
           command = firewall_parameter_command_restart;
         }
       }
@@ -156,7 +156,7 @@ extern "C" {
 
     if (data->parameters[firewall_parameter_command_lock].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_lock].additional.array[0]) {
+        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_lock].values.array[0]) {
           command = firewall_parameter_command_lock;
         }
       }
@@ -168,7 +168,7 @@ extern "C" {
 
     if (data->parameters[firewall_parameter_command_show].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].additional.array[0] > data->parameters[firewall_parameter_command_show].additional.array[0]) {
+        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_show].values.array[0]) {
           command = firewall_parameter_command_show;
         }
       }
@@ -699,7 +699,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < firewall_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_dynamics_t_delete_simple(data->chains);

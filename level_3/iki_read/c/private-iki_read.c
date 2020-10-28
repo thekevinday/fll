@@ -139,9 +139,9 @@ extern "C" {
       f_array_length_t j = 0;
       buffer_range->start = 0;
 
-      for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+      for (; i < data->parameters[iki_read_parameter_name].values.used; i++) {
 
-        index = data->parameters[iki_read_parameter_name].additional.array[i];
+        index = data->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
 
         status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
@@ -263,9 +263,9 @@ extern "C" {
       f_array_length_t j = 0;
       f_string_length_t length_argument = 0;
 
-      for (f_array_length_t index = 0; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+      for (f_array_length_t index = 0; i < data->parameters[iki_read_parameter_name].values.used; i++) {
 
-        index = data->parameters[iki_read_parameter_name].additional.array[i];
+        index = data->parameters[iki_read_parameter_name].values.array[i];
         length_argument = strnlen(arguments.argv[index], f_console_length_size);
 
         for (j = 0, name_missed = F_true; j < names.used; j++) {
@@ -424,9 +424,9 @@ extern "C" {
 
       range.start = 0;
 
-      for (; i < data->parameters[iki_read_parameter_name].additional.used; i++) {
+      for (; i < data->parameters[iki_read_parameter_name].values.used; i++) {
 
-        index = data->parameters[iki_read_parameter_name].additional.array[i];
+        index = data->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
 
         status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
@@ -478,9 +478,9 @@ extern "C" {
 
     f_console_parameter_t *parameter = &data->parameters[iki_read_parameter_substitute];
 
-    for (; i < parameter->additional.used; i += 3) {
+    for (; i < parameter->values.used; i += 3) {
 
-      index = parameter->additional.array[i];
+      index = parameter->values.array[i];
       length = strnlen(arguments.argv[index], f_console_length_size);
 
       for (j = 0; j < vocabulary->used; j++) {
@@ -491,13 +491,13 @@ extern "C" {
           f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_buffer_too_large);
           if (F_status_is_error(status)) return status;
 
-          index = parameter->additional.array[i + 1];
+          index = parameter->values.array[i + 1];
           index_2 = substitutionss[j].used;
           substitutionss[j].array[index_2].replace.string = arguments.argv[index];
           substitutionss[j].array[index_2].replace.used = strnlen(arguments.argv[index], f_console_length_size);
           substitutionss[j].array[index_2].replace.size = substitutionss[j].array[index_2].replace.used;
 
-          index = parameter->additional.array[i + 2];
+          index = parameter->values.array[i + 2];
           substitutionss[j].array[index_2].with.string = arguments.argv[index];
           substitutionss[j].array[index_2].with.used = strnlen(arguments.argv[index], f_console_length_size);
           substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;

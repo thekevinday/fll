@@ -174,7 +174,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[iki_read_parameter_at].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[iki_read_parameter_at].additional.array[data->parameters[iki_read_parameter_at].additional.used - 1];
+        const f_string_length_t index = data->parameters[iki_read_parameter_at].values.array[data->parameters[iki_read_parameter_at].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -214,7 +214,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[iki_read_parameter_line].additional.array[data->parameters[iki_read_parameter_line].additional.used - 1];
+        const f_string_length_t index = data->parameters[iki_read_parameter_line].values.array[data->parameters[iki_read_parameter_line].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -242,7 +242,7 @@ extern "C" {
       }
 
       if (data->parameters[iki_read_parameter_substitute].result != f_console_result_none) {
-        if (data->parameters[iki_read_parameter_substitute].result == f_console_result_found || data->parameters[iki_read_parameter_substitute].additional.used % 3 != 0) {
+        if (data->parameters[iki_read_parameter_substitute].result == f_console_result_found || data->parameters[iki_read_parameter_substitute].values.used % 3 != 0) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(data->error.to.stream, "%c", f_string_eol[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
@@ -463,7 +463,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < iki_read_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);

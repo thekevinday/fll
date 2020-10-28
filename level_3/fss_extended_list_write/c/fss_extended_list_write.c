@@ -165,7 +165,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_additional) {
-        if (data->parameters[fss_extended_list_write_parameter_file].additional.used > 1) {
+        if (data->parameters[fss_extended_list_write_parameter_file].values.used > 1) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(data->error.to.stream, "%c", f_string_eol[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
@@ -176,7 +176,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_string_length_t location = data->parameters[fss_extended_list_write_parameter_file].additional.array[0];
+          const f_string_length_t location = data->parameters[fss_extended_list_write_parameter_file].values.array[0];
 
           output.id = -1;
           output.stream = 0;
@@ -196,11 +196,11 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_extended_list_write_parameter_object].locations.used || data->parameters[fss_extended_list_write_parameter_content].locations.used) {
         if (data->parameters[fss_extended_list_write_parameter_object].locations.used) {
-          if (data->parameters[fss_extended_list_write_parameter_object].locations.used != data->parameters[fss_extended_list_write_parameter_object].additional.used) {
+          if (data->parameters[fss_extended_list_write_parameter_object].locations.used != data->parameters[fss_extended_list_write_parameter_object].values.used) {
             fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable, fss_extended_list_write_long_object);
             status = F_status_set_error(F_parameter);
           }
-          else if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].additional.used) {
+          else if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].values.used) {
             fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable, fss_extended_list_write_long_content);
             status = F_status_set_error(F_parameter);
           }
@@ -256,7 +256,7 @@ extern "C" {
           }
         }
         else if (data->parameters[fss_extended_list_write_parameter_content].locations.used) {
-          if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].additional.used) {
+          if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].values.used) {
             fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable, fss_extended_list_write_long_content);
             status = F_status_set_error(F_parameter);
           }
@@ -305,7 +305,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[fss_extended_list_write_parameter_prepend].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[fss_extended_list_write_parameter_prepend].additional.array[data->parameters[fss_extended_list_write_parameter_prepend].additional.used - 1];
+        const f_string_length_t index = data->parameters[fss_extended_list_write_parameter_prepend].values.array[data->parameters[fss_extended_list_write_parameter_prepend].values.used - 1];
         const f_string_length_t length = strnlen(arguments.argv[index], f_console_length_size);
 
         if (length) {
@@ -359,7 +359,7 @@ extern "C" {
       }
       else if (data->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_additional) {
         const f_array_length_t total_locations = data->parameters[fss_extended_list_write_parameter_ignore].locations.used;
-        const f_array_length_t total_arguments = data->parameters[fss_extended_list_write_parameter_ignore].additional.used;
+        const f_array_length_t total_arguments = data->parameters[fss_extended_list_write_parameter_ignore].values.used;
 
         if (total_locations * 2 > total_arguments) {
           fprintf(data->error.to.stream, "%c", f_string_eol[0]);
@@ -414,9 +414,9 @@ extern "C" {
         if (data->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
 
           if (data->parameters[fss_extended_list_write_parameter_object].result == f_console_result_additional) {
-            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].additional.used; i++) {
+            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
 
-              object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].additional.array[i]];
+              object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_length_size);
               object.size = object.used;
 
@@ -425,12 +425,12 @@ extern "C" {
             } // for
           }
           else {
-            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_content].additional.used; i++) {
+            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_content].values.used; i++) {
 
               status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
               if (F_status_is_error(status)) break;
 
-              content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].additional.array[i]];
+              content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].values.array[i]];
               content.used = strnlen(content.string, f_console_length_size);
               content.size = content.used;
 
@@ -440,16 +440,16 @@ extern "C" {
           }
         }
         else {
-          for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].additional.used; i++) {
+          for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
 
             status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
             if (F_status_is_error(status)) break;
 
-            object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].additional.array[i]];
+            object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].values.array[i]];
             object.used = strnlen(object.string, f_console_length_size);
             object.size = object.used;
 
-            content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].additional.array[i]];
+            content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].values.array[i]];
             content.used = strnlen(content.string, f_console_length_size);
             content.size = content.used;
 
@@ -513,7 +513,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < fss_extended_list_write_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);

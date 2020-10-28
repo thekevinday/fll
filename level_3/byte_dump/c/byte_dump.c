@@ -214,7 +214,7 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[byte_dump_parameter_width].additional.array[data->parameters[byte_dump_parameter_width].additional.used - 1];
+        const f_string_length_t index = data->parameters[byte_dump_parameter_width].values.array[data->parameters[byte_dump_parameter_width].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -246,7 +246,7 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[byte_dump_parameter_first].additional.array[data->parameters[byte_dump_parameter_first].additional.used - 1];
+        const f_string_length_t index = data->parameters[byte_dump_parameter_first].values.array[data->parameters[byte_dump_parameter_first].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -278,7 +278,7 @@ extern "C" {
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[byte_dump_parameter_last].additional.array[data->parameters[byte_dump_parameter_last].additional.used - 1];
+        const f_string_length_t index = data->parameters[byte_dump_parameter_last].values.array[data->parameters[byte_dump_parameter_last].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -447,7 +447,7 @@ extern "C" {
     for (f_string_length_t i = 0; i < byte_dump_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].additional);
+      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);

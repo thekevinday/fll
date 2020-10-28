@@ -361,7 +361,7 @@ extern "C" {
         }
       }
 
-      index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[i * 2];
+      index = data.parameters[fss_extended_list_write_parameter_ignore].values.array[i * 2];
 
       range.start = 0;
       range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;
@@ -380,7 +380,7 @@ extern "C" {
 
       ignore->array[ignore->used].start = number;
 
-      index = data.parameters[fss_extended_list_write_parameter_ignore].additional.array[(i * 2) + 1];
+      index = data.parameters[fss_extended_list_write_parameter_ignore].values.array[(i * 2) + 1];
 
       range.start = 0;
       range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;

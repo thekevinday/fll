@@ -628,7 +628,7 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          f_string_length_t location = data->parameters[parameters_id[i]].additional.array[0];
+          f_string_length_t location = data->parameters[parameters_id[i]].values.array[0];
           f_string_length_t length = strnlen(arguments.argv[location], f_console_length_size);
 
           if (length > 0) {
@@ -760,12 +760,12 @@ extern "C" {
           return F_status_set_error(F_parameter);
         }
         else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
-          if (data->parameters[parameters_id[i]].additional.used > 1) {
+          if (data->parameters[parameters_id[i]].values.used > 1) {
             fake_print_error_parameter_too_many(*data, parameters_name[i]);
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].additional.array[0]], parameters_value[i]);
+          status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             if (fll_error_print(data->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
@@ -799,7 +799,7 @@ extern "C" {
     }
 
     if (data->parameters[fake_parameter_define].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].additional, &data->define);
+      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].values, &data->define);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
@@ -856,7 +856,7 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
     else if (data->parameters[fake_parameter_mode].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].additional, &data->mode);
+      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].values, &data->mode);
 
       if (F_status_is_error(status)) {
         if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_unknown && data->error.verbosity != f_console_verbosity_quiet) {
