@@ -17,10 +17,10 @@ extern "C" {
  *
  * depth: the depth number in which this is to be processed at.
  *
- * index_at: position of the "--at" parameter value in the argv list, when 0 there is no parameter.
+ * index_at:   position of the "--at" parameter value in the argv list, when 0 there is no parameter.
  * index_name: position of the "--name" parameter value in the argv list, when 0 there is no parameter.
  *
- * value_at: the value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
+ * value_at:   the value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
  * value_name: the value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
  */
 #ifndef _di_fss_extended_list_read_depth_t_
