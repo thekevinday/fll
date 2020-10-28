@@ -1394,11 +1394,12 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
   }
 
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+  f_fss_comments_t comments = f_fss_comments_t_initialize;
 
   {
     f_string_range_t input = f_macro_string_range_t_initialize(local->buffer.used);
 
-    status = fll_fss_basic_list_read(&local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits, 0);
+    status = fll_fss_basic_list_read(&local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
   }
 
   if (F_status_is_error(status)) {
@@ -1426,6 +1427,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
   }
 
   f_macro_fss_delimits_t_delete_simple(delimits);
+  f_macro_fss_comments_t_delete_simple(comments);
 
   return status;
 }

@@ -204,24 +204,24 @@ extern "C" {
     {
       f_string_range_t range = f_macro_string_range_t_initialize(data_make->buffer.used);
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
+      f_fss_comments_t comments = f_fss_comments_t_initialize;
 
-      *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents, &delimits, 0);
+      *status = fll_fss_basic_list_read(&data_make->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments);
 
       if (F_status_is_error(*status)) {
         fake_print_error_fss(data, *status, "fll_fss_basic_list_read", data.file_data_build_fakefile.string, range, F_true);
+      }
+      else {
+        *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
 
-        f_macro_fss_delimits_t_delete_simple(delimits);
-        f_macro_fss_objects_t_delete_simple(list_objects);
-        f_macro_fss_contents_t_delete_simple(list_contents);
-        return;
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
+        }
       }
 
-      *status = fl_fss_apply_delimit(delimits, &data_make->buffer);
-
       if (F_status_is_error(*status)) {
-        fll_error_print(data.error, F_status_set_fine(*status), "fl_fss_apply_delimit", F_true);
-
         f_macro_fss_delimits_t_delete_simple(delimits);
+        f_macro_fss_comments_t_delete_simple(comments);
         f_macro_fss_objects_t_delete_simple(list_objects);
         f_macro_fss_contents_t_delete_simple(list_contents);
         return;
