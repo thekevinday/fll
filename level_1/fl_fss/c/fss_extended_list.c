@@ -106,12 +106,12 @@ extern "C" {
 
           while (range->start <= range->stop && range->start < buffer->used) {
 
-            if (buffer->string[range->start] == f_fss_eol) {
-              status = f_fss_is_graph(*buffer, *range);
-              if (F_status_is_error(status)) break;
+            if (buffer->string[range->start] == f_fss_eol) break;
 
-              if (status == F_true) break;
-            }
+            status = f_fss_is_graph(*buffer, *range);
+            if (F_status_is_error(status)) break;
+
+            if (status == F_true) break;
 
             status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) break;
