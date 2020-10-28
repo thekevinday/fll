@@ -245,14 +245,15 @@ extern "C" {
     f_string_length_t last2 = i2;
 
     {
-      // size1 and size2 are to represent to total number of characters after trim.
+      // size1 and size2 are to represent to total number of characters after trim that are not ignored via "except".
       f_string_length_t size1 = 0;
       f_string_length_t size2 = 0;
 
+      f_string_length_t j = 0;
       f_string_length_t ej = e1;
 
       // determine where the last non-whitespace is in string1.
-      for (f_string_length_t j = i1; j < stop1; j += width) {
+      for (j = i1; j < stop1; j += width) {
 
         // skip past NULL in string1.
         while (j < stop1 && !string1[j]) j++;
@@ -280,14 +281,14 @@ extern "C" {
 
         if (status == F_false) {
           last1 = j;
-          size1++;
+          size1 += width;
         }
       } // for
 
       ej = e2;
 
       // determine where the last non-whitespace is in string2.
-      for (f_string_length_t j = i2; j < stop2; j += width) {
+      for (j = i2; j < stop2; j += width) {
 
         // skip past NULL in string2.
         while (j < stop2 && !string2[j]) j++;
@@ -315,22 +316,22 @@ extern "C" {
 
         if (status == F_false) {
           last2 = j;
-          size2++;
+          size2 += width;
         }
       } // for
 
       if (size1 != size2) return F_equal_to_not;
     }
 
-    while (i1 < last1 && i2 < last2) {
+    while (i1 <= last1 && i2 <= last2) {
 
       // skip past NULL in string1.
-      while (i1 < last1 && !string1[i1]) i1++;
-      if (i1 == last1) break;
+      while (i1 <= last1 && !string1[i1]) i1++;
+      if (i1 > last1) break;
 
       // skip past NULL in string2.
-      while (i2 < last2 && !string2[i2]) i2++;
-      if (i2 == last2) break;
+      while (i2 <= last2 && !string2[i2]) i2++;
+      if (i2 > last2) break;
 
       // skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) e1++;
@@ -353,7 +354,7 @@ extern "C" {
     } // while
 
     // only return F_equal_to if all remaining characters are NULL.
-    for (; i1 < last1; i1++) {
+    for (; i1 <= last1; i1++) {
 
       if (string1[i1] != 0) {
 
@@ -365,7 +366,7 @@ extern "C" {
       }
     } // for
 
-    for (; i2 < last2; i2++) {
+    for (; i2 <= last2; i2++) {
 
       if (string2[i2] != 0) {
 
