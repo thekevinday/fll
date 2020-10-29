@@ -315,22 +315,20 @@ extern "C" {
       }
     }
 
-    if (data->parameters[fss_extended_list_read_parameter_depth].result == f_console_result_none || (data->parameters[fss_extended_list_read_parameter_depth].result == f_console_result_additional && depths.used == 1)) {
+    fss_extended_list_read_process_delimits(*data, objects_delimits, contents_delimits);
 
-      fss_extended_list_read_process_delimits(*data, objects_delimits, contents_delimits);
+    const fss_extended_list_read_skip_t parents = fss_extended_list_read_skip_t_initialize;
 
-      return fss_extended_list_read_main_process_for_depth(arguments, data, filename, depths.array[0], line, objects_delimits, contents_delimits);
-    }
-
-    return F_none;
+    return fss_extended_list_read_main_process_for_depth(arguments, data, filename, depths.array[0], line, parents, objects_delimits, contents_delimits);
   }
 #endif // _di_fss_extended_list_read_main_process_file_
 
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, const fss_extended_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
     f_status_t status = F_none;
 
     f_fss_items_t *items = &data->nest.depth[depth_setting.depth];
+
     bool skip[items->used];
 
     f_array_length_t i = 0;
@@ -338,28 +336,44 @@ extern "C" {
 
     const f_string_lengths_t except_none = f_string_lengths_t_initialize;
 
+    // setup defaults to be not skipped unless any given parent is skipped.
+    memset(skip, F_false, sizeof(skip) * items->used);
+
+    if (parents.used) {
+      for (i = 0; i < items->used; ++i) {
+
+        if (items->array[i].parent >= parents.used || parents.skip[items->array[i].parent]) {
+          skip[i] = F_true;
+        }
+      } // for
+    }
+
     if (depth_setting.index_name || depth_setting.index_at) {
-      memset(skip, F_true, sizeof(skip) * items->used);
 
       if (!depth_setting.index_name || (depth_setting.index_at && depth_setting.index_at < depth_setting.index_name)) {
 
-        if (depth_setting.value_at < items->used) {
+        // all other non-"at" parameters must be FALSE.
+        for (i = 0; i < items->used; ++i) {
+
+          if (i != depth_setting.value_at) {
+            skip[i] = F_true;
+          }
+        } // for
+
+        if (depth_setting.value_at < items->used && !skip[depth_setting.value_at]) {
           if (depth_setting.index_name) {
+
             if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
 
-              if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) == F_equal_to) {
-                skip[depth_setting.value_at] = F_false;
+              if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) != F_equal_to) {
+                skip[depth_setting.value_at] = F_true;
               }
             }
             else {
-
-              if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) == F_equal_to) {
-                skip[depth_setting.value_at] = F_false;
+              if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) != F_equal_to) {
+                skip[depth_setting.value_at] = F_true;
               }
             }
-          }
-          else {
-            skip[depth_setting.value_at] = F_false;
           }
         }
       }
@@ -369,8 +383,10 @@ extern "C" {
 
           for (i = 0; i < items->used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) == F_equal_to) {
-              skip[i] = F_false;
+            if (skip[i]) continue;
+
+            if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+              skip[i] = F_true;
             }
           } // for
         }
@@ -378,8 +394,10 @@ extern "C" {
 
           for (i = 0; i < items->used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) == F_equal_to) {
-              skip[i] = F_false;
+            if (skip[i]) continue;
+
+            if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+              skip[i] = F_true;
             }
           } // for
         }
@@ -395,9 +413,6 @@ extern "C" {
           } // for
         }
       }
-    }
-    else {
-      memset(skip, F_false, sizeof(skip) * items->used);
     }
 
     // process objects.

@@ -58,6 +58,31 @@ extern "C" {
 #endif // _di_fss_extended_list_read_depth_t_
 
 /**
+ * A structure containing a statically allocated array of booleans and the array length.
+ *
+ * skip: a statically allocated array representing list items that are to be skipped.
+ * used: the length of the statically allocated skip array.
+ */
+#ifndef _di_fss_extended_list_read_skip_t_
+  typedef struct {
+    bool *skip;
+    f_array_length_t used;
+  } fss_extended_list_read_skip_t;
+
+  #define fss_extended_list_read_skip_t_initialize \
+    { \
+      0, \
+      0, \
+    }
+
+  #define macro_fss_extended_list_read_skip_t_initialize(skip, used) \
+    { \
+      skip, \
+      used, \
+    }
+#endif // _di_fss_extended_list_read_skip_t_
+
+/**
  * An array of depth parameters.
  *
  * array: the array of depths.
@@ -225,6 +250,9 @@ extern "C" {
  *   The depth settings specific to the desired depth.
  * @param line
  *   The line number parameter value, used for printing a specific line number for content.
+ * @param parents
+ *   The skip status of any parent lists.
+ *   Set parents.length to 0 for depth 0.
  * @param objects_delimits
  *   An array of delimits detected during processing, for top-level objects.
  * @param contents_delimits
@@ -238,7 +266,7 @@ extern "C" {
  * @see fss_extended_list_read_main_process_file()
  */
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, const fss_extended_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
 /**
