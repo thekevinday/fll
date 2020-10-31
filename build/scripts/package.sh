@@ -712,11 +712,11 @@ package_dependencies_individual_append() {
       fi
 
       if [[ $dependencies_1 != "" ]] ; then
-        dependencies_individual="$dependencies_individual $dependencies_1"
+        dependencies_individual="$dependencies_1 $dependencies_individual"
       fi
 
       if [[ $dependencies_2 != "" ]] ; then
-        dependencies_individual="$dependencies_individual $dependencies_2"
+        dependencies_individual="$dependencies_2 $dependencies_individual"
       fi
     fi
   fi
