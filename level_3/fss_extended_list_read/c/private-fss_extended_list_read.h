@@ -237,22 +237,23 @@ extern "C" {
 /**
  * Process the items for a given depth.
  *
- * This is intended to be used as a way to process the final specified depth.
- * (for --depth 1 --depth 2 --depth 3, this would be called after navigating to depth 3.)
+ * This will recursively continue down the depth chain until the final depth is reached.
  *
  * @param arguments
  *   The console arguments passed to the program.
- * @param data
- *   The program specific data.
  * @param file_name
  *   The name of the file being processed.
- * @param depth_setting
- *   The depth settings specific to the desired depth.
+ * @param depths
+ *   The array of all depth related parameter settings.
+ * @param depths_index
+ *   The array location within depth being worked on.
  * @param line
  *   The line number parameter value, used for printing a specific line number for content.
  * @param parents
  *   The skip status of any parent lists.
  *   Set parents.length to 0 for depth 0.
+ * @param data
+ *   The program specific data.
  * @param objects_delimits
  *   An array of delimits detected during processing, for top-level objects.
  * @param contents_delimits
@@ -266,7 +267,7 @@ extern "C" {
  * @see fss_extended_list_read_main_process_file()
  */
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, const fss_extended_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_extended_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_extended_list_read_skip_t parents, fss_extended_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_main_process_for_depth_
 
 /**

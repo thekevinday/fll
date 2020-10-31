@@ -33,22 +33,24 @@ extern "C" {
       if (i) {
         for (j = 0; j < data.parameters[fss_extended_list_read_parameter_at].values.used; ++j) {
 
-          for (k = 0; k < j; ++k) {
+          for (k = 0; k < i; ++k) {
 
             if (values_order[k] > data.parameters[fss_extended_list_read_parameter_at].values.array[j]) {
-              for (l = j; l > k; --l) {
+              for (l = i; l > k; --l) {
                 values_order[l] = values_order[l - 1];
+                values_type[l] = values_type[l - 1];
               } // for
 
-              values_order[i] = data.parameters[fss_extended_list_read_parameter_at].values.array[j];
-              values_type[i++] = fss_extended_list_read_parameter_at;
+              values_order[k] = data.parameters[fss_extended_list_read_parameter_at].values.array[j];
+              values_type[k] = fss_extended_list_read_parameter_at;
+              i++;
               break;
             }
           } // for
 
-          if (j == k) {
-              values_order[i] = data.parameters[fss_extended_list_read_parameter_at].values.array[j];
-              values_type[i++] = fss_extended_list_read_parameter_at;
+          if (k == i) {
+            values_order[i] = data.parameters[fss_extended_list_read_parameter_at].values.array[j];
+            values_type[i++] = fss_extended_list_read_parameter_at;
           }
         } // for
       }
@@ -63,22 +65,24 @@ extern "C" {
       if (i) {
         for (j = 0; j < data.parameters[fss_extended_list_read_parameter_name].values.used; ++j) {
 
-          for (k = 0; k < j; ++k) {
+          for (k = 0; k < i; ++k) {
 
             if (values_order[k] > data.parameters[fss_extended_list_read_parameter_name].values.array[j]) {
-              for (l = j; l > k; --l) {
+              for (l = i; l > k; --l) {
                 values_order[l] = values_order[l - 1];
+                values_type[l] = values_type[l - 1];
               } // for
 
-              values_order[i] = data.parameters[fss_extended_list_read_parameter_name].values.array[j];
-              values_type[i++] = fss_extended_list_read_parameter_name;
+              values_order[k] = data.parameters[fss_extended_list_read_parameter_name].values.array[j];
+              values_type[k] = fss_extended_list_read_parameter_name;
+              i++;
               break;
             }
           } // for
 
-          if (j == k) {
-              values_order[i] = data.parameters[fss_extended_list_read_parameter_name].values.array[j];
-              values_type[i++] = fss_extended_list_read_parameter_name;
+          if (k == i) {
+            values_order[i] = data.parameters[fss_extended_list_read_parameter_name].values.array[j];
+            values_type[i++] = fss_extended_list_read_parameter_name;
           }
         } // for
       }
@@ -104,8 +108,6 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "fss_extended_list_read_main_preprocess_depth", F_true);
         return status;
       }
-
-      depths->used = 0;
     }
 
     // provide default level-0 depth values.
@@ -132,8 +134,9 @@ extern "C" {
         }
 
         if (values_type[i] == fss_extended_list_read_parameter_depth) {
+
           if (first_depth) {
-            if (i) {
+            if (i && number) {
               depths->array[++depths->used].index_at = 0;
               depths->array[depths->used].index_name = 0;
               depths->array[depths->used].value_at = 0;
@@ -173,20 +176,9 @@ extern "C" {
               return status;
             }
           }
-
-          if (!depths->array[depths->used].value_name.used) {
-            fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error.to.stream, data.context.set.error, "%sThe '", fll_error_print_error);
-            fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_name);
-            fl_color_print(data.error.to.stream, data.context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
-
-            return F_status_set_error(F_parameter);
-          }
         }
       } // for
-    }
 
-    if (!depths->used) {
       depths->used++;
     }
 
@@ -319,28 +311,22 @@ extern "C" {
 
     const fss_extended_list_read_skip_t parents = fss_extended_list_read_skip_t_initialize;
 
-    return fss_extended_list_read_main_process_for_depth(arguments, data, filename, depths.array[0], line, parents, objects_delimits, contents_delimits);
+    return fss_extended_list_read_main_process_for_depth(arguments, filename, depths, 0, line, parents, data, objects_delimits, contents_delimits);
   }
 #endif // _di_fss_extended_list_read_main_process_file_
 
 #ifndef _di_fss_extended_list_read_main_process_for_depth_
-  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, fss_extended_list_read_data_t *data, const f_string_t filename, const fss_extended_list_read_depth_t depth_setting, const f_array_length_t line, const fss_extended_list_read_skip_t parents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
-    f_status_t status = F_none;
+  f_return_status fss_extended_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_extended_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_extended_list_read_skip_t parents, fss_extended_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
 
-    f_fss_items_t *items = &data->nest.depth[depth_setting.depth];
+    f_fss_items_t *items = &data->nest.depth[depths.array[depths_index].depth];
 
     bool skip[items->used];
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    const f_string_lengths_t except_none = f_string_lengths_t_initialize;
 
     // setup defaults to be not skipped unless any given parent is skipped.
     memset(skip, F_false, sizeof(skip) * items->used);
 
     if (parents.used) {
-      for (i = 0; i < items->used; ++i) {
+      for (f_array_length_t i = 0; i < items->used; ++i) {
 
         if (items->array[i].parent >= parents.used || parents.skip[items->array[i].parent]) {
           skip[i] = F_true;
@@ -348,30 +334,38 @@ extern "C" {
       } // for
     }
 
-    if (depth_setting.index_name || depth_setting.index_at) {
+    if (depths.array[depths_index].index_name || depths.array[depths_index].index_at) {
+      const f_string_lengths_t except_none = f_string_lengths_t_initialize;
 
-      if (!depth_setting.index_name || (depth_setting.index_at && depth_setting.index_at < depth_setting.index_name)) {
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+
+      if (!depths.array[depths_index].index_name || (depths.array[depths_index].index_at && depths.array[depths_index].index_at < depths.array[depths_index].index_name)) {
 
         // all other non-"at" parameters must be FALSE.
-        for (i = 0; i < items->used; ++i) {
+        for (; i < items->used; ++i) {
 
-          if (i != depth_setting.value_at) {
+          if (skip[i]) continue;
+
+          if (j != depths.array[depths_index].value_at) {
             skip[i] = F_true;
           }
+
+          ++j;
         } // for
 
-        if (depth_setting.value_at < items->used && !skip[depth_setting.value_at]) {
-          if (depth_setting.index_name) {
+        if (depths.array[depths_index].value_at < items->used && !skip[depths.array[depths_index].value_at]) {
+          if (depths.array[depths_index].index_name) {
 
             if (data->parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
 
-              if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) != F_equal_to) {
-                skip[depth_setting.value_at] = F_true;
+              if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
+                skip[depths.array[depths_index].value_at] = F_true;
               }
             }
             else {
-              if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[depth_setting.value_at].object, except_none, *objects_delimits) != F_equal_to) {
-                skip[depth_setting.value_at] = F_true;
+              if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
+                skip[depths.array[depths_index].value_at] = F_true;
               }
             }
           }
@@ -385,7 +379,7 @@ extern "C" {
 
             if (skip[i]) continue;
 
-            if (fl_string_dynamic_partial_compare_except_trim_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+            if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
               skip[i] = F_true;
             }
           } // for
@@ -396,26 +390,83 @@ extern "C" {
 
             if (skip[i]) continue;
 
-            if (fl_string_dynamic_partial_compare_except_dynamic(depth_setting.value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+            if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
               skip[i] = F_true;
             }
           } // for
         }
 
-        if (depth_setting.index_at) {
+        if (depths.array[depths_index].index_at) {
 
-          for (i = 0, j = 0; i < items->used; ++i) {
+        // all other non-"at" parameters must be FALSE.
+        for (i = 0, j = 0; i < items->used; ++i) {
 
-            if (!skip[i] && j != depth_setting.value_at) {
-              skip[i] = F_true;
-              ++j;
-            }
-          } // for
+          if (skip[i]) continue;
+
+          if (j != depths.array[depths_index].value_at) {
+            skip[i] = F_true;
+          }
+
+          ++j;
+        } // for
         }
       }
     }
 
+    // if the current depth is not the final depth, then recurse into the next depth.
+    if (depths_index + 1 < depths.used) {
+      bool skip_next[data->nest.depth[depths.array[depths_index + 1].depth - 1].used];
+
+      fss_extended_list_read_skip_t parents_next = fss_extended_list_read_skip_t_initialize;
+
+      if (depths.array[depths_index].depth + 1 == depths.array[depths_index + 1].depth) {
+        parents_next.skip = skip;
+        parents_next.used = items->used;
+      }
+      else {
+        const f_array_length_t parents_depth = depths.array[depths_index + 1].depth - 1;
+        const f_array_length_t depth_next = depths.array[depths_index + 1].depth;
+
+        parents_next.skip = skip_next;
+        parents_next.used = data->nest.depth[parents_depth].used;
+
+        memset(skip_next, F_true, sizeof(skip_next) * parents_next.used);
+
+        f_fss_items_t *items_next = &data->nest.depth[depth_next];
+        f_fss_items_t *items_previous = 0;
+        f_fss_item_t *item_previous = 0;
+
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+
+        for (; i < items_next->used; ++i) {
+
+          j = depth_next;
+
+          item_previous = &items_next->array[i];
+          items_previous = &data->nest.depth[--j];
+
+          while (j > depths.array[depths_index].depth) {
+
+            item_previous = &items_previous->array[item_previous->parent];
+            items_previous = &data->nest.depth[--j];
+          } // while
+
+          if (skip[item_previous->parent]) {
+            skip_next[items_next->array[i].parent] = F_true;
+          }
+          else {
+            skip_next[items_next->array[i].parent] = F_false;
+          }
+        } // for
+      }
+
+      return fss_extended_list_read_main_process_for_depth(arguments, filename, depths, depths_index + 1, line, parents_next, data, objects_delimits, contents_delimits);
+    }
+
     // process objects.
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     if (data->parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
       if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
