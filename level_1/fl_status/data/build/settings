@@ -4,7 +4,7 @@ project_name fl_status
 
 version_major 0
 version_minor 5
-version_micro 1
+version_micro 2
 version_target major
 
 environment

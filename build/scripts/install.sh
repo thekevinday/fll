@@ -12,7 +12,7 @@ install_main() {
   local public_name="Simple FLL Project Install Script"
   local system_name=install
   local called_name=$(basename $0)
-  local version=0.5.1
+  local version=0.5.2
 
   local grab_next=
   local do_color=normal
