@@ -660,8 +660,10 @@ extern "C" {
             if (F_status_is_error(status)) break;
           }
 
-          // only assign object positions for nested objects.
-          if (depth > 0) {
+          if (depth) {
+            found->depth[depth].array[position].parent = found->depth[depth - 1].used;
+
+            // only assign object positions for nested objects.
             found->depth[depth].array[position].object.start = objects.array[depth].start;
             found->depth[depth].array[position].object.stop = objects.array[depth].stop;
           }
