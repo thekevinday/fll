@@ -11,7 +11,6 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
       if (!objects_delimits) return F_status_set_error(F_parameter);
-      if (!contents_delimits) return F_status_set_error(F_parameter);
       if (!comments) return F_status_set_error(F_parameter);
     #endif // _di_level_3_parameter_checking_
 
