@@ -270,6 +270,13 @@ extern "C" {
           break;
         }
 
+        *status = fl_string_dynamic_terminate_after(&destination_file);
+
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          break;
+        }
+
         if (fake_signal_received(data)) {
           *status = F_status_set_error(F_signal);
           break;
