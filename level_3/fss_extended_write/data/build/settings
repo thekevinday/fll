@@ -32,6 +32,7 @@ build_shared yes
 build_static yes
 
 path_headers level_3
+path_headers_preserve no
 path_library_script script
 path_library_shared shared
 path_library_static static

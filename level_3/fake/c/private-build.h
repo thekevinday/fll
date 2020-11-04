@@ -23,6 +23,7 @@ extern "C" {
     bool build_static;
 
     bool path_standard;
+    bool path_headers_preserve;
 
     bool search_exclusive;
     bool search_shared;
@@ -68,6 +69,7 @@ extern "C" {
   #define fake_build_setting_t_initialize { \
     0, \
     0, \
+    F_true, \
     F_true, \
     F_true, \
     F_true, \
@@ -171,6 +173,7 @@ extern "C" {
   #define fake_build_setting_name_modes                  "modes"
   #define fake_build_setting_name_modes_default          "modes_default"
   #define fake_build_setting_name_path_headers           "path_headers"
+  #define fake_build_setting_name_path_headers_preserve  "path_headers_preserve"
   #define fake_build_setting_name_path_language          "path_language"
   #define fake_build_setting_name_path_library_script    "path_library_script"
   #define fake_build_setting_name_path_library_shared    "path_library_shared"
@@ -215,6 +218,7 @@ extern "C" {
   #define fake_build_setting_name_modes_length                  5
   #define fake_build_setting_name_modes_default_length          13
   #define fake_build_setting_name_path_headers_length           12
+  #define fake_build_setting_name_path_headers_preserve_length  21
   #define fake_build_setting_name_path_language_length          13
   #define fake_build_setting_name_path_library_script_length    19
   #define fake_build_setting_name_path_library_shared_length    19
@@ -235,7 +239,7 @@ extern "C" {
   #define fake_build_setting_name_version_minor_length          13
   #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 43
+  #define fake_build_setting_total 44
 
   #define fake_build_setting_default_version "0"
 
@@ -422,6 +426,15 @@ extern "C" {
  *   The files to copy from source to destination.
  * @param file_stage
  *   The specific stage file path.
+ * @param perserve
+ *   When a positive number, this represents the amount of characters at the front of each file to ignore.
+ *   Everything after that is preserved, and the directory is created if necessary.
+ *
+ *   This is always treated as 0 for any file that is a directory type.
+ *   Set to 0 to disable.
+ *
+ *   Example: 'sources/c/level_0/fss.h' with a preseve of 10, would result in the path of 'level_0/fss.h' being preserved.
+ *            Whereas a preserve of 0 would result in a path of 'fss.h' being used (the 'level_0/' directory is not preserved).
  * @param status
  *   The return status.
  *
@@ -431,7 +444,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_string_length_t preserve, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_copy_
 
 /**

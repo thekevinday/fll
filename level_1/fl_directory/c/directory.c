@@ -5,6 +5,50 @@
 extern "C" {
 #endif
 
+#ifndef _di_fl_directory_create_
+  f_return_status fl_directory_create(const f_string_t path, const f_string_length_t length, const mode_t mode) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!path) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!length) {
+      return F_data_not;
+    }
+
+    f_status_t status = f_directory_exists(path);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_true) return F_directory_found;
+
+    {
+      f_string_length_t at_tree = 0;
+      f_string_length_t at_path = 0;
+
+      char tree[length];
+
+      for (; path[at_path]; ++at_path) {
+
+        if (at_path && path[at_path] == f_path_separator[0]) {
+          memcpy(tree, path + at_tree, at_path - at_tree);
+          tree[at_path] = 0;
+
+          status = f_directory_exists(tree);
+          if (F_status_is_error(status)) return status;
+
+          if (status == F_false) {
+            status = f_directory_create(tree, mode);
+            if (F_status_is_error(status)) return status;
+          }
+
+          at_tree = at_path;
+        }
+      } // for
+    }
+
+    return f_directory_create(path, mode);
+  }
+#endif // _di_fl_directory_create_
+
 #ifndef _di_fl_directory_clone_
   f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_

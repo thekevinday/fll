@@ -87,6 +87,45 @@ extern "C" {
 #endif // _di_fl_directory_recurse_t_
 
 /**
+ * Create all directories at the given path.
+ *
+ * The paths must not contain NULL except for the terminating NULL.
+ * The paths must be NULL terminated.
+ *
+ * @param path
+ *   The file path to the directory.
+ * @param length
+ *   The length of the path string.
+ * @param mode
+ *   The directory mode to use when creating.
+ *   This is applied to all created directories.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there was no string to process (length is 0).
+ *   F_directory_found on success, but the directory already exists.
+ *   F_access_denied (with error bit) on access denied.
+ *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *   F_directory_link_max (with error bit) max links limit reached or exceeded.
+ *   F_file_found (with error bit) of a directory aleady exists at the path.
+ *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_loop (with error bit) on loop error.
+ *   F_memory_out (with error bit) if out of memory.
+ *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if filesystem does not allow for removing.
+ *   F_read_only (with error bit) if file is read-only.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see f_directory_create()
+ */
+#ifndef _di_fl_directory_create_
+  extern f_return_status fl_directory_create(const f_string_t path, const f_string_length_t length, const mode_t mode);
+#endif // _di_fl_directory_create_
+
+/**
  * Copy a directory and its contents, as well as its file mode and possibly the owner and group.
  *
  * The paths must not contain NULL except for the terminating NULL.
