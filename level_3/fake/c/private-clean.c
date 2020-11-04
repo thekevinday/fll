@@ -40,7 +40,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_directory_remove", F_true);
+      fll_error_file_print(data.error, F_status_set_fine(status), "f_directory_remove", F_true, data.path_build.string, "remove", fll_error_file_type_directory);
       return status;
     }
 
