@@ -13,7 +13,7 @@ process_pre process_pre.sh
 process_post process_post.sh
 
 modes individual level monolithic
-modes_default individual
+modes_default monolithic
 
 build_compiler gcc
 build_indexer ar
