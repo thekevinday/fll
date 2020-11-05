@@ -1,9 +1,0 @@
-# fss-0002
-
-main:
-  name net-all
-
-command:
-  start network start
-  stop network stop
-  restart network restart
