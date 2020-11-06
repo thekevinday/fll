@@ -42,7 +42,7 @@ extern "C" {
 
     fl_color_print(output.stream, context.set.important, " Notes:");
 
-    fprintf(output.stream, "%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
     fprintf(output.stream, "  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%c", f_string_eol[0]);
 

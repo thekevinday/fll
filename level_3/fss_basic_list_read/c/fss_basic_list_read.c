@@ -39,7 +39,7 @@ extern "C" {
 
     fl_color_print(output.stream, context.set.important, " Notes:");
 
-    fprintf(output.stream, "%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
     fprintf(output.stream, "  This program will print the content associated with the given object and content data based on the FSS-0002 Basic List standard.%c", f_string_eol[0]);
 

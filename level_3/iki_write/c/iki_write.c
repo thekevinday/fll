@@ -32,7 +32,7 @@ extern "C" {
 
     fl_color_print(output.stream, context.set.important, " Notes:");
 
-    fprintf(output.stream, "%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
     fprintf(output.stream, "  This program will accept object and content strings to generate an IKI string, such as: ");
     fl_color_print(output.stream, context.set.notable, "object:\"content\"");
