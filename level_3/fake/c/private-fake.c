@@ -937,7 +937,8 @@ extern "C" {
 
           if (data.error.verbosity != f_console_verbosity_quiet) {
             fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            fl_color_print(data.error.to.stream, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.%c", f_string_eol[0]);
+            fl_color_print(data.error.to.stream, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
+            fprintf(data.error.to.stream, "%c", f_string_eol[0]);
           }
 
           return F_true;
