@@ -14,13 +14,17 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
     fll_program_print_help_option(output, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
     fll_program_print_help_usage(output, context, init_name, "");
+
+    fl_color_print(output.stream, context.set.important, " Notes:");
+    fprintf(output.stream, "%c", f_string_eol[0]);
+
+    fprintf(output.stream, "  This program is intended to be directly called by the kernel during boot.%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol[0]);
+
+    // @todo: this should still print the kernel command options.
 
     return F_none;
   }
@@ -50,33 +54,6 @@ extern "C" {
 
           init_delete_data(data);
           return F_status_set_error(status);
-        }
-      }
-
-      // Identify priority of verbosity related parameters.
-      {
-        f_console_parameter_id_t ids[4] = { init_parameter_verbosity_quiet, init_parameter_verbosity_normal, init_parameter_verbosity_verbose, init_parameter_verbosity_debug };
-        f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
-
-        status = f_console_parameter_prioritize_right(parameters, choices, &choice);
-
-        if (F_status_is_error(status)) {
-          init_delete_data(data);
-          return status;
-        }
-
-        if (choice == init_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
-        }
-        else if (choice == init_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
-        }
-        else if (choice == init_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
-        }
-        else if (choice == init_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -121,6 +98,13 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
+
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root_group);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root_sub);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.run);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.settings);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.settings_name);
 
     f_macro_color_context_t_delete_simple(data->context);
 
