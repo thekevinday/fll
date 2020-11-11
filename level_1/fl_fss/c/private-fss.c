@@ -1047,19 +1047,16 @@ extern "C" {
   f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
-    if (destination->used + 1 > destination->size) {
-      if (destination->size + f_fss_default_allocation_step > f_string_length_t_size) {
-        if (destination->size + 1 > f_string_length_t_size) {
-          return F_status_set_error(F_string_too_large);
-        }
+    if (destination->size + f_fss_default_allocation_step > f_string_length_t_size) {
+      if (destination->size == f_string_length_t_size) {
+        return F_status_set_error(F_string_too_large);
+      }
 
-        f_macro_string_dynamic_t_resize(status, (*destination), (destination->size + 1));
-      }
-      else {
-        f_macro_string_dynamic_t_resize(status, (*destination), (destination->size + f_fss_default_allocation_step));
-      }
+      f_macro_string_dynamic_t_resize(status, (*destination), f_string_length_t_size);
+      return F_string_too_large;
     }
 
+    f_macro_string_dynamic_t_resize(status, (*destination), destination->size + f_fss_default_allocation_step);
     return status;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
@@ -1068,14 +1065,16 @@ extern "C" {
   f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
-    if (destination->used + amount > destination->size) {
-      if (destination->size + amount > f_string_length_t_size) {
+    if (destination->size + amount > f_string_length_t_size) {
+      if (destination->size == f_string_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamic_t_resize(status, (*destination), destination->size + amount);
+      f_macro_string_dynamic_t_resize(status, (*destination), f_string_length_t_size);
+      return F_string_too_large;
     }
 
+    f_macro_string_dynamic_t_resize(status, (*destination), destination->size + amount);
     return status;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)

@@ -245,8 +245,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
+ *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if the new array length is too large.
  *
  * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
@@ -271,8 +273,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_string_too_large (with error bit) if increased string length is too large to store in the destination.
+ *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_string_too_large (with error bit) if the new array length is too large.
  *
  * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
