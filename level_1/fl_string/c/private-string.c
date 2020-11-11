@@ -10,7 +10,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + length > destination->size) {
-      status = private_fl_string_dynamic_size_increase(length, destination);
+      status = private_fl_string_dynamic_increase_by(length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -38,7 +38,7 @@ extern "C" {
           size = i - first;
 
           if (destination->used + size > destination->size) {
-            status = private_fl_string_dynamic_size_increase(size, destination);
+            status = private_fl_string_dynamic_increase_by(size, destination);
             if (F_status_is_error(status)) return status;
           }
 
@@ -55,7 +55,7 @@ extern "C" {
             size = i - first;
 
             if (destination->used + size > destination->size) {
-              status = private_fl_string_dynamic_size_increase(size, destination);
+              status = private_fl_string_dynamic_increase_by(size, destination);
               if (F_status_is_error(status)) return status;
             }
 
@@ -528,8 +528,8 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
-#if !defined(_di_fl_string_dynamic_size_increase_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
-  f_return_status private_fl_string_dynamic_size_increase(const f_string_length_t amount, f_string_dynamic_t *string) {
+#if !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
+  f_return_status private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
     f_status_t status = F_none;
 
     if (string->size + amount > f_string_length_t_size) {
@@ -544,7 +544,7 @@ extern "C" {
     f_macro_string_dynamic_t_resize(status, (*string), string->size + amount);
     return status;
   }
-#endif // !defined(_di_fl_string_dynamic_size_increase_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
+#endif // !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
 
 #if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
   f_return_status private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
@@ -556,7 +556,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + length > destination->size) {
-      status = private_fl_string_dynamic_size_increase(length, destination);
+      status = private_fl_string_dynamic_increase_by(length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -594,7 +594,7 @@ extern "C" {
           size = i - first;
 
           if (destination->used + size > destination->size) {
-            status = private_fl_string_dynamic_size_increase(size, destination);
+            status = private_fl_string_dynamic_increase_by(size, destination);
             if (F_status_is_error(status)) return status;
           }
 
@@ -614,7 +614,7 @@ extern "C" {
             size = i - first;
 
             if (destination->used + size > destination->size) {
-              status = private_fl_string_dynamic_size_increase(size, destination);
+              status = private_fl_string_dynamic_increase_by(size, destination);
               if (F_status_is_error(status)) return status;
             }
 

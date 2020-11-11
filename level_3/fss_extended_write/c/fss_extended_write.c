@@ -426,14 +426,14 @@ extern "C" {
           else {
             object.used = 0;
 
-            status = fl_string_dynamics_size_increase(data->parameters[fss_extended_write_parameter_content].values.used, &contents);
+            status = fl_string_dynamics_increase_by(data->parameters[fss_extended_write_parameter_content].values.used, &contents);
 
             if (status == F_buffer_too_large) {
               status = F_status_set_error(status);
             }
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_size_increase", F_true);
+              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
             }
             else {
               f_array_length_t i = 0;
@@ -489,10 +489,10 @@ extern "C" {
                 if (content_current < object_current || content_current > object_next) break;
               }
 
-              status = fl_string_dynamics_size_increase(f_fss_default_allocation_step, &contents);
+              status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_size_increase", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
                 break;
               }
 

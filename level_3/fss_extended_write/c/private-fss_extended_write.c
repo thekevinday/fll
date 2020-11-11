@@ -196,10 +196,10 @@ extern "C" {
         }
 
         if (object.used + block.used > object.size) {
-          status = fl_string_dynamic_size_increase(block.used, &object);
+          status = fl_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_size_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -237,10 +237,10 @@ extern "C" {
 
       if (state == 0x2) {
         if (contents.used + 1 > contents.size) {
-          status = fl_string_dynamics_size_increase(f_fss_default_allocation_step, &contents);
+          status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_size_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
             break;
           }
         }
@@ -262,10 +262,10 @@ extern "C" {
 
             if (block.string[range.start] == fss_extended_write_pipe_content_start) {
               if (contents.used + 1 > contents.size) {
-                status = fl_string_dynamics_size_increase(f_fss_default_allocation_step, &contents);
+                status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_size_increase", F_true);
+                  fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
                   break;
                 }
               }
@@ -293,10 +293,10 @@ extern "C" {
             }
 
             if (contents.array[contents.used - 1].used + 1 > contents.array[contents.used - 1].size) {
-              status = fl_string_dynamic_size_increase(f_fss_default_allocation_step, &contents.array[contents.used - 1]);
+              status = fl_string_dynamic_increase_by(f_fss_default_allocation_step, &contents.array[contents.used - 1]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_size_increase", F_true);
+                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
                 break;
               }
             }

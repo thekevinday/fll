@@ -180,7 +180,7 @@ extern "C" {
       }
       else {
         if (destination->used + 1 > destination->size) {
-          status = fl_string_dynamic_size_increase(f_fss_default_allocation_step, destination);
+          status = fl_string_dynamic_increase_by(f_fss_default_allocation_step, destination);
           if (F_status_is_error(status)) return status;
         }
 

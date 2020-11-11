@@ -1509,14 +1509,11 @@ extern "C" {
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
- * Resize the dynamic string to a smaller size.
+ * Resize the dynamic string to a smaller size, by 1.
  *
- * This will resize making the string smaller based on the given length.
- * If the given length is too small, then the resize will fail.
+ * This will shrink the size by size - 1.
  * This will not shrink the size to less than 0.
  *
- * @param amount
- *   A positive number greater than 0 representing how much to decrease the size by.
  * @param string
  *   The string to resize.
  *
@@ -1525,11 +1522,32 @@ extern "C" {
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_string_dynamic_size_decrease_
-  extern f_return_status fl_string_dynamic_size_decrease(const f_string_length_t amount, f_string_dynamic_t *string);
-#endif // _di_fl_string_dynamic_size_decrease_
+#ifndef _di_fl_string_dynamic_decrease_
+  extern f_return_status fl_string_dynamic_decrease(f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_decrease_
+
+/**
+ * Resize the dynamic string to a smaller size.
+ *
+ * This will resize making the string smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamic_decrease_by_
+  extern f_return_status fl_string_dynamic_decrease_by(const f_string_length_t amount, f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_decrease_by_
 
 /**
  * Resize the dynamic string to a larger size.
@@ -1539,7 +1557,7 @@ extern "C" {
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
- *   A positive number greater than 0 representing how much to increase the size by.
+ *   A positive number representing how much to increase the size by.
  * @param string
  *   The string to resize.
  *
@@ -1551,9 +1569,33 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_string_dynamic_size_increase_
-  extern f_return_status fl_string_dynamic_size_increase(const f_string_length_t amount, f_string_dynamic_t *string);
-#endif // _di_fl_string_dynamic_size_increase_
+#ifndef _di_fl_string_dynamic_increase_
+  extern f_return_status fl_string_dynamic_increase(f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_increase_
+
+/**
+ * Resize the dynamic string to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_fl_string_dynamic_increase_by_
+  extern f_return_status fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string);
+#endif // _di_fl_string_dynamic_increase_by_
 
 /**
  * Seek the buffer location forward until EOL is reached.
@@ -1786,14 +1828,11 @@ extern "C" {
 #endif // _di_fl_string_dynamic_terminate_after_
 
 /**
- * Resize the array of dynamic strings to a smaller size.
+ * Resize the dynamic string array to a smaller size, by 1.
  *
- * This will resize making the string smaller based on the given length.
- * If the given length is too small, then the resize will fail.
+ * This will shrink the size by size - 1.
  * This will not shrink the size to less than 0.
  *
- * @param length
- *   A positive number greater than 0 representing how much to decrease the size by.
  * @param strings
  *   The string array to resize.
  *
@@ -1802,81 +1841,163 @@ extern "C" {
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_string_dynamics_size_decrease_
-  extern f_return_status fl_string_dynamics_size_decrease(const f_array_length_t length, f_string_dynamics_t *strings);
-#endif // _di_fl_string_dynamics_size_decrease_
+#ifndef _di_fl_string_dynamics_decrease_
+  extern f_return_status fl_string_dynamics_decrease(f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_decrease_
 
 /**
- * Resize the array of dynamic strings to a larger size.
+ * Resize the dynamic string array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamics_decrease_by_
+  extern f_return_status fl_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_decrease_by_
+
+/**
+ * Increase the size of the dynamic string array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_buffer_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_fl_string_dynamics_increase_
+  extern f_return_status fl_string_dynamics_increase(f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_increase_
+
+/**
+ * Resize the dynamic string array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
- * @param length
- *   A positive number greater than 0 representing how much to increase the size by.
+ * @param amount
+ *   A positive number representing how much to increase the size by.
  * @param strings
  *   The string array to resize.
  *
  * @return
  *   F_none on success.
- *   F_string_too_large on success, but the requested length is too large for the buffer.
+ *   F_buffer_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
+ *   F_buffer_too_large (with error bit) if the new array length is too large.
  */
-#ifndef _di_fl_string_dynamics_size_increase_
-  extern f_return_status fl_string_dynamics_size_increase(const f_array_length_t length, f_string_dynamics_t *strings);
-#endif // _di_fl_string_dynamics_size_increase_
+#ifndef _di_fl_string_dynamics_increase_by_
+  extern f_return_status fl_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+#endif // _di_fl_string_dynamics_increase_by_
 
 /**
- * Resize the array of string lengths to a smaller size.
+ * Resize the string lengths array to a smaller size, by 1.
  *
- * This will resize making the string smaller based on the given length.
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_lengths_decrease_
+  extern f_return_status fl_string_lengths_decrease(f_string_lengths_t *lengths);
+#endif // _di_fl_string_lengths_decrease_
+
+/**
+ * Resize the string lengths array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
  * This will not shrink the size to less than 0.
  *
- * @param length
- *   A positive number greater than 0 representing how much to decrease the size by.
- * @param strings
- *   The string array to resize.
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param lengths
+ *   The string lengths array to resize.
  *
  * @return
  *   F_none on success.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_string_lengths_size_decrease_
-  extern f_return_status fl_string_length_size_decrease(const f_array_length_t length, f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_size_decrease_
+#ifndef _di_fl_string_lengths_decrease_by_
+  extern f_return_status fl_string_lengths_decrease_by(const f_array_length_t amount, f_string_lengths_t *lengths);
+#endif // _di_fl_string_lengths_decrease_by_
 
 /**
- * Resize the array of string lengths to a larger size.
+ * Increase the size of the string lengths array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param lengths
+ *   The string lengths array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_buffer_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_fl_string_lengths_increase_
+  extern f_return_status fl_string_lengths_increase(f_string_lengths_t *lengths);
+#endif // _di_fl_string_lengths_increase_
+
+/**
+ * Resize the string lengths array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
- * @param length
- *   A positive number greater than 0 representing how much to increase the size by.
- * @param strings
- *   The string array to resize.
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param lengths
+ *   The string lengths array to resize.
  *
  * @return
  *   F_none on success.
+ *   F_buffer_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
+ *   F_buffer_too_large (with error bit) if the new array length is too large.
  */
-#ifndef _di_fl_string_lengths_size_increase_
-  extern f_return_status fl_string_lengths_size_increase(const f_array_length_t length, f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_size_increase_
+#ifndef _di_fl_string_lengths_increase_by_
+  extern f_return_status fl_string_lengths_increase_by(const f_array_length_t amount, f_string_lengths_t *lengths);
+#endif // _di_fl_string_lengths_increase_by_
 
 /**
  * Append the source string onto the destination with the glue in between.

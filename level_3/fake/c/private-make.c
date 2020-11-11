@@ -446,10 +446,10 @@ extern "C" {
 
                 if (k == data_make->setting_build.environment.used) {
                   if (data_make->setting_build.environment.used + 1 > data_make->setting_build.environment.size) {
-                    *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->setting_build.environment);
+                    *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->setting_build.environment);
 
                     if (F_status_is_error(*status)) {
-                      fll_error_print(data.error, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true);
+                      fll_error_print(data.error, F_status_set_fine(*status), "fl_string_lengths_increase_by", F_true);
                       break;
                     }
                   }
@@ -765,10 +765,10 @@ extern "C" {
 
     if (data.context.mode != f_color_mode_none) {
       if (data_make->parameter.color.used >= data_make->parameter.color.size) {
-        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->parameter.color);
+        *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->parameter.color);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
           return;
         }
       }
@@ -821,10 +821,10 @@ extern "C" {
 
     if (data.error.verbosity != f_console_verbosity_normal) {
       if (data_make->parameter.verbosity.used >= data_make->parameter.verbosity.size) {
-        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->parameter.verbosity);
+        *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->parameter.verbosity);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
           return;
         }
       }
@@ -904,10 +904,10 @@ extern "C" {
         for (j = 0; j < source[i]->used; j++) {
 
           if (destination[i]->used >= destination[i]->size) {
-            *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+            *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+              fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
               return;
             }
           }
@@ -932,10 +932,10 @@ extern "C" {
           }
 
           if (destination[i]->used >= destination[i]->size) {
-            *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+            *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+              fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
               return;
             }
           }
@@ -997,10 +997,10 @@ extern "C" {
       for (uint8_t i = 0; i < 7; i ++) {
 
         if (destination[i]->used >= destination[i]->size) {
-          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+          *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
             return;
           }
         }
@@ -1025,10 +1025,10 @@ extern "C" {
         }
 
         if (destination[i]->used >= destination[i]->size) {
-          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, destination[i]);
+          *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
             return;
           }
         }
@@ -1173,10 +1173,10 @@ extern "C" {
 
     // pre-allocate the known arguments size.
     if (arguments->used + content.used > arguments->size) {
-      *status = fl_string_dynamics_size_increase(content.used, arguments);
+      *status = fl_string_dynamics_increase_by(content.used, arguments);
 
       if (F_status_is_error(*status) || *status == F_string_too_large) {
-        fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
         return;
       }
     }
@@ -1267,10 +1267,10 @@ extern "C" {
       }
 
       if (arguments->used >= arguments->size) {
-        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+        *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true);
+          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_lengths_increase_by", F_true);
           return;
         }
       }
@@ -1353,10 +1353,10 @@ extern "C" {
 
                 if (fl_string_dynamic_partial_compare_string(reserved_name[k], data_make->buffer, reserved_length[k], iki_content.array[j]) == F_equal_to) {
                   if (arguments->used >= arguments->size) {
-                    *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+                    *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
 
                     if (F_status_is_error(*status)) {
-                      fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
                       return;
                     }
                   }
@@ -1423,10 +1423,10 @@ extern "C" {
                     }
                     else {
                       if (arguments->used >= arguments->size) {
-                        *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+                        *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
 
                         if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_size_increase", F_true);
+                          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamics_increase_by", F_true);
                           break;
                         }
                       }
@@ -1801,7 +1801,7 @@ extern "C" {
       status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+      status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
 
       if (F_status_is_error_not(status)) {
         status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
@@ -1857,7 +1857,7 @@ extern "C" {
       status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, arguments);
+      status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
 
       if (F_status_is_error_not(status)) {
         status = fl_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
@@ -1900,10 +1900,10 @@ extern "C" {
 
     // add the operation id to the operation stack.
     if (section_stack->used + 1 > section_stack->size) {
-      *status = fl_string_lengths_size_increase(f_memory_default_allocation_step, section_stack);
+      *status = fl_string_lengths_increase_by(f_memory_default_allocation_step, section_stack);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_lengths_size_increase", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_lengths_increase_by", F_true);
         return;
       }
     }
@@ -3632,10 +3632,10 @@ extern "C" {
       }
       else {
         if (data_make->path.stack.used == data_make->path.stack.size) {
-          *status = fl_string_dynamics_size_increase(f_memory_default_allocation_step, &data_make->path.stack);
+          *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->path.stack);
 
           if (F_status_set_fine(*status) == F_buffer_too_large) {
-            fake_print_message_section_operation_path_stack_max(data, data_make->error, F_buffer_too_large, "fl_string_lengths_size_increase", "path stack");
+            fake_print_message_section_operation_path_stack_max(data, data_make->error, F_buffer_too_large, "fl_string_lengths_increase_by", "path stack");
             return;
           }
           else if (F_status_is_error(*status)) {

@@ -184,10 +184,10 @@ extern "C" {
         }
 
         if (object.used + block.used > object.size) {
-          status = fl_string_dynamic_size_increase(block.used, &object);
+          status = fl_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_size_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -233,10 +233,10 @@ extern "C" {
 
         if (total) {
           if (content.used + total > content.size) {
-            status = fl_string_dynamic_size_increase(total, &content);
+            status = fl_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_size_increase", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
               break;
             }
           }
