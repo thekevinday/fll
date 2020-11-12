@@ -1,0 +1,34 @@
+# fss-0002
+
+Rule Specification:
+  The "rule" files follow the FSS-000D (Basic Rule) format.
+
+  A rule file name is expected to have the file extension ".rule".
+
+  The outer most part, which is essentially FSS-0002 (Basic List), has the following Objects\:
+    "settings": Required.
+    "command": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: "group", "restart", "reload", "start", "stop", and "user".
+    "script": A Basic List of FSS-0003 (Extended List) Object and Content, supporting the following Objects: "restart", "reload", "start", and "stop" and A Basic List of FSS-0001 (Extended) Object and Content, supporting the following: "group" and "user".
+    "service": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: ""create", "group", "program", "restart", "reload", "start", "stop", "timeout", and "user".
+
+  For the above Basic List Objects, "main" may be specified only once whereas the others may be specifed multiple times.
+
+  The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+    "name": One Content, must have at least 1 non-whitespace printing character.
+    "pid": One Content representing the path to a PID file directory.
+
+  For the inner parts, these are the Extended Objects\:
+    "create": One Content representing the path to a PID file.
+    "program": One Content representing the path to a PID file.
+    "group": One Content representing a group name or group id.
+    "restart": One or more Content representing a program to and its arguments.
+    "reload": One or more Content representing a program to and its arguments.
+    "start": One or more Content representing a program to and its arguments.
+    "stop": One or more Content representing a program to and its arguments.
+    "user": One Content representing a user name or user id.
+
+  For the inner parts, these are the Extended List Objects\:
+    "restart": A list repesenting the contents of a (Bash) shell script.
+    "reload": A list repesenting the contents of a (Bash) shell script.
+    "start": A list repesenting the contents of a (Bash) shell script.
+    "stop": A list repesenting the contents of a (Bash) shell script.

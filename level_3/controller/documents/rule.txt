@@ -1,0 +1,43 @@
+# fss-0002
+
+Rule Documentation:
+  This describes the intent and purpose of the rule file settings.
+
+  A rule file, such as "ssh.rule", is intended to desginate what to execute.
+
+  The rule file is read top-down, except for the outer most list "settings", which is intended to store settings data for this rule.
+  Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
+
+  The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+    "name": A name used to represent this rule, which is printing to the user, screen, logs, etc...
+    "pid": A path to a directory where the PID file is expected to be stored in.
+    @todo: consider adding "path" to allow specifying a custom environment PATH variable (or even go a step further and instead provide "environment" or "variable").
+
+  The "command" outer most part provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
+  A "command" always operates in the foreground.
+
+  The "service" outer most part provides a "command" accompanied with a PID file (Process Identifier file).
+  Unlike the "command", a "service" always operates in the background.
+
+  The "script" outer most part provides a series of lines to be executed by a (Bash) script.
+  This "script" operates in the foreground, but individual things done within the script may operate in foreground or background.
+  The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
+  Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.
+
+  There are four primary inner Content to perform: "restart", "reload", "start", and "stop".
+
+  The "start" Content is performed whenever this rule is executed using the start action.
+  The "stop" Content is performed whenever this rule is executed using the stop action.
+  The "restart" Content is performed whenever this rule is executed using the restart action.
+  The "reload" Content is performed whenever this rule is executed using the reload action.
+
+  When "restart" Content is not provided, then "start" and "stop" is called when the rule is executed using the restart action, if both "start" and "stop" are provided.
+  When "reload", "start", or "stop" Content are not provided, then no respective action is peformed.
+
+  The "group" inner Content, an associated "command", "service", or "script" are executed with that group ID or group name.
+  The "user" inner Content, an associated "command", "service", or "script" are executed with that user ID or user name.
+  The "group" and "user" can only be switched to if the user this controller program being operated under is allowed to switch to.
+
+  The "create" Content designates that this controller program to create the PID file after successfully starting the service.
+  The "program" Content designates that the called program will provide the PID file after successfully starting the service.
+  For both "create" and "program" the PID file is expected to only exist on success or failure and the existence thereof designates the success or failure rate.

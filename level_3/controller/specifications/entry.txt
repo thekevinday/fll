@@ -1,0 +1,30 @@
+# fss-0002
+
+Entry Specification:
+  The "rule" files follow the FSS-0005 (Somewhat Basic List) format.
+
+  An entry file name is expected to have the file extension ".entry".
+
+  The outer most part, which is essentially FSS-0002 (Basic List), has the following Objects\:
+    "main": required.
+
+    The entry file may have any other valid Object, only the above have reserved uses.
+
+    Inside each Basic List are essentially the following, FSS-0001 (Extended), Objects\:
+      "category": One Content that is a valid Object name, except for the reserved "main".
+      "controlled": One Content that is a valid Object name, except for the reserved "main".
+      "failsafe": One Content that is a valid relative rule file name without the ".rule" extension.
+      "only": Zero or more Content.
+      "rule": One or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - asynchronous
+          - require
+          - wait
+      "timeout": Two Content.
+        The first being one of\:
+          - start
+          - stop
+          - kill
+        The second being a positive whole number or 0.

@@ -1,0 +1,7 @@
+# fss-0002
+
+Featureless Settings Specification: 000E - Extended Rule:
+  @todo: document this.
+  This should be a special case that has an FSS Extended List on the outside and conditional types on the inside.
+  The conditional types are context-specific and not defined by this specification.
+  This specification only defines that they exist and not when/how they exist.
