@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_file_
-  f_return_status byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, f_file_t file) {
+  f_return_status byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, const f_file_t file) {
     f_status_t status = F_none;
 
     uint64_t position = 0;
