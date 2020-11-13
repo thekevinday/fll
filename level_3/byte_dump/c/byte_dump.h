@@ -50,7 +50,7 @@ extern "C" {
 #ifndef _di_byte_dump_version_
   #define byte_dump_major_version "0"
   #define byte_dump_minor_version "5"
-  #define byte_dump_micro_version "1"
+  #define byte_dump_micro_version "2"
   #define byte_dump_version byte_dump_major_version "." byte_dump_minor_version "." byte_dump_micro_version
 #endif // _di_byte_dump_version_
 
