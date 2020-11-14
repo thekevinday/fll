@@ -5,7 +5,7 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * This program provides fss basic list write functionality.
+ * This program provides FSS-0003 Extended List write functionality.
  */
 #ifndef _fss_extended_list_write_h
 
@@ -51,7 +51,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_list_write_name_
   #define fss_extended_list_write_name      "fss_extended_list_write"
-  #define fss_extended_list_write_name_long "FSS Basic List Write"
+  #define fss_extended_list_write_name_long "FSS Extended List Write"
 #endif // _di_fss_extended_list_write_name_
 
 #ifndef _di_fss_extended_list_write_defines_

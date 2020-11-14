@@ -46,7 +46,7 @@ extern "C" {
  *   The start location will represent where the read stopped on return.
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
- *   A set of all locations where a valid object was found.
+ *   A location where a valid object was found.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
  *
@@ -79,6 +79,8 @@ extern "C" {
 
 /**
  * Read an fss-0003 content.
+ *
+ * @fixme the recursive part of this is actually fss-0008 (Embedded) content, fss-0003 is not recursive, oops!
  *
  * This will record where delimit placeholders exist but will not apply the delimits.
  *

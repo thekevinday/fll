@@ -36,6 +36,10 @@ extern "C" {
   #define f_fss_extended_list_open_end  f_string_eol[0]
   #define f_fss_extended_list_close     '}'
   #define f_fss_extended_list_close_end f_string_eol[0]
+  #define f_fss_embedded_list_open      '{'
+  #define f_fss_embedded_list_open_end  f_string_eol[0]
+  #define f_fss_embedded_list_close     '}'
+  #define f_fss_embedded_list_close_end f_string_eol[0]
   #define f_fss_type_header_open        '#'
   #define f_fss_type_header_part1       ' '
   #define f_fss_type_header_part2       'f'
@@ -73,8 +77,9 @@ extern "C" {
     f_fss_embeded_list,
     f_fss_reverse_mapping,
     f_fss_extended_reverse_mapping,
-    f_fss_simple_json,
     f_fss_simple_list,
+    f_fss_iki_text,
+    f_fss_basic_rule,
   };
 #endif // _di_f_fss_codes_
 
