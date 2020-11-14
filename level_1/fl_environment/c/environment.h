@@ -40,7 +40,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -64,7 +64,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -90,7 +90,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -116,7 +116,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large (with error bit) if paths array is too large for further addressing.
+ *   F_array_too_large (with error bit) if paths array is too large for further addressing.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.

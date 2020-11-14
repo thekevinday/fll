@@ -1214,7 +1214,7 @@ extern "C" {
 
             f_macro_string_dynamic_t_delete_simple(part);
             f_macro_string_dynamics_t_delete_simple(names);
-            *status = F_status_set_error(F_buffer_too_large);
+            *status = F_status_set_error(F_array_too_large);
             return;
           }
 
@@ -1276,7 +1276,7 @@ extern "C" {
       if (F_status_is_error_not(*status) && environment->names.used + 1 > environment->names.size) {
         if (environment->names.size + f_memory_default_allocation_step > f_array_length_t_size) {
           if (environment->names.size + 1 > f_array_length_t_size) {
-            *status = F_status_set_error(F_buffer_too_large);
+            *status = F_status_set_error(F_array_too_large);
           }
           else {
             f_macro_string_dynamics_t_resize(*status, environment->names, environment->names.size + 1);

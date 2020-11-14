@@ -158,7 +158,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          f_macro_memory_structure_macro_increment(status, (*destination), 1, f_console_default_allocation_step, f_macro_string_dynamics_t_resize, F_buffer_too_large);
+          f_macro_memory_structure_macro_increment(status, (*destination), 1, f_console_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
           if (F_status_is_error(status)) break;
 
           destination->array[destination->used] = ripped;

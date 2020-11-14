@@ -45,7 +45,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if name_length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -82,7 +82,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if name_length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.

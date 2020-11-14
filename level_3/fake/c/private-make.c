@@ -3634,8 +3634,8 @@ extern "C" {
         if (data_make->path.stack.used == data_make->path.stack.size) {
           *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->path.stack);
 
-          if (F_status_set_fine(*status) == F_buffer_too_large) {
-            fake_print_message_section_operation_path_stack_max(data, data_make->error, F_buffer_too_large, "fl_string_lengths_increase_by", "path stack");
+          if (F_status_set_fine(*status) == F_array_too_large) {
+            fake_print_message_section_operation_path_stack_max(data, data_make->error, F_array_too_large, "fl_string_lengths_increase_by", "path stack");
             return;
           }
           else if (F_status_is_error(*status)) {

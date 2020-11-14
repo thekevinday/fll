@@ -428,7 +428,7 @@ extern "C" {
 
             status = fl_string_dynamics_increase_by(data->parameters[fss_extended_write_parameter_content].values.used, &contents);
 
-            if (status == F_buffer_too_large) {
+            if (status == F_array_too_large) {
               status = F_status_set_error(status);
             }
 

@@ -205,6 +205,12 @@ extern "C" {
       F_write_only,
     #endif // _di_F_status_basic_
 
+    #ifndef _di_F_status_array_
+      F_array,
+      F_array_too_large,
+      F_array_too_small,
+    #endif // _di_F_status_array_
+
     #ifndef _di_F_status_busy_
       F_busy,
       F_busy_address,

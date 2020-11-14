@@ -1104,7 +1104,7 @@ extern "C" {
     if (nest->used + 1 > nest->size) {
       if (nest->size + f_fss_default_allocation_step > f_array_length_t_size) {
         if (nest->size + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_buffer_too_large);
+          return F_status_set_error(F_array_too_large);
         }
 
         f_macro_fss_nest_t_resize(status, (*nest), (nest->size + 1));
@@ -1125,7 +1125,7 @@ extern "C" {
     if (ranges->used + 1 > ranges->size) {
       if (ranges->size + f_fss_default_allocation_step > f_array_length_t_size) {
         if (ranges->size + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_buffer_too_large);
+          return F_status_set_error(F_array_too_large);
         }
 
         f_macro_string_ranges_t_resize(status, (*ranges), (ranges->size + 1));

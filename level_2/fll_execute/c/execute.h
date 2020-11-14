@@ -53,7 +53,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -94,7 +94,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -138,7 +138,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if size is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -168,7 +168,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if size is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -194,7 +194,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -230,7 +230,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -268,7 +268,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -296,7 +296,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_buffer_too_large (with error bit) if arguments array is too large for further allocation.
+ *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
  *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -457,7 +457,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied for program_path.
- *   F_buffer_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
+ *   F_array_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
  *   F_directory (with error bit) on invalid directory in program_path.
  *   F_failure (with error bit) if result is non-zero.
  *   F_file_found_not (with error bit) if file does not exist at the program_path.

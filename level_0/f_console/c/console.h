@@ -79,7 +79,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "values" parameters were expected but not found.
- *   F_buffer_too_large (with error bit) if a buffer would exceed max length.
+ *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.

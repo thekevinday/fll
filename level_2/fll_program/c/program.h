@@ -222,7 +222,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_buffer_too_large (with error bit) if a buffer would exceed max length.
+ *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.

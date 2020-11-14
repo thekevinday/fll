@@ -310,7 +310,7 @@ extern "C" {
 
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
-            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_t_resize, F_buffer_too_large);
+            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_t_resize, F_array_too_large);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(needs_value);
               return status;

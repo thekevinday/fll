@@ -118,7 +118,7 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
  *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
- *   F_buffer_too_large (with error bit) if a buffer is too large.
+ *   F_array_too_large (with error bit) if a buffer is too large.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -196,7 +196,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_buffer_too_large (with error bit) if appended string length is too large to store in the delimits.
+ *   F_array_too_large (with error bit) if appended string length is too large to store in the delimits.
  *
  * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
@@ -222,7 +222,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_buffer_too_large (with error bit) if increased string length is too large to store in the delimits.
+ *   F_array_too_large (with error bit) if increased string length is too large to store in the delimits.
  *
  * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
@@ -321,7 +321,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_buffer_too_large (with error bit) if increased array length is too large to store in the range.
+ *   F_array_too_large (with error bit) if increased array length is too large to store in the range.
  *
  * @see fl_fss_extended_list_object_read()
  * @see fl_fss_extended_list_content_read()
@@ -339,7 +339,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_buffer_too_large (with error bit) if increased array length is too large to store in the range.
+ *   F_array_too_large (with error bit) if increased array length is too large to store in the range.
  *
  * @see fl_fss_basic_object_read()
  * @see fl_fss_basic_content_read()

@@ -67,6 +67,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_clone()
@@ -124,6 +125,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()

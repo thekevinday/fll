@@ -657,6 +657,23 @@ extern "C" {
       }
     #endif // _di_F_status_basic_
 
+    #ifndef _di_F_status_array_
+      if (fl_string_compare(string, FL_status_string_array, length, FL_status_string_array_length) == F_equal_to) {
+        *code = F_array;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_array_too_large, length, FL_status_string_array_too_large_length) == F_equal_to) {
+        *code = F_array_too_large;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_array_too_small, length, FL_status_string_array_too_small_length) == F_equal_to) {
+        *code = F_array_too_small;
+        return F_none;
+      }
+    #endif // _di_F_status_array_
+
     #ifndef _di_F_status_busy_
       if (fl_string_compare(string, FL_status_string_busy, length, FL_status_string_busy_length) == F_equal_to) {
         *code = F_busy;

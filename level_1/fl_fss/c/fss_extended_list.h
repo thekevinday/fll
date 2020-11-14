@@ -59,7 +59,7 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
  *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
- *   F_buffer_too_large (with error bit) if a buffer is too large.
+ *   F_array_too_large (with error bit) if a buffer is too large.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -112,7 +112,7 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
  *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
- *   F_buffer_too_large (with error bit) if a buffer is too large.
+ *   F_array_too_large (with error bit) if a buffer is too large.
  *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.

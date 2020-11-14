@@ -1336,11 +1336,11 @@ extern "C" {
 
     if (strings->size + f_memory_default_allocation_step > f_array_length_t_size) {
       if (strings->size == f_array_length_t_size) {
-        return F_status_set_error(F_buffer_too_large);
+        return F_status_set_error(F_array_too_large);
       }
 
       f_macro_string_dynamics_t_resize(status, (*strings), f_array_length_t_size);
-      return F_buffer_too_large;
+      return F_array_too_large;
     }
 
     f_macro_string_dynamics_t_resize(status, (*strings), strings->size + f_memory_default_allocation_step);
@@ -1359,11 +1359,11 @@ extern "C" {
 
     if (strings->size + amount > f_array_length_t_size) {
       if (strings->size == f_array_length_t_size) {
-        return F_status_set_error(F_buffer_too_large);
+        return F_status_set_error(F_array_too_large);
       }
 
       f_macro_string_dynamics_t_resize(status, (*strings), f_array_length_t_size);
-      return F_buffer_too_large;
+      return F_array_too_large;
     }
 
     f_macro_string_dynamics_t_resize(status, (*strings), strings->size + amount);
@@ -1420,11 +1420,11 @@ extern "C" {
 
     if (lengths->size + f_memory_default_allocation_step > f_array_length_t_size) {
       if (lengths->size == f_array_length_t_size) {
-        return F_status_set_error(F_buffer_too_large);
+        return F_status_set_error(F_array_too_large);
       }
 
       f_macro_string_lengths_t_resize(status, (*lengths), f_array_length_t_size);
-      return F_buffer_too_large;
+      return F_array_too_large;
     }
 
     f_macro_string_lengths_t_resize(status, (*lengths), lengths->size + f_memory_default_allocation_step);
@@ -1443,11 +1443,11 @@ extern "C" {
 
     if (lengths->size + amount > f_array_length_t_size) {
       if (lengths->size == f_array_length_t_size) {
-        return F_status_set_error(F_buffer_too_large);
+        return F_status_set_error(F_array_too_large);
       }
 
       f_macro_string_lengths_t_resize(status, (*lengths), f_array_length_t_size);
-      return F_buffer_too_large;
+      return F_array_too_large;
     }
 
     f_macro_string_lengths_t_resize(status, (*lengths), lengths->size + amount);

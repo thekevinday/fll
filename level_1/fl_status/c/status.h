@@ -284,6 +284,16 @@ extern "C" {
     #define FL_status_string_write_only_length       12
   #endif // _di_F_status_basic_
 
+  #ifndef _di_F_status_array_
+    #define FL_status_string_array           "F_array"
+    #define FL_status_string_array_too_large "F_array_too_large"
+    #define FL_status_string_array_too_small "F_array_too_small"
+
+    #define FL_status_string_array_length           7
+    #define FL_status_string_array_too_large_length 17
+    #define FL_status_string_array_too_small_length 17
+  #endif // _di_F_status_array_
+
   #ifndef _di_F_status_busy_
     #define FL_status_string_busy         "F_busy"
     #define FL_status_string_busy_address "F_busy_address"

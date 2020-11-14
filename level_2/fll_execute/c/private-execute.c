@@ -11,7 +11,7 @@ extern "C" {
 
     if (arguments->used == arguments->size) {
       if (arguments->size + f_memory_default_allocation_step > f_array_length_t_size) {
-        if (arguments->size + 1 > f_array_length_t_size) return F_status_set_error(F_buffer_too_large);
+        if (arguments->size + 1 > f_array_length_t_size) return F_status_set_error(F_array_too_large);
         f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + 1);
       }
       else {
@@ -52,7 +52,7 @@ extern "C" {
 
     if (arguments->used + 1 >= arguments->size) {
       if (arguments->size + f_memory_default_allocation_step > f_array_length_t_size) {
-        if (arguments->size + 2 > f_array_length_t_size) return F_status_set_error(F_buffer_too_large);
+        if (arguments->size + 2 > f_array_length_t_size) return F_status_set_error(F_array_too_large);
         f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + 2);
       }
       else {

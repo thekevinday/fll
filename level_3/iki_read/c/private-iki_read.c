@@ -279,7 +279,7 @@ extern "C" {
         } // for
 
         if (name_missed) {
-          f_macro_memory_structure_macro_increment(status, names, 1, f_iki_default_allocation_step, f_macro_string_dynamics_t_resize, F_buffer_too_large);
+          f_macro_memory_structure_macro_increment(status, names, 1, f_iki_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
 
           if (F_status_is_error(status)) {
             fll_error_print(data->error, F_status_set_fine(status), "iki_read_process_buffer_ranges_whole", F_true);
@@ -488,7 +488,7 @@ extern "C" {
         status = fl_string_compare(arguments.argv[index], data->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
         if (status == F_equal_to) {
-          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_buffer_too_large);
+          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];

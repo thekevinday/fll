@@ -394,6 +394,18 @@ extern "C" {
           break;
       #endif // _di_F_status_basic_
 
+      #ifndef _di_F_status_array_
+        case F_array:
+          *string = FL_status_string_array;
+          break;
+        case F_array_too_small:
+          *string = FL_status_string_array_too_small;
+          break;
+        case F_array_too_large:
+          *string = FL_status_string_array_too_large;
+          break;
+      #endif // _di_F_status_array_
+
       #ifndef _di_F_status_busy_
         case F_busy:
           *string = FL_status_string_busy;

@@ -1879,11 +1879,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_buffer_too_large (with error bit) if the new array length is too large.
+ *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_dynamics_increase_
   extern f_return_status fl_string_dynamics_increase(f_string_dynamics_t *strings);
@@ -1903,11 +1903,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_buffer_too_large (with error bit) if the new array length is too large.
+ *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_dynamics_increase_by_
   extern f_return_status fl_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings);
@@ -1965,11 +1965,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_buffer_too_large (with error bit) if the new array length is too large.
+ *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_lengths_increase_
   extern f_return_status fl_string_lengths_increase(f_string_lengths_t *lengths);
@@ -1989,11 +1989,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_buffer_too_large on success, but the requested length is too large for the buffer.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_buffer_too_large (with error bit) if the new array length is too large.
+ *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_lengths_increase_by_
   extern f_return_status fl_string_lengths_increase_by(const f_array_length_t amount, f_string_lengths_t *lengths);

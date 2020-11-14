@@ -345,7 +345,7 @@ extern "C" {
   void fake_print_message_section_operation_path_stack_max(const fake_data_t data, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) {
     if (data.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
 
-    if (status == F_buffer_too_large) {
+    if (status == F_array_too_large) {
       fprintf(error.to.stream, "%c", f_string_eol[0]);
       fl_color_print(error.to.stream, data.error.context, "%s: Maximum stack size reached while processing path '", data.error.prefix);
       fl_color_print(error.to.stream, data.context.set.notable, "%s", path);
