@@ -14,6 +14,8 @@ Rule Specification:
   For the above Basic List Objects, "main" may be specified only once whereas the others may be specifed multiple times.
 
   The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+    "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "name": One Content, must have at least 1 non-whitespace printing character.
     "pid": One Content representing the path to a PID file directory.
 

@@ -132,4 +132,3 @@ Featureless Settings Specifications:
   - fss-000B: Simple List
   - fss-000C: Iki Text
   - fss-000D: Basic Rule
-  - fss-000E: Extended Rule

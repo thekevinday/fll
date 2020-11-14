@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-individual -lfll_error -lfll_program -lfll_status -lfl_color -lfl_console -lfl_status -lfl_string -lf_console -lf_conversion -lf_file -lf_memory -lf_pipe -lf_print -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
-build_sources_library controller.c private-controller.c
+build_sources_library controller.c private-controller.c private-entry.c private-rule.c
 build_sources_program main.c
 build_sources_headers controller.h
 build_sources_script

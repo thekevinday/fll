@@ -53,6 +53,39 @@ extern "C" {
 #endif // _di_controller_name_
 
 #ifndef _di_controller_defines_
+  #define controller_string_create      "create"
+  #define controller_string_command     "command"
+  #define controller_string_define      "define"
+  #define controller_string_environment "environment"
+  #define controller_string_group       "group"
+  #define controller_string_name        "name"
+  #define controller_string_pid         "pid"
+  #define controller_string_program     "program"
+  #define controller_string_restart     "restart"
+  #define controller_string_reload      "reload"
+  #define controller_string_script      "script"
+  #define controller_string_service     "service"
+  #define controller_string_settings    "settings"
+  #define controller_string_start       "start"
+  #define controller_string_stop        "stop"
+  #define controller_string_user        "user"
+
+  #define controller_string_create_length      6
+  #define controller_string_command_length     7
+  #define controller_string_define_length      6
+  #define controller_string_environment_length 11
+  #define controller_string_group_length       5
+  #define controller_string_name_length        4
+  #define controller_string_pid_length         3
+  #define controller_string_program_length     7
+  #define controller_string_restart_length     7
+  #define controller_string_reload_length      6
+  #define controller_string_script_length      6
+  #define controller_string_service_length     7
+  #define controller_string_settings_length    8
+  #define controller_string_start_length       5
+  #define controller_string_stop_length        4
+  #define controller_string_user_length        4
 
   enum {
     controller_parameter_help,
@@ -105,6 +138,82 @@ extern "C" {
       f_color_context_t_initialize, \
     }
 #endif // _di_controller_data_t_
+
+#ifndef _di_controller_rule_item_t_
+  enum {
+    controller_rule_item_type_single = 1,
+    controller_rule_item_type_multiple,
+  };
+
+  enum {
+    controller_rule_item_intent_create = 1,
+    controller_rule_item_intent_program,
+    controller_rule_item_intent_group,
+    controller_rule_item_intent_restart,
+    controller_rule_item_intent_reload,
+    controller_rule_item_intent_start,
+    controller_rule_item_intent_stop,
+    controller_rule_item_intent_user,
+  };
+
+  // @fixme rule_item needs to contain a list of actions which is essentially what rule_item is currently acting as.
+  typedef struct {
+    uint8_t type;
+    uint8_t intent;
+
+    f_string_length_t line;
+
+    f_string_dynamic_t name;
+    f_string_dynamic_t content;
+  } controller_rule_item_t;
+
+  #define controller_rule_item_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+    }
+
+  #define f_macro_controller_rule_item_t_delete_simple(rule_item) \
+    f_macro_string_dynamic_t_delete_simple(rule_item.name) \
+    f_macro_string_dynamic_t_delete_simple(rule_item.content)
+#endif // _di_controller_rule_item_t_
+
+#ifndef _di_controller_rule_items_t_
+  typedef struct {
+    f_string_length_t line;
+    f_string_dynamic_t name;
+
+    controller_rule_item_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_rule_items_t;
+
+  #define controller_rule_items_initialize \
+    { \
+      0, \
+      f_string_dynamic_t_initialize, \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define f_macro_controller_rule_items_t_delete_simple(items) \
+    items.used = items.size; \
+    while (items.used > 0) { \
+      items.used--; \
+      f_macro_controller_rule_item_t_delete_simple(items.array[items.used]); \
+      if (!items.used) { \
+        if (f_memory_delete((void **) & items.array, sizeof(f_string_dynamic_t), items.size)) { \
+          items.size = 0; \
+        } \
+      } \
+    } \
+    f_macro_string_dynamic_t_delete_simple(items.name);
+#endif // _di_controller_rule_items_t_
 
 /**
  * Print help.

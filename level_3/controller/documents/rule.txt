@@ -3,12 +3,14 @@
 Rule Documentation:
   This describes the intent and purpose of the rule file settings.
 
-  A rule file, such as "ssh.rule", is intended to desginate what to execute.
+  A rule file, such as "ssh.rule", is intended to designate what to execute.
 
   The rule file is read top-down, except for the outer most list "settings", which is intended to store settings data for this rule.
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
   The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+    "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
+    "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     "name": A name used to represent this rule, which is printing to the user, screen, logs, etc...
     "pid": A path to a directory where the PID file is expected to be stored in.
     @todo: consider adding "path" to allow specifying a custom environment PATH variable (or even go a step further and instead provide "environment" or "variable").
@@ -32,7 +34,7 @@ Rule Documentation:
   The "reload" Content is performed whenever this rule is executed using the reload action.
 
   When "restart" Content is not provided, then "start" and "stop" is called when the rule is executed using the restart action, if both "start" and "stop" are provided.
-  When "reload", "start", or "stop" Content are not provided, then no respective action is peformed.
+  When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
 
   The "group" inner Content, an associated "command", "service", or "script" are executed with that group ID or group name.
   The "user" inner Content, an associated "command", "service", or "script" are executed with that user ID or user name.
