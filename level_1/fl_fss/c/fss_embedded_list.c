@@ -1111,20 +1111,15 @@ extern "C" {
           }
           else if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
-            if (content.string[range->start] == f_fss_eol) {
-              ends_on_eol = F_true;
-            }
-            else {
-              ends_on_eol = F_false;
-            }
-
-            // increase by total slashes + 1, along with the extended list open and possible newline.
-            status = private_fl_fss_destination_increase_by(slash_count + 3, destination);
+            // increase by total slashes + 1 embedded list open/close.
+            status = private_fl_fss_destination_increase_by(slash_count + 2, destination);
             if (F_status_is_error(status)) break;
 
-            while (slash_count--) {
-              destination->string[destination->used++] = f_fss_delimit_slash;
-            } // while
+            if (content.string[range->start] == f_fss_embedded_list_open) {
+              while (slash_count--) {
+                destination->string[destination->used++] = f_fss_delimit_slash;
+              } // while
+            }
 
             destination->string[destination->used++] = f_fss_delimit_slash;
             destination->string[destination->used++] = content.string[start];
