@@ -30,12 +30,16 @@ extern "C" {
 /**
  * Read a buffer expected to be in fss-0003 format, getting all objects and their respective content.
  *
+ * This does not utilize recursion and has a max content depth of 1, see fss-0008 (Embedded List) for that purpose.
+ *
  * @param buffer
  *   The buffer to read from.
  * @param range
  *   The range within the buffer that is currently being read.
- * @param nest
- *   An nested set of all objects and content.
+ * @param objects
+ *   This will be populated with all valid objects found.
+ * @param contents
+ *   This will be populated with all valid contents found.
  * @param objects_delimits
  *   An array of delimits for objects detected during processing.
  *   The caller is expected to decide if and when to process them.
@@ -71,7 +75,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_extended_list_object_read().
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
+  extern f_return_status fll_fss_extended_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
 #endif // _di_fll_fss_extended_list_read_
 
 /**

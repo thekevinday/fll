@@ -80,8 +80,6 @@ extern "C" {
 /**
  * Read an fss-0008 content.
  *
- * @fixme the recursive part of this is actually fss-0008 (Embedded) content, fss-0008 is not recursive, oops!
- *
  * This will record where delimit placeholders exist but will not apply the delimits.
  *
  * This operates on the assumption that found.array[0].array[found.array[0].used].content is the current content being processed.

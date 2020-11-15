@@ -80,13 +80,9 @@ extern "C" {
 /**
  * Read an fss-0003 content.
  *
- * @fixme the recursive part of this is actually fss-0008 (Embedded) content, fss-0003 is not recursive, oops!
- *
  * This will record where delimit placeholders exist but will not apply the delimits.
  *
- * This operates on the assumption that found.array[0].array[found.array[0].used].content is the current content being processed.
- * Therefore the object for this content will also need to be found.array[0].array[found.array[0].used].object.
- * The object at depth 0 will not be populated, but all nested objects will be populated at their respective depth along with the content.
+ * This does not utilize recursion and has a max content depth of 1, see fss-0008 (Embedded List) for that purpose.
  *
  * @param buffer
  *   The buffer to read from.
@@ -128,7 +124,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_list_content_read_
-  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments);
+  extern f_return_status fl_fss_extended_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments);
 #endif // _di_fl_fss_extended_list_content_read_
 
 /**

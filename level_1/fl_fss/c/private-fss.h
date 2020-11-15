@@ -54,12 +54,13 @@ extern "C" {
  *   Errors (with error bit) from: private_fl_fss_destination_increase().
  *
  * @see fl_fss_basic_list_content_write_string()
+ * @see fl_fss_embedded_list_content_write_string()
  * @see fl_fss_extended_list_content_write_string()
  * @see private_fl_fss_destination_increase()
  */
-#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
   extern f_return_status private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
 
 /**
  * Trim a given object used by the basic list and extended list object write functions.
@@ -198,18 +199,20 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_array_too_large (with error bit) if appended string length is too large to store in the delimits.
  *
- * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
- * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_embedded_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
  * @see fl_fss_extended_content_write_string()
- * @see fl_fss_extended_list_object_write_string()
  * @see fl_fss_extended_list_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_delimits_increase(f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
  * Increase the size of delimits array by the given amount, but only if necessary.
@@ -224,18 +227,20 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_array_too_large (with error bit) if increased string length is too large to store in the delimits.
  *
- * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
- * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_embedded_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
  * @see fl_fss_extended_content_write_string()
- * @see fl_fss_extended_list_object_write_string()
  * @see fl_fss_extended_list_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_delimits_increase_by(const f_string_length_t amount, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
  * Increase the size of destination buffer, but only if necessary.
@@ -250,18 +255,20 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_string_too_large (with error bit) if the new array length is too large.
  *
- * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
- * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_embedded_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
  * @see fl_fss_extended_content_write_string()
- * @see fl_fss_extended_list_object_write_string()
  * @see fl_fss_extended_list_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
  * Increase the size of destination buffer by the given amount, but only if necessary.
@@ -278,18 +285,20 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_string_too_large (with error bit) if the new array length is too large.
  *
- * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_content_write_string()
- * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_basic_object_write_string()
  * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_extended_object_write_string()
+ * @see fl_fss_basic_list_object_write_string()
+ * @see fl_fss_embedded_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
  * @see fl_fss_extended_content_write_string()
- * @see fl_fss_extended_list_object_write_string()
  * @see fl_fss_extended_list_content_write_string()
+ * @see fl_fss_extended_list_object_write_string()
+ * @see fl_fss_extended_object_write_string()
  */
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
+#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
  * Prepend the given string onto the destination buffer, allocating space as necessary.
@@ -323,12 +332,12 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_array_too_large (with error bit) if increased array length is too large to store in the range.
  *
- * @see fl_fss_extended_list_object_read()
- * @see fl_fss_extended_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
+ * @see fl_fss_embedded_list_content_read()
  */
-#if !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_)
+#if !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_nest_increase(f_fss_nest_t *nest) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_)
+#endif // !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
  * Increase the size of a given range buffer, but only if necessary.
@@ -343,16 +352,18 @@ extern "C" {
  *
  * @see fl_fss_basic_object_read()
  * @see fl_fss_basic_content_read()
- * @see fl_fss_extended_object_read()
- * @see fl_fss_extended_content_read()
- * @see fl_fss_basic_list_object_read()
  * @see fl_fss_basic_list_content_read()
- * @see fl_fss_extended_list_object_read()
+ * @see fl_fss_basic_list_object_read
+ * @see fl_fss_embedded_list_content_read()
+ * @see fl_fss_embedded_list_object_read()
+ * @see fl_fss_extended_content_read()
  * @see fl_fss_extended_list_content_read()
+ * @see fl_fss_extended_list_object_read()
+ * @see fl_fss_extended_object_read()
  */
-#if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_)
+#if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_ranges_increase(f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_)
+#endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 #ifdef __cplusplus
 } // extern "C"

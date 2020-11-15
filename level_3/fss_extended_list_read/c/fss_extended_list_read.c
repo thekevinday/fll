@@ -41,7 +41,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fprintf(output.stream, "  This program will print the content associated with the given object and content data based on the FSS-0002 Basic List standard.%c", f_string_eol[0]);
+    fprintf(output.stream, "  This program will print the content associated with the given object and content data based on the FSS-0003 Extended List standard.%c", f_string_eol[0]);
 
     fprintf(output.stream, "%c", f_string_eol[0]);
 
@@ -167,7 +167,7 @@ extern "C" {
 
       {
         f_console_parameter_id_t ids[3] = { fss_extended_list_read_parameter_no_color, fss_extended_list_read_parameter_light, fss_extended_list_read_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = { ids, 3 };
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
@@ -214,14 +214,14 @@ extern "C" {
       fss_extended_list_read_print_help(data->output, data->context);
 
       fss_extended_list_read_delete_data(data);
-      return F_none;
+      return status;
     }
 
     if (data->parameters[fss_extended_list_read_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, fss_extended_list_read_version);
 
       fss_extended_list_read_delete_data(data);
-      return F_none;
+      return status;
     }
 
     if (data->remaining.used > 0 || data->process_pipe) {
@@ -265,8 +265,8 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
-        if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
+      if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
+        if (data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
@@ -301,8 +301,8 @@ extern "C" {
         }
       }
 
-      if (data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
-        if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
+        if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_line);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
@@ -313,8 +313,8 @@ extern "C" {
         }
       }
 
-      if (data->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
-        if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
+        if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_list_read_long_pipe);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
@@ -384,8 +384,7 @@ extern "C" {
 
       fss_extended_list_read_depths_t depths = fss_extended_list_read_depths_t_initialize;
 
-      f_fss_delimits_t objects_delimits = f_fss_delimits_t_initialize;
-      f_fss_delimits_t contents_delimits = f_fss_delimits_t_initialize;
+      f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       f_string_length_t original_size = data->quantity.total;
@@ -396,6 +395,20 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "fss_extended_list_read_main_preprocess_depth", F_true);
         }
+      }
+
+      // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
+      if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
+        macro_fss_extended_list_read_depths_t_delete_simple(depths);
+        f_macro_fss_delimits_t_delete_simple(delimits);
+        f_macro_fss_comments_t_delete_simple(comments);
+
+        if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
+          fprintf(data->output.stream, "0%c", f_string_eol[0]);
+        }
+
+        fss_extended_list_read_delete_data(data);
+        return F_none;
       }
 
       if (F_status_is_error_not(status) && data->parameters[fss_extended_list_read_parameter_select].result == f_console_result_found) {
@@ -417,7 +430,7 @@ extern "C" {
           fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe);
         }
         else {
-          status = fss_extended_list_read_main_process_file(arguments, data, "-", depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_extended_list_read_main_process_file(arguments, data, "-", depths, &delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "fss_extended_list_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe);
@@ -425,7 +438,8 @@ extern "C" {
         }
 
         // Clear buffers before continuing.
-        f_macro_fss_nest_t_delete_simple(data->nest);
+        f_macro_fss_contents_t_delete_simple(data->contents);
+        f_macro_fss_objects_t_delete_simple(data->objects);
         f_macro_string_dynamic_t_delete_simple(data->buffer);
       }
 
@@ -444,6 +458,7 @@ extern "C" {
 
           if (!data->quantity.total) {
             status = f_file_size_by_id(file.id, &data->quantity.total);
+
             if (F_status_is_error(status)) {
               fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
 
@@ -471,7 +486,7 @@ extern "C" {
             break;
           }
 
-          status = fss_extended_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths, &objects_delimits, &contents_delimits, &comments);
+          status = fss_extended_list_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths, &delimits, &comments);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "fss_extended_list_read_main_process_file", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
@@ -479,19 +494,20 @@ extern "C" {
           }
 
           // Clear buffers before repeating the loop.
-          f_macro_fss_nest_t_delete_simple(data->nest);
+          f_macro_fss_contents_t_delete_simple(data->contents);
+          f_macro_fss_objects_t_delete_simple(data->objects);
           f_macro_string_dynamic_t_delete_simple(data->buffer);
         } // for
 
         if (F_status_is_error(status)) {
-          f_macro_fss_nest_t_delete_simple(data->nest);
+          f_macro_fss_contents_t_delete_simple(data->contents);
+          f_macro_fss_objects_t_delete_simple(data->objects);
           f_macro_string_dynamic_t_delete_simple(data->buffer);
         }
       }
 
       macro_fss_extended_list_read_depths_t_delete_simple(depths);
-      f_macro_fss_delimits_t_delete_simple(objects_delimits);
-      f_macro_fss_delimits_t_delete_simple(contents_delimits);
+      f_macro_fss_delimits_t_delete_simple(delimits);
       f_macro_fss_comments_t_delete_simple(comments);
     }
     else {
@@ -513,8 +529,8 @@ extern "C" {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_fss_nest_t_delete_simple(data->nest);
-
+    f_macro_fss_contents_t_delete_simple(data->contents);
+    f_macro_fss_objects_t_delete_simple(data->objects);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
     f_macro_string_lengths_t_delete_simple(data->remaining);
 

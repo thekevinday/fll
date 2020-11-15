@@ -5,7 +5,7 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * This is the FSS Basic List Read program
+ * This is the FSS Extended List Read program
  * This program utilizes the Featureless Linux Library.
  * This program processes files or other input in fss format and stores the results in the fss_extended_list_read_data_t.
  *
@@ -122,7 +122,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, F_false, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
@@ -176,7 +176,8 @@ extern "C" {
     fll_error_print_t error;
 
     f_string_dynamic_t buffer;
-    f_fss_nest_t nest;
+    f_fss_objects_t objects;
+    f_fss_contents_t contents;
     f_string_quantity_t quantity;
 
     uint8_t delimit_mode;
@@ -193,7 +194,8 @@ extern "C" {
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_fss_nest_t_initialize, \
+      f_fss_objects_t_initialize, \
+      f_fss_contents_t_initialize, \
       f_string_quantity_t_initialize, \
       fss_extended_list_read_delimit_mode_all, \
       0, \

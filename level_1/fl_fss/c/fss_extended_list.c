@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_object_read_
 
 #ifndef _di_fl_fss_extended_list_content_read_
-  f_return_status fl_fss_extended_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
+  f_return_status fl_fss_extended_list_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
     #ifndef _di_level_1_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
@@ -258,273 +258,106 @@ extern "C" {
       if (!comments) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_array_length_t found_used = found->used;
+    const f_array_length_t delimits_used = delimits->used;
+    const f_array_length_t comments_used = comments->used;
 
     f_status_t status = f_fss_skip_past_delimit(*buffer, range);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none_eos || status == F_none_stop) {
-      return status;
-    }
+    fl_macro_fss_content_with_comments_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
-    status = private_fl_fss_nest_increase(found);
+    status = private_fl_fss_ranges_increase(found);
     if (F_status_is_error(status)) return status;
 
-    f_string_lengths_t positions_start = f_string_lengths_t_initialize;
+    found->array[found->used].start = range->start;
 
-    f_macro_string_lengths_t_new(status, positions_start, f_fss_default_allocation_step);
-    if (F_status_is_error(status)) return status;
-
-    f_fss_objects_t objects = f_fss_objects_t_initialize;
-
-    f_macro_fss_objects_t_new(status, objects, f_fss_default_allocation_step);
-
-    if (F_status_is_error(status)) {
-      f_macro_string_lengths_t_delete_simple(positions_start);
-
-      return status;
-    }
-
-    const f_array_length_t delimits_used = delimits->used;
-    const f_array_length_t comments_used = comments->used;
-
-    f_array_length_t depth = 0;
-    f_array_length_t position = 0;
-
-    f_string_length_t position_previous = range->start;
-    f_string_length_t line_start = range->start;
     f_string_length_t newline_last = range->start;
-    f_string_length_t comment_delimit = 0;
-
     f_string_length_t slash_first = 0;
-    f_string_length_t slash_last = 0;
     f_string_length_t slash_count = 0;
+    f_string_length_t start = 0;
 
-    f_string_length_t before_list_open = position_previous;
-
-    bool is_open = F_false;
-
-    uint8_t graph_first = 0x0; // 0x0 = false, 0x1 = true, 0x2 = false, but there is a delimited comment, comment_delimit is set.
-
-    // initialize depth 1 start position.
-    // positions_start.used is used as a max depth (such that positions_start.used == max depth + 1).
-    positions_start.array[0] = range->start;
-    positions_start.used = 1;
-
+    // identify where the content ends.
     while (range->start <= range->stop && range->start < buffer->used) {
 
-      if (buffer->string[range->start] == f_fss_eol) {
-        if (graph_first == 0x2) {
-          status = private_fl_fss_delimits_increase(delimits);
-          if (F_status_is_error(status)) break;
+      status = f_fss_skip_past_space(*buffer, range);
+      if (F_status_is_error(status)) return status;
 
-          delimits->array[delimits->used++] = comment_delimit;
-        }
-
+      if (status == F_none_eol) {
         newline_last = range->start;
-        position_previous = range->start++;
-        graph_first = 0x1;
-
-        if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-        }
-        else {
-          fl_macro_fss_nest_return_on_overflow_delimited((*buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop);
-        }
-
-        line_start = range->start;
+        range->start++;
         continue;
       }
 
       if (buffer->string[range->start] == f_fss_delimit_slash) {
         slash_first = range->start;
-        slash_last = range->start;
         slash_count = 1;
 
-        position_previous = range->start;
+        for (range->start++; range->start <= range->stop && range->start < buffer->used; ++range->start) {
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
-        if (F_status_is_error(status)) break;
-
-        while (range->start <= range->stop && range->start < buffer->used && (buffer->string[range->start] == f_fss_delimit_placeholder || buffer->string[range->start] == f_fss_delimit_slash)) {
-          position_previous = range->start;
-
-          if (buffer->string[range->start] == f_fss_delimit_slash) {
-            slash_last = range->start++;
+          if (buffer->string[range->start] == f_fss_delimit_placeholder) {
+            continue;
+          } else if (buffer->string[range->start] != f_fss_delimit_slash) {
+            break;
           }
 
-          status = f_utf_buffer_increment(*buffer, range, 1);
-          if (F_status_is_error(status)) break;
-        } // while
+          slash_count++;
+        } // for
 
-        if (F_status_is_error(status)) break;
+        if (range->start > range->stop || range->start >= buffer->used) break;
 
-        if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-        }
-        else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
-        }
-
-        // All slashes for an open are delimited (because it could represent a slash in the object name).
-        // for example 'object {' = valid open, name 'object', 'object \{' represents 'object {', 'object \\{' = valid open, name 'object \', 'object \\\{' represents 'object \{', etc..
         // Only the first slash before a close is delimited, all others are maintained.
-        // for example '}' = valid close, '\}' represents '}', '\\}' represents '\}', '\\\}' represents '\\}', '\\\\}' represents '\\\}', and so on..
-        // When slash is odd and a (delimited) valid open/close is found, then save delimited positions and continue.
-        if (buffer->string[range->start] == f_fss_eol) {
-          if (graph_first == 0x2) {
-            status = private_fl_fss_delimits_increase(delimits);
-            if (F_status_is_error(status)) break;
-
-            delimits->array[delimits->used++] = comment_delimit;
-          }
-
-          newline_last = range->start;
-          position_previous = range->start++;
-          line_start = range->start;
-          graph_first = 0x1;
-        }
-        else if (buffer->string[range->start] == f_fss_extended_list_open || buffer->string[range->start] == f_fss_extended_list_close) {
-          before_list_open = position_previous;
-          is_open = F_false;
-          graph_first = 0x0;
-
-          if (buffer->string[range->start] == f_fss_extended_list_open) {
-            is_open = F_true;
-          }
-
-          position_previous = range->start++;
+        // For example '}' = valid close, '\}' represents '}', '\\}' represents '\}', '\\\}' represents '\\}', '\\\\}' represents '\\\}', and so on..
+        // With one or more slashes, even if delimited, this line may never designate a valid content close.
+        if (buffer->string[range->start] == f_fss_extended_list_close) {
+          range->start++;
 
           while (range->start <= range->stop && range->start < buffer->used) {
 
-            if (buffer->string[range->start] == f_fss_eol) {
-              if (graph_first == 0x2) {
-                status = private_fl_fss_delimits_increase(delimits);
-                if (F_status_is_error(status)) break;
+            if (buffer->string[range->start] == f_fss_eol) break;
 
-                delimits->array[delimits->used++] = comment_delimit;
-              }
+            status = f_fss_is_space(*buffer, *range);
+            if (F_status_is_error(status)) break;
 
-              newline_last = range->start;
-              line_start = range->start + 1;
-              graph_first = 0x1;
-              break;
-            }
-
-            if (buffer->string[range->start] != f_fss_delimit_placeholder) {
-              status = f_fss_is_space(*buffer, *range);
-              if (F_status_is_error(status)) break;
-
-              if (status == F_false) break;
-            }
-
-            position_previous = range->start;
+            if (status == F_false) break;
 
             status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(status)) break;
           } // while
 
+          if (range->start > range->stop || range->start >= buffer->used) break;
+
+          if (buffer->string[range->start] == f_fss_eol) {
+            status = private_fl_fss_delimits_increase(delimits);
+            if (F_status_is_error(status)) break;
+
+            delimits->array[delimits->used++] = slash_first;
+            continue;
+          }
+        }
+        else if (buffer->string[range->start] == f_fss_comment) {
+          status = private_fl_fss_delimits_increase(delimits);
           if (F_status_is_error(status)) break;
 
-          if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-          }
-          else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
-          }
-
-          // this is a valid object open/close that has been delimited, save the slash delimit positions.
-          if (buffer->string[range->start] == f_fss_eol) {
-            newline_last = range->start;
-            line_start = range->start + 1;
-            graph_first = 0x1;
-
-            if (is_open) {
-              bool is_object = F_false;
-
-              if (slash_count % 2 == 0) {
-                is_object = F_true;
-              }
-
-              range->start = slash_first;
-
-              status = private_fl_fss_delimits_increase_by((slash_count / 2) + 1, delimits);
-              if (F_status_is_error(status)) break;
-
-              // apply slash delimits, only slashes and placeholders should be present.
-              while (slash_count > 0) {
-
-                if (buffer->string[range->start] == f_fss_delimit_slash) {
-                  if (slash_count % 2 == 1) {
-                    delimits->array[delimits->used++] = range->start;
-                  }
-
-                  slash_count--;
-                }
-
-                // Delimit slashes and placeholders are required to be in the ASCII range.
-                position_previous = range->start++;
-              } // while
-
-              if (F_status_is_error(status)) break;
-
-              // when slashes are even, the object is valid and needs to be processed.
-              if (is_object) {
-                depth++;
-
-                if (depth > positions_start.size) {
-                  f_macro_string_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
-                  if (F_status_is_error(status)) break;
-                }
-
-                if (positions_start.used < depth) {
-                  positions_start.used = depth;
-                }
-
-                positions_start.array[depth] = newline_last + 1;
-
-                objects.array[depth].start = line_start;
-                objects.array[depth].stop = before_list_open;
-              }
-            }
-            else {
-              status = private_fl_fss_delimits_increase(delimits);
-              if (F_status_is_error(status)) break;
-
-              delimits->array[delimits->used++] = slash_last;
-            }
-
-            range->start = newline_last;
-          }
+          delimits->array[delimits->used++] = slash_first;
         }
-        else if (graph_first == 0x1 && buffer->string[range->start] == f_fss_comment) {
-          graph_first = 0x2;
-          comment_delimit = slash_first;
-        }
-        else {
-          graph_first = 0x0;
-        }
-      }
-      else if (buffer->string[range->start] == f_fss_extended_list_open) {
-        graph_first = 0x0;
-        before_list_open = position_previous;
-        position_previous = range->start;
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
+        status = f_fss_seek_to_eol(*buffer, range);
         if (F_status_is_error(status)) break;
+
+        continue;
+      }
+
+      if (buffer->string[range->start] == f_fss_extended_list_close) {
+        range->start++;
 
         while (range->start <= range->stop && range->start < buffer->used) {
 
           if (buffer->string[range->start] == f_fss_eol) break;
 
-          if (buffer->string[range->start] != f_fss_delimit_placeholder) {
-            status = f_fss_is_space(*buffer, *range);
-            if (F_status_is_error(status)) break;
+          status = f_fss_is_space(*buffer, *range);
+          if (F_status_is_error(status)) break;
 
-            if (status == F_false) break;
-          }
-
-          position_previous = range->start;
+          if (status == F_false) break;
 
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) break;
@@ -532,216 +365,21 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-        }
-        else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
-        }
+        if (range->start > range->stop || range->start >= buffer->used) break;
 
+        // found a valid content close, set stop point to last newline.
         if (buffer->string[range->start] == f_fss_eol) {
-          depth++;
+          range->start = newline_last + 1;
+          found->array[found->used++].stop = newline_last;
 
-          if (depth >= positions_start.size) {
-            f_macro_string_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
-            if (F_status_is_error(status)) break;
-
-            f_macro_fss_objects_t_resize(status, objects, objects.size + f_fss_default_allocation_step);
-            if (F_status_is_error(status)) break;
-          }
-
-          if (positions_start.used <= depth) {
-            positions_start.used = depth + 1;
-          }
-
-          positions_start.array[depth] = range->start + 1;
-
-          objects.array[depth].start = line_start;
-          objects.array[depth].stop = before_list_open;
-
-          if (graph_first == 0x2) {
-            status = private_fl_fss_delimits_increase(delimits);
-            if (F_status_is_error(status)) break;
-
-            delimits->array[delimits->used++] = comment_delimit;
-          }
-
-          newline_last = range->start;
-          line_start = range->start + 1;
-          graph_first = 0x1;
+          return FL_fss_found_content;
         }
-        else {
 
-          // No valid object close found, seek until EOL.
-          status = f_fss_seek_to_eol(*buffer, range);
-          if (F_status_is_error(status)) break;
-
-          if (graph_first == 0x2) {
-            status = private_fl_fss_delimits_increase(delimits);
-            if (F_status_is_error(status)) break;
-
-            delimits->array[delimits->used++] = comment_delimit;
-          }
-
-          newline_last = range->start;
-          line_start = range->start + 1;
-          graph_first = 0x1;
-
-          while (range->start <= range->stop && range->start < buffer->used) {
-
-            if (buffer->string[range->start] == f_fss_eol) {
-              newline_last = range->start;
-              line_start = range->start + 1;
-              break;
-            }
-
-            position_previous = range->start;
-
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) break;
-          } // while
-
-          if (F_status_is_error(status)) break;
-
-          if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-          }
-          else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
-          }
-        }
+        continue;
       }
-      else if (buffer->string[range->start] == f_fss_extended_list_close) {
-        graph_first = 0x0;
 
-        while (range->start <= range->stop && range->start < buffer->used) {
-
-          position_previous = range->start;
-
-          status = f_utf_buffer_increment(*buffer, range, 1);
-          if (F_status_is_error(status)) break;
-
-          if (buffer->string[range->start] == f_fss_eol) {
-            break;
-          }
-
-          if (buffer->string[range->start] != f_fss_delimit_placeholder) {
-            status = f_fss_is_space(*buffer, *range);
-            if (F_status_is_error(status)) break;
-
-            if (status == F_false) {
-              break;
-            }
-          }
-        } // while
-
-        if (F_status_is_error(status)) break;
-
-        if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
-        }
-        else {
-          fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
-        }
-
-        if (buffer->string[range->start] == f_fss_eol) {
-          status = private_fl_fss_nest_increase(found);
-          if (F_status_is_error(status)) break;
-
-          if (found->depth[depth].used == found->depth[depth].size) {
-            f_macro_fss_items_t_resize(status, found->depth[depth], found->depth[depth].size + f_fss_default_allocation_step);
-            if (F_status_is_error(status)) break;
-          }
-
-          position = found->depth[depth].used;
-
-          if (found->depth[depth].array[position].content.size != 1) {
-            f_macro_fss_content_t_resize(status, found->depth[depth].array[position].content, 1);
-            if (F_status_is_error(status)) break;
-          }
-
-          if (depth) {
-            found->depth[depth].array[position].parent = found->depth[depth - 1].used;
-
-            // only assign object positions for nested objects.
-            found->depth[depth].array[position].object.start = objects.array[depth].start;
-            found->depth[depth].array[position].object.stop = objects.array[depth].stop;
-          }
-
-          found->depth[depth].array[position].content.array[0].start = positions_start.array[depth];
-          found->depth[depth].array[position].content.array[0].stop = newline_last;
-          found->depth[depth].array[position].content.used = 1;
-
-          if (position >= found->depth[depth].used) {
-            found->depth[depth].used++;
-          }
-
-          if (found->used < depth + 1) {
-            found->used = depth + 1;
-          }
-
-          if (graph_first == 0x2) {
-            status = private_fl_fss_delimits_increase(delimits);
-            if (F_status_is_error(status)) break;
-
-            delimits->array[delimits->used++] = comment_delimit;
-          }
-
-          newline_last = range->start;
-          line_start = range->start + 1;
-          graph_first = 0x1;
-
-          if (!depth) {
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) break;
-
-            fl_macro_fss_nest_return_on_overflow_delimited((*buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop)
-
-            f_macro_string_lengths_t_delete_simple(positions_start);
-            f_macro_fss_objects_t_delete_simple(objects);
-
-            return FL_fss_found_content;
-          }
-
-          depth--;
-        }
-        else {
-
-          // No valid object close found, seek until EOL.
-          while (range->start <= range->stop && range->start < buffer->used) {
-
-            if (buffer->string[range->start] == f_fss_eol) {
-              if (graph_first == 0x2) {
-                status = private_fl_fss_delimits_increase(delimits);
-                if (F_status_is_error(status)) break;
-
-                delimits->array[delimits->used++] = comment_delimit;
-              }
-
-              newline_last = range->start;
-              line_start = range->start + 1;
-              graph_first = 0x1;
-              break;
-            }
-
-            position_previous = range->start;
-
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) break;
-          } // while
-
-          if (F_status_is_error(status)) break;
-
-          if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
-          }
-          else {
-            fl_macro_fss_nest_return_on_overflow((*buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop)
-          }
-        }
-      }
-      else if (graph_first == 0x1 && buffer->string[range->start] == f_fss_comment) {
-        position = range->start;
+      if (buffer->string[range->start] == f_fss_comment) {
+        start = range->start;
 
         status = f_fss_seek_to_eol(*buffer, range);
         if (F_status_is_error(status)) break;
@@ -753,72 +391,26 @@ extern "C" {
           range->start--;
         }
         else {
-          if (graph_first == 0x2) {
-            status = private_fl_fss_delimits_increase(delimits);
-            if (F_status_is_error(status)) break;
-
-            delimits->array[delimits->used++] = comment_delimit;
-          }
-
           newline_last = range->start;
-          graph_first = 0x1;
         }
 
-        comments->array[comments->used].start = position;
+        comments->array[comments->used].start = start;
         comments->array[comments->used++].stop = range->start++;
         continue;
       }
-      else if (buffer->string[range->start] != f_fss_eol) {
-        position_previous = range->start;
 
-        if (graph_first == 0x1) {
-          status = f_fss_is_space(*buffer, *range);
-          if (F_status_is_error(status)) break;
-
-          if (status == F_false) {
-            graph_first = 0x0;
-          }
-        }
-
-        status = f_utf_buffer_increment(*buffer, range, 1);
-        if (F_status_is_error(status)) break;
-
-        if (range->start >= buffer->used || range->start > range->stop) {
-          break;
-        }
-
-        continue;
-      }
-
-      position_previous = range->start;
-
-      status = f_utf_buffer_increment(*buffer, range, 1);
+      // There is no possibility of a valid content close, so seek until newline.
+      status = f_fss_seek_to_eol(*buffer, range);
       if (F_status_is_error(status)) break;
     } // while
 
-    f_macro_string_lengths_t_delete_simple(positions_start);
-    f_macro_fss_objects_t_delete_simple(objects);
-
-    delimits->used = delimits_used;
-    comments->used = comments_used;
-
     if (F_status_is_error(status)) {
+      delimits->used = delimits_used;
+      comments->used = comments_used;
       return status;
     }
 
-    if (range->start > range->stop) {
-      if (!depth) {
-        return F_status_set_error(F_unterminated_stop);
-      }
-
-      return F_status_set_error(F_unterminated_nest_stop);
-    }
-
-    if (!depth) {
-      return F_status_set_error(F_unterminated_eos);
-    }
-
-    return F_status_set_error(F_unterminated_nest_eos);
+    return FL_fss_found_content_not;
   }
 #endif // _di_fl_fss_extended_list_content_read_
 
@@ -1100,34 +692,23 @@ extern "C" {
           slash_count++;
         } // for
 
-        if (content.string[range->start] == f_fss_extended_list_open || content.string[range->start] == f_fss_extended_list_close) {
+        if (content.string[range->start] == f_fss_extended_list_close) {
           start = range->start++;
 
           status = f_fss_skip_past_space(content, range);
           if (F_status_is_error(status)) break;
 
-          if (has_graph && content.string[range->start] == f_fss_extended_list_close) {
+          if (has_graph) {
             // do nothing.
           }
           else if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
-            if (content.string[range->start] == f_fss_eol) {
-              ends_on_eol = F_true;
-            }
-            else {
-              ends_on_eol = F_false;
-            }
-
-            // increase by total slashes + 1, along with the extended list open and possible newline.
-            status = private_fl_fss_destination_increase_by(slash_count + 3, destination);
+            // increase by total slashes + 1 and extended list close.
+            status = private_fl_fss_destination_increase_by(2, destination);
             if (F_status_is_error(status)) break;
 
-            while (slash_count--) {
-              destination->string[destination->used++] = f_fss_delimit_slash;
-            } // while
-
             destination->string[destination->used++] = f_fss_delimit_slash;
-            destination->string[destination->used++] = content.string[start];
+            destination->string[destination->used++] = f_fss_extended_list_close;
 
             range->start = start + 1;
 
@@ -1159,7 +740,7 @@ extern "C" {
           continue;
         }
       }
-      else if ((content.string[range->start] == f_fss_extended_list_open || (!has_graph && content.string[range->start] == f_fss_extended_list_close)) && !is_comment) {
+      else if (!has_graph && content.string[range->start] == f_fss_extended_list_close && !is_comment) {
         start = range->start++;
 
         if (do_prepend) {
@@ -1200,8 +781,8 @@ extern "C" {
             }
           }
 
-          // increase by slash and extended list open and possible newline.
-          status = private_fl_fss_destination_increase_by(3, destination);
+          // increase by slash and extended list close.
+          status = private_fl_fss_destination_increase_by(2, destination);
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash;

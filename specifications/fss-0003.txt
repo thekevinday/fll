@@ -2,7 +2,8 @@
 
 Featureless Settings Specification: 0003 - Extended List:
   Each Object starts at the beginning of a line and whitespace to the left of the Object is not treated as an object.
-  An open-brace ({) followed by any whitespace until a newline terminates a valid Object.
+  An open-brace ({) followed by any whitespace until a newline terminates a possible valid Object.
+  An Object is not considered fully valid until a valid close-brace (}) is found, designating the end of the Content.
   Non-whitespace may not follow the open-brace of a valid Object.
 
   Content exists on every line following a valid object until the end of file (or string) or until a non-delimited close-brace (}).
@@ -11,8 +12,12 @@ Featureless Settings Specification: 0003 - Extended List:
 
   There is no single-quote or double-quote delimitation in this specification.
   Only the open-brace that would result in a valid Object or the close-brace that would terminate valid Content can be delimited.
-  Each delimit slash in an open-brace is treated as a potential delimit such that two slashes represents a single delimited slash ('\\\{' would represent '\{').
-  Only the first delimit slash in a close-brace is treated as a potential delimit ('\\\}' would represent '\\}').
+  When inside potentially valid Content (which follows a valid Object) the open-brace cannot be delimited because this standard is not-recursive.
+  When not inside any potentially valid Content (that is, there is no previous unclosed Object), then the Object may be delimited.
+  Likelwise, the close-brace may only be delimited if it is within any potentially valid Content.
+
+  Each delimit slash in a delimitable open-brace is treated as a potential delimit such that two slashes represents a single delimited slash ('\\\{' would represent '\{').
+  Only the first delimit slash in a delimitable close-brace is treated as a potential delimit ('\\\}' would represent '\\}').
 
   Key\:
     \s = whitespace, except newline.
