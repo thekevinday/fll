@@ -9,7 +9,7 @@ Rule Specification:
     "settings": Required.
     "command": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: "group", "restart", "reload", "start", "stop", and "user".
     "script": A Basic List of FSS-0003 (Extended List) Object and Content, supporting the following Objects: "restart", "reload", "start", and "stop" and A Basic List of FSS-0001 (Extended) Object and Content, supporting the following: "group" and "user".
-    "service": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: ""create", "group", "program", "restart", "reload", "start", "stop", "timeout", and "user".
+    "service": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: ""create", "group", "use", "restart", "reload", "start", "stop", "timeout", and "user".
 
   For the above Basic List Objects, "main" may be specified only once whereas the others may be specifed multiple times.
 
@@ -21,12 +21,12 @@ Rule Specification:
 
   For the inner parts, these are the Extended Objects\:
     "create": One Content representing the path to a PID file.
-    "program": One Content representing the path to a PID file.
     "group": One Content representing a group name or group id.
     "restart": One or more Content representing a program to and its arguments.
     "reload": One or more Content representing a program to and its arguments.
     "start": One or more Content representing a program to and its arguments.
     "stop": One or more Content representing a program to and its arguments.
+    "use": One Content representing the path to a PID file.
     "user": One Content representing a user name or user id.
 
   For the inner parts, these are the Extended List Objects\:

@@ -41,5 +41,5 @@ Rule Documentation:
   The "group" and "user" can only be switched to if the user this controller program being operated under is allowed to switch to.
 
   The "create" Content designates that this controller program to create the PID file after successfully starting the service.
-  The "program" Content designates that the called program will provide the PID file after successfully starting the service.
+  The "use" Content designates that the called program will provide the PID file after successfully starting the service.
   For both "create" and "program" the PID file is expected to only exist on success or failure and the existence thereof designates the success or failure rate.

@@ -44,6 +44,9 @@ extern "C" {
         data->error.context = data->context.set.error;
         data->error.notable = data->context.set.notable;
 
+        data->warning.context = data->context.set.warning;
+        data->warning.notable = data->context.set.notable;
+
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
@@ -70,15 +73,19 @@ extern "C" {
 
         if (choice == controller_parameter_verbosity_quiet) {
           data->error.verbosity = f_console_verbosity_quiet;
+          data->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == controller_parameter_verbosity_normal) {
           data->error.verbosity = f_console_verbosity_normal;
+          data->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == controller_parameter_verbosity_verbose) {
           data->error.verbosity = f_console_verbosity_verbose;
+          data->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == controller_parameter_verbosity_debug) {
           data->error.verbosity = f_console_verbosity_debug;
+          data->warning.verbosity = f_console_verbosity_debug;
         }
       }
 

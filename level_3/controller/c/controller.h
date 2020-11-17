@@ -60,7 +60,6 @@ extern "C" {
   #define controller_string_group       "group"
   #define controller_string_name        "name"
   #define controller_string_pid         "pid"
-  #define controller_string_program     "program"
   #define controller_string_restart     "restart"
   #define controller_string_reload      "reload"
   #define controller_string_script      "script"
@@ -68,6 +67,7 @@ extern "C" {
   #define controller_string_settings    "settings"
   #define controller_string_start       "start"
   #define controller_string_stop        "stop"
+  #define controller_string_use         "use"
   #define controller_string_user        "user"
 
   #define controller_string_create_length      6
@@ -77,7 +77,6 @@ extern "C" {
   #define controller_string_group_length       5
   #define controller_string_name_length        4
   #define controller_string_pid_length         3
-  #define controller_string_program_length     7
   #define controller_string_restart_length     7
   #define controller_string_reload_length      6
   #define controller_string_script_length      6
@@ -85,6 +84,7 @@ extern "C" {
   #define controller_string_settings_length    8
   #define controller_string_start_length       5
   #define controller_string_stop_length        4
+  #define controller_string_use_length         3
   #define controller_string_user_length        4
 
   enum {
@@ -124,6 +124,7 @@ extern "C" {
 
     f_file_t output;
     fll_error_print_t error;
+    fll_error_print_t warning;
 
     f_color_context_t context;
   } controller_data_t;
@@ -135,57 +136,126 @@ extern "C" {
       F_false, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      fll_macro_error_print_t_initialize_warning(f_console_verbosity_debug) \
       f_color_context_t_initialize, \
     }
 #endif // _di_controller_data_t_
 
-#ifndef _di_controller_rule_item_t_
+#ifndef _di_controller_rule_action_t_
   enum {
-    controller_rule_item_type_single = 1,
-    controller_rule_item_type_multiple,
+    controller_rule_action_type_basic = 1,
+    controller_rule_action_type_extended,
+    controller_rule_action_type_extended_list,
   };
 
   enum {
-    controller_rule_item_intent_create = 1,
-    controller_rule_item_intent_program,
-    controller_rule_item_intent_group,
-    controller_rule_item_intent_restart,
-    controller_rule_item_intent_reload,
-    controller_rule_item_intent_start,
-    controller_rule_item_intent_stop,
-    controller_rule_item_intent_user,
+    controller_rule_action_intent_create = 1,
+    controller_rule_action_intent_group,
+    controller_rule_action_intent_restart,
+    controller_rule_action_intent_reload,
+    controller_rule_action_intent_start,
+    controller_rule_action_intent_stop,
+    controller_rule_action_intent_use,
+    controller_rule_action_intent_user,
   };
 
-  // @fixme rule_item needs to contain a list of actions which is essentially what rule_item is currently acting as.
+  typedef struct {
+    f_string_length_t line;
+    f_string_dynamic_t content;
+  } controller_rule_action_t;
+
+  #define controller_rule_action_t_initialize \
+    { \
+      0, \
+      f_string_dynamic_t_initialize, \
+    }
+
+  #define f_macro_controller_rule_action_t_delete_simple(action) \
+    f_macro_string_dynamic_t_delete_simple(action.content)
+#endif // _di_controller_rule_action_t_
+
+#ifndef _di_controller_rule_actions_t_
   typedef struct {
     uint8_t type;
     uint8_t intent;
 
+    controller_rule_action_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_rule_actions_t;
+
+  #define controller_rule_actions_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define f_macro_controller_rule_actions_t_delete_simple(actions) \
+    actions.used = actions.size; \
+    while (actions.used > 0) { \
+      actions.used--; \
+      f_macro_controller_rule_item_t_delete_simple(actions.array[actions.used]); \
+      if (!actions.used) { \
+        if (f_memory_delete((void **) & actions.array, sizeof(controller_rule_action_t), actions.size)) { \
+          actions.size = 0; \
+        } \
+      } \
+    }
+#endif // _di_controller_rule_actions_t_
+
+#ifndef _di_controller_rule_item_t_
+  enum {
+    controller_rule_item_type_command = 1,
+    controller_rule_item_type_script,
+    controller_rule_item_type_service,
+    controller_rule_item_type_settings,
+  };
+
+  typedef struct {
+    uint8_t type;
     f_string_length_t line;
 
-    f_string_dynamic_t name;
-    f_string_dynamic_t content;
+    controller_rule_actions_t create;
+    controller_rule_actions_t group;
+    controller_rule_actions_t restart;
+    controller_rule_actions_t reload;
+    controller_rule_actions_t start;
+    controller_rule_actions_t stop;
+    controller_rule_actions_t use;
+    controller_rule_actions_t user;
   } controller_rule_item_t;
 
   #define controller_rule_item_t_initialize \
     { \
       0, \
       0, \
-      0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
+      controller_rule_actions_t_initialize, \
     }
 
-  #define f_macro_controller_rule_item_t_delete_simple(rule_item) \
-    f_macro_string_dynamic_t_delete_simple(rule_item.name) \
-    f_macro_string_dynamic_t_delete_simple(rule_item.content)
+  #define f_macro_controller_rule_item_t_delete_simple(item) \
+    f_macro_controller_rule_actions_t_delete_simple(item.create) \
+    f_macro_controller_rule_actions_t_delete_simple(item.group) \
+    f_macro_controller_rule_actions_t_delete_simple(item.restart) \
+    f_macro_controller_rule_actions_t_delete_simple(item.reload) \
+    f_macro_controller_rule_actions_t_delete_simple(item.start) \
+    f_macro_controller_rule_actions_t_delete_simple(item.stop) \
+    f_macro_controller_rule_actions_t_delete_simple(item.use) \
+    f_macro_controller_rule_actions_t_delete_simple(item.user)
 #endif // _di_controller_rule_item_t_
 
 #ifndef _di_controller_rule_items_t_
   typedef struct {
-    f_string_length_t line;
-    f_string_dynamic_t name;
-
     controller_rule_item_t *array;
 
     f_array_length_t size;
@@ -194,8 +264,6 @@ extern "C" {
 
   #define controller_rule_items_initialize \
     { \
-      0, \
-      f_string_dynamic_t_initialize, \
       0, \
       0, \
       0, \
@@ -207,13 +275,36 @@ extern "C" {
       items.used--; \
       f_macro_controller_rule_item_t_delete_simple(items.array[items.used]); \
       if (!items.used) { \
-        if (f_memory_delete((void **) & items.array, sizeof(f_string_dynamic_t), items.size)) { \
+        if (f_memory_delete((void **) & items.array, sizeof(controller_rule_item_t), items.size)) { \
           items.size = 0; \
         } \
       } \
-    } \
-    f_macro_string_dynamic_t_delete_simple(items.name);
+    }
 #endif // _di_controller_rule_items_t_
+
+#ifndef _di_controller_rule_setting_t_
+  typedef struct {
+    f_string_dynamic_t name;
+    f_string_dynamic_t pid;
+
+    f_string_dynamics_t defines; // @todo this probably should a list of name and value pairs.
+    f_string_dynamics_t environment;
+  } controller_rule_setting_t;
+
+  #define controller_rule_setting_t_initialize \
+    { \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+    }
+
+  #define f_macro_controller_rule_setting_t_delete_simple(setting) \
+    f_string_dynamic_t_delete_simple(setting.name) \
+    f_string_dynamic_t_delete_simple(setting.pid) \
+    f_string_dynamics_t_delete_simple(setting.defines) \
+    f_string_dynamics_t_delete_simple(setting.environments)
+#endif // _di_controller_rule_setting_t_
 
 /**
  * Print help.
