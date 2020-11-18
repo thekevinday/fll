@@ -38,11 +38,11 @@ extern "C" {
  *   This will be populated with all valid objects found.
  * @param contents
  *   This will be populated with all valid contents found.
- * @param quoted_objects
- *   An array of all objects discovered with quotes and the quote discovered.
+ * @param objects_quoted
+ *   An array mapped to each object in objects representing the quote discovered, if any.
  *   Set the pointer address to 0 to disable.
- * @param quoted_contents
- *   An array of all contents discovered with quotes and the quote discovered.
+ * @param contents_quoted
+ *   An array mapped to each content in contents representing the quote discovered, if any.
  *   Set the pointer address to 0 to disable.
  * @param objects_delimits
  *   An array of delimits for objects detected during processing.
@@ -69,7 +69,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_extended_object_read().
  */
 #ifndef _di_fll_fss_extended_read_
-  extern f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects, f_fss_quotess_t *quoted_contents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
+  extern f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_quotess_t *contents_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
 #endif // _di_fll_fss_extended_read_
 
 /**

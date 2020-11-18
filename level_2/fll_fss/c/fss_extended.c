@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_read_
-  f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *quoted_objects, f_fss_quotess_t *quoted_contents, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_return_status fll_fss_extended_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_quotess_t *contents_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
     #ifndef _di_level_2_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
@@ -31,20 +31,20 @@ extern "C" {
         f_macro_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
         if (F_status_is_error(status2)) return status2;
 
-        if (quoted_objects) {
-          f_macro_fss_quotes_t_resize(status2, (*quoted_objects), quoted_objects->used + f_fss_default_allocation_step);
+        if (objects_quoted) {
+          f_macro_fss_quotes_t_resize(status2, (*objects_quoted), objects_quoted->used + f_fss_default_allocation_step);
           if (F_status_is_error(status2)) return status2;
         }
 
-        if (quoted_contents) {
-          f_macro_fss_quotess_t_resize(status2, (*quoted_contents), quoted_contents->used + f_fss_default_allocation_step);
+        if (contents_quoted) {
+          f_macro_fss_quotess_t_resize(status2, (*contents_quoted), contents_quoted->used + f_fss_default_allocation_step);
           if (F_status_is_error(status2)) return status2;
         }
       }
 
       do {
-        if (quoted_objects) {
-          quoted_object = &quoted_objects->array[quoted_objects->used];
+        if (objects_quoted) {
+          quoted_object = &objects_quoted->array[objects_quoted->used];
         }
 
         status = fl_fss_extended_object_read(buffer, range, &objects->array[objects->used], quoted_object, objects_delimits);
@@ -57,8 +57,8 @@ extern "C" {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
-            if (quoted_objects) {
-              quoted_objects->used++;
+            if (objects_quoted) {
+              objects_quoted->used++;
             }
 
             if (contents->array[contents->used].used == contents->array[contents->used].size) {
@@ -68,8 +68,8 @@ extern "C" {
 
             contents->used++;
 
-            if (quoted_contents) {
-              quoted_contents->used++;
+            if (contents_quoted) {
+              contents_quoted->used++;
             }
 
             return FL_fss_found_object_content_not;
@@ -94,8 +94,8 @@ extern "C" {
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
-          if (quoted_contents) {
-            quoted_content = &quoted_contents->array[quoted_contents->used];
+          if (contents_quoted) {
+            quoted_content = &contents_quoted->array[contents_quoted->used];
           }
 
           status = fl_fss_extended_content_read(buffer, range, &contents->array[contents->used], quoted_content, contents_delimits ? contents_delimits : objects_delimits);
@@ -125,13 +125,13 @@ extern "C" {
         objects->used++;
         contents->used++;
 
-        if (quoted_objects) {
-          quoted_objects->used++;
+        if (objects_quoted) {
+          objects_quoted->used++;
         }
 
-        if (quoted_contents) {
-          quoted_contents->array[quoted_contents->used].used++;
-          quoted_contents->used++;
+        if (contents_quoted) {
+          contents_quoted->array[contents_quoted->used].used++;
+          contents_quoted->used++;
         }
 
         return status;
@@ -155,12 +155,12 @@ extern "C" {
           objects->used++;
           contents->used++;
 
-          if (quoted_objects) {
-            quoted_objects->used++;
+          if (objects_quoted) {
+            objects_quoted->used++;
           }
 
-          if (quoted_contents) {
-            quoted_contents->used++;
+          if (contents_quoted) {
+            contents_quoted->used++;
           }
         }
 
@@ -178,12 +178,12 @@ extern "C" {
       objects->used++;
       contents->used++;
 
-      if (quoted_objects) {
-        quoted_objects->used++;
+      if (objects_quoted) {
+        objects_quoted->used++;
       }
 
-      if (quoted_contents) {
-        quoted_contents->used++;
+      if (contents_quoted) {
+        contents_quoted->used++;
       }
     } while (range->start < f_string_length_t_size);
 
