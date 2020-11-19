@@ -73,7 +73,7 @@ extern "C" {
 
   #define fll_macro_error_print_t_initialize(to, verbosity, prefix, context, notable) { to, verbosity, prefix, context, notable }
   #define fll_macro_error_print_t_initialize_debug() fll_macro_error_print_t_initialize(f_macro_file_t_initialize(f_type_debug, f_type_descriptor_debug, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_debug, f_color_set_t_initialize, f_color_set_t_initialize)
-  #define fll_macro_error_print_t_initialize_warning() fll_macro_error_print_t_initialize(f_macro_file_t_initialize(f_type_warn, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_warning, f_color_set_t_initialize, f_color_set_t_initialize)
+  #define fll_macro_error_print_t_initialize_warning() fll_macro_error_print_t_initialize(f_macro_file_t_initialize(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_warning, f_color_set_t_initialize, f_color_set_t_initialize)
 #endif // _di_fll_error_print_t_
 
 #ifdef __cplusplus
