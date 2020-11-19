@@ -20,9 +20,15 @@ extern "C" {
     f_string_range_t range_item;
     f_string_range_t range_action;
 
+    f_fss_comments_t comments;
+    f_fss_content_t content;
+    f_fss_contents_t contents;
+    f_fss_delimits_t delimits;
+    f_fss_objects_t objects;
+
     f_string_dynamic_t name_file;
     f_string_dynamic_t name_item;
-    f_string_dynamic_t name_action
+    f_string_dynamic_t name_action;
   } controller_rule_cache_t;
 
   #define controller_rule_cache_t_initialize \
@@ -31,25 +37,85 @@ extern "C" {
       0, \
       0, \
       0, \
+      f_fss_delimits_t_initialize, \
+      f_fss_content_t_initialize, \
+      f_fss_contents_t_initialize, \
+      f_fss_comments_t_initialize, \
+      f_fss_objects_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
     }
 
   #define f_macro_controller_rule_name_t_delete_simple(cache) \
-    f_string_dynamic_t_delete_simple(cache.name_file) \
-    f_string_dynamic_t_delete_simple(cache.name_item) \
-    f_string_dynamic_t_delete_simple(cache.name_action)
+    f_macro_fss_comments_t_delete_simple(cache.comments) \
+    f_macro_fss_content_t_delete_simple(cache.content) \
+    f_macro_fss_contents_t_delete_simple(cache.contents) \
+    f_macro_fss_delimits_t_delete_simple(cache.delimits) \
+    f_macro_fss_objects_t_delete_simple(cache.objects) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_item) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_action)
 #endif // _di_controller_rule_cache_t_
+
+/**
+ * Read the rule action.
+ *
+ * The object and content ranges are merged together (in that order) as the action parameters.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   The buffer containing the content.
+ * @param object
+ *   (optional) The range representing where the object is found within the buffer.
+ *   Set pointer address to 0 to disable.
+ * @param content
+ *   (optional) The ranges representing where the content is found within the buffer.
+ *   Set pointer address to 0 to disable.
+ * @param action
+ *   The processed action.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_fss_count_lines().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_fss_count_lines()
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamics_increase()
+ */
+#ifndef _di_controller_rule_action_read_
+  extern f_return_status controller_rule_action_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, controller_rule_action_t *action) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_read_
+
+/**
+ * Increase the size of the rule actions array by the specified amount, but only if necessary.
+ *
+ * This only increases size if the current used plus amount is greater than the currently allocated size.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param actions
+ *   The actions to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large on success, but requested size is too small (resize is smaller than requested length).
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_controller_rule_actions_increase_by_
+  extern f_return_status controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_actions_increase_by_
 
 /**
  * Read the content within the buffer, extracting all valid actions for the current processed item.
  *
  * @param data
  *   The program data.
- * @param multiple
- *   If TRUE, then the Object expects multiple lines of Content (which ends up being an extended list).
- *   If FALSE, then the Object expects only a single line of Content (which is either basic or extended).
  * @param buffer
  *   The buffer containing the content.
  * @param cache
@@ -58,15 +124,23 @@ extern "C" {
  *   The processed item.
  * @param actions
  *   The processed actions.
+ * @param range
+ *   The current positions within the buffer being operated on.
+ *   This is expected to be set to a position immediately after a valid object read.
  *
  * @return
  *   F_none on success.
- *   @todo add response codes.
  *
+ *   Errors (with error bit) from: controller_rule_action_read().
+ *   Errors (with error bit) from: controller_rule_actions_increase_by().
  *   Errors (with error bit) from: f_fss_count_lines().
+ *
+ * @see controller_rule_action_read()
+ * @see controller_rule_actions_increase_by()
+ * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_actions_read_
-  f_return_status controller_rule_actions_read(const controller_data_t data, const bool multiple, f_string_static_t *buffer, controller_rule_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_actions_read(const controller_data_t data, f_string_static_t *buffer, controller_rule_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_actions_read_
 
 /**
@@ -109,6 +183,9 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  *
  * @see controller_rule_actions_read()
+ * @see f_fss_count_lines()
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
   extern f_return_status controller_rule_item_read(const controller_data_t data, f_string_static_t *buffer, controller_rule_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
@@ -129,6 +206,8 @@ extern "C" {
  *   F_array_too_large on success, but requested size is too small (resize is smaller than requested length).
  *
  *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_items_increase_by_
   extern f_return_status controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
@@ -158,7 +237,16 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
- * @see controller_rule_item_read()
+ * @see controller_rule_items_increase_by().
+ * @see controller_rule_item_read().
+ * @see f_file_stream_open().
+ * @see f_file_stream_read().
+ * @see f_fss_count_lines().
+ * @see fl_fss_apply_delimit().
+ * @see fl_string_dynamic_partial_append().
+ * @see fl_string_dynamic_partial_append_nulless().
+ * @see fl_string_dynamic_terminate_after().
+ * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
   extern f_return_status controller_rule_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_items_t *items) f_gcc_attribute_visibility_internal;

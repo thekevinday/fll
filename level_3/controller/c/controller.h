@@ -24,16 +24,22 @@
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/file.h>
+#include <level_0/fss.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
 
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/fss.h>
 #include <level_1/string.h>
 
 // fll-2 includes
 #include <level_2/error.h>
+#include <level_2/fss.h>
+#include <level_2/fss_basic_list.h>
+#include <level_2/fss_extended.h>
+#include <level_2/fss_extended_list.h>
 #include <level_2/program.h>
 
 #ifdef __cplusplus
@@ -136,15 +142,14 @@ extern "C" {
       F_false, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
-      fll_macro_error_print_t_initialize_warning(f_console_verbosity_debug) \
+      fll_macro_error_print_t_initialize_warning(), \
       f_color_context_t_initialize, \
     }
 #endif // _di_controller_data_t_
 
 #ifndef _di_controller_rule_action_t_
   enum {
-    controller_rule_action_type_basic = 1,
-    controller_rule_action_type_extended,
+    controller_rule_action_type_extended = 1,
     controller_rule_action_type_extended_list,
   };
 
@@ -161,17 +166,17 @@ extern "C" {
 
   typedef struct {
     f_string_length_t line;
-    f_string_dynamic_t content;
+    f_string_dynamics_t parameters;
   } controller_rule_action_t;
 
   #define controller_rule_action_t_initialize \
     { \
       0, \
-      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
     }
 
   #define f_macro_controller_rule_action_t_delete_simple(action) \
-    f_macro_string_dynamic_t_delete_simple(action.content)
+    f_macro_string_dynamics_t_delete_simple(action.parameters)
 #endif // _di_controller_rule_action_t_
 
 #ifndef _di_controller_rule_actions_t_
