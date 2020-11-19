@@ -5,9 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_basic_read_
-  f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_return_status fll_fss_basic_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
     #ifndef _di_level_2_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!objects) return F_status_set_error(F_parameter);
       if (!contents) return F_status_set_error(F_parameter);
@@ -47,7 +46,7 @@ extern "C" {
           return status;
         }
 
-        if (range->start >= range->stop || range->start >= buffer->used) {
+        if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
@@ -66,14 +65,14 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer->used) {
+            if (range->start >= buffer.used) {
                return F_none_eos;
             }
 
             return F_none_stop;
           }
           else {
-            if (range->start >= buffer->used) {
+            if (range->start >= buffer.used) {
                return F_data_not_eos;
             }
 
@@ -126,7 +125,7 @@ extern "C" {
         return status;
       }
       // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
-      else if (range->start >= range->stop || range->start >= buffer->used) {
+      else if (range->start >= range->stop || range->start >= buffer.used) {
         if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not) {
           objects->used++;
           contents->used++;
@@ -136,7 +135,7 @@ extern "C" {
           }
         }
 
-        if (range->start >= buffer->used) {
+        if (range->start >= buffer.used) {
           return F_none_eos;
         }
 

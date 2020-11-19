@@ -87,15 +87,14 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param buffer
+ *   The buffer to read from.
  * @param object_as
  *   If TRUE, then this operate as an Object.
  *   IF FALSE, then this operates as a Content.
  *
  *   As Object, this checks if the first graph character is a comment character '#', or an escaped comment character '#'.
  *   As Content, this does nothing special in regards to a leading '#'.
- * @param buffer
- *   The buffer to read from.
- *   This will be updated with delimit placeholders as it is being processed.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -139,7 +138,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern f_return_status private_fl_fss_basic_read(const bool object_as, f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**

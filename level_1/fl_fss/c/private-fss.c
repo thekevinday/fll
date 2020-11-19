@@ -190,9 +190,9 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_return_status private_fl_fss_basic_read(const bool object_as, f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_return_status private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
 
-    f_status_t status = f_fss_skip_past_space(*buffer, range);
+    f_status_t status = f_fss_skip_past_space(buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
@@ -215,12 +215,12 @@ extern "C" {
     found->start = range->start;
 
     // ignore all comment lines.
-    if (object_as && buffer->string[range->start] == f_fss_comment) {
+    if (object_as && buffer.string[range->start] == f_fss_comment) {
 
-      while (buffer->string[range->start] != f_fss_eol) {
+      while (buffer.string[range->start] != f_fss_eol) {
         range->start++;
 
-        if (range->start >= buffer->used) return F_data_not_eos;
+        if (range->start >= buffer.used) return F_data_not_eos;
         if (range->start > range->stop) return F_data_not_stop;
       } // while
 
@@ -238,38 +238,38 @@ extern "C" {
     }
 
     // identify where the object begins.
-    if (buffer->string[range->start] == f_fss_delimit_slash) {
+    if (buffer.string[range->start] == f_fss_delimit_slash) {
       f_string_length_t first_slash = range->start;
 
       found->start = range->start;
 
-      status = f_utf_buffer_increment(*buffer, range, 1);
+      status = f_utf_buffer_increment(buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
-      while (range->start <= range->stop && range->start < buffer->used) {
+      while (range->start <= range->stop && range->start < buffer.used) {
 
-        status = f_fss_is_zero_width(*buffer, *range);
+        status = f_fss_is_zero_width(buffer, *range);
         if (F_status_is_error(status)) return status;
 
         if (status == F_true) {
-          status = f_utf_buffer_increment(*buffer, range, 1);
+          status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
           continue;
         }
 
-        if (buffer->string[range->start] != f_fss_delimit_slash) {
-          status = f_fss_is_space(*buffer, *range);
+        if (buffer.string[range->start] != f_fss_delimit_slash) {
+          status = f_fss_is_space(buffer, *range);
           if (F_status_is_error(status)) return status;
 
           // found the end of the object while processing the slash for potential delimits.
           if (status == F_true) {
             found->stop = range->start - 1;
 
-            status = f_utf_buffer_increment(*buffer, range, 1);
+            status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) return status;
 
-            if (buffer->string[range->start] == f_fss_eol) {
+            if (buffer.string[range->start] == f_fss_eol) {
               return FL_fss_found_object_content_not;
             }
 
@@ -279,12 +279,12 @@ extern "C" {
           break;
         }
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
+        status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 
-      if (range->start >= buffer->used) {
-        found->stop = buffer->used - 1;
+      if (range->start >= buffer.used) {
+        found->stop = buffer.used - 1;
         return F_none_eos;
       }
 
@@ -293,7 +293,7 @@ extern "C" {
         return F_none_stop;
       }
 
-      if (buffer->string[range->start] == f_fss_delimit_quote_single || buffer->string[range->start] == f_fss_delimit_quote_double || (object_as && buffer->string[range->start] == f_fss_comment)) {
+      if (buffer.string[range->start] == f_fss_delimit_quote_single || buffer.string[range->start] == f_fss_delimit_quote_double || (object_as && buffer.string[range->start] == f_fss_comment)) {
 
         // only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
         // this simplifies the number of slashes needed.
@@ -303,14 +303,14 @@ extern "C" {
         delimits->array[delimits->used] = first_slash;
         delimits->used++;
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
+        status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(status)) return status;
       }
     }
-    else if (buffer->string[range->start] == f_fss_delimit_quote_single || buffer->string[range->start] == f_fss_delimit_quote_double) {
-      quote_found = buffer->string[range->start];
+    else if (buffer.string[range->start] == f_fss_delimit_quote_single || buffer.string[range->start] == f_fss_delimit_quote_double) {
+      quote_found = buffer.string[range->start];
 
-      status = f_utf_buffer_increment(*buffer, range, 1);
+      status = f_utf_buffer_increment(buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       found->start = range->start;
@@ -320,20 +320,20 @@ extern "C" {
     if (!quote_found) {
       status = F_none;
 
-      while (range->start <= range->stop && range->start < buffer->used) {
+      while (range->start <= range->stop && range->start < buffer.used) {
 
-        status = f_fss_is_space(*buffer, *range);
+        status = f_fss_is_space(buffer, *range);
         if (F_status_is_error(status)) return status;
 
         if (status == F_true) break;
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
+        status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 
       found->stop = range->start - 1;
 
-      if (buffer->string[range->start] == f_fss_eol) {
+      if (buffer.string[range->start] == f_fss_eol) {
 
         // move the start position to after the EOL.
         range->start++;
@@ -341,7 +341,7 @@ extern "C" {
         return FL_fss_found_object_content_not;
       }
 
-      status = f_utf_buffer_increment(*buffer, range, 1);
+      status = f_utf_buffer_increment(buffer, range, 1);
       if (F_status_is_error(status)) return status;
 
       return FL_fss_found_object;
@@ -351,35 +351,35 @@ extern "C" {
       f_string_length_t slash_count = 0;
       f_string_length_t location = 0;
 
-      while (range->start <= range->stop && range->start < buffer->used) {
+      while (range->start <= range->stop && range->start < buffer.used) {
 
-        if (buffer->string[range->start] == f_fss_delimit_slash) {
+        if (buffer.string[range->start] == f_fss_delimit_slash) {
           first_slash = range->start;
           slash_count = 1;
 
-          status = f_utf_buffer_increment(*buffer, range, 1);
+          status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) return status;
 
-          while (range->start <= range->stop && range->start < buffer->used) {
+          while (range->start <= range->stop && range->start < buffer.used) {
 
-            if (buffer->string[range->start] == f_fss_delimit_placeholder) {
-              status = f_utf_buffer_increment(*buffer, range, 1);
+            if (buffer.string[range->start] == f_fss_delimit_placeholder) {
+              status = f_utf_buffer_increment(buffer, range, 1);
               if (F_status_is_error(status)) return status;
 
               continue;
             }
-            else if (buffer->string[range->start] != f_fss_delimit_slash) {
+            else if (buffer.string[range->start] != f_fss_delimit_slash) {
               break;
             }
 
             slash_count++;
 
-            status = f_utf_buffer_increment(*buffer, range, 1);
+            status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) return status;
           } // while
 
-          if (range->start >= buffer->used) {
-            found->stop = buffer->used - 1;
+          if (range->start >= buffer.used) {
+            found->stop = buffer.used - 1;
             return F_unterminated_group_eos;
           }
 
@@ -388,23 +388,23 @@ extern "C" {
             return F_unterminated_group_stop;
           }
 
-          if (buffer->string[range->start] == quote_found) {
+          if (buffer.string[range->start] == quote_found) {
             location = range->start;
 
             // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted and delimits do not apply.
-            if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
+            if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
               range->start++;
 
-              status = f_fss_skip_past_delimit(*buffer, range);
+              status = f_fss_skip_past_delimit(buffer, range);
               if (F_status_is_error(status)) return status;
 
-              if (range->start > range->stop || range->start >= buffer->used) {
+              if (range->start > range->stop || range->start >= buffer.used) {
                 // EOS or EOL was reached, so it is a valid closing quoted.
                 // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
                 status = F_true;
               }
               else {
-                status = f_fss_is_space(*buffer, *range);
+                status = f_fss_is_space(buffer, *range);
                 if (F_status_is_error(status)) return status;
               }
             }
@@ -432,7 +432,7 @@ extern "C" {
 
                 while (slash_count > 0) {
 
-                  if (buffer->string[range->start] == f_fss_delimit_slash) {
+                  if (buffer.string[range->start] == f_fss_delimit_slash) {
                     if (slash_count % 2 == 1) {
                       delimits->array[delimits->used] = range->start;
                       delimits->used++;
@@ -441,32 +441,32 @@ extern "C" {
                     slash_count--;
                   }
 
-                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  status = f_utf_buffer_increment(buffer, range, 1);
                   if (F_status_is_error(status)) return status;
                 } // while
 
                 range->start = location + 1;
 
-                while (buffer->string[range->start] == f_fss_delimit_placeholder) {
+                while (buffer.string[range->start] == f_fss_delimit_placeholder) {
                   range->start++;
 
-                  if (range->start >= buffer->used) return F_none_eos;
+                  if (range->start >= buffer.used) return F_none_eos;
                   if (range->start > range->stop) return F_none_stop;
                 } // while
 
-                status = f_fss_is_graph(*buffer, *range);
+                status = f_fss_is_graph(buffer, *range);
                 if (F_status_is_error(status)) return status;
 
                 if (status == F_true) {
 
-                  while (range->start <= range->stop && range->start < buffer->used && buffer->string[range->start] != f_fss_eol) {
+                  while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol) {
 
-                    status = f_utf_buffer_increment(*buffer, range, 1);
+                    status = f_utf_buffer_increment(buffer, range, 1);
                     if (F_status_is_error(status)) return status;
                   } // while
 
-                  if (range->start >= buffer->used) {
-                    found->stop = buffer->used - 1;
+                  if (range->start >= buffer.used) {
+                    found->stop = buffer.used - 1;
                     return F_data_not_eos;
                   }
 
@@ -475,13 +475,13 @@ extern "C" {
                     return F_data_not_stop;
                   }
 
-                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  status = f_utf_buffer_increment(buffer, range, 1);
                   if (F_status_is_error(status)) return status;
 
                   return FL_fss_found_object_not;
                 }
 
-                if (buffer->string[range->start] == f_fss_eol) {
+                if (buffer.string[range->start] == f_fss_eol) {
                   found->stop = location - 1;
 
                   // move the start position to after the EOL.
@@ -492,7 +492,7 @@ extern "C" {
 
                 found->stop = location - 1;
 
-                status = f_utf_buffer_increment(*buffer, range, 1);
+                status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
                 return FL_fss_found_object;
@@ -503,7 +503,7 @@ extern "C" {
 
                 while (slash_count > 0) {
 
-                  if (buffer->string[range->start] == f_fss_delimit_slash) {
+                  if (buffer.string[range->start] == f_fss_delimit_slash) {
                     if (slash_count % 2 == 1) {
                       delimits->array[delimits->used] = range->start;
                       delimits->used++;
@@ -512,7 +512,7 @@ extern "C" {
                     slash_count--;
                   }
 
-                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  status = f_utf_buffer_increment(buffer, range, 1);
                   if (F_status_is_error(status)) return status;
                 } // while
 
@@ -524,24 +524,24 @@ extern "C" {
             }
           }
         }
-        else if (buffer->string[range->start] == quote_found) {
+        else if (buffer.string[range->start] == quote_found) {
 
           // check to see if there is a whitespace, EOS, or EOL after the quoted, if not, then this is not a closing quoted.
           location = range->start;
 
-          if (range->start + 1 <= range->stop && range->start + 1 < buffer->used) {
+          if (range->start + 1 <= range->stop && range->start + 1 < buffer.used) {
             range->start++;
 
-            status = f_fss_skip_past_delimit(*buffer, range);
+            status = f_fss_skip_past_delimit(buffer, range);
             if (F_status_is_error(status)) return status;
 
-            if (range->start > range->stop || range->start >= buffer->used) {
+            if (range->start > range->stop || range->start >= buffer.used) {
               // EOS or EOL was reached, so it is a valid closing quoted.
               // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
               status = F_true;
             }
             else {
-              status = f_fss_is_space(*buffer, *range);
+              status = f_fss_is_space(buffer, *range);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -565,12 +565,12 @@ extern "C" {
 
             found->stop = range->start - 1;
 
-            status = f_utf_buffer_increment(*buffer, range, 1);
+            status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) return status;
 
-            while (range->start <= range->stop && range->start < buffer->used) {
+            while (range->start <= range->stop && range->start < buffer.used) {
 
-              if (buffer->string[range->start] == f_fss_eol) {
+              if (buffer.string[range->start] == f_fss_eol) {
 
                 // move the start position to after the EOL.
                 range->start++;
@@ -578,26 +578,26 @@ extern "C" {
                 return FL_fss_found_object_content_not;
               }
 
-              status = f_fss_is_space(*buffer, *range);
+              status = f_fss_is_space(buffer, *range);
               if (F_status_is_error(status)) return status;
 
               if (status == F_true) {
-                status = f_utf_buffer_increment(*buffer, range, 1);
+                status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
                 return FL_fss_found_object;
               }
 
-              if (buffer->string[range->start] != f_fss_delimit_placeholder) {
+              if (buffer.string[range->start] != f_fss_delimit_placeholder) {
 
-                while (range->start <= range->stop && range->start < buffer->used && buffer->string[range->start] != f_fss_eol) {
+                while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol) {
 
-                  status = f_utf_buffer_increment(*buffer, range, 1);
+                  status = f_utf_buffer_increment(buffer, range, 1);
                   if (F_status_is_error(status)) return status;
                 } // while
 
-                if (range->start >= buffer->used) {
-                  found->stop = buffer->used - 1;
+                if (range->start >= buffer.used) {
+                  found->stop = buffer.used - 1;
                   return F_data_not_eos;
                 }
 
@@ -606,18 +606,18 @@ extern "C" {
                   return F_data_not_stop;
                 }
 
-                status = f_utf_buffer_increment(*buffer, range, 1);
+                status = f_utf_buffer_increment(buffer, range, 1);
                 if (F_status_is_error(status)) return status;
 
                 return FL_fss_found_object_not;
               }
 
-              status = f_utf_buffer_increment(*buffer, range, 1);
+              status = f_utf_buffer_increment(buffer, range, 1);
               if (F_status_is_error(status)) return status;
             } // while
 
-            if (range->start >= buffer->used) {
-              found->stop = buffer->used - 1;
+            if (range->start >= buffer.used) {
+              found->stop = buffer.used - 1;
               return F_none_eos;
             }
 
@@ -627,7 +627,7 @@ extern "C" {
             }
           }
         }
-        else if (buffer->string[range->start] == f_fss_eol) {
+        else if (buffer.string[range->start] == f_fss_eol) {
 
           // move the start position to after the EOL.
           range->start++;
@@ -635,12 +635,12 @@ extern "C" {
           return FL_fss_found_object_not;
         }
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
+        status = f_utf_buffer_increment(buffer, range, 1);
         if (F_status_is_error(status)) return status;
       } // while
 
-      if (range->start >= buffer->used) {
-        found->stop = buffer->used - 1;
+      if (range->start >= buffer.used) {
+        found->stop = buffer.used - 1;
         return F_unterminated_group_eos;
       }
 
@@ -651,7 +651,7 @@ extern "C" {
     }
 
     // seek to the EOL when no valid object is found.
-    status = f_fss_seek_to_eol(*buffer, range);
+    status = f_fss_seek_to_eol(buffer, range);
     if (F_status_is_error(status)) return status;
 
     // move the start position to after the EOL.

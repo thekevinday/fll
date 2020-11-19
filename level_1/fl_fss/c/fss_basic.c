@@ -6,9 +6,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_return_status fl_fss_basic_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_return_status fl_fss_basic_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
       if (!delimits) return F_status_set_error(F_parameter);
@@ -16,7 +15,7 @@ extern "C" {
 
     const f_array_length_t delimits_used = delimits->used;
 
-    f_status_t status = private_fl_fss_basic_read(F_true, buffer, range, found, quote, delimits);
+    f_status_t status = private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits);
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
@@ -28,15 +27,14 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_return_status fl_fss_basic_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
+  f_return_status fl_fss_basic_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
       if (!delimits) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = f_fss_skip_past_space(*buffer, range);
+    f_status_t status = f_fss_skip_past_space(buffer, range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
@@ -59,19 +57,19 @@ extern "C" {
 
     for (;; range->start++) {
 
-      status = f_fss_skip_past_delimit(*buffer, range);
+      status = f_fss_skip_past_delimit(buffer, range);
       if (F_status_is_error(status)) return status;
 
       if (status == F_none_eos || status == F_none_stop) {
         return status;
       }
 
-      if (buffer->string[range->start] == f_fss_basic_close) break;
+      if (buffer.string[range->start] == f_fss_basic_close) break;
     } // for
 
     found->array[found->used++].stop = range->start - 1;
 
-    status = f_utf_buffer_increment(*buffer, range, 1);
+    status = f_utf_buffer_increment(buffer, range, 1);
     if (F_status_is_error(status)) return status;
 
     return FL_fss_found_content;

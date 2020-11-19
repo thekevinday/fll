@@ -5,9 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_embedded_list_read_
-  f_return_status fll_fss_embedded_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_return_status fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
     #ifndef _di_level_3_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
       if (!objects_delimits) return F_status_set_error(F_parameter);
@@ -38,7 +37,7 @@ extern "C" {
         status = fl_fss_embedded_list_object_read(buffer, range, &nest->depth[0].array[nest->depth[0].used].object, objects_delimits);
         if (F_status_is_error(status)) return status;
 
-        if (range->start >= range->stop || range->start >= buffer->used) {
+        if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
 
             // extended list requires content closure, so this could be an error.
@@ -46,14 +45,14 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer->used) {
+            if (range->start >= buffer.used) {
               return F_none_eos;
             }
 
             return F_none_stop;
           }
           else {
-            if (range->start >= buffer->used) {
+            if (range->start >= buffer.used) {
               return F_data_not_eos;
             }
 
@@ -101,8 +100,8 @@ extern "C" {
         return status;
       }
       // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
-      else if (range->start >= range->stop || range->start >= buffer->used) {
-        if (range->start >= buffer->used) {
+      else if (range->start >= range->stop || range->start >= buffer.used) {
+        if (range->start >= buffer.used) {
           return F_none_eos;
         }
 

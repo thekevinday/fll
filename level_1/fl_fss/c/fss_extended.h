@@ -38,7 +38,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- *   This will be updated with delimit placeholders as it is being processed.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -72,7 +71,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_return_status fl_fss_extended_object_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits);
+  extern f_return_status fl_fss_extended_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -82,7 +81,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- *   This will be updated with delimit placeholders as it is being processed.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -115,7 +113,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_return_status fl_fss_extended_content_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits);
+  extern f_return_status fl_fss_extended_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_content_read_
 
 /**

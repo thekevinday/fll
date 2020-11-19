@@ -71,7 +71,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_embedded_list_object_read().
  */
 #ifndef _di_fll_fss_embedded_list_read_
-  extern f_return_status fll_fss_embedded_list_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
+  extern f_return_status fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
 #endif // _di_fll_fss_embedded_list_read_
 
 /**

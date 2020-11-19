@@ -68,7 +68,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_basic_object_read().
  */
 #ifndef _di_fll_fss_basic_read_
-  extern f_return_status fll_fss_basic_read(f_string_dynamic_t *buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
+  extern f_return_status fll_fss_basic_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
 #endif // _di_fll_fss_basic_read_
 
 /**

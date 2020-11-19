@@ -651,7 +651,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
               {
                 f_string_range_t input = f_macro_string_range_t_initialize(local_buffer.used);
 
-                status = fll_fss_basic_read(&local_buffer, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
+                status = fll_fss_basic_read(local_buffer, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
               }
 
               if (F_status_set_error(status)) {
@@ -1399,7 +1399,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
   {
     f_string_range_t input = f_macro_string_range_t_initialize(local->buffer.used);
 
-    status = fll_fss_basic_list_read(&local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
+    status = fll_fss_basic_list_read(local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
   }
 
   if (F_status_is_error(status)) {
@@ -1435,7 +1435,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
 f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) {
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-  f_status_t status = fll_fss_extended_read(&local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
+  f_status_t status = fll_fss_extended_read(local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
 
   if (F_status_is_error_not(status)) {
     status = fl_fss_apply_delimit(delimits, &local->buffer);

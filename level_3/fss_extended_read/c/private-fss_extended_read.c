@@ -214,7 +214,7 @@ extern "C" {
       objects_delimits->used = 0;
       contents_delimits->used = 0;
 
-      status = fll_fss_extended_read(&data->buffer, &input, &data->objects, &data->contents, 0, 0, objects_delimits, contents_delimits);
+      status = fll_fss_extended_read(data->buffer, &input, &data->objects, &data->contents, 0, 0, objects_delimits, contents_delimits);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.

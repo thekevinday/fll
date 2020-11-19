@@ -226,7 +226,7 @@ extern "C" {
       contents_delimits->used = 0;
       comments->used = 0;
 
-      status = fll_fss_embedded_list_read(&data->buffer, &input, &data->nest, objects_delimits, contents_delimits, comments);
+      status = fll_fss_embedded_list_read(data->buffer, &input, &data->nest, objects_delimits, contents_delimits, comments);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
