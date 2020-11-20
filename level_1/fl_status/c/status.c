@@ -275,6 +275,9 @@ extern "C" {
         case F_found:
           *string = FL_status_string_found;
           break;
+        case F_found_not:
+          *string = FL_status_string_found_not;
+          break;
         case F_incomplete:
           *string = FL_status_string_incomplete;
           break;
@@ -295,6 +298,9 @@ extern "C" {
           break;
         case F_link:
           *string = FL_status_string_link;
+          break;
+        case F_link_not:
+          *string = FL_status_string_link_not;
           break;
         case F_lock:
           *string = FL_status_string_lock;

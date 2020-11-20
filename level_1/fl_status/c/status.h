@@ -183,6 +183,7 @@ extern "C" {
     #define FL_status_string_failure          "F_failure"
     #define FL_status_string_fork             "F_fork"
     #define FL_status_string_found            "F_found"
+    #define FL_status_string_found_not        "F_found_not"
     #define FL_status_string_incomplete       "F_incomplete"
     #define FL_status_string_input            "F_input"
     #define FL_status_string_input_output     "F_input_output"
@@ -190,6 +191,7 @@ extern "C" {
     #define FL_status_string_invalid          "F_invalid"
     #define FL_status_string_output           "F_output"
     #define FL_status_string_link             "F_link"
+    #define FL_status_string_link_not         "F_link_not"
     #define FL_status_string_lock             "F_lock"
     #define FL_status_string_lock_not         "F_lock_not"
     #define FL_status_string_loop             "F_loop"
@@ -243,6 +245,7 @@ extern "C" {
     #define FL_status_string_failure_length          9
     #define FL_status_string_fork_length             6
     #define FL_status_string_found_length            7
+    #define FL_status_string_found_not_length        11
     #define FL_status_string_incomplete_length       12
     #define FL_status_string_input_length            7
     #define FL_status_string_input_output_length     14
@@ -250,6 +253,7 @@ extern "C" {
     #define FL_status_string_invalid_length          9
     #define FL_status_string_output_length           8
     #define FL_status_string_link_length             6
+    #define FL_status_string_link_not_length         10
     #define FL_status_string_lock_length             6
     #define FL_status_string_lock_not_length         10
     #define FL_status_string_loop_length             6
