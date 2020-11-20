@@ -11,9 +11,16 @@ Rule Documentation:
   The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
-    "name": A name used to represent this rule, which is printing to the user, screen, logs, etc...
+    "name": A name used to represent this rule, which is printing to the user, screen, logs, etc.. (this is required).
+    "need": A list of relative rule path names that represent any given rule required to be executed (must exist and must succeed) before this rule starts.
+    "path": A single Content used to set a custom PATH environment variable value.
     "pid": A path to a directory where the PID file is expected to be stored in.
-    @todo: consider adding "path" to allow specifying a custom environment PATH variable (or even go a step further and instead provide "environment" or "variable").
+    "want": A list of relative rule path names that represent any given rule desired to be executed (may exist and must succeed) before this rule starts.
+    "wish": A list of relative rule path names that represent any given rule desired to be executed (may exist and not required to succeed) before this rule starts.
+
+  In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
+
+  In the case of "path", when specified, the PATH environment variable is automatically added to the "environment" setting.
 
   The "command" outer most part provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
   A "command" always operates in the foreground.

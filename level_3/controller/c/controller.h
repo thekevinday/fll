@@ -287,29 +287,49 @@ extern "C" {
     }
 #endif // _di_controller_rule_items_t_
 
-#ifndef _di_controller_rule_setting_t_
+#ifndef _di_controller_rule_t_
   typedef struct {
+    f_status_t status;
+
+    f_string_dynamic_t id;
     f_string_dynamic_t name;
     f_string_dynamic_t pid;
 
-    f_string_dynamics_t defines; // @todo this probably should a list of name and value pairs.
-    f_string_dynamics_t environment;
-  } controller_rule_setting_t;
+    f_string_maps_t defines;
 
-  #define controller_rule_setting_t_initialize \
+    f_string_dynamics_t environment;
+    f_string_dynamics_t need;
+    f_string_dynamics_t want;
+    f_string_dynamics_t wish;
+
+    controller_rule_items_t items;
+  } controller_rule_t;
+
+  #define controller_rule_t_initialize \
     { \
+      F_unknown, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_maps_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      controller_rule_items_initialize, \
     }
 
   #define f_macro_controller_rule_setting_t_delete_simple(setting) \
+    f_string_dynamic_t_delete_simple(setting.id) \
     f_string_dynamic_t_delete_simple(setting.name) \
     f_string_dynamic_t_delete_simple(setting.pid) \
-    f_string_dynamics_t_delete_simple(setting.defines) \
-    f_string_dynamics_t_delete_simple(setting.environments)
-#endif // _di_controller_rule_setting_t_
+    f_string_maps_t_delete_simple(setting.defines) \
+    f_string_dynamics_t_delete_simple(setting.environments) \
+    f_string_dynamics_t_delete_simple(setting.need) \
+    f_string_dynamics_t_delete_simple(setting.want) \
+    f_string_dynamics_t_delete_simple(setting.wish) \
+    f_macro_controller_rule_item_t_delete_simple(setting.items)
+#endif // _di_controller_rule_t_
 
 /**
  * Print help.

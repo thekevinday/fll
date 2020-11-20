@@ -14,21 +14,27 @@ extern "C" {
 
 #ifndef _di_controller_rule_cache_t_
   typedef struct {
-    f_string_length_t line_item;
     f_string_length_t line_action;
+    f_string_length_t line_item;
 
-    f_string_range_t range_item;
     f_string_range_t range_action;
+    f_string_range_t range_item;
 
     f_fss_comments_t comments;
-    f_fss_content_t content;
-    f_fss_contents_t contents;
     f_fss_delimits_t delimits;
-    f_fss_objects_t objects;
 
+    f_fss_content_t content_action;
+    f_fss_contents_t contents_action;
+    f_fss_contents_t contents_items;
+    f_fss_objects_t objects_action;
+    f_fss_objects_t objects_items;
+
+    f_string_dynamic_t buffer_item;
+    f_string_dynamic_t buffer_items;
+
+    f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
     f_string_dynamic_t name_item;
-    f_string_dynamic_t name_action;
   } controller_rule_cache_t;
 
   #define controller_rule_cache_t_initialize \
@@ -37,11 +43,15 @@ extern "C" {
       0, \
       0, \
       0, \
+      f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_content_t_initialize, \
       f_fss_contents_t_initialize, \
-      f_fss_comments_t_initialize, \
+      f_fss_contents_t_initialize, \
       f_fss_objects_t_initialize, \
+      f_fss_objects_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -49,13 +59,17 @@ extern "C" {
 
   #define f_macro_controller_rule_name_t_delete_simple(cache) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
-    f_macro_fss_content_t_delete_simple(cache.content) \
-    f_macro_fss_contents_t_delete_simple(cache.contents) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
-    f_macro_fss_objects_t_delete_simple(cache.objects) \
+    f_macro_fss_content_t_delete_simple(cache.content_action) \
+    f_macro_fss_contents_t_delete_simple(cache.contents_action) \
+    f_macro_fss_contents_t_delete_simple(cache.contents_items) \
+    f_macro_fss_objects_t_delete_simple(cache.objects_action) \
+    f_macro_fss_objects_t_delete_simple(cache.objects_items) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_items) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
     f_macro_string_dynamic_t_delete_simple(cache.name_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_item) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_action)
+    f_macro_string_dynamic_t_delete_simple(cache.name_item)
 #endif // _di_controller_rule_cache_t_
 
 /**
@@ -116,10 +130,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param buffer
- *   The buffer containing the content.
  * @param cache
- *   A structure for containing and caching the file name, item name, and action name.
+ *   A structure for containing and caching relevant data.
  * @param item
  *   The processed item.
  * @param actions
@@ -140,7 +152,7 @@ extern "C" {
  * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_actions_read_
-  extern f_return_status controller_rule_actions_read(const controller_data_t data, f_string_static_t *buffer, controller_rule_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_actions_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_actions_read_
 
 /**
@@ -151,7 +163,7 @@ extern "C" {
  * @param output
  *   The error or warning output structure.
  * @param cache
- *   A structure for containing and caching the file name, item name, and action name.
+ *   A structure for containing and caching relevant data.
  *
  * @see controller_rule_actions_read()
  * @see controller_rule_items_read()
@@ -168,10 +180,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param buffer
- *   The buffer containing the content.
  * @param cache
- *   A structure for containing and caching the file name, item name, and action name.
+ *   A structure for containing and caching relevant data.
  * @param item
  *   The processed item.
  *
@@ -188,7 +198,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
-  extern f_return_status controller_rule_item_read(const controller_data_t data, f_string_static_t *buffer, controller_rule_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_item_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_item_read_
 
 /**
@@ -219,9 +229,9 @@ extern "C" {
  * @param data
  *   The program data.
  * @param cache
- *   A structure for containing and caching the file name, item name, and action name.
- * @param items
- *   The processed array of items.
+ *   A structure for containing and caching relevant data.
+ * @param rule
+ *   The processed rule.
  *
  * @return
  *   F_none on success.
@@ -249,8 +259,31 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_return_status controller_rule_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
+
+/**
+ * Read the content within the buffer, extracting all valid settings.
+ *
+ * This will perform additional FSS read functions as appropriate.
+ *
+ * @param data
+ *   The program data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param rule
+ *   The processed rule.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_fss_count_lines().
+ *
+ * @see f_fss_count_lines()
+ */
+#ifndef _di_controller_rule_setting_read_
+  extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_setting_read_
 
 #ifdef __cplusplus
 } // extern "C"

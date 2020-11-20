@@ -6,18 +6,22 @@ Rule Specification:
   A rule file name is expected to have the file extension ".rule".
 
   The outer most part, which is essentially FSS-0002 (Basic List), has the following Objects\:
-    "settings": Required.
     "command": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: "group", "restart", "reload", "start", "stop", and "user".
     "script": A Basic List of FSS-0003 (Extended List) Object and Content, supporting the following Objects: "restart", "reload", "start", and "stop" and A Basic List of FSS-0001 (Extended) Object and Content, supporting the following: "group" and "user".
     "service": A Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: ""create", "group", "use", "restart", "reload", "start", "stop", "timeout", and "user".
+    "settings": A (Required) Basic List of FSS-0001 (Extended) Object and Content, supporting the following Objects: "define", "environment", "name", "need", "pid", "want", "wish".
 
   For the above Basic List Objects, "main" may be specified only once whereas the others may be specifed multiple times.
 
   The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
     "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    "name": One Content, must have at least 1 non-whitespace printing character.
-    "pid": One Content representing the path to a PID file directory.
+    "name": (Required) One Content, must have at least 1 non-whitespace printing character.
+    "need": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
+    "path": Zero or One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
+    "pid": One Content representing the full path to a PID file directory (such as "/var/run/service/ssh.pid").
+    "want": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
+    "wish": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
 
   For the inner parts, these are the Extended Objects\:
     "create": One Content representing the path to a PID file.
