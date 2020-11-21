@@ -23,6 +23,11 @@ Entry Documentation:
   To disallow all rules in all directories, specify this command and provide no directoies.
   Each directory is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" would have a resulting path of: "/etc/controller/rules/[directory]/".
 
+  The "consider" command is a special case of a "rule" command.
+  All available Content are identical.
+  The difference is that this rule is only processed at this spot at this time if and when some "rule" command (or a "consider" command is determined to be executed) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish").
+  If this is determined to be executed, then this is immediately executed in the designated position and applies all properties as appropriate (such as "asynchronous", for example).
+
   The "rule" command immediately executes a given rule file.
   The first Content represents the directory in which the rule is to be found (do not include leading or trailing slashes in the name).
   The second Content represents the basename for the file representing the desired rule.

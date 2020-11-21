@@ -449,30 +449,37 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 #ifndef _di_controller_rule_read_
-  f_return_status controller_rule_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_read(const controller_data_t data, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
 
+    rule->id.used = 0;
     rule->items.used = 0;
+    rule->status = F_unknown;
 
-    cache->delimits.used = 0;
     cache->comments.used = 0;
+    cache->delimits.used = 0;
 
     cache->buffer_items.used = 0;
     cache->contents_items.used = 0;
     cache->objects_items.used = 0;
 
-    rule->status = F_found_not;
+    status = fl_string_dynamic_append_nulless(rule_id, &rule->id);
 
-    // @todo construct the rule->id from the file path name, strip the ".rule" extension and only accept the relative part of the path (relative to the base settings directory).
-    // @todo the base settings directory should be a configurable string, such as with a "-s/--settings" parameter which defaults to a compiled in value (such as /etc/controller/rules/)".
-
-    {
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+    }
+    else {
       f_file_t file = f_file_t_initialize;
 
-      status = f_file_stream_open(cache->name_file.string, 0, &file);
+      const f_string_length_t file_path_length = rule->id.used;
+      char file_path[file_path_length + 1];
+
+      memcpy(file_path, rule->id.string, rule->id.used);
+
+      status = f_file_stream_open(file_path, 0, &file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, cache->name_file.string, "open", fll_error_file_type_file);
+        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, rule->id.string, "open", fll_error_file_type_file);
       }
       else {
         status = f_file_stream_read(file, 1, &cache->buffer_items);
@@ -480,18 +487,12 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, cache->name_file.string, "read", fll_error_file_type_file);
         }
-        else {
-          // Setting to F_none from F_unknown distinguishes the two such that F_none suggests a valid rule and F_unknown is just that, unknown.
-          rule->status = F_none;
-        }
       }
 
       f_file_stream_close(F_true, &file);
-
-      if (F_status_is_error(status)) return F_false;
     }
 
-    if (cache->buffer_items.used) {
+    if (F_status_is_error_not(status) && cache->buffer_items.used) {
       f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_items.used);
 
       status = fll_fss_basic_list_read(cache->buffer_items, &range, &cache->objects_items, &cache->contents_items, &cache->delimits, 0, &cache->comments);
@@ -604,13 +605,31 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
       controller_rule_error_print(data.error, *cache);
 
-      // designate that the rule is invalid, for any failure.
-      rule->status = F_status_set_error(F_invalid);
+      if (status == F_memory_not) {
+        rule->status = F_memory;
+      }
+      else if (status == F_file_open_max || status == F_space_not || status == F_busy) {
+        rule->status = F_resource;
+      }
+      else if (status == F_access_denied || status == F_filesystem_quota_block || status == F_prohibited || status == F_input_output) {
+        rule->status = F_access;
+      }
+      else if (status == F_interrupted) {
+        rule->status = F_interrupted;
+      }
+      else {
+        rule->status = F_invalid;
+      }
+
+      return F_false;
     }
 
-    return status;
+    rule->status = F_none;
+    return F_true;
   }
 #endif // _di_controller_rule_read_
 

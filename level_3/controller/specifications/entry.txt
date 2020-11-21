@@ -15,6 +15,13 @@ Entry Specification:
       "controlled": One Content that is a valid Object name, except for the reserved "main".
       "failsafe": One Content that is a valid relative rule file name without the ".rule" extension.
       "only": Zero or more Content.
+      "consider": One or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - asynchronous
+          - require
+          - wait
       "rule": One or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.

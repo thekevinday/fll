@@ -10,10 +10,13 @@
  * This program utilizes the Featureless Linux Library.
  * This program provides system service management, much like sysvcontroller and controllerng.
  * This program can be controlled from user-space via the "control" program.
+ *
+ * @todo research containers and build in container support into this, providing "container" appropriate verbiage for individual rules.
  */
 #ifndef _controller_h
 
 // libc includes
+#include <string.h>
 
 // fll-0 includes
 #include <level_0/type.h>
@@ -61,13 +64,18 @@ extern "C" {
 #ifndef _di_controller_defines_
   #define controller_string_create      "create"
   #define controller_string_command     "command"
+  #define controller_string_consider    "consider"
   #define controller_string_define      "define"
+  #define controller_string_entry       "entry"
+  #define controller_string_entries     "entries"
   #define controller_string_environment "environment"
   #define controller_string_group       "group"
   #define controller_string_name        "name"
   #define controller_string_pid         "pid"
   #define controller_string_restart     "restart"
   #define controller_string_reload      "reload"
+  #define controller_string_rule        "rule"
+  #define controller_string_rules       "rules"
   #define controller_string_script      "script"
   #define controller_string_service     "service"
   #define controller_string_settings    "settings"
@@ -78,13 +86,18 @@ extern "C" {
 
   #define controller_string_create_length      6
   #define controller_string_command_length     7
+  #define controller_string_consider_length    8
   #define controller_string_define_length      6
+  #define controller_string_entry_length       5
+  #define controller_string_entries_length     7
   #define controller_string_environment_length 11
   #define controller_string_group_length       5
   #define controller_string_name_length        4
   #define controller_string_pid_length         3
   #define controller_string_restart_length     7
   #define controller_string_reload_length      6
+  #define controller_string_rule_length        4
+  #define controller_string_rules_length       5
   #define controller_string_script_length      6
   #define controller_string_service_length     7
   #define controller_string_settings_length    8
@@ -92,6 +105,16 @@ extern "C" {
   #define controller_string_stop_length        4
   #define controller_string_use_length         3
   #define controller_string_user_length        4
+
+  #define controller_path_settings "/etc/controller"
+
+  #define controller_path_settings_length 15
+
+  #define controller_short_interruptable "i"
+  #define controller_short_settings      "s"
+
+  #define controller_long_interruptable "interruptable"
+  #define controller_long_settings      "settings"
 
   enum {
     controller_parameter_help,
@@ -103,6 +126,9 @@ extern "C" {
     controller_parameter_verbosity_verbose,
     controller_parameter_verbosity_debug,
     controller_parameter_version,
+
+    controller_parameter_interruptable,
+    controller_parameter_settings,
   };
 
   #define controller_console_parameter_t_initialize \
@@ -116,36 +142,12 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(controller_short_interruptable, controller_long_interruptable, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 9
+  #define controller_total_parameters 11
 #endif // _di_controller_defines_
-
-#ifndef _di_controller_data_t_
-  typedef struct {
-    f_console_parameter_t parameters[controller_total_parameters];
-
-    f_string_lengths_t remaining;
-    bool process_pipe;
-
-    f_file_t output;
-    fll_error_print_t error;
-    fll_error_print_t warning;
-
-    f_color_context_t context;
-  } controller_data_t;
-
-  #define controller_data_initialize \
-    { \
-      controller_console_parameter_t_initialize, \
-      f_string_lengths_t_initialize, \
-      F_false, \
-      f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
-      fll_error_print_t_initialize, \
-      fll_macro_error_print_t_initialize_warning(), \
-      f_color_context_t_initialize, \
-    }
-#endif // _di_controller_data_t_
 
 #ifndef _di_controller_rule_action_t_
   enum {
@@ -319,7 +321,7 @@ extern "C" {
       controller_rule_items_initialize, \
     }
 
-  #define f_macro_controller_rule_setting_t_delete_simple(setting) \
+  #define f_macro_controller_rule_t_delete_simple(setting) \
     f_string_dynamic_t_delete_simple(setting.id) \
     f_string_dynamic_t_delete_simple(setting.name) \
     f_string_dynamic_t_delete_simple(setting.pid) \
@@ -330,6 +332,81 @@ extern "C" {
     f_string_dynamics_t_delete_simple(setting.wish) \
     f_macro_controller_rule_item_t_delete_simple(setting.items)
 #endif // _di_controller_rule_t_
+
+#ifndef _di_controller_rules_t_
+  typedef struct {
+    controller_rule_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_rules_t;
+
+  #define controller_rules_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define f_macro_controller_rules_t_delete_simple(rules) \
+    rules.used = rules.size; \
+    while (rules.used > 0) { \
+      rules.used--; \
+      f_macro_controller_rule_t_delete_simple(rules.array[rules.used]); \
+      if (!rules.used) { \
+        if (f_memory_delete((void **) & rules.array, sizeof(controller_rule_t), rules.size)) { \
+          rules.size = 0; \
+        } \
+      } \
+    }
+#endif // _di_controller_rules_t_
+
+#ifndef _di_controller_setting_t
+  typedef struct {
+    bool interruptable;
+
+    f_string_dynamic_t path_setting;
+
+    controller_rules_t rules;
+  } controller_setting_t;
+
+  #define controller_setting_t_initialize \
+    { \
+      F_false, \
+      f_string_dynamic_t_initialize, \
+      controller_rules_t_initialize, \
+    }
+
+  #define f_macro_controller_setting_t_delete_simple(setting) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_setting) \
+    f_macro_string_dynamic_t_delete_simple(setting.rules)
+#endif // _di_controller_setting_t
+
+#ifndef _di_controller_data_t_
+  typedef struct {
+    f_console_parameter_t parameters[controller_total_parameters];
+
+    f_string_lengths_t remaining;
+    bool process_pipe;
+
+    f_file_t output;
+    fll_error_print_t error;
+    fll_error_print_t warning;
+
+    f_color_context_t context;
+  } controller_data_t;
+
+  #define controller_data_t_initialize \
+    { \
+      controller_console_parameter_t_initialize, \
+      f_string_lengths_t_initialize, \
+      F_false, \
+      f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+      fll_error_print_t_initialize, \
+      fll_macro_error_print_t_initialize_warning(), \
+      f_color_context_t_initialize, \
+    }
+#endif // _di_controller_data_t_
 
 /**
  * Print help.

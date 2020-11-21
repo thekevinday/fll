@@ -22,6 +22,11 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
+    fprintf(output.stream, "%c", f_string_eol[0]);
+
+    fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Designate that this program can be interrupted.");
+    fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path.");
+
     fll_program_print_help_usage(output, context, controller_name, "");
 
     return F_none;
@@ -130,7 +135,6 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
-
     f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;

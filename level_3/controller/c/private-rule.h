@@ -228,24 +228,19 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param rule_id
+ *   The string identifying the rule.
+ *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
+ *   "/etc/controller/setting/rules/boot/my.rule" would have a rule id of "boot/my".
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param rule
  *   The processed rule.
+ *   The rule status will be updated by this function.
  *
  * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: controller_rule_items_increase_by().
- *   Errors (with error bit) from: controller_rule_item_read().
- *   Errors (with error bit) from: f_file_stream_open().
- *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: fl_fss_apply_delimit().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
- *   Errors (with error bit) from: fll_fss_basic_list_read().
+ *   F_true on success.
+ *   F_false on failure.
  *
  * @see controller_rule_items_increase_by().
  * @see controller_rule_item_read().
@@ -259,7 +254,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_return_status controller_rule_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_read(const controller_data_t data, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
 
 /**
