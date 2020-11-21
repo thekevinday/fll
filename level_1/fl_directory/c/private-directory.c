@@ -424,10 +424,10 @@ extern "C" {
 
     if (!parent) {
       if (errno == ENOMEM) {
-        return F_status_set_error(F_memory_out);
+        return F_status_set_error(F_memory_not);
       }
       else if (errno == ENOMEM) {
-        return F_status_set_error(F_memory_out);
+        return F_status_set_error(F_memory_not);
       }
       else if (errno == EMFILE) {
         return F_status_set_error(F_file_descriptor_max);

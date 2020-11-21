@@ -32,7 +32,7 @@ extern "C" {
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
         if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-        if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
         if (errno == ERANGE) {
           if (length_max > 0) return F_status_set_error(F_buffer_too_small);
@@ -63,7 +63,7 @@ extern "C" {
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ERANGE) return F_status_set_error(F_buffer_too_small);
 
       return F_status_set_error(F_failure);
@@ -107,7 +107,7 @@ extern "C" {
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
         if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-        if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
         if (errno == ERANGE) {
           if (length_max > 0) return F_status_set_error(F_buffer_too_small);
@@ -138,7 +138,7 @@ extern "C" {
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ERANGE) return F_status_set_error(F_buffer_too_small);
 
       return F_status_set_error(F_failure);

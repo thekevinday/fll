@@ -16,7 +16,7 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
 
       return F_status_set_error(F_failure);

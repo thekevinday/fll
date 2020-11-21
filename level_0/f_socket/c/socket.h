@@ -51,7 +51,7 @@ extern "C"{
  *   F_descriptor (with error bit) if the id is not a socket descriptor.
  *   F_directory_found_not (with error bit) if directory was not found.
  *   F_file_found_not (with error bit) if file not found.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *   F_unavailable_address (with error bit) if address is unavailable (is non-existent or not local).

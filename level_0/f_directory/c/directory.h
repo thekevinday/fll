@@ -60,7 +60,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
@@ -94,7 +94,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
@@ -120,7 +120,7 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -148,7 +148,7 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -171,7 +171,7 @@ extern "C" {
  *   F_file_found_not if the path was not found.
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -199,7 +199,7 @@ extern "C" {
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -267,7 +267,7 @@ extern "C" {
  *   F_file_type_directory_not (with error bit) file is not a directory.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -308,7 +308,7 @@ extern "C" {
  *   F_file_type_directory_not (with error bit) file is not a directory.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -347,7 +347,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
@@ -389,7 +389,7 @@ extern "C" {
  *   F_file_type_directory (with error bit) file is a directory (directories cannot be removed via this function).
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.
@@ -426,7 +426,7 @@ extern "C" {
  *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -468,7 +468,7 @@ extern "C" {
  *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.

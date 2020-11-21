@@ -34,7 +34,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_memory_allocation || status == F_memory_reallocation || status == F_memory_out) {
+    if (status == F_memory_allocation || status == F_memory_reallocation || status == F_memory_not) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sUnable to allocate memory in function ", error.context.before->string, error.prefix ? error.prefix : "");

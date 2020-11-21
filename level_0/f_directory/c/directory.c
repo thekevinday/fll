@@ -33,7 +33,7 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_file_found_not;
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_false;
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
 
@@ -59,7 +59,7 @@ extern "C" {
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_file_found_not;
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_false;
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
 
@@ -83,7 +83,7 @@ extern "C" {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_file_found_not;
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_false;
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
       if (errno == ELOOP) return F_status_set_error(F_loop);
@@ -109,7 +109,7 @@ extern "C" {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_file_found_not;
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_false;
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
       if (errno == ELOOP) return F_status_set_error(F_loop);
@@ -202,7 +202,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENOENT) return F_status_set_error(F_directory_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -241,7 +241,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENOENT) return F_status_set_error(F_directory_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -288,7 +288,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -335,7 +335,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == ENOTEMPTY) return F_status_set_error(F_directory_empty_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -367,7 +367,7 @@ extern "C" {
 
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -415,7 +415,7 @@ extern "C" {
 
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);

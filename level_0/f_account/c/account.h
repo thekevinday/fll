@@ -48,7 +48,7 @@ extern "C" {
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other failure.
  *
@@ -74,7 +74,7 @@ extern "C" {
  *   F_file_open_max (with error bit) too many open files.
  *   F_input_output (with error bit) if an I/O error occurred.
  *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other failure.
  *

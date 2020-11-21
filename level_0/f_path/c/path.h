@@ -42,7 +42,7 @@ extern "C" {
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_file_found_not if the path was not found.
@@ -68,7 +68,7 @@ extern "C" {
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_file_found_not if the path was not found.
@@ -100,7 +100,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_file_found_not if the path was not found.
@@ -156,7 +156,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_file_found_not if the path was not found.

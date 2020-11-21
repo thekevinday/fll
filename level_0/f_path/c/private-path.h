@@ -34,7 +34,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *

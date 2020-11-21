@@ -314,7 +314,10 @@ extern "C" {
         case F_maybe:
           *string = FL_status_string_maybe;
           break;
-        case F_memory_out:
+        case F_memory:
+          *string = FL_status_string_memory;
+          break;
+        case F_memory_not:
           *string = FL_status_string_memory_out;
           break;
         case F_mount:
@@ -355,6 +358,12 @@ extern "C" {
           break;
         case F_relative:
           *string = FL_status_string_relative;
+          break;
+        case F_resource:
+          *string = FL_status_string_resource;
+          break;
+        case F_resource_not:
+          *string = FL_status_string_resource_not;
           break;
         case F_search:
           *string = FL_status_string_search;

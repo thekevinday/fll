@@ -196,7 +196,8 @@ extern "C" {
     #define FL_status_string_lock_not         "F_lock_not"
     #define FL_status_string_loop             "F_loop"
     #define FL_status_string_maybe            "F_maybe"
-    #define FL_status_string_memory_out       "F_memory_out"
+    #define FL_status_string_memory           "F_memory"
+    #define FL_status_string_memory_out       "F_memory_not"
     #define FL_status_string_mount            "F_mount"
     #define FL_status_string_name             "F_name"
     #define FL_status_string_parameter        "F_parameter"
@@ -210,6 +211,8 @@ extern "C" {
     #define FL_status_string_read_only        "F_read_only"
     #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_relative         "F_relative"
+    #define FL_status_string_resource         "F_resource"
+    #define FL_status_string_resource_not     "F_resource_not"
     #define FL_status_string_search           "F_search"
     #define FL_status_string_signal           "F_signal"
     #define FL_status_string_space            "F_space"
@@ -258,6 +261,7 @@ extern "C" {
     #define FL_status_string_lock_not_length         10
     #define FL_status_string_loop_length             6
     #define FL_status_string_maybe_length            7
+    #define FL_status_string_memory_length           8
     #define FL_status_string_memory_out_length       12
     #define FL_status_string_mount_length            7
     #define FL_status_string_name_length             6
@@ -272,6 +276,8 @@ extern "C" {
     #define FL_status_string_read_only_length        11
     #define FL_status_string_recurse_length          9
     #define FL_status_string_relative_length         10
+    #define FL_status_string_resource_length         10
+    #define FL_status_string_resource_not_length     14
     #define FL_status_string_search_length           8
     #define FL_status_string_signal_length           8
     #define FL_status_string_space_length            7

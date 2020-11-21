@@ -58,7 +58,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *
  * @see f_environment_set()
@@ -78,7 +78,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *
  * @see f_environment_unset()

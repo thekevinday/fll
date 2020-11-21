@@ -46,7 +46,7 @@ extern "C" {
         return F_status_set_error(F_invalid);
       }
       else if (errno == ENOMEM) {
-        return F_status_set_error(F_memory_out);
+        return F_status_set_error(F_memory_not);
       }
 
       return F_status_set_error(F_failure);
@@ -64,7 +64,7 @@ extern "C" {
         return F_status_set_error(F_invalid);
       }
       else if (errno == ENOMEM) {
-        return F_status_set_error(F_memory_out);
+        return F_status_set_error(F_memory_not);
       }
 
       return F_status_set_error(F_failure);

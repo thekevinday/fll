@@ -42,7 +42,7 @@ extern "C" {
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
       if (errno == ENODEV) return F_status_set_error(F_device);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
     }
@@ -73,7 +73,7 @@ extern "C" {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINTR) return F_status_set_error(F_interrupted);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
     }

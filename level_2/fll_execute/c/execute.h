@@ -332,7 +332,7 @@ extern "C" {
  *   F_file_stat (with error bit) on stat error while checking the program_path.
  *   F_loop (with error bit) on loop error while checking the program_path.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
@@ -380,7 +380,7 @@ extern "C" {
  *   F_file_stat (with error bit) on stat error while checking the program_path.
  *   F_loop (with error bit) on loop error while checking the program_path.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
@@ -464,7 +464,7 @@ extern "C" {
  *   F_fork (with error bit) on fork failure.
  *   F_loop (with error bit) on loop error while checking the program_path.
  *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.

@@ -111,7 +111,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if a file within the path is not found (such as a broken symbolic link).
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if filesystem does not allow for removing.

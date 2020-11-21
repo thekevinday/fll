@@ -64,7 +64,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *   F_device (with error bit) if could not mount the internal inode device.
  *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -90,7 +90,7 @@ extern "C" {
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_descriptor (with error bit) if the signal descriptor is invalid.
  *   F_interrupted (with error bit) if interrupt was received.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_input_output (with error bit) on I/O error.
  *   F_file_type_directory (with error bit) if file descriptor represents a directory.

@@ -139,7 +139,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *
  * @see setenv()
@@ -168,7 +168,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if name.used is 0.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -189,7 +189,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *
  * @see unsetenv()
@@ -209,7 +209,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_invalid (with error bit) if name is an invalid string.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *

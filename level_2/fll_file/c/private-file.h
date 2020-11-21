@@ -37,7 +37,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
@@ -77,7 +77,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if file at path was not found.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_out (with error bit) if out of memory.
+ *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.

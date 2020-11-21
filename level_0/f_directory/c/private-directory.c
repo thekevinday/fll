@@ -18,7 +18,7 @@ extern "C" {
       if (errno == EMLINK) return F_status_set_error(F_directory_link_max);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
@@ -45,7 +45,7 @@ extern "C" {
       if (errno == EMLINK) return F_status_set_error(F_directory_link_max);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_out);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);

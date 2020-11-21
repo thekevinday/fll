@@ -74,7 +74,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_memory_out) {
+    if (status == F_memory_not) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
         fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory, while trying to %s '", fll_error_print_error, operation);

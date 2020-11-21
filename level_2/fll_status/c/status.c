@@ -526,8 +526,13 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_memory, length, FL_status_string_memory_length) == F_equal_to) {
+        *code = F_memory;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_memory_out, length, FL_status_string_memory_out_length) == F_equal_to) {
-        *code = F_memory_out;
+        *code = F_memory_not;
         return F_none;
       }
 
@@ -593,6 +598,16 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_relative, length, FL_status_string_relative_length) == F_equal_to) {
         *code = F_relative;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_resource, length, FL_status_string_resource_length) == F_equal_to) {
+        *code = F_resource;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_resource_not, length, FL_status_string_resource_not_length) == F_equal_to) {
+        *code = F_resource_not;
         return F_none;
       }
 
