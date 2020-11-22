@@ -1432,6 +1432,45 @@ extern "C" {
   }
 #endif // _di_fl_string_lengths_increase_
 
+#ifndef _di_fl_string_maps_decrease_
+  f_return_status fl_string_maps_decrease(f_string_maps_t *maps) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!maps) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (maps->size - 1 > 0) {
+      f_macro_string_maps_t_resize(status, (*maps), maps->size - 1);
+    }
+    else {
+      f_macro_string_maps_t_delete(status, (*maps));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_maps_decrease_
+
+#ifndef _di_fl_string_maps_decrease_by_
+  f_return_status fl_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!maps) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (maps->size - amount > 0) {
+      f_macro_string_maps_t_resize(status, (*maps), maps->size - amount);
+    }
+    else {
+      f_macro_string_maps_t_delete(status, (*maps));
+    }
+
+    return status;
+  }
+#endif // _di_fl_string_maps_decrease_by_
+
 #ifndef _di_fl_string_lengths_increase_by_
   f_return_status fl_string_lengths_increase_by(const f_array_length_t amount, f_string_lengths_t *lengths) {
     #ifndef _di_level_1_parameter_checking_
@@ -1454,6 +1493,51 @@ extern "C" {
     return status;
   }
 #endif // _di_fl_string_lengths_increase_by_
+
+#ifndef _di_fl_string_maps_increase_
+  f_return_status fl_string_maps_increase(f_string_maps_t *maps) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!maps) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (maps->size + f_memory_default_allocation_step > f_array_length_t_size) {
+      if (maps->size == f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      f_macro_string_maps_t_resize(status, (*maps), f_array_length_t_size);
+      return F_array_too_large;
+    }
+
+    f_macro_string_maps_t_resize(status, (*maps), maps->size + f_memory_default_allocation_step);
+    return status;
+  }
+#endif // _di_fl_string_maps_increase_
+
+#ifndef _di_fl_string_maps_increase_by_
+  f_return_status fl_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!maps) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    f_status_t status = F_none;
+
+    if (maps->size + amount > f_array_length_t_size) {
+      if (maps->size == f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      f_macro_string_maps_t_resize(status, (*maps), f_array_length_t_size);
+      return F_array_too_large;
+    }
+
+    f_macro_string_maps_t_resize(status, (*maps), maps->size + amount);
+    return status;
+  }
+#endif // _di_fl_string_maps_increase_by_
 
 #ifndef _di_fl_string_mash_
   f_return_status fl_string_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {

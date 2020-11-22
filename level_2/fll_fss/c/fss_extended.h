@@ -39,10 +39,10 @@ extern "C" {
  * @param contents
  *   This will be populated with all valid contents found.
  * @param objects_quoted
- *   An array mapped to each object in objects representing the quote discovered, if any.
+ *   (optional) An array mapped to each object in objects representing the quote discovered, if any.
  *   Set the pointer address to 0 to disable.
  * @param contents_quoted
- *   An array mapped to each content in contents representing the quote discovered, if any.
+ *   (optional) An array mapped to each content in contents representing the quote discovered, if any.
  *   Set the pointer address to 0 to disable.
  * @param objects_delimits
  *   An array of delimits for objects detected during processing.

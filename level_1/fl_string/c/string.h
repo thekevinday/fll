@@ -2000,6 +2000,92 @@ extern "C" {
 #endif // _di_fl_string_lengths_increase_by_
 
 /**
+ * Resize the string maps array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param maps
+ *   The string maps array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_maps_decrease_
+  extern f_return_status fl_string_maps_decrease(f_string_maps_t *maps);
+#endif // _di_fl_string_maps_decrease_
+
+/**
+ * Resize the string maps array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param maps
+ *   The string maps array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_maps_decrease_by_
+  extern f_return_status fl_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps);
+#endif // _di_fl_string_maps_decrease_by_
+
+/**
+ * Increase the size of the string maps array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param maps
+ *   The string maps array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_fl_string_maps_increase_
+  extern f_return_status fl_string_maps_increase(f_string_maps_t *maps);
+#endif // _di_fl_string_maps_increase_
+
+/**
+ * Resize the string maps array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param maps
+ *   The string maps array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large on success, but the requested length is too large for the buffer.
+ *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_fl_string_maps_increase_by_
+  extern f_return_status fl_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps);
+#endif // _di_fl_string_maps_increase_by_
+
+/**
  * Append the source string onto the destination with the glue in between.
  *
  * If the destination string is empty, then no glue is appended.
