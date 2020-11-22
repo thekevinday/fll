@@ -164,13 +164,15 @@ extern "C" {
  *   The error or warning output structure.
  * @param cache
  *   A structure for containing and caching relevant data.
+ * @param item
+ *   If TRUE, then this error is associated with an item.
+ *   If FALSE, then this error is associated with a rule setting.
  *
  * @see controller_rule_actions_read()
  * @see controller_rule_items_read()
- * @see controller_rule_settings_read()
  */
 #ifndef _di_controller_rule_error_print_
-  void controller_rule_error_print(const fll_error_print_t output, const controller_rule_cache_t cache) f_gcc_attribute_visibility_internal;
+  void controller_rule_error_print(const fll_error_print_t output, const controller_rule_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_
 
 /**
@@ -262,6 +264,8 @@ extern "C" {
  *
  * This will perform additional FSS read functions as appropriate.
  *
+ * Errors from this are not considered fatal, therefore errors may be printed but nothing is returned.
+ *
  * @param data
  *   The program data.
  * @param cache
@@ -269,15 +273,10 @@ extern "C" {
  * @param rule
  *   The processed rule.
  *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_fss_count_lines().
- *
- * @see f_fss_count_lines()
+ * @todo consider making memory failures still critical errors, in which case a status does need to be returned.
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
 
 #ifdef __cplusplus

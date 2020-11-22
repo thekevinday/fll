@@ -9,6 +9,7 @@ f_color
 f_console
 f_file
 f_fss
+f_path
 f_pipe
 f_print
 fl_color
@@ -17,5 +18,6 @@ fl_fss
 fl_string
 fll_error
 fll_fss
+fll_path
 fll_program
 fll_status

@@ -28,6 +28,7 @@
 #include <level_0/directory.h>
 #include <level_0/file.h>
 #include <level_0/fss.h>
+#include <level_0/path.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
 
@@ -43,6 +44,7 @@
 #include <level_2/fss_basic_list.h>
 #include <level_2/fss_extended.h>
 #include <level_2/fss_extended_list.h>
+#include <level_2/path.h>
 #include <level_2/program.h>
 
 #ifdef __cplusplus
@@ -71,6 +73,8 @@ extern "C" {
   #define controller_string_environment "environment"
   #define controller_string_group       "group"
   #define controller_string_name        "name"
+  #define controller_string_need        "need"
+  #define controller_string_path        "path"
   #define controller_string_pid         "pid"
   #define controller_string_restart     "restart"
   #define controller_string_reload      "reload"
@@ -83,6 +87,8 @@ extern "C" {
   #define controller_string_stop        "stop"
   #define controller_string_use         "use"
   #define controller_string_user        "user"
+  #define controller_string_want        "want"
+  #define controller_string_wish        "wish"
 
   #define controller_string_create_length      6
   #define controller_string_command_length     7
@@ -93,6 +99,8 @@ extern "C" {
   #define controller_string_environment_length 11
   #define controller_string_group_length       5
   #define controller_string_name_length        4
+  #define controller_string_need_length        4
+  #define controller_string_path_length        4
   #define controller_string_pid_length         3
   #define controller_string_restart_length     7
   #define controller_string_reload_length      6
@@ -105,6 +113,8 @@ extern "C" {
   #define controller_string_stop_length        4
   #define controller_string_use_length         3
   #define controller_string_user_length        4
+  #define controller_string_want_length        4
+  #define controller_string_wish_length        4
 
   #define controller_path_settings "/etc/controller"
 
@@ -112,9 +122,11 @@ extern "C" {
 
   #define controller_short_interruptable "i"
   #define controller_short_settings      "s"
+  #define controller_short_test          "t"
 
   #define controller_long_interruptable "interruptable"
   #define controller_long_settings      "settings"
+  #define controller_long_test          "test"
 
   enum {
     controller_parameter_help,
@@ -129,6 +141,7 @@ extern "C" {
 
     controller_parameter_interruptable,
     controller_parameter_settings,
+    controller_parameter_test,
   };
 
   #define controller_console_parameter_t_initialize \
@@ -144,9 +157,10 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(controller_short_interruptable, controller_long_interruptable, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_test, controller_long_test, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 11
+  #define controller_total_parameters 12
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_rule_action_t_
@@ -295,6 +309,7 @@ extern "C" {
 
     f_string_dynamic_t id;
     f_string_dynamic_t name;
+    f_string_dynamic_t path;
     f_string_dynamic_t pid;
 
     f_string_maps_t defines;
@@ -313,6 +328,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
@@ -324,6 +340,7 @@ extern "C" {
   #define f_macro_controller_rule_t_delete_simple(setting) \
     f_string_dynamic_t_delete_simple(setting.id) \
     f_string_dynamic_t_delete_simple(setting.name) \
+    f_string_dynamic_t_delete_simple(setting.path) \
     f_string_dynamic_t_delete_simple(setting.pid) \
     f_string_maps_t_delete_simple(setting.defines) \
     f_string_dynamics_t_delete_simple(setting.environments) \
