@@ -8,7 +8,8 @@ Rule Documentation:
   The rule file is read top-down, except for the outer most list "settings", which is intended to store settings data for this rule.
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
-  The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+  The "settings" outer most list Object has the following FSS-0001 (Extended) Content\:
+    "control_group": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     "name": A name used to represent this rule, which is printing to the user, screen, logs, etc...

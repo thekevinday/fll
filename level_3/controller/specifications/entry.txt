@@ -11,17 +11,15 @@ Entry Specification:
     The entry file may have any other valid Object, only the above have reserved uses.
 
     Inside each Basic List are essentially the following, FSS-0001 (Extended), Objects\:
-      "category": One Content that is a valid Object name, except for the reserved "main".
-      "controlled": One Content that is a valid Object name, except for the reserved "main".
-      "failsafe": One Content that is a valid relative rule file name without the ".rule" extension.
-      "only": Zero or more Content.
       "consider": One or more Content.
-        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The first Content that is the relative file path (without any leading/trailing slashes and without file extension).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:
           - asynchronous
           - require
           - wait
+      "failsafe": One Content that is a valid Object name, except for the reserved "main".
+      "group": One Content that is a valid Object name, except for the reserved "main".
       "rule": One or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.

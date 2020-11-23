@@ -8,6 +8,8 @@
 #ifndef _PRIVATE_control_h
 #define _PRIVATE_control_h
 
+#include "private-controller.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

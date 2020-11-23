@@ -10,32 +10,32 @@ Entry Documentation:
   All other Basic List Objects are not executed unless either a "category" or a "failsafe" specifies the Object.
   Execution of all Basic List Objects is top-down.
 
-  Inside each list there are additional commands: "category", "failsafe", "rule", and "timeout".
-
-  The "category" command accepts only a valid Basic List Object in which will be immediately executed.
-
-  The "failsafe" command accepts only a valid Basic List Object in which will be executed when a failure is detected.
-  Only a single "failsafe" command may exist at a time so when specified multiple times.
-  Each time a "failsafe" command is specified, it replaces the previous "failsafe" command.
-
-  The "only" command represents a list of directory names that are allowed to be "controlled" by the "control" program from user-space.
-  To allow all rules in all directories, do not specify the "omit" command.
-  To disallow all rules in all directories, specify this command and provide no directoies.
-  Each directory is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" would have a resulting path of: "/etc/controller/rules/[directory]/".
+  Inside each list there are additional commands: "consider", "failsafe", "group", "rule", and "timeout".
 
   The "consider" command is a special case of a "rule" command.
   All available Content are identical.
   The difference is that this rule is only processed at this spot at this time if and when some "rule" command (or a "consider" command is determined to be executed) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish").
   If this is determined to be executed, then this is immediately executed in the designated position and applies all properties as appropriate (such as "asynchronous", for example).
 
+  The "failsafe" command accepts only a valid Basic List Object in which will be executed when a failure is detected.
+  Only a single "failsafe" command may exist at a time.
+  Each time a "failsafe" command is specified, it replaces the previous "failsafe" command.
+
+  The "group" command accepts only a valid Basic List Object in which will be immediately executed.
+  A "group" is another list within the entry file to execute in it entirety.
+  Any valid Object name, except for the reserved "main", may be called using this.
+
   The "rule" command immediately executes a given rule file.
-  The first Content represents the directory in which the rule is to be found (do not include leading or trailing slashes in the name).
+  The first Content represents the rule ID, which is a relative path the rule file is to be found, without the file extension.
+    - Do not include leading or trailing slashes in the name.
+    - This is relative to the settings rules directory.
+    - For example the rule ID "example/my" would be found in "/etc/controller/settings/rules/example/my.rule" (assuming the directory structure).
   The second Content represents the basename for the file representing the desired rule.
   The directory is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[filename]", the resulting path would be: "/etc/controller/rules/[directory]/[filename].rule"
   The remaining Content may be specified in any order\:
-  - "asynchronous": Designates that execution will not block (wait).
-  - "require": Designates that this rule must succeed or trigger execution of failsafe.
-  - "wait": Designates that this rule will not execute until all other existing "asynchronous" executions complete.
+    - "asynchronous": Designates that execution will not block (wait).
+    - "require": Designates that this rule must succeed or trigger execution of failsafe.
+    - "wait": Designates that this rule will not execute until all other existing "asynchronous" executions complete.
 
   It is important to note that for any given rule, execution within that rule may be internally asynchronous.
   For example, a service that is often called a daemon will execute in the background.
@@ -45,9 +45,23 @@ Entry Documentation:
   The "timeout" command provides default global settings for each of the three special situations: "start", "stop", and "kill".
   Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
   Each of these will replace any previously specified setting.
-  Each of these accepts a single Content that is a 0 or greater whole number representing the number of milliseconds.
-  For "start", this represents the number of milliseconds to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
-  For "stop", this represents the number of milliseconds to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.
-  For "kill", this represents the number of milliseconds to wait after stopping some rule and that rule has not yet stopped to forcefully stop the rule (aka kill the rule).
+  Each of these accepts a single Content that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+  For "start", this represents the number of MegaTime to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
+  For "stop", this represents the number of MegaTime to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.
+  For "kill", this represents the number of MegaTime to wait after stopping some rule and that rule has not yet stopped to forcefully stop the rule (aka kill the rule).
   The timeouts are generally only valid for services such as daemon services.
   A value of 0 disables this (prevents any action).
+
+  This utilizes the unit of measurement called a "Time", represented with uppercase "T".
+  For comparison, a unit of Time is equivalent to a nanosecond, or 10^-9 seconds.
+  A MegaTime (MT) is therefore equivalent to a millisecond such that a millisecond is 10^-3 seconds.
+  A unit of Time is intended to represent some unit of Time such that a single 64-bit integer may hold all units of Time for a single calendar year.
+  This unit of Time does not and must not include Years (unlike Unixtime).
+  To convert from Time to Unixtime, one must have a year (which could be assumed to be the current year) and then calculate all of those calendar oddities.
+  A unit of Time by default is assumed to be in UTC.
+  1 (Earth) year ~= 31536000000000000 Time or 31536000 GT (GigaTime).
+  1 (Earth) day = 86400000000000 Time or 86400 GT (GigaTime).
+  1 (Earth) hour = 3600000000000 Time or 3600 GT (GigaTime).
+  1 (Earth) minute = 60000000000 Time or 60 GT (GigaTime).
+  1 (Earth) second = 1000000000 Time or 1 GT (GigaTime).
+  Consequentially, 1 day in units of Time is easily represented as 86.4 TT (TeraTime).

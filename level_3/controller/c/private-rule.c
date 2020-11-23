@@ -81,7 +81,7 @@ extern "C" {
 
     // "script" types use the entire content and can be directly passed through.
     if (item->type == controller_rule_item_type_script) {
-      status = controller_rule_actions_increase_by(1, actions);
+      status = controller_rule_actions_increase_by(f_memory_default_allocation_step, actions);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
@@ -185,7 +185,7 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
         }
         else {
-          status = controller_rule_actions_increase_by(1, actions);
+          status = controller_rule_actions_increase_by(f_memory_default_allocation_step, actions);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
@@ -438,7 +438,7 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 #ifndef _di_controller_rule_read_
-  f_return_status controller_rule_read(const controller_data_t data, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
 
     bool for_item = F_true;
@@ -473,10 +473,17 @@ extern "C" {
     else {
       f_file_t file = f_file_t_initialize;
 
-      const f_string_length_t file_path_length = rule->id.used;
+      const f_string_length_t file_path_length = setting.path_setting.used + f_path_separator_length + controller_string_rules_length + f_path_separator_length + rule->id.used + f_path_separator_length;
       char file_path[file_path_length + 1];
 
-      memcpy(file_path, rule->id.string, rule->id.used);
+      memcpy(file_path, setting.path_setting.string, setting.path_setting.used);
+      memcpy(file_path + setting.path_setting.used + f_path_separator_length, controller_string_rules, controller_string_rules_length);
+      memcpy(file_path + setting.path_setting.used + f_path_separator_length + controller_string_rules_length + f_path_separator_length, rule->id.string, rule->id.used);
+
+      file_path[setting.path_setting.used] = f_path_separator[0];
+      file_path[setting.path_setting.used + f_path_separator_length + controller_string_rules_length] = f_path_separator[0];
+      file_path[file_path_length - 1] = f_path_separator[0];
+      file_path[file_path_length] = 0;
 
       status = f_file_stream_open(file_path, 0, &file);
 
@@ -604,7 +611,13 @@ extern "C" {
           else {
             for_item = F_false;
 
-            controller_rule_setting_read(data, cache, rule);
+            status = controller_rule_setting_read(data, cache, rule);
+
+            if (F_status_is_error(status)) {
+              if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                break;
+              }
+            }
           }
         } // for
       }
@@ -640,8 +653,9 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  void controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
+    f_status_t status_return = F_none;
 
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
@@ -654,7 +668,7 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
       controller_rule_error_print(data.error, *cache, F_false);
 
-      return;
+      return status;
     }
 
     f_string_length_t path_original_length = 0;
@@ -673,6 +687,15 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          return status;
+        }
+
+        if (F_status_is_error_not(status_return)) {
+          status_return = status;
+        }
+
         controller_rule_error_print(data.error, *cache, F_false);
         continue;
       }
@@ -734,6 +757,16 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
         controller_rule_error_print(data.error, *cache, F_false);
+
+        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          return status;
+        }
+
+        if (F_status_is_error_not(status_return)) {
+          status_return = status;
+        }
+
+        controller_rule_error_print(data.error, *cache, F_false);
         continue;
       }
 
@@ -743,6 +776,11 @@ extern "C" {
           fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
           controller_rule_error_print(data.error, *cache, F_false);
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = F_status_set_error(F_invalid);
+          }
+
           continue;
         }
 
@@ -753,6 +791,15 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_maps_increase", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
@@ -761,6 +808,15 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
@@ -769,6 +825,15 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
@@ -793,6 +858,11 @@ extern "C" {
             fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
             controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(F_invalid);
+            }
+
             continue;
           }
         }
@@ -802,6 +872,11 @@ extern "C" {
             fprintf(data.error.to.stream, "%s%sRule setting requires no Content or exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
             controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(F_invalid);
+            }
+
             continue;
           }
 
@@ -815,12 +890,50 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
 
         if (type == 3) {
-          // @todo validate must have at least 1 non-whitespace printing character.
+          status = controller_validate_has_graph(setting_values->array[setting_values->used]);
+
+          if (status == F_false || F_status_set_fine(status) == F_incomplete_utf) {
+            if (status == F_false) {
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used].string, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+              controller_rule_error_print(data.error, *cache, F_false);
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = F_status_set_error(F_invalid);
+              }
+            }
+            else {
+
+              // this function should only return F_incomplete_utf on error.
+              fll_error_print(data.error, F_incomplete_utf, "controller_validate_has_graph", F_true);
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = status;
+              }
+            }
+
+            setting_values->array[setting_values->used].used = 0;
+
+            controller_rule_error_print(data.error, *cache, F_false);
+            continue;
+          }
         }
         else if (type == 6) {
           path_original_length = setting_value->used;
@@ -847,6 +960,15 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
+
+            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              return status;
+            }
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = status;
+            }
+
             controller_rule_error_print(data.error, *cache, F_false);
             continue;
           }
@@ -874,6 +996,15 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
@@ -884,17 +1015,57 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            return status;
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
+
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
 
         if (type == 2) {
-          // @todo validate that this is a valid environment variable name: case-sensitive alpha-numeric or underscore, but no leading digits.
+          status = controller_validate_environment_name(setting_values->array[setting_values->used]);
+
+          if (status == F_false || F_status_set_fine(status) == F_incomplete_utf) {
+            if (status == F_false) {
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "%s%sRule setting has an invalid environment variable name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used].string, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+              controller_rule_error_print(data.error, *cache, F_false);
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = F_status_set_error(F_invalid);
+              }
+            }
+            else {
+
+              // this function should only return F_incomplete_utf on error.
+              fll_error_print(data.error, F_incomplete_utf, "controller_validate_environment_name", F_true);
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = status;
+              }
+            }
+
+            setting_values->array[setting_values->used].used = 0;
+
+            controller_rule_error_print(data.error, *cache, F_false);
+            continue;
+          }
         }
 
         setting_values->used++;
       } // for
     } // for
+
+    return status_return;
   }
 #endif // _di_controller_rule_setting_read_
 

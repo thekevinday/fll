@@ -1,7 +1,8 @@
 #include "controller.h"
-#include "private-controller.h"
+#include "private-control.h"
 #include "private-entry.h"
 #include "private-rule.h"
+#include "private-controller.h"
 
 #ifdef __cplusplus
 extern "C" {

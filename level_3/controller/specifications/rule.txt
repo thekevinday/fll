@@ -13,10 +13,11 @@ Rule Specification:
 
   For the above Basic List Objects, "main" may be specified only once whereas the others may be specifed multiple times.
 
-  The "settings" outer most list Object has the following FSS-0001 (Extended) Content:
+  The "settings" outer most list Object has the following FSS-0001 (Extended) Content\:
+    "control_group": Zero or One Content representing a valid control group (cgroup) name.
     "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    "name": Zero or One Content, must have at least 1 non-whitespace printing character.
+    "name": Zero or One Content, must have at least 1 graph character (non-whitespace printing character).
     "need": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
     "path": Zero or One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
     "pid": One Content representing the full path to a PID file directory (such as "/var/run/service/ssh.pid").

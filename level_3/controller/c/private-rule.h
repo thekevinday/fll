@@ -8,6 +8,8 @@
 #ifndef _PRIVATE_rule_h
 #define _PRIVATE_rule_h
 
+#include "private-controller.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -41,8 +43,8 @@ extern "C" {
     { \
       0, \
       0, \
-      0, \
-      0, \
+      f_string_range_t_initialize, \
+      f_string_range_t_initialize, \
       f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_content_t_initialize, \
@@ -57,7 +59,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
     }
 
-  #define f_macro_controller_rule_name_t_delete_simple(cache) \
+  #define macro_controller_rule_name_t_delete_simple(cache) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \
@@ -226,14 +228,16 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 /**
- * Read the content within the buffer, extracting all valid items.
+ * Read the rule file, extracting all valid items.
  *
  * @param data
  *   The program data.
+ * @param setting
+ *   The controller settings data.
  * @param rule_id
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
- *   "/etc/controller/setting/rules/boot/my.rule" would have a rule id of "boot/my".
+ *   "/etc/controller/rules/boot/my.rule" would have a rule id of "boot/my".
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param rule
@@ -256,7 +260,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_return_status controller_rule_read(const controller_data_t data, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
 
 /**
@@ -264,7 +268,8 @@ extern "C" {
  *
  * This will perform additional FSS read functions as appropriate.
  *
- * Errors from this are not considered fatal, therefore errors may be printed but nothing is returned.
+ * Errors from this are not considered fatal, but the first error code encountered is returned.
+ * Memory failure errors are always immediately returned.
  *
  * @param data
  *   The program data.
@@ -273,10 +278,24 @@ extern "C" {
  * @param rule
  *   The processed rule.
  *
- * @todo consider making memory failures still critical errors, in which case a status does need to be returned.
+ * @return
+ *    F_none on success.
+ *    F_invalid (with error bit) on success but there were one or more invalid settings encountered.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: fl_string_maps_increase().
+ *   Errors (with error bit) from: fll_fss_extended_read().
+ *   Errors (with error bit) from: fll_path_canonical().
+ *
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamics_increase()
+ * @see fl_string_maps_increase()
+ * @see fll_fss_extended_read()
+ * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern void controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
 
 #ifdef __cplusplus
