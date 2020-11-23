@@ -764,9 +764,11 @@ extern "C" {
 /**
  * Validate that the given define variable name is valid.
  *
- * A valid define variable name mst begin with an alpha-character or an underscore.
+ * A valid define variable name must begin with an alpha-character or an underscore.
  * Every character after that may be alphanumeric or underscore.
  * All other characters, including Unicode characters, are invalid.
+ *
+ * @fixme make this UTF-8 friendly.
  *
  * @param name
  *   The variable name string to validate.
