@@ -86,6 +86,19 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_incomplete_utf) {
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol[0]);
+        fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : "");
+
+        private_fll_error_print_function(error, function);
+
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol[0]);
+      }
+
+      return F_false;
+    }
+
     if (fallback && error.verbosity != f_console_verbosity_quiet) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
