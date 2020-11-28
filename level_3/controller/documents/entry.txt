@@ -10,20 +10,28 @@ Entry Documentation:
   All other Basic List Objects are not executed unless either a "category" or a "failsafe" specifies the Object.
   Execution of all Basic List Objects is top-down.
 
-  Inside each list there are additional commands: "consider", "failsafe", "group", "rule", and "timeout".
+  Inside each list there are additional commands: "consider", "failsafe", "item", "ready", "rule", and "timeout".
 
   The "consider" command is a special case of a "rule" command.
   All available Content are identical.
-  The difference is that this rule is only processed at this spot at this time if and when some "rule" command (or a "consider" command is determined to be executed) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish").
+  The difference is that "consider" is only processed at this spot at this time if and when some "rule" command (or another "consider" command is determined to be executed) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish").
   If this is determined to be executed, then this is immediately executed in the designated position and applies all properties as appropriate (such as "asynchronous", for example).
+  If this is determined not to be executed, then this "consider" is ignored as if it was never there in the first place.
 
   The "failsafe" command accepts only a valid Basic List Object in which will be executed when a failure is detected.
   Only a single "failsafe" command may exist at a time.
   Each time a "failsafe" command is specified, it replaces the previous "failsafe" command.
 
-  The "group" command accepts only a valid Basic List Object in which will be immediately executed.
-  A "group" is another list within the entry file to execute in it entirety.
+  The "item" command accepts only a valid Basic List Object in which will be immediately executed.
+  An "item" is another list within the entry file to execute in it entirety.
   Any valid Object name, except for the reserved "main", may be called using this.
+
+  The "ready" command instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
+  When not specified, the state is always assumed to be ready.
+  For example, the controller may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
+  If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is properly mounted.
+  This could be a problem, such as on a read-only filesystem the pid creation fails and controller bails out on error.
+  Adding ready essentially specifies a point in time in the rules in which things are expected to be safe for such basic operations.
 
   The "rule" command immediately executes a given rule file.
   The first Content represents the rule ID, which is a relative path the rule file is to be found, without the file extension.

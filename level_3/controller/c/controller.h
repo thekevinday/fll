@@ -64,15 +64,23 @@ extern "C" {
 #endif // _di_controller_name_
 
 #ifndef _di_controller_defines_
+
+  // must be at least 2.
+  #define controller_default_allocation_step 4
+
+  #define controller_path_pid      "/var/run/controller.pid"
   #define controller_path_settings "/etc/controller"
 
+  #define controller_path_pid_length      23
   #define controller_path_settings_length 15
 
   #define controller_short_interruptable "i"
+  #define controller_short_pid           "p"
   #define controller_short_settings      "s"
   #define controller_short_test          "t"
 
   #define controller_long_interruptable "interruptable"
+  #define controller_long_pid           "pid"
   #define controller_long_settings      "settings"
   #define controller_long_test          "test"
 
@@ -88,6 +96,7 @@ extern "C" {
     controller_parameter_version,
 
     controller_parameter_interruptable,
+    controller_parameter_pid,
     controller_parameter_settings,
     controller_parameter_test,
   };
@@ -104,11 +113,12 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(controller_short_interruptable, controller_long_interruptable, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_pid, controller_long_pid, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_test, controller_long_test, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 12
+  #define controller_total_parameters 13
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_data_t_

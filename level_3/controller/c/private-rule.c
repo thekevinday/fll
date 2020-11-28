@@ -65,7 +65,7 @@ extern "C" {
       status = F_array_too_large;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & actions->array, sizeof(controller_rule_actions_t), actions->size, size);
+    const f_status_t status_resize = f_memory_resize((void **) & actions->array, sizeof(controller_rule_action_t), actions->size, size);
     if (F_status_is_error(status_resize)) return status_resize;
 
     actions->size = size;
@@ -81,7 +81,7 @@ extern "C" {
 
     // "script" types use the entire content and can be directly passed through.
     if (item->type == controller_rule_item_type_script) {
-      status = controller_rule_actions_increase_by(f_memory_default_allocation_step, actions);
+      status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
@@ -111,8 +111,8 @@ extern "C" {
     if (actions->type == controller_rule_action_type_extended_list) {
       cache->comments.used = 0;
       cache->delimits.used = 0;
-      cache->contents_action.used = 0;
-      cache->objects_action.used = 0;
+      cache->content_actions.used = 0;
+      cache->object_actions.used = 0;
 
       status = fl_fss_extended_list_content_read(cache->buffer_item, range, &cache->content_action, &cache->delimits, &cache->comments);
 
@@ -120,7 +120,7 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true);
       }
       else if (status == FL_fss_found_content) {
-        status = fll_fss_extended_read(cache->buffer_item, &cache->content_action.array[0], &cache->objects_action, &cache->contents_action, 0, 0, &cache->delimits, 0);
+        status = fll_fss_extended_read(cache->buffer_item, &cache->content_action.array[0], &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
@@ -135,9 +135,9 @@ extern "C" {
             f_array_length_t i = 0;
             f_array_length_t j = 0;
 
-            for (; i < cache->objects_action.used; ++i) {
+            for (; i < cache->object_actions.used; ++i) {
 
-              status = f_fss_count_lines(cache->buffer_item, cache->objects_action.array[i].start, &actions->array[actions->used].line);
+              status = f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &actions->array[actions->used].line);
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -154,7 +154,7 @@ extern "C" {
                 break;
               }
 
-              status = controller_rule_action_read(data, cache->buffer_item, &cache->objects_action.array[i], &cache->contents_action.array[i], &actions->array[actions->used]);
+              status = controller_rule_action_read(data, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used]);
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "controller_rule_action_read", F_true);
@@ -185,7 +185,7 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
         }
         else {
-          status = controller_rule_actions_increase_by(f_memory_default_allocation_step, actions);
+          status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
@@ -244,7 +244,7 @@ extern "C" {
       }
 
       if (cache.name_item.used) {
-        fprintf(output.to.stream, "%s '", item ? "item" : "setting");
+        fprintf(output.to.stream, "rule %s '", item ? "item" : "setting");
         fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_item.string, output.notable.after->string);
         fprintf(output.to.stream, "%s' on line ", output.context.before->string);
         fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_item, output.notable.after->string);
@@ -263,7 +263,6 @@ extern "C" {
     f_status_t status = F_none;
 
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
-    f_fss_quote_t quote = 0;
 
     controller_rule_actions_t *actions = 0;
 
@@ -299,7 +298,7 @@ extern "C" {
         cache->delimits.used = 0;
 
         // The current line is not an Extended List object, so the next possibility is a Basic List (and Extended List, both use the same Object structure).
-        status = fl_fss_extended_object_read(cache->buffer_item, &range, &cache->range_action, &quote, &cache->delimits);
+        status = fl_fss_extended_object_read(cache->buffer_item, &range, &cache->range_action, 0, &cache->delimits);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true);
@@ -381,7 +380,7 @@ extern "C" {
         else {
           if (data.warning.verbosity == f_console_verbosity_debug) {
             fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
-            fprintf(data.warning.to.stream, "%s%sUnknown action type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
+            fprintf(data.warning.to.stream, "%s%sUnknown rule item action type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
 
             controller_rule_error_print(data.warning, *cache, F_true);
           }
@@ -393,7 +392,7 @@ extern "C" {
           if (actions->intent == controller_rule_action_intent_create || actions->intent == controller_rule_action_intent_group || actions->intent == controller_rule_action_intent_use || actions->intent == controller_rule_action_intent_user) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for this item action type.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+              fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for this rule item action type.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
             }
 
             status = F_status_set_error(F_unsupported);
@@ -429,7 +428,7 @@ extern "C" {
       status = F_array_too_large;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & items->array, sizeof(controller_rule_items_t), items->size, size);
+    const f_status_t status_resize = f_memory_resize((void **) & items->array, sizeof(controller_rule_item_t), items->size, size);
     if (F_status_is_error(status_resize)) return status_resize;
 
     items->size = size;
@@ -458,12 +457,25 @@ extern "C" {
 
     rule->items.used = 0;
 
+    cache->line_item = 0;
+    cache->line_action = 0;
+
+    cache->range_action.start = 1;
+    cache->range_action.stop = 0;
+
     cache->comments.used = 0;
     cache->delimits.used = 0;
 
-    cache->buffer_items.used = 0;
-    cache->contents_items.used = 0;
-    cache->objects_items.used = 0;
+    cache->buffer_file.used = 0;
+    cache->buffer_item.used = 0;
+
+    cache->content_items.used = 0;
+
+    cache->object_items.used = 0;
+
+    cache->name_action.used = 0;
+    cache->name_file.used = 0;
+    cache->name_item.used = 0;
 
     status = fl_string_dynamic_append_nulless(rule_id, &rule->id);
 
@@ -471,46 +483,19 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
     }
     else {
-      f_file_t file = f_file_t_initialize;
-
-      const f_string_length_t file_path_length = setting.path_setting.used + f_path_separator_length + controller_string_rules_length + f_path_separator_length + rule->id.used + f_path_separator_length;
-      char file_path[file_path_length + 1];
-
-      memcpy(file_path, setting.path_setting.string, setting.path_setting.used);
-      memcpy(file_path + setting.path_setting.used + f_path_separator_length, controller_string_rules, controller_string_rules_length);
-      memcpy(file_path + setting.path_setting.used + f_path_separator_length + controller_string_rules_length + f_path_separator_length, rule->id.string, rule->id.used);
-
-      file_path[setting.path_setting.used] = f_path_separator[0];
-      file_path[setting.path_setting.used + f_path_separator_length + controller_string_rules_length] = f_path_separator[0];
-      file_path[file_path_length - 1] = f_path_separator[0];
-      file_path[file_path_length] = 0;
-
-      status = f_file_stream_open(file_path, 0, &file);
-
-      if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, rule->id.string, "open", fll_error_file_type_file);
-      }
-      else {
-        status = f_file_stream_read(file, 1, &cache->buffer_items);
-
-        if (F_status_is_error(status)) {
-          fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, cache->name_file.string, "read", fll_error_file_type_file);
-        }
-      }
-
-      f_file_stream_close(F_true, &file);
+      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, &cache->buffer_file, &cache->name_file);
     }
 
-    if (F_status_is_error_not(status) && cache->buffer_items.used) {
-      f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_items.used);
+    if (F_status_is_error_not(status) && cache->buffer_file.used) {
+      f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_file.used);
 
-      status = fll_fss_basic_list_read(cache->buffer_items, &range, &cache->objects_items, &cache->contents_items, &cache->delimits, 0, &cache->comments);
+      status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
       }
       else {
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_items);
+        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
@@ -518,38 +503,37 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && cache->objects_items.used) {
-      status = controller_rule_items_increase_by(cache->objects_items.used, &rule->items);
+    if (F_status_is_error_not(status) && cache->object_items.used) {
+      status = controller_rule_items_increase_by(cache->object_items.used, &rule->items);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "controller_rule_items_increase_by", F_true);
       }
       else {
-        for (f_array_length_t i = 0; i < cache->objects_items.used; ++i) {
+        for (f_array_length_t i = 0; i < cache->object_items.used; ++i) {
 
           cache->line_item = 0;
           cache->line_action = 0;
 
           cache->range_action.start = 1;
           cache->range_action.stop = 0;
-          cache->range_item = cache->objects_items.array[i];
 
           cache->comments.used = 0;
           cache->delimits.used = 0;
 
           cache->content_action.used = 0;
-          cache->contents_action.used = 0;
-          cache->objects_action.used = 0;
+          cache->content_actions.used = 0;
+
+          cache->object_actions.used = 0;
 
           cache->buffer_item.used = 0;
 
           cache->name_action.used = 0;
-          cache->name_file.used = 0;
           cache->name_item.used = 0;
 
           for_item = F_true;
 
-          status = f_fss_count_lines(cache->buffer_items, cache->range_item.start, &cache->line_item);
+          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->line_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -558,7 +542,7 @@ extern "C" {
 
           rule->items.array[rule->items.used].line = cache->line_item;
 
-          status = fl_string_dynamic_rip_nulless(cache->buffer_items, cache->range_item, &cache->name_item);
+          status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
@@ -569,13 +553,6 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-            break;
-          }
-
-          status = fl_string_dynamic_partial_append(cache->buffer_items, cache->contents_items.array[i].array[0], &cache->buffer_item);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append", F_true);
             break;
           }
 
@@ -594,12 +571,19 @@ extern "C" {
           else {
             if (data.warning.verbosity == f_console_verbosity_debug) {
               fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.warning.to.stream, "%s%sUnknown item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
+              fprintf(data.warning.to.stream, "%s%sUnknown rule item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
 
               controller_rule_error_print(data.warning, *cache, F_true);
             }
 
             continue;
+          }
+
+          status = fl_string_dynamic_partial_append(cache->buffer_file, cache->content_items.array[i].array[0], &cache->buffer_item);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append", F_true);
+            break;
           }
 
           if (rule->items.array[rule->items.used].type) {
@@ -660,9 +644,7 @@ extern "C" {
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
-    f_fss_quote_t quote = 0;
-
-    status = fll_fss_extended_read(cache->buffer_item, &range, &cache->objects_action, &cache->contents_action, 0, 0, &cache->delimits, 0);
+    status = fll_fss_extended_read(cache->buffer_item, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
     if (F_status_is_error(status)) {
       fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
@@ -679,11 +661,11 @@ extern "C" {
     f_array_length_t j = 0;
     uint8_t type = 0;
 
-    for (; i < cache->contents_action.used; ++i, type = 0) {
+    for (; i < cache->content_actions.used; ++i, type = 0) {
 
       // name_item is used to store the setting name.
       cache->name_item.used = 0;
-      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->objects_action.array[i], &cache->name_item);
+      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->object_actions.array[i], &cache->name_item);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
@@ -735,7 +717,7 @@ extern "C" {
         continue;
       }
 
-      if (!cache->contents_action.array[i].used) {
+      if (!cache->content_actions.array[i].used) {
         if (data.warning.verbosity == f_console_verbosity_debug) {
           fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
           fprintf(data.warning.to.stream, "%s%sEmpty rule setting.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
@@ -749,8 +731,8 @@ extern "C" {
       // name_action is used to store all setting values for a single setting.
       cache->name_action.used = 0;
 
-      range2.start = cache->contents_action.array[i].array[0].start;
-      range2.stop = cache->contents_action.array[i].array[cache->contents_action.array[i].used - 1].stop;
+      range2.start = cache->content_actions.array[i].array[0].start;
+      range2.stop = cache->content_actions.array[i].array[cache->content_actions.array[i].used - 1].stop;
 
       status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->name_action);
 
@@ -771,7 +753,7 @@ extern "C" {
       }
 
       if (type == 1) {
-        if (cache->contents_action.array[i].used != 2) {
+        if (cache->content_actions.array[i].used != 2) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
           fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
@@ -804,7 +786,7 @@ extern "C" {
           continue;
         }
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->contents_action.array[i].array[0], &rule->defines.array[rule->defines.used].name);
+        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &rule->defines.array[rule->defines.used].name);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
@@ -821,7 +803,7 @@ extern "C" {
           continue;
         }
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->contents_action.array[i].array[1], &rule->defines.array[rule->defines.used].value);
+        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &rule->defines.array[rule->defines.used].value);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
@@ -853,7 +835,7 @@ extern "C" {
         }
 
         if (type == 6) {
-          if (setting_value->used || cache->contents_action.array[i].used != 1) {
+          if (setting_value->used || cache->content_actions.array[i].used != 1) {
             fprintf(data.error.to.stream, "%c", f_string_eol[0]);
             fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
@@ -867,7 +849,7 @@ extern "C" {
           }
         }
         else {
-          if (setting_value->used || cache->contents_action.array[i].used > 1) {
+          if (setting_value->used || cache->content_actions.array[i].used > 1) {
             fprintf(data.error.to.stream, "%c", f_string_eol[0]);
             fprintf(data.error.to.stream, "%s%sRule setting requires no Content or exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
 
@@ -880,13 +862,13 @@ extern "C" {
             continue;
           }
 
-          if (!cache->contents_action.array[i].used) {
+          if (!cache->content_actions.array[i].used) {
             setting_value->used = 0;
             continue;
           }
         }
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->contents_action.array[i].array[0], setting_value);
+        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
@@ -990,7 +972,7 @@ extern "C" {
         setting_values = &rule->wish;
       }
 
-      for (j = 0; j < cache->contents_action.array[i].used; ++j) {
+      for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
         status = fl_string_dynamics_increase(setting_values);
 
@@ -1011,7 +993,7 @@ extern "C" {
 
         setting_values->array[setting_values->used].used = 0;
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->contents_action.array[i].array[j], &setting_values->array[setting_values->used]);
+        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &setting_values->array[setting_values->used]);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);

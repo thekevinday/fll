@@ -26,7 +26,8 @@ extern "C" {
     fprintf(output.stream, "%c", f_string_eol[0]);
 
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Designate that this program can be interrupted.");
-    fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path.");
+    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom pid file path, such as '" controller_path_pid "'.");
+    fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path, such as '" controller_path_settings "'.");
     fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Run in test mode, where nothing is actually run (a simulation).");
 
     fll_program_print_help_usage(output, context, controller_name, "");
@@ -38,6 +39,8 @@ extern "C" {
 #ifndef _di_controller_main_
   f_return_status controller_main(const f_console_arguments_t arguments, controller_data_t *data) {
     f_status_t status = F_none;
+
+    // @todo somewhere in here, check to see if the standard pid file exists before attempting to start (when in normal operation mode).
 
     {
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, controller_total_parameters);

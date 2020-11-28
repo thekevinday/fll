@@ -20,19 +20,18 @@ extern "C" {
     f_string_length_t line_item;
 
     f_string_range_t range_action;
-    f_string_range_t range_item;
 
     f_fss_comments_t comments;
     f_fss_delimits_t delimits;
 
     f_fss_content_t content_action;
-    f_fss_contents_t contents_action;
-    f_fss_contents_t contents_items;
-    f_fss_objects_t objects_action;
-    f_fss_objects_t objects_items;
+    f_fss_contents_t content_actions;
+    f_fss_contents_t content_items;
+    f_fss_objects_t object_actions;
+    f_fss_objects_t object_items;
 
+    f_string_dynamic_t buffer_file;
     f_string_dynamic_t buffer_item;
-    f_string_dynamic_t buffer_items;
 
     f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
@@ -43,7 +42,6 @@ extern "C" {
     { \
       0, \
       0, \
-      f_string_range_t_initialize, \
       f_string_range_t_initialize, \
       f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
@@ -63,12 +61,12 @@ extern "C" {
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \
-    f_macro_fss_contents_t_delete_simple(cache.contents_action) \
-    f_macro_fss_contents_t_delete_simple(cache.contents_items) \
-    f_macro_fss_objects_t_delete_simple(cache.objects_action) \
-    f_macro_fss_objects_t_delete_simple(cache.objects_items) \
+    f_macro_fss_contents_t_delete_simple(cache.content_actions) \
+    f_macro_fss_contents_t_delete_simple(cache.content_items) \
+    f_macro_fss_objects_t_delete_simple(cache.object_actions) \
+    f_macro_fss_objects_t_delete_simple(cache.object_items) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
     f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_items) \
     f_macro_string_dynamic_t_delete_simple(cache.name_action) \
     f_macro_string_dynamic_t_delete_simple(cache.name_file) \
     f_macro_string_dynamic_t_delete_simple(cache.name_item)
@@ -171,7 +169,10 @@ extern "C" {
  *   If FALSE, then this error is associated with a rule setting.
  *
  * @see controller_rule_actions_read()
+ * @see controller_rule_item_read()
  * @see controller_rule_items_read()
+ * @see controller_rule_read()
+ * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_
   void controller_rule_error_print(const fll_error_print_t output, const controller_rule_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
@@ -237,7 +238,7 @@ extern "C" {
  * @param rule_id
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
- *   "/etc/controller/rules/boot/my.rule" would have a rule id of "boot/my".
+ *   "/etc/controller/rules/example/my.rule" would have a rule id of "example/my".
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param rule

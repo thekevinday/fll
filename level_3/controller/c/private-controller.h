@@ -23,11 +23,13 @@ extern "C" {
   #define controller_string_environment "environment"
   #define controller_string_failsafe    "failsafe"
   #define controller_string_group       "group"
+  #define controller_string_item        "item"
   #define controller_string_main        "main"
   #define controller_string_name        "name"
   #define controller_string_need        "need"
   #define controller_string_path        "path"
   #define controller_string_pid         "pid"
+  #define controller_string_ready       "ready"
   #define controller_string_restart     "restart"
   #define controller_string_reload      "reload"
   #define controller_string_rule        "rule"
@@ -53,11 +55,13 @@ extern "C" {
   #define controller_string_environment_length 11
   #define controller_string_failsafe_length    8
   #define controller_string_group_length       5
+  #define controller_string_item_length        4
   #define controller_string_main_length        4
   #define controller_string_name_length        4
   #define controller_string_need_length        4
   #define controller_string_path_length        4
   #define controller_string_pid_length         3
+  #define controller_string_ready_length       5
   #define controller_string_restart_length     7
   #define controller_string_reload_length      6
   #define controller_string_rule_length        4
@@ -292,13 +296,14 @@ extern "C" {
     }
 #endif // _di_controller_rules_t_
 
-#ifndef _di_controller_entry_item_t_
+#ifndef _di_controller_entry_action_t_
   enum {
-    controller_entry_item_type_consider = 1,
-    controller_entry_item_type_failsafe,
-    controller_entry_item_type_group,
-    controller_entry_item_type_rule,
-    controller_entry_item_type_timeout,
+    controller_entry_action_type_consider = 1,
+    controller_entry_action_type_failsafe,
+    controller_entry_action_type_item,
+    controller_entry_action_type_ready,
+    controller_entry_action_type_rule,
+    controller_entry_action_type_timeout,
   };
 
   #define controller_entry_rule_code_asynchronous 0x1
@@ -316,20 +321,71 @@ extern "C" {
     f_string_length_t line;
     f_number_unsigned_t timeout;
 
-    f_string_dynamic_t id;
-  } controller_entry_item_t;
+    f_status_t status;
 
-  #define controller_entry_item_t_initialize \
+    f_string_dynamics_t parameters;
+  } controller_entry_action_t;
+
+  #define controller_entry_action_t_initialize \
     { \
       0, \
       0, \
       0, \
       0, \
-      f_string_dynamic_t_initialize, \
+      F_unknown, \
+      f_string_dynamics_t_initialize, \
     }
 
-  #define macro_controller_entry_item_t_delete_simple(item) \
-    f_macro_string_dynamics_t_delete_simple(item.id)
+  #define macro_controller_entry_action_t_delete_simple(item) \
+    f_macro_string_dynamics_t_delete_simple(item.parameters)
+#endif // _di_controller_entry_action_t_
+
+#ifndef _di_controller_entry_actions_t_
+  typedef struct {
+    controller_entry_action_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_entry_actions_t;
+
+  #define controller_entry_actions_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define macro_controller_entry_actions_t_delete_simple(items) \
+    items.used = items.size; \
+    while (items.used > 0) { \
+      items.used--; \
+      macro_controller_rule_t_delete_simple(items.array[items.used]); \
+      if (!items.used) { \
+        if (f_memory_delete((void **) & items.array, sizeof(controller_entry_action_t), items.size)) { \
+          items.size = 0; \
+        } \
+      } \
+    }
+#endif // _di_controller_entry_actions_t_
+
+#ifndef _di_controller_entry_item_t_
+  typedef struct {
+    f_string_length_t line;
+
+    f_string_dynamic_t name;
+    controller_entry_actions_t actions;
+  } controller_entry_item_t;
+
+  #define controller_entry_item_t_initialize \
+    { \
+      0, \
+      f_string_dynamic_t_initialize, \
+      controller_entry_actions_t_initialize, \
+    }
+
+  #define macro_controller_entry_item_t_delete_simple(list) \
+    f_macro_string_dynamic_t_delete_simple(list.name) \
+    macro_controller_entry_actions_t_delete_simple(list.actions)
 #endif // _di_controller_entry_item_t_
 
 #ifndef _di_controller_entry_items_t_
@@ -360,75 +416,83 @@ extern "C" {
     }
 #endif // _di_controller_entry_items_t_
 
-#ifndef _di_controller_entry_list_t_
+#ifndef _di_controller_entry_t_
   typedef struct {
-    f_string_length_t line;
-    f_string_dynamic_t name;
+    f_status_t status;
     controller_entry_items_t items;
-  } controller_entry_list_t;
+  } controller_entry_t;
 
-  #define controller_entry_list_t_initialize \
+  #define controller_entry_t_initialize \
     { \
-      0, \
-      f_string_dynamic_t_initialize, \
+      F_unknown, \
       controller_entry_items_t_initialize, \
     }
 
-  #define macro_controller_entry_list_t_delete_simple(list) \
-    f_macro_string_dynamic_t_delete_simple(list.name) \
-    macro_controller_entry_items_t_delete_simple(list.items)
-#endif // _di_controller_entry_list_t_
-
-#ifndef _di_controller_entry_lists_t_
-  typedef struct {
-    controller_entry_list_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } controller_entry_lists_t;
-
-  #define controller_entry_lists_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
-
-  #define macro_controller_entry_lists_t_delete_simple(lists) \
-    lists.used = lists.size; \
-    while (lists.used > 0) { \
-      lists.used--; \
-      macro_controller_rule_t_delete_simple(lists.array[lists.used]); \
-      if (!lists.used) { \
-        if (f_memory_delete((void **) & lists.array, sizeof(controller_entry_list_t), lists.size)) { \
-          lists.size = 0; \
-        } \
-      } \
-    }
-#endif // _di_controller_entry_lists_t_
+  #define macro_controller_entry_t_delete_simple(entry) \
+    macro_controller_entry_items_t_delete_simple(entry.items)
+#endif // _di_controller_entry_t_
 
 #ifndef _di_controller_setting_t
   typedef struct {
     bool interruptable;
+    bool ready;
 
     f_string_dynamic_t path_setting;
 
-    controller_entry_lists_t entry_lists;
+    controller_entry_t entry;
     controller_rules_t rules;
   } controller_setting_t;
 
   #define controller_setting_t_initialize \
     { \
       F_false, \
+      F_false, \
       f_string_dynamic_t_initialize, \
+      controller_entry_t_initialize, \
       controller_rules_t_initialize, \
     }
 
   #define macro_controller_setting_t_delete_simple(setting) \
     f_macro_string_dynamic_t_delete_simple(setting.path_setting) \
-    macro_controller_entry_lists_t_delete_simple(entry_lists) \
+    macro_controller_entry_items_t_delete_simple(entry_lists) \
+    macro_controller_entry_t_delete_simple(setting.entry) \
     f_macro_string_dynamic_t_delete_simple(setting.rules)
 #endif // _di_controller_setting_t
+
+/**
+ * Load a file from the controller settings directory.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   The controller settings data.
+ * @param path_prefix
+ *   The path prefix, such as 'entries' from '/etc/controller/entries/default.entry'.
+ * @param path_name
+ *   The path name, such as 'default' from '/etc/controller/entries/default.entry'.
+ * @param path_suffix
+ *   The path suffix, such as 'entry' from '/etc/controller/entries/default.entry'.
+ * @param path_prefix_length
+ *   The length of the prefix path.
+ * @param path_suffix_length
+ *   The length of the suffix path.
+ * @param path_file
+ *   This is updated with a partial path to the given file.
+ * @param buffer
+ *   The buffer to load the file into.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_stream_open().
+ *   Errors (with error bit) from: f_file_stream_read().
+ *
+ * @see f_file_stream_open()
+ * @see f_file_stream_read()
+ */
+#ifndef _di_controller_file_load_
+  extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, f_string_dynamic_t *path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_file_load_
 
 /**
  * Validate that the given string is a valid environment variable name.
