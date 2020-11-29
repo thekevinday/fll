@@ -108,7 +108,7 @@ extern "C" {
       return status;
     }
 
-    if (actions->type == controller_rule_action_type_extended_list) {
+    if (actions->method == controller_rule_action_method_extended_list) {
       cache->comments.used = 0;
       cache->delimits.used = 0;
       cache->content_actions.used = 0;
@@ -146,20 +146,20 @@ extern "C" {
 
               actions->array[actions->used].line += item->line;
               actions->array[actions->used].parameters.used = 0;
+              actions->array[actions->used].status = F_unknown;
 
               status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+
+                actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
                 break;
               }
 
               status = controller_rule_action_read(data, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used]);
 
-              if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "controller_rule_action_read", F_true);
-              }
-
+              actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
               actions->used++;
             } // for
           }
@@ -199,11 +199,17 @@ extern "C" {
             else {
               actions->array[0].line += item->line;
               actions->array[0].parameters.used = 0;
+              actions->array[0].status = F_unknown;
 
               status = controller_rule_action_read(data, cache->buffer_item, 0, &cache->content_action, &actions->array[0]);
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "controller_rule_action_read", F_true);
+
+                actions->array[0].status = controller_status_simplify(F_status_set_fine(status));
+              }
+              else {
+                actions->array[0].status = status;
               }
 
               actions->used = 1;
@@ -251,9 +257,11 @@ extern "C" {
         fprintf(output.to.stream, "%s for ", output.context.before->string);
       }
 
-      fprintf(output.to.stream, "file '");
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
-      fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol[0]);
+      if (cache.name_file.used) {
+        fprintf(output.to.stream, "file '");
+        fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
+        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol[0]);
+      }
     }
   }
 #endif // _di_controller_rule_error_print_
@@ -343,39 +351,32 @@ extern "C" {
           break;
         }
 
-        actions = 0;
-
         if (fl_string_dynamic_compare_string(controller_string_create, cache->name_action, controller_string_create_length) == F_equal_to) {
-          actions = &item->create;
-          actions->intent = controller_rule_action_intent_create;
+          item->actions.type = controller_rule_action_type_create;
         }
         else if (fl_string_dynamic_compare_string(controller_string_group, cache->name_action, controller_string_group_length) == F_equal_to) {
-          actions = &item->group;
-          actions->intent = controller_rule_action_intent_group;
+          item->actions.type = controller_rule_action_type_group;
+        }
+        else if (fl_string_dynamic_compare_string(controller_string_kill, cache->name_action, controller_string_kill_length) == F_equal_to) {
+          item->actions.type = controller_rule_action_type_kill;
         }
         else if (fl_string_dynamic_compare_string(controller_string_restart, cache->name_action, controller_string_restart_length) == F_equal_to) {
-          actions = &item->restart;
-          actions->intent = controller_rule_action_intent_restart;
+          item->actions.type = controller_rule_action_type_restart;
         }
         else if (fl_string_dynamic_compare_string(controller_string_reload, cache->name_action, controller_string_reload_length) == F_equal_to) {
-          actions = &item->reload;
-          actions->intent = controller_rule_action_intent_reload;
+          item->actions.type = controller_rule_action_type_reload;
         }
         else if (fl_string_dynamic_compare_string(controller_string_start, cache->name_action, controller_string_start_length) == F_equal_to) {
-          actions = &item->start;
-          actions->intent = controller_rule_action_intent_start;
+          item->actions.type = controller_rule_action_type_start;
         }
         else if (fl_string_dynamic_compare_string(controller_string_stop, cache->name_action, controller_string_stop_length) == F_equal_to) {
-          actions = &item->stop;
-          actions->intent = controller_rule_action_intent_stop;
+          item->actions.type = controller_rule_action_type_stop;
         }
         else if (fl_string_dynamic_compare_string(controller_string_use, cache->name_action, controller_string_use_length) == F_equal_to) {
-          actions = &item->use;
-          actions->intent = controller_rule_action_intent_use;
+          item->actions.type = controller_rule_action_type_use;
         }
         else if (fl_string_dynamic_compare_string(controller_string_user, cache->name_action, controller_string_user_length) == F_equal_to) {
-          actions = &item->user;
-          actions->intent = controller_rule_action_intent_user;
+          item->actions.type = controller_rule_action_type_user;
         }
         else {
           if (data.warning.verbosity == f_console_verbosity_debug) {
@@ -389,7 +390,7 @@ extern "C" {
         }
 
         if (multiple) {
-          if (actions->intent == controller_rule_action_intent_create || actions->intent == controller_rule_action_intent_group || actions->intent == controller_rule_action_intent_use || actions->intent == controller_rule_action_intent_user) {
+          if (item->actions.type == controller_rule_action_type_create || item->actions.type == controller_rule_action_type_group || item->actions.type == controller_rule_action_type_use || item->actions.type == controller_rule_action_type_user) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
               fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for this rule item action type.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
@@ -399,13 +400,13 @@ extern "C" {
             break;
           }
 
-          actions->type = controller_rule_action_type_extended_list;
+          item->actions.method = controller_rule_action_method_extended_list;
         }
         else {
-          actions->type = controller_rule_action_type_extended;
+          item->actions.method = controller_rule_action_method_extended;
         }
 
-        status = controller_rule_actions_read(data, cache, item, actions, &range);
+        status = controller_rule_actions_read(data, cache, item, &item->actions, &range);
         if (F_status_is_error(status)) break;
       }
     } // for
@@ -483,7 +484,7 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
     }
     else {
-      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, &cache->buffer_file, &cache->name_file);
+      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, &cache->name_file, &cache->buffer_file);
     }
 
     if (F_status_is_error_not(status) && cache->buffer_file.used) {
@@ -608,26 +609,9 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      status = F_status_set_fine(status);
-
       controller_rule_error_print(data.error, *cache, for_item);
 
-      if (status == F_memory_not || status == F_memory_allocation || status == F_memory_reallocation) {
-        rule->status = F_memory;
-      }
-      else if (status == F_file_open_max || status == F_space_not || status == F_busy) {
-        rule->status = F_resource;
-      }
-      else if (status == F_access_denied || status == F_filesystem_quota_block || status == F_prohibited || status == F_input_output) {
-        rule->status = F_access;
-      }
-      else if (status == F_interrupted) {
-        rule->status = F_interrupted;
-      }
-      else {
-        rule->status = F_invalid;
-      }
-
+      rule->status = controller_status_simplify(F_status_set_fine(status));
       return F_false;
     }
 

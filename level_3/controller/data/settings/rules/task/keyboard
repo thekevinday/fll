@@ -1,0 +1,7 @@
+# fss-000d
+#
+# Rule for setting the keyboard.
+#
+
+setting:
+  name "System Keyboard"

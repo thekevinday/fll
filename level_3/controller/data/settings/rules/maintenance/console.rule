@@ -1,0 +1,10 @@
+# fss-000d
+#
+# Rule for maintenance/failsafe console.
+#
+
+setting:
+  name "Maintenance Console"
+
+command:
+  start bash --login

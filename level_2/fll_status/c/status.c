@@ -421,6 +421,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_encoding, length, FL_status_string_encoding_length) == F_equal_to) {
+        *code = F_encoding;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_encoding_not, length, FL_status_string_encoding_not_length) == F_equal_to) {
+        *code = F_encoding_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_eof, length, FL_status_string_eof_length) == F_equal_to) {
         *code = F_eof;
         return F_none;

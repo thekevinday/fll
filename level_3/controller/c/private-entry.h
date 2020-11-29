@@ -13,9 +13,7 @@
 #ifndef _di_controller_entry_cache_t_
   typedef struct {
     f_string_length_t line_action;
-    f_string_length_t line_list;
-
-    f_string_range_t range_list;
+    f_string_length_t line_item;
 
     f_fss_comments_t comments;
     f_fss_delimits_t delimits;
@@ -27,7 +25,7 @@
     f_fss_objects_t object_items;
 
     f_string_dynamic_t buffer_file;
-    f_string_dynamic_t buffer_item;
+    f_string_dynamic_t buffer_path;
 
     f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
@@ -38,7 +36,6 @@
     { \
       0, \
       0, \
-      f_string_range_t_initialize, \
       f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_content_t_initialize, \
@@ -62,7 +59,7 @@
     f_macro_fss_objects_t_delete_simple(cache.object_actions) \
     f_macro_fss_objects_t_delete_simple(cache.object_items) \
     f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_path) \
     f_macro_string_dynamic_t_delete_simple(cache.name_action) \
     f_macro_string_dynamic_t_delete_simple(cache.name_file) \
     f_macro_string_dynamic_t_delete_simple(cache.name_item)
@@ -110,6 +107,24 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors (with error bit) from: controller_entry_actions_increase_by().
+ *   Errors (with error bit) from: f_fss_count_lines().
+ *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: fl_string_dynamics_increase_by().
+ *   Errors (with error bit) from: fll_fss_extended_read().
+ *
+ * @see controller_entry_actions_increase_by()
+ * @see f_fss_count_lines()
+ * @see fl_fss_apply_delimit()
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamic_rip_nulless()
+ * @see fl_string_dynamic_terminate_after()
+ * @see fl_string_dynamics_increase_by()
+ * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
   extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_entry_cache_t *cache, controller_entry_actions_t *items) f_gcc_attribute_visibility_internal;
@@ -139,8 +154,8 @@ extern "C" {
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
- * @param lists
- *   The entry lists to resize.
+ * @param items
+ *   The entry items to resize.
  *
  * @return
  *   F_none on success.
@@ -151,7 +166,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_return_status controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *lists) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_items_increase_by_
 
 /**
@@ -173,6 +188,17 @@ extern "C" {
  * @return
  *   F_true on success.
  *   F_false on failure.
+ *
+ * @see controller_entry_actions_read()
+ * @see controller_entry_items_increase_by()
+ * @see controller_file_load()
+ * @see controller_status_simplify()
+ * @see f_fss_count_lines()
+ * @see fl_fss_apply_delimit()
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamic_terminate()
+ * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
   extern f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_entry_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;

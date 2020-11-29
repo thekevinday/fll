@@ -1,0 +1,15 @@
+# fss-000d
+#
+# Rule for initializing the filesystem.
+#
+
+setting:
+  name "Setup Filesystem"
+
+command:
+  start mount -a -O no_netdev
+  stop umount -arf -O no_netdev
+
+command:
+  start swapon -a
+  stop swapoff -a

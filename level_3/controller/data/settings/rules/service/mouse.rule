@@ -1,0 +1,20 @@
+# fss-000d
+#
+# Rule for console mouse.
+#
+
+setting:
+  name "Console Mouse"
+
+  # @todo consider adding iki support.
+
+script:
+  start {
+    # @todo read settings from /etc/mouse, and replace below.
+  }
+
+service:
+  use /var/run/mouse/mouse.pid
+
+  # @todo
+  start gpm -m [device] -t [protocol] [options]

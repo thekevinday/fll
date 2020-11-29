@@ -8,7 +8,7 @@ Rule Documentation:
   The rule file is read top-down, except for the outer most list "settings", which is intended to store settings data for this rule.
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
-  The "settings" outer most list Object has the following FSS-0001 (Extended) Content\:
+  The "settings" Rule Type has the following FSS-0001 (Extended) Content\:
     "control_group": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
@@ -34,8 +34,9 @@ Rule Documentation:
   The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
   Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.
 
-  There are four primary inner Content to perform: "restart", "reload", "start", and "stop".
+  There are five primary inner Content to perform: "kill", "restart", "reload", "start", and "stop".
 
+  The "kill" Content is performed whenever this rule is executed using the kill action (which is, in general, a forced stop).
   The "start" Content is performed whenever this rule is executed using the start action.
   The "stop" Content is performed whenever this rule is executed using the stop action.
   The "restart" Content is performed whenever this rule is executed using the restart action.

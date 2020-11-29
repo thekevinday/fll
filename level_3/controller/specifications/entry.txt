@@ -1,16 +1,24 @@
 # fss-0002
 
 Entry Specification:
-  The "entry" files follow the FSS-0005 (Somewhat Basic List) format.
+  The Entry files follow the FSS-0005 (Somewhat Basic List) format.
 
-  An entry file name is expected to have the file extension ".entry".
+  An Entry file name is expected to have the file extension ".entry".
 
-  The outer most part, which is essentially FSS-0002 (Basic List), has the following Objects\:
+  For each entry file:
+    - The outer most part is a FSS-0002 (Basic List).
+    - The Basic List Object is considered the "Item".
+    - The Basic List Content are considered the "Actions".
+    - The "Actions" are FSS-0001 (Extended).
+    - Each Action Object is the "Action Name".
+    - Each Action Content are the "Action Parameters".
+
+  The Items:
     "main": required.
 
-    The entry file may have any other valid Object, only the above have reserved uses.
+    The Entry file may have any other valid Item Objects, but only the above are reserved.
 
-    Inside each Basic List are essentially the following, FSS-0001 (Extended), Objects\:
+    The Actions\:
       "consider": One or more Content.
         The first Content that is the relative file path (without any leading/trailing slashes and without file extension).
         The second Content that is the basename for a rule file.

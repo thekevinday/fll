@@ -156,6 +156,8 @@ extern "C" {
       F_descriptor,
       F_device,
       F_dummy,
+      F_encoding,
+      F_encoding_not,
       F_eof,
       F_eol,
       F_eos,

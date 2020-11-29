@@ -1,0 +1,22 @@
+# fss-000d
+#
+# Rule for initializing the kernel modules.
+#
+
+setting:
+  name "Setup Kernel Modules"
+
+  need boot filesystem
+
+script:
+  start {
+    if [[ ! -f /proc/modules ]] ; then
+      exit 0;
+    fi
+
+    if [[ ! -e /lib/modules/$(uname -r)/modules.dep ]] ; then
+      depmod;
+    fi
+
+    return 0;
+  }

@@ -1,0 +1,12 @@
+# fss-000d
+#
+# Rule for D-Bus service.
+#
+
+setting:
+  name "D-BUS"
+
+service:
+  use /var/run/dbus/dbus.pid
+
+  start dbus-daemon --system --fork

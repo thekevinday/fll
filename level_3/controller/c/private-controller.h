@@ -13,96 +13,109 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_string_
-  #define controller_string_create      "create"
-  #define controller_string_command     "command"
-  #define controller_string_consider    "consider"
-  #define controller_string_default     "default"
-  #define controller_string_define      "define"
-  #define controller_string_entry       "entry"
-  #define controller_string_entries     "entries"
-  #define controller_string_environment "environment"
-  #define controller_string_failsafe    "failsafe"
-  #define controller_string_group       "group"
-  #define controller_string_item        "item"
-  #define controller_string_main        "main"
-  #define controller_string_name        "name"
-  #define controller_string_need        "need"
-  #define controller_string_path        "path"
-  #define controller_string_pid         "pid"
-  #define controller_string_ready       "ready"
-  #define controller_string_restart     "restart"
-  #define controller_string_reload      "reload"
-  #define controller_string_rule        "rule"
-  #define controller_string_rules       "rules"
-  #define controller_string_script      "script"
-  #define controller_string_service     "service"
-  #define controller_string_settings    "settings"
-  #define controller_string_start       "start"
-  #define controller_string_stop        "stop"
-  #define controller_string_timeout     "timeout"
-  #define controller_string_use         "use"
-  #define controller_string_user        "user"
-  #define controller_string_want        "want"
-  #define controller_string_wish        "wish"
+  #define controller_string_asynchronous "asynchronous"
+  #define controller_string_create       "create"
+  #define controller_string_command      "command"
+  #define controller_string_consider     "consider"
+  #define controller_string_default      "default"
+  #define controller_string_define       "define"
+  #define controller_string_entry        "entry"
+  #define controller_string_entries      "entries"
+  #define controller_string_environment  "environment"
+  #define controller_string_failsafe     "failsafe"
+  #define controller_string_group        "group"
+  #define controller_string_item         "item"
+  #define controller_string_kill         "kill"
+  #define controller_string_main         "main"
+  #define controller_string_name         "name"
+  #define controller_string_need         "need"
+  #define controller_string_path         "path"
+  #define controller_string_pid          "pid"
+  #define controller_string_ready        "ready"
+  #define controller_string_reload       "reload"
+  #define controller_string_require      "require"
+  #define controller_string_restart      "restart"
+  #define controller_string_rule         "rule"
+  #define controller_string_rules        "rules"
+  #define controller_string_script       "script"
+  #define controller_string_service      "service"
+  #define controller_string_settings     "settings"
+  #define controller_string_start        "start"
+  #define controller_string_stop         "stop"
+  #define controller_string_timeout      "timeout"
+  #define controller_string_use          "use"
+  #define controller_string_user         "user"
+  #define controller_string_wait         "wait"
+  #define controller_string_want         "want"
+  #define controller_string_wish         "wish"
 
-  #define controller_string_create_length      6
-  #define controller_string_command_length     7
-  #define controller_string_consider_length    8
-  #define controller_string_define_length      6
-  #define controller_string_default_length     7
-  #define controller_string_entry_length       5
-  #define controller_string_entries_length     7
-  #define controller_string_environment_length 11
-  #define controller_string_failsafe_length    8
-  #define controller_string_group_length       5
-  #define controller_string_item_length        4
-  #define controller_string_main_length        4
-  #define controller_string_name_length        4
-  #define controller_string_need_length        4
-  #define controller_string_path_length        4
-  #define controller_string_pid_length         3
-  #define controller_string_ready_length       5
-  #define controller_string_restart_length     7
-  #define controller_string_reload_length      6
-  #define controller_string_rule_length        4
-  #define controller_string_rules_length       5
-  #define controller_string_script_length      6
-  #define controller_string_service_length     7
-  #define controller_string_settings_length    8
-  #define controller_string_start_length       5
-  #define controller_string_stop_length        4
-  #define controller_string_timeout_length     7
-  #define controller_string_use_length         3
-  #define controller_string_user_length        4
-  #define controller_string_want_length        4
-  #define controller_string_wish_length        4
+  #define controller_string_asynchronous_length 12
+  #define controller_string_create_length       6
+  #define controller_string_command_length      7
+  #define controller_string_consider_length     8
+  #define controller_string_define_length       6
+  #define controller_string_default_length      7
+  #define controller_string_entry_length        5
+  #define controller_string_entries_length      7
+  #define controller_string_environment_length  11
+  #define controller_string_failsafe_length     8
+  #define controller_string_group_length        5
+  #define controller_string_item_length         4
+  #define controller_string_kill_length         4
+  #define controller_string_main_length         4
+  #define controller_string_name_length         4
+  #define controller_string_need_length         4
+  #define controller_string_path_length         4
+  #define controller_string_pid_length          3
+  #define controller_string_ready_length        5
+  #define controller_string_reload_length       6
+  #define controller_string_require_length      7
+  #define controller_string_restart_length      7
+  #define controller_string_rule_length         4
+  #define controller_string_rules_length        5
+  #define controller_string_script_length       6
+  #define controller_string_service_length      7
+  #define controller_string_settings_length     8
+  #define controller_string_start_length        5
+  #define controller_string_stop_length         4
+  #define controller_string_timeout_length      7
+  #define controller_string_use_length          3
+  #define controller_string_user_length         4
+  #define controller_string_wait_length         4
+  #define controller_string_want_length         4
+  #define controller_string_wish_length         4
 #endif // _di_controller_string_
 
 #ifndef _di_controller_rule_action_t_
   enum {
-    controller_rule_action_type_extended = 1,
-    controller_rule_action_type_extended_list,
+    controller_rule_action_method_extended = 1,
+    controller_rule_action_method_extended_list,
   };
 
   enum {
-    controller_rule_action_intent_create = 1,
-    controller_rule_action_intent_group,
-    controller_rule_action_intent_restart,
-    controller_rule_action_intent_reload,
-    controller_rule_action_intent_start,
-    controller_rule_action_intent_stop,
-    controller_rule_action_intent_use,
-    controller_rule_action_intent_user,
+    controller_rule_action_type_create = 1,
+    controller_rule_action_type_group,
+    controller_rule_action_type_kill,
+    controller_rule_action_type_restart,
+    controller_rule_action_type_reload,
+    controller_rule_action_type_start,
+    controller_rule_action_type_stop,
+    controller_rule_action_type_use,
+    controller_rule_action_type_user,
   };
 
   typedef struct {
     f_string_length_t line;
+
+    f_status_t status;
+
     f_string_dynamics_t parameters;
   } controller_rule_action_t;
 
   #define controller_rule_action_t_initialize \
     { \
       0, \
+      F_unknown, \
       f_string_dynamics_t_initialize, \
     }
 
@@ -112,8 +125,8 @@ extern "C" {
 
 #ifndef _di_controller_rule_actions_t_
   typedef struct {
+    uint8_t method;
     uint8_t type;
-    uint8_t intent;
 
     controller_rule_action_t *array;
 
@@ -134,7 +147,7 @@ extern "C" {
     actions.used = actions.size; \
     while (actions.used > 0) { \
       actions.used--; \
-      macro_controller_rule_item_t_delete_simple(actions.array[actions.used]); \
+      macro_controller_rule_action_t_delete_simple(actions.array[actions.used]); \
       if (!actions.used) { \
         if (f_memory_delete((void **) & actions.array, sizeof(controller_rule_action_t), actions.size)) { \
           actions.size = 0; \
@@ -155,14 +168,7 @@ extern "C" {
     uint8_t type;
     f_string_length_t line;
 
-    controller_rule_actions_t create;
-    controller_rule_actions_t group;
-    controller_rule_actions_t restart;
-    controller_rule_actions_t reload;
-    controller_rule_actions_t start;
-    controller_rule_actions_t stop;
-    controller_rule_actions_t use;
-    controller_rule_actions_t user;
+    controller_rule_actions_t actions;
   } controller_rule_item_t;
 
   #define controller_rule_item_t_initialize \
@@ -170,24 +176,10 @@ extern "C" {
       0, \
       0, \
       controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
-      controller_rule_actions_t_initialize, \
     }
 
   #define macro_controller_rule_item_t_delete_simple(item) \
-    macro_controller_rule_actions_t_delete_simple(item.create) \
-    macro_controller_rule_actions_t_delete_simple(item.group) \
-    macro_controller_rule_actions_t_delete_simple(item.restart) \
-    macro_controller_rule_actions_t_delete_simple(item.reload) \
-    macro_controller_rule_actions_t_delete_simple(item.start) \
-    macro_controller_rule_actions_t_delete_simple(item.stop) \
-    macro_controller_rule_actions_t_delete_simple(item.use) \
-    macro_controller_rule_actions_t_delete_simple(item.user)
+    macro_controller_rule_actions_t_delete_simple(item.actions)
 #endif // _di_controller_rule_item_t_
 
 #ifndef _di_controller_rule_items_t_
@@ -254,18 +246,18 @@ extern "C" {
       controller_rule_items_initialize, \
     }
 
-  #define macro_controller_rule_t_delete_simple(setting) \
-    f_string_dynamic_t_delete_simple(setting.id) \
-    f_string_dynamic_t_delete_simple(setting.name) \
-    f_string_dynamic_t_delete_simple(setting.control_group) \
-    f_string_dynamic_t_delete_simple(setting.path) \
-    f_string_dynamic_t_delete_simple(setting.pid) \
-    f_string_maps_t_delete_simple(setting.defines) \
-    f_string_dynamics_t_delete_simple(setting.environments) \
-    f_string_dynamics_t_delete_simple(setting.need) \
-    f_string_dynamics_t_delete_simple(setting.want) \
-    f_string_dynamics_t_delete_simple(setting.wish) \
-    macro_controller_rule_item_t_delete_simple(setting.items)
+  #define macro_controller_rule_t_delete_simple(rule) \
+    f_macro_string_dynamic_t_delete_simple(rule.id) \
+    f_macro_string_dynamic_t_delete_simple(rule.name) \
+    f_macro_string_dynamic_t_delete_simple(rule.control_group) \
+    f_macro_string_dynamic_t_delete_simple(rule.path) \
+    f_macro_string_dynamic_t_delete_simple(rule.pid) \
+    f_macro_string_maps_t_delete_simple(rule.defines) \
+    f_macro_string_dynamics_t_delete_simple(rule.environment) \
+    f_macro_string_dynamics_t_delete_simple(rule.need) \
+    f_macro_string_dynamics_t_delete_simple(rule.want) \
+    f_macro_string_dynamics_t_delete_simple(rule.wish) \
+    macro_controller_rule_items_t_delete_simple(rule.items)
 #endif // _di_controller_rule_t_
 
 #ifndef _di_controller_rules_t_
@@ -336,8 +328,8 @@ extern "C" {
       f_string_dynamics_t_initialize, \
     }
 
-  #define macro_controller_entry_action_t_delete_simple(item) \
-    f_macro_string_dynamics_t_delete_simple(item.parameters)
+  #define macro_controller_entry_action_t_delete_simple(action) \
+    f_macro_string_dynamics_t_delete_simple(action.parameters)
 #endif // _di_controller_entry_action_t_
 
 #ifndef _di_controller_entry_actions_t_
@@ -355,14 +347,14 @@ extern "C" {
       0, \
     }
 
-  #define macro_controller_entry_actions_t_delete_simple(items) \
-    items.used = items.size; \
-    while (items.used > 0) { \
-      items.used--; \
-      macro_controller_rule_t_delete_simple(items.array[items.used]); \
-      if (!items.used) { \
-        if (f_memory_delete((void **) & items.array, sizeof(controller_entry_action_t), items.size)) { \
-          items.size = 0; \
+  #define macro_controller_entry_actions_t_delete_simple(actions) \
+    actions.used = actions.size; \
+    while (actions.used > 0) { \
+      actions.used--; \
+      macro_controller_entry_action_t_delete_simple(actions.array[actions.used]); \
+      if (!actions.used) { \
+        if (f_memory_delete((void **) & actions.array, sizeof(controller_entry_action_t), actions.size)) { \
+          actions.size = 0; \
         } \
       } \
     }
@@ -383,9 +375,9 @@ extern "C" {
       controller_entry_actions_t_initialize, \
     }
 
-  #define macro_controller_entry_item_t_delete_simple(list) \
-    f_macro_string_dynamic_t_delete_simple(list.name) \
-    macro_controller_entry_actions_t_delete_simple(list.actions)
+  #define macro_controller_entry_item_t_delete_simple(item) \
+    f_macro_string_dynamic_t_delete_simple(item.name) \
+    macro_controller_entry_actions_t_delete_simple(item.actions)
 #endif // _di_controller_entry_item_t_
 
 #ifndef _di_controller_entry_items_t_
@@ -407,7 +399,7 @@ extern "C" {
     items.used = items.size; \
     while (items.used > 0) { \
       items.used--; \
-      macro_controller_rule_t_delete_simple(items.array[items.used]); \
+      macro_controller_entry_item_t_delete_simple(items.array[items.used]); \
       if (!items.used) { \
         if (f_memory_delete((void **) & items.array, sizeof(controller_entry_item_t), items.size)) { \
           items.size = 0; \
@@ -454,9 +446,8 @@ extern "C" {
 
   #define macro_controller_setting_t_delete_simple(setting) \
     f_macro_string_dynamic_t_delete_simple(setting.path_setting) \
-    macro_controller_entry_items_t_delete_simple(entry_lists) \
     macro_controller_entry_t_delete_simple(setting.entry) \
-    f_macro_string_dynamic_t_delete_simple(setting.rules)
+    macro_controller_rules_t_delete_simple(setting.rules)
 #endif // _di_controller_setting_t
 
 /**
@@ -493,6 +484,19 @@ extern "C" {
 #ifndef _di_controller_file_load_
   extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, f_string_dynamic_t *path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_load_
+
+/**
+ * Given a wide range of status codes, simplify them down to a small subset.
+ *
+ * @param status
+ *   The status code (without the error bit set) to simplify.
+ *
+ * @return
+ *   A subset of status codes with error bit set.
+ */
+#ifndef _di_controller_status_simplify_
+  extern f_return_status controller_status_simplify(const f_status_t status) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_status_simplify_
 
 /**
  * Validate that the given string is a valid environment variable name.

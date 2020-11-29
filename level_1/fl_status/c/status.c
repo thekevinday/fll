@@ -251,6 +251,12 @@ extern "C" {
         case F_dummy:
           *string = FL_status_string_dummy;
           break;
+        case F_encoding:
+          *string = FL_status_string_encoding;
+          break;
+        case F_encoding_not:
+          *string = FL_status_string_encoding_not;
+          break;
         case F_eof:
           *string = FL_status_string_eof;
           break;

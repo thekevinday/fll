@@ -175,6 +175,8 @@ extern "C" {
     #define FL_status_string_descriptor       "F_descriptor"
     #define FL_status_string_device           "F_device"
     #define FL_status_string_dummy            "F_dummy"
+    #define FL_status_string_encoding         "F_encoding"
+    #define FL_status_string_encoding_not     "F_encoding_not"
     #define FL_status_string_eof              "F_eof"
     #define FL_status_string_eol              "F_eol"
     #define FL_status_string_eos              "F_eos"
@@ -240,6 +242,8 @@ extern "C" {
     #define FL_status_string_descriptor_length       12
     #define FL_status_string_device_length           8
     #define FL_status_string_dummy_length            7
+    #define FL_status_string_encoding_length         10
+    #define FL_status_string_encoding_not_length     14
     #define FL_status_string_eof_length              5
     #define FL_status_string_eol_length              5
     #define FL_status_string_eos_length              5

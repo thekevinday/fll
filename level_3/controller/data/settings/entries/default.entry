@@ -1,0 +1,45 @@
+# fss-0005
+#
+# A very basic boot process.
+#
+
+main:
+  timeout start 7
+  timeout stop 7
+  timeout kill 3
+
+  item boot
+  item net
+  item time
+  item keyboard
+  item console
+
+  failsafe maintenance
+
+boot:
+  rule boot filesystem require
+  rule boot modules require
+  rule boot devices require
+
+  rule service logger wait
+  rule service dbus asynchronous
+
+net:
+  rule net all asynchronous
+
+time:
+  rule task clock asynchronous
+
+keyboard:
+  rule task keyboard asynchronous
+
+console:
+  rule program terminal require wait
+  rule service mouse
+
+maintenance:
+  timeout start 2
+  timeout stop 2
+  timeout kill 2
+
+  rule maintenance console

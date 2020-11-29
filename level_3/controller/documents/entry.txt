@@ -1,59 +1,58 @@
 # fss-0002
 
 Entry Documentation:
-  This describes the intent and purpose of the entry file settings.
+  This describes the intent and purpose of the Entry file settings.
 
-  An entry file, such as "default.entry", is intended to store a set of rules in which the controller will process on execution.
+  An Entry file, such as "default.entry", is intended to store a set of rules in which the controller will process on execution.
   These are almost always meant for booting a system.
 
-  The "main" Basic List Object is always executed first (Therefore "main" is required).
-  All other Basic List Objects are not executed unless either a "category" or a "failsafe" specifies the Object.
-  Execution of all Basic List Objects is top-down.
+  The "main" Item Object is always executed first (Therefore "main" is both reserved and required).
+  All other Basic List Objects are not executed unless either an "item" or a "failsafe" specifies a valid Item name.
+  Execution of all Items are top-down.
 
-  Inside each list there are additional commands: "consider", "failsafe", "item", "ready", "rule", and "timeout".
+  Each item supports the following Action Names: "consider", "failsafe", "item", "ready", "rule", and "timeout".
 
-  The "consider" command is a special case of a "rule" command.
-  All available Content are identical.
-  The difference is that "consider" is only processed at this spot at this time if and when some "rule" command (or another "consider" command is determined to be executed) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish").
+  The "consider" Action is a special case of a "rule" Action.
+  All Action Parameters are the same as with the "rule" Action Parameters.
+  The difference is that "consider" is only processed at this spot at this time if and when some "rule" Action (or another "consider" Action) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish") from the within the referenced Rule file.
   If this is determined to be executed, then this is immediately executed in the designated position and applies all properties as appropriate (such as "asynchronous", for example).
   If this is determined not to be executed, then this "consider" is ignored as if it was never there in the first place.
 
-  The "failsafe" command accepts only a valid Basic List Object in which will be executed when a failure is detected.
-  Only a single "failsafe" command may exist at a time.
-  Each time a "failsafe" command is specified, it replaces the previous "failsafe" command.
+  The "failsafe" Action accepts only a valid Item Name in which will be executed when a failure is detected.
+  Only a single "failsafe" Action may exist at a time.
+  Each successive "failsafe" Action specified replaces the previously defined "failsafe" Action (in a top-down manner).
 
-  The "item" command accepts only a valid Basic List Object in which will be immediately executed.
-  An "item" is another list within the entry file to execute in it entirety.
-  Any valid Object name, except for the reserved "main", may be called using this.
+  The "item" Action accepts only a valid Item Name in which will be immediately executed.
+  Any valid Item Name, except for the reserved "main", may be used.
 
-  The "ready" command instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
+  The "ready" Action instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
   When not specified, the state is always assumed to be ready.
-  For example, the controller may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
-  If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is properly mounted.
+  For example, the controller program may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
+  If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
   This could be a problem, such as on a read-only filesystem the pid creation fails and controller bails out on error.
-  Adding ready essentially specifies a point in time in the rules in which things are expected to be safe for such basic operations.
+  Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
 
-  The "rule" command immediately executes a given rule file.
-  The first Content represents the rule ID, which is a relative path the rule file is to be found, without the file extension.
+  The "rule" Action immediately executes a named rule file.
+  The first Action Parameter represents the rule ID, which is a relative path the rule file is to be found, without the file extension.
     - Do not include leading or trailing slashes in the name.
     - This is relative to the settings rules directory.
     - For example the rule ID "example/my" would be found in "/etc/controller/settings/rules/example/my.rule" (assuming the directory structure).
-  The second Content represents the basename for the file representing the desired rule.
+  The second Action Parameter represents the basename for the file representing the desired rule.
   The directory is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[filename]", the resulting path would be: "/etc/controller/rules/[directory]/[filename].rule"
-  The remaining Content may be specified in any order\:
+  The remaining Action Parameters may be specified in any order\:
     - "asynchronous": Designates that execution will not block (wait).
     - "require": Designates that this rule must succeed or trigger execution of failsafe.
-    - "wait": Designates that this rule will not execute until all other existing "asynchronous" executions complete.
+    - "wait": Designates that this rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
 
-  It is important to note that for any given rule, execution within that rule may be internally asynchronous.
+  It is important to note that for any given "rule", execution within that "rule" may be internally asynchronous (even if the "rule" is synchronous).
   For example, a service that is often called a daemon will execute in the background.
   Until that execution succeeds and the daemon goes into the background the representing rule will block.
-  After the daemon goes into the background, then the representing rule will return success.
+  After the daemon goes into the background, then the representing rule will be fully executed.
 
-  The "timeout" command provides default global settings for each of the three special situations: "start", "stop", and "kill".
+  The "timeout" Action provides default global settings for each of the three special situations: "start", "stop", and "kill".
   Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
-  Each of these will replace any previously specified setting.
-  Each of these accepts a single Content that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+  Each successive "timeout" Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
+  Each of these accepts a single Action Parameter that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
   For "start", this represents the number of MegaTime to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
   For "stop", this represents the number of MegaTime to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.
   For "kill", this represents the number of MegaTime to wait after stopping some rule and that rule has not yet stopped to forcefully stop the rule (aka kill the rule).
@@ -73,3 +72,8 @@ Entry Documentation:
   1 (Earth) minute = 60000000000 Time or 60 GT (GigaTime).
   1 (Earth) second = 1000000000 Time or 1 GT (GigaTime).
   Consequentially, 1 day in units of Time is easily represented as 86.4 TT (TeraTime).
+  The Time may be stored in its "year string format".
+  In this format, a Year may be prepended to the Time followed by a single colon ':' to associate a year with the Time.
+  This Year has no minimum or maximum but may not have decimals.
+  For example, "2020:86400000000000" would represent: January 02, 2020 0:00 UTC.
+  For example, "2020:86.4 TT" would represent: January 02, 2020 0:00 UTC.

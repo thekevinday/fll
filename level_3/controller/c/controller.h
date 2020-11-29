@@ -78,11 +78,13 @@ extern "C" {
   #define controller_short_pid           "p"
   #define controller_short_settings      "s"
   #define controller_short_test          "t"
+  #define controller_short_validate      "V"
 
   #define controller_long_interruptable "interruptable"
   #define controller_long_pid           "pid"
   #define controller_long_settings      "settings"
   #define controller_long_test          "test"
+  #define controller_long_validate      "validate"
 
   enum {
     controller_parameter_help,
@@ -99,6 +101,7 @@ extern "C" {
     controller_parameter_pid,
     controller_parameter_settings,
     controller_parameter_test,
+    controller_parameter_validate,
   };
 
   #define controller_console_parameter_t_initialize \
@@ -116,9 +119,10 @@ extern "C" {
       f_console_parameter_t_initialize(controller_short_pid, controller_long_pid, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_test, controller_long_test, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_validate, controller_long_validate, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 13
+  #define controller_total_parameters 14
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_data_t_

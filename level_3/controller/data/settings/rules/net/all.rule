@@ -1,0 +1,12 @@
+# fss-000d
+#
+# Rule for starting all network devices.
+#
+
+setting:
+  name "System Network"
+
+command:
+  start network start
+  stop network stop
+  restart network restart

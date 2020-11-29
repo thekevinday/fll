@@ -7,6 +7,7 @@ f_string
 f_utf
 f_color
 f_console
+f_conversion
 f_file
 f_fss
 f_path
@@ -14,6 +15,7 @@ f_pipe
 f_print
 fl_color
 fl_console
+fl_conversion
 fl_fss
 fl_string
 fll_error

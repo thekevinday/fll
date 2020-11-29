@@ -95,7 +95,7 @@ extern "C" {
         break;
       }
 
-      status = fl_string_dynamic_rip_nulless(cache->buffer_item, cache->object_actions.array[i], &cache->name_action);
+      status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
@@ -213,6 +213,7 @@ extern "C" {
 
           break;
         }
+
         for (j = 0; j < allocate; ++j) {
 
           action->parameters.array[j].used = 0;
@@ -232,11 +233,144 @@ extern "C" {
           action->parameters.used++;
         } // for
 
-        if (F_status_is_error(status)) break;
+        if (F_status_is_error_not(action->status)) {
+          if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
+            if (action->parameters.array[0].used) {
 
-        // @todo validate if "timeout" paramter #1 is one of start, stop, or kill and parameter #2 is valid number.
-        // @todo validate if "consider" or "rule" parameters are valid (valid file path), (valid file basename), (then one of asynchronous, require, and/or wait).
-        // @todo: after entries are processed, check to see if "item" or "failsafe" reference existent items.
+              // force the path to be canonical (removing all '../' parts).
+              status = fll_path_canonical(action->parameters.array[0].string, &cache->buffer_path);
+
+              if (F_status_is_error(status)) {
+                fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
+
+                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                  status_action = status;
+                  break;
+                }
+
+                if (F_status_is_error_not(status_action)) {
+                  status_action = status;
+                }
+              }
+            }
+            else {
+              action->status = F_status_set_error(F_parameter);
+
+              if (F_status_is_error_not(status_action)) {
+                status_action = action->status;
+              }
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a path (the first parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+              }
+            }
+
+            if (action->parameters.array[1].used) {
+              action->status = F_status_set_error(F_parameter);
+
+              if (F_status_is_error_not(status_action)) {
+                status_action = action->status;
+              }
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a rule name (the second parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+              }
+            }
+
+            for (j = 2; j < action->parameters.used; ++j) {
+
+              if (fl_string_dynamic_compare_string(controller_string_asynchronous, action->parameters.array[j], controller_string_asynchronous_length) == F_equal_to) {
+                // do nothing.
+              }
+              else if (fl_string_dynamic_compare_string(controller_string_require, action->parameters.array[j], controller_string_require_length) == F_equal_to) {
+                // do nothing.
+              }
+              else if (fl_string_dynamic_compare_string(controller_string_wait, action->parameters.array[j], controller_string_wait_length) == F_equal_to) {
+                // do nothing.
+              }
+              else {
+                if (action->status == F_none) {
+                  action->status = F_status_set_error(F_unsupported);
+
+                  if (F_status_is_error_not(status_action)) {
+                    status_action = action->status;
+                  }
+                }
+
+                if (data.error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                  fprintf(data.error.to.stream, "%s%sThe entry item action third parameter (and beyond) must be one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_asynchronous, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_require, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_wait, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[j].string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                }
+              }
+            } // for
+          }
+          else if (action->type == controller_entry_action_type_timeout) {
+            if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to_not) {
+              if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to_not) {
+                if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to_not) {
+                  action->status = F_status_set_error(F_unsupported);
+
+                  if (F_status_is_error_not(status_action)) {
+                    status_action = action->status;
+                  }
+
+                  if (data.error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                    fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                  }
+                }
+              }
+            }
+
+            if (action->status == F_none) {
+              const f_string_range_t range = f_macro_string_range_t_initialize(action->parameters.array[1].used);
+              f_number_unsigned_t number = 0;
+
+              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, &number, range);
+
+              if (F_status_is_error(status) || status == F_data_not) {
+                if (status == F_data_not) {
+                  action->status = F_status_set_error(F_number);
+                }
+                else {
+                  action->status = controller_status_simplify(F_status_set_fine(status));
+                }
+
+                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                  fll_error_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
+
+                  status_action = status;
+                  break;
+                }
+
+                if (data.error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                  fprintf(data.error.to.stream, "%s%sThe entry item action parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[1].string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s' is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                }
+              }
+            }
+          }
+        }
       }
 
       actions->used++;
@@ -268,13 +402,15 @@ extern "C" {
         fprintf(output.to.stream, "entry item '");
         fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_item.string, output.notable.after->string);
         fprintf(output.to.stream, "%s' on line ", output.context.before->string);
-        fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_list, output.notable.after->string);
+        fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_item, output.notable.after->string);
         fprintf(output.to.stream, "%s for ", output.context.before->string);
       }
 
-      fprintf(output.to.stream, "file '");
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
-      fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol[0]);
+      if (cache.name_file.used) {
+        fprintf(output.to.stream, "file '");
+        fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
+        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol[0]);
+      }
     }
   }
 #endif // _di_controller_entry_error_print_
@@ -309,10 +445,7 @@ extern "C" {
     entry->items.used = 0;
 
     cache->line_action = 0;
-    cache->line_list = 0;
-
-    cache->range_list.start = 1;
-    cache->range_list.stop = 0;
+    cache->line_item = 0;
 
     cache->comments.used = 0;
     cache->delimits.used = 0;
@@ -325,13 +458,13 @@ extern "C" {
     cache->object_items.used = 0;
 
     cache->buffer_file.used = 0;
-    cache->buffer_item.used = 0;
+    cache->buffer_path.used = 0;
 
     cache->name_file.used = 0;
     cache->name_action.used = 0;
     cache->name_item.used = 0;
 
-    status = controller_file_load(data, setting, controller_string_rules, entry_name, controller_string_rule, controller_string_rules_length, controller_string_rule_length, &cache->buffer_file, &cache->name_file);
+    status = controller_file_load(data, setting, controller_string_entries, entry_name, controller_string_entry, controller_string_entries_length, controller_string_entry_length, &cache->name_file, &cache->buffer_file);
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
@@ -372,9 +505,11 @@ extern "C" {
 
         controller_entry_item_t *item = 0;
         f_string_range_t *range = 0;
-        f_string_length_t j = 0;
 
-        for (f_array_length_t i = 0; i < cache->object_items.used; ++i) {
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+
+        for (; i < cache->object_items.used; ++i) {
 
           if (code & 0x2) {
             code -= 0x2;
@@ -383,9 +518,7 @@ extern "C" {
           range = 0;
 
           cache->line_action = 0;
-          cache->line_list = 0;
-
-          cache->range_list = cache->object_items.array[i];
+          cache->line_item = 0;
 
           cache->comments.used = 0;
           cache->delimits.used = 0;
@@ -396,7 +529,7 @@ extern "C" {
           cache->object_actions.used = 0;
 
           cache->buffer_file.used = 0;
-          cache->buffer_item.used = 0;
+          cache->buffer_path.used = 0;
 
           cache->name_action.used = 0;
           cache->name_item.used = 0;
@@ -422,7 +555,7 @@ extern "C" {
             break;
           }
 
-          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->line_list);
+          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->line_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
@@ -470,7 +603,7 @@ extern "C" {
             entry->items.used = 2;
           }
 
-          item->line = cache->line_list;
+          item->line = cache->line_item;
 
           status = fl_string_dynamic_append(cache->name_item, &item->name);
 
@@ -497,40 +630,117 @@ extern "C" {
           }
         } // for
 
-        if (F_status_is_error_not(status) && code & 0x1) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            fprintf(data.error.to.stream, "The required list '");
-            fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+        if (F_status_is_error_not(status)) {
+          cache->name_action.used = 0;
+          cache->name_item.used = 0;
+
+          if (code & 0x1) {
+            if (data.error.verbosity != f_console_verbosity_quiet) {
+              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+              fprintf(data.error.to.stream, "The required entry item '");
+              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+            }
+
+            status = F_status_set_error(F_found_not);
           }
 
-          status = F_status_set_error(F_found_not);
+          if (F_status_is_error_not(status)) {
+            controller_entry_action_t *action = 0;
+
+            f_array_length_t k = 0;
+
+            // 0x1 = missing or not, 0x2 = one or more missing.
+            uint8_t missing = 0;
+
+            for (i = 0; i < entry->items.used; ++i) {
+
+              for (j = 0; j < entry->items.array[i].actions.used; ++j) {
+
+                action = &entry->items.array[i].actions.array[j];
+
+                // only process actions that don't already have an error.
+                if (F_status_is_error(action->status)) continue;
+
+                if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
+                  missing &= 0x1;
+
+                  for (k = 0; k < entry->items.used; ++k) {
+
+                    if (fl_string_dynamic_compare(action->parameters.array[0], entry->items.array[k].name) == F_equal_to) {
+                      if (missing & 0x1) {
+                        missing -= 0x1;
+                      }
+
+                      break;
+                    }
+                  } // for
+
+                  if (missing & 0x1) {
+                    missing &= 0x2;
+
+                    cache->line_action = action->line;
+                    cache->line_item = entry->items.array[i].line;
+
+                    status = fl_string_dynamic_append(entry->items.array[i].name, &cache->name_item);
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+                      break;
+                    }
+
+                    status = fl_string_dynamic_terminate(&cache->name_item);
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+                      break;
+                    }
+
+                    status = fl_string_dynamic_append(entry->items.array[i].name, &cache->name_item);
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+                      break;
+                    }
+
+                    status = fl_string_dynamic_terminate(&cache->name_item);
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+                      break;
+                    }
+
+                    if (data.error.verbosity != f_console_verbosity_quiet) {
+                      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                      fprintf(data.error.to.stream, "The requested entry item '");
+                      fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
+                      fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                      controller_entry_error_print(data.error, *cache);
+                    }
+
+                    entry->status = controller_status_simplify(F_found_not);
+
+                    cache->name_action.used = 0;
+                    cache->name_item.used = 0;
+                  }
+                }
+              } // for
+            } // for
+
+            // the error is already fully printed and the entry status is already assigned, so immediately exit.
+            if (missing & 0x2) {
+              return F_false;
+            }
+          }
         }
       }
     }
 
     if (F_status_is_error(status)) {
-      status = F_status_set_fine(status);
-
       controller_entry_error_print(data.error, *cache);
 
-      if (status == F_memory_not || status == F_memory_allocation || status == F_memory_reallocation) {
-        entry->status = F_memory;
-      }
-      else if (status == F_file_open_max || status == F_space_not || status == F_busy) {
-        entry->status = F_resource;
-      }
-      else if (status == F_access_denied || status == F_filesystem_quota_block || status == F_prohibited || status == F_input_output) {
-        entry->status = F_access;
-      }
-      else if (status == F_interrupted) {
-        entry->status = F_interrupted;
-      }
-      else {
-        entry->status = F_invalid;
-      }
-
+      entry->status = controller_status_simplify(F_status_set_fine(status));
       return F_false;
     }
 

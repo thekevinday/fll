@@ -25,12 +25,13 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol[0]);
 
-    fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Designate that this program can be interrupted.");
-    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom pid file path, such as '" controller_path_pid "'.");
+    fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
+    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid "'.");
     fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Run in test mode, where nothing is actually run (a simulation).");
+    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Run in test mode, where nothing is actually run (a simulation).");
+    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules).");
 
-    fll_program_print_help_usage(output, context, controller_name, "");
+    fll_program_print_help_usage(output, context, controller_name, "entry");
 
     return F_none;
   }
@@ -116,6 +117,31 @@ extern "C" {
       return F_none;
     }
 
+    controller_setting_t setting = controller_setting_t_initialize;
+
+    controller_entry_cache_t cache_entry = controller_entry_cache_t_initialize;
+    controller_rule_cache_t cache_rule = controller_rule_cache_t_initialize;
+
+    f_string_static_t entry_name = f_string_static_t_initialize;
+
+    if (data->remaining.used) {
+      entry_name.string = arguments.argv[data->remaining.array[0]];
+      entry_name.used = strnlen(entry_name.string, f_console_length_size);
+      entry_name.size = entry_name.used;
+    }
+    else {
+      entry_name.string = controller_string_default;
+      entry_name.used = controller_string_default_length;
+      entry_name.size = entry_name.used;
+    }
+
+    status = controller_entry_read(*data, setting, entry_name, &cache_entry, &setting.entry);
+
+    // @fixme this is temporary for testing.
+    if (F_status_is_error(setting.entry.status)) {
+      status = setting.entry.status;
+    }
+
     // @todo
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
@@ -125,7 +151,11 @@ extern "C" {
       }
     }
 
+    macro_controller_setting_t_delete_simple(setting);
+    macro_controller_entry_cache_t_delete_simple(cache_entry);
+    macro_controller_rule_cache_t_delete_simple(cache_rule);
     controller_delete_data(data);
+
     return status;
   }
 #endif // _di_controller_main_

@@ -26,7 +26,7 @@ build_sources_library controller.c private-control.c private-controller.c privat
 build_sources_program main.c
 build_sources_headers controller.h
 build_sources_script
-build_sources_setting
+build_sources_setting entries rules
 build_script yes
 build_shared yes
 build_static yes
