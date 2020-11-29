@@ -227,29 +227,53 @@ extern "C" {
         break;
       }
 
-      if ((*status = f_directory_is(path_source.string)) == F_true) {
+      *status = f_directory_is(path_source.string);
 
-        if (fake_signal_received(data)) {
-          *status = F_status_set_error(F_signal);
+      if (fake_signal_received(data)) {
+        *status = F_status_set_error(F_signal);
+        break;
+      }
+
+      if (*status == F_true) {
+        destination_directory.used = 0;
+
+        *status = fl_string_dynamic_append(destination, &destination_directory);
+
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_append", F_true);
           break;
         }
 
-        *status = fl_directory_copy_content(path_source.string, destination.string, path_source.used, destination.used, mode, recurse);
+        *status = f_file_name_base(path_source.string, path_source.used, &destination_directory);
+
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "f_file_name_base", F_true);
+          break;
+        }
+
+        *status = fl_string_dynamic_terminate_after(&destination_directory);
+
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_terminate_after", F_true);
+          break;
+        }
+
+        *status = fl_directory_copy(path_source.string, destination_directory.string, path_source.used, destination_directory.used, mode, recurse);
 
         if (F_status_is_error(*status)) {
           if (data.error.verbosity == f_console_verbosity_verbose) {
             for (f_string_length_t j = 0; j < failures.used; j++) {
-              fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+              fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
             } // for
 
             if (F_status_set_fine(*status) != F_failure) {
-              fll_error_print(data.error, F_status_set_fine(*status), "fl_directory_copy_content", F_true);
+              fll_error_print(data.error, F_status_set_fine(*status), "fl_directory_copy", F_true);
             }
 
             break;
           }
           else if (data.error.verbosity != f_console_verbosity_quiet) {
-            fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy_content", "copy contents of", "to", path_source.string, destination.string, F_true);
+            fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
           }
 
           break;
