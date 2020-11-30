@@ -49,25 +49,28 @@ extern "C" {
       return status;
     }
 
-    const f_string_length_t path_length = setting.path_setting.used + f_path_separator_length + path_file->used;
+    const f_string_length_t path_length = setting.path_setting.used ? setting.path_setting.used + f_path_separator_length + path_file->used : path_file->used;
     char path[path_length + 1];
 
-    memcpy(path, setting.path_setting.string, setting.path_setting.used);
-    memcpy(path + setting.path_setting.used + f_path_separator_length, path_file->string, path_file->used);
+    if (setting.path_setting.used) {
+      memcpy(path, setting.path_setting.string, setting.path_setting.used);
+      memcpy(path + setting.path_setting.used + f_path_separator_length, path_file->string, path_file->used);
 
-    path[setting.path_setting.used] = f_path_separator[0];
+      path[setting.path_setting.used] = f_path_separator[0];
+    }
+
     path[path_length] = 0;
 
     status = f_file_stream_open(path, 0, &file);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, path_file->string, "open", fll_error_file_type_file);
+      fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
     }
     else {
       status = f_file_stream_read(file, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, path_file->string, "read", fll_error_file_type_file);
+        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
       }
     }
 

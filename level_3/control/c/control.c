@@ -39,8 +39,24 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        data->error.context = data->context.set.error;
-        data->error.notable = data->context.set.notable;
+        if (data->context.set.error.before) {
+          data->error.context = data->context.set.error;
+          data->error.notable = data->context.set.notable;
+
+          data->warning.context = data->context.set.warning;
+          data->warning.notable = data->context.set.notable;
+        }
+        else {
+          data->error.context.before = &fll_error_string_null_s;
+          data->error.context.after = &fll_error_string_null_s;
+          data->error.notable.before = &fll_error_string_null_s;
+          data->error.notable.after = &fll_error_string_null_s;
+
+          data->warning.context.before = &fll_error_string_null_s;
+          data->warning.context.after = &fll_error_string_null_s;
+          data->warning.notable.before = &fll_error_string_null_s;
+          data->warning.notable.after = &fll_error_string_null_s;
+        }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {

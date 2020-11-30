@@ -11,6 +11,11 @@ Featureless Settings Specification: 000D - Basic Rule:
   The FSS Basic and FSS Extended Objects have the same format for Object names but the FSS Extended List Object is slightly different.
   Anything that would match an FSS Extended List Object must therefore be an FSS Extended List Object.
 
+  This supports the use of IKI-0000 (Unrestricted) but only within the Content of the outermost Basic List.
+  Furthermore, should there be a Basic List that defines IKI names and values, then that Basic List must not support IKI substitution.
+  Additional restrictions on the use of IKI syntax is allowed if explicitly defined in the implementing specification.
+  This additional restriction may also include using a more restrictive IKI syntax, such as "IKI-0001 (Basic IKI)".
+
   Anything implementing this specification may impose its own restrictions on when to determine if the Inner Content is what FSS format, based on Object names.
 
   See the appropriate specifications for the Key/Structure/Example documentation for the respective FSS-0000 (Basic), FSS-0001 (Extended), and FSS-0003 (Extended List).
@@ -18,7 +23,7 @@ Featureless Settings Specification: 000D - Basic Rule:
   Example\:
 
     main:
-      name boot-devices
+      name "Boot Devices"
 
     script:
       start {
@@ -40,7 +45,7 @@ Featureless Settings Specification: 000D - Basic Rule:
     3) command
 
   Outer List Contents would be\:
-    1.1) name boot-devices
+    1.1) name "Boot Devices"
 
     2.1) start {
            ip addr add 127.0.0.1/8 label lo dev lo;
@@ -61,8 +66,8 @@ Featureless Settings Specification: 000D - Basic Rule:
     3.1.1) begin
     3.1.2) end
 
-  Inner Content Contents would be\:
-    1.1.1) boot-devices
+  Inner Content Contents would be (without breaking Content into its individual parts)\:
+    1.1.1) Boot Devices
     2.1.1) ip addr add 127.0.0.1/8 label lo dev lo;
            ip link set lo up;
     2.1.2) ip link set lo down;

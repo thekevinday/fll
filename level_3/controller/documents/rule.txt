@@ -12,16 +12,22 @@ Rule Documentation:
     "control_group": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
-    "name": A name used to represent this rule, which is printing to the user, screen, logs, etc...
-    "need": A list of relative rule path names that represent any given rule required to be executed (must exist and must succeed) before this rule starts.
+    "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
+    "need": A single rule required to be executed (must exist and must succeed) before this rule starts.
+    "parameter": A statically defined IKI name and its associated value for use in this rule file.
     "path": A single Content used to set a custom PATH environment variable value.
-    "pid": A path to a directory where the PID file is expected to be stored in.
-    "want": A list of relative rule path names that represent any given rule desired to be executed (may exist and must succeed) before this rule starts.
-    "wish": A list of relative rule path names that represent any given rule desired to be executed (may exist and not required to succeed) before this rule starts.
+    "want": A single rule desired to be executed (may exist and must succeed) before this rule starts.
+    "wish": A single rule desired to be executed (may exist and is not required to succeed) before this rule starts.
 
   In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 
   In the case of "path", when specified, the PATH environment variable is automatically added to the "environment" setting.
+
+  In the case of "parameter", IKI variables are expanded in a pre-process manner and will be removed prior to any execution.
+  Any IKI variables referencing an undefined parameter will be fully removed.
+  These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
+  A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
+  These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
 
   The "command" outer most part provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
   A "command" always operates in the foreground.
@@ -33,6 +39,8 @@ Rule Documentation:
   This "script" operates in the foreground, but individual things done within the script may operate in foreground or background.
   The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
   Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.
+  A "script" is assumed to be in GNU Bash, which is the default expected behavior, but the specification does not explicitly require this.
+  Another scripting language can be used but changing this incurs the responsibility to ensure all rules are updated to the appropriate scripting language.
 
   There are five primary inner Content to perform: "kill", "restart", "reload", "start", and "stop".
 
@@ -44,6 +52,7 @@ Rule Documentation:
 
   When "restart" Content is not provided, then "start" and "stop" is called when the rule is executed using the restart action, if both "start" and "stop" are provided.
   When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
+  Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
   The "group" inner Content, an associated "command", "service", or "script" are executed with that group ID or group name.
   The "user" inner Content, an associated "command", "service", or "script" are executed with that user ID or user name.

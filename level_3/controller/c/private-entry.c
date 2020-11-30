@@ -207,6 +207,8 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
 
+          action->status = status;
+
           if (F_status_is_error_not(status_action)) {
             status_action = status;
           }
@@ -222,6 +224,8 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+            action->status = status;
 
             if (F_status_is_error_not(status_action)) {
               status_action = status;
@@ -242,6 +246,8 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
+
+                action->status = status;
 
                 if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
                   status_action = status;
@@ -267,6 +273,59 @@ extern "C" {
             }
 
             if (action->parameters.array[1].used) {
+              cache->buffer_path.used = 0;
+
+              status = f_file_name_base(action->parameters.array[1].string, action->parameters.array[1].used, &cache->buffer_path);
+
+              if (F_status_is_error(status)) {
+                fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
+
+                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                  status_action = status;
+                  break;
+                }
+
+                action->status = status;
+
+                if (F_status_is_error_not(status_action)) {
+                  status_action = status;
+                }
+              }
+              else {
+                if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
+
+                  if (data.error.verbosity != f_console_verbosity_quiet) {
+                    status = fl_string_dynamic_terminate_after(&cache->buffer_path);
+
+                    if (F_status_is_error(status)) {
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+
+                      action->status = status;
+
+                      if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                        status_action = status;
+                      }
+
+                      break;
+                    }
+
+                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                    fprintf(data.error.to.stream, "%s%sThe entry item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[1].string, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s' must be a base path name, such as '", data.error.context.before->string);
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->buffer_path.string, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                  }
+
+                  action->status = F_status_set_error(F_parameter);
+
+                  if (F_status_is_error_not(status_action)) {
+                    status_action = action->status;
+                  }
+                }
+              }
+            }
+            else {
               action->status = F_status_set_error(F_parameter);
 
               if (F_status_is_error_not(status_action)) {
@@ -388,6 +447,7 @@ extern "C" {
   void controller_entry_error_print(const fll_error_print_t output, const controller_entry_cache_t cache) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
+      fprintf(output.to.stream, "%c", f_string_eol[0]);
       fprintf(output.to.stream, "%s%sWhile processing ", output.context.before->string, output.prefix ? output.prefix : "");
 
       if (cache.name_action.used) {
@@ -637,7 +697,7 @@ extern "C" {
           if (code & 0x1) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.error.to.stream, "The required entry item '");
+              fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
               fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
               fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
             }

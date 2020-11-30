@@ -1,7 +1,7 @@
 # fss-0002
 
 Rule Specification:
-  The Rule files follow the FSS-000D (Basic Rule) format.
+  The Rule files follow the FSS-000D (Basic Rule) format with IKI-0000 (Unrestricted IKI).
 
   A Rule file name is expected to have the file extension ".rule".
 
@@ -28,15 +28,15 @@ Rule Specification:
   The other Rule Types are processed top-down.
 
   The "settings" Rule Type has the following FSS-0001 (Extended)\:
-    "control_group": Zero or One Content representing a valid control group (cgroup) name.
+    "control_group": One Content representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
     "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    "name": Zero or One Content, must have at least 1 graph character (non-whitespace printing character).
-    "need": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
-    "path": Zero or One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
-    "pid": One Content representing the full path to a PID file directory (such as "/var/run/service/ssh.pid").
-    "want": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
-    "wish": Zero or more Content, each being a partial path and the rule file name without extension (such as "boot/modules").
+    "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    "need": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
+    "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
+    "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
+    "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
+    "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 
   The "service" Rule Type allows the following the FSS-0001 (Extended)\:
     "create": One Content representing the path to a PID file.

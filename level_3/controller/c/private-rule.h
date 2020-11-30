@@ -32,6 +32,7 @@ extern "C" {
 
     f_string_dynamic_t buffer_file;
     f_string_dynamic_t buffer_item;
+    f_string_dynamic_t buffer_path;
 
     f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
@@ -50,6 +51,7 @@ extern "C" {
       f_fss_contents_t_initialize, \
       f_fss_objects_t_initialize, \
       f_fss_objects_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -284,12 +286,14 @@ extern "C" {
  *    F_invalid (with error bit) on success but there were one or more invalid settings encountered.
  *
  *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *   Errors (with error bit) from: fl_string_maps_increase().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *   Errors (with error bit) from: fll_path_canonical().
  *
  * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamic_rip_nulless()
  * @see fl_string_dynamics_increase()
  * @see fl_string_maps_increase()
  * @see fll_fss_extended_read()

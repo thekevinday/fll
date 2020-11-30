@@ -41,8 +41,6 @@ extern "C" {
   f_return_status controller_main(const f_console_arguments_t arguments, controller_data_t *data) {
     f_status_t status = F_none;
 
-    // @todo somewhere in here, check to see if the standard pid file exists before attempting to start (when in normal operation mode).
-
     {
       const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, controller_total_parameters);
 
@@ -52,11 +50,24 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        data->error.context = data->context.set.error;
-        data->error.notable = data->context.set.notable;
+        if (data->context.set.error.before) {
+          data->error.context = data->context.set.error;
+          data->error.notable = data->context.set.notable;
 
-        data->warning.context = data->context.set.warning;
-        data->warning.notable = data->context.set.notable;
+          data->warning.context = data->context.set.warning;
+          data->warning.notable = data->context.set.notable;
+        }
+        else {
+          data->error.context.before = &fll_error_string_null_s;
+          data->error.context.after = &fll_error_string_null_s;
+          data->error.notable.before = &fll_error_string_null_s;
+          data->error.notable.after = &fll_error_string_null_s;
+
+          data->warning.context.before = &fll_error_string_null_s;
+          data->warning.context.after = &fll_error_string_null_s;
+          data->warning.notable.before = &fll_error_string_null_s;
+          data->warning.notable.after = &fll_error_string_null_s;
+        }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
@@ -135,14 +146,102 @@ extern "C" {
       entry_name.size = entry_name.used;
     }
 
-    status = controller_entry_read(*data, setting, entry_name, &cache_entry, &setting.entry);
+    if (data->parameters[controller_parameter_settings].result == f_console_result_found) {
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+        fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_settings, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+      }
 
-    // @fixme this is temporary for testing.
-    if (F_status_is_error(setting.entry.status)) {
-      status = setting.entry.status;
+      status = F_status_set_error(F_parameter);
+    }
+    else if (data->parameters[controller_parameter_settings].locations.used) {
+      const f_array_length_t location = data->parameters[controller_parameter_settings].values.array[data->parameters[controller_parameter_settings].values.used - 1];
+
+      status = fll_path_canonical(arguments.argv[location], &setting.path_setting);
+
+      if (F_status_is_error(status)) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fll_error_print(data->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+        }
+      }
+    }
+    else {
+      status = fl_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
+
+      if (F_status_is_error(status)) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+        }
+      }
     }
 
-    // @todo
+    if (data->parameters[controller_parameter_pid].result == f_console_result_found) {
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+      }
+
+      status = F_status_set_error(F_parameter);
+    }
+    else if (data->parameters[controller_parameter_pid].locations.used) {
+      const f_array_length_t location = data->parameters[controller_parameter_pid].values.array[data->parameters[controller_parameter_pid].values.used - 1];
+
+      if (strnlen(arguments.argv[location], f_console_length_size)) {
+        status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
+
+        if (F_status_is_error(status)) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fll_error_print(data->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+          }
+        }
+      }
+      else {
+        if (data->warning.verbosity == f_console_verbosity_debug) {
+          fprintf(data->warning.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : "");
+          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->warning.notable.after->string);
+          fprintf(data->warning.to.stream, "%s' must be a file path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol[0]);
+        }
+      }
+    }
+
+    // the pid file is required.
+    if (!setting.path_pid.used) {
+      status = fl_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
+
+      if (F_status_is_error(status)) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+        }
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = controller_entry_read(*data, setting, entry_name, &cache_entry, &setting.entry);
+
+      // @fixme this is temporary and may or may not be used when finished codestorming.
+      if (F_status_is_error(setting.entry.status)) {
+        status = setting.entry.status;
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      if (data->parameters[controller_parameter_test].result == f_console_result_found || data->parameters[controller_parameter_validate].result == f_console_result_found) {
+        // @todo validate happens first, report and handle validation problems or success.
+
+        if (data->parameters[controller_parameter_test].result == f_console_result_found) {
+          // @todo after validation succeeds, perform test run.
+        }
+      }
+      else {
+        // @todo check to see if the standard pid file exists before attempting to start (when in normal operation mode).
+        // @todo real execution.
+      }
+    }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
