@@ -215,6 +215,19 @@ extern "C" {
       return F_false;
     }
 
+    if (type == fll_error_file_type_file) {
+      if (status == F_file_type_not_directory) {
+        if (error.verbosity != f_console_verbosity_quiet) {
+          fprintf(error.to.stream, "%c", f_string_eol[0]);
+          fprintf(error.to.stream, "%s%sInvalid or missing directory in path while trying to %s %s '", error.context.before->string, error.prefix ? error.prefix : "", operation, type_name);
+          fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
+          fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol[0]);
+        }
+
+        return F_false;
+      }
+    }
+
     if (type == fll_error_file_type_file || type == fll_error_file_type_directory) {
       if (status == F_directory_found_not) {
         if (error.verbosity != f_console_verbosity_quiet) {
