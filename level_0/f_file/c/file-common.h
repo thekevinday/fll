@@ -84,6 +84,13 @@ extern "C" {
   #define f_macro_file_type_is_link(mode)      f_macro_file_type_get(mode) == f_file_type_link
   #define f_macro_file_type_is_regular(mode)   f_macro_file_type_get(mode) == f_file_type_regular
   #define f_macro_file_type_is_socket(mode)    f_macro_file_type_get(mode) == f_file_type_socket
+
+  #define f_macro_file_open_mode_append        "a"
+  #define f_macro_file_open_mode_read          "r"
+  #define f_macro_file_open_mode_read_append   "a+"
+  #define f_macro_file_open_mode_read_truncate "w+"
+  #define f_macro_file_open_mode_read_write    "r+"
+  #define f_macro_file_open_mode_truncate      "w"
 #endif // _di_f_file_type_
 
 /**
