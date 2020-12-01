@@ -229,6 +229,11 @@ extern "C" {
       }
     }
 
+    // @todo create pid file but not until "ready", so be sure to add this after pre-processing the entry file.
+    if (setting.ready) {
+      controller_file_pid_create(*data, setting.path_pid);
+    }
+
     if (F_status_is_error_not(status)) {
       if (data->parameters[controller_parameter_test].result == f_console_result_found || data->parameters[controller_parameter_validate].result == f_console_result_found) {
         // @todo validate happens first, report and handle validation problems or success.
@@ -250,9 +255,12 @@ extern "C" {
       }
     }
 
+    controller_file_pid_delete(*data, setting.path_pid);
+
     macro_controller_setting_t_delete_simple(setting);
     macro_controller_entry_cache_t_delete_simple(cache_entry);
     macro_controller_rule_cache_t_delete_simple(cache_rule);
+
     controller_delete_data(data);
 
     return status;

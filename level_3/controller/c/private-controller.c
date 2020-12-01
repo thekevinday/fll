@@ -82,6 +82,93 @@ extern "C" {
   }
 #endif // _di_controller_file_load_
 
+#ifndef _di_controller_file_pid_create_
+  f_return_status controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) {
+    f_status_t status = F_none;
+
+    // the file exists, do not attempt to overwrite.
+    if (f_file_exists(path_pid.string) == F_true) {
+      return F_status_set_error(F_file_found);
+    }
+
+    {
+      f_string_dynamic_t path_directory = f_string_dynamic_t_initialize;
+
+      status = f_file_name_directory(path_pid.string, path_pid.used, &path_directory);
+
+      if (F_status_is_error_not(status)) {
+        status = f_directory_exists(path_directory.string);
+      }
+
+      f_macro_string_dynamic_t_delete_simple(path_directory);
+
+      if (F_status_is_error(status)) return status;
+
+      // the directory does not exist so do not bother attempting to create a pid file.
+      if (status == F_false) {
+        return F_status_set_error(F_directory_not);
+      }
+    }
+
+    f_file_t file = f_file_t_initialize;
+
+    file.flag = f_file_flag_write_only;
+
+    status = f_file_stream_open(path_pid.string, f_macro_file_open_mode_truncate, &file);
+    if (F_status_is_error(status)) return status;
+
+    fprintf(file.stream, "%llu\n", data.pid);
+
+    f_file_stream_close(F_true, &file);
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_controller_file_pid_create_
+
+#ifndef _di_controller_file_pid_delete_
+  void controller_file_pid_delete(const controller_data_t data, const f_string_static_t path_pid) {
+
+    if (f_file_exists(path_pid.string) != F_true) {
+      return;
+    }
+
+    f_status_t status = F_none;
+    f_file_t pid_file = f_file_t_initialize;
+
+    status = f_file_stream_open(path_pid.string, f_macro_file_open_mode_read, &pid_file);
+    if (F_status_is_error(status)) return;
+
+    f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
+
+    status = f_file_stream_read(pid_file, 1, &pid_buffer);
+
+    f_file_stream_close(F_true, &pid_file);
+
+    if (F_status_is_error_not(status)) {
+      f_number_unsigned_t number = 0;
+      f_string_range_t range = f_macro_string_range_t_initialize(pid_buffer.used);
+
+      for (; range.start < pid_buffer.used; ++range.start) {
+        if (!isspace(pid_buffer.string[range.start])) break;
+      } // for
+
+      for (; range.stop > 0; --range.stop) {
+        if (!isspace(pid_buffer.string[range.stop])) break;
+      } // for
+
+      status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, &number, range);
+
+      if (F_status_is_error_not(status) && number == data.pid) {
+        f_file_remove(path_pid.string);
+      }
+    }
+
+    f_macro_string_dynamic_t_delete_simple(pid_buffer);
+  }
+#endif // _di_controller_file_pid_delete_
+
 #ifndef _di_controller_status_simplify_
   f_return_status controller_status_simplify(const f_status_t status) {
 

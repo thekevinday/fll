@@ -8,6 +8,8 @@ int main(const unsigned long argc, const f_string_t *argv) {
     data.process_pipe = F_true;
   }
 
+  data.pid = getpid();
+
   if (F_status_is_error(controller_main(arguments, &data))) {
     return 1;
   }

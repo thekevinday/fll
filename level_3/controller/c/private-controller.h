@@ -505,6 +505,45 @@ extern "C" {
 #endif // _di_controller_file_load_
 
 /**
+ * Create the pid file, if possible.
+ *
+ * @param data
+ *   The program data.
+ * @param path_pid
+ *   The file path to the pid file to create.
+ *
+ * @return
+ *   F_none on success.
+ *   F_access_denied if pid file is not created due to access denied errors.
+ *   F_directory_not if pid file is not created due to a parent directory is unavailable or invalid.
+ *
+ *   Errors (with error bit) from: f_directory_exists().
+ *   Errors (with error bit) from: f_file_name_directory().
+ *   Errors (with error bit) from: f_file_stream_open().
+ *
+ * @see f_directory_exists()
+ * @see f_file_name_directory()
+ * @see f_file_stream_open()
+ */
+#ifndef _di_controller_file_pid_create_
+  f_return_status controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_file_pid_create_
+
+/**
+ * Delete the pid file, if exists and is valid.
+ *
+ * This is meant to be called on exit and avoids checking status codes, returning void.
+ *
+ * @param data
+ *   The program data.
+ * @param path_pid
+ *   The file path to the pid file to create.
+ */
+#ifndef _di_controller_file_pid_delete_
+  void controller_file_pid_delete(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_file_pid_delete_
+
+/**
  * Given a wide range of status codes, simplify them down to a small subset.
  *
  * @param status

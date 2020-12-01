@@ -12,11 +12,14 @@
  * This program can be controlled from user-space via the "control" program.
  *
  * @todo research containers and build in container support into this, providing "container" appropriate verbiage for individual rules.
+ * @todo research namespaces and user_namespaces, they may be important to support.
  */
 #ifndef _controller_h
 
 // libc includes
 #include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 // fll-0 includes
 #include <level_0/type.h>
@@ -68,10 +71,10 @@ extern "C" {
   // must be at least 2.
   #define controller_default_allocation_step 4
 
-  #define controller_path_pid      "/var/run/controller.pid"
+  #define controller_path_pid      "/var/run/controller/controller.pid"
   #define controller_path_settings "/etc/controller"
 
-  #define controller_path_pid_length      23
+  #define controller_path_pid_length      34
   #define controller_path_settings_length 15
 
   #define controller_short_interruptable "i"
@@ -131,6 +134,7 @@ extern "C" {
 
     f_string_lengths_t remaining;
     bool process_pipe;
+    pid_t pid;
 
     f_file_t output;
     fll_error_print_t error;
@@ -144,6 +148,7 @@ extern "C" {
       controller_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
+      0, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       fll_macro_error_print_t_initialize_warning(), \
