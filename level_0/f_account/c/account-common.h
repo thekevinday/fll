@@ -1,13 +1,13 @@
 /**
  * FLL - Level 0
  *
- * Project: Pipe
+ * Project: Account
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Defines common data to be used for/by pipe console.
+ * Defines common data to be used for/by account related functionality.
  *
- * This is auto-included by pipe.h and should not need to be explicitly included.
+ * This is auto-included by account.h and should not need to be explicitly included.
  */
 #ifndef _F_account_common_h
 #define _F_account_common_h
