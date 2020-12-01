@@ -123,7 +123,7 @@ extern "C" {
           width_written = width;
 
           if (*written + width > write_max) {
-            return F_incomplete_utf_stop;
+            return F_complete_not_utf_stop;
           }
 
           buffer_write[used] = f_macro_utf_character_t_to_char_1(string[*written + i]);
@@ -170,7 +170,7 @@ extern "C" {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EISDIR) return F_status_set_error(F_file_type_directory);

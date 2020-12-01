@@ -330,7 +330,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
@@ -373,7 +373,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).

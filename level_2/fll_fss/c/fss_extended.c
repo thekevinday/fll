@@ -135,7 +135,7 @@ extern "C" {
 
         return status;
       }
-      else if (status == F_data_not_eos || status == F_data_not_stop || status == F_unterminated_group_eos || status == F_unterminated_group_stop) {
+      else if (status == F_data_not_eos || status == F_data_not_stop || status == F_terminated_not_group_eos || status == F_terminated_not_group_stop) {
 
         // If at least some valid object was found, then return F_none equivelents.
         if (objects->used > initial_used) {
@@ -145,12 +145,12 @@ extern "C" {
 
         return status;
       }
-      else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not && status != F_unterminated_group) {
+      else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not && status != F_terminated_not_group) {
         return status;
       }
       // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
       else if (range->start >= range->stop || range->start >= buffer.used) {
-        if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not || status == F_unterminated_group) {
+        if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not || status == F_terminated_not_group) {
           objects->used++;
           contents->used++;
 
@@ -164,12 +164,12 @@ extern "C" {
         }
 
         if (range->start >= buffer.used) {
-          if (status == F_unterminated_group) return F_unterminated_group_eos;
+          if (status == F_terminated_not_group) return F_terminated_not_group_eos;
 
           return F_none_eos;
         }
 
-        if (status == F_unterminated_group) return F_unterminated_group_stop;
+        if (status == F_terminated_not_group) return F_terminated_not_group_stop;
 
         return F_none_stop;
       }

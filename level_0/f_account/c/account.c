@@ -28,7 +28,7 @@ extern "C" {
       int result = getgrnam_r(name, &grp, buffer, length, &pointer);
 
       if (result) {
-        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
         if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -59,7 +59,7 @@ extern "C" {
     const int result = getgrnam_r(name, &grp, buffer, length, &pointer);
 
     if (result) {
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -103,7 +103,7 @@ extern "C" {
       const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
       if (result) {
-        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
         if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -134,7 +134,7 @@ extern "C" {
     const int result = getpwnam_r(name, &password, buffer, length, &pointer);
 
     if (result) {
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);

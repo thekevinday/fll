@@ -42,7 +42,7 @@ extern "C" {
 
     if (!size_read) {
       if (width != 0) {
-        return F_status_set_error(F_incomplete_utf_eof);
+        return F_status_set_error(F_complete_not_utf_eof);
       }
 
       return F_none_eof;
@@ -51,7 +51,7 @@ extern "C" {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
@@ -59,7 +59,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
     else if (width != 0) {
-      return F_status_set_error(F_incomplete_utf_stop);
+      return F_status_set_error(F_complete_not_utf_stop);
     }
 
     return F_none;
@@ -102,7 +102,7 @@ extern "C" {
 
     if (!size_read) {
       if (width) {
-        return F_status_set_error(F_incomplete_utf_eof);
+        return F_status_set_error(F_complete_not_utf_eof);
       }
 
       return F_none_eof;
@@ -111,7 +111,7 @@ extern "C" {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
@@ -119,7 +119,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
     else if (width != 0) {
-      return F_status_set_error(F_incomplete_utf_stop);
+      return F_status_set_error(F_complete_not_utf_stop);
     }
 
     return F_none;
@@ -170,7 +170,7 @@ extern "C" {
 
     if (!size_read) {
       if (width != 0) {
-        return F_status_set_error(F_incomplete_utf_eof);
+        return F_status_set_error(F_complete_not_utf_eof);
       }
 
       return F_none_eof;
@@ -179,7 +179,7 @@ extern "C" {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
@@ -187,7 +187,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
     else if (width != 0) {
-      return F_status_set_error(F_incomplete_utf_stop);
+      return F_status_set_error(F_complete_not_utf_stop);
     }
 
     return F_none;

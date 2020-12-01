@@ -83,7 +83,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_none_eol) {
         fss_basic_list_write_error_parameter_unsupported_eol_print(data);
 
-        return F_status_set_error(F_unsupported);
+        return F_status_set_error(F_supported_not);
       }
 
       if (F_status_is_error(status)) {
@@ -237,7 +237,7 @@ extern "C" {
                 fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol[0]);
               }
 
-              status = F_status_set_error(F_unsupported);
+              status = F_status_set_error(F_supported_not);
               break;
             }
 

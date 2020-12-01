@@ -1037,10 +1037,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
@@ -1087,10 +1087,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
       }
 
       range->start += width;
@@ -1131,10 +1131,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
       }
 
       range->start += width;
@@ -1199,10 +1199,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
@@ -1789,10 +1789,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_eos);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_eos);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
@@ -1832,10 +1832,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
       }
 
       range->start += width;
@@ -1878,10 +1878,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
       }
 
       range->start += width;
@@ -1945,10 +1945,10 @@ extern "C" {
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_incomplete_utf_stop);
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
 
         if (width == seek_width) {
           f_utf_character_t character = 0;

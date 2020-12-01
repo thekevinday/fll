@@ -22,7 +22,7 @@ extern "C" {
 
       if (width > range->start) {
         if (width > 1) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         return F_none_eos;
@@ -53,7 +53,7 @@ extern "C" {
 
       if (range->start + width > range->stop) {
         if (width > 1) {
-          return F_status_set_error(F_incomplete_utf_stop);
+          return F_status_set_error(F_complete_not_utf_stop);
         }
 
         range->start += width;
@@ -61,7 +61,7 @@ extern "C" {
       }
       else if (range->start + width >= buffer.used) {
         if (width > 1) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         range->start += width;
@@ -697,7 +697,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     return F_true;
@@ -721,7 +721,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -755,7 +755,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -789,7 +789,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -815,7 +815,7 @@ extern "C" {
     const uint8_t width = f_macro_utf_byte_width_is(*character);
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -846,7 +846,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -880,7 +880,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -911,7 +911,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -945,7 +945,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -979,7 +979,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1029,7 +1029,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1076,7 +1076,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1107,7 +1107,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1138,7 +1138,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1199,7 +1199,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1245,7 +1245,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1331,7 +1331,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1363,7 +1363,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1395,7 +1395,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1429,7 +1429,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1463,7 +1463,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1497,7 +1497,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;
@@ -1539,7 +1539,7 @@ extern "C" {
     }
 
     if (width == 1) {
-      return F_status_is_error(F_incomplete_utf);
+      return F_status_is_error(F_complete_not_utf);
     }
 
     f_utf_character_t character_utf = 0;

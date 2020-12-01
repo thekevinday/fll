@@ -15,7 +15,7 @@ extern "C"{
     if (bind(id, (struct sockaddr *) address, sizeof(struct sockaddr_un)) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
-      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_unavailable_address);
+      if (errno == EADDRNOTAVAIL) return F_status_set_error(F_available_not_address);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_busy_socket);
       if (errno == ELOOP) return F_status_set_error(F_loop);
@@ -39,7 +39,7 @@ extern "C"{
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == ENOTSOCK) return F_status_set_error(F_descriptor);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_unsupported);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
 
       return F_status_set_error(F_failure);
     }
@@ -60,14 +60,14 @@ extern "C"{
         result = shutdown(id, action);
       }
       else {
-        return F_status_set_error(F_unsupported);
+        return F_status_set_error(F_supported_not);
       }
     }
 
     if (result < 0) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_value);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOTCONN) return F_connected_not;

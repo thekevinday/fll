@@ -196,7 +196,7 @@ extern "C" {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
@@ -235,7 +235,7 @@ extern "C" {
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);

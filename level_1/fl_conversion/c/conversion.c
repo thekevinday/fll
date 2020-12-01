@@ -602,7 +602,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (status == F_status_set_error(F_maybe)) {
-              status = F_status_set_error(F_incomplete_utf);
+              status = F_status_set_error(F_complete_not_utf);
             }
 
             return status;
@@ -754,7 +754,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (status == F_status_set_error(F_maybe)) {
-              status = F_status_set_error(F_incomplete_utf);
+              status = F_status_set_error(F_complete_not_utf);
             }
 
             return status;

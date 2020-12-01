@@ -97,7 +97,7 @@ extern "C" {
       return F_status_set_error(F_access);
     }
 
-    if (status == F_incomplete_utf || status == F_incomplete_utf_block || status == F_incomplete_utf_eof || status == F_incomplete_utf_eol || status == F_incomplete_utf_eos || status == F_incomplete_utf_stop) {
+    if (status == F_complete_not_utf || status == F_complete_not_utf_block || status == F_complete_not_utf_eof || status == F_complete_not_utf_eol || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
       return F_status_set_error(F_encoding);
     }
 
@@ -105,11 +105,11 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    if (status == F_parameter || status == F_found_not || status == F_interrupted) {
+    if (status == F_parameter || status == F_found_not || status == F_interrupt) {
       return F_status_set_error(status);
     }
 
-    return F_status_set_error(F_invalid);
+    return F_status_set_error(F_valid_not);
   }
 #endif // _di_controller_status_simplify_
 

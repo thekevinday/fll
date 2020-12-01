@@ -633,7 +633,7 @@ extern "C" {
  * @param status
  *   The return status.
  *
- *   F_invalid (with error bit set) is returned if any part of the section is invalid, such as an invalid operation name.
+ *   F_valid_not (with error bit set) is returned if any part of the section is invalid, such as an invalid operation name.
  *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
  */
 #ifndef _di_fake_make_operate_section_

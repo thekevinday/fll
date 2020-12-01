@@ -43,7 +43,7 @@ extern "C" {
 
     if (setenv(name, value, replace) < 0) {
       if (errno == EINVAL) {
-        return F_status_set_error(F_invalid);
+        return F_status_set_error(F_valid_not);
       }
       else if (errno == ENOMEM) {
         return F_status_set_error(F_memory_not);
@@ -61,7 +61,7 @@ extern "C" {
 
     if (unsetenv(name) < 0) {
       if (errno == EINVAL) {
-        return F_status_set_error(F_invalid);
+        return F_status_set_error(F_valid_not);
       }
       else if (errno == ENOMEM) {
         return F_status_set_error(F_memory_not);

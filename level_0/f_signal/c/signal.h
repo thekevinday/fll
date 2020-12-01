@@ -42,7 +42,7 @@ extern "C" {
  *   F_descriptor (with error bit) if id is an invalid descriptor.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) if an I/O error occurred.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -89,7 +89,7 @@ extern "C" {
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_descriptor (with error bit) if the signal descriptor is invalid.
- *   F_interrupted (with error bit) if interrupt was received.
+ *   F_interrupt (with error bit) if interrupt was received.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_input_output (with error bit) on I/O error.

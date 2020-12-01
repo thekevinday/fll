@@ -1657,8 +1657,8 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
@@ -1686,8 +1686,8 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1716,8 +1716,8 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1746,8 +1746,8 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_to_
@@ -1770,8 +1770,8 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
@@ -2400,8 +2400,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *
@@ -2428,8 +2428,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2458,8 +2458,8 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2487,8 +2487,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_to_
@@ -2510,8 +2510,8 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
- *   F_incomplete_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *

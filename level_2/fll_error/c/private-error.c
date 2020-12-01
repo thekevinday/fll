@@ -86,7 +86,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_incomplete_utf) {
+    if (status == F_complete_not_utf) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
         fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : "");

@@ -85,7 +85,7 @@ extern "C" {
       action->code = 0;
       action->line = cache->line_action;
       action->timeout = 0;
-      action->status = F_unknown;
+      action->status = F_known_not;
       action->parameters.used = 0;
 
       status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->line_action);
@@ -351,7 +351,7 @@ extern "C" {
               }
               else {
                 if (action->status == F_none) {
-                  action->status = F_status_set_error(F_unsupported);
+                  action->status = F_status_set_error(F_supported_not);
 
                   if (F_status_is_error_not(status_action)) {
                     status_action = action->status;
@@ -377,7 +377,7 @@ extern "C" {
             if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to_not) {
               if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to_not) {
                 if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to_not) {
-                  action->status = F_status_set_error(F_unsupported);
+                  action->status = F_status_set_error(F_supported_not);
 
                   if (F_status_is_error_not(status_action)) {
                     status_action = action->status;
@@ -501,7 +501,7 @@ extern "C" {
   f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_entry_cache_t *cache, controller_entry_t *entry) {
     f_status_t status = F_none;
 
-    entry->status = F_unknown;
+    entry->status = F_known_not;
     entry->items.used = 0;
 
     cache->line_action = 0;

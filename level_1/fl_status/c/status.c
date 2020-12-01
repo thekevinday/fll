@@ -221,14 +221,32 @@ extern "C" {
         case F_absolute:
           *string = FL_status_string_absolute;
           break;
+        case F_absolute_not:
+          *string = FL_status_string_absolute_not;
+          break;
         case F_address:
           *string = FL_status_string_address;
+          break;
+        case F_address_not:
+          *string = FL_status_string_address_not;
           break;
         case F_block:
           *string = FL_status_string_block;
           break;
-        case F_bound_out:
-          *string = FL_status_string_bound_out;
+        case F_block_not:
+          *string = FL_status_string_block_not;
+          break;
+        case F_bound:
+          *string = FL_status_string_bound;
+          break;
+        case F_bound_not:
+          *string = FL_status_string_bound_not;
+          break;
+        case F_complete:
+          *string = FL_status_string_complete;
+          break;
+        case F_complete_not:
+          *string = FL_status_string_complete_not;
           break;
         case F_connected:
           *string = FL_status_string_connected;
@@ -239,17 +257,32 @@ extern "C" {
         case F_critical:
           *string = FL_status_string_critical;
           break;
+        case F_critical_not:
+          *string = FL_status_string_critical_not;
+          break;
         case F_deadlock:
           *string = FL_status_string_deadlock;
+          break;
+        case F_deadlock_not:
+          *string = FL_status_string_deadlock_not;
           break;
         case F_descriptor:
           *string = FL_status_string_descriptor;
           break;
+        case F_descriptor_not:
+          *string = FL_status_string_descriptor_not;
+          break;
         case F_device:
           *string = FL_status_string_device;
           break;
+        case F_device_not:
+          *string = FL_status_string_device_not;
+          break;
         case F_dummy:
           *string = FL_status_string_dummy;
+          break;
+        case F_dummy_not:
+          *string = FL_status_string_dummy_not;
           break;
         case F_encoding:
           *string = FL_status_string_encoding;
@@ -260,11 +293,20 @@ extern "C" {
         case F_eof:
           *string = FL_status_string_eof;
           break;
+        case F_eof_not:
+          *string = FL_status_string_eof_not;
+          break;
         case F_eol:
           *string = FL_status_string_eol;
           break;
+        case F_eol_not:
+          *string = FL_status_string_eol_not;
+          break;
         case F_eos:
           *string = FL_status_string_eos;
+          break;
+        case F_eos_not:
+          *string = FL_status_string_eos_not;
           break;
         case F_exist:
           *string = FL_status_string_exist;
@@ -275,8 +317,14 @@ extern "C" {
         case F_failure:
           *string = FL_status_string_failure;
           break;
+        case F_failure_not:
+          *string = FL_status_string_failure_not;
+          break;
         case F_fork:
           *string = FL_status_string_fork;
+          break;
+        case F_fork_not:
+          *string = FL_status_string_fork_not;
           break;
         case F_found:
           *string = FL_status_string_found;
@@ -284,23 +332,26 @@ extern "C" {
         case F_found_not:
           *string = FL_status_string_found_not;
           break;
-        case F_incomplete:
-          *string = FL_status_string_incomplete;
-          break;
         case F_input:
           *string = FL_status_string_input;
+          break;
+        case F_input_not:
+          *string = FL_status_string_input_not;
           break;
         case F_input_output:
           *string = FL_status_string_input_output;
           break;
-        case F_interrupted:
-          *string = FL_status_string_interrupted;
+        case F_interrupt:
+          *string = FL_status_string_interrupt;
           break;
-        case F_invalid:
-          *string = FL_status_string_invalid;
+        case F_interrupt_not:
+          *string = FL_status_string_interrupt_not;
           break;
-        case F_output:
-          *string = FL_status_string_output;
+        case F_valid:
+          *string = FL_status_string_valid;
+          break;
+        case F_valid_not:
+          *string = FL_status_string_valid_not;
           break;
         case F_link:
           *string = FL_status_string_link;
@@ -317,38 +368,56 @@ extern "C" {
         case F_loop:
           *string = FL_status_string_loop;
           break;
+        case F_loop_not:
+          *string = FL_status_string_loop_not;
+          break;
         case F_maybe:
           *string = FL_status_string_maybe;
           break;
-        case F_memory:
-          *string = FL_status_string_memory;
-          break;
-        case F_memory_not:
-          *string = FL_status_string_memory_out;
+        case F_maybe_not:
+          *string = FL_status_string_maybe_not;
           break;
         case F_mount:
           *string = FL_status_string_mount;
           break;
+        case F_mount_not:
+          *string = FL_status_string_mount_not;
+          break;
         case F_name:
           *string = FL_status_string_name;
+          break;
+        case F_name_not:
+          *string = FL_status_string_name_not;
+          break;
+        case F_output:
+          *string = FL_status_string_output;
+          break;
+        case F_output_not:
+          *string = FL_status_string_output_not;
           break;
         case F_parameter:
           *string = FL_status_string_parameter;
           break;
+        case F_parameter_not:
+          *string = FL_status_string_parameter_not;
+          break;
         case F_pipe:
           *string = FL_status_string_pipe;
+          break;
+        case F_pipe_not:
+          *string = FL_status_string_pipe_not;
           break;
         case F_port:
           *string = FL_status_string_port;
           break;
-        case F_process:
-          *string = FL_status_string_process;
-          break;
-        case F_process_too_many:
-          *string = FL_status_string_process_too_many;
+        case F_port_not:
+          *string = FL_status_string_port_not;
           break;
         case F_prohibited:
           *string = FL_status_string_prohibited;
+          break;
+        case F_prohibited_not:
+          *string = FL_status_string_prohibited_not;
           break;
         case F_range:
           *string = FL_status_string_range;
@@ -356,14 +425,26 @@ extern "C" {
         case F_range_not:
           *string = FL_status_string_range_not;
           break;
+        case F_read:
+          *string = FL_status_string_read;
+          break;
+        case F_read_not:
+          *string = FL_status_string_read_not;
+          break;
         case F_read_only:
           *string = FL_status_string_read_only;
           break;
         case F_recurse:
           *string = FL_status_string_recurse;
           break;
+        case F_recurse_not:
+          *string = FL_status_string_recurse_not;
+          break;
         case F_relative:
           *string = FL_status_string_relative;
+          break;
+        case F_relative_not:
+          *string = FL_status_string_relative_not;
           break;
         case F_resource:
           *string = FL_status_string_resource;
@@ -374,8 +455,14 @@ extern "C" {
         case F_search:
           *string = FL_status_string_search;
           break;
+        case F_search_not:
+          *string = FL_status_string_search_not;
+          break;
         case F_signal:
           *string = FL_status_string_signal;
+          break;
+        case F_signal_not:
+          *string = FL_status_string_signal_not;
           break;
         case F_space:
           *string = FL_status_string_space;
@@ -386,14 +473,38 @@ extern "C" {
         case F_stop:
           *string = FL_status_string_stop;
           break;
+        case F_stop_not:
+          *string = FL_status_string_stop_not;
+          break;
+        case F_string:
+          *string = FL_status_string_string;
+          break;
+        case F_string_not:
+          *string = FL_status_string_string_not;
+          break;
+        case F_string_too_large:
+          *string = FL_status_string_string_too_large;
+          break;
+        case F_string_too_small:
+          *string = FL_status_string_string_too_small;
+          break;
         case F_syntax:
           *string = FL_status_string_syntax;
           break;
-        case F_unknown:
-          *string = FL_status_string_unknown;
+        case F_syntax_not:
+          *string = FL_status_string_syntax_not;
           break;
-        case F_unsupported:
-          *string = FL_status_string_unsupported;
+        case F_known:
+          *string = FL_status_string_known;
+          break;
+        case F_known_not:
+          *string = FL_status_string_known_not;
+          break;
+        case F_supported:
+          *string = FL_status_string_supported;
+          break;
+        case F_supported_not:
+          *string = FL_status_string_supported_not;
           break;
         case F_utf:
           *string = FL_status_string_utf;
@@ -410,6 +521,15 @@ extern "C" {
         case F_warn:
           *string = FL_status_string_warn;
           break;
+        case F_warn_not:
+          *string = FL_status_string_warn_not;
+          break;
+        case F_write:
+          *string = FL_status_string_write;
+          break;
+        case F_write_not:
+          *string = FL_status_string_write_not;
+          break;
         case F_write_only:
           *string = FL_status_string_write_only;
           break;
@@ -419,13 +539,46 @@ extern "C" {
         case F_array:
           *string = FL_status_string_array;
           break;
-        case F_array_too_small:
-          *string = FL_status_string_array_too_small;
+        case F_array_not:
+          *string = FL_status_string_array_not;
           break;
         case F_array_too_large:
           *string = FL_status_string_array_too_large;
           break;
+        case F_array_too_small:
+          *string = FL_status_string_array_too_small;
+          break;
       #endif // _di_F_status_array_
+
+      #ifndef _di_F_status_available_
+        case F_available:
+          *string = FL_status_string_available;
+          break;
+        case F_available_not:
+          *string = FL_status_string_available_not;
+          break;
+        case F_available_not_address:
+          *string = FL_status_string_available_not_address;
+          break;
+        case F_available_not_buffer:
+          *string = FL_status_string_available_not_buffer;
+          break;
+        case F_available_not_device:
+          *string = FL_status_string_available_not_device;
+          break;
+        case F_available_not_pipe:
+          *string = FL_status_string_available_not_pipe;
+          break;
+        case F_available_not_port:
+          *string = FL_status_string_available_not_port;
+          break;
+        case F_available_not_process:
+          *string = FL_status_string_available_not_process;
+          break;
+        case F_available_not_socket:
+          *string = FL_status_string_available_not_socket;
+          break;
+      #endif // _di_F_status_available_
 
       #ifndef _di_F_status_busy_
         case F_busy:
@@ -439,6 +592,9 @@ extern "C" {
           break;
         case F_busy_device:
           *string = FL_status_string_busy_device;
+          break;
+        case F_busy_not:
+          *string = FL_status_string_busy_not;
           break;
         case F_busy_pipe:
           *string = FL_status_string_busy_pipe;
@@ -454,33 +610,6 @@ extern "C" {
           break;
       #endif // _di_F_status_busy_
 
-      #ifndef _di_F_status_unavailable_
-        case F_unavailable:
-          *string = FL_status_string_unavailable;
-          break;
-        case F_unavailable_address:
-          *string = FL_status_string_unavailable_address;
-          break;
-        case F_unavailable_buffer:
-          *string = FL_status_string_unavailable_buffer;
-          break;
-        case F_unavailable_device:
-          *string = FL_status_string_unavailable_device;
-          break;
-        case F_unavailable_pipe:
-          *string = FL_status_string_unavailable_pipe;
-          break;
-        case F_unavailable_port:
-          *string = FL_status_string_unavailable_port;
-          break;
-        case F_unavailable_process:
-          *string = FL_status_string_unavailable_process;
-          break;
-        case F_unavailable_socket:
-          *string = FL_status_string_unavailable_socket;
-          break;
-      #endif // _di_F_status_unavailable_
-
       #ifndef _di_F_status_number_
         case F_number:
           *string = FL_status_string_number;
@@ -488,11 +617,20 @@ extern "C" {
         case F_number_decimal:
           *string = FL_status_string_number_decimal;
           break;
+        case F_number_decimal_not:
+          *string = FL_status_string_number_decimal_not;
+          break;
         case F_number_divide_by_zero:
           *string = FL_status_string_number_divide_by_zero;
           break;
         case F_number_negative:
           *string = FL_status_string_number_negative;
+          break;
+        case F_number_negative_not:
+          *string = FL_status_string_number_negative_not;
+          break;
+        case F_number_not:
+          *string = FL_status_string_number_not;
           break;
         case F_number_overflow:
           *string = FL_status_string_number_overflow;
@@ -500,14 +638,23 @@ extern "C" {
         case F_number_positive:
           *string = FL_status_string_number_positive;
           break;
+        case F_number_positive_not:
+          *string = FL_status_string_number_positive_not;
+          break;
         case F_number_underflow:
           *string = FL_status_string_number_underflow;
           break;
         case F_number_whole:
           *string = FL_status_string_number_whole;
           break;
+        case F_number_whole_not:
+          *string = FL_status_string_number_whole_not;
+          break;
         case F_number_zero:
           *string = FL_status_string_number_zero;
+          break;
+        case F_number_zero_not:
+          *string = FL_status_string_number_zero_not;
           break;
       #endif // _di_F_status_number_
 
@@ -515,29 +662,29 @@ extern "C" {
         case F_buffer:
           *string = FL_status_string_buffer;
           break;
-        case F_buffer_too_small:
-          *string = FL_status_string_buffer_too_small;
+        case F_buffer_not:
+          *string = FL_status_string_buffer_not;
           break;
         case F_buffer_too_large:
           *string = FL_status_string_buffer_too_large;
           break;
-        case F_incomplete_utf:
-          *string = FL_status_string_incomplete_utf;
+        case F_buffer_too_small:
+          *string = FL_status_string_buffer_too_small;
           break;
-        case F_incomplete_utf_block:
-          *string = FL_status_string_incomplete_utf_block;
+        case F_complete_not_utf_block:
+          *string = FL_status_string_complete_not_utf_block;
           break;
-        case F_incomplete_utf_eof:
-          *string = FL_status_string_incomplete_utf_eof;
+        case F_complete_not_utf_eof:
+          *string = FL_status_string_complete_not_utf_eof;
           break;
-        case F_incomplete_utf_eol:
-          *string = FL_status_string_incomplete_utf_eol;
+        case F_complete_not_utf_eol:
+          *string = FL_status_string_complete_not_utf_eol;
           break;
-        case F_incomplete_utf_eos:
-          *string = FL_status_string_incomplete_utf_eos;
+        case F_complete_not_utf_eos:
+          *string = FL_status_string_complete_not_utf_eos;
           break;
-        case F_incomplete_utf_stop:
-          *string = FL_status_string_incomplete_utf_stop;
+        case F_complete_not_utf_stop:
+          *string = FL_status_string_complete_not_utf_stop;
           break;
         case F_none_block:
           *string = FL_status_string_none_block;
@@ -575,79 +722,94 @@ extern "C" {
         case F_data_not_stop:
           *string = FL_status_string_data_not_stop;
           break;
-        case F_string_too_small:
-          *string = FL_status_string_string_too_small;
+        case F_terminated:
+          *string = FL_status_string_terminated;
           break;
-        case F_string_too_large:
-          *string = FL_status_string_string_too_large;
+        case F_terminated_not:
+          *string = FL_status_string_terminated_not;
           break;
-        case F_unterminated:
-          *string = FL_status_string_unterminated;
+        case F_terminated_not_block:
+          *string = FL_status_string_terminated_not_block;
           break;
-        case F_unterminated_block:
-          *string = FL_status_string_unterminated_block;
+        case F_terminated_not_eof:
+          *string = FL_status_string_terminated_not_eof;
           break;
-        case F_unterminated_eof:
-          *string = FL_status_string_unterminated_eof;
+        case F_terminated_not_eol:
+          *string = FL_status_string_terminated_not_eol;
           break;
-        case F_unterminated_eol:
-          *string = FL_status_string_unterminated_eol;
+        case F_terminated_not_eos:
+          *string = FL_status_string_terminated_not_eos;
           break;
-        case F_unterminated_eos:
-          *string = FL_status_string_unterminated_eos;
+        case F_terminated_not_group:
+          *string = FL_status_string_terminated_not_group;
           break;
-        case F_unterminated_stop:
-          *string = FL_status_string_unterminated_stop;
+        case F_terminated_not_group_block:
+          *string = FL_status_string_terminated_not_group_block;
           break;
-        case F_unterminated_group:
-          *string = FL_status_string_unterminated_group;
+        case F_terminated_not_group_eof:
+          *string = FL_status_string_terminated_not_group_eof;
           break;
-        case F_unterminated_group_block:
-          *string = FL_status_string_unterminated_group_block;
+        case F_terminated_not_group_eol:
+          *string = FL_status_string_terminated_not_group_eol;
           break;
-        case F_unterminated_group_eof:
-          *string = FL_status_string_unterminated_group_eof;
+        case F_terminated_not_group_eos:
+          *string = FL_status_string_terminated_not_group_eos;
           break;
-        case F_unterminated_group_eol:
-          *string = FL_status_string_unterminated_group_eol;
+        case F_terminated_not_group_stop:
+          *string = FL_status_string_terminated_not_group_stop;
           break;
-        case F_unterminated_group_eos:
-          *string = FL_status_string_unterminated_group_eos;
+        case F_terminated_not_nest:
+          *string = FL_status_string_terminated_not_nest;
           break;
-        case F_unterminated_group_stop:
-          *string = FL_status_string_unterminated_group_stop;
+        case F_terminated_not_nest_block:
+          *string = FL_status_string_terminated_not_nest_block;
           break;
-        case F_unterminated_nest:
-          *string = FL_status_string_unterminated_nest;
+        case F_terminated_not_nest_eof:
+          *string = FL_status_string_terminated_not_nest_eof;
           break;
-        case F_unterminated_nest_block:
-          *string = FL_status_string_unterminated_nest_block;
+        case F_terminated_not_nest_eol:
+          *string = FL_status_string_terminated_not_nest_eol;
           break;
-        case F_unterminated_nest_eof:
-          *string = FL_status_string_unterminated_nest_eof;
+        case F_terminated_not_nest_eos:
+          *string = FL_status_string_terminated_not_nest_eos;
           break;
-        case F_unterminated_nest_eol:
-          *string = FL_status_string_unterminated_nest_eol;
+        case F_terminated_not_nest_stop:
+          *string = FL_status_string_terminated_not_nest_stop;
           break;
-        case F_unterminated_nest_eos:
-          *string = FL_status_string_unterminated_nest_eos;
-          break;
-        case F_unterminated_nest_stop:
-          *string = FL_status_string_unterminated_nest_stop;
+        case F_terminated_not_stop:
+          *string = FL_status_string_terminated_not_stop;
           break;
       #endif // _di_F_status_buffers_
 
-      #ifndef _di_F_status_allocation_
+      #ifndef _di_F_status_memory_
+        case F_memory:
+          *string = FL_status_string_memory;
+          break;
         case F_memory_allocation:
           *string = FL_status_string_memory_allocation;
           break;
         case F_memory_deallocation:
           *string = FL_status_string_memory_deallocation;
           break;
+        case F_memory_not:
+          *string = FL_status_string_memory_not;
+          break;
         case F_memory_reallocation:
           *string = FL_status_string_memory_reallocation;
           break;
-      #endif // _di_F_status_allocation_
+      #endif // _di_F_status_memory_
+
+      #ifndef _di_F_status_process_
+        case F_process:
+          *string = FL_status_string_process;
+          break;
+        case F_process_not:
+          *string = FL_status_string_process_not;
+          break;
+        case F_process_too_many:
+          *string = FL_status_string_process_too_many;
+          break;
+      #endif // _di_F_status_process_
 
       #ifndef _di_F_status_file_
         case F_file:
@@ -682,6 +844,9 @@ extern "C" {
           break;
         case F_file_found_not:
           *string = FL_status_string_file_found_not;
+          break;
+        case F_file_not:
+          *string = FL_status_string_file_not;
           break;
         case F_file_open:
           *string = FL_status_string_file_open;
@@ -776,6 +941,9 @@ extern "C" {
         case F_filesystem:
           *string = FL_status_string_filesystem;
           break;
+        case F_filesystem_not:
+          *string = FL_status_string_filesystem_not;
+          break;
         case F_filesystem_quota_block:
           *string = FL_status_string_filesystem_quota_block;
           break;
@@ -795,7 +963,7 @@ extern "C" {
           *string = FL_status_string_directory_closed;
           break;
         case F_directory_descriptor:
-          *string =FL_status_string_directory_descriptor;
+          *string = FL_status_string_directory_descriptor;
           break;
         case F_directory_empty:
           *string = FL_status_string_directory_empty;
@@ -814,6 +982,9 @@ extern "C" {
           break;
         case F_directory_link_max:
           *string = FL_status_string_directory_link_max;
+          break;
+        case F_directory_not:
+          *string = FL_status_string_directory_not;
           break;
         case F_directory_open:
           *string = FL_status_string_directory_open;
@@ -850,6 +1021,9 @@ extern "C" {
           break;
         case F_socket_client:
           *string = FL_status_string_socket_client;
+          break;
+        case F_socket_not:
+          *string = FL_status_string_socket_not;
           break;
         case F_socket_receive:
           *string = FL_status_string_socket_receive;
@@ -934,6 +1108,9 @@ extern "C" {
           break;
         case F_access_mode:
           *string = FL_status_string_access_mode;
+          break;
+        case F_access_not:
+          *string = FL_status_string_access_not;
           break;
         case F_access_owner:
           *string = FL_status_string_access_owner;

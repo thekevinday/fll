@@ -82,13 +82,13 @@ extern "C" {
         }
 
         if (i + width > serialize.used) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         start = i + width;
       }
       else if (i + width > serialize.used) {
-        return F_status_set_error(F_incomplete_utf_eos);
+        return F_status_set_error(F_complete_not_utf_eos);
       }
 
       i += width;
@@ -137,13 +137,13 @@ extern "C" {
         locations->used++;
 
         if (i + width > serialize.used) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         start = i + width;
       }
       else if (i + width > serialize.used) {
-        return F_status_set_error(F_incomplete_utf_eos);
+        return F_status_set_error(F_complete_not_utf_eos);
       }
     } // for
 

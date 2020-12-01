@@ -324,7 +324,7 @@ extern "C" {
         graph_first = 0x1;
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
           fl_macro_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop);
@@ -358,7 +358,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
           fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
@@ -425,7 +425,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
           }
           else {
             fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
@@ -531,7 +531,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
           fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
@@ -602,7 +602,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
           }
           else {
             fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
@@ -636,7 +636,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (depth > 0) {
-          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop);
+          fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
           fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
@@ -731,7 +731,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           if (depth > 0) {
-            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_unterminated_nest_eos, F_unterminated_nest_stop)
+            fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop)
           }
           else {
             fl_macro_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop)
@@ -806,17 +806,17 @@ extern "C" {
 
     if (range->start > range->stop) {
       if (!depth) {
-        return F_status_set_error(F_unterminated_stop);
+        return F_status_set_error(F_terminated_not_stop);
       }
 
-      return F_status_set_error(F_unterminated_nest_stop);
+      return F_status_set_error(F_terminated_not_nest_stop);
     }
 
     if (!depth) {
-      return F_status_set_error(F_unterminated_eos);
+      return F_status_set_error(F_terminated_not_eos);
     }
 
-    return F_status_set_error(F_unterminated_nest_eos);
+    return F_status_set_error(F_terminated_not_nest_eos);
   }
 #endif // _di_fl_fss_embedded_list_content_read_
 

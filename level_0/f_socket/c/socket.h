@@ -54,7 +54,7 @@ extern "C"{
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
- *   F_unavailable_address (with error bit) if address is unavailable (is non-existent or not local).
+ *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
  *   F_failure (with error bit) for any other error.
  *
  * @see bind()
@@ -77,7 +77,7 @@ extern "C"{
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_descriptor (with error bit) if the id is not a socket descriptor.
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
- *   F_unsupported (with error bit) if this socket does not support the listen() operation.
+ *   F_supported_not (with error bit) if this socket does not support the listen() operation.
  *   F_failure (with error bit) for any other error.
  *
  * @see listen()
@@ -103,10 +103,10 @@ extern "C"{
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) if an I/O error occurred.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
- *   F_unsupported (with error bit) if this socket does not support the listen() operation.
+ *   F_supported_not (with error bit) if this socket does not support the listen() operation.
  *   F_failure (with error bit) for any other error.
  *
  * @see close()

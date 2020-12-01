@@ -340,7 +340,7 @@ extern "C" {
       if (status == F_true) continue;
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_incomplete_utf) continue;
+        if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
         return status;
       }
@@ -368,7 +368,7 @@ extern "C" {
           if (status == F_true) continue;
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_incomplete_utf) continue;
+            if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
             return status;
           }

@@ -119,7 +119,7 @@ extern "C" {
   #define controller_rule_action_t_initialize \
     { \
       0, \
-      F_unknown, \
+      F_known_not, \
       f_string_dynamics_t_initialize, \
     }
 
@@ -248,7 +248,7 @@ extern "C" {
 
   #define controller_rule_t_initialize \
     { \
-      F_unknown, \
+      F_known_not, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -340,7 +340,7 @@ extern "C" {
       0, \
       0, \
       0, \
-      F_unknown, \
+      F_known_not, \
       f_string_dynamics_t_initialize, \
     }
 
@@ -432,7 +432,7 @@ extern "C" {
 
   #define controller_entry_t_initialize \
     { \
-      F_unknown, \
+      F_known_not, \
       controller_entry_items_t_initialize, \
     }
 

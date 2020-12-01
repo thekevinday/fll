@@ -27,7 +27,7 @@ extern "C" {
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_overflow (with error bit) on integer overflow.
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
  *   Errors (with error bit) from: fss_status_code_convert_number().
  *
@@ -70,7 +70,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts wth a null (length is 0).
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_overflow (with error bit) on integer overflow.
@@ -100,7 +100,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string starts wth a null (length is 0).
- *   F_incomplete_utf (with error bit) if an incomplete UTF-8 fragment is found.
+ *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_overflow (with error bit) on integer overflow.

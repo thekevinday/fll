@@ -283,7 +283,7 @@ extern "C" {
  *
  * @return
  *    F_none on success.
- *    F_invalid (with error bit) on success but there were one or more invalid settings encountered.
+ *    F_valid_not (with error bit) on success but there were one or more invalid settings encountered.
  *
  *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().

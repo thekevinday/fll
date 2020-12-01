@@ -62,7 +62,7 @@ extern "C" {
         status = f_fss_is_space(*destination, destination_range);
 
         // when going backwards, getting incomplete UTF-8 sequences is not an error.
-        if (F_status_set_fine(status) == F_incomplete_utf) continue;
+        if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
         if (F_status_is_error(status)) {
           destination->used = used_start;
@@ -160,7 +160,7 @@ extern "C" {
       status = f_fss_is_space(*destination, destination_range);
 
       // when going backwards, getting incomplete UTF-8 sequences is not an error.
-      if (F_status_set_fine(status) == F_incomplete_utf) continue;
+      if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
@@ -380,12 +380,12 @@ extern "C" {
 
           if (range->start >= buffer.used) {
             found->stop = buffer.used - 1;
-            return F_unterminated_group_eos;
+            return F_terminated_not_group_eos;
           }
 
           if (range->start > range->stop) {
             found->stop = range->stop;
-            return F_unterminated_group_stop;
+            return F_terminated_not_group_stop;
           }
 
           if (buffer.string[range->start] == quote_found) {
@@ -641,12 +641,12 @@ extern "C" {
 
       if (range->start >= buffer.used) {
         found->stop = buffer.used - 1;
-        return F_unterminated_group_eos;
+        return F_terminated_not_group_eos;
       }
 
       if (range->start > range->stop) {
         found->stop = range->stop;
-        return F_unterminated_group_stop;
+        return F_terminated_not_group_stop;
       }
     }
 

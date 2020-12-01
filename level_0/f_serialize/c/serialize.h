@@ -70,7 +70,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_complete_not_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   F_array_too_large (with error bit) if a buffer would exceed maximum length.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -96,7 +96,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_incomplete_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
+ *   F_complete_not_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   F_array_too_large (with error bit) if a buffer would exceed memory max length.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -126,7 +126,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached.
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   F_complete_not_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_find_
@@ -154,7 +154,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached (dynamic->used is set to 0).
- *   F_incomplete_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
+ *   F_complete_not_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

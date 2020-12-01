@@ -57,7 +57,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_invalid (with error bit) if name is an invalid string.
+ *   F_valid_not (with error bit) if name is an invalid string.
  *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *
@@ -77,7 +77,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_invalid (with error bit) if name is an invalid string.
+ *   F_valid_not (with error bit) if name is an invalid string.
  *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
  *

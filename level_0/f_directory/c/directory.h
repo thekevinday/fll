@@ -265,7 +265,7 @@ extern "C" {
  *   F_failure (with error bit) if failed to read directory information.
  *   F_file_open_max (with error bit) too many open files.
  *   F_file_type_directory_not (with error bit) file is not a directory.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -306,7 +306,7 @@ extern "C" {
  *   F_failure (with error bit) if failed to read directory information.
  *   F_file_open_max (with error bit) too many open files.
  *   F_file_type_directory_not (with error bit) file is not a directory.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -424,7 +424,7 @@ extern "C" {
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
@@ -466,7 +466,7 @@ extern "C" {
  *   F_file_open_max (with error bit) when system-wide max open files is reached.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_filesystem_quota_reached (with error bit) quota reached of filesystem is out of space.
- *   F_interrupted (with error bit) when program received an interrupt signal, halting operation.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_loop (with error bit) on loop error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.

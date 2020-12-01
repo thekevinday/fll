@@ -14,7 +14,7 @@ extern "C" {
 
     if (close(*id) < 0) {
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -313,7 +313,7 @@ extern "C" {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == EROFS) return F_status_set_error(F_unsupported);
+      if (errno == EROFS) return F_status_set_error(F_supported_not);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
 
       return F_status_set_error(F_failure);
@@ -333,7 +333,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
@@ -361,7 +361,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENOENT) return F_status_set_error(F_file_found_not);
@@ -515,7 +515,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -527,7 +527,7 @@ extern "C" {
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
       if (errno == EISDIR) return F_status_set_error(F_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_unsupported);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
 
       return F_status_set_error(F_failure);
     }
@@ -553,7 +553,7 @@ extern "C" {
       if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EFBIG || errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ELOOP) return F_status_set_error(F_loop);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -566,7 +566,7 @@ extern "C" {
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
       if (errno == EISDIR) return F_status_set_error(F_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_unsupported);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
 
       return F_status_set_error(F_failure);
     }
@@ -780,7 +780,7 @@ extern "C" {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_file_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
@@ -829,7 +829,7 @@ extern "C" {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EISDIR) return F_status_set_error(F_file_type_directory);

@@ -149,7 +149,7 @@ extern "C" {
 
     f_status_t status = f_file_clone(path_source, path_destination, role, recurse.size_block, recurse.exclusive);
 
-    if (F_status_is_error(status) || status == F_unsupported) {
+    if (F_status_is_error(status) || status == F_supported_not) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
         return F_status_set_error(status);
       }
@@ -345,7 +345,7 @@ extern "C" {
 
     f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.exclusive);
 
-    if (F_status_is_error(status) || status == F_unsupported) {
+    if (F_status_is_error(status) || status == F_supported_not) {
       if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
         return F_status_set_error(status);
       }
@@ -598,7 +598,7 @@ extern "C" {
           if (status == F_true) continue;
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_incomplete_utf) continue;
+            if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
             return status;
           }
@@ -612,7 +612,7 @@ extern "C" {
                 if (status == F_true) continue;
 
                 if (F_status_is_error(status)) {
-                  if (F_status_set_fine(status) == F_incomplete_utf) continue;
+                  if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
                   return status;
                 }
@@ -649,7 +649,7 @@ extern "C" {
         if (status == F_true) continue;
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_incomplete_utf) continue;
+          if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
           return status;
         }
@@ -667,7 +667,7 @@ extern "C" {
               if (status == F_true) continue;
 
               if (F_status_is_error(status)) {
-                if (F_status_set_fine(status) == F_incomplete_utf) continue;
+                if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
                 return status;
               }
@@ -701,7 +701,7 @@ extern "C" {
         if (status == F_true) continue;
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_incomplete_utf) continue;
+          if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
           return status;
         }
@@ -717,7 +717,7 @@ extern "C" {
               if (status == F_true) continue;
 
               if (F_status_is_error(status)) {
-                if (F_status_set_fine(status) == F_incomplete_utf) continue;
+                if (F_status_set_fine(status) == F_complete_not_utf) continue;
 
                 return status;
               }

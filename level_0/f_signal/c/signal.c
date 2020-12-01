@@ -17,7 +17,7 @@ extern "C" {
     if (close(signal->id) < 0) {
       if (errno == EBADF) return F_status_set_error(F_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_parameter);
 
@@ -71,7 +71,7 @@ extern "C" {
 
     if (result < 0) {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupted);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
@@ -84,7 +84,7 @@ extern "C" {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
         if (errno == EBADF) return F_status_set_error(F_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupted);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == EIO) return F_status_set_error(F_input_output);
         if (errno == EISDIR) return F_status_set_error(F_file_type_directory);

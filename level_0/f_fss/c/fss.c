@@ -316,15 +316,15 @@ extern "C" {
       else if (width == 1) {
 
         // Do not operate on UTF-8 fragments that are not the first byte of the character.
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
         if (range->start + width >= buffer.used) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         if (range->start + width > range->stop) {
-          return F_status_set_error(F_incomplete_utf_stop);
+          return F_status_set_error(F_complete_not_utf_stop);
         }
       }
 
@@ -445,15 +445,15 @@ extern "C" {
       else if (width == 1) {
 
         // Do not operate on UTF-8 fragments that are not the first byte of the character.
-        return F_status_set_error(F_incomplete_utf);
+        return F_status_set_error(F_complete_not_utf);
       }
       else {
         if (range->start + width >= buffer.used) {
-          return F_status_set_error(F_incomplete_utf_eos);
+          return F_status_set_error(F_complete_not_utf_eos);
         }
 
         if (range->start + width > range->stop) {
-          return F_status_set_error(F_incomplete_utf_stop);
+          return F_status_set_error(F_complete_not_utf_stop);
         }
       }
 

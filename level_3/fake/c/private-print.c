@@ -211,7 +211,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(data.error, status, function, F_false) == F_unknown && fallback && data.error.verbosity != f_console_verbosity_quiet) {
+    if (fll_error_print(data.error, status, function, F_false) == F_known_not && fallback && data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.error.to.stream, "%c", f_string_eol[0]);
       fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN %s(", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", status);
@@ -246,7 +246,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_status_set_error(F_incomplete_utf_stop)) {
+    if (status == F_status_set_error(F_complete_not_utf_stop)) {
       if (data.error.verbosity != f_console_verbosity_quiet) {
         fprintf(data.error.to.stream, "%c", f_string_eol[0]);
         fl_color_print(data.error.to.stream, data.context.set.error, "%serror occurred on invalid UTF-8 character at end of string (at ", fll_error_print_error);
@@ -259,7 +259,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(data.error, status, function, F_false) == F_unknown && fallback && data.error.verbosity != f_console_verbosity_quiet) {
+    if (fll_error_print(data.error, status, function, F_false) == F_known_not && fallback && data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.error.to.stream, "%c", f_string_eol[0]);
       fl_color_print(data.error.to.stream, data.context.set.error, "UNKNOWN %s(", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", status);

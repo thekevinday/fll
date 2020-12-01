@@ -2070,7 +2070,7 @@ extern "C" {
       if (!operation) {
         fake_print_message_section_operation_unknown(data, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
-        *status = F_status_set_error(F_invalid);
+        *status = F_status_set_error(F_valid_not);
       }
       else if (operation == fake_make_operation_type_operate) {
         if (section_stack->used == fake_make_section_stack_max) {

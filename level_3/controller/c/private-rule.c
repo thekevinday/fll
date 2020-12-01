@@ -146,7 +146,7 @@ extern "C" {
 
               actions->array[actions->used].line += item->line;
               actions->array[actions->used].parameters.used = 0;
-              actions->array[actions->used].status = F_unknown;
+              actions->array[actions->used].status = F_known_not;
 
               status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
 
@@ -199,7 +199,7 @@ extern "C" {
             else {
               actions->array[0].line += item->line;
               actions->array[0].parameters.used = 0;
-              actions->array[0].status = F_unknown;
+              actions->array[0].status = F_known_not;
 
               status = controller_rule_action_read(data, cache->buffer_item, 0, &cache->content_action, &actions->array[0]);
 
@@ -397,7 +397,7 @@ extern "C" {
               fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for this rule item action type.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
             }
 
-            status = F_status_set_error(F_unsupported);
+            status = F_status_set_error(F_supported_not);
             break;
           }
 
@@ -444,7 +444,7 @@ extern "C" {
 
     bool for_item = F_true;
 
-    rule->status = F_unknown;
+    rule->status = F_known_not;
 
     rule->id.used = 0;
     rule->name.used = 0;
@@ -752,7 +752,7 @@ extern "C" {
           controller_rule_error_print(data.error, *cache, F_false);
 
           if (F_status_is_error_not(status_return)) {
-            status_return = F_status_set_error(F_invalid);
+            status_return = F_status_set_error(F_valid_not);
           }
 
           continue;
@@ -841,7 +841,7 @@ extern "C" {
           controller_rule_error_print(data.error, *cache, F_false);
 
           if (F_status_is_error_not(status_return)) {
-            status_return = F_status_set_error(F_invalid);
+            status_return = F_status_set_error(F_valid_not);
           }
 
           continue;
@@ -871,7 +871,7 @@ extern "C" {
 
           status = controller_validate_has_graph(*setting_value);
 
-          if (status == F_false || F_status_set_fine(status) == F_incomplete_utf) {
+          if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
             if (status == F_false) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
               fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
@@ -881,13 +881,13 @@ extern "C" {
               controller_rule_error_print(data.error, *cache, F_false);
 
               if (F_status_is_error_not(status_return)) {
-                status_return = F_status_set_error(F_invalid);
+                status_return = F_status_set_error(F_valid_not);
               }
             }
             else {
 
-              // this function should only return F_incomplete_utf on error.
-              fll_error_print(data.error, F_incomplete_utf, "controller_validate_has_graph", F_true);
+              // this function should only return F_complete_not_utf on error.
+              fll_error_print(data.error, F_complete_not_utf, "controller_validate_has_graph", F_true);
 
               if (F_status_is_error_not(status_return)) {
                 status_return = status;
@@ -969,7 +969,7 @@ extern "C" {
 
           status = controller_validate_environment_name(setting_values->array[setting_values->used]);
 
-          if (status == F_false || F_status_set_fine(status) == F_incomplete_utf) {
+          if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
             if (status == F_false) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
               fprintf(data.error.to.stream, "%s%sRule setting has an invalid environment variable name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
@@ -979,13 +979,13 @@ extern "C" {
               controller_rule_error_print(data.error, *cache, F_false);
 
               if (F_status_is_error_not(status_return)) {
-                status_return = F_status_set_error(F_invalid);
+                status_return = F_status_set_error(F_valid_not);
               }
             }
             else {
 
-              // this function should only return F_incomplete_utf on error.
-              fll_error_print(data.error, F_incomplete_utf, "controller_validate_environment_name", F_true);
+              // this function should only return F_complete_not_utf on error.
+              fll_error_print(data.error, F_complete_not_utf, "controller_validate_environment_name", F_true);
 
               if (F_status_is_error_not(status_return)) {
                 status_return = status;
@@ -1011,7 +1011,7 @@ extern "C" {
         controller_rule_error_print(data.error, *cache, F_false);
 
         if (F_status_is_error_not(status_return)) {
-          status_return = F_status_set_error(F_invalid);
+          status_return = F_status_set_error(F_valid_not);
         }
 
         continue;

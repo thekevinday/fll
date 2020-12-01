@@ -116,12 +116,12 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_unterminated_group_eos if EOS was reached before the a group termination was reached.
- *   F_unterminated_group_stop if stop point was reached before the a group termination was reached.
+ *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
+ *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
  *   F_array_too_large (with error bit) if a buffer is too large.
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_incomplete_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_incomplete_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
@@ -170,7 +170,7 @@ extern "C" {
  *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_incomplete_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_reallocation (with error bit) on reallocation error.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
