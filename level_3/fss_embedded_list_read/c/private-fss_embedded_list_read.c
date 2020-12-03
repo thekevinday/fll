@@ -102,7 +102,7 @@ extern "C" {
         i = data.parameters[fss_embedded_list_read_parameter_depth].values.used + 1;
       }
 
-      macro_fss_embedded_list_read_depths_t_new(status, (*depths), i);
+      fss_embedded_list_read_macro_depths_t_new(status, (*depths), i);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);

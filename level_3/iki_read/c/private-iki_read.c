@@ -124,7 +124,7 @@ extern "C" {
         fll_error_print(data->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
         for (f_array_length_t i = 0; i < variable->used; i++) {
-          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
         return status;
@@ -150,7 +150,7 @@ extern "C" {
           fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
 
           for (f_array_length_t i = 0; i < variable->used; i++) {
-            macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+            iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
           f_macro_string_dynamic_t_delete_simple(name);
@@ -206,7 +206,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < variable->used; i++) {
-      macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+      iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
     return status;
@@ -243,7 +243,7 @@ extern "C" {
         fll_error_print(data->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
         for (f_array_length_t i = 0; i < variable->used; i++) {
-          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
         return status;
@@ -299,7 +299,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         for (i = 0; i < variable->used; i++) {
-          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
         f_macro_string_dynamics_t_delete_simple(names);
@@ -380,7 +380,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < variable->used; i++) {
-      macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
+      iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
     f_macro_string_dynamics_t_delete_simple(names);
@@ -488,7 +488,7 @@ extern "C" {
         status = fl_string_compare(arguments.argv[index], data->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
         if (status == F_equal_to) {
-          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_array_too_large);
+          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, iki_read_macro_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];

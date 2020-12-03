@@ -257,9 +257,9 @@ extern "C" {
 
     controller_file_pid_delete(*data, setting.path_pid);
 
-    macro_controller_setting_t_delete_simple(setting);
-    macro_controller_entry_cache_t_delete_simple(cache_entry);
-    macro_controller_rule_cache_t_delete_simple(cache_rule);
+    controller_macro_setting_t_delete_simple(setting);
+    controller_macro_entry_cache_t_delete_simple(cache_entry);
+    controller_macro_rule_cache_t_delete_simple(cache_rule);
 
     controller_delete_data(data);
 

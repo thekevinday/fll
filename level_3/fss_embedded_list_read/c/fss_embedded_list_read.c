@@ -489,7 +489,7 @@ extern "C" {
         }
       }
 
-      macro_fss_embedded_list_read_depths_t_delete_simple(depths);
+      fss_embedded_list_read_macro_depths_t_delete_simple(depths);
       f_macro_fss_delimits_t_delete_simple(objects_delimits);
       f_macro_fss_delimits_t_delete_simple(contents_delimits);
       f_macro_fss_comments_t_delete_simple(comments);

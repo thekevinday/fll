@@ -50,7 +50,7 @@
       f_string_dynamic_t_initialize, \
     }
 
-  #define macro_controller_entry_cache_t_delete_simple(cache) \
+  #define controller_macro_entry_cache_t_delete_simple(cache) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \

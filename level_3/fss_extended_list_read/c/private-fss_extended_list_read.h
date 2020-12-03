@@ -43,18 +43,18 @@ extern "C" {
       f_string_dynamic_t_initialize, \
     }
 
-  #define macro_fss_extended_list_read_depth_t_clear(structure) \
+  #define fss_extended_list_read_macro_depth_t_clear(structure) \
     structure.depth = 0; \
     structure.index_at = 0; \
     structure.index_name = 0; \
     structure.value_at = 0; \
     f_macro_string_dynamic_t_clear(structure.value_name)
 
-  #define macro_fss_extended_list_read_depth_t_delete(status, structure)  f_macro_string_dynamic_t_delete(status, structure.value_name)
-  #define macro_fss_extended_list_read_depth_t_destroy(status, structure) f_macro_string_dynamic_t_destroy(status, structure.value_name)
+  #define fss_extended_list_read_macro_depth_t_delete(status, structure)  f_macro_string_dynamic_t_delete(status, structure.value_name)
+  #define fss_extended_list_read_macro_depth_t_destroy(status, structure) f_macro_string_dynamic_t_destroy(status, structure.value_name)
 
-  #define macro_fss_extended_list_read_depth_t_delete_simple(structure)  f_macro_string_dynamic_t_delete_simple(structure.value_name)
-  #define macro_fss_extended_list_read_depth_t_destroy_simple(structure) f_macro_string_dynamic_t_destroy_simple(structure.value_name)
+  #define fss_extended_list_read_macro_depth_t_delete_simple(structure)  f_macro_string_dynamic_t_delete_simple(structure.value_name)
+  #define fss_extended_list_read_macro_depth_t_destroy_simple(structure) f_macro_string_dynamic_t_destroy_simple(structure.value_name)
 #endif // _di_fss_extended_list_read_depth_t_
 
 /**
@@ -74,52 +74,52 @@ extern "C" {
 
   #define fss_extended_list_read_depths_t_initialize { 0, 0, 0 }
 
-  #define macro_fss_extended_list_read_depths_t_clear(depths) f_macro_memory_structure_t_clear(depths)
+  #define fss_extended_list_read_macro_depths_t_clear(depths) f_macro_memory_structure_t_clear(depths)
 
-  #define macro_fss_extended_list_read_depths_t_new(status, depths, length) f_macro_memory_structure_t_new(status, depths, fss_extended_list_read_depth_t, length)
+  #define fss_extended_list_read_macro_depths_t_new(status, depths, length) f_macro_memory_structure_t_new(status, depths, fss_extended_list_read_depth_t, length)
 
-  #define macro_fss_extended_list_read_depths_t_delete(status, depths) \
+  #define fss_extended_list_read_macro_depths_t_delete(status, depths) \
     status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_extended_list_read_depth_t_delete(status, depths.array[depths.used]); \
+      fss_extended_list_read_macro_depth_t_delete(status, depths.array[depths.used]); \
       if (status != F_none) break; \
     } \
     if (status == F_none) f_macro_memory_structure_t_delete(depths, fss_extended_list_read_depth_t)
 
-  #define macro_fss_extended_list_read_depths_t_destroy(status, depths) \
+  #define fss_extended_list_read_macro_depths_t_destroy(status, depths) \
     status = F_none; \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_extended_list_read_depth_t_destroy(status, depths.array[depths.used]); \
+      fss_extended_list_read_macro_depth_t_destroy(status, depths.array[depths.used]); \
       if (status != F_none) break; \
     } \
     if (status == F_none) f_macro_memory_structure_t_destroy(depths, fss_extended_list_read_depth_t)
 
-  #define macro_fss_extended_list_read_depths_t_delete_simple(depths) \
+  #define fss_extended_list_read_macro_depths_t_delete_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_extended_list_read_depth_t_delete_simple(depths.array[depths.used]); \
+      fss_extended_list_read_macro_depth_t_delete_simple(depths.array[depths.used]); \
     } \
     if (!depths.used) f_macro_memory_structure_t_delete_simple(depths, fss_extended_list_read_depth_t)
 
-  #define macro_fss_extended_list_read_depths_t_destroy_simple(depths) \
+  #define fss_extended_list_read_macro_depths_t_destroy_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
       depths.used--; \
-      macro_fss_extended_list_read_depth_t_destroy_simple(depths.array[depths.used]); \
+      fss_extended_list_read_macro_depth_t_destroy_simple(depths.array[depths.used]); \
     } \
     if (!depths.used) f_macro_memory_structure_t_destroy_simple(depths, fss_extended_list_read_depth_t)
 
-  #define macro_fss_extended_list_read_depths_t_resize(status, depths, new_length) \
+  #define fss_extended_list_read_macro_depths_t_resize(status, depths, new_length) \
     status = F_none; \
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        macro_fss_extended_list_read_depth_t_delete(status, depths.array[i]); \
+        fss_extended_list_read_macro_depth_t_delete(status, depths.array[i]); \
         if (status != F_none) break; \
       } \
     } \
@@ -135,12 +135,12 @@ extern "C" {
       if (depths.used > depths.size) depths.used = new_length; \
     }
 
-  #define macro_fss_extended_list_read_depths_t_adjust(status, depths, new_length) \
+  #define fss_extended_list_read_macro_depths_t_adjust(status, depths, new_length) \
     status = F_none; \
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        macro_fss_extended_list_read_depth_t_delete(status, depths.array[i]); \
+        fss_extended_list_read_macro_depth_t_delete(status, depths.array[i]); \
         if (status != F_none) break; \
       } \
     } \

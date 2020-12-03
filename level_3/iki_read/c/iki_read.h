@@ -153,7 +153,7 @@ extern "C" {
       f_string_static_t_initialize, \
     }
 
-  #define macro_iki_read_substitution_t_initialize(replace, with) \
+  #define iki_read_macro_substitution_t_initialize(replace, with) \
     { \
       f_macro_string_static_t_initialize(replace), \
       f_macro_string_static_t_initialize(with), \
@@ -170,25 +170,25 @@ extern "C" {
 
   #define iki_read_substitutions_t_initialize {0, 0, 0}
 
-  #define macro_iki_read_substitutions_t_clear(replacements) f_macro_memory_structure_t_clear(replacements)
+  #define iki_read_macro_substitutions_t_clear(replacements) f_macro_memory_structure_t_clear(replacements)
 
-  #define macro_iki_read_substitutions_t_new(status, replacements, length) f_macro_memory_structure_t_new(status, replacements, iki_read_substitution_t, length)
+  #define iki_read_macro_substitutions_t_new(status, replacements, length) f_macro_memory_structure_t_new(status, replacements, iki_read_substitution_t, length)
 
-  #define macro_iki_read_substitutions_t_delete_simple(replacements) \
+  #define iki_read_macro_substitutions_t_delete_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
     if (!replacements.used) f_macro_memory_structure_t_delete_simple(replacements, iki_read_substitution_t)
 
-  #define macro_iki_read_substitutions_t_destroy_simple(replacements) \
+  #define iki_read_macro_substitutions_t_destroy_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
     if (!replacements.used) f_macro_memory_structure_t_destroy_simple(replacements, iki_read_substitution_t)
 
-  #define macro_iki_read_substitutions_t_resize(status, replacements, new_length) \
+  #define iki_read_macro_substitutions_t_resize(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
       f_array_length_t i = replacements.size - new_length; \
@@ -208,7 +208,7 @@ extern "C" {
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
 
-  #define macro_iki_read_substitutions_t_adjust(status, replacements, new_length) \
+  #define iki_read_macro_substitutions_t_adjust(status, replacements, new_length) \
     status = F_none; \
     if (new_length < replacements.size) { \
       f_array_length_t i = replacements.size - new_length; \

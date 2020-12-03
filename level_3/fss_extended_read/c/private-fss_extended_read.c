@@ -43,7 +43,7 @@ extern "C" {
         depth_size = data.parameters[fss_extended_read_parameter_depth].values.used;
       }
 
-      macro_fss_extended_read_depths_t_new(status, (*depths), depth_size);
+      fss_extended_read_macro_depths_t_new(status, (*depths), depth_size);
 
       if (F_status_is_error(status)) {
         fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);

@@ -399,7 +399,7 @@ extern "C" {
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
       if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
-        macro_fss_extended_read_depths_t_delete_simple(depths);
+        fss_extended_read_macro_depths_t_delete_simple(depths);
         f_macro_fss_delimits_t_delete_simple(objects_delimits);
         f_macro_fss_delimits_t_delete_simple(contents_delimits);
 
@@ -506,7 +506,7 @@ extern "C" {
         }
       }
 
-      macro_fss_extended_read_depths_t_delete_simple(depths);
+      fss_extended_read_macro_depths_t_delete_simple(depths);
       f_macro_fss_delimits_t_delete_simple(objects_delimits);
       f_macro_fss_delimits_t_delete_simple(contents_delimits);
     }
