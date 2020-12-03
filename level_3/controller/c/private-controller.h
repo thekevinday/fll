@@ -149,15 +149,12 @@ extern "C" {
 
   #define macro_controller_rule_actions_t_delete_simple(actions) \
     actions.used = actions.size; \
-    while (actions.used > 0) { \
+    while (actions.used) { \
       actions.used--; \
       macro_controller_rule_action_t_delete_simple(actions.array[actions.used]); \
-      if (!actions.used) { \
-        if (f_memory_delete((void **) & actions.array, sizeof(controller_rule_action_t), actions.size)) { \
-          actions.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & actions.array, sizeof(controller_rule_action_t), actions.size); \
+    actions.size = 0;
 #endif // _di_controller_rule_actions_t_
 
 #ifndef _di_controller_rule_item_t_
@@ -203,15 +200,12 @@ extern "C" {
 
   #define macro_controller_rule_items_t_delete_simple(items) \
     items.used = items.size; \
-    while (items.used > 0) { \
+    while (items.used) { \
       items.used--; \
       macro_controller_rule_item_t_delete_simple(items.array[items.used]); \
-      if (!items.used) { \
-        if (f_memory_delete((void **) & items.array, sizeof(controller_rule_item_t), items.size)) { \
-          items.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & items.array, sizeof(controller_rule_item_t), items.size); \
+    items.size = 0;
 #endif // _di_controller_rule_items_t_
 
 #ifndef _di_controller_rule_t_
@@ -293,15 +287,12 @@ extern "C" {
 
   #define macro_controller_rules_t_delete_simple(rules) \
     rules.used = rules.size; \
-    while (rules.used > 0) { \
+    while (rules.used) { \
       rules.used--; \
       macro_controller_rule_t_delete_simple(rules.array[rules.used]); \
-      if (!rules.used) { \
-        if (f_memory_delete((void **) & rules.array, sizeof(controller_rule_t), rules.size)) { \
-          rules.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & rules.array, sizeof(controller_rule_t), rules.size); \
+    rules.size = 0;
 #endif // _di_controller_rules_t_
 
 #ifndef _di_controller_entry_action_t_
@@ -365,15 +356,12 @@ extern "C" {
 
   #define macro_controller_entry_actions_t_delete_simple(actions) \
     actions.used = actions.size; \
-    while (actions.used > 0) { \
+    while (actions.used) { \
       actions.used--; \
       macro_controller_entry_action_t_delete_simple(actions.array[actions.used]); \
-      if (!actions.used) { \
-        if (f_memory_delete((void **) & actions.array, sizeof(controller_entry_action_t), actions.size)) { \
-          actions.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & actions.array, sizeof(controller_entry_action_t), actions.size); \
+    actions.size = 0;
 #endif // _di_controller_entry_actions_t_
 
 #ifndef _di_controller_entry_item_t_
@@ -413,15 +401,12 @@ extern "C" {
 
   #define macro_controller_entry_items_t_delete_simple(items) \
     items.used = items.size; \
-    while (items.used > 0) { \
+    while (items.used) { \
       items.used--; \
       macro_controller_entry_item_t_delete_simple(items.array[items.used]); \
-      if (!items.used) { \
-        if (f_memory_delete((void **) & items.array, sizeof(controller_entry_item_t), items.size)) { \
-          items.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & items.array, sizeof(controller_entry_item_t), items.size); \
+    items.size = 0;
 #endif // _di_controller_entry_items_t_
 
 #ifndef _di_controller_entry_t_

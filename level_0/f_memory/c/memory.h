@@ -80,10 +80,12 @@ extern "C" {
  *
  * @param pointer
  *   A pointer that will be updated to the address of the newly allocated memory.
- * @param type
- *   The block size, in bytes (type * length = allocated size).
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   Must be greater than 0.
  * @param length
  *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
  *
  * @return
  *   F_none on success.
@@ -93,7 +95,7 @@ extern "C" {
  * @see calloc()
  */
 #ifndef _di_f_memory_new_
-  extern f_return_status f_memory_new(void **pointer, const f_memory_size_t type, const f_memory_length length);
+  extern f_return_status f_memory_new(void **pointer, const f_memory_size_t size, const f_memory_length length);
 #endif // _di_f_memory_new_
 
 /**
@@ -105,10 +107,12 @@ extern "C" {
  *
  * @param pointer
  *   A pointer to the address that will be freed.
- * @param type
- *   The block size, in bytes (type * length = allocated size).
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
  * @param length
  *   The total number of blocks to be allocated.
+ *   If length is 0 then no delete is performed.
  *
  * @return
  *   F_none on success.
@@ -116,9 +120,9 @@ extern "C" {
  *
  * @see free()
  */
-#if ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
-  extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t type, const f_memory_length length);
-#endif // ! ( defined (_di_f_memory_delete_) || defined (_f_memory_FORCE_secure_memory_) )
+#if !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
+  extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t size, const f_memory_length length);
+#endif // !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
 
 /**
  * Securely deletes some dynamically allocated data.
@@ -127,10 +131,12 @@ extern "C" {
  *
  * @param pointer
  *   A pointer to the address that will be freed.
- * @param type
- *   The block size, in bytes (type * length = allocated size).
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
  * @param length
  *   The total number of blocks to be allocated.
+ *   If length is 0 then no delete is performed.
  *
  * @return
  *   F_none on success.
@@ -139,9 +145,9 @@ extern "C" {
  * @see free()
  * @see memset()
  */
-#if ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
-  extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t type, const f_memory_length length);
-#endif // ! ( defined (_di_f_memory_destroy_) || defined (_f_memory_FORCE_fast_memory_) )
+#if !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
+  extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t size, const f_memory_length length);
+#endif // !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
 
 /**
  * Resize dynamically allocated data.
@@ -150,8 +156,8 @@ extern "C" {
  *
  * @param pointer
  *   A pointer to the address that will be resized.
- * @param type
- *   The block size, in bytes (type * length = allocated size).
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
  * @param old_length
  *   The total number of blocks representing the length to be resized from.
  * @param new_length
@@ -166,9 +172,9 @@ extern "C" {
  * @see memset()
  * @see realloc()
  */
-#if ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
-  extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
-#endif // ! ( defined (_di_f_memory_resize_) || defined (_f_memory_FORCE_secure_memory_) )
+#if !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
+  extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t size, const f_memory_length old_length, const f_memory_length new_length);
+#endif // !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
 
 /**
  * Securely resize dynamically allocated data.
@@ -177,8 +183,8 @@ extern "C" {
  *
  * @param pointer
  *   A pointer to the address that will be resized.
- * @param type
- *   The block size, in bytes (type * length = allocated size).
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
  * @param old_length
  *   The total number of blocks representing the length to be resized from.
  * @param new_length
@@ -193,8 +199,8 @@ extern "C" {
  * @see memset()
  * @see realloc()
  */
-#if ! ( defined (_di_f_memory_adjust_) || defined (_f_memory_FORCE_fast_memory_) )
-  extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t type, const f_memory_length old_length, const f_memory_length new_length);
+#if !(defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_fast_memory_))
+  extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t size, const f_memory_length old_length, const f_memory_length new_length);
 #endif // _di_f_memory_adjust_
 
 #ifdef __cplusplus

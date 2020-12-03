@@ -53,23 +53,22 @@ extern "C" {
 
 #ifndef _di_controller_rule_actions_increase_by_
   f_return_status controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) {
-    f_status_t status = F_none;
-    f_string_length_t size = actions->size + amount;
 
-    if (size > f_array_length_t_size) {
-      if (actions->size == f_array_length_t_size) {
+    if (actions->used + amount > actions->size) {
+      if (actions->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      size = actions->size;
-      status = F_array_too_large;
+      const f_status_t status = f_memory_resize((void **) & actions->array, sizeof(controller_rule_action_t), actions->size, actions->used + amount);
+
+      if (F_status_is_error_not(status)) {
+        actions->size = actions->used + amount;
+      }
+
+      return status;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & actions->array, sizeof(controller_rule_action_t), actions->size, size);
-    if (F_status_is_error(status_resize)) return status_resize;
-
-    actions->size = size;
-    return status;
+    return F_none;
   }
 #endif // _di_controller_rule_actions_increase_by_
 
@@ -418,23 +417,22 @@ extern "C" {
 
 #ifndef _di_controller_rule_items_increase_by_
   f_return_status controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) {
-    f_status_t status = F_none;
-    f_string_length_t size = items->size + amount;
 
-    if (size > f_array_length_t_size) {
-      if (items->size == f_array_length_t_size) {
+    if (items->used + amount > items->size) {
+      if (items->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      size = items->size;
-      status = F_array_too_large;
+      const f_status_t status = f_memory_resize((void **) & items->array, sizeof(controller_rule_item_t), items->size, items->used + amount);
+
+      if (F_status_is_error_not(status)) {
+        items->size = items->used + amount;
+      }
+
+      return status;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & items->array, sizeof(controller_rule_item_t), items->size, size);
-    if (F_status_is_error(status_resize)) return status_resize;
-
-    items->size = size;
-    return status;
+    return F_none;
   }
 #endif // _di_controller_rule_items_increase_by_
 

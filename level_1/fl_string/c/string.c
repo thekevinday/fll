@@ -937,26 +937,31 @@ extern "C" {
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    if (string->used + 1 > string->size) {
+      f_array_length_t size = string->used + f_memory_default_allocation_step;
 
-    if (string->size + f_memory_default_allocation_step > f_string_length_t_size) {
-      if (string->size == f_string_length_t_size) {
-        return F_status_set_error(F_string_too_large);
+      if (size > f_string_length_t_size) {
+        if (string->used + 1 > f_string_length_t_size) {
+          return F_status_set_error(F_string_too_large);
+        }
+
+        size = f_string_length_t_size;
       }
 
-      f_macro_string_dynamic_t_resize(status, (*string), f_string_length_t_size);
-      return F_string_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_dynamic_t_resize(status, (*string), size);
+
+      return status;
     }
 
-    f_macro_string_dynamic_t_resize(status, (*string), string->size + f_memory_default_allocation_step);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_dynamic_increase_
 
 #ifndef _di_fl_string_dynamic_increase_by_
   f_return_status fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
     #ifndef _di_level_1_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
@@ -1332,42 +1337,47 @@ extern "C" {
       if (!strings) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    if (strings->used + 1 > strings->size) {
+      f_array_length_t size = strings->used + f_memory_default_allocation_step;
 
-    if (strings->size + f_memory_default_allocation_step > f_array_length_t_size) {
-      if (strings->size == f_array_length_t_size) {
-        return F_status_set_error(F_array_too_large);
+      if (size > f_array_length_t_size) {
+        if (strings->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
       }
 
-      f_macro_string_dynamics_t_resize(status, (*strings), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_dynamics_t_resize(status, (*strings), size);
+
+      return status;
     }
 
-    f_macro_string_dynamics_t_resize(status, (*strings), strings->size + f_memory_default_allocation_step);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_dynamics_increase_
 
 #ifndef _di_fl_string_dynamics_increase_by_
   f_return_status fl_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings) {
     #ifndef _di_level_1_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
       if (!strings) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
-    if (strings->size + amount > f_array_length_t_size) {
-      if (strings->size == f_array_length_t_size) {
+    if (strings->used + amount > strings->size) {
+      if (strings->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      f_macro_string_dynamics_t_resize(status, (*strings), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_dynamics_t_resize(status, (*strings), strings->used + amount);
+
+      return status;
     }
 
-    f_macro_string_dynamics_t_resize(status, (*strings), strings->size + amount);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_dynamics_increase_by_
 
@@ -1416,19 +1426,25 @@ extern "C" {
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    if (lengths->used + 1 > lengths->size) {
+      f_array_length_t size = lengths->used + f_memory_default_allocation_step;
 
-    if (lengths->size + f_memory_default_allocation_step > f_array_length_t_size) {
-      if (lengths->size == f_array_length_t_size) {
-        return F_status_set_error(F_array_too_large);
+      if (size > f_array_length_t_size) {
+        if (lengths->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
       }
 
-      f_macro_string_lengths_t_resize(status, (*lengths), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_lengths_t_resize(status, (*lengths), size);
+
+      return status;
     }
 
-    f_macro_string_lengths_t_resize(status, (*lengths), lengths->size + f_memory_default_allocation_step);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_lengths_increase_
 
@@ -1478,19 +1494,19 @@ extern "C" {
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
-    if (lengths->size + amount > f_array_length_t_size) {
-      if (lengths->size == f_array_length_t_size) {
+    if (lengths->used + amount > lengths->size) {
+      if (lengths->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      f_macro_string_lengths_t_resize(status, (*lengths), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_lengths_t_resize(status, (*lengths), lengths->used + amount);
+
+      return status;
     }
 
-    f_macro_string_lengths_t_resize(status, (*lengths), lengths->size + amount);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_lengths_increase_by_
 
@@ -1500,19 +1516,25 @@ extern "C" {
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    if (maps->used + 1 > maps->size) {
+      f_array_length_t size = maps->used + f_memory_default_allocation_step;
 
-    if (maps->size + f_memory_default_allocation_step > f_array_length_t_size) {
-      if (maps->size == f_array_length_t_size) {
-        return F_status_set_error(F_array_too_large);
+      if (size > f_array_length_t_size) {
+        if (maps->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
       }
 
-      f_macro_string_maps_t_resize(status, (*maps), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_maps_t_resize(status, (*maps), size);
+
+      return status;
     }
 
-    f_macro_string_maps_t_resize(status, (*maps), maps->size + f_memory_default_allocation_step);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_maps_increase_
 
@@ -1523,19 +1545,19 @@ extern "C" {
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
-    if (maps->size + amount > f_array_length_t_size) {
-      if (maps->size == f_array_length_t_size) {
+    if (maps->used + amount > maps->size) {
+      if (maps->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      f_macro_string_maps_t_resize(status, (*maps), f_array_length_t_size);
-      return F_array_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_maps_t_resize(status, (*maps), maps->used + amount);
+
+      return status;
     }
 
-    f_macro_string_maps_t_resize(status, (*maps), maps->size + amount);
-    return status;
+    return F_none;
   }
 #endif // _di_fl_string_maps_increase_by_
 

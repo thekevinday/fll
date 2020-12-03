@@ -200,7 +200,7 @@ extern "C" {
   #define f_macro_fss_items_t_delete(status, items) \
     status = F_none; \
     items.used = items.size; \
-    while (items.used > 0) { \
+    while (items.used) { \
       items.used--; \
       f_macro_fss_item_t_delete(status, items.array[items.used]); \
       if (status != F_none) break; \
@@ -217,7 +217,7 @@ extern "C" {
   #define f_macro_fss_items_t_destroy(status, items) \
     status = F_none; \
     items.used = items.size; \
-    while (items.used > 0) { \
+    while (items.used) { \
       items.used--; \
       f_macro_fss_item_t_destroy(status, items.array[items.used]); \
       if (status != F_none) break; \
@@ -232,15 +232,12 @@ extern "C" {
    */
   #define f_macro_fss_items_t_delete_simple(items) \
     items.used = items.size; \
-    while (items.used > 0) { \
+    while (items.used) { \
       items.used--; \
       f_macro_fss_item_t_delete_simple(items.array[items.used]); \
-      if (!items.used) { \
-        if (f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size)) { \
-          items.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size); \
+    items.size = 0;
 
   /**
    * Destroy a fss items.
@@ -252,12 +249,9 @@ extern "C" {
     while (items.used > 0) { \
       items.used--; \
       f_macro_fss_item_t_destroy_simple(status, items.array[items.used]); \
-      if (!items.used) { \
-        if (f_memory_destroy((void **) & items.array, sizeof(f_fss_item_t), items.size)) { \
-          items.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & items.array, sizeof(f_fss_item_t), items.size); \
+    items.size = 0;
 
   /**
    * Resize a fss items.
@@ -374,7 +368,7 @@ extern "C" {
   #define f_macro_fss_nest_t_delete(status, nest) \
     status = F_none; \
     nest.used = nest.size; \
-    while (nest.used > 0) { \
+    while (nest.used) { \
       nest.used--; \
       f_macro_fss_items_t_delete(status, nest.depth[nest.used]); \
       if (status != F_none) break; \
@@ -391,7 +385,7 @@ extern "C" {
   #define f_macro_fss_nest_t_destroy(status, nest) \
     status = F_none; \
     nest.used = nest.size; \
-    while (nest.used > 0) { \
+    while (nest.used) { \
       nest.used--; \
       f_macro_fss_items_t_destroy(status, nest.depth[nest.used]); \
       if (status != F_none) break; \
@@ -406,15 +400,12 @@ extern "C" {
    */
   #define f_macro_fss_nest_t_delete_simple(nest) \
     nest.used = nest.size; \
-    while (nest.used > 0) { \
+    while (nest.used) { \
       nest.used--; \
       f_macro_fss_items_t_delete_simple(nest.depth[nest.used]); \
-      if (!nest.used) { \
-        if (f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size)) { \
-          nest.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
+    nest.size = 0;
 
   /**
    * Destroy a fss content nest.
@@ -426,12 +417,9 @@ extern "C" {
     while (nest.used > 0) { \
       nest.used--; \
       f_macro_fss_items_t_destroy_simple(nest.depth[nest.used]); \
-      if (!nest.used) { \
-        if (f_memory_destroy((void **) & nest.depth, sizeof(f_fss_items_t), nest.size)) { \
-          nest.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
+    nest.size = 0;
 
   /**
    * Resize a fss content nest.
@@ -543,7 +531,7 @@ extern "C" {
   #define f_macro_fss_nests_t_delete(nests) \
     status = F_none; \
     nests.used = nests.size; \
-    while (nests.used > 0) { \
+    while (nests.used) { \
       nests.used--; \
       f_macro_fss_nest_t_delete(status, nests.array[nests.used]); \
       if (status != F_none) break; \
@@ -560,7 +548,7 @@ extern "C" {
   #define f_macro_fss_nests_t_destroy(nests) \
     status = F_none; \
     nests.used = nests.size; \
-    while (nests.used > 0) { \
+    while (nests.used) { \
       nests.used--; \
       f_macro_fss_nest_t_destroy(status, nests.array[nests.used]); \
       if (status != F_none) break; \
@@ -575,15 +563,12 @@ extern "C" {
    */
   #define f_macro_fss_nests_t_delete_simple(nests) \
     nests.used = nests.size; \
-    while (nests.used > 0) { \
+    while (nests.used) { \
       nests.used--; \
       f_macro_fss_nest_t_delete_simple(nests.array[nests.used]); \
-      if (!nests.used) { \
-        if (f_memory_delete((void **) & nests.array, sizeof(f_fss_nest_t), nests.size)) { \
-          nests.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
+    nests.size = 0;
 
   /**
    * Destroy a fss content nests.
@@ -592,15 +577,12 @@ extern "C" {
    */
   #define f_macro_fss_nests_t_destroy_simple(nests) \
     nests.used = nests.size; \
-    while (nests.used > 0) { \
+    while (nests.used) { \
       nests.used--; \
       f_macro_fss_nest_t_destroy_simple(nests.array[nests.used]); \
-      if (!nests.used) { \
-        if (f_memory_destroy((void **) & nests.array, sizeof(f_fss_nest_t), nests.size)) { \
-          nests.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
+    nests.size = 0;
 
   /**
    * Resize a fss content nests.

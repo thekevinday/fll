@@ -1563,7 +1563,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_string_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1587,7 +1586,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_string_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1879,7 +1877,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1903,7 +1900,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1965,7 +1961,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1989,7 +1984,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2051,7 +2045,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2075,7 +2068,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but the requested length is too large for the buffer.
  *   F_memory_allocation (with error bit) on memory allocation error.
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  *   F_parameter (with error bit) if a parameter is invalid.

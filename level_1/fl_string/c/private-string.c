@@ -530,19 +530,20 @@ extern "C" {
 
 #if !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
   f_return_status private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
-    f_status_t status = F_none;
 
-    if (string->size + amount > f_string_length_t_size) {
-      if (string->size == f_string_length_t_size) {
+    if (string->used + amount > string->size) {
+      if (string->used + amount > f_string_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamic_t_resize(status, (*string), f_string_length_t_size);
-      return F_string_too_large;
+      f_status_t status = F_none;
+
+      f_macro_string_dynamic_t_resize(status, (*string), string->used + amount);
+
+      return status;
     }
 
-    f_macro_string_dynamic_t_resize(status, (*string), string->size + amount);
-    return status;
+    return F_none;
   }
 #endif // !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
 

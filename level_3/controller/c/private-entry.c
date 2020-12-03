@@ -7,23 +7,22 @@ extern "C" {
 
 #ifndef _di_controller_entry_actions_increase_by_
   f_return_status controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
-    f_status_t status = F_none;
-    f_string_length_t size = actions->size + amount;
 
-    if (size > f_array_length_t_size) {
-      if (actions->size == f_array_length_t_size) {
+    if (actions->used + amount > actions->size) {
+      if (actions->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      size = actions->size;
-      status = F_array_too_large;
+      const f_status_t status = f_memory_resize((void **) & actions->array, sizeof(controller_entry_action_t), actions->size, actions->used + amount);
+
+      if (F_status_is_error_not(status)) {
+        actions->size = actions->used + amount;
+      }
+
+      return status;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & actions->array, sizeof(controller_entry_action_t), actions->size, size);
-    if (F_status_is_error(status_resize)) return status_resize;
-
-    actions->size = size;
-    return status;
+    return F_none;
   }
 #endif // _di_controller_entry_actions_increase_by_
 
@@ -33,8 +32,21 @@ extern "C" {
     f_status_t status_action = F_none;
 
     actions->used = 0;
-    cache->object_actions.used = 0;
-    cache->content_actions.used = 0;
+
+    cache->object_actions.used = cache->object_actions.size;
+
+    while (cache->object_actions.used) {
+      cache->object_actions.used--;
+      cache->object_actions.array[cache->object_actions.used].start = 1;
+      cache->object_actions.array[cache->object_actions.used].stop = 0;
+    } // while
+
+    cache->content_actions.used = cache->content_actions.size;
+
+    while (cache->content_actions.used) {
+      cache->content_actions.used--;
+      cache->content_actions.array[cache->content_actions.used].used = 0;
+    } // while
 
     {
       f_string_range_t range = content_range;
@@ -477,23 +489,22 @@ extern "C" {
 
 #ifndef _di_controller_entry_items_increase_by_
   f_return_status controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) {
-    f_status_t status = F_none;
-    f_string_length_t size = items->size + amount;
 
-    if (size > f_array_length_t_size) {
-      if (items->size == f_array_length_t_size) {
+    if (items->used + amount > items->size) {
+      if (items->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      size = items->size;
-      status = F_array_too_large;
+      const f_status_t status = f_memory_resize((void **) & items->array, sizeof(controller_entry_item_t), items->size, items->used + amount);
+
+      if (F_status_is_error_not(status)) {
+        items->size = items->used + amount;
+      }
+
+      return status;
     }
 
-    const f_status_t status_resize = f_memory_resize((void **) & items->array, sizeof(controller_entry_items_t), items->size, size);
-    if (F_status_is_error(status_resize)) return status_resize;
-
-    items->size = size;
-    return status;
+    return F_none;
   }
 #endif // _di_controller_entry_items_increase_by_
 
@@ -553,7 +564,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && cache->object_actions.used) {
+    if (F_status_is_error_not(status) && cache->object_items.used) {
       status = controller_entry_items_increase_by(cache->object_items.used, &entry->items);
 
       if (F_status_is_error(status)) {
@@ -563,9 +574,9 @@ extern "C" {
         // 0x1 = main found, 0x2 = found existing.
         uint8_t code = 0;
 
-        controller_entry_item_t *item = 0;
         f_string_range_t *range = 0;
 
+        f_array_length_t at = 0;
         f_array_length_t i = 0;
         f_array_length_t j = 0;
 
@@ -575,6 +586,7 @@ extern "C" {
             code -= 0x2;
           }
 
+          at = 0;
           range = 0;
 
           cache->line_action = 0;
@@ -588,7 +600,6 @@ extern "C" {
 
           cache->object_actions.used = 0;
 
-          cache->buffer_file.used = 0;
           cache->buffer_path.used = 0;
 
           cache->name_action.used = 0;
@@ -608,10 +619,10 @@ extern "C" {
             break;
           }
 
-          status = fl_string_dynamic_terminate(&cache->name_item);
+          status = fl_string_dynamic_terminate_after(&cache->name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
 
@@ -646,40 +657,40 @@ extern "C" {
           if (fl_string_dynamic_compare_string(controller_string_main, cache->name_item, controller_string_main_length) == F_equal_to) {
             code |= 0x1;
 
-            item = &entry->items.array[0];
+            at = 0;
 
             if (!entry->items.used) {
               entry->items.used = 1;
             }
           }
           else if (entry->items.used) {
-            item = &entry->items.array[entry->items.used++];
+            at = entry->items.used++;
           }
           else {
 
             // skip position 0, which is reserved for "main".
-            item = &entry->items.array[1];
+            at = 1;
 
             entry->items.used = 2;
           }
 
-          item->line = cache->line_item;
+          entry->items.array[at].line = cache->line_item;
 
-          status = fl_string_dynamic_append(cache->name_item, &item->name);
+          status = fl_string_dynamic_append(cache->name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
             break;
           }
 
-          status = fl_string_dynamic_terminate(&item->name);
+          status = fl_string_dynamic_terminate_after(&entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
 
-          status = controller_entry_actions_read(data, setting, *range, cache, &item->actions);
+          status = controller_entry_actions_read(data, setting, *range, cache, &entry->items.array[at].actions);
 
           if (F_status_is_error(status)) {
             controller_entry_error_print(data.error, *cache);
@@ -749,10 +760,10 @@ extern "C" {
                       break;
                     }
 
-                    status = fl_string_dynamic_terminate(&cache->name_item);
+                    status = fl_string_dynamic_terminate_after(&cache->name_item);
 
                     if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
                       break;
                     }
 
@@ -763,10 +774,10 @@ extern "C" {
                       break;
                     }
 
-                    status = fl_string_dynamic_terminate(&cache->name_item);
+                    status = fl_string_dynamic_terminate_after(&cache->name_item);
 
                     if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
+                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
                       break;
                     }
 

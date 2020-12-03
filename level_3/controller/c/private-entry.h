@@ -81,7 +81,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but requested size is too small (resize is smaller than requested length).
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
@@ -159,7 +159,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large on success, but requested size is too small (resize is smaller than requested length).
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
  *
  *   Errors (with error bit) from: f_memory_resize().
  *

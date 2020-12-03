@@ -159,7 +159,7 @@ extern "C" {
   #define f_macro_string_dynamics_t_delete(status, dynamics) \
     status = F_none; \
     dynamics.used = dynamics.size; \
-    while (dynamics.used > 0) { \
+    while (dynamics.used) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_delete(status, dynamics.array[dynamics.used]); \
       if (status != F_none) break; \
@@ -170,7 +170,7 @@ extern "C" {
   #define f_macro_string_dynamics_t_destroy(status, dynamics) \
     status = F_none; \
     dynamics.used = dynamics.size; \
-    while (dynamics.used > 0) { \
+    while (dynamics.used) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_destroy(status, dynamics.array[dynamics.used]); \
       if (status != F_none) break; \
@@ -180,27 +180,21 @@ extern "C" {
 
   #define f_macro_string_dynamics_t_delete_simple(dynamics) \
     dynamics.used = dynamics.size; \
-    while (dynamics.used > 0) { \
+    while (dynamics.used) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_delete_simple(dynamics.array[dynamics.used]); \
-      if (!dynamics.used) { \
-        if (f_memory_delete((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size)) { \
-          dynamics.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size); \
+    dynamics.size = 0;
 
   #define f_macro_string_dynamics_t_destroy_simple(dynamics) \
     dynamics.used = dynamics.size; \
     while (dynamics.used > 0) { \
       dynamics.used--; \
       f_macro_string_dynamic_t_destroy_simple(dynamics.array[dynamics.used]); \
-      if (!dynamics.used) { \
-        if (f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size)) { \
-          dynamics.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size); \
+    dynamics.size = 0;
 
   #define f_macro_string_dynamics_t_resize(status, dynamics, new_length) \
     status = F_none; \

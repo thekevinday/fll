@@ -90,10 +90,9 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structure_delete_simple_
   #define f_macro_memory_structure_t_delete_simple(structure, type) \
-    if (f_memory_delete((void **) & structure.array, sizeof(type), structure.size) == F_none) { \
-      structure.size = 0; \
-      structure.used = 0; \
-    }
+    f_memory_delete((void **) & structure.array, sizeof(type), structure.size); \
+    structure.size = 0; \
+    structure.used = 0;
 #endif // _di_f_macro_memory_structure_delete_simple_
 
 /**
@@ -104,10 +103,9 @@ extern "C" {
  */
 #ifndef _di_f_macro_memory_structure_destroy_simple_
   #define f_macro_memory_structure_t_destroy_simple(structure, type) \
-    if (f_memory_destroy((void **) & structure.array, sizeof(type), structure.size) == F_none) { \
-      structure.size = 0; \
-      structure.used = 0; \
-    }
+    f_memory_destroy((void **) & structure.array, sizeof(type), structure.size); \
+    structure.size = 0; \
+    structure.used = 0;
 #endif // _di_f_macro_memory_structure_destroy_simple_
 
 /**
@@ -190,7 +188,7 @@ extern "C" {
   #define f_macro_memory_structures_t_delete(status, structures, type_structure, type_structures) \
     status = F_none; \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       structures.used--; \
       f_macro_memory_structure_t_delete(status, structures.array[structures.used], type_structure); \
       if (status != F_none) break; \
@@ -211,7 +209,7 @@ extern "C" {
   #define f_macro_memory_structures_t_destroy(status, structures, type_structure, type_structures) \
     status = F_none; \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       structures.used--; \
       f_macro_memory_structure_t_destroy(status, structures.array[structures.used], type_structure); \
       if (status != F_none) break; \
@@ -230,15 +228,12 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_delete_simple_
   #define f_macro_memory_structures_t_delete_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       structures.used--; \
       f_macro_memory_structure_t_delete_simple(structures.array[structures.used], type_structure); \
     } \
-    if (!structures.used) { \
-      if (f_memory_delete((void **) & structures.array, sizeof(type_structures), structures.size)) { \
-        structures.size = 0; \
-      } \
-    }
+    f_memory_delete((void **) & structures.array, sizeof(type_structures), structures.size); \
+    structures.size = 0;
 #endif // _di_f_macro_memory_structures_delete_simple_
 
 /**
@@ -251,15 +246,12 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_destroy_simple_
   #define f_macro_memory_structures_t_destroy_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
-    while (structures.used > 0) { \
+    while (structures.used) { \
       structures.used--; \
       f_macro_memory_structure_t_destroy_simple(structures.array[structures.used], type_structure); \
     } \
-    if (!structures.used) { \
-      if (f_memory_destroy((void **) & structures.array, sizeof(type_structures), structures.size)) { \
-        structures.size = 0; \
-      } \
-    }
+    f_memory_destroy((void **) & structures.array, sizeof(type_structures), structures.size); \
+    structures.size = 0;
 #endif // _di_f_macro_memory_structures_destroy_simple_
 
 /**
@@ -344,11 +336,11 @@ extern "C" {
   #define f_macro_memory_structure_macro_increment(status, structure, step, step_default, macro_resize, error_too_large) \
     if (structure.used + step > structure.size) { \
       if (structure.used + step_default > f_array_length_t_size) { \
-        if (structure.used + step > structure.size > f_array_length_t_size) { \
+        if (structure.used + step > f_array_length_t_size) { \
           status = F_status_set_error(error_too_large); \
         } \
         else { \
-          macro_resize(status, structure, structure.size + step); \
+          macro_resize(status, structure, structure.used + step); \
         } \
       } \
       else { \

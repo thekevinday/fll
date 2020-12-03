@@ -157,7 +157,7 @@ extern "C" {
   #define f_macro_fss_nameds_t_delete(status, sets) \
     status = F_none; \
     sets.used = sets.size; \
-    while (sets.used > 0) { \
+    while (sets.used) { \
       sets.used--; \
       f_macro_fss_named_t_delete(status, sets.array[sets.used]); \
       if (status != F_none) break; \
@@ -174,7 +174,7 @@ extern "C" {
   #define f_macro_fss_nameds_t_destroy(status, sets) \
     status = F_none; \
     sets.used = sets.size; \
-    while (sets.used > 0) { \
+    while (sets.used) { \
       sets.used--; \
       f_macro_fss_named_t_destroy(status, sets.array[sets.used]); \
       if (status != F_none) break; \
@@ -192,12 +192,9 @@ extern "C" {
     while (sets.used > 0) { \
       sets.used--; \
       f_macro_fss_named_t_delete_simple(sets.array[sets.used]); \
-      if (!sets.used) { \
-        if (f_memory_delete((void **) & sets.array, sizeof(f_fss_named_t), sets.size)) { \
-          sets.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & sets.array, sizeof(f_fss_named_t), sets.size); \
+    sets.size = 0;
 
   /**
    * Destroy a fss content sets.
@@ -209,12 +206,9 @@ extern "C" {
     while (sets.used > 0) { \
       sets.used--; \
       f_macro_fss_named_t_destroy_simple(sets.array[sets.used]); \
-      if (!sets.used) { \
-        if (f_memory_destroy((void **) & sets.array, sizeof(f_fss_named_t), sets.size)) { \
-          sets.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & sets.array, sizeof(f_fss_named_t), sets.size); \
+    sets.size = 0;
 
   /**
    * Resize a fss content sets.

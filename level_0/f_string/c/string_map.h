@@ -89,7 +89,7 @@ extern "C" {
   #define f_macro_string_maps_t_delete(status, maps) \
     status = F_none; \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_t_delete(status, maps.array[maps.used]); \
       if (status != F_none) break; \
@@ -100,7 +100,7 @@ extern "C" {
   #define f_macro_string_maps_t_destroy(status, maps) \
     status = F_none; \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_t_destroy(status, maps.array[maps.used]); \
       if (status != F_none) break; \
@@ -110,27 +110,21 @@ extern "C" {
 
   #define f_macro_string_maps_t_delete_simple(maps) \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_t_delete_simple(maps.array[maps.used]); \
-      if (!maps.used) { \
-        if (f_memory_delete((void **) & maps.array, sizeof(f_string_map_t), maps.size)) { \
-          maps.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & maps.array, sizeof(f_string_map_t), maps.size); \
+    maps.size = 0;
 
   #define f_macro_string_maps_t_destroy_simple(maps) \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_t_destroy_simple(maps.array[maps.used]); \
-      if (!maps.used) { \
-        if (f_memory_destroy((void **) & maps.array, sizeof(f_string_map_t), maps.size)) { \
-          maps.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & maps.array, sizeof(f_string_map_t), maps.size); \
+    maps.size = 0;
 
   #define f_macro_string_maps_t_resize(status, maps, new_length) \
     status = F_none; \
@@ -240,7 +234,7 @@ extern "C" {
   #define f_macro_string_map_multis_t_delete(status, maps) \
     status = F_none; \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_multi_t_delete(status, maps.array[maps.used]); \
       if (status != F_none) break; \
@@ -251,7 +245,7 @@ extern "C" {
   #define f_macro_string_map_multis_t_destroy(status, maps) \
     status = F_none; \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_multi_t_destroy(status, maps.array[maps.used]); \
       if (status != F_none) break; \
@@ -261,27 +255,21 @@ extern "C" {
 
   #define f_macro_string_map_multis_t_delete_simple(maps) \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_multi_t_delete_simple(maps.array[maps.used]); \
-      if (!maps.used) { \
-        if (f_memory_delete((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size)) { \
-          maps.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_delete((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size); \
+    maps.size = 0;
 
   #define f_macro_string_map_multis_t_destroy_simple(maps) \
     maps.used = maps.size; \
-    while (maps.used > 0) { \
+    while (maps.used) { \
       maps.used--; \
       f_macro_string_map_multi_t_destroy_simple(maps.array[maps.used]); \
-      if (!maps.used) { \
-        if (f_memory_destroy((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size)) { \
-          maps.size = 0; \
-        } \
-      } \
-    }
+    } \
+    f_memory_destroy((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size); \
+    maps.size = 0;
 
   #define f_macro_string_map_multis_t_resize(status, maps, new_length) \
     status = F_none; \
