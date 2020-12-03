@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "private-common.h"
 #include "private-control.h"
 #include "private-entry.h"
 #include "private-rule.h"
@@ -129,9 +130,7 @@ extern "C" {
     }
 
     controller_setting_t setting = controller_setting_t_initialize;
-
-    controller_entry_cache_t cache_entry = controller_entry_cache_t_initialize;
-    controller_rule_cache_t cache_rule = controller_rule_cache_t_initialize;
+    controller_cache_t cache = controller_cache_t_initialize;
 
     f_string_static_t entry_name = f_string_static_t_initialize;
 
@@ -221,7 +220,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = controller_entry_read(*data, setting, entry_name, &cache_entry, &setting.entry);
+      status = controller_entry_read(*data, setting, entry_name, &cache, &setting.entry);
 
       // @fixme this is temporary and may or may not be used when finished codestorming.
       if (F_status_is_error(setting.entry.status)) {
@@ -232,6 +231,10 @@ extern "C" {
     // @todo create pid file but not until "ready", so be sure to add this after pre-processing the entry file.
     if (setting.ready) {
       controller_file_pid_create(*data, setting.path_pid);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = controller_preprocess_rules(*data, &setting, &cache);
     }
 
     if (F_status_is_error_not(status)) {
@@ -258,8 +261,7 @@ extern "C" {
     controller_file_pid_delete(*data, setting.path_pid);
 
     controller_macro_setting_t_delete_simple(setting);
-    controller_macro_entry_cache_t_delete_simple(cache_entry);
-    controller_macro_rule_cache_t_delete_simple(cache_rule);
+    controller_macro_cache_t_delete_simple(cache);
 
     controller_delete_data(data);
 

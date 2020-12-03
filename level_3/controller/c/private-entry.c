@@ -1,4 +1,6 @@
 #include "controller.h"
+#include "private-common.h"
+#include "private-controller.h"
 #include "private-entry.h"
 
 #ifdef __cplusplus
@@ -27,7 +29,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_increase_by_
 
 #ifndef _di_controller_entry_actions_read_
-  f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_entry_cache_t *cache, controller_entry_actions_t *actions) {
+  f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) {
     f_status_t status = F_none;
     f_status_t status_action = F_none;
 
@@ -456,7 +458,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_read_
 
 #ifndef _di_controller_entry_error_print_
-  void controller_entry_error_print(const fll_error_print_t output, const controller_entry_cache_t cache) {
+  void controller_entry_error_print(const fll_error_print_t output, const controller_cache_t cache) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       fprintf(output.to.stream, "%c", f_string_eol[0]);
@@ -509,7 +511,7 @@ extern "C" {
 #endif // _di_controller_entry_items_increase_by_
 
 #ifndef _di_controller_entry_read_
-  f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_entry_cache_t *cache, controller_entry_t *entry) {
+  f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) {
     f_status_t status = F_none;
 
     entry->status = F_known_not;

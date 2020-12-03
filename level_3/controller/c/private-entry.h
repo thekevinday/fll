@@ -8,63 +8,6 @@
 #ifndef _PRIVATE_entry_h
 #define _PRIVATE_entry_h
 
-#include "private-controller.h"
-
-#ifndef _di_controller_entry_cache_t_
-  typedef struct {
-    f_string_length_t line_action;
-    f_string_length_t line_item;
-
-    f_fss_comments_t comments;
-    f_fss_delimits_t delimits;
-
-    f_fss_content_t content_action;
-    f_fss_contents_t content_actions;
-    f_fss_contents_t content_items;
-    f_fss_objects_t object_actions;
-    f_fss_objects_t object_items;
-
-    f_string_dynamic_t buffer_file;
-    f_string_dynamic_t buffer_path;
-
-    f_string_dynamic_t name_action;
-    f_string_dynamic_t name_file;
-    f_string_dynamic_t name_item;
-  } controller_entry_cache_t;
-
-  #define controller_entry_cache_t_initialize \
-    { \
-      0, \
-      0, \
-      f_fss_comments_t_initialize, \
-      f_fss_delimits_t_initialize, \
-      f_fss_content_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-    }
-
-  #define controller_macro_entry_cache_t_delete_simple(cache) \
-    f_macro_fss_comments_t_delete_simple(cache.comments) \
-    f_macro_fss_delimits_t_delete_simple(cache.delimits) \
-    f_macro_fss_content_t_delete_simple(cache.content_action) \
-    f_macro_fss_contents_t_delete_simple(cache.content_actions) \
-    f_macro_fss_contents_t_delete_simple(cache.content_items) \
-    f_macro_fss_objects_t_delete_simple(cache.object_actions) \
-    f_macro_fss_objects_t_delete_simple(cache.object_items) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_path) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_item)
-#endif // _di_controller_entry_cache_t_
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -127,7 +70,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_entry_cache_t *cache, controller_entry_actions_t *items) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *items) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -144,7 +87,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const fll_error_print_t output, const controller_entry_cache_t cache) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print(const fll_error_print_t output, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_
 
 /**
@@ -201,7 +144,7 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_entry_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
 #ifdef __cplusplus

@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "private-common.h"
 #include "private-control.h"
 #include "private-entry.h"
 #include "private-rule.h"
@@ -168,6 +169,13 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(pid_buffer);
   }
 #endif // _di_controller_file_pid_delete_
+
+#ifndef _di_controller_preprocess_rules_
+  f_return_status controller_preprocess_rules(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
+    // @todo
+    return F_none;
+  }
+#endif // _di_controller_preprocess_rules_
 
 #ifndef _di_controller_status_simplify_
   f_return_status controller_status_simplify(const f_status_t status) {

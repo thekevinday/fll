@@ -1,4 +1,6 @@
 #include "controller.h"
+#include "private-common.h"
+#include "private-controller.h"
 #include "private-rule.h"
 
 #ifdef __cplusplus
@@ -73,7 +75,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 #ifndef _di_controller_rule_actions_read_
-  f_return_status controller_rule_actions_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+  f_return_status controller_rule_actions_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
     f_status_t status = F_none;
 
     actions->used = 0;
@@ -235,7 +237,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_read_
 
 #ifndef _di_controller_rule_error_print_
-  void controller_rule_error_print(const fll_error_print_t output, const controller_rule_cache_t cache, const bool item) {
+  void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       fprintf(output.to.stream, "%c", f_string_eol[0]);
@@ -267,7 +269,7 @@ extern "C" {
 #endif // _di_controller_rule_error_print_
 
 #ifndef _di_controller_rule_item_read_
-  f_return_status controller_rule_item_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_item_t *item) {
+  f_return_status controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
@@ -437,7 +439,7 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 #ifndef _di_controller_rule_read_
-  f_return_status controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_rule_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
 
     bool for_item = F_true;
@@ -622,7 +624,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_return_status controller_rule_setting_read(const controller_data_t data, controller_rule_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
