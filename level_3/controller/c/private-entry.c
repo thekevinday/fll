@@ -633,7 +633,7 @@ extern "C" {
             break;
           }
 
-          for (j = code & 0x1 ? 1 : 0; j < entry->items.used; ++j) {
+          for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
             if (fl_string_dynamic_compare(entry->items.array[j].name, cache->name_item) == F_equal_to) {
               if (data.warning.verbosity != f_console_verbosity_quiet) {
@@ -669,8 +669,9 @@ extern "C" {
           else {
 
             // skip position 0, which is reserved for "main".
-            at = 1;
+            entry->items.array[0].name.used = 0;
 
+            at = 1;
             entry->items.used = 2;
           }
 
@@ -705,7 +706,7 @@ extern "C" {
           cache->name_action.used = 0;
           cache->name_item.used = 0;
 
-          if (code & 0x1) {
+          if (!(code & 0x1)) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol[0]);
               fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
