@@ -7,8 +7,8 @@
  *
  * Provides datatype definitions.
  */
-#ifndef _F_types_h
-#define _F_types_h
+#ifndef _F_type_h
+#define _F_type_h
 
 // libc includes
 #include <stdbool.h>
@@ -307,4 +307,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _F_types_h
+#endif // _F_type_h
