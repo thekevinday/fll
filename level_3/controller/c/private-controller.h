@@ -11,6 +11,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/**
+ * Get a string representing the entry action type.
+ *
+ * @param type
+ *   The entry action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_entry_action_type_name_
+  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_type_name_
 
 /**
  * Load a file from the controller settings directory.
@@ -99,9 +112,9 @@ extern "C" {
  * @return
  *   F_none on success.
  */
-#ifndef _di_controller_preprocess_rules_
-  extern f_return_status controller_preprocess_rules(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_preprocess_rules_
+#ifndef _di_controller_preprocess_items_
+  extern f_return_status controller_preprocess_items(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_preprocess_items_
 
 /**
  * Given a wide range of status codes, simplify them down to a small subset.

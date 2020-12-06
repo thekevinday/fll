@@ -45,8 +45,8 @@ extern "C" {
  *   The range in the list buffer representing the content.
  * @param cache
  *   A structure for containing and caching relevant data.
- * @param list
- *   The processed list.
+ * @param actions
+ *   The processed actions.
  *
  * @return
  *   F_none on success.
@@ -70,7 +70,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *items) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**

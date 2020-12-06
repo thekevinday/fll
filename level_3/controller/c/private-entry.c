@@ -97,8 +97,8 @@ extern "C" {
       action = &actions->array[actions->used];
       action->type = 0;
       action->code = 0;
-      action->line = cache->line_action;
-      action->timeout = 0;
+      action->line = 0;
+      action->number = 0;
       action->status = F_known_not;
       action->parameters.used = 0;
 
@@ -108,6 +108,9 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
         break;
       }
+
+      cache->line_action++;
+      action->line = cache->line_action;
 
       status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
 
@@ -387,39 +390,61 @@ extern "C" {
               }
             } // for
           }
+          else if (action->type == controller_entry_action_type_item) {
+            if (fl_string_dynamic_compare_string(controller_string_main, action->parameters.array[0], controller_string_main_length) == F_equal_to) {
+              action->status = F_status_set_error(F_supported_not);
+
+              if (F_status_is_error_not(status_action)) {
+                status_action = action->status;
+              }
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action may not specify the reserved item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+              }
+            }
+          }
           else if (action->type == controller_entry_action_type_timeout) {
-            if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to_not) {
-              if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to_not) {
-                if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to_not) {
-                  action->status = F_status_set_error(F_supported_not);
+            if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to) {
+              // do nothing
+            }
+            else if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to) {
+              // do nothing
+            }
+            else if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to) {
+              // do nothing
+            }
+            else {
+              action->status = F_status_set_error(F_supported_not);
 
-                  if (F_status_is_error_not(status_action)) {
-                    status_action = action->status;
-                  }
+              if (F_status_is_error_not(status_action)) {
+                status_action = action->status;
+              }
 
-                  if (data.error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                    fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
-                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
-                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
-                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
-                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
-                  }
-                }
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
               }
             }
 
             if (action->status == F_none) {
               const f_string_range_t range = f_macro_string_range_t_initialize(action->parameters.array[1].used);
-              f_number_unsigned_t number = 0;
 
-              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, &number, range);
+              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, &action->number, range);
 
               if (F_status_is_error(status) || status == F_data_not) {
+                action->number = 0;
+
                 if (status == F_data_not) {
                   action->status = F_status_set_error(F_number);
                 }
@@ -573,6 +598,7 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "controller_entry_items_increase_by", F_true);
       }
       else {
+
         // 0x1 = main found, 0x2 = found existing.
         uint8_t code = 0;
 
@@ -635,10 +661,12 @@ extern "C" {
             break;
           }
 
+          cache->line_item++;
+
           for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
             if (fl_string_dynamic_compare(entry->items.array[j].name, cache->name_item) == F_equal_to) {
-              if (data.warning.verbosity != f_console_verbosity_quiet) {
+              if (data.warning.verbosity == f_console_verbosity_debug) {
                 fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
                 fprintf(data.warning.to.stream, "%s%sIgnoring duplicate entry item '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "");
                 fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->name_file.string, data.warning.notable.after->string);

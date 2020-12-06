@@ -228,16 +228,12 @@ extern "C" {
       }
     }
 
-    // @todo create pid file but not until "ready", so be sure to add this after pre-processing the entry file.
-    if (setting.ready) {
-      controller_file_pid_create(*data, setting.path_pid);
+    if (F_status_is_error_not(status)) {
+      status = controller_preprocess_items(*data, &setting, &cache);
     }
 
     if (F_status_is_error_not(status)) {
-      status = controller_preprocess_rules(*data, &setting, &cache);
-    }
 
-    if (F_status_is_error_not(status)) {
       if (data->parameters[controller_parameter_test].result == f_console_result_found || data->parameters[controller_parameter_validate].result == f_console_result_found) {
         // @todo validate happens first, report and handle validation problems or success.
 
@@ -248,6 +244,18 @@ extern "C" {
       else {
         // @todo check to see if the standard pid file exists before attempting to start (when in normal operation mode).
         // @todo real execution.
+
+        // @todo create pid file but not until "ready", so be sure to add this after pre-processing the entry file.
+        if (setting.ready) {
+          controller_file_pid_create(*data, setting.path_pid);
+        }
+
+        // @todo when everything is ready, wait here until told to quit.
+        // @todo clear cache periodically while waiting and no commands.
+        // controller_macro_cache_t_delete_simple(cache);
+
+        // @todo on failures that prevent normal execution: trigger failsafe/fallback execution, if defined
+        // @todo otherwise, set ready to controller_setting_ready_done.
       }
     }
 

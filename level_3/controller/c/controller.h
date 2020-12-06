@@ -40,6 +40,7 @@
 #include <level_1/console.h>
 #include <level_1/fss.h>
 #include <level_1/string.h>
+#include <level_1/type.h>
 
 // fll-2 includes
 #include <level_2/error.h>
@@ -68,7 +69,7 @@ extern "C" {
 
 #ifndef _di_controller_defines_
 
-  // must be at least 2.
+  // This specifically must be at least 2 for this project.
   #define controller_default_allocation_step 4
 
   #define controller_path_pid      "/var/run/controller/controller.pid"

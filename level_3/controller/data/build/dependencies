@@ -21,6 +21,7 @@ fl_conversion
 fl_fss
 fl_iki
 fl_string
+fl_type
 fll_error
 fll_fss
 fll_path

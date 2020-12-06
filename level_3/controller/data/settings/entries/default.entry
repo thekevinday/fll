@@ -24,6 +24,8 @@ boot:
   rule service logger wait
   rule service dbus asynchronous
 
+  ready
+
 net:
   rule net all asynchronous
 

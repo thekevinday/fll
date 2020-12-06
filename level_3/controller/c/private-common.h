@@ -318,7 +318,7 @@ extern "C" {
     uint8_t code;
 
     f_string_length_t line;
-    f_number_unsigned_t timeout;
+    f_number_unsigned_t number;
 
     f_status_t status;
 
@@ -430,6 +430,7 @@ extern "C" {
     controller_setting_ready_no = 0,
     controller_setting_ready_wait,
     controller_setting_ready_yes,
+    controller_setting_ready_done,
   };
 
   typedef struct {
@@ -467,6 +468,8 @@ extern "C" {
 
     f_string_range_t range_action;
 
+    f_array_lengths_t ats;
+
     f_fss_comments_t comments;
     f_fss_delimits_t delimits;
 
@@ -490,6 +493,7 @@ extern "C" {
       0, \
       0, \
       f_string_range_t_initialize, \
+      f_array_lengths_t_initialize, \
       f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_content_t_initialize, \
@@ -506,6 +510,7 @@ extern "C" {
     }
 
   #define controller_macro_cache_t_delete_simple(cache) \
+    f_macro_array_lengths_t_delete_simple(cache.ats) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \
