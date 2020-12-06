@@ -217,6 +217,10 @@ extern "C" {
     #define FL_status_string_loop_not         "F_loop_not"
     #define FL_status_string_maybe            "F_maybe"
     #define FL_status_string_maybe_not        "F_maybe_not"
+    #define FL_status_string_minor            "F_minor"
+    #define FL_status_string_minor_not        "F_minor_not"
+    #define FL_status_string_moderate         "F_moderate"
+    #define FL_status_string_moderate_not     "F_moderate_not"
     #define FL_status_string_mount            "F_mount"
     #define FL_status_string_mount_not        "F_mount_not"
     #define FL_status_string_name             "F_name"
@@ -324,6 +328,10 @@ extern "C" {
     #define FL_status_string_loop_not_length         10
     #define FL_status_string_maybe_length            7
     #define FL_status_string_maybe_not_length        11
+    #define FL_status_string_minor_length            7
+    #define FL_status_string_minor_not_length        11
+    #define FL_status_string_moderate_length         10
+    #define FL_status_string_moderate_not_length     14
     #define FL_status_string_mount_length            7
     #define FL_status_string_mount_not_length        11
     #define FL_status_string_name_length             6

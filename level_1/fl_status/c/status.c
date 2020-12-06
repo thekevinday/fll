@@ -377,6 +377,18 @@ extern "C" {
         case F_maybe_not:
           *string = FL_status_string_maybe_not;
           break;
+        case F_minor:
+          *string = FL_status_string_minor;
+          break;
+        case F_minor_not:
+          *string = FL_status_string_minor_not;
+          break;
+        case F_moderate:
+          *string = FL_status_string_moderate;
+          break;
+        case F_moderate_not:
+          *string = FL_status_string_moderate_not;
+          break;
         case F_mount:
           *string = FL_status_string_mount;
           break;

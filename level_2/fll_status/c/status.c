@@ -631,6 +631,26 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_minor, length, FL_status_string_minor_length) == F_equal_to) {
+        *code = F_minor;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_minor_not, length, FL_status_string_minor_not_length) == F_equal_to) {
+        *code = F_minor_not;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_moderate, length, FL_status_string_moderate_length) == F_equal_to) {
+        *code = F_moderate;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_moderate_not, length, FL_status_string_moderate_not_length) == F_equal_to) {
+        *code = F_moderate_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_mount, length, FL_status_string_mount_length) == F_equal_to) {
         *code = F_mount;
         return F_none;
