@@ -8,13 +8,13 @@ main:
   timeout stop 7
   timeout kill 3
 
+  failsafe maintenance
+
   item boot
   item net
   item time
   item keyboard
   item console
-
-  failsafe maintenance
 
 boot:
   rule boot filesystem require

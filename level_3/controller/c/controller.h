@@ -78,12 +78,14 @@ extern "C" {
   #define controller_path_pid_length      34
   #define controller_path_settings_length 15
 
+  #define controller_short_daemon        "d"
   #define controller_short_interruptable "i"
   #define controller_short_pid           "p"
   #define controller_short_settings      "s"
   #define controller_short_test          "t"
   #define controller_short_validate      "V"
 
+  #define controller_long_daemon        "daemon"
   #define controller_long_interruptable "interruptable"
   #define controller_long_pid           "pid"
   #define controller_long_settings      "settings"
@@ -101,6 +103,7 @@ extern "C" {
     controller_parameter_verbosity_debug,
     controller_parameter_version,
 
+    controller_parameter_daemon,
     controller_parameter_interruptable,
     controller_parameter_pid,
     controller_parameter_settings,
@@ -119,6 +122,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(controller_short_daemon, controller_long_daemon, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_interruptable, controller_long_interruptable, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_pid, controller_long_pid, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
@@ -126,7 +130,7 @@ extern "C" {
       f_console_parameter_t_initialize(controller_short_validate, controller_long_validate, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 14
+  #define controller_total_parameters 15
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_data_t_

@@ -640,17 +640,10 @@ extern "C" {
             break;
           }
 
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
+          status = controller_string_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-            break;
-          }
-
-          status = fl_string_dynamic_terminate_after(&cache->name_item);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true);
             break;
           }
 
@@ -707,17 +700,10 @@ extern "C" {
 
           entry->items.array[at].line = cache->line_item;
 
-          status = fl_string_dynamic_append(cache->name_item, &entry->items.array[at].name);
+          status = controller_string_dynamic_append_terminated(cache->name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
-            break;
-          }
-
-          status = fl_string_dynamic_terminate_after(&entry->items.array[at].name);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
             break;
           }
 
@@ -784,31 +770,10 @@ extern "C" {
                     cache->line_action = action->line;
                     cache->line_item = entry->items.array[i].line;
 
-                    status = fl_string_dynamic_append(entry->items.array[i].name, &cache->name_item);
+                    status = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->name_item);
 
                     if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
-                      break;
-                    }
-
-                    status = fl_string_dynamic_terminate_after(&cache->name_item);
-
-                    if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-                      break;
-                    }
-
-                    status = fl_string_dynamic_append(entry->items.array[i].name, &cache->name_item);
-
-                    if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
-                      break;
-                    }
-
-                    status = fl_string_dynamic_terminate_after(&cache->name_item);
-
-                    if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+                      fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
                       break;
                     }
 
@@ -832,7 +797,7 @@ extern "C" {
 
             // the error is already fully printed and the entry status is already assigned, so immediately exit.
             if (missing & 0x2) {
-              return F_false;
+              return entry->status;
             }
           }
         }
@@ -843,11 +808,12 @@ extern "C" {
       controller_entry_error_print(data.error, *cache);
 
       entry->status = controller_status_simplify(F_status_set_fine(status));
-      return F_false;
+    }
+    else {
+      entry->status = F_none;
     }
 
-    entry->status = F_none;
-    return F_true;
+    return entry->status;
   }
 #endif // _di_controller_entry_read_
 

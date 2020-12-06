@@ -11,6 +11,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /**
  * Get a string representing the entry action type.
  *
@@ -24,6 +25,50 @@ extern "C" {
 #ifndef _di_controller_entry_action_type_name_
   extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_action_type_name_
+
+/**
+ * Append a string and then add a NULL after the end of the string.
+ *
+ * @param source
+ *   The string to copy from.
+ * @param destination
+ *   The string to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_terminate_after()
+ */
+#ifndef _di_controller_string_dynamic_append_terminated_
+  extern f_return_status controller_string_dynamic_append_terminated(const f_string_static_t from, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_string_dynamic_append_terminated_
+
+/**
+ * Append given range from within a string and then add a NULL after the end of the string.
+ *
+ * @param from
+ *   The string to copy from.
+ * @param range
+ *   The range within the from string to copy.
+ * @param destination
+ *   The string to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_terminate_after()
+ */
+#ifndef _di_controller_string_dynamic_partial_append_terminated_
+  extern f_return_status controller_string_dynamic_partial_append_terminated(const f_string_static_t from, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_string_dynamic_partial_append_terminated_
 
 /**
  * Load a file from the controller settings directory.
@@ -100,7 +145,9 @@ extern "C" {
 #endif // _di_controller_file_pid_delete_
 
 /**
- * Load relevant rules into memory and performing other pre-process tasks.
+ * Perform all activities requiring the state to be "ready".
+ *
+ * This prints messages on errors.
  *
  * @param data
  *   The program data.
@@ -111,10 +158,70 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   Errors from controller_file_pid_create() are not returned, unless it is a memory error.
+ *
+ * @see controller_file_pid_create()
  */
-#ifndef _di_controller_preprocess_items_
-  extern f_return_status controller_preprocess_items(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_preprocess_items_
+#ifndef _di_controller_perform_ready_
+  extern f_return_status controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_perform_ready_
+
+/**
+ * Pre-process all items for the loaded entry.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   The controller settings data.
+ * @param cache
+ *   The cache.
+ *
+ * @return
+ *   F_none on success.
+ *   F_recurse (with error bit) on a recursion error.
+ *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: fl_type_array_lengths_increase_by().
+ *
+ *   This will detect and report all errors, but only the first error is returned.
+ *   Memory related errors return immediately.
+ *
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_terminate_after()
+ * @see fl_type_array_lengths_increase_by()
+ */
+#ifndef _di_controller_preprocess_entry_
+  extern f_return_status controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_preprocess_entry_
+
+/**
+ * Process (execute) all items for the loaded entry.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   The controller settings data.
+ * @param cache
+ *   The cache.
+ *
+ * @return
+ *   F_none on success.
+ *   F_critical (with error bit) on any critical error.
+ *
+ *   Errors (with error bit) from: controller_perform_ready().
+ *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
+ *   Errors (with error bit) from: fl_type_array_lengths_increase_by().
+ *
+ * @see controller_perform_ready()
+ * @see controller_string_dynamic_append_terminated()
+ * @see fl_type_array_lengths_increase_by()
+ */
+#ifndef _di_controller_process_entry_
+  extern f_return_status controller_process_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_process_entry_
 
 /**
  * Given a wide range of status codes, simplify them down to a small subset.

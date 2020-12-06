@@ -129,13 +129,27 @@ extern "C" {
  *   The processed entry.
  *
  * @return
- *   F_true on success.
- *   F_false on failure.
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: controller_entry_actions_read().
+ *   Errors (with error bit) from: controller_entry_items_increase_by().
+ *   Errors (with error bit) from: controller_file_load().
+ *   Errors (with error bit) from: controller_status_simplify().
+ *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
+ *   Errors (with error bit) from: controller_string_dynamic_partial_append_terminated().
+ *   Errors (with error bit) from: f_fss_count_lines().
+ *   Errors (with error bit) from: fl_fss_apply_delimit().
+ *   Errors (with error bit) from: fl_string_dynamic_append().
+ *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
  * @see controller_entry_actions_read()
  * @see controller_entry_items_increase_by()
  * @see controller_file_load()
  * @see controller_status_simplify()
+ * @see controller_string_dynamic_append_terminated()
+ * @see controller_string_dynamic_partial_append_terminated()
  * @see f_fss_count_lines()
  * @see fl_fss_apply_delimit()
  * @see fl_string_dynamic_append()

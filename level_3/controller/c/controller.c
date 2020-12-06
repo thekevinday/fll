@@ -26,11 +26,12 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol[0]);
 
+    fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
     fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid "'.");
     fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path, such as '" controller_path_settings "'.");
     fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Run in test mode, where nothing is actually run (a simulation).");
-    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules).");
+    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules) without running (or simulating).");
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
@@ -208,7 +209,7 @@ extern "C" {
       }
     }
 
-    // the pid file is required.
+    // a pid file path is required.
     if (!setting.path_pid.used) {
       status = fl_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
 
@@ -219,43 +220,78 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status)) {
-      status = controller_entry_read(*data, setting, entry_name, &cache, &setting.entry);
+    if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
 
-      // @fixme this is temporary and may or may not be used when finished codestorming.
-      if (F_status_is_error(setting.entry.status)) {
-        status = setting.entry.status;
+      if (data->parameters[controller_parameter_validate].result == f_console_result_found) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_validate, data->error.notable.after->string);
+          fprintf(data->error.to.stream, "%s' must not be specified with the parameter '", data->error.context.before->string);
+          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_daemon, data->error.notable.after->string);
+          fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+        }
+
+        status = F_status_set_error(F_parameter);
+      }
+
+      if (F_status_is_error_not(status)) {
+        setting.ready = controller_setting_ready_done;
+
+        if (f_file_exists(setting.path_pid.string) == F_true) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : "", data->error.context.after->string, f_string_eol[0]);
+          }
+
+          status = F_status_set_error(F_available_not);
+          setting.ready = controller_setting_ready_abort;
+        }
+
+        // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
+        // @todo clear cache periodically while waiting.
+        // controller_macro_cache_t_delete_simple(cache);
       }
     }
+    else {
 
-    if (F_status_is_error_not(status)) {
-      status = controller_preprocess_items(*data, &setting, &cache);
-    }
+      if (F_status_is_error_not(status)) {
+        status = controller_entry_read(*data, setting, entry_name, &cache, &setting.entry);
+      }
 
-    if (F_status_is_error_not(status)) {
-
-      if (data->parameters[controller_parameter_test].result == f_console_result_found || data->parameters[controller_parameter_validate].result == f_console_result_found) {
-        // @todo validate happens first, report and handle validation problems or success.
-
-        if (data->parameters[controller_parameter_test].result == f_console_result_found) {
-          // @todo after validation succeeds, perform test run.
-        }
+      if (F_status_is_error(status)) {
+        setting.ready = controller_setting_ready_fail;
       }
       else {
-        // @todo check to see if the standard pid file exists before attempting to start (when in normal operation mode).
-        // @todo real execution.
+        status = controller_preprocess_entry(*data, &setting, &cache);
 
-        // @todo create pid file but not until "ready", so be sure to add this after pre-processing the entry file.
-        if (setting.ready) {
-          controller_file_pid_create(*data, setting.path_pid);
+        if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
+
+          if (f_file_exists(setting.path_pid.string) == F_true) {
+            if (data->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+              fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : "", data->error.context.after->string, f_string_eol[0]);
+            }
+
+            status = F_status_set_error(F_available_not);
+            setting.ready = controller_setting_ready_abort;
+          }
+
+          if (F_status_is_error_not(status)) {
+            status = controller_process_entry(*data, &setting, &cache);
+          }
+
+          if (F_status_is_error(status)) {
+            setting.ready = controller_setting_ready_fail;
+          }
+          else {
+            setting.ready = controller_setting_ready_done;
+
+            // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
+            // @todo clear cache periodically while waiting.
+            // controller_macro_cache_t_delete_simple(cache);
+          }
         }
-
-        // @todo when everything is ready, wait here until told to quit.
-        // @todo clear cache periodically while waiting and no commands.
-        // controller_macro_cache_t_delete_simple(cache);
-
-        // @todo on failures that prevent normal execution: trigger failsafe/fallback execution, if defined
-        // @todo otherwise, set ready to controller_setting_ready_done.
       }
     }
 
@@ -272,6 +308,10 @@ extern "C" {
     controller_macro_cache_t_delete_simple(cache);
 
     controller_delete_data(data);
+
+    if (setting.ready == controller_setting_ready_fail) {
+      // @todo trigger failsafe/fallback execution, if defined.
+    }
 
     return status;
   }

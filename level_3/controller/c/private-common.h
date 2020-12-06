@@ -431,6 +431,8 @@ extern "C" {
     controller_setting_ready_wait,
     controller_setting_ready_yes,
     controller_setting_ready_done,
+    controller_setting_ready_fail,
+    controller_setting_ready_abort,
   };
 
   typedef struct {
