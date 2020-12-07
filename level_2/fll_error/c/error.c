@@ -111,7 +111,7 @@ extern "C" {
     }
 
     if (status == F_file_open) {
-      fprintf(error.to.stream, "%s%sUnable to open the file '", error.context.before->string, error.prefix ? error.prefix : "");
+      fprintf(error.to.stream, "%s%sUnable to open the %s '", error.context.before->string, error.prefix ? error.prefix : "", type_name);
       fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
       fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol[0]);
 
@@ -119,7 +119,7 @@ extern "C" {
     }
 
     if (status == F_file_descriptor) {
-      fprintf(error.to.stream, "%s%sFile descriptor error while trying to open the file '", error.context.before->string, error.prefix ? error.prefix : "");
+      fprintf(error.to.stream, "%s%sFile descriptor error while trying to open the %s '", error.context.before->string, error.prefix ? error.prefix : "", type_name);
       fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
       fprintf(error.to.stream, "%c", f_string_eol[0]);
 
@@ -127,7 +127,7 @@ extern "C" {
     }
 
     if (status == F_number_underflow) {
-      fprintf(error.to.stream, "%s%sInteger underflow while trying to buffer the file '", error.context.before->string, error.prefix ? error.prefix : "");
+      fprintf(error.to.stream, "%s%sInteger underflow while trying to buffer the %s '", error.context.before->string, error.prefix ? error.prefix : "", type_name);
       fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
       fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol[0]);
 
@@ -137,7 +137,7 @@ extern "C" {
     if (status == F_file_read) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sA read error occurred while accessing the file '", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sA read error occurred while accessing the %s '", error.context.before->string, error.prefix ? error.prefix : "", type_name);
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
         fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol[0]);
       }
@@ -148,7 +148,7 @@ extern "C" {
     if (status == F_file_seek) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sA seek error occurred while accessing the file '", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sA seek error occurred while accessing the %s '", error.context.before->string, error.prefix ? error.prefix : "", type_name);
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
         fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol[0]);
       }
