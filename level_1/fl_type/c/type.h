@@ -34,7 +34,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_cells_increase_
-  extern f_return_status fl_type_cells_increase(f_cells_t *cells) ;
+  extern f_return_status fl_type_cells_increase(f_cells_t *cells);
 #endif // _di_fl_type_cells_increase_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_array_lengths_increase_
-  extern f_return_status fl_type_array_lengths_increase(f_array_lengths_t *array_lengths) ;
+  extern f_return_status fl_type_array_lengths_increase(f_array_lengths_t *array_lengths);
 #endif // _di_fl_type_array_lengths_increase_
 
 /**
@@ -162,7 +162,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_int8s_increase_
-  extern f_return_status fl_type_int8s_increase(f_int8s_t *int8s) ;
+  extern f_return_status fl_type_int8s_increase(f_int8s_t *int8s);
 #endif // _di_fl_type_int8s_increase_
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_uint8s_increase_
-  extern f_return_status fl_type_uint8s_increase(f_uint8s_t *uint8s) ;
+  extern f_return_status fl_type_uint8s_increase(f_uint8s_t *uint8s);
 #endif // _di_fl_type_uint8s_increase_
 
 /**
@@ -290,7 +290,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_int16s_increase_
-  extern f_return_status fl_type_int16s_increase(f_int16s_t *int16s) ;
+  extern f_return_status fl_type_int16s_increase(f_int16s_t *int16s);
 #endif // _di_fl_type_int16s_increase_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_uint16s_increase_
-  extern f_return_status fl_type_uint16s_increase(f_uint16s_t *uint16s) ;
+  extern f_return_status fl_type_uint16s_increase(f_uint16s_t *uint16s);
 #endif // _di_fl_type_uint16s_increase_
 
 /**
@@ -418,7 +418,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_int32s_increase_
-  extern f_return_status fl_type_int32s_increase(f_int32s_t *int32s) ;
+  extern f_return_status fl_type_int32s_increase(f_int32s_t *int32s);
 #endif // _di_fl_type_int32s_increase_
 
 /**
@@ -482,7 +482,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_uint32s_increase_
-  extern f_return_status fl_type_uint32s_increase(f_uint32s_t *uint32s) ;
+  extern f_return_status fl_type_uint32s_increase(f_uint32s_t *uint32s);
 #endif // _di_fl_type_uint32s_increase_
 
 /**
@@ -546,7 +546,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_int64s_increase_
-  extern f_return_status fl_int64s_increase(f_int64s_t *int64s) ;
+  extern f_return_status fl_int64s_increase(f_int64s_t *int64s);
 #endif // _di_fl_int64s_increase_
 
 /**
@@ -610,7 +610,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_uint64s_increase_
-  extern f_return_status fl_uint64s_increase(f_uint64s_t *uint64s) ;
+  extern f_return_status fl_uint64s_increase(f_uint64s_t *uint64s);
 #endif // _di_fl_uint64s_increase_
 
 /**
@@ -674,7 +674,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_int128s_increase_
-  extern f_return_status fl_type_int128s_increase(f_int128s_t *int128s) ;
+  extern f_return_status fl_type_int128s_increase(f_int128s_t *int128s);
 #endif // _di_fl_type_int128s_increase_
 
 /**
@@ -738,7 +738,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if new length is larger than max array length.
  */
 #ifndef _di_fl_type_uint128s_increase_
-  extern f_return_status fl_type_uint128s_increase(f_uint128s_t *uint128s) ;
+  extern f_return_status fl_type_uint128s_increase(f_uint128s_t *uint128s);
 #endif // _di_fl_type_uint128s_increase_
 
 /**
