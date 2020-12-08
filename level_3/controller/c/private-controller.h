@@ -87,10 +87,11 @@ extern "C" {
  *   The length of the prefix path.
  * @param path_suffix_length
  *   The length of the suffix path.
- * @param path_file
- *   This is updated with a partial path to the given file.
- * @param buffer
- *   The buffer to load the file into.
+ * @param cache
+ *   The following within the cache is updated:
+ *   - name_file: The partial path of the file is inserted.
+ *   - buffer_file: The contents of the file is inserted.
+ *   - timestamp: This is updated to reflect the last changed timestamp.
  *
  * @return
  *   F_none on success.
@@ -102,7 +103,7 @@ extern "C" {
  * @see f_file_stream_read()
  */
 #ifndef _di_controller_file_load_
-  extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, f_string_dynamic_t *path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_load_
 
 /**

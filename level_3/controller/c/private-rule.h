@@ -119,6 +119,26 @@ extern "C" {
 #endif // _di_controller_rule_error_print_
 
 /**
+ * Search the already loaded rules to see if one is found.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   The controller settings data.
+ * @param rule_id
+ *   The string identifying the rule.
+ *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
+ *   "/etc/controller/rules/example/my.rule" would have a rule id of "example/my".
+ *
+ * @return
+ *   If found, a valid location within the setting.rules array.
+ *   If not found, then setting.rules.used is returned.
+ */
+#ifndef _di_controller_rule_find_loaded_
+  extern f_array_length_t controller_rule_find_loaded(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_find_loaded_
+
+/**
  * Read the content within the buffer, extracting all valid items after determining their type for some rule file.
  *
  * This will perform additional FSS read functions as appropriate.
@@ -240,6 +260,28 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_
   extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
+
+/**
+ * Increase the size of the rules array by the specified amount, but only if necessary.
+ *
+ * This only increases size if the current used plus amount is greater than the currently allocated size.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param rules
+ *   The rules to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_rules_increase_by_
+  extern f_return_status controller_rules_increase_by(const f_array_length_t amount, controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_by_
 
 #ifdef __cplusplus
 } // extern "C"

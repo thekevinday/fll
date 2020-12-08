@@ -545,6 +545,8 @@ extern "C" {
     cache->line_action = 0;
     cache->line_item = 0;
 
+    f_macro_time_spec_t_clear(cache->timestamp);
+
     cache->comments.used = 0;
     cache->delimits.used = 0;
 
@@ -562,7 +564,7 @@ extern "C" {
     cache->name_action.used = 0;
     cache->name_item.used = 0;
 
-    status = controller_file_load(data, setting, controller_string_entries, entry_name, controller_string_entry, controller_string_entries_length, controller_string_entry_length, &cache->name_file, &cache->buffer_file);
+    status = controller_file_load(data, setting, controller_string_entries, entry_name, controller_string_entry, controller_string_entries_length, controller_string_entry_length, cache);
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {

@@ -268,6 +268,21 @@ extern "C" {
   }
 #endif // _di_controller_rule_error_print_
 
+#ifndef _di_controller_rule_find_loaded_
+  f_array_length_t controller_rule_find_loaded(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id) {
+    f_array_length_t i = 0;
+
+    for (; i < setting.rules.used; ++i) {
+
+      if (fl_string_dynamic_compare(setting.rules.array[i], rule_id) == F_equal_to) {
+        return i;
+      }
+    } // for
+
+    return i;
+  }
+#endif // _di_controller_rule_find_loaded_
+
 #ifndef _di_controller_rule_item_read_
   f_return_status controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
     f_status_t status = F_none;
@@ -446,6 +461,8 @@ extern "C" {
 
     rule->status = F_known_not;
 
+    f_macro_time_spec_t_clear(rule->timestamp);
+
     rule->id.used = 0;
     rule->name.used = 0;
 
@@ -486,22 +503,26 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
     }
     else {
-      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, &cache->name_file, &cache->buffer_file);
+      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, cache);
     }
 
-    if (F_status_is_error_not(status) && cache->buffer_file.used) {
-      f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_file.used);
+    if (F_status_is_error_not(status)) {
+      rule->timestamp = cache->timestamp;
 
-      status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
+      if (cache->buffer_file.used) {
+        f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_file.used);
 
-      if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
-      }
-      else {
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+        status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
+        }
+        else {
+          status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          }
         }
       }
     }
@@ -1173,6 +1194,27 @@ extern "C" {
     return status_return;
   }
 #endif // _di_controller_rule_setting_read_
+
+#ifndef _di_controller_rules_increase_by_
+  f_return_status controller_rules_increase_by(const f_array_length_t amount, controller_rules_t *rules) {
+
+    if (rules->used + amount > rules->size) {
+      if (rules->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      const f_status_t status = f_memory_resize((void **) & rules->array, sizeof(controller_rule_t), rules->size, rules->used + amount);
+
+      if (F_status_is_error_not(status)) {
+        rules->size = rules->used + amount;
+      }
+
+      return status;
+    }
+
+    return F_none;
+  }
+#endif // _di_controller_rule_increase_by_
 
 #ifdef __cplusplus
 } // extern "C"

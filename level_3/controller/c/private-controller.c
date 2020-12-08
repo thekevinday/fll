@@ -79,14 +79,19 @@ extern "C" {
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
 #ifndef _di_controller_file_load_
-  f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, f_string_dynamic_t *path_file, f_string_dynamic_t *buffer) {
+  f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_file_t file = f_file_t_initialize;
 
-    status = fl_string_append(path_prefix, path_prefix_length, path_file);
+    cache->name_file.used = 0;
+    cache->buffer_file.used = 0;
+
+    f_macro_time_spec_t_clear(cache->timestamp);
+
+    status = fl_string_append(path_prefix, path_prefix_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator, f_path_separator_length, path_file);
+      status = fl_string_append(f_path_separator, f_path_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
@@ -94,17 +99,17 @@ extern "C" {
       return status;
     }
 
-    status = fl_string_dynamic_append(path_name, path_file);
+    status = fl_string_dynamic_append(path_name, &cache->name_file);
 
     if (F_status_is_error(status)) {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
       return status;
     }
 
-    status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, path_file);
+    status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(path_suffix, path_suffix_length, path_file);
+      status = fl_string_append(path_suffix, path_suffix_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
@@ -112,19 +117,19 @@ extern "C" {
       return status;
     }
 
-    status = fl_string_dynamic_terminate_after(path_file);
+    status = fl_string_dynamic_terminate_after(&cache->name_file);
 
     if (F_status_is_error(status)) {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
       return status;
     }
 
-    const f_string_length_t path_length = setting.path_setting.used ? setting.path_setting.used + f_path_separator_length + path_file->used : path_file->used;
+    const f_string_length_t path_length = setting.path_setting.used ? setting.path_setting.used + f_path_separator_length + cache->name_file.used : cache->name_file.used;
     char path[path_length + 1];
 
     if (setting.path_setting.used) {
       memcpy(path, setting.path_setting.string, setting.path_setting.used);
-      memcpy(path + setting.path_setting.used + f_path_separator_length, path_file->string, path_file->used);
+      memcpy(path + setting.path_setting.used + f_path_separator_length, cache->name_file.string, cache->name_file.used);
 
       path[setting.path_setting.used] = f_path_separator[0];
     }
@@ -137,7 +142,7 @@ extern "C" {
       fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
     }
     else {
-      status = f_file_stream_read(file, 1, buffer);
+      status = f_file_stream_read(file, 1, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
         fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
@@ -145,6 +150,20 @@ extern "C" {
     }
 
     f_file_stream_close(F_true, &file);
+
+    if (F_status_is_error_not(status)) {
+      struct stat stat_file;
+
+      status = f_file_stat(path, F_true, &stat_file);
+
+      if (F_status_is_error(status)) {
+        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
+      }
+      else {
+        cache->timestamp.seconds = stat_file.st_ctim.tv_sec;
+        cache->timestamp.nanoseconds = stat_file.st_ctim.tv_nsec;
+      }
+    }
 
     if (F_status_is_error(status)) return status;
 
@@ -493,6 +512,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
+    f_array_length_t at = 0;
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
@@ -616,56 +636,81 @@ extern "C" {
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_consider || actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
-          // rule execution will re-use the existing cache, so save the current cache.
-          const f_array_length_t cache_line_action = cache->line_action;
-          const f_array_length_t cache_line_item = cache->line_item;
-
-          const f_string_length_t cache_name_action_used = cache->name_action.used;
-          const f_string_length_t cache_name_item_used = cache->name_item.used;
-
-          char cache_name_item[cache_name_action_used];
-          char cache_name_action[cache_name_item_used];
-
-          memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
-          memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
-
-          const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
-          char rule_id_name[rule_id_length + 1];
-          const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
-
-          memcpy(rule_id_name, actions->array[cache->ats.array[at_j]].parameters.array[0].string, actions->array[cache->ats.array[at_j]].parameters.array[0].used);
-          memcpy(rule_id_name + actions->array[cache->ats.array[at_j]].parameters.array[0].used + 1, actions->array[cache->ats.array[at_j]].parameters.array[1].string, actions->array[cache->ats.array[at_j]].parameters.array[1].used);
-
-          rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator[0];
-          rule_id_name[rule_id_length] = 0;
-
-          // @todo check if the rule is already loaded by using the "rule_id", if not then load it.
-
-          //status = controller_rule_read(data, *setting, rule_id, cache, &setting->rules.array[setting->rules.used]);
-
-          // @todo execute rule.
-          if (F_status_is_error_not(status) && actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
-            //setting->rules.used++;
-            //status = controller_rule_process();
-          }
-
-          // restore cache.
-          memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
-          memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
-
-          cache->name_action.string[cache_name_action_used] = 0;
-          cache->name_item.string[cache_name_item_used] = 0;
-
-          cache->name_action.used = cache_name_action_used;
-          cache->name_item.used = cache_name_item_used;
-
-          cache->line_action = cache_line_action;
-          cache->line_item = cache_line_item;
+          status = controller_rules_increase_by(controller_default_allocation_step, &setting->rules);
 
           if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "controller_rules_increase_by", F_true);
             controller_entry_error_print(data.error, *cache);
 
-            if (!simulate) break;
+            return status;
+          }
+          else {
+
+            // rule execution will re-use the existing cache, so save the current cache.
+            const f_array_length_t cache_line_action = cache->line_action;
+            const f_array_length_t cache_line_item = cache->line_item;
+
+            const f_string_length_t cache_name_action_used = cache->name_action.used;
+            const f_string_length_t cache_name_item_used = cache->name_item.used;
+
+            char cache_name_item[cache_name_action_used];
+            char cache_name_action[cache_name_item_used];
+
+            memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
+            memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
+
+            const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
+            char rule_id_name[rule_id_length + 1];
+            const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
+
+            memcpy(rule_id_name, actions->array[cache->ats.array[at_j]].parameters.array[0].string, actions->array[cache->ats.array[at_j]].parameters.array[0].used);
+            memcpy(rule_id_name + actions->array[cache->ats.array[at_j]].parameters.array[0].used + 1, actions->array[cache->ats.array[at_j]].parameters.array[1].string, actions->array[cache->ats.array[at_j]].parameters.array[1].used);
+
+            rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator[0];
+            rule_id_name[rule_id_length] = 0;
+
+            at = controller_rule_find_loaded(data, *setting, rule_id);
+
+            if (at == setting->rules.used) {
+              status = controller_rule_read(data, *setting, rule_id, cache, &setting->rules.array[setting->rules.used]);
+
+              if (F_status_is_error(status)) {
+                controller_entry_error_print(data.error, *cache);
+
+                if (!simulate) break;
+              }
+              else {
+                setting->rules.used++;
+              }
+            }
+
+            if (F_status_is_error_not(status) && actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
+              if (similate) {
+                // @todo print message about how this would execute the rule.
+              }
+              else {
+                //status = controller_rule_process();
+              }
+            }
+
+            // restore cache.
+            memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
+            memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
+
+            cache->name_action.string[cache_name_action_used] = 0;
+            cache->name_item.string[cache_name_item_used] = 0;
+
+            cache->name_action.used = cache_name_action_used;
+            cache->name_item.used = cache_name_item_used;
+
+            cache->line_action = cache_line_action;
+            cache->line_item = cache_line_item;
+
+            if (F_status_is_error(status)) {
+              controller_entry_error_print(data.error, *cache);
+
+              if (!simulate) break;
+            }
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_timeout) {

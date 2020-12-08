@@ -224,6 +224,8 @@ extern "C" {
   typedef struct {
     f_status_t status;
 
+    f_time_spec_t timestamp;
+
     f_string_dynamic_t id;
     f_string_dynamic_t name;
     f_string_dynamic_t control_group;
@@ -243,6 +245,8 @@ extern "C" {
   #define controller_rule_t_initialize \
     { \
       F_known_not, \
+      0, \
+      f_time_spec_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -468,6 +472,8 @@ extern "C" {
     f_string_length_t line_action;
     f_string_length_t line_item;
 
+    f_time_spec_t timestamp;
+
     f_string_range_t range_action;
 
     f_array_lengths_t ats;
@@ -494,6 +500,7 @@ extern "C" {
     { \
       0, \
       0, \
+      f_time_spec_t_initialize, \
       f_string_range_t_initialize, \
       f_array_lengths_t_initialize, \
       f_fss_comments_t_initialize, \
