@@ -225,6 +225,37 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 /**
+ * Process and execute the given rule by the rule id.
+ *
+ * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
+ * All dependent rules must be already loaded, this function will not load any rules.
+ *
+ * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
+ *
+ * @todo add asynchronous boolean? (will also need a wait boolean, so this should probably be a uint8_t with using bitwise states).
+ *
+ * @param data
+ *   The program data.
+ * @param index
+ *   Position in the rules array representing the rule to execute
+ * @param simulate
+ *   If TRUE, then the rule execution is simulated (printing a message that the rule would be executed but does not execut the rule).
+ *   If FALSE, the rule is not simulated and is executed as normal.
+ * @param setting
+ *   The controller settings data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ *   This utilizes cache.stack for recursive executions, no function called by this may therefore safely use cache.stack for any other purpose.
+ *   This utilizes line_action, line_item, name_action, and name_item from cache, but they are backed up before starting and then restored after finishing.
+ *
+ * @return
+ *    F_none on success.
+ */
+#ifndef _di_controller_rule_process_
+  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_process_
+
+/**
  * Read the content within the buffer, extracting all valid settings.
  *
  * This will perform additional FSS read functions as appropriate.

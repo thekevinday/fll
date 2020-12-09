@@ -525,6 +525,7 @@ extern "C" {
     cache->line_item = 0;
     cache->name_action.used = 0;
     cache->name_item.used = 0;
+    cache->stack.used = 0;
 
     if (setting->ready == controller_setting_ready_yes) {
       status = controller_perform_ready(data, setting, cache);
@@ -645,20 +646,6 @@ extern "C" {
             return status;
           }
           else {
-
-            // rule execution will re-use the existing cache, so save the current cache.
-            const f_array_length_t cache_line_action = cache->line_action;
-            const f_array_length_t cache_line_item = cache->line_item;
-
-            const f_string_length_t cache_name_action_used = cache->name_action.used;
-            const f_string_length_t cache_name_item_used = cache->name_item.used;
-
-            char cache_name_item[cache_name_action_used];
-            char cache_name_action[cache_name_item_used];
-
-            memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
-            memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
-
             const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
             char rule_id_name[rule_id_length + 1];
             const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
@@ -684,46 +671,72 @@ extern "C" {
               }
             }
 
-            if (F_status_is_error_not(status) && actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
-              if (similate) {
-                // @todo print message about how this would execute the rule.
+            if (F_status_is_error_not(status)) {
+
+              // rule execution will re-use the existing cache, so save the current cache.
+              const f_array_length_t cache_line_action = cache->line_action;
+              const f_array_length_t cache_line_item = cache->line_item;
+
+              const f_string_length_t cache_name_action_used = cache->name_action.used;
+              const f_string_length_t cache_name_item_used = cache->name_item.used;
+              const f_string_length_t cache_name_file_used = cache->name_file.used;
+
+              char cache_name_action[cache_name_action_used];
+              char cache_name_item[cache_name_item_used];
+              char cache_name_file[cache_name_file_used];
+
+              memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
+              memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
+              memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
+
+              if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
+                // @todo: this will also need to support the asynchronous/wait behavior.
+                status = controller_rule_process(data, at, simulate, setting, cache);
               }
-              else {
-                //status = controller_rule_process();
-              }
+
+              // restore cache.
+              memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
+              memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
+              memcpy(cache->name_file.string, cache_name_file, cache_name_file_used);
+
+              cache->name_action.string[cache_name_action_used] = 0;
+              cache->name_item.string[cache_name_item_used] = 0;
+              cache->name_file.string[cache_name_file_used] = 0;
+
+              cache->name_action.used = cache_name_action_used;
+              cache->name_item.used = cache_name_item_used;
+              cache->name_file.used = cache_name_file_used;
+
+              cache->line_action = cache_line_action;
+              cache->line_item = cache_line_item;
             }
-
-            // restore cache.
-            memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
-            memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
-
-            cache->name_action.string[cache_name_action_used] = 0;
-            cache->name_item.string[cache_name_item_used] = 0;
-
-            cache->name_action.used = cache_name_action_used;
-            cache->name_item.used = cache_name_item_used;
-
-            cache->line_action = cache_line_action;
-            cache->line_item = cache_line_item;
 
             if (F_status_is_error(status)) {
               controller_entry_error_print(data.error, *cache);
 
-              if (!simulate) break;
+              if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                break;
+              }
             }
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_timeout) {
-          // @todo
+          // @todo set the appropriate timeout value (set the entry actions timeouts which are later used as the initial defaults as the rule timeouts).
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_failsafe) {
-          // @todo
+          // @todo set the failsafe rule to this rule id (find the rule and then assign by the rule id and then assign by the array index).
         }
 
       } // for
 
       cache->line_action = 0;
       cache->name_action.used = 0;
+
+      if (F_status_is_error(status)) {
+        if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          break;
+        }
+      }
 
       // end of actions found, so drop to previous loop in stack.
       if (cache->ats.array[at_j] == actions->used) {
@@ -746,7 +759,7 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
           controller_entry_error_print(data.error, *cache);
 
-          return status;
+          break;
         }
       }
     } // for

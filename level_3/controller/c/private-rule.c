@@ -274,7 +274,7 @@ extern "C" {
 
     for (; i < setting.rules.used; ++i) {
 
-      if (fl_string_dynamic_compare(setting.rules.array[i], rule_id) == F_equal_to) {
+      if (fl_string_dynamic_compare(setting.rules.array[i].id, rule_id) == F_equal_to) {
         return i;
       }
     } // for
@@ -643,6 +643,274 @@ extern "C" {
     return F_true;
   }
 #endif // _di_controller_rule_read_
+
+#ifndef _di_controller_rule_process_
+  f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) {
+
+    if (index >= setting->rules.used) {
+      fll_error_print(data.error, F_parameter, "controller_rule_process", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return F_status_set_error(F_parameter);
+    }
+
+    f_status_t status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->stack);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return status;
+    }
+
+    f_array_length_t i = 0;
+
+    for (; i < cache->stack.used; ++i) {
+
+      if (cache->stack.array[i] == index) {
+        if (data.error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%s%sThe rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+          fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting->rules.array[i].name.string, data.error.notable.after->string);
+          fprintf(data.error.to.stream, "%s' is already on the execution stack, this recursion is prohibited.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+          controller_rule_error_print(data.error, *cache, F_true);
+        }
+
+        // never continue on recursion errors even in simulate mode.
+        return F_status_set_error(F_recurse);
+      }
+    }
+
+    cache->stack.array[cache->stack.used++] = index;
+
+    cache->name_action.used = 0;
+    cache->name_item.used = 0;
+    cache->name_file.used = 0;
+
+    status = fl_string_append(controller_string_rules, controller_string_rules_length, &cache->name_file);
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(f_path_separator, f_path_separator_length, &cache->name_file);
+    }
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return status;
+    }
+
+    status = fl_string_dynamic_append(setting->rules.array[index].id, &cache->name_file);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return status;
+    }
+
+    status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(controller_string_rule, controller_string_rule_length, &cache->name_file);
+    }
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return status;
+    }
+
+    status = fl_string_dynamic_terminate_after(&cache->name_file);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      controller_rule_error_print(data.error, *cache, F_true);
+
+      return status;
+    }
+
+    controller_rule_t *rule = &setting->rules.array[index];
+
+    {
+      f_array_length_t j = 0;
+      f_array_length_t k = 0;
+      f_array_length_t at = 0;
+
+      f_string_dynamics_t *dynamics[] = {
+        &rule->need,
+        &rule->want,
+        &rule->wish,
+      };
+
+      for (i = 0; i < 3; ++i) {
+
+        for (j = 0; j < dynamics[i]->used; ++j) {
+          at = controller_rule_find_loaded(data, *setting, dynamics[i]->array[j]);
+
+          if (at == setting->rules.used) {
+            if (i == 0) {
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s%sThe needed rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                controller_rule_error_print(data.error, *cache, F_true);
+              }
+
+              status = F_status_set_error(F_found_not);
+
+              if (!simulate) break;
+            }
+            else {
+              if (data.warning.verbosity == f_console_verbosity_debug) {
+                fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
+                fprintf(data.warning.to.stream, "%s%sThe %s rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", i == 1 ? "wanted" : "wished for");
+                fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
+                fprintf(data.warning.to.stream, "%s' was not found.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                controller_rule_error_print(data.warning, *cache, F_true);
+              }
+            }
+          }
+
+          if (F_status_is_error_not(status) && at < setting->rules.used) {
+
+            // @todo: this will also need to support the asynchronous/wait behavior.
+            //if (setting->rules.array[at].status == F_busy) { ... if wait then block ... }
+
+            // when the status is unknown, then the rule has not been executed, so attempt to execute it.
+            if (setting->rules.array[at].status == F_known_not) {
+
+              status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->stack);
+
+              if (F_status_is_error(status)) {
+                fll_error_print(data.error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+
+                // always exit on memory errors, even in simulate mode.
+                break;
+              }
+
+              // rule execution will re-use the existing cache, so save the current cache.
+              const f_array_length_t cache_line_action = cache->line_action;
+              const f_array_length_t cache_line_item = cache->line_item;
+
+              const f_string_length_t cache_name_action_used = cache->name_action.used;
+              const f_string_length_t cache_name_item_used = cache->name_item.used;
+              const f_string_length_t cache_name_file_used = cache->name_file.used;
+
+              char cache_name_action[cache_name_action_used];
+              char cache_name_item[cache_name_item_used];
+              char cache_name_file[cache_name_file_used];
+
+              memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
+              memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
+              memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
+
+              // @todo: this should pass or use the asynchronous state.
+              status = controller_rule_process(data, at, simulate, setting, cache);
+
+              // restore cache.
+              memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
+              memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
+              memcpy(cache->name_file.string, cache_name_file, cache_name_file_used);
+
+              cache->name_action.string[cache_name_action_used] = 0;
+              cache->name_item.string[cache_name_item_used] = 0;
+
+              cache->name_action.used = cache_name_action_used;
+              cache->name_item.used = cache_name_item_used;
+              cache->name_file.used = cache_name_file_used;
+
+              cache->line_action = cache_line_action;
+              cache->line_item = cache_line_item;
+
+              if (F_status_is_error(status)) {
+                if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+
+                  if (data.error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                    fprintf(data.error.to.stream, "%s%sThe %s rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", i ? "wanted" : "needed");
+                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
+                    fprintf(data.error.to.stream, "%s' failed during execution.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                    controller_rule_error_print(data.error, *cache, F_true);
+                  }
+
+                  if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                    break;
+                  }
+                }
+                else {
+                  if (data.warning.verbosity == f_console_verbosity_debug) {
+                    fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
+                    fprintf(data.warning.to.stream, "%s%sThe wished for rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "");
+                    fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
+                    fprintf(data.warning.to.stream, "%s' failed during execution.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                    controller_rule_error_print(data.warning, *cache, F_true);
+                  }
+                }
+              }
+            }
+            else if (F_status_is_error(setting->rules.array[at].status)) {
+
+              if (i == 0 || i == 1) {
+
+                if (data.error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                  fprintf(data.error.to.stream, "%s%sThe %s rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", i ? "wanted" : "needed");
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s' is in a failed state.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                  controller_rule_error_print(data.error, *cache, F_true);
+                }
+
+                status = F_status_set_error(F_found_not);
+
+                if (!simulate) break;
+              }
+              else {
+                if (data.warning.verbosity == f_console_verbosity_debug) {
+                  fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
+                  fprintf(data.warning.to.stream, "%s%sThe wished for rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "");
+                  fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
+                  fprintf(data.warning.to.stream, "%s' is in a failed state.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol[0]);
+
+                  controller_rule_error_print(data.warning, *cache, F_true);
+                }
+              }
+            }
+          }
+        }
+
+        if (F_status_is_error(status)) break;
+      } // for
+    }
+
+    if (F_status_is_error_not(status)) {
+      if (simulate) {
+        //status = controller_rule_simulate();
+      }
+      else {
+        //status = controller_rule_execute();
+      }
+    }
+
+    // remove this rule off the stack.
+    cache->stack.used--;
+
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    return F_none;
+  }
+#endif // _di_controller_rule_process_
 
 #ifndef _di_controller_rule_setting_read_
   f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) {

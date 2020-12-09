@@ -223,6 +223,7 @@ extern "C" {
 
   typedef struct {
     f_status_t status;
+    f_number_signed_t process; // @todo: for background/threaded support (ideally should hold the process id, but remove if this ends up not being the strategy) (this can also be used by the parent/main process to check to see if the child no longer a child of this process).
 
     f_time_spec_t timestamp;
 
@@ -245,6 +246,7 @@ extern "C" {
   #define controller_rule_t_initialize \
     { \
       F_known_not, \
+      0, \
       0, \
       f_time_spec_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -441,6 +443,7 @@ extern "C" {
 
   typedef struct {
     bool interruptable;
+    bool lock; // @todo: this is intend for mutex write locking of this setting for thread safety, remove this if another approach is used.
     uint8_t ready;
 
     f_string_dynamic_t path_pid;
@@ -452,6 +455,7 @@ extern "C" {
 
   #define controller_setting_t_initialize \
     { \
+      F_false, \
       F_false, \
       0, \
       f_string_dynamic_t_initialize, \
@@ -477,6 +481,7 @@ extern "C" {
     f_string_range_t range_action;
 
     f_array_lengths_t ats;
+    f_array_lengths_t stack;
 
     f_fss_comments_t comments;
     f_fss_delimits_t delimits;
@@ -503,6 +508,7 @@ extern "C" {
       f_time_spec_t_initialize, \
       f_string_range_t_initialize, \
       f_array_lengths_t_initialize, \
+      f_array_lengths_t_initialize, \
       f_fss_comments_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_content_t_initialize, \
@@ -520,6 +526,7 @@ extern "C" {
 
   #define controller_macro_cache_t_delete_simple(cache) \
     f_macro_array_lengths_t_delete_simple(cache.ats) \
+    f_macro_array_lengths_t_delete_simple(cache.stack) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \
