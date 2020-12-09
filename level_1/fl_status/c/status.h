@@ -240,6 +240,8 @@ extern "C" {
     #define FL_status_string_read             "F_read"
     #define FL_status_string_read_not         "F_read_not"
     #define FL_status_string_read_only        "F_read_only"
+    #define FL_status_string_ready             "F_ready"
+    #define FL_status_string_ready_not         "F_ready_not"
     #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_recurse_not      "F_recurse_not"
     #define FL_status_string_relative         "F_relative"
@@ -268,6 +270,8 @@ extern "C" {
     #define FL_status_string_valid_not        "F_valid_not"
     #define FL_status_string_value            "F_value"
     #define FL_status_string_value_not        "F_value_not"
+    #define FL_status_string_wait             "F_wait"
+    #define FL_status_string_wait_not         "F_wait_not"
     #define FL_status_string_warn             "F_warn"
     #define FL_status_string_warn_not         "F_warn_not"
     #define FL_status_string_write            "F_write"
@@ -351,6 +355,8 @@ extern "C" {
     #define FL_status_string_read_length             6
     #define FL_status_string_read_not_length         10
     #define FL_status_string_read_only_length        11
+    #define FL_status_string_ready_length            7
+    #define FL_status_string_ready_not_length        11
     #define FL_status_string_recurse_length          9
     #define FL_status_string_recurse_not_length      13
     #define FL_status_string_relative_length         10
@@ -379,6 +385,8 @@ extern "C" {
     #define FL_status_string_valid_not_length        11
     #define FL_status_string_value_length            7
     #define FL_status_string_value_not_length        11
+    #define FL_status_string_wait_length             6
+    #define FL_status_string_wait_not_length         10
     #define FL_status_string_warn_length             6
     #define FL_status_string_warn_not_length         10
     #define FL_status_string_write_length            7

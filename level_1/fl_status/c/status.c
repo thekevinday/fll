@@ -446,6 +446,12 @@ extern "C" {
         case F_read_only:
           *string = FL_status_string_read_only;
           break;
+        case F_ready:
+          *string = FL_status_string_ready;
+          break;
+        case F_ready_not:
+          *string = FL_status_string_ready_not;
+          break;
         case F_recurse:
           *string = FL_status_string_recurse;
           break;
@@ -529,6 +535,12 @@ extern "C" {
           break;
         case F_value_not:
           *string = FL_status_string_value_not;
+          break;
+        case F_wait:
+          *string = FL_status_string_wait;
+          break;
+        case F_wait_not:
+          *string = FL_status_string_wait_not;
           break;
         case F_warn:
           *string = FL_status_string_warn;
