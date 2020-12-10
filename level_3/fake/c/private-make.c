@@ -891,7 +891,7 @@ extern "C" {
         &data.mode,
       };
 
-      f_string_dynamics_t *destination[] = {
+      f_string_dynamics_t * const destination[] = {
         &data_make->parameter.define,
         &data_make->parameter.mode,
       };
@@ -984,7 +984,7 @@ extern "C" {
         &data.settings,
       };
 
-      f_string_dynamics_t *destination[] = {
+      f_string_dynamics_t * const destination[] = {
         &data_make->parameter.fakefile,
         &data_make->parameter.build,
         &data_make->parameter.data,
@@ -1235,7 +1235,7 @@ extern "C" {
       fake_make_parameter_variable_work_length,
     };
 
-    f_string_dynamics_t *reserved_value[] = {
+    f_string_dynamics_t * const reserved_value[] = {
       &data_make->parameter.build,
       &data_make->parameter.color,
       &data_make->parameter.data,

@@ -184,7 +184,7 @@ extern "C" {
         &data->path_sources_script,
       };
 
-      f_string_dynamic_t **parameters_value[] = {
+      f_string_dynamic_t **const parameters_value[] = {
         parameters_value_0,
         parameters_value_1,
         parameters_value_2,
@@ -237,7 +237,7 @@ extern "C" {
         fake_path_part_script_length,
       };
 
-      f_string_dynamic_t *parameters_value[] = {
+      f_string_dynamic_t * const parameters_value[] = {
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -303,7 +303,7 @@ extern "C" {
         &data->file_documents_readme,
       };
 
-      f_string_dynamic_t **parameters_value[] = {
+      f_string_dynamic_t **const parameters_value[] = {
         parameters_value_0,
         parameters_value_1,
         parameters_value_2,
@@ -358,7 +358,7 @@ extern "C" {
         fake_file_readme_length,
       };
 
-      f_string_dynamic_t *parameters_value[] = {
+      f_string_dynamic_t * const parameters_value[] = {
         &data->path_build_libraries_script,
         &data->path_build_libraries_shared,
         &data->path_build_libraries_static,
@@ -384,7 +384,7 @@ extern "C" {
 
     if (data->path_work.used > 0) {
       {
-        f_string_dynamic_t *parameters_value[] = {
+        f_string_dynamic_t * const parameters_value[] = {
           &data->path_work_includes,
           &data->path_work_libraries,
           &data->path_work_programs,
@@ -413,7 +413,7 @@ extern "C" {
           fake_path_part_programs_length,
         };
 
-        f_string_dynamic_t *parameters_value[] = {
+        f_string_dynamic_t * const parameters_value[] = {
           &data->path_work_includes,
           &data->path_work_libraries,
           &data->path_work_programs,
@@ -452,7 +452,7 @@ extern "C" {
           &data->path_work_programs_static,
         };
 
-        f_string_dynamic_t **parameters_value[] = {
+        f_string_dynamic_t **const parameters_value[] = {
           parameters_value_0,
           parameters_value_1,
         };
@@ -486,7 +486,7 @@ extern "C" {
           fake_path_part_static_length,
         };
 
-        f_string_dynamic_t *parameters_value[] = {
+        f_string_dynamic_t * const parameters_value[] = {
           &data->path_work_libraries_script,
           &data->path_work_libraries_shared,
           &data->path_work_libraries_static,
@@ -507,7 +507,7 @@ extern "C" {
     }
 
     {
-      f_string_dynamic_t *parameters_value[] = {
+      f_string_dynamic_t * const parameters_value[] = {
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -604,7 +604,7 @@ extern "C" {
         fake_default_settings_length,
       };
 
-      f_string_dynamic_t *parameters_value[] = {
+      f_string_dynamic_t * const parameters_value[] = {
         &data->fakefile,
         &data->process,
         &data->settings,
@@ -746,7 +746,7 @@ extern "C" {
         fake_default_path_work_length,
       };
 
-      f_string_dynamic_t *parameters_value[] = {
+      f_string_dynamic_t * const parameters_value[] = {
         &data->path_build,
         &data->path_data,
         &data->path_sources,

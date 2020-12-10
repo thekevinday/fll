@@ -129,7 +129,7 @@ Consider the "*.device" files such that they are also use IKI.
         init_string_verbosity_length,
       };
 
-      f_string_dynamic_t *parameter_value[] = {
+      f_string_dynamic_t * const parameter_value[] = {
         &cache,
         &cache,
         &cache,
@@ -144,7 +144,7 @@ Consider the "*.device" files such that they are also use IKI.
         &cache,
       };
 
-      bool *parameter_value_bool[] = {
+      bool * const parameter_value_bool[] = {
         0,
         &setting_kernel->failsafe,
         0,
@@ -159,7 +159,7 @@ Consider the "*.device" files such that they are also use IKI.
         0,
       };
 
-      uint8_t *parameter_value_uint8[] = {
+      uint8_t * const parameter_value_uint8[] = {
         &setting_kernel->color,
         0,
         &setting_kernel->mode,
@@ -175,7 +175,7 @@ Consider the "*.device" files such that they are also use IKI.
       };
 
       // @todo: create f_metric_t, such that it is an f_number_unsigned_t with an exponent type, such as: Y (yotta), Z (zetta), E (exa), P (peta), T (Tera), G (giga), M (mega), k (kilo), h (hecto), da (deca), (none), d (deci), c (centi), m (milli), μ (micro), n (nano), p (pico), f (femto), a (atto), z (zepto), and y (yocto).
-      f_number_unsigned_t *parameter_value_number_unsigned[] = {
+      f_number_unsigned_t * const parameter_value_number_unsigned[] = {
         0,
         0,
         0,

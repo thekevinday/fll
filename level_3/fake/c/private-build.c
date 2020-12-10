@@ -1417,7 +1417,7 @@ extern "C" {
     if (F_status_is_error_not(*status)) {
       bool failed = F_false;
 
-      f_string_static_t *settings[] = {
+      f_string_static_t * const settings[] = {
         &setting->project_name,
       };
 
@@ -1583,7 +1583,7 @@ extern "C" {
     f_string_dynamics_t version_minor = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
 
-    f_string_dynamics_t *settings_value[] = {
+    f_string_dynamics_t * settings_value[] = {
       &build_compiler,
       &build_indexer,
       &build_language,
@@ -1791,7 +1791,7 @@ extern "C" {
         &version_target,
       };
 
-      bool *settings_single_bool[] = {
+      bool * const settings_single_bool[] = {
         0,
         0,
         0,
@@ -1817,7 +1817,7 @@ extern "C" {
         &setting->search_static,
       };
 
-      f_string_dynamic_t *settings_single_destination[] = {
+      f_string_dynamic_t * const settings_single_destination[] = {
         &setting->build_compiler,
         &setting->build_indexer,
         0,
@@ -1846,13 +1846,13 @@ extern "C" {
         &setting->version_minor,
       };
 
-      uint8_t *settings_single_language[] = {
+      uint8_t * const settings_single_language[] = {
         0,
         0,
         &setting->build_language,
       };
 
-      uint8_t *settings_single_version[] = {
+      uint8_t * const settings_single_version[] = {
         0,
         0,
         0,
@@ -1883,7 +1883,7 @@ extern "C" {
       };
 
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
-      uint8_t settings_single_type[] = {
+      const uint8_t settings_single_type[] = {
         3,
         3,
         4,
@@ -2088,19 +2088,19 @@ extern "C" {
     }
 
     {
-      f_string_t sources[] = {
+      const f_string_t sources[] = {
         fake_build_setting_default_version,
         fake_build_setting_default_version,
         fake_build_setting_default_version,
       };
 
-      f_string_length_t lengths[] = {
+      const f_string_length_t lengths[] = {
         fake_build_setting_default_version_length,
         fake_build_setting_default_version_length,
         fake_build_setting_default_version_length,
       };
 
-      f_string_dynamic_t *destinations[] = {
+      f_string_dynamic_t * const destinations[] = {
         &setting->version_major,
         &setting->version_minor,
         &setting->version_micro,
@@ -2279,7 +2279,7 @@ extern "C" {
       fake_build_stage_sources_settings_length,
     };
 
-    f_string_dynamic_t *values[] = {
+    f_string_dynamic_t * const values[] = {
       &stage->file_libraries_script,
       &stage->file_libraries_shared,
       &stage->file_libraries_static,

@@ -30,7 +30,7 @@ extern "C" {
     const f_string_length_t path_length = strnlen(path, f_path_max);
 
     {
-      f_string_dynamics_t *list[] = {
+      f_string_dynamics_t * const list[] = {
         &listing.block,
         &listing.character,
         &listing.regular,
@@ -127,7 +127,7 @@ extern "C" {
     const f_string_length_t path_length = strnlen(path, f_path_max);
 
     {
-      f_string_dynamics_t *list[] = {
+      f_string_dynamics_t * const list[] = {
         &listing.block,
         &listing.character,
         &listing.regular,

@@ -23,7 +23,7 @@ extern "C" {
     f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {
-      f_string_dynamics_t *list[] = {
+      f_string_dynamics_t * const list[] = {
         &listing.block,
         &listing.character,
         &listing.regular,
@@ -234,7 +234,7 @@ extern "C" {
     f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {
-      f_string_dynamics_t *list[] = {
+      f_string_dynamics_t * const list[] = {
         &listing.block,
         &listing.character,
         &listing.regular,
