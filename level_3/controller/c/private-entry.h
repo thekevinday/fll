@@ -13,6 +13,20 @@ extern "C" {
 #endif
 
 /**
+ * Get a string representing the entry action type.
+ *
+ * @param type
+ *   The entry action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_entry_action_type_name_
+  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_type_name_
+
+/**
  * Increase the size of the entry item actions array by the specified amount, but only if necessary.
  *
  * This only increases size if the current used plus amount is greater than the currently allocated size.

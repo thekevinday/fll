@@ -13,6 +13,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_string_
+  #define controller_string_action        "action"
   #define controller_string_asynchronous  "asynchronous"
   #define controller_string_create        "create"
   #define controller_string_command       "command"
@@ -28,6 +29,7 @@ extern "C" {
   #define controller_string_item          "item"
   #define controller_string_kill          "kill"
   #define controller_string_main          "main"
+  #define controller_string_method        "method"
   #define controller_string_name          "name"
   #define controller_string_need          "need"
   #define controller_string_parameter     "parameter"
@@ -41,16 +43,18 @@ extern "C" {
   #define controller_string_rules         "rules"
   #define controller_string_script        "script"
   #define controller_string_service       "service"
-  #define controller_string_settings      "settings"
+  #define controller_string_setting       "setting"
   #define controller_string_start         "start"
   #define controller_string_stop          "stop"
   #define controller_string_timeout       "timeout"
+  #define controller_string_type          "type"
   #define controller_string_use           "use"
   #define controller_string_user          "user"
   #define controller_string_wait          "wait"
   #define controller_string_want          "want"
   #define controller_string_wish          "wish"
 
+  #define controller_string_action_length        6
   #define controller_string_asynchronous_length  12
   #define controller_string_create_length        6
   #define controller_string_command_length       7
@@ -66,6 +70,7 @@ extern "C" {
   #define controller_string_item_length          4
   #define controller_string_kill_length          4
   #define controller_string_main_length          4
+  #define controller_string_method_length        6
   #define controller_string_name_length          4
   #define controller_string_need_length          4
   #define controller_string_parameter_length     9
@@ -79,10 +84,11 @@ extern "C" {
   #define controller_string_rules_length         5
   #define controller_string_script_length        6
   #define controller_string_service_length       7
-  #define controller_string_settings_length      8
+  #define controller_string_setting_length       7
   #define controller_string_start_length         5
   #define controller_string_stop_length          4
   #define controller_string_timeout_length       7
+  #define controller_string_type_length          4
   #define controller_string_use_length           3
   #define controller_string_user_length          4
   #define controller_string_wait_length          4
@@ -91,6 +97,12 @@ extern "C" {
 #endif // _di_controller_string_
 
 #ifndef _di_controller_rule_action_t_
+  #define controller_rule_action_method_string_extended      "FSS-0001 (Extended)"
+  #define controller_rule_action_method_string_extended_list "FSS-0003 (Extended List)"
+
+  #define controller_rule_action_method_string_extended_length      19
+  #define controller_rule_action_method_string_extended_list_length 24
+
   enum {
     controller_rule_action_method_extended = 1,
     controller_rule_action_method_extended_list,
@@ -162,7 +174,7 @@ extern "C" {
     controller_rule_item_type_command = 1,
     controller_rule_item_type_script,
     controller_rule_item_type_service,
-    controller_rule_item_type_settings,
+    controller_rule_item_type_setting,
   };
 
   typedef struct {

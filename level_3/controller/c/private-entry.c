@@ -7,6 +7,49 @@
 extern "C" {
 #endif
 
+#ifndef _di_controller_entry_action_type_name_
+  f_string_static_t controller_entry_action_type_name(const uint8_t type) {
+
+    f_string_static_t buffer = f_string_static_t_initialize;
+
+    switch (type) {
+      case controller_entry_action_type_consider:
+        buffer.string = controller_string_consider;
+        buffer.used = controller_string_consider_length;
+        break;
+
+      case controller_entry_action_type_failsafe:
+        buffer.string = controller_string_failsafe;
+        buffer.used = controller_string_failsafe_length;
+        break;
+
+      case controller_entry_action_type_item:
+        buffer.string = controller_string_item;
+        buffer.used = controller_string_item_length;
+        break;
+
+      case controller_entry_action_type_ready:
+        buffer.string = controller_string_ready;
+        buffer.used = controller_string_ready_length;
+        break;
+
+      case controller_entry_action_type_rule:
+        buffer.string = controller_string_rule;
+        buffer.used = controller_string_rule_length;
+        break;
+
+      case controller_entry_action_type_timeout:
+        buffer.string = controller_string_timeout;
+        buffer.used = controller_string_timeout_length;
+        break;
+    }
+
+    buffer.size = buffer.used;
+
+    return buffer;
+  }
+#endif // _di_controller_entry_action_type_name_
+
 #ifndef _di_controller_entry_actions_increase_by_
   f_return_status controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
 
@@ -109,8 +152,7 @@ extern "C" {
         break;
       }
 
-      cache->line_action++;
-      action->line = cache->line_action;
+      action->line = ++cache->line_action;
 
       status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
 
@@ -146,8 +188,8 @@ extern "C" {
       }
       else {
         if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
-          fprintf(data.warning.to.stream, "%s%sUnknown entry item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "", data.warning.context.after->string, f_string_eol[0]);
+          fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data.warning.to.stream, "%s%sUnknown entry item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
 
           controller_entry_error_print(data.warning, *cache);
         }
@@ -181,14 +223,14 @@ extern "C" {
         action->status = F_status_set_error(F_parameter);
 
         if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fprintf(data.error.to.stream, "%s%sThe entry item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data.error.to.stream, "%s%sThe entry item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
           fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->name_action.string, data.error.notable.after->string);
           fprintf(data.error.to.stream, "%s' requires ", data.error.context.before->string);
 
           if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
             fprintf(data.error.to.stream, "%s%s%llu%s", data.error.context.after->string, data.error.notable.before->string, cache->line_action, data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s or more parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+            fprintf(data.error.to.stream, "%s or more parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
           }
           else {
             uint8_t parameters = 0;
@@ -202,7 +244,7 @@ extern "C" {
 
             fprintf(data.error.to.stream, "exactly ", data.error.context.before->string);
             fprintf(data.error.to.stream, "%s%s%u%s", data.error.context.after->string, parameters, data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+            fprintf(data.error.to.stream, "%s parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
           }
         }
       }
@@ -284,8 +326,8 @@ extern "C" {
               }
 
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a path (the first parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a path (the first parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -326,12 +368,12 @@ extern "C" {
                       break;
                     }
 
-                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                    fprintf(data.error.to.stream, "%s%sThe entry item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                    fprintf(data.error.to.stream, "%s%sThe entry item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                     fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[1].string, data.error.notable.after->string);
                     fprintf(data.error.to.stream, "%s' must be a base path name, such as '", data.error.context.before->string);
                     fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->buffer_path.string, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                    fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
                   }
 
                   action->status = F_status_set_error(F_parameter);
@@ -350,8 +392,8 @@ extern "C" {
               }
 
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a rule name (the second parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must not have an empty string for a rule name (the second parameter).%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -376,8 +418,8 @@ extern "C" {
                 }
 
                 if (data.error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                  fprintf(data.error.to.stream, "%s%sThe entry item action third parameter (and beyond) must be one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(data.error.to.stream, "%s%sThe entry item action third parameter (and beyond) must be one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_asynchronous, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_require, data.error.notable.after->string);
@@ -385,7 +427,7 @@ extern "C" {
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_wait, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[j].string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                  fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
                 }
               }
             } // for
@@ -399,10 +441,10 @@ extern "C" {
               }
 
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.error.to.stream, "%s%sThe entry item action may not specify the reserved item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action may not specify the reserved item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
               }
             }
           }
@@ -424,8 +466,8 @@ extern "C" {
               }
 
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start, data.error.notable.after->string);
@@ -433,7 +475,7 @@ extern "C" {
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -460,10 +502,10 @@ extern "C" {
                 }
 
                 if (data.error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                  fprintf(data.error.to.stream, "%s%sThe entry item action parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(data.error.to.stream, "%s%sThe entry item action parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[1].string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s' is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                  fprintf(data.error.to.stream, "%s' is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
                 }
               }
             }
@@ -486,8 +528,8 @@ extern "C" {
   void controller_entry_error_print(const fll_error_print_t output, const controller_cache_t cache) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
-      fprintf(output.to.stream, "%c", f_string_eol[0]);
-      fprintf(output.to.stream, "%s%sWhile processing ", output.context.before->string, output.prefix ? output.prefix : "");
+      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(output.to.stream, "%s%sWhile processing ", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s);
 
       if (cache.name_action.used) {
         fprintf(output.to.stream, "action '");
@@ -508,7 +550,7 @@ extern "C" {
       if (cache.name_file.used) {
         fprintf(output.to.stream, "file '");
         fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
-        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol[0]);
+        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
       }
     }
   }
@@ -585,8 +627,8 @@ extern "C" {
       }
       else {
         if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-          fprintf(data.error.to.stream, "%s%sThe entry file is empty.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : "", data.error.context.after->string, f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data.error.to.stream, "%s%sThe entry file is empty.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_data_not);
@@ -662,10 +704,10 @@ extern "C" {
 
             if (fl_string_dynamic_compare(entry->items.array[j].name, cache->name_item) == F_equal_to) {
               if (data.warning.verbosity == f_console_verbosity_debug) {
-                fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.warning.to.stream, "%s%sIgnoring duplicate entry item '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "");
+                fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.warning.to.stream, "%s%sIgnoring duplicate entry item '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
                 fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->name_file.string, data.warning.notable.after->string);
-                fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol[0]);
+                fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
                 controller_entry_error_print(data.warning, *cache);
               }
@@ -726,10 +768,10 @@ extern "C" {
 
           if (!(code & 0x1)) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
               fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
-              fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+              fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
             }
 
             status = F_status_set_error(F_found_not);
@@ -780,10 +822,10 @@ extern "C" {
                     }
 
                     if (data.error.verbosity != f_console_verbosity_quiet) {
-                      fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+                      fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
                       fprintf(data.error.to.stream, "The requested entry item '");
                       fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
-                      fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                      fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
                       controller_entry_error_print(data.error, *cache);
                     }

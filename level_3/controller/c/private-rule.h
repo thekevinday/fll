@@ -13,6 +13,20 @@ extern "C" {
 #endif
 
 /**
+ * Get a string representing the rule action method.
+ *
+ * @param type
+ *   The rule action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_action_method_name_
+  extern f_string_static_t controller_rule_action_method_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_method_name_
+
+/**
  * Read the rule action.
  *
  * The object and content ranges are merged together (in that order) as the action parameters.
@@ -44,6 +58,20 @@ extern "C" {
 #ifndef _di_controller_rule_action_read_
   extern f_return_status controller_rule_action_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, controller_rule_action_t *action) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_action_read_
+
+/**
+ * Get a string representing the rule action type.
+ *
+ * @param type
+ *   The rule action type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_action_type_name_
+  extern f_string_static_t controller_rule_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_type_name_
 
 /**
  * Increase the size of the rule actions array by the specified amount, but only if necessary.
@@ -115,8 +143,31 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_
-  void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_
+
+/**
+ * Perform an execution of the given rule.
+ *
+ * @param data
+ *   The program data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param index
+ *   The position in the setting.rules array representing the rule to simulate.
+ * @param setting
+ *   The controller settings data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   On success and the rule is run synchronously, then the individual status for the rule is set to F_complete.
+ *   On success and the rule is run asynchronously, then the individual status for the rule is set to F_busy.
+ *   On failure, the individual status for the rule is set to an appropriate error status.
+ */
+#ifndef _di_controller_rule_execute_
+  extern f_return_status controller_rule_execute(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_
 
 /**
  * Search the already loaded rules to see if one is found.
@@ -167,6 +218,20 @@ extern "C" {
 #endif // _di_controller_rule_item_read_
 
 /**
+ * Get a string representing the rule item type.
+ *
+ * @param type
+ *   The rule item type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_item_type_name_
+  extern f_string_static_t controller_rule_item_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_type_name_
+
+/**
  * Increase the size of the rule items array by the specified amount, but only if necessary.
  *
  * This only increases size if the current used plus amount is greater than the currently allocated size.
@@ -187,6 +252,37 @@ extern "C" {
 #ifndef _di_controller_rule_items_increase_by_
   extern f_return_status controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_items_increase_by_
+
+/**
+ * Process and execute the given rule by the rule id.
+ *
+ * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
+ * All dependent rules must be already loaded, this function will not load any rules.
+ *
+ * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
+ *
+ * @todo add asynchronous boolean? (will also need a wait boolean, so this should probably be a uint8_t with using bitwise states).
+ *
+ * @param data
+ *   The program data.
+ * @param index
+ *   Position in the rules array representing the rule to execute
+ * @param simulate
+ *   If TRUE, then the rule execution is simulated (printing a message that the rule would be executed but does not execut the rule).
+ *   If FALSE, the rule is not simulated and is executed as normal.
+ * @param setting
+ *   The controller settings data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ *   This utilizes cache.stack for recursive executions, no function called by this may therefore safely use cache.stack for any other purpose.
+ *   This utilizes line_action, line_item, name_action, and name_item from cache, but they are backed up before starting and then restored after finishing.
+ *
+ * @return
+ *    F_none on success.
+ */
+#ifndef _di_controller_rule_process_
+  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_process_
 
 /**
  * Read the rule file, extracting all valid items.
@@ -225,37 +321,6 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 /**
- * Process and execute the given rule by the rule id.
- *
- * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
- * All dependent rules must be already loaded, this function will not load any rules.
- *
- * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
- *
- * @todo add asynchronous boolean? (will also need a wait boolean, so this should probably be a uint8_t with using bitwise states).
- *
- * @param data
- *   The program data.
- * @param index
- *   Position in the rules array representing the rule to execute
- * @param simulate
- *   If TRUE, then the rule execution is simulated (printing a message that the rule would be executed but does not execut the rule).
- *   If FALSE, the rule is not simulated and is executed as normal.
- * @param setting
- *   The controller settings data.
- * @param cache
- *   A structure for containing and caching relevant data.
- *   This utilizes cache.stack for recursive executions, no function called by this may therefore safely use cache.stack for any other purpose.
- *   This utilizes line_action, line_item, name_action, and name_item from cache, but they are backed up before starting and then restored after finishing.
- *
- * @return
- *    F_none on success.
- */
-#ifndef _di_controller_rule_process_
-  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_process_
-
-/**
  * Read the content within the buffer, extracting all valid settings.
  *
  * This will perform additional FSS read functions as appropriate.
@@ -291,6 +356,26 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_
   extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
+
+/**
+ * Perform a simulated execution of the given rule.
+ *
+ * This simply prints information about the rule.
+ *
+ * This automatically sets the rule's status to F_complete.
+ *
+ * @param data
+ *   The program data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param index
+ *   The position in the setting.rules array representing the rule to simulate.
+ * @param setting
+ *   The controller settings data.
+ */
+#ifndef _di_controller_rule_simulate_
+  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_simulate_
 
 /**
  * Increase the size of the rules array by the specified amount, but only if necessary.

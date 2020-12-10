@@ -9,49 +9,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_entry_action_type_name_
-  f_string_static_t controller_entry_action_type_name(const uint8_t type) {
-
-    f_string_static_t buffer = f_string_static_t_initialize;
-
-    switch (type) {
-      case controller_entry_action_type_consider:
-        buffer.string = controller_string_consider;
-        buffer.used = controller_string_consider_length;
-        break;
-
-      case controller_entry_action_type_failsafe:
-        buffer.string = controller_string_failsafe;
-        buffer.used = controller_string_failsafe_length;
-        break;
-
-      case controller_entry_action_type_item:
-        buffer.string = controller_string_item;
-        buffer.used = controller_string_item_length;
-        break;
-
-      case controller_entry_action_type_ready:
-        buffer.string = controller_string_ready;
-        buffer.used = controller_string_ready_length;
-        break;
-
-      case controller_entry_action_type_rule:
-        buffer.string = controller_string_rule;
-        buffer.used = controller_string_rule_length;
-        break;
-
-      case controller_entry_action_type_timeout:
-        buffer.string = controller_string_timeout;
-        buffer.used = controller_string_timeout_length;
-        break;
-    }
-
-    buffer.size = buffer.used;
-
-    return buffer;
-  }
-#endif // _di_controller_entry_action_type_name_
-
 #ifndef _di_controller_string_dynamic_append_terminated_
   f_return_status controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
@@ -358,10 +315,10 @@ extern "C" {
 
           if (setting->ready == controller_setting_ready_wait) {
             if (data.warning.verbosity == f_console_verbosity_debug) {
-              fprintf(data.warning.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.warning.to.stream, "%s%sMultiple '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : "");
+              fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.warning.to.stream, "%s%sMultiple '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
               fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, controller_string_ready, data.warning.notable.after->string);
-              fprintf(data.warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol[0]);
+              fprintf(data.warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
               controller_entry_error_print(data.warning, *cache);
             }
@@ -387,10 +344,10 @@ extern "C" {
 
                 if (cache->ats.array[j] == i) {
                   if (data.error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                    fprintf(data.error.to.stream, "%s%sThe entry item named '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                    fprintf(data.error.to.stream, "%s%sThe entry item named '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                     fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting->entry.items.array[i].name.string, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                    fprintf(data.error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
                   }
 
                   controller_entry_error_print(data.error, *cache);
@@ -448,10 +405,10 @@ extern "C" {
           if (error_has || i >= setting->entry.items.used) {
             if (i >= setting->entry.items.used) {
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fprintf(data.error.to.stream, "%s%sThe entry item named '", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item named '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, actions->array[cache->ats.array[at_j]].parameters.array[0].string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
               }
 
               controller_entry_error_print(data.error, *cache);
@@ -590,10 +547,10 @@ extern "C" {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
             if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fprintf(data.error.to.stream, "%s%sInvalid entry item index ", data.error.context.before->string, data.error.prefix ? data.error.prefix : "");
+              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.error.to.stream, "%s%sInvalid entry item index ", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
               fprintf(data.error.to.stream, "%s%s%llu%s", data.error.context.after->string, data.error.notable.before->string, actions->array[cache->ats.array[at_j]].number, data.error.notable.after->string);
-              fprintf(data.error.to.stream, "%s detected.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol[0]);
+              fprintf(data.error.to.stream, "%s detected.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
             }
 
             controller_entry_error_print(data.error, *cache);

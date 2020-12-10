@@ -24,7 +24,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
@@ -60,21 +60,38 @@ extern "C" {
           data->warning.notable = data->context.set.notable;
         }
         else {
-          data->error.context.before = &fll_error_string_null_s;
-          data->error.context.after = &fll_error_string_null_s;
-          data->error.notable.before = &fll_error_string_null_s;
-          data->error.notable.after = &fll_error_string_null_s;
+          data->context.set.warning.before = &f_color_set_string_null_s;
+          data->context.set.warning.after = &f_color_set_string_null_s;
+          data->context.set.error.before = &f_color_set_string_null_s;
+          data->context.set.error.after = &f_color_set_string_null_s;
+          data->context.set.title.before = &f_color_set_string_null_s;
+          data->context.set.title.after = &f_color_set_string_null_s;
+          data->context.set.notable.before = &f_color_set_string_null_s;
+          data->context.set.notable.after = &f_color_set_string_null_s;
+          data->context.set.important.before = &f_color_set_string_null_s;
+          data->context.set.important.after = &f_color_set_string_null_s;
+          data->context.set.standout.before = &f_color_set_string_null_s;
+          data->context.set.standout.after = &f_color_set_string_null_s;
+          data->context.set.normal.before = &f_color_set_string_null_s;
+          data->context.set.normal.after = &f_color_set_string_null_s;
+          data->context.set.normal_reset.before = &f_color_set_string_null_s;
+          data->context.set.normal_reset.after = &f_color_set_string_null_s;
 
-          data->warning.context.before = &fll_error_string_null_s;
-          data->warning.context.after = &fll_error_string_null_s;
-          data->warning.notable.before = &fll_error_string_null_s;
-          data->warning.notable.after = &fll_error_string_null_s;
+          data->error.context.before = &f_color_set_string_null_s;
+          data->error.context.after = &f_color_set_string_null_s;
+          data->error.notable.before = &f_color_set_string_null_s;
+          data->error.notable.after = &f_color_set_string_null_s;
+
+          data->warning.context.before = &f_color_set_string_null_s;
+          data->warning.context.after = &f_color_set_string_null_s;
+          data->warning.notable.before = &f_color_set_string_null_s;
+          data->warning.notable.after = &f_color_set_string_null_s;
         }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
           controller_delete_data(data);
@@ -148,10 +165,10 @@ extern "C" {
 
     if (data->parameters[controller_parameter_settings].result == f_console_result_found) {
       if (data->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
         fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_settings, data->error.notable.after->string);
-        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 
       status = F_status_set_error(F_parameter);
@@ -179,10 +196,10 @@ extern "C" {
 
     if (data->parameters[controller_parameter_pid].result == f_console_result_found) {
       if (data->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
         fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->error.notable.after->string);
-        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 
       status = F_status_set_error(F_parameter);
@@ -201,10 +218,10 @@ extern "C" {
       }
       else {
         if (data->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data->warning.to.stream, "%c", f_string_eol[0]);
-          fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : "");
+          fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
           fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->warning.notable.after->string);
-          fprintf(data->warning.to.stream, "%s' must be a file path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol[0]);
+          fprintf(data->warning.to.stream, "%s' must be a file path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
         }
       }
     }
@@ -224,12 +241,12 @@ extern "C" {
 
       if (data->parameters[controller_parameter_validate].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-          fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : "");
+          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
           fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_validate, data->error.notable.after->string);
           fprintf(data->error.to.stream, "%s' must not be specified with the parameter '", data->error.context.before->string);
           fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_daemon, data->error.notable.after->string);
-          fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol[0]);
+          fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -240,8 +257,8 @@ extern "C" {
 
         if (f_file_exists(setting.path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-            fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : "", data->error.context.after->string, f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s, data->error.context.after->string, f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_available_not);
@@ -269,8 +286,8 @@ extern "C" {
 
           if (f_file_exists(setting.path_pid.string) == F_true) {
             if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol[0]);
-              fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : "", data->error.context.after->string, f_string_eol[0]);
+              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s, data->error.context.after->string, f_string_eol_s[0]);
             }
 
             status = F_status_set_error(F_available_not);
@@ -298,7 +315,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 
