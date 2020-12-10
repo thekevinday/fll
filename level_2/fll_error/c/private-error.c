@@ -11,7 +11,7 @@ extern "C" {
     if (status == F_array_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sMaximum array length reached while processing ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sMaximum array length reached while processing ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -24,7 +24,7 @@ extern "C" {
     if (status == F_buffer_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sMaximum buffer length reached while processing ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sMaximum buffer length reached while processing ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -37,7 +37,7 @@ extern "C" {
     if (status == F_memory_allocation || status == F_memory_reallocation || status == F_memory_not) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sUnable to allocate memory in function ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sUnable to allocate memory in function ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -50,7 +50,7 @@ extern "C" {
     if (status == F_parameter) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sInvalid parameter", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sInvalid parameter", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -63,7 +63,7 @@ extern "C" {
     if (status == F_string_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sMaximum string length reached while processing ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sMaximum string length reached while processing ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -76,7 +76,7 @@ extern "C" {
     if (status == F_utf) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sInvalid UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sInvalid UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -89,7 +89,7 @@ extern "C" {
     if (status == F_complete_not_utf) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character while calling ", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
 
         private_fll_error_print_function(error, function);
 
@@ -102,7 +102,7 @@ extern "C" {
     if (fallback && error.verbosity != f_console_verbosity_quiet) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol[0]);
-        fprintf(error.to.stream, "%s%s(", error.context.before->string, error.prefix ? error.prefix : "");
+        fprintf(error.to.stream, "%s%s(", error.context.before->string, error.prefix ? error.prefix : f_string_empty_s);
         fprintf(error.to.stream, "%s%s%llu%s", error.context.after->string, error.notable.before->string, status, error.notable.after->string);
         fprintf(error.to.stream, "%s)", error.context.before->string);
 

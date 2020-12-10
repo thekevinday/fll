@@ -16,7 +16,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fll_program_print_help_usage(output, context, init_name, "");
+    fll_program_print_help_usage(output, context, init_name, f_string_empty_s);
 
     fl_color_print(output.stream, context.set.important, " Notes:");
     fprintf(output.stream, "%c", f_string_eol[0]);

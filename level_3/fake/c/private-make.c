@@ -2529,7 +2529,7 @@ extern "C" {
         *status = f_environment_set(arguments.array[0].string, arguments.array[1].string, F_true);
       }
       else {
-        *status = f_environment_set(arguments.array[0].string, "", F_true);
+        *status = f_environment_set(arguments.array[0].string, f_string_empty_s, F_true);
       }
 
       if (F_status_is_error(*status)) {

@@ -20,7 +20,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fll_program_print_help_usage(output, context, control_name, "");
+    fll_program_print_help_usage(output, context, control_name, f_string_empty_s);
 
     return F_none;
   }
@@ -47,15 +47,32 @@ extern "C" {
           data->warning.notable = data->context.set.notable;
         }
         else {
-          data->error.context.before = &fll_error_string_null_s;
-          data->error.context.after = &fll_error_string_null_s;
-          data->error.notable.before = &fll_error_string_null_s;
-          data->error.notable.after = &fll_error_string_null_s;
+          data->context.set.warning.before = &f_color_set_string_null_s;
+          data->context.set.warning.after = &f_color_set_string_null_s;
+          data->context.set.error.before = &f_color_set_string_null_s;
+          data->context.set.error.after = &f_color_set_string_null_s;
+          data->context.set.title.before = &f_color_set_string_null_s;
+          data->context.set.title.after = &f_color_set_string_null_s;
+          data->context.set.notable.before = &f_color_set_string_null_s;
+          data->context.set.notable.after = &f_color_set_string_null_s;
+          data->context.set.important.before = &f_color_set_string_null_s;
+          data->context.set.important.after = &f_color_set_string_null_s;
+          data->context.set.standout.before = &f_color_set_string_null_s;
+          data->context.set.standout.after = &f_color_set_string_null_s;
+          data->context.set.normal.before = &f_color_set_string_null_s;
+          data->context.set.normal.after = &f_color_set_string_null_s;
+          data->context.set.normal_reset.before = &f_color_set_string_null_s;
+          data->context.set.normal_reset.after = &f_color_set_string_null_s;
 
-          data->warning.context.before = &fll_error_string_null_s;
-          data->warning.context.after = &fll_error_string_null_s;
-          data->warning.notable.before = &fll_error_string_null_s;
-          data->warning.notable.after = &fll_error_string_null_s;
+          data->error.context.before = &f_color_set_string_null_s;
+          data->error.context.after = &f_color_set_string_null_s;
+          data->error.notable.before = &f_color_set_string_null_s;
+          data->error.notable.after = &f_color_set_string_null_s;
+
+          data->warning.context.before = &f_color_set_string_null_s;
+          data->warning.context.after = &f_color_set_string_null_s;
+          data->warning.notable.before = &f_color_set_string_null_s;
+          data->warning.notable.after = &f_color_set_string_null_s;
         }
 
         if (F_status_is_error(status)) {

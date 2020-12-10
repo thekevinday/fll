@@ -28,7 +28,7 @@ extern "C" {
     fll_program_print_help_option(output, context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable, f_console_symbol_long_enable, " The object to output.");
     fll_program_print_help_option(output, context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
 
-    fll_program_print_help_usage(output, context, iki_write_name, "");
+    fll_program_print_help_usage(output, context, iki_write_name, f_string_empty_s);
 
     fl_color_print(output.stream, context.set.important, " Notes:");
 

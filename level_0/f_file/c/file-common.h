@@ -91,6 +91,9 @@ extern "C" {
   #define f_macro_file_open_mode_read_truncate "w+"
   #define f_macro_file_open_mode_read_write    "r+"
   #define f_macro_file_open_mode_truncate      "w"
+
+  // @todo consider adding the following for the different strings in this project.
+  //static char * const f_file_open_mode_append_s = f_macro_file_open_mode_append;
 #endif // _di_f_file_type_
 
 /**

@@ -32,7 +32,7 @@ extern "C" {
     fll_program_print_help_option(output, context, fss_extended_write_short_single, fss_extended_write_long_single, f_console_symbol_short_enable, f_console_symbol_long_enable, " Use single quotes.");
     fll_program_print_help_option(output, context, fss_extended_write_short_trim, fss_extended_write_long_trim, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Trim object names.");
 
-    fll_program_print_help_usage(output, context, fss_extended_write_name, "");
+    fll_program_print_help_usage(output, context, fss_extended_write_name, f_string_empty_s);
 
     fprintf(output.stream, "  The pipe uses the Backspace character '");
     fl_color_print(output.stream, context.set.notable, "\\b");

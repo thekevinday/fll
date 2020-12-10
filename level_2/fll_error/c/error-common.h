@@ -76,13 +76,6 @@ extern "C" {
   #define fll_macro_error_print_t_initialize_warning() fll_macro_error_print_t_initialize(f_macro_file_t_initialize(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_warning, f_color_set_t_initialize, f_color_set_t_initialize)
 #endif // _di_fll_error_print_t_
 
-/**
- * Set the context and notable to this to safely allow for fprintf uses when there is no color to be used.
- */
-#ifndef _di_fll_error_string_null_s_
-  const static f_string_static_t fll_error_string_null_s = f_macro_string_static_t_initialize("", 0);
-#endif // _di_fll_error_string_null_s_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

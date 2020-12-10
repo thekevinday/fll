@@ -62,7 +62,7 @@ extern "C" {
         if (data.error.verbosity != f_console_verbosity_quiet) {
           fprintf(data.error.to.stream, "%c", f_string_eol[0]);
           fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to find program '", fll_error_print_error);
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", program.used ? program.string : "");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", program.used ? program.string : f_string_empty_s);
           fl_color_print(data.error.to.stream, data.context.set.error, "' for executing.%c", f_string_eol[0]);
         }
       }

@@ -1583,7 +1583,7 @@ extern "C" {
     f_string_dynamics_t version_minor = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
 
-    f_string_dynamics_t * settings_value[] = {
+    f_string_dynamics_t *settings_value[] = {
       &build_compiler,
       &build_indexer,
       &build_language,

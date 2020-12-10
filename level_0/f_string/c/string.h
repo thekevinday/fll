@@ -32,6 +32,18 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_string_has_empty_
+  const static f_string_t f_string_empty_s = "";
+#endif // _di_f_string_has_empty_
+
+#ifndef _di_f_string_has_eol_
+  const static f_string_t f_string_eol_s = f_string_eol;
+#endif // _di_f_string_has_eol_
+
+#ifndef _di_f_string_has_placeholder_
+  const static f_string_t f_string_placeholder_s = f_string_placeholder;
+#endif // _di_f_string_has_placeholder_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
