@@ -28,50 +28,44 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    f_string_length_t i = 0;
     f_string_length_t first = 0;
     f_string_length_t size = 0;
 
-    for (f_string_length_t i = 0; i <= length; i++) {
+    for (; i < length; i++) {
 
-      if (i == length) {
-        if (i > first) {
-          size = i - first;
+      if (source[i]) continue;
 
-          if (destination->used + size > destination->size) {
-            status = private_fl_string_dynamic_increase_by(size, destination);
-            if (F_status_is_error(status)) return status;
-          }
+      if (i && i > first) {
+        size = i - first;
 
-          memcpy(destination->string + destination->used, source + first, size);
-          destination->used = destination->used + size;
+        if (destination->used + size > destination->size) {
+          status = private_fl_string_dynamic_increase_by(size, destination);
+          if (F_status_is_error(status)) return status;
         }
 
-        break;
+        memcpy(destination->string + destination->used, source + first, size);
+        destination->used = destination->used + size;
       }
 
-      if (!source[i]) {
-        if (i > 0) {
-          if (i > first) {
-            size = i - first;
+      while (i + 1 < length && !source[i + 1]) {
+        i++;
+      } // while
 
-            if (destination->used + size > destination->size) {
-              status = private_fl_string_dynamic_increase_by(size, destination);
-              if (F_status_is_error(status)) return status;
-            }
-
-            memcpy(destination->string + destination->used, source + first, size);
-            destination->used = destination->used + size;
-          }
-        }
-
-        while (i + 1 < length && !source[i + 1]) {
-          i++;
-        } // while
-
-        first = i + 1;
-        continue;
-      }
+      first = i + 1;
     } // for
+
+    if (i > first) {
+      size = i - first;
+
+      if (destination->used + size > destination->size) {
+        status = private_fl_string_dynamic_increase_by(size, destination);
+        if (F_status_is_error(status)) return status;
+      }
+
+      memcpy(destination->string + destination->used, source + first, size);
+      destination->used = destination->used + size;
+    }
 
     return F_none;
   }

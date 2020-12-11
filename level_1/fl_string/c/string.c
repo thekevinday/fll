@@ -867,13 +867,24 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return F_status_set_error(F_parameter);
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
+      if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!source.used) return F_data_not_eos;
+
+    f_string_length_t begin = range.start;
+    f_string_length_t end = range.stop;
+
+    const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_data_not) return status;
+
+    if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    return private_fl_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
+    return private_fl_string_append(source.string + begin, (end - begin) + 1, destination);
   }
 #endif // _di_fl_string_dynamic_rip_
 
@@ -882,13 +893,24 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.start) return F_status_set_error(F_parameter);
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
+      if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!source.used) return F_data_not_eos;
+
+    f_string_length_t begin = range.start;
+    f_string_length_t end = range.stop;
+
+    const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
+
+    if (F_status_is_error(status)) return status;
+    if (status == F_data_not) return status;
+
+    if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    return private_fl_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
+    return private_fl_string_append_nulless(source.string + begin, (end - begin) + 1, destination);
   }
 #endif // _di_fl_string_dynamic_rip_nulless_
 
@@ -1730,7 +1752,7 @@ extern "C" {
     f_string_length_t begin = 0;
     f_string_length_t end = length - 1;
 
-    f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
+    const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
     if (F_status_is_error(status)) return status;
     if (status == F_data_not) return status;
@@ -1750,7 +1772,7 @@ extern "C" {
     f_string_length_t begin = 0;
     f_string_length_t end = length - 1;
 
-    f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
+    const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
     if (F_status_is_error(status)) return status;
     if (status == F_data_not) return status;

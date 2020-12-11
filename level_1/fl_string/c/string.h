@@ -1459,6 +1459,7 @@ extern "C" {
  * Allocate a new string from the provided range in the buffer.
  *
  * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
  * As a result, resulting size may be smaller than requested range.
  *
  * @param source
@@ -1485,6 +1486,7 @@ extern "C" {
  * Allocate a new string from the provided range in the buffer.
  *
  * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
  * As a result, resulting size may be smaller than requested range.
  *
  * Skips over NULL characters from source when appending.
@@ -2301,6 +2303,7 @@ extern "C" {
  * Allocate a new string from the provided range in the string.
  *
  * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
  * As a result, resulting size may be smaller than requested length.
  *
  * @param source
@@ -2329,6 +2332,7 @@ extern "C" {
  * Allocate a new string from the provided range in the string.
  *
  * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
  * As a result, resulting size may be smaller than requested length.
  *
  * Skips over NULL characters from source when ripping.
