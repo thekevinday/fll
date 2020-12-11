@@ -20,33 +20,46 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
-  #define f_fss_comment                 '#'
-  #define f_fss_eol                     f_string_eol[0]
-  #define f_fss_space                   ' '
-  #define f_fss_space_holder            '_'
-  #define f_fss_basic_open              ' '
-  #define f_fss_basic_close             f_string_eol[0]
-  #define f_fss_extended_open           ' '
-  #define f_fss_extended_next           ' '
-  #define f_fss_extended_close          f_string_eol[0]
-  #define f_fss_basic_list_open         ':'
-  #define f_fss_basic_list_open_end     f_string_eol[0]
-  #define f_fss_basic_list_close        f_string_eol[0]
-  #define f_fss_extended_list_open      '{'
-  #define f_fss_extended_list_open_end  f_string_eol[0]
-  #define f_fss_extended_list_close     '}'
-  #define f_fss_extended_list_close_end f_string_eol[0]
-  #define f_fss_embedded_list_open      '{'
-  #define f_fss_embedded_list_open_end  f_string_eol[0]
-  #define f_fss_embedded_list_close     '}'
-  #define f_fss_embedded_list_close_end f_string_eol[0]
-  #define f_fss_type_header_open        '#'
-  #define f_fss_type_header_part1       ' '
-  #define f_fss_type_header_part2       'f'
-  #define f_fss_type_header_part3       's'
-  #define f_fss_type_header_part4       's'
-  #define f_fss_type_header_part5       '-'
-  #define f_fss_type_header_close       f_string_eol[0]
+  const static f_string_t f_fss_brace_left_s = "{";
+  const static f_string_t f_fss_brace_right_s = "}";
+  const static f_string_t f_fss_colon_s = ":";
+  const static f_string_t f_fss_dash_s = "-";
+  const static f_string_t f_fss_f_s = "f";
+  const static f_string_t f_fss_pound_s = "#";
+  const static f_string_t f_fss_quote_single_s = "'";
+  const static f_string_t f_fss_quote_double_s = "\"";
+  const static f_string_t f_fss_s_s = "s";
+  const static f_string_t f_fss_slash_s = "\\";
+  const static f_string_t f_fss_space_s = " ";
+  const static f_string_t f_fss_underscore_s = "_";
+
+  #define f_fss_comment                 f_fss_pound_s[0]
+  #define f_fss_eol                     f_string_eol_s[0]
+  #define f_fss_space                   f_fss_space_s[0]
+  #define f_fss_space_holder            f_fss_underscore_s[0]
+  #define f_fss_basic_open              f_fss_space_s[0]
+  #define f_fss_basic_close             f_string_eol_s[0]
+  #define f_fss_extended_open           f_fss_space_s[0]
+  #define f_fss_extended_next           f_fss_space_s[0]
+  #define f_fss_extended_close          f_string_eol_s[0]
+  #define f_fss_basic_list_open         f_fss_colon_s[0]
+  #define f_fss_basic_list_open_end     f_string_eol_s[0]
+  #define f_fss_basic_list_close        f_string_eol_s[0]
+  #define f_fss_extended_list_open      f_fss_brace_left_s[0]
+  #define f_fss_extended_list_open_end  f_string_eol_s[0]
+  #define f_fss_extended_list_close     f_fss_brace_right_s[0]
+  #define f_fss_extended_list_close_end f_string_eol_s[0]
+  #define f_fss_embedded_list_open      f_fss_brace_left_s[0]
+  #define f_fss_embedded_list_open_end  f_string_eol_s[0]
+  #define f_fss_embedded_list_close     f_fss_brace_right_s[0]
+  #define f_fss_embedded_list_close_end f_string_eol_s[0]
+  #define f_fss_type_header_open        f_fss_pound_s[0]
+  #define f_fss_type_header_part1       f_fss_space_s[0]
+  #define f_fss_type_header_part2       f_fss_f_s[0]
+  #define f_fss_type_header_part3       f_fss_s_s[0]
+  #define f_fss_type_header_part4       f_fss_s_s[0]
+  #define f_fss_type_header_part5       f_fss_dash_s[0]
+  #define f_fss_type_header_close       f_string_eol_s[0]
 
   typedef unsigned long f_fss_id_t;
 #endif // _di_f_fss_types_t_
@@ -56,9 +69,9 @@ extern "C" {
  */
 #ifndef _di_f_fss_delimiters_
   #define f_fss_delimit_placeholder  f_string_placeholder[0]
-  #define f_fss_delimit_quote_single '\''
-  #define f_fss_delimit_quote_double '"'
-  #define f_fss_delimit_slash        '\\'
+  #define f_fss_delimit_quote_single f_fss_quote_single_s[0]
+  #define f_fss_delimit_quote_double f_fss_quote_double_s[0]
+  #define f_fss_delimit_slash        f_fss_slash_s[0]
 #endif //_di_f_fss_delimiters_
 
 /**

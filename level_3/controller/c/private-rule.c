@@ -51,6 +51,13 @@ extern "C" {
         return status;
       }
 
+      status = fl_string_dynamic_terminate_after(&action->parameters.array[0]);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        return status;
+      }
+
       action->parameters.used++;
     }
 
@@ -65,6 +72,13 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          return status;
+        }
+
+        status = fl_string_dynamic_terminate_after(&action->parameters.array[action->parameters.used]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
           return status;
         }
 
@@ -183,6 +197,12 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+          }
+
+          status = fl_string_dynamic_terminate_after(&actions->array[0].parameters.array[0]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
           }
         }
       }
@@ -484,8 +504,12 @@ extern "C" {
         }
         else {
           if (data.warning.verbosity == f_console_verbosity_debug) {
-            fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.warning.to.stream, "%s%sUnknown rule item action type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
+            fprintf(data.warning.to.stream, "%s%sUnknown rule item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+            fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
+            f_print_dynamic(data.warning.to.stream, cache->name_action);
+            fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
+            fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+
 
             controller_rule_error_print(data.warning, *cache, F_true);
           }
@@ -497,7 +521,11 @@ extern "C" {
           if (item->actions.type == controller_rule_action_type_create || item->actions.type == controller_rule_action_type_group || item->actions.type == controller_rule_action_type_use || item->actions.type == controller_rule_action_type_user) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for this rule item action type.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+              fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+              fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+              f_print_dynamic(data.error.to.stream, cache->name_action);
+              fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
             }
 
             status = F_status_set_error(F_supported_not);
@@ -572,6 +600,76 @@ extern "C" {
     return F_none;
   }
 #endif // _di_controller_rule_items_increase_by_
+
+#ifndef _di_controller_rule_path_
+  f_return_status controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) {
+    f_status_t status = F_none;
+
+    path->used = 0;
+
+    if (setting.path_setting.used) {
+      status = fl_string_append(setting.path_setting.string, setting.path_setting.used, path);
+
+      if (F_status_is_error_not(status)) {
+        status = fl_string_append(f_path_separator, f_path_separator_length, path);
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(controller_string_rules, controller_string_rules_length, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(f_path_separator, f_path_separator_length, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(path_directory.string, path_directory.used, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(f_path_separator, f_path_separator_length, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(path_name.string, path_name.used, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, path);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(controller_string_rule, controller_string_rule_length, path);
+    }
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      return status;
+    }
+
+    status = fl_string_dynamic_terminate_after(path);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      return status;
+    }
+
+    char path_raw[path->used + 1];
+
+    memcpy(path_raw, path->string, path->used);
+    path_raw[path->used] = 0;
+
+    status = fll_path_canonical(path_raw, path);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
+      return status;
+    }
+
+    return F_none;
+  }
+#endif // _di_controller_rule_path_
 
 #ifndef _di_controller_rule_process_
   f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) {
@@ -884,8 +982,11 @@ extern "C" {
     cache->buffer_item.used = 0;
     cache->buffer_path.used = 0;
 
-    cache->content_items.used = 0;
+    for (f_array_length_t i = 0; i < cache->content_items.used; ++i) {
+      cache->content_items.array[i].used = 0;
+    } // for
 
+    cache->content_items.used = 0;
     cache->object_items.used = 0;
 
     cache->name_action.used = 0;
@@ -898,7 +999,14 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
     }
     else {
-      status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, cache);
+      status = fl_string_dynamic_terminate_after(&rule->id);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      }
+      else {
+        status = controller_file_load(data, setting, controller_string_rules, rule->id, controller_string_rule, controller_string_rules_length, controller_string_rule_length, cache);
+      }
     }
 
     if (F_status_is_error_not(status)) {
@@ -929,7 +1037,10 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "controller_rule_items_increase_by", F_true);
       }
       else {
-        for (f_array_length_t i = 0; i < cache->object_items.used; ++i) {
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+
+        for (; i < cache->object_items.used; ++i) {
 
           cache->line_item = 0;
           cache->line_action = 0;
@@ -941,8 +1052,12 @@ extern "C" {
           cache->delimits.used = 0;
 
           cache->content_action.used = 0;
-          cache->content_actions.used = 0;
 
+          for (j = 0; j < cache->content_actions.used; ++j) {
+            cache->content_actions.array[j].used = 0;
+          } // for
+
+          cache->content_actions.used = 0;
           cache->object_actions.used = 0;
 
           cache->buffer_item.used = 0;
@@ -990,8 +1105,11 @@ extern "C" {
           }
           else {
             if (data.warning.verbosity == f_console_verbosity_debug) {
-              fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.warning.to.stream, "%s%sUnknown rule item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
+              fprintf(data.warning.to.stream, "%s%sUnknown rule item '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+              fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
+              f_print_dynamic(data.warning.to.stream, cache->name_item);
+              fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
               controller_rule_error_print(data.warning, *cache, F_true);
             }
@@ -1003,6 +1121,13 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append", F_true);
+            break;
+          }
+
+          status = fl_string_dynamic_terminate_after(&cache->buffer_item);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
             break;
           }
 
@@ -1073,7 +1198,16 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      }
+      else {
+        status = fl_string_dynamic_terminate_after(&cache->name_item);
 
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        }
+      }
+
+      if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
           return status;
         }
@@ -1115,11 +1249,10 @@ extern "C" {
       }
       else {
         if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.warning.to.stream, "%s%sUnknown rule setting.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
-
           fprintf(data.warning.to.stream, "%s%sUnknown rule setting '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-          fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->name_item.string, data.warning.notable.after->string);
+          fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
+          f_print_dynamic(data.warning.to.stream, cache->name_item);
+          fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
           fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
           controller_rule_error_print(data.warning, *cache, F_false);
@@ -1149,6 +1282,16 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      }
+      else {
+        status = fl_string_dynamic_terminate_after(&cache->name_action);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        }
+      }
+
+      if (F_status_is_error(status)) {
         controller_rule_error_print(data.error, *cache, F_false);
 
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
@@ -1185,9 +1328,6 @@ extern "C" {
           setting_maps = &rule->parameter;
         }
 
-        setting_maps->array[setting_maps->used].name.used = 0;
-        setting_maps->array[setting_maps->used].value.used = 0;
-
         status = fl_string_maps_increase(setting_maps);
 
         if (F_status_is_error(status)) {
@@ -1204,6 +1344,9 @@ extern "C" {
           controller_rule_error_print(data.error, *cache, F_false);
           continue;
         }
+
+        setting_maps->array[setting_maps->used].name.used = 0;
+        setting_maps->array[setting_maps->used].value.used = 0;
 
         status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_maps->array[setting_maps->used].name);
 
@@ -1226,7 +1369,16 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+        }
+        else {
+          status = fl_string_dynamic_terminate_after(&setting_maps->array[setting_maps->used].value);
 
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          }
+        }
+
+        if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
             return status;
           }
@@ -1325,7 +1477,16 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          }
+          else {
+            status = fl_string_dynamic_terminate_after(setting_value);
 
+            if (F_status_is_error(status)) {
+              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            }
+          }
+
+          if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
               return status;
             }
@@ -1371,9 +1532,18 @@ extern "C" {
           status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &setting_values->array[setting_values->used]);
 
           if (F_status_is_error(status)) {
-            setting_values->array[setting_values->used].used = 0;
-
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          }
+          else {
+            status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            }
+          }
+
+          if (F_status_is_error(status)) {
+            setting_values->array[setting_values->used].used = 0;
 
             if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
               return status;
@@ -1447,7 +1617,7 @@ extern "C" {
         setting_values = &rule->wish;
       }
 
-      status = fl_string_dynamics_increase_by(2, setting_values);
+      status = fl_string_dynamics_increase_by(controller_default_allocation_step, setting_values);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
@@ -1470,9 +1640,18 @@ extern "C" {
       status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_values->array[setting_values->used]);
 
       if (F_status_is_error(status)) {
-        setting_values->array[setting_values->used].used = 0;
-
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      }
+      else {
+        status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        }
+      }
+
+      if (F_status_is_error(status)) {
+        setting_values->array[setting_values->used].used = 0;
 
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
           return status;
@@ -1489,10 +1668,19 @@ extern "C" {
       status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &setting_values->array[setting_values->used + 1]);
 
       if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      }
+      else {
+        status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used + 1]);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        }
+      }
+
+      if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
         setting_values->array[setting_values->used + 1].used = 0;
-
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
 
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
           return status;
@@ -1503,27 +1691,6 @@ extern "C" {
         }
 
         controller_rule_error_print(data.error, *cache, F_false);
-        continue;
-      }
-
-      // force the path to be canonical (removing all '../' parts).
-      status = fll_path_canonical(setting_values->array[setting_values->used].string, &setting_values->array[setting_values->used]);
-
-      if (F_status_is_error(status)) {
-        setting_values->array[setting_values->used].used = 0;
-        setting_values->array[setting_values->used + 1].used = 0;
-
-        fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
-
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
-          status_return = status;
-          break;
-        }
-
-        if (F_status_is_error_not(status_return)) {
-          status_return = status;
-        }
-
         continue;
       }
 
@@ -1548,43 +1715,24 @@ extern "C" {
 
         continue;
       }
-      else {
-        if (fl_string_dynamic_compare(setting_values->array[setting_values->used + 1], cache->buffer_path) == F_equal_to_not) {
 
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            status = fl_string_dynamic_terminate_after(&cache->buffer_item);
+      if (fl_string_dynamic_compare(setting_values->array[setting_values->used + 1], cache->buffer_path) == F_equal_to_not) {
 
-            if (F_status_is_error(status)) {
-              setting_values->array[setting_values->used].used = 0;
-              setting_values->array[setting_values->used + 1].used = 0;
-
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-
-              if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
-                return status;
-              }
-
-              if (F_status_is_error_not(status_return)) {
-                status_return = status;
-              }
-
-              controller_rule_error_print(data.error, *cache, F_false);
-              continue;
-            }
-
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sThe rule item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-            fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used + 1].string, data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s' must be a base path name, such as '", data.error.context.before->string);
-            fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->buffer_path.string, data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-          }
-
-          setting_values->array[setting_values->used].used = 0;
-          setting_values->array[setting_values->used + 1].used = 0;
-
-          continue;
+        if (data.error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data.error.to.stream, "%s%sThe rule item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+          fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used + 1].string, data.error.notable.after->string);
+          fprintf(data.error.to.stream, "%s' must be a base path name, such as %llu '", data.error.context.before->string, cache->buffer_path.used);
+          fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+          f_print_dynamic(data.error.to.stream, cache->buffer_path);
+          fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+          fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
         }
+
+        setting_values->array[setting_values->used].used = 0;
+        setting_values->array[setting_values->used + 1].used = 0;
+
+        continue;
       }
 
       setting_values->used += 2;

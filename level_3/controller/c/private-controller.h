@@ -82,11 +82,17 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   Errors (with error bit) from: f_file_stat().
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  *
+ * @see f_file_stat()
  * @see f_file_stream_open()
  * @see f_file_stream_read()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
   extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) f_gcc_attribute_visibility_internal;

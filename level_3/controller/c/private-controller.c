@@ -51,19 +51,13 @@ extern "C" {
       status = fl_string_append(f_path_separator, f_path_separator_length, &cache->name_file);
     }
 
-    if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
-      return status;
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(path_name.string, path_name.used, &cache->name_file);
     }
 
-    status = fl_string_dynamic_append(path_name, &cache->name_file);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
-      return status;
+    if (F_status_is_error_not(status)) {
+      status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
     }
-
-    status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
       status = fl_string_append(path_suffix, path_suffix_length, &cache->name_file);

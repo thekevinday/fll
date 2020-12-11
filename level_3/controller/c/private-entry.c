@@ -188,8 +188,11 @@ extern "C" {
       }
       else {
         if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.warning.to.stream, "%s%sUnknown entry item type.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
+          fprintf(data.warning.to.stream, "%s%sUnknown entry item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+          fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
+          f_print_dynamic(data.warning.to.stream, cache->name_action);
+          fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
+          fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
           controller_entry_error_print(data.warning, *cache);
         }
@@ -199,7 +202,7 @@ extern "C" {
 
       if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
         allocate = cache->content_actions.array[i].used;
-        at_least = 1;
+        at_least = 2;
         at_most = allocate;
       }
       else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
@@ -593,6 +596,19 @@ extern "C" {
     cache->delimits.used = 0;
 
     cache->content_action.used = 0;
+
+    {
+      f_array_length_t i = 0;
+
+      for (; i < cache->content_actions.used; ++i) {
+        cache->content_actions.array[i].used = 0;
+      } // for
+
+      for (i = 0; i < cache->content_items.used; ++i) {
+        cache->content_items.array[i].used = 0;
+      } // for
+    }
+
     cache->content_actions.used = 0;
     cache->content_items.used = 0;
 

@@ -29,7 +29,7 @@ Entry Specification:
       "failsafe": One Content that is a valid Object name, except for the reserved "main".
       "item": One Content that is a valid Object name, except for the reserved "main".
       "ready": Zero Content.
-      "rule": One or more Content.
+      "rule": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:

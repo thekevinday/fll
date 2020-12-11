@@ -254,6 +254,40 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 /**
+ * Construct a canonical rule file path from the given path directory and name.
+ *
+ * @param data
+ *   The program data.
+ * @param setting
+ *   The controller settings data.
+ * @param path_directory
+ *   The path directory, such as 'boot' from '/etc/controller/rules/boot/default.rule'.
+ * @param path_name
+ *   The path name, such as 'default' from '/etc/controller/rules/boot/default.rule'.
+ * @param path
+ *   The constructed path.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_stream_open().
+ *   Errors (with error bit) from: f_file_stream_read().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: fll_path_canonical().
+ *
+ * @see f_file_stat()
+ * @see f_file_stream_open()
+ * @see f_file_stream_read()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate_after()
+ * @see fll_path_canonical()
+ */
+#ifndef _di_controller_rule_path_
+  extern f_return_status controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_path_
+
+/**
  * Process and execute the given rule by the rule id.
  *
  * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
