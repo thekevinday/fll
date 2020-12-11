@@ -31,9 +31,12 @@ extern "C" {
   #define f_string_map_t_initialize { f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
   #define f_macro_string_map_t_clear(map) \
-    map.array = 0; \
-    map.size = 0; \
-    map.used = 0;
+    map.name.array = 0; \
+    map.name.size = 0; \
+    map.name.used = 0; \
+    map.value.array = 0; \
+    map.value.size = 0; \
+    map.value.used = 0;
 
   #define f_macro_string_map_t_delete(status, map) \
     f_macro_string_dynamic_t_delete(status, map.name) \

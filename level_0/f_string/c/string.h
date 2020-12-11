@@ -27,6 +27,7 @@
 #include <level_0/string_map.h>
 #include <level_0/string_quantity.h>
 #include <level_0/string_range.h>
+#include <level_0/string_tuple.h>
 
 #ifdef __cplusplus
 extern "C" {
