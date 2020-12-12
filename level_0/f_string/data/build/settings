@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-individual -lf_memory
 build_sources_library
 build_sources_program
-build_sources_headers string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_tuple.h
+build_sources_headers string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_triple.h
 build_sources_script
 build_sources_setting
 build_script yes
