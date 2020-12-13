@@ -33,16 +33,17 @@ Entry Documentation:
   Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
 
   The "rule" Action immediately executes a named rule file.
-  The first Action Parameter represents the rule ID, which is a relative path the rule file is to be found, without the file extension.
-    - Do not include leading or trailing slashes in the name.
+  The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.
+    - Do not include leading or trailing slashes.
     - This is relative to the settings rules directory.
-    - For example the rule ID "example/my" would be found in "/etc/controller/settings/rules/example/my.rule" (assuming the directory structure).
-  The second Action Parameter represents the basename for the file representing the desired rule.
-  The directory is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[filename]", the resulting path would be: "/etc/controller/rules/[directory]/[filename].rule"
+  The second Action Parameter represents the basename for the rule file, without the file extension.
+    - This must not have any directory paths.
   The remaining Action Parameters may be specified in any order\:
     - "asynchronous": Designates that execution will not block (wait).
     - "require": Designates that this rule must succeed or trigger execution of failsafe.
     - "wait": Designates that this rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
+
+  The full path to the "rule" is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[basename]", the resulting path would be: "/etc/controller/rules/[directory]/[basename].rule"
 
   It is important to note that for any given "rule", execution within that "rule" may be internally asynchronous (even if the "rule" is synchronous).
   For example, a service that is often called a daemon will execute in the background.

@@ -28,12 +28,19 @@ extern "C" {
 
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
-    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid "'.");
+    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
     fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Run in test mode, where nothing is actually run (a simulation).");
-    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules) without running (or simulating).");
+    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Run in test mode, where nothing is actually run but is instead simulated.");
+    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
+
+    fprintf(output.stream, "  When both the ");
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, controller_long_test);
+    fprintf(output.stream, " operation and the ");
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, controller_long_validate);
+    fprintf(output.stream, " operation are specified, then additional information on each would be executed rule is printed.");
+    fprintf(output.stream, "%c", f_string_eol[0]);
 
     return F_none;
   }
@@ -230,6 +237,14 @@ extern "C" {
     if (!setting.path_pid.used) {
       status = fl_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
 
+      if (F_status_is_error_not(status)) {
+        status = fl_string_append(entry_name.string, entry_name.used, &setting.path_pid);
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = fl_string_append(controller_path_suffix, controller_path_suffix_length, &setting.path_pid);
+      }
+
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
           fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
@@ -282,7 +297,7 @@ extern "C" {
       else {
         status = controller_preprocess_entry(*data, &setting, &cache);
 
-        if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
+        if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
 
           if (f_file_exists(setting.path_pid.string) == F_true) {
             if (data->error.verbosity != f_console_verbosity_quiet) {

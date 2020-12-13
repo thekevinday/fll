@@ -27,6 +27,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/color.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/file.h>
@@ -72,18 +73,20 @@ extern "C" {
   // This specifically must be at least 2 for this project.
   #define controller_default_allocation_step 4
 
-  #define controller_path_pid      "/var/run/controller/controller.pid"
+  #define controller_path_pid      "/var/run/controller/controller-"
   #define controller_path_settings "/etc/controller"
+  #define controller_path_suffix   ".pid"
 
-  #define controller_path_pid_length      34
+  #define controller_path_pid_length      31
   #define controller_path_settings_length 15
+  #define controller_path_suffix_length   4
 
   #define controller_short_daemon        "d"
   #define controller_short_interruptable "i"
   #define controller_short_pid           "p"
   #define controller_short_settings      "s"
   #define controller_short_test          "t"
-  #define controller_short_validate      "V"
+  #define controller_short_validate      "v"
 
   #define controller_long_daemon        "daemon"
   #define controller_long_interruptable "interruptable"

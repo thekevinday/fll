@@ -14,6 +14,7 @@ extern "C" {
 
 #ifndef _di_controller_string_
   #define controller_string_action        "action"
+  #define controller_string_actions       "actions"
   #define controller_string_asynchronous  "asynchronous"
   #define controller_string_create        "create"
   #define controller_string_command       "command"
@@ -55,6 +56,7 @@ extern "C" {
   #define controller_string_wish          "wish"
 
   #define controller_string_action_length        6
+  #define controller_string_actions_length       7
   #define controller_string_asynchronous_length  12
   #define controller_string_create_length        6
   #define controller_string_command_length       7
@@ -121,6 +123,9 @@ extern "C" {
   };
 
   typedef struct {
+    uint8_t method;
+    uint8_t type;
+
     f_string_length_t line;
 
     f_status_t status;
@@ -130,6 +135,8 @@ extern "C" {
 
   #define controller_rule_action_t_initialize \
     { \
+      0, \
+      0, \
       0, \
       F_known_not, \
       f_string_dynamics_t_initialize, \
@@ -141,9 +148,6 @@ extern "C" {
 
 #ifndef _di_controller_rule_actions_t_
   typedef struct {
-    uint8_t method;
-    uint8_t type;
-
     controller_rule_action_t *array;
 
     f_array_length_t size;
@@ -152,8 +156,6 @@ extern "C" {
 
   #define controller_rule_actions_t_initialize \
     { \
-      0, \
-      0, \
       0, \
       0, \
       0, \

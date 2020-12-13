@@ -30,35 +30,37 @@ extern "C" {
   }
 #endif // _di_controller_rule_action_method_name_
 
-#ifndef _di_controller_rule_action_read_
-  f_return_status controller_rule_action_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, controller_rule_action_t *action) {
+#ifndef _di_controller_rule_parameters_read_
+  f_return_status controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) {
     f_status_t status = F_none;
 
+    parameters->used = 0;
+
     if (object && object->start <= object->start) {
-      status = fl_string_dynamics_increase(&action->parameters);
+      status = fl_string_dynamics_increase(parameters);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
         return status;
       }
 
-      action->parameters.array[0].used = 0;
+      parameters->array[parameters->used].used = 0;
 
-      status = fl_string_dynamic_partial_append_nulless(buffer, *object, &action->parameters.array[0]);
+      status = fl_string_dynamic_partial_append_nulless(buffer, *object, &parameters->array[0]);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
         return status;
       }
 
-      status = fl_string_dynamic_terminate_after(&action->parameters.array[0]);
+      status = fl_string_dynamic_terminate_after(&parameters->array[0]);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
         return status;
       }
 
-      action->parameters.used++;
+      parameters->used++;
     }
 
     if (content && content->used) {
@@ -66,29 +68,36 @@ extern "C" {
 
         if (content->array[i].start > content->array[i].start) continue;
 
-        action->parameters.array[action->parameters.used].used = 0;
+        status = fl_string_dynamics_increase(parameters);
 
-        status = fl_string_dynamic_partial_append_nulless(buffer, content->array[i], &action->parameters.array[action->parameters.used]);
+        if (F_status_is_error(status)) {
+          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+          return status;
+        }
+
+        parameters->array[parameters->used].used = 0;
+
+        status = fl_string_dynamic_partial_append_nulless(buffer, content->array[i], &parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
           return status;
         }
 
-        status = fl_string_dynamic_terminate_after(&action->parameters.array[action->parameters.used]);
+        status = fl_string_dynamic_terminate_after(&parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
           return status;
         }
 
-        action->parameters.used++;
+        parameters->used++;
       } // for
     }
 
     return F_none;
   }
-#endif // _di_controller_rule_action_read_
+#endif // _di_controller_rule_parameters_read_
 
 #ifndef _di_controller_rule_action_type_name_
   f_string_static_t controller_rule_action_type_name(const uint8_t type) {
@@ -169,52 +178,20 @@ extern "C" {
   }
 #endif // _di_controller_rule_actions_increase_by_
 
-#ifndef _di_controller_rule_actions_read_
-  f_return_status controller_rule_actions_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+#ifndef _di_controller_rule_action_read_
+  f_return_status controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
     f_status_t status = F_none;
 
-    actions->used = 0;
-
-    // "script" types use the entire content and can be directly passed through.
-    if (item->type == controller_rule_item_type_script) {
-      status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
-      }
-      else {
-        actions->array[0].parameters.used = 0;
-
-        status = fl_string_dynamics_increase(&actions->array[0].parameters);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
-        }
-        else {
-          actions->array[0].line = cache->line_action;
-
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->range_action, &actions->array[0].parameters.array[0]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
-          }
-
-          status = fl_string_dynamic_terminate_after(&actions->array[0].parameters.array[0]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-          }
-        }
-      }
-
-      return status;
-    }
-
-    if (actions->method == controller_rule_action_method_extended_list) {
+    if (method == controller_rule_action_method_extended_list) {
       cache->comments.used = 0;
       cache->delimits.used = 0;
+      cache->content_action.used = 0;
       cache->content_actions.used = 0;
       cache->object_actions.used = 0;
+
+      if (actions->size) {
+        actions->array[actions->used].parameters.used = 0;
+      }
 
       status = fl_fss_extended_list_content_read(cache->buffer_item, range, &cache->content_action, &cache->delimits, &cache->comments);
 
@@ -222,6 +199,42 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true);
       }
       else if (status == FL_fss_found_content) {
+
+        // "script" types use the entire content and can be directly passed through.
+        if (item->type == controller_rule_item_type_script) {
+          actions->array[actions->used].parameters.used = 0;
+
+          status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+          }
+          else {
+            actions->array[actions->used].type = type;
+            actions->array[actions->used].method = method;
+            actions->array[actions->used].line = cache->line_action;
+
+            status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_action.array[0], &actions->array[actions->used].parameters.array[0]);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+            }
+
+            status = fl_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            }
+            else {
+              actions->array[actions->used].parameters.used = 1;
+              actions->used++;
+            }
+          }
+
+          return status;
+        }
+
+        // the object_actions and content_actions caches are being used for the purposes of getting the parameters a given the action.
         status = fll_fss_extended_read(cache->buffer_item, &cache->content_action.array[0], &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
         if (F_status_is_error(status)) {
@@ -239,6 +252,13 @@ extern "C" {
 
             for (; i < cache->object_actions.used; ++i) {
 
+              status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
+
+              if (F_status_is_error(status)) {
+                fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
+                break;
+              }
+
               status = f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &actions->array[actions->used].line);
 
               if (F_status_is_error(status)) {
@@ -246,6 +266,8 @@ extern "C" {
                 break;
               }
 
+              actions->array[actions->used].type = type;
+              actions->array[actions->used].method = method;
               actions->array[actions->used].line += ++item->line;
               actions->array[actions->used].parameters.used = 0;
               actions->array[actions->used].status = F_known_not;
@@ -259,11 +281,13 @@ extern "C" {
                 break;
               }
 
-              status = controller_rule_action_read(data, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used]);
+              status = controller_rule_parameters_read(data, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used].parameters);
 
               actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
               actions->used++;
             } // for
+
+            range->start = cache->content_action.array[0].start;
           }
         }
       }
@@ -287,35 +311,30 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
         }
         else {
-          status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
+          status = f_fss_count_lines(cache->buffer_item, range->start, &actions->array[actions->used].line);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
           }
           else {
-            status = f_fss_count_lines(cache->buffer_item, range->start, &actions->array[0].line);
+            actions->array[actions->used].type = type;
+            actions->array[actions->used].method = method;
+            actions->array[actions->used].line += ++item->line;
+            actions->array[actions->used].parameters.used = 0;
+            actions->array[actions->used].status = F_known_not;
+
+            status = controller_rule_parameters_read(data, cache->buffer_item, 0, &cache->content_action, &actions->array[actions->used].parameters);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "controller_rule_parameters_read", F_true);
+
+              actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
             }
             else {
-              actions->array[0].line += ++item->line;
-              actions->array[0].parameters.used = 0;
-              actions->array[0].status = F_known_not;
-
-              status = controller_rule_action_read(data, cache->buffer_item, 0, &cache->content_action, &actions->array[0]);
-
-              if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "controller_rule_action_read", F_true);
-
-                actions->array[0].status = controller_status_simplify(F_status_set_fine(status));
-              }
-              else {
-                actions->array[0].status = status;
-              }
-
-              actions->used = 1;
+              actions->array[actions->used].status = status;
             }
+
+            actions->used++;
           }
         }
       }
@@ -335,7 +354,7 @@ extern "C" {
 
     return status;
   }
-#endif // _di_controller_rule_actions_read_
+#endif // _di_controller_rule_action_read_
 
 #ifndef _di_controller_rule_error_print_
   void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) {
@@ -369,19 +388,32 @@ extern "C" {
   }
 #endif // _di_controller_rule_error_print_
 
+#ifndef _di_controller_rule_error_need_want_wish_print_
+  void controller_rule_error_need_want_wish_print(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
+
+    if (output.verbosity != f_console_verbosity_quiet) {
+      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(output.to.stream, "%s%sThe %s rule '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s, need_want_wish);
+      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, value, output.notable.after->string);
+      fprintf(output.to.stream, "%s' %s.%s%c", output.context.before->string, why, output.context.after->string, f_string_eol_s[0]);
+    }
+  }
+#endif // _di_controller_rule_error_need_want_wish_print_
+
 #ifndef _di_controller_rule_execute_
   f_return_status controller_rule_execute(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) {
+    // @todo this needs the "action" in which to perform, such as "start", "stop", "restart", etc..
     // @todo
   }
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_find_loaded_
   f_array_length_t controller_rule_find_loaded(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id) {
+
     f_array_length_t i = 0;
 
     for (; i < setting.rules.used; ++i) {
-
-      if (fl_string_dynamic_compare(setting.rules.array[i].id, rule_id) == F_equal_to) {
+      if (fl_string_dynamic_compare(rule_id, setting.rules.array[i].id) == F_equal_to) {
         return i;
       }
     } // for
@@ -390,17 +422,57 @@ extern "C" {
   }
 #endif // _di_controller_rule_find_loaded_
 
+#ifndef _di_controller_rule_id_construct_
+  f_return_status controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *id) {
+    f_status_t status = F_none;
+
+    id->used = 0;
+
+    status = fl_string_dynamic_partial_append_nulless(source, directory, id);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      return status;
+    }
+
+    status = fl_string_append(f_path_separator_s, f_path_separator_length, id);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      return status;
+    }
+
+    status = fl_string_dynamic_partial_append_nulless(source, basename, id);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      return status;
+    }
+
+    status = fl_string_dynamic_terminate_after(id);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+    }
+
+    return status;
+  }
+#endif // _di_controller_rule_id_construct_
+
 #ifndef _di_controller_rule_item_read_
   f_return_status controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
+    f_string_length_t last = 0;
 
-    controller_rule_actions_t *actions = 0;
-
+    uint8_t type = 0;
+    uint8_t method = 0;
     bool multiple = F_false;
 
-    for (range.start = 0; range.start < cache->buffer_item.used && range.start <= range.stop; cache->delimits.used = 0, cache->comments.used = 0) {
+    item->actions.used = 0;
+
+    for (; range.start < cache->buffer_item.used && range.start <= range.stop; last = range.start, cache->delimits.used = 0, cache->comments.used = 0) {
 
       status = fl_fss_extended_list_object_read(cache->buffer_item, &range, &cache->range_action, &cache->delimits);
 
@@ -409,23 +481,11 @@ extern "C" {
         break;
       }
 
-      if (range.start >= range.stop || range.start >= cache->buffer_item.used) {
-        if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sUnterminated FSS Extended List at end of rule file.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
-          }
-
-          status = F_status_set_error(FL_fss_found_object_content_not);
-        }
-
-        break;
-      }
-
       if (status == FL_fss_found_object) {
         multiple = F_true;
       }
       else {
+        range.start = last;
         multiple = F_false;
         cache->delimits.used = 0;
 
@@ -436,111 +496,107 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true);
           break;
         }
+
+        // Nothing of importance here, so continue onto the next line.
+        // @todo present an error if this line is anything but whitespace.
+        if (status != FL_fss_found_object) continue;
       }
 
-      if (status == FL_fss_found_object_content_not || range.start >= range.stop || range.start >= cache->buffer_item.used) {
-        // object ended without any content.
+      status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
         break;
       }
 
-      if (status == FL_fss_found_object) {
-        status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
+      status = f_fss_count_lines(cache->buffer_item, cache->range_action.start, &cache->line_action);
 
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
-          break;
-        }
-
-        status = f_fss_count_lines(cache->buffer_item, cache->range_action.start, &cache->line_action);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
-          break;
-        }
-
-        cache->line_action += ++item->line;
-        cache->name_action.used = 0;
-
-        status = fl_string_dynamic_rip_nulless(cache->buffer_item, cache->range_action, &cache->name_action);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
-          break;
-        }
-
-        status = fl_string_dynamic_terminate_after(&cache->name_action);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-          break;
-        }
-
-        if (fl_string_dynamic_compare_string(controller_string_create, cache->name_action, controller_string_create_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_create;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_group, cache->name_action, controller_string_group_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_group;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_kill, cache->name_action, controller_string_kill_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_kill;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_restart, cache->name_action, controller_string_restart_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_restart;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_reload, cache->name_action, controller_string_reload_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_reload;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_start, cache->name_action, controller_string_start_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_start;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_stop, cache->name_action, controller_string_stop_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_stop;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_use, cache->name_action, controller_string_use_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_use;
-        }
-        else if (fl_string_dynamic_compare_string(controller_string_user, cache->name_action, controller_string_user_length) == F_equal_to) {
-          item->actions.type = controller_rule_action_type_user;
-        }
-        else {
-          if (data.warning.verbosity == f_console_verbosity_debug) {
-            fprintf(data.warning.to.stream, "%s%sUnknown rule item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-            fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
-            f_print_dynamic(data.warning.to.stream, cache->name_action);
-            fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
-            fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
-
-
-            controller_rule_error_print(data.warning, *cache, F_true);
-          }
-
-          continue;
-        }
-
-        if (multiple) {
-          if (item->actions.type == controller_rule_action_type_create || item->actions.type == controller_rule_action_type_group || item->actions.type == controller_rule_action_type_use || item->actions.type == controller_rule_action_type_user) {
-            if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-              fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-              f_print_dynamic(data.error.to.stream, cache->name_action);
-              fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-              fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-            }
-
-            status = F_status_set_error(F_supported_not);
-            break;
-          }
-
-          item->actions.method = controller_rule_action_method_extended_list;
-        }
-        else {
-          item->actions.method = controller_rule_action_method_extended;
-        }
-
-        status = controller_rule_actions_read(data, cache, item, &item->actions, &range);
-        if (F_status_is_error(status)) break;
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+        break;
       }
+
+      cache->line_action += ++item->line;
+      cache->name_action.used = 0;
+
+      status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_item, cache->range_action, &cache->name_action);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
+        break;
+      }
+
+      if (fl_string_dynamic_compare_string(controller_string_create, cache->name_action, controller_string_create_length) == F_equal_to) {
+        type = controller_rule_action_type_create;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_group, cache->name_action, controller_string_group_length) == F_equal_to) {
+        type = controller_rule_action_type_group;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_kill, cache->name_action, controller_string_kill_length) == F_equal_to) {
+        type = controller_rule_action_type_kill;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_restart, cache->name_action, controller_string_restart_length) == F_equal_to) {
+        type = controller_rule_action_type_restart;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_reload, cache->name_action, controller_string_reload_length) == F_equal_to) {
+        type = controller_rule_action_type_reload;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_start, cache->name_action, controller_string_start_length) == F_equal_to) {
+        type = controller_rule_action_type_start;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_stop, cache->name_action, controller_string_stop_length) == F_equal_to) {
+        type = controller_rule_action_type_stop;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_use, cache->name_action, controller_string_use_length) == F_equal_to) {
+        type = controller_rule_action_type_use;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_user, cache->name_action, controller_string_user_length) == F_equal_to) {
+        type = controller_rule_action_type_user;
+      }
+      else {
+        if (data.warning.verbosity == f_console_verbosity_debug) {
+          fprintf(data.warning.to.stream, "%s%sUnknown rule item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+          fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
+          f_print_dynamic(data.warning.to.stream, cache->name_action);
+          fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
+          fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+
+          controller_rule_error_print(data.warning, *cache, F_true);
+        }
+
+        continue;
+      }
+
+      if (multiple) {
+        if (type == controller_rule_action_type_create || type == controller_rule_action_type_group || type == controller_rule_action_type_use || type == controller_rule_action_type_user) {
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+            f_print_dynamic(data.error.to.stream, cache->name_action);
+            fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+            fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          }
+
+          status = F_status_set_error(F_supported_not);
+          break;
+        }
+
+        method = controller_rule_action_method_extended_list;
+      }
+      else {
+        method = controller_rule_action_method_extended;
+      }
+
+      status = controller_rule_actions_increase_by(controller_default_allocation_step, &item->actions);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
+        break;
+      }
+
+      status = controller_rule_action_read(data, type, method, cache, item, &item->actions, &range);
+      if (F_status_is_error(status)) break;
     } // for
 
     return status;
@@ -611,7 +667,7 @@ extern "C" {
       status = fl_string_append(setting.path_setting.string, setting.path_setting.used, path);
 
       if (F_status_is_error_not(status)) {
-        status = fl_string_append(f_path_separator, f_path_separator_length, path);
+        status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
       }
     }
 
@@ -620,7 +676,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator, f_path_separator_length, path);
+      status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
     }
 
     if (F_status_is_error_not(status)) {
@@ -628,7 +684,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator, f_path_separator_length, path);
+      status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
     }
 
     if (F_status_is_error_not(status)) {
@@ -716,7 +772,7 @@ extern "C" {
     status = fl_string_append(controller_string_rules, controller_string_rules_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator, f_path_separator_length, &cache->name_file);
+      status = fl_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
@@ -761,6 +817,10 @@ extern "C" {
 
     controller_rule_t *rule = &setting->rules.array[index];
 
+    if (simulate && data.parameters[controller_parameter_validate].result == f_console_result_found) {
+      controller_rule_simulate(data, *cache, index, setting);
+    }
+
     {
       f_array_length_t j = 0;
       f_array_length_t k = 0;
@@ -772,6 +832,12 @@ extern "C" {
         &rule->wish,
       };
 
+      const f_string_t strings[] = {
+        "needed",
+        "wanted",
+        "wished for",
+      };
+
       for (i = 0; i < 3; ++i) {
 
         for (j = 0; j < dynamics[i]->used; ++j) {
@@ -779,27 +845,16 @@ extern "C" {
 
           if (at == setting->rules.used) {
             if (i == 0) {
-
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sThe needed rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
-                controller_rule_error_print(data.error, *cache, F_true);
-              }
+              controller_rule_error_need_want_wish_print(data.error, strings[i], dynamics[i]->array[j].string, "was not found");
 
               status = F_status_set_error(F_found_not);
+              controller_rule_error_print(data.error, *cache, F_true);
 
               if (!simulate) break;
             }
             else {
               if (data.warning.verbosity == f_console_verbosity_debug) {
-                fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.warning.to.stream, "%s%sThe %s rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, i == 1 ? "wanted" : "wished for");
-                fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
-                fprintf(data.warning.to.stream, "%s' was not found.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
+                controller_rule_error_need_want_wish_print(data.warning, strings[i], dynamics[i]->array[j].string, "was not found");
                 controller_rule_error_print(data.warning, *cache, F_true);
               }
             }
@@ -817,6 +872,7 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+                controller_rule_error_print(data.error, *cache, F_true);
 
                 // always exit on memory errors, even in simulate mode.
                 break;
@@ -859,14 +915,8 @@ extern "C" {
               if (F_status_is_error(status)) {
                 if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
 
-                  if (data.error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                    fprintf(data.error.to.stream, "%s%sThe %s rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, i ? "wanted" : "needed");
-                    fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
-                    fprintf(data.error.to.stream, "%s' failed during execution.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
-                    controller_rule_error_print(data.error, *cache, F_true);
-                  }
+                  controller_rule_error_need_want_wish_print(data.error, strings[i], dynamics[i]->array[j].string, "failed during execution");
+                  controller_rule_error_print(data.error, *cache, F_true);
 
                   if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
                     break;
@@ -874,11 +924,7 @@ extern "C" {
                 }
                 else {
                   if (data.warning.verbosity == f_console_verbosity_debug) {
-                    fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-                    fprintf(data.warning.to.stream, "%s%sThe wished for rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-                    fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
-                    fprintf(data.warning.to.stream, "%s' failed during execution.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
+                    controller_rule_error_need_want_wish_print(data.warning, strings[i], dynamics[i]->array[j].string, "failed during execution");
                     controller_rule_error_print(data.warning, *cache, F_true);
                   }
                 }
@@ -887,51 +933,32 @@ extern "C" {
             else if (F_status_is_error(setting->rules.array[at].status)) {
 
               if (i == 0 || i == 1) {
-
-                if (data.error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sThe %s rule '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, i ? "wanted" : "needed");
-                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s' is in a failed state.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
-                  controller_rule_error_print(data.error, *cache, F_true);
-                }
+                controller_rule_error_need_want_wish_print(data.error, strings[i], dynamics[i]->array[j].string, "is in a failed state");
 
                 status = F_status_set_error(F_found_not);
+                controller_rule_error_print(data.error, *cache, F_true);
 
                 if (!simulate) break;
               }
               else {
                 if (data.warning.verbosity == f_console_verbosity_debug) {
-                  fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.warning.to.stream, "%s%sThe wished for rule '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-                  fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.error.notable.before->string, dynamics[i]->array[j].string, data.warning.notable.after->string);
-                  fprintf(data.warning.to.stream, "%s' is in a failed state.%s%c", data.warning.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
-
+                  controller_rule_error_need_want_wish_print(data.warning, strings[i], dynamics[i]->array[j].string, "is in a failed state");
                   controller_rule_error_print(data.warning, *cache, F_true);
                 }
               }
             }
           }
-        }
+        } // for
 
-        if (F_status_is_error(status)) break;
+        if (F_status_is_error(status) && !simulate) break;
       } // for
     }
 
-    if (F_status_is_error_not(status)) {
-      if (simulate) {
-        controller_rule_simulate(data, *cache, index, setting);
-      }
-      else {
-        status = controller_rule_execute(data, *cache, index, setting);
+    if (!simulate && F_status_is_error_not(status)) {
+      status = controller_rule_execute(data, *cache, index, setting);
 
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "controller_rule_execute", F_true);
-          controller_rule_error_print(data.error, *cache, F_true);
-
-          return status;
-        }
+      if (F_status_is_error(status)) {
+        fll_error_print(data.error, F_status_set_fine(status), "controller_rule_execute", F_true);
       }
     }
 
@@ -1077,17 +1104,10 @@ extern "C" {
 
           rule->items.array[rule->items.used].line = ++cache->line_item;
 
-          status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
+          status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
-            break;
-          }
-
-          status = fl_string_dynamic_terminate_after(&cache->name_item);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
             break;
           }
 
@@ -1422,12 +1442,11 @@ extern "C" {
         setting_value->used = 0;
 
         if (type == controller_rule_setting_type_control_group || type == controller_rule_setting_type_name) {
-          status = fl_string_dynamic_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
+
+          status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
             setting_value->used = 0;
-
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
 
             if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
               return status;
@@ -1447,7 +1466,9 @@ extern "C" {
             if (status == F_false) {
               fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_value->string, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+              f_print_dynamic(data.error.to.stream, *setting_value);
+              fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
               fprintf(data.error.to.stream, "%s', there must be at least 1 graph character.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
               controller_rule_error_print(data.error, *cache, F_false);
@@ -1634,53 +1655,10 @@ extern "C" {
         continue;
       }
 
-      setting_values->array[setting_values->used].used = 0;
-      setting_values->array[setting_values->used + 1].used = 0;
-
-      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_values->array[setting_values->used]);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-      }
-      else {
-        status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-        }
-      }
+      status = controller_rule_id_construct(data, cache->buffer_item, cache->content_actions.array[i].array[0], cache->content_actions.array[i].array[1], &setting_values->array[setting_values->used]);
 
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
-
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
-          return status;
-        }
-
-        if (F_status_is_error_not(status_return)) {
-          status_return = status;
-        }
-
-        controller_rule_error_print(data.error, *cache, F_false);
-        continue;
-      }
-
-      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &setting_values->array[setting_values->used + 1]);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
-      }
-      else {
-        status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used + 1]);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
-        }
-      }
-
-      if (F_status_is_error(status)) {
-        setting_values->array[setting_values->used].used = 0;
-        setting_values->array[setting_values->used + 1].used = 0;
 
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
           return status;
@@ -1696,11 +1674,10 @@ extern "C" {
 
       cache->buffer_path.used = 0;
 
-      status = f_file_name_base(setting_values->array[setting_values->used + 1].string, setting_values->array[setting_values->used + 1].used, &cache->buffer_path);
+      status = f_file_name_base(setting_values->array[setting_values->used].string, setting_values->array[setting_values->used + 1].used, &cache->buffer_path);
 
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
-        setting_values->array[setting_values->used + 1].used = 0;
 
         fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
 
@@ -1716,12 +1693,14 @@ extern "C" {
         continue;
       }
 
-      if (fl_string_dynamic_compare(setting_values->array[setting_values->used + 1], cache->buffer_path) == F_equal_to_not) {
+      if (fl_string_dynamic_partial_compare_string(cache->buffer_item.string, cache->buffer_path, cache->buffer_item.used, cache->content_actions.array[i].array[1]) == F_equal_to_not) {
 
         if (data.error.verbosity != f_console_verbosity_quiet) {
           fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data.error.to.stream, "%s%sThe rule item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-          fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used + 1].string, data.error.notable.after->string);
+          fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+          f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+          fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
           fprintf(data.error.to.stream, "%s' must be a base path name, such as %llu '", data.error.context.before->string, cache->buffer_path.used);
           fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
           f_print_dynamic(data.error.to.stream, cache->buffer_path);
@@ -1730,12 +1709,11 @@ extern "C" {
         }
 
         setting_values->array[setting_values->used].used = 0;
-        setting_values->array[setting_values->used + 1].used = 0;
 
         continue;
       }
 
-      setting_values->used += 2;
+      setting_values->used++;
     } // for
 
     return status_return;
@@ -1744,6 +1722,8 @@ extern "C" {
 
 #ifndef _di_controller_rule_simulate_
   void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) {
+
+    // @todo this needs the "action" in which to perform, such as "start", "stop", "restart", etc..
 
     controller_rule_t * const rule = &setting->rules.array[index];
 
@@ -1832,38 +1812,65 @@ extern "C" {
 
     fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
 
-    fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_item, data.context.set.important.after->string, f_string_eol_s[0]);
-
     if (rule->items.used) {
       controller_rule_action_t *action = 0;
       controller_rule_item_t *item = 0;
+      f_string_dynamic_t *parameter = 0;
 
       f_array_length_t j = 0;
+      f_array_length_t k = 0;
 
       for (i = 0; i < rule->items.used; ++i) {
 
         item = &rule->items.array[i];
 
-        fprintf(data.output.stream, "    %s%s%s %s%c", data.context.set.important.before->string, controller_string_type, data.context.set.important.after->string, controller_rule_item_type_name(item->type).string, f_string_eol_s[0]);
+        fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_item, data.context.set.important.after->string, f_string_eol_s[0]);
 
-        fprintf(data.output.stream, "    %s%s%s {%c", data.context.set.important.before->string, controller_string_action, data.context.set.important.after->string, f_string_eol_s[0]);
+        fprintf(data.output.stream, "    %s%s%s %s%c", data.context.set.important.before->string, controller_string_type, data.context.set.important.after->string, controller_rule_item_type_name(item->type).string, f_string_eol_s[0]);
 
         for (j = 0; j < item->actions.used; ++j) {
 
           action = &item->actions.array[j];
 
-          // action method
-          // action type
-          // action parameters
-        }
+          fprintf(data.output.stream, "    %s%s%s {%c", data.context.set.important.before->string, controller_string_action, data.context.set.important.after->string, f_string_eol_s[0]);
 
-        fprintf(data.output.stream, "    }%c", f_string_eol_s[0]);
+          fprintf(data.output.stream, "      %s%s%s %s%c", data.context.set.important.before->string, controller_string_type, data.context.set.important.after->string, controller_rule_action_type_name(action->type).string, f_string_eol_s[0]);
+          fprintf(data.output.stream, "      %s%s%s %s%c", data.context.set.important.before->string, controller_string_method, data.context.set.important.after->string, controller_rule_action_method_name(action->method).string, f_string_eol_s[0]);
+
+          if (action->method == controller_rule_action_method_extended_list && item->type == controller_rule_item_type_script) {
+            fprintf(data.output.stream, "      %s%s%s {%c", data.context.set.important.before->string, controller_string_parameter, data.context.set.important.after->string, f_string_eol_s[0]);
+
+            parameter = &action->parameters.array[0];
+
+            if (parameter->used) {
+              fprintf(data.output.stream, "        ");
+
+              for (k = 0; k < parameter->used; ++k) {
+
+                fprintf(data.output.stream, "%c", parameter->string[k]);
+
+                if (parameter->string[k] == f_fss_eol && k + 1 < parameter->used) {
+                  fprintf(data.output.stream, "        ");
+                }
+              } // for
+            }
+
+            fprintf(data.output.stream, "      }%c", f_string_eol_s[0]);
+          }
+          else {
+            for (k = 0; k < action->parameters.used; ++k) {
+              fprintf(data.output.stream, "      %s%s%s %s%c", data.context.set.important.before->string, controller_string_parameter, data.context.set.important.after->string, action->parameters.array[k].string, f_string_eol_s[0]);
+            } // for
+          }
+
+          fprintf(data.output.stream, "    }%c", f_string_eol_s[0]);
+        } // for
+
+        fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
       } // for
-
-      fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
     }
 
-    fprintf(data.output.stream, "}%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+    fprintf(data.output.stream, "}%c", f_string_eol_s[0]);
 
     setting->rules.array[index].status = F_complete;
   }

@@ -9,16 +9,23 @@
 extern "C" {
 #endif
 
+#ifndef _di_controller_string_dynamic_rip_nulless_terminated_
+  f_return_status controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+
+    f_status_t status = fl_string_dynamic_rip_nulless(source, range, destination);
+    if (F_status_is_error(status)) return status;
+
+    return fl_string_dynamic_terminate_after(destination);
+  }
+#endif // _di_controller_string_dynamic_rip_nulless_terminated_
+
 #ifndef _di_controller_string_dynamic_append_terminated_
   f_return_status controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
     f_status_t status = fl_string_dynamic_append(source, destination);
-
     if (F_status_is_error(status)) return status;
 
-    status = fl_string_dynamic_terminate_after(destination);
-
-    return status;
+    return fl_string_dynamic_terminate_after(destination);
   }
 #endif // _di_controller_string_dynamic_append_terminated_
 
@@ -26,12 +33,9 @@ extern "C" {
   f_return_status controller_string_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
     f_status_t status = fl_string_dynamic_partial_append(source, range, destination);
-
     if (F_status_is_error(status)) return status;
 
-    status = fl_string_dynamic_terminate_after(destination);
-
-    return status;
+    return fl_string_dynamic_terminate_after(destination);
   }
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
@@ -48,7 +52,7 @@ extern "C" {
     status = fl_string_append(path_prefix, path_prefix_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator, f_path_separator_length, &cache->name_file);
+      status = fl_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error_not(status)) {
@@ -82,7 +86,7 @@ extern "C" {
       memcpy(path, setting.path_setting.string, setting.path_setting.used);
       memcpy(path + setting.path_setting.used + f_path_separator_length, cache->name_file.string, cache->name_file.used);
 
-      path[setting.path_setting.used] = f_path_separator[0];
+      path[setting.path_setting.used] = f_path_separator_s[0];
     }
 
     path[path_length] = 0;
@@ -271,6 +275,7 @@ extern "C" {
       return status;
     }
 
+    // utilize the ats cache as an item execution stack (at_i is for item index, and at_j (at_i + 1) is for action index).
     cache->ats.array[0] = 0;
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
@@ -492,6 +497,7 @@ extern "C" {
       return status;
     }
 
+    // utilize the ats cache as an item execution stack (at_i is for item index, and at_j (at_i + 1) is for action index).
     cache->ats.array[0] = 0;
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
@@ -506,6 +512,13 @@ extern "C" {
       controller_entry_error_print(data.error, *cache);
 
       return status;
+    }
+
+    if (simulate) {
+      fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+      fprintf(data.output.stream, "Processing entry item rule '");
+      fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_main, data.context.set.title.after->string);
+      fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
     }
 
     for (;;) {
@@ -529,10 +542,25 @@ extern "C" {
         if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready) {
 
           if (setting->ready == controller_setting_ready_wait) {
-            setting->ready = controller_setting_ready_yes;
 
-            controller_perform_ready(data, setting, cache);
-            if (F_status_is_error(status)) return status;
+            if (simulate) {
+              fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.output.stream, "Processing entry item action '");
+              fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_ready, data.context.set.title.after->string);
+              fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+            }
+            else {
+              controller_perform_ready(data, setting, cache);
+              if (F_status_is_error(status)) return status;
+            }
+
+            setting->ready = controller_setting_ready_yes;
+          }
+          else if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "Ignoring entry item action '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_ready, data.context.set.title.after->string);
+            fprintf(data.output.stream, "', state is already ready.%c", f_string_eol_s[0]);
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
@@ -562,20 +590,21 @@ extern "C" {
           }
 
           // continue into the requested item.
+          cache->ats.array[cache->ats.used] = actions->array[cache->ats.array[at_j]].number;
+          cache->ats.array[cache->ats.used + 1] = 0;
+
           at_i = cache->ats.used;
           at_j = cache->ats.used + 1;
 
-          cache->ats.array[at_i] = actions->array[cache->ats.array[at_j]].number;
-          cache->ats.array[at_j] = 0;
           cache->ats.used += 2;
 
           cache->name_action.used = 0;
           cache->line_action = 0;
 
           cache->name_item.used = 0;
-          cache->line_item = setting->entry.items.array[actions->array[cache->ats.array[at_j]].number].line;
+          cache->line_item = setting->entry.items.array[cache->ats.array[at_i]].line;
 
-          status = controller_string_dynamic_append_terminated(setting->entry.items.array[actions->array[cache->ats.array[at_j]].number].name, &cache->name_item);
+          status = controller_string_dynamic_append_terminated(setting->entry.items.array[cache->ats.array[at_i]].name, &cache->name_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
@@ -584,6 +613,14 @@ extern "C" {
             return status;
           }
 
+          if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "Processing entry item '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, cache->name_item.string, data.context.set.title.after->string);
+            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+          }
+
+          // exit inner loop to force restarting and start processing the requested item.
           break;
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_consider || actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
@@ -596,85 +633,111 @@ extern "C" {
 
             return status;
           }
-          else {
-            const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
-            char rule_id_name[rule_id_length + 1];
-            const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
 
-            memcpy(rule_id_name, actions->array[cache->ats.array[at_j]].parameters.array[0].string, actions->array[cache->ats.array[at_j]].parameters.array[0].used);
-            memcpy(rule_id_name + actions->array[cache->ats.array[at_j]].parameters.array[0].used + 1, actions->array[cache->ats.array[at_j]].parameters.array[1].string, actions->array[cache->ats.array[at_j]].parameters.array[1].used);
+          const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
+          char rule_id_name[rule_id_length + 1];
+          const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
 
-            rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator[0];
-            rule_id_name[rule_id_length] = 0;
+          memcpy(rule_id_name, actions->array[cache->ats.array[at_j]].parameters.array[0].string, actions->array[cache->ats.array[at_j]].parameters.array[0].used);
+          memcpy(rule_id_name + actions->array[cache->ats.array[at_j]].parameters.array[0].used + 1, actions->array[cache->ats.array[at_j]].parameters.array[1].string, actions->array[cache->ats.array[at_j]].parameters.array[1].used);
 
-            at = controller_rule_find_loaded(data, *setting, rule_id);
+          rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator_s[0];
+          rule_id_name[rule_id_length] = 0;
 
-            if (at == setting->rules.used) {
-              status = controller_rule_read(data, *setting, rule_id, cache, &setting->rules.array[setting->rules.used]);
+          at = controller_rule_find_loaded(data, *setting, rule_id);
 
-              if (F_status_is_error(status)) {
-                controller_entry_error_print(data.error, *cache);
+          if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "%s entry item rule '", actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule ? "Processing" : "Considering");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, rule_id.string, data.context.set.title.after->string);
+            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+          }
 
-                if (!simulate) break;
-              }
-              else {
-                setting->rules.used++;
-              }
-            }
-
-            if (F_status_is_error_not(status)) {
-
-              // rule execution will re-use the existing cache, so save the current cache.
-              const f_array_length_t cache_line_action = cache->line_action;
-              const f_array_length_t cache_line_item = cache->line_item;
-
-              const f_string_length_t cache_name_action_used = cache->name_action.used;
-              const f_string_length_t cache_name_item_used = cache->name_item.used;
-              const f_string_length_t cache_name_file_used = cache->name_file.used;
-
-              char cache_name_action[cache_name_action_used];
-              char cache_name_item[cache_name_item_used];
-              char cache_name_file[cache_name_file_used];
-
-              memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
-              memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
-              memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
-
-              if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
-                // @todo: this will also need to support the asynchronous/wait behavior.
-                status = controller_rule_process(data, at, simulate, setting, cache);
-              }
-
-              // restore cache.
-              memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
-              memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
-              memcpy(cache->name_file.string, cache_name_file, cache_name_file_used);
-
-              cache->name_action.string[cache_name_action_used] = 0;
-              cache->name_item.string[cache_name_item_used] = 0;
-              cache->name_file.string[cache_name_file_used] = 0;
-
-              cache->name_action.used = cache_name_action_used;
-              cache->name_item.used = cache_name_item_used;
-              cache->name_file.used = cache_name_file_used;
-
-              cache->line_action = cache_line_action;
-              cache->line_item = cache_line_item;
-            }
+          if (at == setting->rules.used) {
+            status = controller_rule_read(data, *setting, rule_id, cache, &setting->rules.array[setting->rules.used]);
 
             if (F_status_is_error(status)) {
               controller_entry_error_print(data.error, *cache);
 
-              if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
-                break;
-              }
+              if (!simulate) break;
+            }
+            else {
+              setting->rules.used++;
+            }
+          }
+
+          if (F_status_is_error_not(status)) {
+
+            // rule execution will re-use the existing cache, so save the current cache.
+            const f_array_length_t cache_line_action = cache->line_action;
+            const f_array_length_t cache_line_item = cache->line_item;
+
+            const f_string_length_t cache_name_action_used = cache->name_action.used;
+            const f_string_length_t cache_name_item_used = cache->name_item.used;
+            const f_string_length_t cache_name_file_used = cache->name_file.used;
+
+            char cache_name_action[cache_name_action_used];
+            char cache_name_item[cache_name_item_used];
+            char cache_name_file[cache_name_file_used];
+
+            memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
+            memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
+            memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
+
+            if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
+              // @todo: this will also need to support the asynchronous/wait behavior.
+              status = controller_rule_process(data, at, simulate, setting, cache);
+            }
+
+            // restore cache.
+            memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
+            memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
+            memcpy(cache->name_file.string, cache_name_file, cache_name_file_used);
+
+            cache->name_action.string[cache_name_action_used] = 0;
+            cache->name_item.string[cache_name_item_used] = 0;
+            cache->name_file.string[cache_name_file_used] = 0;
+
+            cache->name_action.used = cache_name_action_used;
+            cache->name_item.used = cache_name_item_used;
+            cache->name_file.used = cache_name_file_used;
+
+            cache->line_action = cache_line_action;
+            cache->line_item = cache_line_item;
+          }
+
+          if (F_status_is_error(status)) {
+            controller_entry_error_print(data.error, *cache);
+
+            if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              break;
             }
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_timeout) {
+          if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "Processing entry item action '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_timeout, data.context.set.title.after->string);
+            fprintf(data.output.stream, "' setting '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
+            fprintf(data.output.stream, "' to '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
+            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+          }
+
           // @todo set the appropriate timeout value (set the entry actions timeouts which are later used as the initial defaults as the rule timeouts).
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_failsafe) {
+          if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "Processing entry item action '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_failsafe, data.context.set.title.after->string);
+            fprintf(data.output.stream, "' setting value to '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
+            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+          }
+
           // @todo set the failsafe rule to this rule id (find the rule and then assign by the rule id and then assign by the array index).
         }
 
@@ -714,6 +777,10 @@ extern "C" {
         }
       }
     } // for
+
+    if (F_status_is_error_not(status) && simulate) {
+      fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+    }
 
     return status;
   }

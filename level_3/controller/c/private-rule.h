@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_controller_rule_action_method_name_
 
 /**
- * Read the rule action.
+ * Read the parameters for some rule action.
  *
  * The object and content ranges are merged together (in that order) as the action parameters.
  *
@@ -41,8 +41,8 @@ extern "C" {
  * @param content
  *   (optional) The ranges representing where the content is found within the buffer.
  *   Set pointer address to 0 to disable.
- * @param action
- *   The processed action.
+ * @param parameters
+ *   The processed parameters.
  *
  * @return
  *   F_none on success.
@@ -55,9 +55,9 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  * @see fl_string_dynamics_increase()
  */
-#ifndef _di_controller_rule_action_read_
-  extern f_return_status controller_rule_action_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, controller_rule_action_t *action) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_action_read_
+#ifndef _di_controller_rule_parameters_read_
+  extern f_return_status controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_parameters_read_
 
 /**
  * Get a string representing the rule action type.
@@ -94,10 +94,16 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 /**
- * Read the content within the buffer, extracting all valid actions for the current processed item.
+ * Read the content within the buffer, processing the action (or a set of within a list) for the given item.
+ *
+ * This will automatically increase the size of the actions array as needed.
  *
  * @param data
  *   The program data.
+ * @param type
+ *   The action type for this action or set of actions.
+ * @param method
+ *   The action method for this action or set of actions.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param item
@@ -111,17 +117,17 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: controller_rule_action_read().
  *   Errors (with error bit) from: controller_rule_actions_increase_by().
+ *   Errors (with error bit) from: controller_rule_parameters_read().
  *   Errors (with error bit) from: f_fss_count_lines().
  *
- * @see controller_rule_action_read()
  * @see controller_rule_actions_increase_by()
+ * @see controller_rule_parameters_read()
  * @see f_fss_count_lines()
  */
-#ifndef _di_controller_rule_actions_read_
-  extern f_return_status controller_rule_actions_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_actions_read_
+#ifndef _di_controller_rule_action_read_
+  extern f_return_status controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_read_
 
 /**
  * Print additional error/warning information in addition to existing error.
@@ -136,7 +142,7 @@ extern "C" {
  *   If TRUE, then this error is associated with an item.
  *   If FALSE, then this error is associated with a rule setting.
  *
- * @see controller_rule_actions_read()
+ * @see controller_rule_action_read()
  * @see controller_rule_item_read()
  * @see controller_rule_items_read()
  * @see controller_rule_read()
@@ -145,6 +151,22 @@ extern "C" {
 #ifndef _di_controller_rule_error_print_
   extern void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_
+
+/**
+ * Print an error or warning message related to need/want/wish settings of some rule.
+ *
+ * @param output
+ *   The error or warning output structure.
+ * @param need_want_wish
+ *   The appropriate string, such as "needs", "wants", or "wishes for" to print when describing this error/warning.
+ * @param value
+ *   The value that is the error or warning.
+ * @param why
+ *   A short explanation on why this is an error or warning.
+ */
+#ifndef _di_controller_rule_error_need_want_wish_print_
+  extern void controller_rule_error_need_want_wish_print(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_need_want_wish_print_
 
 /**
  * Perform an execution of the given rule.
@@ -190,6 +212,34 @@ extern "C" {
 #endif // _di_controller_rule_find_loaded_
 
 /**
+ * Construct an id from two distinct strings found within a single given source.
+ *
+ * @param data
+ *   The program data.
+ * @param source
+ *   The source string that both the directory and basename are copied from.
+ * @param directory
+ *   A range within the source representing the directory part of a rule id.
+ * @param basename
+ *   A range within the source representing the basename part of a rule id.
+ * @param id
+ *   The constructed id.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *
+ * @see f_string_append()
+ * @see fl_string_dynamic_partial_append_nulless()
+ * @see fl_string_dynamic_terminate_after()
+ */
+#ifndef _di_controller_rule_id_construct_
+  extern f_return_status controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_id_construct_
+
+/**
  * Read the content within the buffer, extracting all valid items after determining their type for some rule file.
  *
  * This will perform additional FSS read functions as appropriate.
@@ -208,7 +258,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  *
- * @see controller_rule_actions_read()
+ * @see controller_rule_action_read()
  * @see f_fss_count_lines()
  * @see fl_string_dynamic_partial_append_nulless()
  * @see fl_string_dynamic_terminate_after()

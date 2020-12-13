@@ -13,6 +13,27 @@ extern "C" {
 #endif
 
 /**
+ * Rip a string fromt he source and then add a NULL after the end of the string.
+ *
+ * @param source
+ *   The string to copy from.
+ * @param destination
+ *   The string to copy to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *
+ * @see fl_string_dynamic_rip_nulless()
+ * @see fl_string_dynamic_terminate_after()
+ */
+#ifndef _di_controller_string_dynamic_rip_nulless_terminated_
+  extern f_return_status controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_string_dynamic_rip_nulless_terminated_
+
+/**
  * Append a string and then add a NULL after the end of the string.
  *
  * @param source

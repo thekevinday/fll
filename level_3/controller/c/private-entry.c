@@ -154,17 +154,10 @@ extern "C" {
 
       action->line = ++cache->line_action;
 
-      status = fl_string_dynamic_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
+      status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_rip_nulless", F_true);
-        break;
-      }
-
-      status = fl_string_dynamic_terminate_after(&cache->name_action);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
         break;
       }
 
