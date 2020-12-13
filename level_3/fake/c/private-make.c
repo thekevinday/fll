@@ -1048,15 +1048,15 @@ extern "C" {
 #endif // _di_fake_make_load_parameters_
 
 #ifndef _di_fake_make_operate_
-  f_return_status fake_make_operate(const fake_data_t data) {
+  f_return_status fake_make_operate(fake_data_t *data) {
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(*data)) {
       return F_signal;
     }
 
-    if (data.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(data.output.stream, "%c", f_string_eol[0]);
-      fl_color_print(data.output.stream, data.context.set.important, "Making project.%c", f_string_eol[0]);
+    if (data->error.verbosity != f_console_verbosity_quiet) {
+      fprintf(data->output.stream, "%c", f_string_eol[0]);
+      fl_color_print(data->output.stream, data->context.set.important, "Making project.%c", f_string_eol[0]);
     }
 
     f_status_t status = F_none;
@@ -1068,11 +1068,11 @@ extern "C" {
     f_macro_string_dynamics_new(status, data_make.path.stack, f_memory_default_allocation_step);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
       return status;
     }
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(*data)) {
       fake_macro_make_data_t_delete_simple(data_make);
       return F_signal;
     }
@@ -1080,7 +1080,7 @@ extern "C" {
     status = f_path_current(F_true, &data_make.path.stack.array[0]);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_path_current", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_path_current", F_true);
 
       fake_macro_make_data_t_delete_simple(data_make);
       return status;
@@ -1089,7 +1089,7 @@ extern "C" {
     status = f_directory_open(data_make.path.stack.array[0].string, F_false, &data_make.path.top.id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_directory_open", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_directory_open", F_true);
 
       fake_macro_make_data_t_delete_simple(data_make);
       return status;
@@ -1097,11 +1097,11 @@ extern "C" {
 
     data_make.path.stack.used = 1;
 
-    f_macro_mode_t_set_default_umask(mode, data.umask);
+    f_macro_mode_t_set_default_umask(mode, data->umask);
 
-    fake_make_load_parameters(data, &data_make, &status);
+    fake_make_load_parameters(*data, &data_make, &status);
 
-    fake_make_load_fakefile(data, &data_make, &status);
+    fake_make_load_fakefile(*data, &data_make, &status);
 
     if (F_status_is_error(status)) {
       fake_macro_make_data_t_delete_simple(data_make);
@@ -1116,15 +1116,15 @@ extern "C" {
 
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit) {
       data_make.error.prefix = fll_error_print_error;
-      data_make.error.context = data.context.set.error;
-      data_make.error.notable = data.context.set.notable;
+      data_make.error.context = data->context.set.error;
+      data_make.error.notable = data->context.set.notable;
       data_make.error.to.stream = f_type_error;
       data_make.error.to.id = f_type_descriptor_error;
     }
     else if (data_make.setting_make.fail == fake_make_operation_fail_type_warn) {
       data_make.error.prefix = fll_error_print_warning;
-      data_make.error.context = data.context.set.warning;
-      data_make.error.notable = data.context.set.notable;
+      data_make.error.context = data->context.set.warning;
+      data_make.error.notable = data->context.set.notable;
       data_make.error.to.stream = f_type_warning;
       data_make.error.to.id = f_type_descriptor_warning;
     }
@@ -1133,7 +1133,13 @@ extern "C" {
       data_make.error.to.id = -1;
     }
 
-    fake_make_operate_section(data, data_make.main, &data_make, &section_stack, &status);
+    {
+      const int result = fake_make_operate_section(data_make.main, data, &data_make, &section_stack, &status);
+
+      if (status == F_child) {
+        data->child = result;
+      }
+    }
 
     if (data_make.path.current.stream) {
       f_file_stream_close(F_true, &data_make.path.current);
@@ -1142,13 +1148,13 @@ extern "C" {
     {
       f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
-      if (F_status_is_error(status_path) && data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.output.stream, data.context.set.warning, "%sFailed change back to orignal path '", fll_error_print_warning);
-        fl_color_print(data.output.stream, data.context.set.notable, "%s", data_make.path.stack.array[0].string);
-        fl_color_print(data.output.stream, data.context.set.warning, "', status code = ");
-        fl_color_print(data.output.stream, data.context.set.notable, "%llu", F_status_set_fine(status_path));
-        fl_color_print(data.output.stream, data.context.set.warning, ".%c", f_string_eol[0]);
+      if (F_status_is_error(status_path) && data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "%c", f_string_eol[0]);
+        fl_color_print(data->output.stream, data->context.set.warning, "%sFailed change back to orignal path '", fll_error_print_warning);
+        fl_color_print(data->output.stream, data->context.set.notable, "%s", data_make.path.stack.array[0].string);
+        fl_color_print(data->output.stream, data->context.set.warning, "', status code = ");
+        fl_color_print(data->output.stream, data->context.set.notable, "%llu", F_status_set_fine(status_path));
+        fl_color_print(data->output.stream, data->context.set.warning, ".%c", f_string_eol[0]);
       }
     }
 
@@ -1883,19 +1889,19 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data_t data, const f_array_length_t id_section, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
-    if (F_status_is_error(*status)) return;
+  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+    if (F_status_is_error(*status) || *status == F_child) return data->child;
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(*data)) {
       *status = F_status_set_error(F_signal);
-      return;
+      return 0;
     }
 
     if (id_section > data_make->fakefile.used) {
       *status = F_status_set_error(F_parameter);
 
       fll_error_print(data_make->error, F_parameter, "fake_make_operate_section", F_true);
-      return;
+      return 0;
     }
 
     // add the operation id to the operation stack.
@@ -1904,7 +1910,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_lengths_increase_by", F_true);
-        return;
+        return 0;
       }
     }
 
@@ -1914,21 +1920,21 @@ extern "C" {
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
-    if (data.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(data.output.stream, "%c", f_string_eol[0]);
+    if (data->error.verbosity != f_console_verbosity_quiet) {
+      fprintf(data->output.stream, "%c", f_string_eol[0]);
 
-      fl_color_print(data.output.stream, data.context.set.important, "Processing Section '");
+      fl_color_print(data->output.stream, data->context.set.important, "Processing Section '");
 
-      fl_color_print_code(data.output.stream, *data.context.set.notable.before);
-      f_print_dynamic_partial(data.output.stream, data_make->buffer, section->name);
-      fl_color_print_code(data.output.stream, *data.context.set.notable.after);
+      fl_color_print_code(data->output.stream, *data->context.set.notable.before);
+      f_print_dynamic_partial(data->output.stream, data_make->buffer, section->name);
+      fl_color_print_code(data->output.stream, *data->context.set.notable.after);
 
-      fl_color_print(data.output.stream, data.context.set.important, "'.%c", f_string_eol[0]);
+      fl_color_print(data->output.stream, data->context.set.important, "'.%c", f_string_eol[0]);
     }
 
     if (!section->objects.used) {
       section_stack->used--;
-      return;
+      return 0;
     }
 
     const f_string_static_t operations_name[] = {
@@ -2053,7 +2059,7 @@ extern "C" {
       operation = 0;
       operation_name = 0;
 
-      if (fake_signal_received(data)) {
+      if (fake_signal_received(*data)) {
         *status = F_status_set_error(F_signal);
         break;
       }
@@ -2068,13 +2074,13 @@ extern "C" {
       } // for
 
       if (!operation) {
-        fake_print_message_section_operation_unknown(data, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
+        fake_print_message_section_operation_unknown(*data, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         *status = F_status_set_error(F_valid_not);
       }
       else if (operation == fake_make_operation_type_operate) {
         if (section_stack->used == fake_make_section_stack_max) {
-          fake_print_message_section_operation_stack_max(data, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
+          fake_print_message_section_operation_stack_max(*data, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_make_section_stack_max);
 
           *status = F_status_set_error(F_recurse);
         }
@@ -2083,7 +2089,7 @@ extern "C" {
       if (F_status_is_error_not(*status)) {
         operations[i] = operation;
 
-        fake_make_operate_expand(data, section->name, operation, *operation_name, section->contents.array[i], section->quotess.array[i], data_make, &arguments[i], status);
+        fake_make_operate_expand(*data, section->name, operation, *operation_name, section->contents.array[i], section->quotess.array[i], data_make, &arguments[i], status);
       }
 
       if (operation_if == fake_make_operation_if_type_true_next) {
@@ -2096,7 +2102,7 @@ extern "C" {
         operation_if = fake_make_operation_if_type_false_always;
       }
 
-      fake_make_operate_validate(data, section->name, operation, *operation_name, arguments[i], &operation_if, data_make, section_stack, status);
+      fake_make_operate_validate(*data, section->name, operation, *operation_name, arguments[i], &operation_if, data_make, section_stack, status);
 
       if (F_status_is_error_not(*status)) {
 
@@ -2113,7 +2119,11 @@ extern "C" {
           continue;
         }
 
-        fake_make_operate_process(data, section->name, operation, *operation_name, arguments[i], success, &operation_if, data_make, section_stack, status);
+        const int result = fake_make_operate_process(section->name, operation, *operation_name, arguments[i], success, &operation_if, data, data_make, section_stack, status);
+
+        if (*status == F_child) {
+          return result;
+        }
       }
       else {
 
@@ -2173,13 +2183,13 @@ extern "C" {
         if (F_status_set_fine(*status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_type_exit;
           data_make->error.prefix = fll_error_print_error;
-          data_make->error.context = data.context.set.error;
-          data_make->error.notable = data.context.set.notable;
+          data_make->error.context = data->context.set.error;
+          data_make->error.notable = data->context.set.notable;
           data_make->error.to.stream = f_type_error;
           data_make->error.to.id = f_type_descriptor_error;
         }
 
-        fake_print_message_section_operation_failed(data, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
+        fake_print_message_section_operation_failed(*data, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         // F_signal_abort is used by the break section operation.
         if (F_status_set_fine(*status) == F_signal_abort) {
@@ -2226,12 +2236,12 @@ extern "C" {
         f_macro_string_dynamics_t_delete_simple(arguments[i]);
       } // for
 
-      return;
+      return 0;
     }
 
     if (i == section->objects.used && (operation_if == fake_make_operation_if_type_true_next || operation_if == fake_make_operation_if_type_false_next || operation_if == fake_make_operation_if_type_else_true || operation_if == fake_make_operation_if_type_else_false)) {
 
-      if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+      if (data->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
         const char *type_name = 0;
 
         if (operation_if == fake_make_operation_if_type_true_next || operation_if == fake_make_operation_if_type_false_next) {
@@ -2247,7 +2257,7 @@ extern "C" {
         fl_color_print(data_make->error.to.stream, data_make->error.context, "' at end of section.%c", f_string_eol[0]);
       }
 
-      fake_print_message_section_operation_failed(data, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
+      fake_print_message_section_operation_failed(*data, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
 
       *status = F_status_set_error(F_failure);
     }
@@ -2262,22 +2272,29 @@ extern "C" {
     } // for
 
     section_stack->used--;
+
+    return 0;
   }
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_process_
-  void fake_make_operate_process(const fake_data_t data, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+    if (*status == F_child) return data->child;
 
     if (operation == fake_make_operation_type_index) {
-      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
+      const f_status_t result = fake_execute(*data, data_make->environment, data_make->setting_build.build_indexer, arguments, status);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
       }
 
-      fake_make_operate_process_return(data, return_code, data_make, status);
+      if (*status == F_child) {
+        return result;
+      }
 
-      return;
+      fake_make_operate_process_return(*data, result, data_make, status);
+
+      return 0;
     }
 
     if (operation == fake_make_operation_type_break) {
@@ -2289,54 +2306,54 @@ extern "C" {
         *status = F_status_set_error(F_signal_abort);
       }
       else {
-        return;
+        return 0;
       }
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Breaking as '");
-        fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.used ? arguments.array[0].string : fake_make_operation_argument_success);
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Breaking as '");
+        fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.used ? arguments.array[0].string : fake_make_operation_argument_success);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_build) {
       f_string_static_t stub = f_string_static_t_initialize;
 
-      *status = fake_build_operate(data, arguments.used ? arguments.array[0] : stub);
+      *status = fake_build_operate(arguments.used ? arguments.array[0] : stub, data);
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
-        return;
+        return 0;
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(data, 1, data_make, status);
+        fake_make_operate_process_return(*data, 1, data_make, status);
       }
       else {
-        fake_make_operate_process_return(data, 0, data_make, status);
+        fake_make_operate_process_return(*data, 0, data_make, status);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_clean) {
-      *status = fake_clean_operate(data);
+      *status = fake_clean_operate(*data);
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
-        return;
+        return 0;
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(data, 1, data_make, status);
+        fake_make_operate_process_return(*data, 1, data_make, status);
       }
       else {
-        fake_make_operate_process_return(data, 0, data_make, status);
+        fake_make_operate_process_return(*data, 0, data_make, status);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_clone) {
@@ -2347,8 +2364,8 @@ extern "C" {
 
       f_string_length_t destination_length = 0;
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = data.output;
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        recurse.output = data->output;
         recurse.verbose = fake_verbose_print_clone;
       }
 
@@ -2361,7 +2378,7 @@ extern "C" {
         if (F_status_is_error(status_file)) {
           fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
           *status = F_status_set_error(F_failure);
-          return;
+          return 0;
         }
 
         if (status_file == F_false || status_file == F_file_found_not) {
@@ -2405,12 +2422,12 @@ extern "C" {
             fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_clone", F_true, arguments.array[i].string, "clone", fll_error_file_type_file);
             *status = F_status_set_error(F_failure);
           }
-          else if (data.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(data.output.stream, "Cloned '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-            fprintf(data.output.stream, "' to '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", destination);
-            fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+          else if (data->error.verbosity == f_console_verbosity_verbose) {
+            fprintf(data->output.stream, "Cloned '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+            fprintf(data->output.stream, "' to '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", destination);
+            fprintf(data->output.stream, "'.%c", f_string_eol[0]);
           }
         }
         else if (F_status_is_error(status_file)) {
@@ -2420,19 +2437,23 @@ extern "C" {
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_compile) {
-      int return_code = fake_execute(data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
+      const int result = fake_execute(*data, data_make->environment, data_make->setting_build.build_compiler, arguments, status);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
       }
 
-      fake_make_operate_process_return(data, return_code, data_make, status);
+      if (*status == F_child) {
+        return result;
+      }
 
-      return;
+      fake_make_operate_process_return(*data, result, data_make, status);
+
+      return 0;
     }
 
     if (operation == fake_make_operation_type_copy) {
@@ -2445,10 +2466,10 @@ extern "C" {
 
       f_mode_t mode = f_mode_t_initialize;
 
-      f_macro_mode_t_set_default_umask(mode, data.umask);
+      f_macro_mode_t_set_default_umask(mode, data->umask);
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = data.output;
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        recurse.output = data->output;
         recurse.verbose = fake_verbose_print_copy;
       }
 
@@ -2462,7 +2483,7 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
 
           *status = F_status_set_error(F_failure);
-          return;
+          return 0;
         }
 
         if (status_file == F_false || status_file == F_file_found_not) {
@@ -2505,12 +2526,12 @@ extern "C" {
             fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_copy", F_true, arguments.array[i].string, "copy", fll_error_file_type_file);
             *status = F_status_set_error(F_failure);
           }
-          else if (data.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(data.output.stream, "Copied '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-            fprintf(data.output.stream, "' to '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", destination);
-            fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+          else if (data->error.verbosity == f_console_verbosity_verbose) {
+            fprintf(data->output.stream, "Copied '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+            fprintf(data->output.stream, "' to '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", destination);
+            fprintf(data->output.stream, "'.%c", f_string_eol[0]);
           }
         }
         else if (F_status_is_error(status_file)) {
@@ -2520,7 +2541,7 @@ extern "C" {
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_define) {
@@ -2535,13 +2556,13 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_environment_set", F_true);
       }
-      else if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Defined environment variable '");
-        fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[0].string);
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+      else if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Defined environment variable '");
+        fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[0].string);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_delete || operation == fake_make_operation_type_deletes) {
@@ -2555,22 +2576,22 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_file_found_not) {
-            if (data.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(data.output.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.output.stream, data.context.set.warning, "%sthe file '", fll_error_print_warning);
-              fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-              fl_color_print(data.output.stream, data.context.set.warning, "' was not found.%c", f_string_eol[0]);
+            if (data->error.verbosity == f_console_verbosity_verbose) {
+              fprintf(data->output.stream, "%c", f_string_eol[0]);
+              fl_color_print(data->output.stream, data->context.set.warning, "%sthe file '", fll_error_print_warning);
+              fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+              fl_color_print(data->output.stream, data->context.set.warning, "' was not found.%c", f_string_eol[0]);
             }
 
             *status = F_none;
           }
           else {
             fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_stat", F_true, arguments.array[i].string, "delete", fll_error_file_type_file);
-            return;
+            return 0;
           }
         }
         else if (f_macro_file_type_is_directory(file_stat.st_mode)) {
-          if (data.error.verbosity == f_console_verbosity_verbose) {
+          if (data->error.verbosity == f_console_verbosity_verbose) {
             *status = f_directory_remove_custom(arguments.array[i].string, recursion_max, F_false, fake_clean_remove_recursively_verbosely);
           }
           else {
@@ -2578,10 +2599,10 @@ extern "C" {
           }
 
           if (F_status_set_fine(*status) == F_file_found_not) {
-            if (data.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(data.output.stream, "The directory '");
-              fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-              fprintf(data.output.stream, "' does not exist.%c", f_string_eol[0]);
+            if (data->error.verbosity == f_console_verbosity_verbose) {
+              fprintf(data->output.stream, "The directory '");
+              fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+              fprintf(data->output.stream, "' does not exist.%c", f_string_eol[0]);
             }
 
             *status = F_none;
@@ -2589,22 +2610,22 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_directory_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_directory);
-            return;
+            return 0;
           }
-          else if (data.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(data.output.stream, "Removed '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-            fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+          else if (data->error.verbosity == f_console_verbosity_verbose) {
+            fprintf(data->output.stream, "Removed '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+            fprintf(data->output.stream, "'.%c", f_string_eol[0]);
           }
         }
         else {
           *status = f_file_remove(arguments.array[i].string);
 
           if (F_status_set_fine(*status) == F_file_found_not) {
-            if (data.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(data.output.stream, "The file '");
-              fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-              fprintf(data.output.stream, "' does not exist.%c", f_string_eol[0]);
+            if (data->error.verbosity == f_console_verbosity_verbose) {
+              fprintf(data->output.stream, "The file '");
+              fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+              fprintf(data->output.stream, "' does not exist.%c", f_string_eol[0]);
             }
 
             *status = F_none;
@@ -2612,17 +2633,17 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_remove", F_true, arguments.array[i].string, "delete", fll_error_file_type_file);
-            return;
+            return 0;
           }
-          else if (data.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(data.output.stream, "Removed '");
-            fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-            fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+          else if (data->error.verbosity == f_console_verbosity_verbose) {
+            fprintf(data->output.stream, "Removed '");
+            fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+            fprintf(data->output.stream, "'.%c", f_string_eol[0]);
           }
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_else) {
@@ -2634,7 +2655,7 @@ extern "C" {
         *operation_if = fake_make_operation_if_type_else_true;
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_exit) {
@@ -2648,22 +2669,22 @@ extern "C" {
         // forcing exit forces fail mode.
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
         data_make->error.prefix = fll_error_print_error;
-        data_make->error.context = data.context.set.error;
-        data_make->error.notable = data.context.set.notable;
+        data_make->error.context = data->context.set.error;
+        data_make->error.notable = data->context.set.notable;
         data_make->error.to.stream = f_type_error;
         data_make->error.to.id = f_type_descriptor_error;
       }
       else {
-        return;
+        return 0;
       }
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Exiting as '");
-        fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.used ? arguments.array[0].string : fake_make_operation_argument_success);
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Exiting as '");
+        fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.used ? arguments.array[0].string : fake_make_operation_argument_success);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_fail) {
@@ -2671,16 +2692,16 @@ extern "C" {
       if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit, arguments.array[0], fake_make_operation_argument_exit_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
         data_make->error.prefix = fll_error_print_error;
-        data_make->error.context = data.context.set.error;
-        data_make->error.notable = data.context.set.notable;
+        data_make->error.context = data->context.set.error;
+        data_make->error.notable = data->context.set.notable;
         data_make->error.to.stream = f_type_error;
         data_make->error.to.id = f_type_descriptor_error;
       }
       else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_warn;
         data_make->error.prefix = fll_error_print_warning;
-        data_make->error.context = data.context.set.warning;
-        data_make->error.notable = data.context.set.notable;
+        data_make->error.context = data->context.set.warning;
+        data_make->error.notable = data->context.set.notable;
         data_make->error.to.stream = f_type_warning;
         data_make->error.to.id = f_type_descriptor_warning;
       }
@@ -2690,41 +2711,41 @@ extern "C" {
         data_make->error.to.id = -1;
       }
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Set failure state to '");
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Set failure state to '");
 
         if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
-          fl_color_print(data.output.stream, data.context.set.notable, "%s", fake_make_operation_argument_exit);
+          fl_color_print(data->output.stream, data->context.set.notable, "%s", fake_make_operation_argument_exit);
         }
         else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn) {
-          fl_color_print(data.output.stream, data.context.set.notable, "%s", fake_make_operation_argument_warn);
+          fl_color_print(data->output.stream, data->context.set.notable, "%s", fake_make_operation_argument_warn);
         }
         else if (data_make->setting_make.fail == fake_make_operation_fail_type_ignore) {
-          fl_color_print(data.output.stream, data.context.set.notable, "%s", fake_make_operation_argument_ignore);
+          fl_color_print(data->output.stream, data->context.set.notable, "%s", fake_make_operation_argument_ignore);
         }
 
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_group) {
       gid_t id = 0;
 
-      *status = fake_make_get_id_group(data, data_make->error, arguments.array[0], &id);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_group(*data, data_make->error, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return 0;
 
       f_status_t status_file = F_none;
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
 
-        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(*data, arguments.array[i], data_make);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
 
-          fake_print_message_section_operation_path_outside(data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+          fake_print_message_section_operation_path_outside(*data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
           continue;
         }
@@ -2736,34 +2757,34 @@ extern "C" {
 
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_role_change", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file);
         }
-        else if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed group of '");
-          fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.output.stream, data.context.set.notable, "%llu", id);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        else if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed group of '");
+          fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->output.stream, data->context.set.notable, "%llu", id);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_groups) {
       gid_t id = 0;
 
-      *status = fake_make_get_id_group(data, data_make->error, arguments.array[0], &id);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_group(*data, data_make->error, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return 0;
 
       f_status_t status_file = F_none;
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
 
-        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(*data, arguments.array[i], data_make);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
 
-          fake_print_message_section_operation_path_outside(data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+          fake_print_message_section_operation_path_outside(*data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
           continue;
         }
@@ -2775,16 +2796,16 @@ extern "C" {
 
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "fll_file_role_change_all", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file);
         }
-        else if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed group of '");
-          fl_color_print(data.output.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.output.stream, data.context.set.notable, "%llu", id);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        else if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed group of '");
+          fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->output.stream, data->context.set.notable, "%llu", id);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_if) {
@@ -2797,7 +2818,7 @@ extern "C" {
           *operation_if = fake_make_operation_if_type_false_next;
         }
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_failure) {
@@ -2808,14 +2829,14 @@ extern "C" {
           *operation_if = fake_make_operation_if_type_true_next;
         }
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_group) {
         uid_t id = 0;
 
-        *status = fake_make_get_id_group(data, data_make->error, arguments.array[1], &id);
-        if (F_status_is_error(*status)) return;
+        *status = fake_make_get_id_group(*data, data_make->error, arguments.array[1], &id);
+        if (F_status_is_error(*status)) return 0;
 
         uid_t id_file = 0;
 
@@ -2836,7 +2857,7 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_mode) {
@@ -2852,11 +2873,11 @@ extern "C" {
         {
           uint8_t mode_replace = 0;
 
-          *status = fake_make_get_id_mode(data, data_make->error, arguments.array[2], &mode_rule, &mode_replace);
+          *status = fake_make_get_id_mode(*data, data_make->error, arguments.array[2], &mode_rule, &mode_replace);
 
           if (F_status_is_error(*status)) {
             *operation_if = fake_make_operation_if_type_false_always_next;
-            return;
+            return 0;
           }
 
           *status = f_file_mode_to_mode(mode_rule, &mode_match);
@@ -2864,7 +2885,7 @@ extern "C" {
           if (F_status_is_error(*status)) {
             *operation_if = fake_make_operation_if_type_false_always_next;
             fll_error_print(data_make->error, F_status_set_fine(*status), "f_file_mode_to_mode", F_true);
-            return;
+            return 0;
           }
         }
 
@@ -2896,14 +2917,14 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_owner) {
         uid_t id = 0;
 
-        *status = fake_make_get_id_owner(data, data_make->error, arguments.array[1], &id);
-        if (F_status_is_error(*status)) return;
+        *status = fake_make_get_id_owner(*data, data_make->error, arguments.array[1], &id);
+        if (F_status_is_error(*status)) return 0;
 
         uid_t id_file = 0;
 
@@ -2925,7 +2946,7 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_is) {
@@ -3011,7 +3032,7 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_exists) {
@@ -3033,7 +3054,7 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_defined) {
@@ -3053,7 +3074,7 @@ extern "C" {
 
           if (!data_make->setting_make.parameter.used) {
             *operation_if = fake_make_operation_if_type_false_next;
-            return;
+            return 0;
           }
 
           f_array_length_t i = 2;
@@ -3079,7 +3100,7 @@ extern "C" {
           } // for
         }
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_equal) {
@@ -3093,7 +3114,7 @@ extern "C" {
           }
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_equal_not) {
@@ -3114,7 +3135,7 @@ extern "C" {
           } // for
         } // for
 
-        return;
+        return 0;
       }
 
       if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
@@ -3243,26 +3264,26 @@ extern "C" {
           *status = F_status_set_error(F_failure);
           *operation_if = fake_make_operation_if_type_false_always_next;
 
-          if (data.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
-            fprintf(data.output.stream, "%c", f_string_eol[0]);
+          if (data->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
+            fprintf(data->output.stream, "%c", f_string_eol[0]);
 
             if ((i == 1 && number_left > f_number_t_size_unsigned) || (i > 1 && number_right > f_number_t_size_unsigned)) {
-              fl_color_print(data.error.to.stream, data_make->error.context, "%sThe number '", data_make->error.prefix);
-              fl_color_print(data.error.to.stream, data_make->error.notable, "%c%s", arguments.array[i].string);
-              fl_color_print(data.error.to.stream, data_make->error.context, "' may only be between the ranges -%llu to %llu.%c", f_number_t_size_unsigned, f_number_t_size_unsigned, f_string_eol[0]);
+              fl_color_print(data->error.to.stream, data_make->error.context, "%sThe number '", data_make->error.prefix);
+              fl_color_print(data->error.to.stream, data_make->error.notable, "%c%s", arguments.array[i].string);
+              fl_color_print(data->error.to.stream, data_make->error.context, "' may only be between the ranges -%llu to %llu.%c", f_number_t_size_unsigned, f_number_t_size_unsigned, f_string_eol[0]);
             }
             else {
-              fl_color_print(data.error.to.stream, data_make->error.context, "%sInvalid or unsupported number provided '", data_make->error.prefix);
-              fl_color_print(data.error.to.stream, data_make->error.notable, "%s", arguments.array[i].string);
-              fl_color_print(data.error.to.stream, data_make->error.context, "'.%c", f_string_eol[0]);
+              fl_color_print(data->error.to.stream, data_make->error.context, "%sInvalid or unsupported number provided '", data_make->error.prefix);
+              fl_color_print(data->error.to.stream, data_make->error.notable, "%s", arguments.array[i].string);
+              fl_color_print(data->error.to.stream, data_make->error.context, "'.%c", f_string_eol[0]);
             }
           }
         }
 
-        return;
+        return 0;
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_link) {
@@ -3271,23 +3292,23 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1].string, "create link", fll_error_file_type_file);
       }
-      else if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Created symbolic link from '");
-        fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[1].string);
-        fprintf(data.output.stream, "' to '");
-        fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[0].string);
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+      else if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Created symbolic link from '");
+        fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[1].string);
+        fprintf(data->output.stream, "' to '");
+        fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[0].string);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_mode) {
       f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
-      *status = fake_make_get_id_mode(data, data_make->error, arguments.array[0], &mode_rule, &replace);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_mode(*data, data_make->error, arguments.array[0], &mode_rule, &replace);
+      if (F_status_is_error(*status)) return 0;
 
       mode_t mode = 0;
       mode_t mode_file = 0;
@@ -3316,24 +3337,24 @@ extern "C" {
           break;
         }
 
-        if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed mode of '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%#o", mode);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed mode of '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%#o", mode);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_modes) {
       f_file_mode_t mode_rule = 0;
       uint8_t replace = 0;
 
-      *status = fake_make_get_id_mode(data, data_make->error, arguments.array[0], &mode_rule, &replace);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_mode(*data, data_make->error, arguments.array[0], &mode_rule, &replace);
+      if (F_status_is_error(*status)) return 0;
 
       mode_t mode = 0;
       mode_t mode_file = 0;
@@ -3362,16 +3383,16 @@ extern "C" {
           break;
         }
 
-        if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed mode of '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%#o", mode);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed mode of '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%#o", mode);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_move) {
@@ -3382,8 +3403,8 @@ extern "C" {
 
       f_string_length_t destination_length = 0;
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = data.output;
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        recurse.output = data->output;
         recurse.verbose = fake_verbose_print_move;
       }
 
@@ -3397,7 +3418,7 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
 
           *status = F_status_set_error(F_failure);
-          return;
+          return 0;
         }
 
         if (status_file == F_false || status_file == F_file_found_not) {
@@ -3432,7 +3453,7 @@ extern "C" {
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_operate) {
@@ -3446,10 +3467,10 @@ extern "C" {
       } // for
 
       if (id_section == data_make->fakefile.used) {
-        return;
+        return 0;
       }
 
-      fake_make_operate_section(data, id_section, data_make, section_stack, status);
+      const int result = fake_make_operate_section(id_section, data, data_make, section_stack, status);
 
       // Ensure that a break only happens within its active operation stack.
       if (*status == F_signal_abort) {
@@ -3459,25 +3480,25 @@ extern "C" {
         *status = F_status_set_error(F_failure);
       }
 
-      return;
+      return result;
     }
 
     if (operation == fake_make_operation_type_owner) {
       uid_t id = 0;
 
-      *status = fake_make_get_id_owner(data, data_make->error, arguments.array[0], &id);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_owner(*data, data_make->error, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return 0;
 
       f_status_t status_file = F_none;
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
 
-        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(*data, arguments.array[i], data_make);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
 
-          fake_print_message_section_operation_path_outside(data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+          fake_print_message_section_operation_path_outside(*data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
           continue;
         }
@@ -3490,34 +3511,34 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_role_change", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file);
           break;
         }
-        else if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed owner of '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%d", id);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        else if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed owner of '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%d", id);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_owners) {
       uid_t id = 0;
 
-      *status = fake_make_get_id_owner(data, data_make->error, arguments.array[0], &id);
-      if (F_status_is_error(*status)) return;
+      *status = fake_make_get_id_owner(*data, data_make->error, arguments.array[0], &id);
+      if (F_status_is_error(*status)) return 0;
 
       f_status_t status_file = F_none;
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
 
-        status_file = fake_make_assure_inside_project(data, arguments.array[i], data_make);
+        status_file = fake_make_assure_inside_project(*data, arguments.array[i], data_make);
 
         if (F_status_is_error(status_file)) {
           *status = status_file;
 
-          fake_print_message_section_operation_path_outside(data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
+          fake_print_message_section_operation_path_outside(*data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[i].string);
 
           continue;
         }
@@ -3529,16 +3550,16 @@ extern "C" {
 
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "fll_file_role_change_all", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file);
         }
-        else if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Changed owner of '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", arguments.array[i].string);
-          fprintf(data.output.stream, "' to ");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%d", id);
-          fprintf(data.output.stream, ".%c", f_string_eol[0]);
+        else if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Changed owner of '");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.array[i].string);
+          fprintf(data->output.stream, "' to ");
+          fl_color_print(data->error.to.stream, data->context.set.notable, "%d", id);
+          fprintf(data->output.stream, ".%c", f_string_eol[0]);
         }
       } // for
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_pop) {
@@ -3549,98 +3570,98 @@ extern "C" {
       *status = f_path_change(data_make->path.stack.array[data_make->path.stack.used - 1].string);
 
       if (F_status_is_error(*status)) {
-        fake_print_message_section_operation_path_stack_max(data, data_make->error, F_status_set_fine(*status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1].string);
-        return;
+        fake_print_message_section_operation_path_stack_max(*data, data_make->error, F_status_set_fine(*status), "f_path_change", data_make->path.stack.array[data_make->path.stack.used - 1].string);
+        return 0;
       }
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        *status = fake_make_path_relative(data, data_make->path.stack.array[data_make->path.stack.used - 1], data_make);
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        *status = fake_make_path_relative(*data, data_make->path.stack.array[data_make->path.stack.used - 1], data_make);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_path_relative", F_true);
-          return;
+          return 0;
         }
 
-        fprintf(data.output.stream, "Changed to project path '");
-        fl_color_print_code(data.output.stream, *data.context.set.notable.before);
-        f_print_dynamic(data.output.stream, data_make->path_cache);
-        fl_color_print_code(data.output.stream, *data.context.set.notable.after);
-        fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+        fprintf(data->output.stream, "Changed to project path '");
+        fl_color_print_code(data->output.stream, *data->context.set.notable.before);
+        f_print_dynamic(data->output.stream, data_make->path_cache);
+        fl_color_print_code(data->output.stream, *data->context.set.notable.after);
+        fprintf(data->output.stream, "'.%c", f_string_eol[0]);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_print) {
       for (f_array_length_t i = 0; i < arguments.used; i++) {
-        f_print_dynamic(data.output.stream, arguments.array[i]);
+        f_print_dynamic(data->output.stream, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
-          fprintf(data.output.stream, " ");
+          fprintf(data->output.stream, " ");
         }
       } // for
 
-      fprintf(data.output.stream, "%c", f_string_eol[0]);
-      return;
+      fprintf(data->output.stream, "%c", f_string_eol[0]);
+      return 0;
     }
 
     if (operation == fake_make_operation_type_run) {
-      *status = fake_make_operate_process_run(data, arguments, F_false, data_make);
-      return;
+      *status = fake_make_operate_process_run(*data, arguments, F_false, data_make);
+      return 0;
     }
 
     if (operation == fake_make_operation_type_shell) {
-      *status = fake_make_operate_process_run(data, arguments, F_true, data_make);
-      return;
+      *status = fake_make_operate_process_run(*data, arguments, F_true, data_make);
+      return 0;
     }
 
     if (operation == fake_make_operation_type_skeleton) {
-      *status = fake_skeleton_operate(data);
+      *status = fake_skeleton_operate(*data);
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
-        return;
+        return 0;
       }
 
       if (F_status_is_error(*status)) {
-        fake_make_operate_process_return(data, 1, data_make, status);
+        fake_make_operate_process_return(*data, 1, data_make, status);
       }
       else {
-        fake_make_operate_process_return(data, 0, data_make, status);
+        fake_make_operate_process_return(*data, 0, data_make, status);
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_to) {
-      *status = fake_make_assure_inside_project(data, arguments.array[0], data_make);
+      *status = fake_make_assure_inside_project(*data, arguments.array[0], data_make);
 
       if (F_status_is_error(*status)) {
-        fake_print_message_section_operation_path_outside(data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
+        fake_print_message_section_operation_path_outside(*data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache.string : arguments.array[0].string);
 
         if (F_status_set_fine(*status) == F_false) {
           *status = F_status_set_error(F_failure);
         }
 
-        return;
+        return 0;
       }
 
       *status = f_path_change(arguments.array[0].string);
 
       if (F_status_is_error(*status)) {
-        fake_print_message_section_operation_path_stack_max(data, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
+        fake_print_message_section_operation_path_stack_max(*data, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
       }
       else {
         if (data_make->path.stack.used == data_make->path.stack.size) {
           *status = fl_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->path.stack);
 
           if (F_status_set_fine(*status) == F_array_too_large) {
-            fake_print_message_section_operation_path_stack_max(data, data_make->error, F_array_too_large, "fl_string_lengths_increase_by", "path stack");
-            return;
+            fake_print_message_section_operation_path_stack_max(*data, data_make->error, F_array_too_large, "fl_string_lengths_increase_by", "path stack");
+            return 0;
           }
           else if (F_status_is_error(*status)) {
             fll_error_print(data_make->error, F_status_set_fine(*status), "f_macro_string_dynamics_t_resize", F_true);
-            return;
+            return 0;
           }
         }
 
@@ -3651,28 +3672,28 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamic_append_nulless", F_true);
-          return;
+          return 0;
         }
 
-        if (data.error.verbosity == f_console_verbosity_verbose) {
-          *status = fake_make_path_relative(data, data_make->path.stack.array[data_make->path.stack.used], data_make);
+        if (data->error.verbosity == f_console_verbosity_verbose) {
+          *status = fake_make_path_relative(*data, data_make->path.stack.array[data_make->path.stack.used], data_make);
 
           if (F_status_is_error(*status)) {
             fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_path_relative", F_true);
-            return;
+            return 0;
           }
 
-          fprintf(data.output.stream, "Changed to project path '");
-          fl_color_print_code(data.output.stream, *data.context.set.notable.before);
-          f_print_dynamic(data.output.stream, data_make->path_cache);
-          fl_color_print_code(data.output.stream, *data.context.set.notable.after);
-          fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+          fprintf(data->output.stream, "Changed to project path '");
+          fl_color_print_code(data->output.stream, *data->context.set.notable.before);
+          f_print_dynamic(data->output.stream, data_make->path_cache);
+          fl_color_print_code(data->output.stream, *data->context.set.notable.after);
+          fprintf(data->output.stream, "'.%c", f_string_eol[0]);
         }
 
         data_make->path.stack.used++;
       }
 
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_top) {
@@ -3680,12 +3701,12 @@ extern "C" {
       *status = f_path_change_at(data_make->path.top.id);
 
       if (F_status_is_error(*status)) {
-        fake_print_message_section_operation_path_stack_max(data, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
-        return;
+        fake_print_message_section_operation_path_stack_max(*data, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
+        return 0;
       }
 
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "Changed to project path ''.%c", f_string_eol[0]);
+      if (data->error.verbosity == f_console_verbosity_verbose) {
+        fprintf(data->output.stream, "Changed to project path ''.%c", f_string_eol[0]);
       }
 
       // clear stack, except for the project root.
@@ -3694,13 +3715,13 @@ extern "C" {
       } // for
 
       data_make->path.stack.used = 1;
-      return;
+      return 0;
     }
 
     if (operation == fake_make_operation_type_touch) {
       f_mode_t mode = f_mode_t_initialize;
 
-      f_macro_mode_t_set_default_umask(mode, data.umask);
+      f_macro_mode_t_set_default_umask(mode, data->umask);
 
       for (f_array_length_t i = 1; i < arguments.used; i++) {
 
@@ -3733,18 +3754,18 @@ extern "C" {
           }
         }
 
-        if (data.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(data.output.stream, "Touched %s '", arguments.array[0].string);
-          fl_color_print_code(data.output.stream, *data.context.set.notable.before);
-          f_print_dynamic(data.output.stream, arguments.array[i]);
-          fl_color_print_code(data.output.stream, *data.context.set.notable.after);
-          fprintf(data.output.stream, "'.%c", f_string_eol[0]);
+        if (data->error.verbosity == f_console_verbosity_verbose) {
+          fprintf(data->output.stream, "Touched %s '", arguments.array[0].string);
+          fl_color_print_code(data->output.stream, *data->context.set.notable.before);
+          f_print_dynamic(data->output.stream, arguments.array[i]);
+          fl_color_print_code(data->output.stream, *data->context.set.notable.after);
+          fprintf(data->output.stream, "'.%c", f_string_eol[0]);
         }
 
       } // for
-
-      return;
     }
+
+    return 0;
   }
 #endif // _di_fake_make_operate_process_
 
@@ -3826,10 +3847,10 @@ extern "C" {
     f_signal_set_fill(&signals.block_not);
 
     if (as_shell) {
-      status = fll_execute_path_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &return_code);
+      status = fll_execute_path_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, &return_code);
     }
     else {
-      status = fll_execute_program_environment(program.string, arguments, &signals, data_make->environment.names, data_make->environment.values, &return_code);
+      status = fll_execute_program_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, &return_code);
     }
 
     if (status == F_status_set_error(F_signal)) {

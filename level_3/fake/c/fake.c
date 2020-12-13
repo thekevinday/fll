@@ -290,7 +290,7 @@ extern "C" {
           if (F_status_is_error_not(status) && status != F_signal) {
             f_string_static_t stub = f_string_static_t_initialize;
 
-            status = fake_build_operate(*data, stub);
+            status = fake_build_operate(stub, data);
           }
         }
         else if (data->operation == fake_operation_clean) {
@@ -310,14 +310,18 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status) && status != F_signal) {
-            status = fake_make_operate(*data);
+            status = fake_make_operate(data);
+
+            if (status == F_child) {
+              break;
+            }
           }
         }
         else if (data->operation == fake_operation_skeleton) {
           status = fake_skeleton_operate(*data);
         }
 
-        if (status == F_signal || fake_signal_received(*data)) {
+        if (status == F_signal || status == F_child || fake_signal_received(*data)) {
           break;
         }
         else if (F_status_is_error(status)) {
@@ -337,7 +341,7 @@ extern "C" {
         if (F_status_is_error(status) || status == F_signal) {
           fprintf(data->error.to.stream, "%c", f_string_eol[0]);
         }
-        else {
+        else if (status != F_child) {
           fprintf(data->output.stream, "%cAll operations complete.%c%c", f_string_eol[0], f_string_eol[0], f_string_eol[0]);
         }
       }

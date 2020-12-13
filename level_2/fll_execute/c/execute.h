@@ -52,18 +52,23 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_return_status fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_
+
 /**
  * Add parameters as arguments to the execution arguments array.
  *
@@ -93,14 +98,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_return_status fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
@@ -137,14 +146,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if size is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_return_status fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -167,14 +180,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if size is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_return_status fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -193,14 +210,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
@@ -229,14 +250,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
@@ -267,14 +292,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -295,14 +324,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -312,6 +345,10 @@ extern "C" {
  * Execute a program given some path + program name (such as "/bin/bash").
  *
  * This does validate that the program path exists.
+ *
+ * This does not call exit() when the child process exits.
+ * Instead, this returns F_child and assigns the child's return code to result.
+ * The caller is expected to handle the appropriate exit procedures and memory deallocation.
  *
  * @param program_path
  *   The entire path to the program.
@@ -325,22 +362,22 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_access_denied (with error bit) on access denied for program_path.
- *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
  *   F_failure (with error bit) if result is non-zero.
- *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_file_stat (with error bit) on stat error while checking the program_path.
- *   F_loop (with error bit) on loop error while checking the program_path.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_name (with error bit) on path name error.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_fork (with error bit) if fork failed.
  *
  *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_signal_set_handle().
  *
  * @see execv()
+ * @see exit()
+ * @see fork()
+ * @see memcpy()
+ * @see strnlen()
+ * @see waitpid()
+ *
+ * @see f_file_exists()
+ * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_path_
   extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
@@ -353,6 +390,10 @@ extern "C" {
  *
  * The environment is defined by the names and values pair.
  *
+ * This does not call exit() when the child process exits.
+ * Instead, this returns F_child and assigns the child's return code to result.
+ * The caller is expected to handle the appropriate exit procedures and memory deallocation.
+ *
  * @param program_path
  *   The entire path to the program.
  * @param arguments
@@ -361,43 +402,49 @@ extern "C" {
  *   An array of strings representing the environment variable names.
  *   At most names.used variables are created.
  *   Duplicate names are overwritten.
- * @param set_signal
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
  * @param values
  *   An array of strings representing the environment variable names.
  *   The values.used must be of at least names.used.
  *   Set individual strings.used to 0 for empty/NULL values.
+ * @param signals
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
  * @return
  *   F_none on success.
- *   F_access_denied (with error bit) on access denied for program_path.
- *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
  *   F_failure (with error bit) if result is non-zero.
- *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_file_stat (with error bit) on stat error while checking the program_path.
- *   F_loop (with error bit) on loop error while checking the program_path.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_name (with error bit) on path name error.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_fork (with error bit) if fork failed.
  *
+ *   Errors (with error bit) from: f_environment_set_dynamic().
  *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_signal_set_handle().
  *
  * @see execv()
+ * @see clearenv()
+ * @see fork()
+ * @see memcpy()
+ * @see strnlen()
+ * @see waitpid()
+ *
+ * @see f_environment_set_dynamic()
+ * @see f_file_exists()
+ * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result);
+  extern f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result);
 #endif // _di_fll_execute_path_environment_
 
 /**
  * Execute a program given by name found in the PATH environment (such as "bash").
  *
  * This does not validate the path to the program.
+ *
+ * This does not call exit() when the child process exits.
+ * Instead, this returns F_child and assigns the child's return code to result.
+ * The caller is expected to handle the appropriate exit procedures and memory deallocation.
  *
  * @param program_name
  *   The name of the program.
@@ -411,17 +458,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
  *   F_failure (with error bit) if result is non-zero.
- *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_fork (with error bit) on fork failure.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
+ *   F_fork (with error bit) if fork failed.
  *
  *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_signal_set_handle().
  *
  * @see execvp()
+ * @see fork()
+ * @see strnlen()
+ * @see waitpid()
+ *
+ * @see f_file_exists()
+ * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_program_
   extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
@@ -436,6 +486,10 @@ extern "C" {
  * This is done because the PATH environment will get cleared or may be set differently.
  * Execution of program_name is done using the PATH environment prior to clearing and reassigning the environment variables.
  *
+ * Unlike the execv() family of functions, this does not call exit() when the child process exits.
+ * Instead, this returns F_child and assigns the child's return code to result.
+ * The caller is expected to handle the appropriate exit procedures and memory deallocation.
+ *
  * @param program_name
  *   The name of the program.
  * @param arguments
@@ -444,42 +498,46 @@ extern "C" {
  *   An array of strings representing the environment variable names.
  *   At most names.used variables are created.
  *   Duplicate names are overwritten.
- * @param set_signal
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
  * @param values
  *   An array of strings representing the environment variable names.
  *   The values.used must be of at least names.used.
  *   Set individual strings.used to 0 for empty/null values.
+ * @param signals
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
- *   F_access_denied (with error bit) on access denied for program_path.
- *   F_array_too_large (with error bit) if paths array (generated from PATH) is too large for further addressing.
- *   F_directory (with error bit) on invalid directory in program_path.
+ *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
  *   F_failure (with error bit) if result is non-zero.
- *   F_file_found_not (with error bit) if file does not exist at the program_path.
- *   F_fork (with error bit) on fork failure.
- *   F_loop (with error bit) on loop error while checking the program_path.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_name (with error bit) on path name error.
- *   F_number_overflow (with error bit) on overflow error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string (generated from PATH) is too large.
+ *   F_fork (with error bit) if fork failed.
  *
+ *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
+ *   Errors (with error bit) from: f_signal_set_handle().
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
- * @see execvpe()
+ * @see execvp()
+ * @see fork()
+ * @see memcpy()
+ * @see strnlen()
+ * @see waitpid()
+ *
+ * @see f_environment_get()
+ * @see f_file_exists()
+ * @see f_signal_set_handle()
+ * @see fl_environment_path_explode_dynamic()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_environment_
-  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, const f_string_statics_t names, const f_string_statics_t values, int *result);
+  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result);
 #endif // _di_fll_execute_program_environment_
 
 #ifdef __cplusplus

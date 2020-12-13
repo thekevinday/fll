@@ -172,6 +172,8 @@ extern "C" {
     #define FL_status_string_block_not        "F_block_not"
     #define FL_status_string_bound            "F_bound"
     #define FL_status_string_bound_not        "F_bound_not"
+    #define FL_status_string_child            "F_child"
+    #define FL_status_string_child_not        "F_child_not"
     #define FL_status_string_complete         "F_complete"
     #define FL_status_string_complete_not     "F_complete_not"
     #define FL_status_string_connected        "F_connected"
@@ -229,6 +231,8 @@ extern "C" {
     #define FL_status_string_output_not       "F_output_not"
     #define FL_status_string_parameter        "F_parameter"
     #define FL_status_string_parameter_not    "F_parameter_not"
+    #define FL_status_string_parent           "F_parent"
+    #define FL_status_string_parent_not       "F_parent_not"
     #define FL_status_string_pipe             "F_pipe"
     #define FL_status_string_pipe_not         "F_pipe_not"
     #define FL_status_string_port             "F_port"
@@ -287,6 +291,8 @@ extern "C" {
     #define FL_status_string_block_not_length        11
     #define FL_status_string_bound_length            7
     #define FL_status_string_bound_not_length        11
+    #define FL_status_string_child_length            7
+    #define FL_status_string_child_not_length        11
     #define FL_status_string_complete_length         10
     #define FL_status_string_complete_not_length     14
     #define FL_status_string_connected_length        11
@@ -344,6 +350,8 @@ extern "C" {
     #define FL_status_string_output_not_length       12
     #define FL_status_string_parameter_length        11
     #define FL_status_string_parameter_not_length    15
+    #define FL_status_string_parent_length           8
+    #define FL_status_string_parent_not_length       12
     #define FL_status_string_pipe_length             6
     #define FL_status_string_pipe_not_length         10
     #define FL_status_string_port_length             6

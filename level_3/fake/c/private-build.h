@@ -483,15 +483,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern void fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
 
 /**
@@ -525,15 +526,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_libraries_script_
-  extern void fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_script_
 
 /**
@@ -548,15 +550,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_shared_
-  extern void fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_library_shared_
 
 /**
@@ -571,15 +574,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_static_
-  extern void fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_library_static_
 
 /**
@@ -711,25 +715,26 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_objects_static_
-  extern void fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_objects_static_
 
 /**
  * Execute the build operation.
  *
- * @param data
- *   The program data.
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -737,7 +742,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_return_status fake_build_operate(const fake_data_t data, const f_string_static_t setting_file) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_build_operate(const f_string_static_t setting_file, fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_operate_
 
 /**
@@ -752,15 +757,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_programs_script_
-  extern void fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_programs_script_
 
 /**
@@ -775,15 +781,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_program_shared_
-  extern void fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_program_shared_
 
 /**
@@ -798,15 +805,16 @@ extern "C" {
  * @param file_stage
  *   The specific stage file path.
  * @param status
- *   The return status.
- *
- * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_program_static_
-  extern void fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_program_static_
 
 /**

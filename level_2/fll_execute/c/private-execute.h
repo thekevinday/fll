@@ -44,12 +44,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if name_length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  * @see fll_execute_arguments_add()
  * @see fll_execute_arguments_add_set()
  * @see fll_execute_arguments_dynamic_add()
@@ -81,12 +87,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if name_length is 0.
- *   F_array_too_large (with error bit) if arguments array is too large for further allocation.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
+ *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *
+ * @see f_macro_string_dynamic_t_delete_simple()
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_append()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamics_increase()
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()
  * @see fll_execute_arguments_dynamic_add_parameter()
@@ -95,6 +107,100 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
   extern f_return_status private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
+
+/**
+ * Private function for performing the fork and execute operation.
+ *
+ * @param program_path
+ *   The part of the path to the program representing the program name to copy from.
+ * @param fixed_arguments
+ *   A fixed array of strings representing the arguments.
+ * @param execute_path
+ *   If TRUE then execvp() is called to perform execution.
+ *   If FALSE then execv() is called to perform execution.
+ * @param set_signal
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
+ * @param result
+ *   The code returned after finishing execution of program_path.
+ *
+ * @return
+ *   F_none on success.
+ *   F_child on success but this is the child thread.
+ *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit set) on execution failure.
+ *
+ * @see execv()
+ * @see execvp()
+ * @see fll_execute_path()
+ * @see fll_execute_program()
+ */
+#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
+  extern f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_path, const f_signal_how_t *signals, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
+
+/**
+ * Private function for performing the fork and execute operation using a specified environment.
+ *
+ * @param program_path
+ *   The part of the path to the program representing the program name to copy from.
+ * @param fixed_arguments
+ *   A fixed array of strings representing the arguments.
+ * @param execute_program
+ *   If TRUE then execvp() is called to perform execution.
+ *   If FALSE then execv() is called to perform execution.
+ * @param names
+ *   An array of strings representing the environment variable names.
+ *   At most names.used variables are created.
+ *   Duplicate names are overwritten.
+ * @param values
+ *   An array of strings representing the environment variable names.
+ *   The values.used must be of at least names.used.
+ *   Set individual strings.used to 0 for empty/NULL values.
+ * @param signals
+ *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
+ * @param result
+ *   The code returned after finishing execution of program_path.
+ *
+ * @return
+ *   F_none on success.
+ *   F_child on success but this is the child thread.
+ *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit set) on execution failure.
+ *
+ * @see execv()
+ * @see execvpe()
+ * @see fll_execute_path_environment()
+ * @see fll_execute_program_environment()
+ */
+#if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+  extern f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+
+/**
+ * Private function for reconstructing the arguments into a fixed array.
+ *
+ * @param program_path
+ *   The part of the path to the program representing the program name to copy from.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param name_size
+ *   The size of the program_path to copy.
+ * @param program_name
+ *   The destination to copy the name to.
+ * @param fixed_arguments
+ *   The array of arguments to be updated with the program name.
+ *
+ * @return
+ *   F_none on success.
+ *
+ * @see fll_execute_path()
+ * @see fll_execute_path_environment()
+ */
+#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
 
 #ifdef __cplusplus
 } // extern "C"

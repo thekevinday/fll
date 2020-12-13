@@ -165,7 +165,7 @@ extern "C" {
 
 #ifndef _di_fake_build_copy_
   void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_string_length_t preserve, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
 
     if (fake_signal_received(data)) {
       *status = F_status_set_error(F_signal);
@@ -379,7 +379,7 @@ extern "C" {
 
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(const fake_data_t data, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
 
     if (fake_signal_received(data)) {
       *status = F_status_set_error(F_signal);
@@ -464,13 +464,13 @@ extern "C" {
 #endif // _di_fake_build_skeleton_
 
 #ifndef _di_fake_build_execute_process_script_
-  void fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!process_script.used) return;
+  int fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!process_script.used) return 0;
 
     if (fake_signal_received(data)) {
       *status = F_status_set_error(F_signal);
-      return;
+      return 0;
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -515,7 +515,7 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
-      return;
+      return 0;
     }
 
     {
@@ -536,7 +536,7 @@ extern "C" {
 
           f_macro_string_dynamic_t_delete_simple(defines);
           f_macro_string_dynamics_t_delete_simple(arguments);
-          return;
+          return 0;
         }
 
         *status = fl_string_dynamic_terminate_after(&defines);
@@ -546,7 +546,7 @@ extern "C" {
 
           f_macro_string_dynamic_t_delete_simple(defines);
           f_macro_string_dynamics_t_delete_simple(arguments);
-          return;
+          return 0;
         }
       }
 
@@ -618,7 +618,7 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
+        return 0;
       }
     }
 
@@ -646,9 +646,11 @@ extern "C" {
 
         f_macro_string_dynamic_t_delete_simple(path);
         f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
+        return 0;
       }
     }
+
+    int return_code = 0;
 
     if (fake_signal_received(data)) {
       *status = F_status_set_error(F_signal);
@@ -657,21 +659,19 @@ extern "C" {
       f_macro_string_dynamics_t_delete_simple(arguments);
     }
     else {
-      int return_code = 0;
-
       // child processes should receive all signals, without blocking.
       f_signal_how_t signals = f_signal_how_t_initialize;
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      *status = fll_execute_path_environment(path.string, arguments, &signals, data_build.environment.names, data_build.environment.values, &return_code);
+      *status = fll_execute_path_environment(path.string, arguments, data_build.environment.names, data_build.environment.values, &signals, &return_code);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
 
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);
       }
-      else {
+      else if (*status != F_child) {
         if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_failure) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
@@ -693,6 +693,8 @@ extern "C" {
     }
 
     f_macro_string_dynamic_t_delete_simple(path);
+
+    return return_code;
   }
 #endif // _di_fake_build_execute_process_script_
 
@@ -730,19 +732,21 @@ extern "C" {
 #endif // _di_fake_build_get_file_name_without_extension_
 
 #ifndef _di_fake_build_libraries_script_
-  void fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+  int fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
 
     // @todo needs to perform some sort of regex replace on the library scripts.
 
     fake_build_touch(data, file_stage, status);
+
+    return 0;
   }
 #endif // _di_fake_build_libraries_script_
 
 #ifndef _di_fake_build_library_shared_
-  void fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!data_build.setting.build_sources_library.used) return;
+  int fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!data_build.setting.build_sources_library.used) return 0;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -786,7 +790,7 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
+        return 0;
       }
     }
 
@@ -925,16 +929,22 @@ extern "C" {
         fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         f_macro_string_dynamics_t_delete_simple(arguments);
-        return;
+        return 0;
       }
     }
 
-    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
+    {
+      const int result = fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-    f_macro_string_dynamics_t_delete_simple(arguments);
+      f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error(*status)) {
-      return;
+      if (F_status_is_error(*status)) {
+        return 0;
+      }
+
+      if (*status == F_child) {
+        return result;
+      }
     }
 
     if (data_build.setting.version_target != fake_build_version_type_micro) {
@@ -963,7 +973,7 @@ extern "C" {
 
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);
-        return;
+        return 0;
       }
 
       *status = f_file_link(parameter_file_name_micro, parameter_file_path);
@@ -974,11 +984,11 @@ extern "C" {
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
           fll_error_file_print(data.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
-          return;
+          return 0;
         }
 
         fll_error_file_print(data.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
-        return;
+        return 0;
       }
     }
 
@@ -995,7 +1005,7 @@ extern "C" {
 
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);
-        return;
+        return 0;
       }
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
@@ -1027,7 +1037,7 @@ extern "C" {
         if (F_status_set_fine(*status) == F_file_found) {
           fll_error_file_print(data.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
 
-          return;
+          return 0;
         }
 
         if (data_build.setting.version_target == fake_build_version_type_major) {
@@ -1040,18 +1050,20 @@ extern "C" {
           fll_error_file_print(data.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
         }
 
-        return;
+        return 0;
       }
     }
 
     fake_build_touch(data, file_stage, status);
+
+    return 0;
   }
 #endif // _di_fake_build_library_shared_
 
 #ifndef _di_fake_build_library_static_
-  void fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!data_build.setting.build_sources_library.used) return;
+  int fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!data_build.setting.build_sources_library.used) return 0;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -1167,17 +1179,21 @@ extern "C" {
       } // for
     }
 
+    int result = data.child;
+
     if (F_status_is_error_not(*status)) {
-      fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
+      result = fake_execute(data, data_build.environment, data_build.setting.build_indexer, arguments, status);
     }
 
     f_macro_string_dynamic_t_delete_simple(file_name);
     f_macro_string_dynamic_t_delete_simple(source_path);
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error_not(*status)) {
+    if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(data, file_stage, status);
     }
+
+    return result;
   }
 #endif // _di_fake_build_library_static_
 
@@ -2377,9 +2393,9 @@ extern "C" {
 #endif // _di_fake_build_load_stage_
 
 #ifndef _di_fake_build_objects_static_
-  void fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!data_build.setting.build_sources_library.used) return;
+  int fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!data_build.setting.build_sources_library.used) return 0;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -2394,6 +2410,8 @@ extern "C" {
     f_string_length_t destination_length = 0;
 
     const f_string_static_t *path_sources = &data.path_sources;
+
+    int result = data.child;
 
     if (data_build.setting.path_standard) {
       path_sources = &data.path_sources_c;
@@ -2555,27 +2573,29 @@ extern "C" {
         break;
       }
 
-      fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
+      result = fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
 
-      if (F_status_is_error(*status)) break;
+      if (F_status_is_error(*status) || *status == F_child) break;
     } // for
 
     f_macro_string_dynamic_t_delete_simple(file_name);
     f_macro_string_dynamic_t_delete_simple(destination_path);
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error_not(*status)) {
+    if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(data, file_stage, status);
     }
+
+    return result;
   }
 #endif // _di_fake_build_objects_static_
 
 #ifndef _di_fake_build_operate_
-  f_return_status fake_build_operate(const fake_data_t data, const f_string_static_t setting_file) {
+  f_return_status fake_build_operate(const f_string_static_t setting_file, fake_data_t *data) {
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(*data)) {
       return F_signal;
     }
 
@@ -2585,70 +2605,70 @@ extern "C" {
     fake_build_data_t data_build = fake_build_data_t_initialize;
     fake_build_stage_t stage = fake_build_stage_t_initialize;
 
-    f_macro_mode_t_set_default_umask(mode, data.umask);
+    f_macro_mode_t_set_default_umask(mode, data->umask);
 
-    fake_build_load_setting(data, setting_file, &data_build.setting, &status);
+    fake_build_load_setting(*data, setting_file, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
-      if (data.error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data.output.stream, "%c", f_string_eol[0]);
-        fl_color_print(data.output.stream, data.context.set.important, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->output.stream, "%c", f_string_eol[0]);
+        fl_color_print(data->output.stream, data->context.set.important, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
 
         if (data_build.setting.project_name.used) {
-          fl_color_print_code(data.output.stream, data.context.notable);
-          f_print_dynamic(data.output.stream, data_build.setting.project_name);
-          fl_color_print_code(data.output.stream, data.context.reset);
+          fl_color_print_code(data->output.stream, data->context.notable);
+          f_print_dynamic(data->output.stream, data_build.setting.project_name);
+          fl_color_print_code(data->output.stream, data->context.reset);
         }
 
-        fl_color_print(data.output.stream, data.context.set.important, ".");
-        fprintf(data.output.stream, "%c", f_string_eol[0]);
+        fl_color_print(data->output.stream, data->context.set.important, ".");
+        fprintf(data->output.stream, "%c", f_string_eol[0]);
       }
     }
 
-    fake_build_load_stage(data, setting_file, &stage, &status);
+    fake_build_load_stage(*data, setting_file, &stage, &status);
 
-    fake_build_load_environment(data, data_build, &data_build.environment, &status);
+    fake_build_load_environment(*data, data_build, &data_build.environment, &status);
 
-    fake_build_skeleton(data, data_build, mode.directory, stage.file_skeleton, &status);
+    fake_build_skeleton(*data, data_build, mode.directory, stage.file_skeleton, &status);
 
-    fake_build_execute_process_script(data, data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
+    data->child = fake_build_execute_process_script(*data, data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
 
-    fake_build_copy(data, mode, "setting files", data.path_data_settings, data.path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
+    fake_build_copy(*data, mode, "setting files", data->path_data_settings, data->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 
     if (data_build.setting.build_language == fake_build_language_type_bash) {
-      fake_build_libraries_script(data, data_build, mode, stage.file_libraries_script, &status);
+      fake_build_libraries_script(*data, data_build, mode, stage.file_libraries_script, &status);
 
-      fake_build_programs_script(data, data_build, mode, stage.file_programs_script, &status);
+      fake_build_programs_script(*data, data_build, mode, stage.file_programs_script, &status);
 
       if (data_build.setting.build_script) {
-        fake_build_copy(data, mode, "scripts", data.path_sources_script, data.path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        fake_build_copy(*data, mode, "scripts", data->path_sources_script, data->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
     else {
       if (data_build.setting.build_sources_headers.used) {
-        const f_string_static_t *path_sources = &data.path_sources;
+        const f_string_static_t *path_sources = &data->path_sources;
 
         if (data_build.setting.path_standard) {
-          path_sources = &data.path_sources_c;
+          path_sources = &data->path_sources_c;
 
           if (data_build.setting.build_language == fake_build_language_type_cpp) {
-            path_sources = &data.path_sources_cpp;
+            path_sources = &data->path_sources_cpp;
           }
         }
-        else if (data.parameters[fake_parameter_path_sources].result != f_console_result_additional) {
+        else if (data->parameters[fake_parameter_path_sources].result != f_console_result_additional) {
           path_sources = &data_build.setting.path_sources;
         }
 
         const f_string_length_t path_sources_base_length = path_sources->used;
 
         f_string_static_t path_headers = f_string_static_t_initialize;
-        f_string_length_t directory_headers_length = data.path_build_includes.used + data_build.setting.path_headers.used;
+        f_string_length_t directory_headers_length = data->path_build_includes.used + data_build.setting.path_headers.used;
 
         char directory_headers[directory_headers_length + 1];
 
         if (data_build.setting.path_headers.used > 0) {
-          memcpy(directory_headers, data.path_build_includes.string, data.path_build_includes.used);
-          memcpy(directory_headers + data.path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
+          memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
+          memcpy(directory_headers + data->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
 
           directory_headers[directory_headers_length] = 0;
 
@@ -2657,7 +2677,7 @@ extern "C" {
           path_headers.size = directory_headers_length + 1;
         }
         else {
-          memcpy(directory_headers, data.path_build_includes.string, data.path_build_includes.used);
+          memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
 
           directory_headers[directory_headers_length] = 0;
 
@@ -2666,29 +2686,29 @@ extern "C" {
           path_headers.size = directory_headers_length + 1;
         }
 
-        fake_build_copy(data, mode, "header files", *path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
+        fake_build_copy(*data, mode, "header files", *path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
       }
 
       if (data_build.setting.build_shared) {
-        fake_build_library_shared(data, data_build, mode, stage.file_libraries_shared, &status);
+        data->child = fake_build_library_shared(*data, data_build, mode, stage.file_libraries_shared, &status);
 
-        fake_build_program_shared(data, data_build, mode, stage.file_programs_shared, &status);
+        data->child = fake_build_program_shared(*data, data_build, mode, stage.file_programs_shared, &status);
       }
 
       if (data_build.setting.build_static) {
-        fake_build_objects_static(data, data_build, mode, stage.file_objects_static, &status);
+        data->child = fake_build_objects_static(*data, data_build, mode, stage.file_objects_static, &status);
 
-        fake_build_library_static(data, data_build, mode, stage.file_libraries_static, &status);
+        data->child = fake_build_library_static(*data, data_build, mode, stage.file_libraries_static, &status);
 
-        fake_build_program_static(data, data_build, mode, stage.file_programs_static, &status);
+        data->child = fake_build_program_static(*data, data_build, mode, stage.file_programs_static, &status);
       }
 
       if (data_build.setting.build_script) {
-        fake_build_copy(data, mode, "scripts", data.path_sources_script, data.path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
+        fake_build_copy(*data, mode, "scripts", data->path_sources_script, data->path_build_programs_script, data_build.setting.build_sources_script, stage.file_sources_script, 0, &status);
       }
     }
 
-    fake_build_execute_process_script(data, data_build, data_build.setting.process_post, stage.file_process_post, &status);
+    fake_build_execute_process_script(*data, data_build, data_build.setting.process_post, stage.file_process_post, &status);
 
     fake_macro_build_data_delete_simple(data_build);
     fake_macro_build_stage_t_delete_simple(stage);
@@ -2703,19 +2723,21 @@ extern "C" {
 #endif // _di_fake_build_operate_
 
 #ifndef _di_fake_build_programs_script_
-  void fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
+  int fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
 
     // @todo needs to perform some sort of regex replace on the program scripts.
 
     fake_build_touch(data, file_stage, status);
+
+    return 0;
   }
 #endif // _di_fake_build_programs_script_
 
 #ifndef _di_fake_build_program_shared_
-  void fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!data_build.setting.build_sources_program.used) return;
+  int fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!data_build.setting.build_sources_program.used) return 0;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -2799,23 +2821,25 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
-      return;
+      return 0;
     }
 
-    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
+    int result = fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error_not(*status)) {
+    if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(data, file_stage, status);
     }
+
+    return result;
   }
 #endif // _di_fake_build_program_shared_
 
 #ifndef _di_fake_build_program_static_
-  void fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
-    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true) return;
-    if (!data_build.setting.build_sources_program.used) return;
+  int fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+    if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return data.child;
+    if (!data_build.setting.build_sources_program.used) return 0;
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol[0]);
@@ -2915,16 +2939,18 @@ extern "C" {
       fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
-      return;
+      return 0;
     }
 
-    fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
+    int result = fake_execute(data, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
     f_macro_string_dynamics_t_delete_simple(arguments);
 
-    if (F_status_is_error_not(*status)) {
+    if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(data, file_stage, status);
     }
+
+    return result;
   }
 #endif // _di_fake_build_program_static_
 

@@ -11,6 +11,8 @@
  * @return
  *   0 on success.
  *   1 on error.
+ *
+ * @see exit()
  */
 int main(const unsigned long argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
@@ -45,6 +47,10 @@ int main(const unsigned long argc, const f_string_t *argv) {
 
   if (F_status_is_error(status)) {
     return 1;
+  }
+
+  if (status == F_child) {
+    exit(data.child);
   }
 
   return 0;

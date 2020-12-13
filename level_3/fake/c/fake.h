@@ -378,6 +378,7 @@ extern "C" {
     uint8_t operation;
 
     mode_t umask;
+    int child;
     f_signal_t signal;
 
     f_string_dynamics_t define;
@@ -443,6 +444,7 @@ extern "C" {
       F_false, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      0, \
       0, \
       0, \
       f_signal_t_initialize, \

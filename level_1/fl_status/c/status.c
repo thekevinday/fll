@@ -242,6 +242,12 @@ extern "C" {
         case F_bound_not:
           *string = FL_status_string_bound_not;
           break;
+        case F_child:
+          *string = FL_status_string_child;
+          break;
+        case F_child_not:
+          *string = FL_status_string_child_not;
+          break;
         case F_complete:
           *string = FL_status_string_complete;
           break;
@@ -412,6 +418,12 @@ extern "C" {
           break;
         case F_parameter_not:
           *string = FL_status_string_parameter_not;
+          break;
+        case F_parent:
+          *string = FL_status_string_parent;
+          break;
+        case F_parent_not:
+          *string = FL_status_string_parent_not;
           break;
         case F_pipe:
           *string = FL_status_string_pipe;

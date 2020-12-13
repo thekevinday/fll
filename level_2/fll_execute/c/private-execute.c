@@ -7,27 +7,19 @@ extern "C" {
 
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
   f_return_status private_fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments) {
-    f_status_t status = F_none;
 
-    if (arguments->used == arguments->size) {
-      if (arguments->size + f_memory_default_allocation_step > f_array_length_t_size) {
-        if (arguments->size + 1 > f_array_length_t_size) return F_status_set_error(F_array_too_large);
-        f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + 1);
-      }
-      else {
-        f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + f_memory_default_allocation_step);
-      }
-
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = fl_string_dynamics_increase(arguments);
+    if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
-    status = fl_string_append(source, length, &argument);
+    if (length) {
+      status = fl_string_append(source, length, &argument);
 
-    if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
-      return status;
+      if (F_status_is_error(status)) {
+        f_macro_string_dynamic_t_delete_simple(argument);
+        return status;
+      }
     }
 
     status = fl_string_dynamic_terminate(&argument);
@@ -48,23 +40,13 @@ extern "C" {
 
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
   f_return_status private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) {
-    f_status_t status = F_none;
 
-    if (arguments->used + 1 >= arguments->size) {
-      if (arguments->size + f_memory_default_allocation_step > f_array_length_t_size) {
-        if (arguments->size + 2 > f_array_length_t_size) return F_status_set_error(F_array_too_large);
-        f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + 2);
-      }
-      else {
-        f_macro_string_dynamics_t_resize(status, (*arguments), arguments->size + f_memory_default_allocation_step + 1);
-      }
-
-      if (F_status_is_error(status)) return status;
-    }
+    f_status_t status = fl_string_dynamics_increase(arguments);
+    if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
-    if (prefix_length > 0) {
+    if (prefix_length) {
       status = fl_string_append(prefix, prefix_length, &argument);
 
       if (F_status_is_error(status)) {
@@ -73,11 +55,13 @@ extern "C" {
       }
     }
 
-    status = fl_string_append(name, name_length, &argument);
+    if (name_length) {
+      status = fl_string_append(name, name_length, &argument);
 
-    if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
-      return status;
+      if (F_status_is_error(status)) {
+        f_macro_string_dynamic_t_delete_simple(argument);
+        return status;
+      }
     }
 
     status = fl_string_dynamic_terminate(&argument);
@@ -94,14 +78,23 @@ extern "C" {
 
     f_macro_string_dynamic_t_clear(argument);
 
-    status = fl_string_append(value, value_length, &argument);
+    if (value_length) {
+      status = fl_string_append(value, value_length, &argument);
+
+      if (F_status_is_error(status)) {
+        f_macro_string_dynamic_t_delete_simple(argument);
+        return status;
+      }
+    }
+
+    status = fl_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
-    status = fl_string_dynamic_terminate(&argument);
+    status = fl_string_dynamics_increase(arguments);
 
     if (F_status_is_error(status)) {
       f_macro_string_dynamic_t_delete_simple(argument);
@@ -116,6 +109,113 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
+
+#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
+  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_signal_how_t *signals, int *result) {
+
+    const pid_t process_id = fork();
+
+    if (process_id < 0) {
+      return F_status_set_error(F_fork);
+    }
+
+    // child process.
+    if (!process_id) {
+
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
+
+      const int code = execute_program ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+
+      if (result) {
+        *result = code;
+      }
+
+      return F_child;
+    }
+
+    // have the parent wait for the child process to finish.
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
+
+    if (result != 0) {
+      if (WIFEXITED(*result)) {
+        return F_none;
+      }
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
+
+#if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) {
+
+    const pid_t process_id = fork();
+
+    if (process_id < 0) {
+      return F_status_set_error(F_fork);
+    }
+
+    // child process.
+    if (!process_id) {
+      if (signals) {
+        f_signal_set_handle(SIG_BLOCK, &signals->block);
+        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+      }
+
+      clearenv();
+
+      for (f_array_length_t i = 0; i < names.used; i++) {
+        f_environment_set_dynamic(names.array[i], values.array[i], F_true);
+      } // for
+
+      const int code = execute_program ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+
+      if (result) {
+        *result = code;
+      }
+
+      return F_child;
+    }
+
+    // have the parent wait for the child process to finish.
+    waitpid(process_id, result, WUNTRACED | WCONTINUED);
+
+    if (result != 0) {
+      if (WIFEXITED(*result)) {
+        return F_none;
+      }
+
+      return F_status_set_error(F_failure);
+    }
+  }
+#endif // !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+
+#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
+
+    memcpy(program_name, program_path, name_size);
+    program_name[name_size] = 0;
+
+    if (name_size) {
+      fixed_arguments[0] = program_name;
+    }
+    else {
+      fixed_arguments[0] = 0;
+    }
+
+    for (f_string_length_t i = 0; i < arguments.used; i++) {
+      fixed_arguments[i + 1] = arguments.array[i].string;
+    } // for
+
+    // insert the required end of array designator.
+    fixed_arguments[arguments.used + 1] = 0;
+  }
+#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
 
 #ifdef __cplusplus
 } // extern "C"

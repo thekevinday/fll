@@ -754,6 +754,11 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
 
                     status = fll_execute_program((f_string_t) current_tool, arguments, 0, &return_code);
 
+                    // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+                    if (status == F_child) {
+                      exit(return_code);
+                    }
+
                     if (status == F_failure) {
                       fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, current_tool, f_string_eol[0]);
                       fprintf(f_type_error, "  ");
@@ -822,6 +827,11 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
           }
 
           status = fll_execute_program(current_tool, arguments, 0, &return_code);
+
+          // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+          if (status == F_child) {
+            exit(return_code);
+          }
 
           if (status == F_failure) {
             fl_color_print(data.error.to.stream, data.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, current_tool, f_string_eol[0]);
@@ -1062,6 +1072,11 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
         tool = firewall_program_iptables;
         status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, &return_code);
 
+        // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+        if (status == F_child) {
+          exit(return_code);
+        }
+
         if (F_status_is_error_not(status)) {
           if (data->error.verbosity == f_console_verbosity_debug) {
             fl_color_print_code(f_type_debug, data->context.warning);
@@ -1077,6 +1092,11 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
 
           tool = firewall_program_ip6tables;
           status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, 0, &return_code);
+
+          // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+          if (status == F_child) {
+            exit(return_code);
+          }
         }
 
         if (F_status_is_error(status)) {
@@ -1161,6 +1181,11 @@ f_return_status firewall_delete_chains(const firewall_data_t data) {
 
     status = fll_execute_program(tools[i], arguments, 0, &return_code);
 
+    // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+    if (status == F_child) {
+      exit(return_code);
+    }
+
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
@@ -1215,6 +1240,11 @@ f_return_status firewall_delete_chains(const firewall_data_t data) {
     }
 
     status = fll_execute_program(tools[i], arguments, 0, &return_code);
+
+    // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+    if (status == F_child) {
+      exit(return_code);
+    }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -1292,6 +1322,11 @@ f_return_status firewall_default_lock(const firewall_data_t data) {
       }
 
       status = fll_execute_program(tools[j], arguments, 0, &return_code);
+
+      // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
+      if (status == F_child) {
+        exit(return_code);
+      }
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);

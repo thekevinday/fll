@@ -538,7 +538,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_
-  extern f_return_status fake_make_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_return_status fake_make_operate(fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_
 
 /**
@@ -622,29 +622,32 @@ extern "C" {
 /**
  * Perform the make operations within the given section.
  *
- * @param data
- *   The program data.
  * @param id_section
  *   The array location id within the fakefile of the section to operate on.
+ * @param data
+ *   The program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param section_stack
  *   The current operation stack.
  * @param status
- *   The return status.
- *
+ *   F_none on success.
  *   F_valid_not (with error bit set) is returned if any part of the section is invalid, such as an invalid operation name.
  *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_section_
-  void fake_make_operate_section(const fake_data_t data, const f_array_length_t id_section, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
+  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_section_
 
 /**
  * Perform a specific make operation within the given section.
  *
- * @param data
- *   The program data.
  * @param section_name
  *   The section name.
  * @param operation
@@ -657,17 +660,23 @@ extern "C" {
  *   Whether or not a previous section operation succeeded or failed.
  * @param operation_if
  *   The if-condition status for the current operation.
+ * @param data
+ *   The program data.
  * @param data_make
  *   All make related setting data, including data from the fakefile and optionally build settings file.
  * @param section_stack
  *   The current operation stack.
  * @param status
- *   The return status.
+ *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
+ *
+ * @return
+ *   The return code of the execution process.
+ *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern void fake_make_operate_process(const fake_data_t data, const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_
 
 /**
