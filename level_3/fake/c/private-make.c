@@ -33,7 +33,7 @@ extern "C" {
           return F_true;
         }
 
-        if (data_make->path_cache.string[data_make->path.stack.array[0].used] == f_path_separator[0]) {
+        if (data_make->path_cache.string[data_make->path.stack.array[0].used] == f_path_separator_s[0]) {
           return F_true;
         }
       }
@@ -2383,7 +2383,7 @@ extern "C" {
 
         if (existing) {
           memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-          destination[arguments.array[total].used] = f_path_separator[0];
+          destination[arguments.array[total].used] = f_path_separator_s[0];
         }
 
         destination[destination_length] = 0;
@@ -2483,7 +2483,7 @@ extern "C" {
 
         if (existing) {
           memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-          destination[arguments.array[total].used] = f_path_separator[0];
+          destination[arguments.array[total].used] = f_path_separator_s[0];
         }
 
         destination[destination_length] = 0;
@@ -3419,7 +3419,7 @@ extern "C" {
 
         if (existing) {
           memcpy(destination + arguments.array[total].used + 1, arguments.array[i].string, arguments.array[i].used);
-          destination[arguments.array[total].used] = f_path_separator[0];
+          destination[arguments.array[total].used] = f_path_separator_s[0];
         }
 
         destination[destination_length] = 0;

@@ -99,7 +99,7 @@ extern "C" {
 
     for (f_string_length_t i = 0; i < length; i++) {
 
-      if (path[i] == f_path_separator[0]) {
+      if (path[i] == f_path_separator_s[0]) {
         return F_true;
       }
     } // for

@@ -50,7 +50,7 @@ extern "C" {
         total = i - first;
 
         if (total > 0) {
-          if (path[i - 1] == f_path_separator[0]) {
+          if (path[i - 1] == f_path_separator_s[0]) {
             f_macro_string_dynamic_t_new(status, part, total);
             if (F_status_is_error(status)) return status;
 
@@ -60,7 +60,7 @@ extern "C" {
             f_macro_string_dynamic_t_new(status, part, total + 1);
             if (F_status_is_error(status)) return status;
 
-            part.string[total] = f_path_separator[0];
+            part.string[total] = f_path_separator_s[0];
             part.used = total + 1;
           }
 
@@ -137,11 +137,11 @@ extern "C" {
             part.used++;
           } // for
 
-          if (part.string[part.used - 1] != f_path_separator[0]) {
+          if (part.string[part.used - 1] != f_path_separator_s[0]) {
             f_macro_string_dynamic_t_resize(status, part, total + 1);
             if (F_status_is_error(status)) return status;
 
-            part.string[part.used] = f_path_separator[0];
+            part.string[part.used] = f_path_separator_s[0];
             part.used++;
           }
         }
@@ -202,7 +202,7 @@ extern "C" {
           total = last - i;
 
           if (total > 0) {
-            if (path[j + total] == f_path_separator[0]) {
+            if (path[j + total] == f_path_separator_s[0]) {
               f_macro_string_dynamic_t_new(status, part, total);
               if (F_status_is_error(status)) return status;
 
@@ -212,7 +212,7 @@ extern "C" {
               f_macro_string_dynamic_t_new(status, part, total + 1);
               if (F_status_is_error(status)) return status;
 
-              part.string[total] = f_path_separator[0];
+              part.string[total] = f_path_separator_s[0];
               part.used = total + 1;
             }
 
@@ -227,7 +227,7 @@ extern "C" {
           total = last - j;
 
           if (total > 0) {
-            if (path[last - 1] == f_path_separator[0]) {
+            if (path[last - 1] == f_path_separator_s[0]) {
               f_macro_string_dynamic_t_new(status, part, total);
               if (F_status_is_error(status)) return status;
 
@@ -238,7 +238,7 @@ extern "C" {
               if (F_status_is_error(status)) return status;
 
               part.used = total + 1;
-              part.string[total] = f_path_separator[0];
+              part.string[total] = f_path_separator_s[0];
             }
 
             memcpy(part.string, path, total);
@@ -307,11 +307,11 @@ extern "C" {
               part.used++;
             } // for
 
-            if (part.string[part.used - 1] != f_path_separator[0]) {
+            if (part.string[part.used - 1] != f_path_separator_s[0]) {
               f_macro_string_dynamic_t_resize(status, part, total + 1);
               if (F_status_is_error(status)) return status;
 
-              part.string[part.used] = f_path_separator[0];
+              part.string[part.used] = f_path_separator_s[0];
               part.used++;
             }
           }
@@ -332,11 +332,11 @@ extern "C" {
             part.used++;
           } // for
 
-          if (part.string[part.used - 1] != f_path_separator[0]) {
+          if (part.string[part.used - 1] != f_path_separator_s[0]) {
             f_macro_string_dynamic_t_resize(status, part, total + 1);
             if (F_status_is_error(status)) return status;
 
-            part.string[part.used - 1] = f_path_separator[0];
+            part.string[part.used - 1] = f_path_separator_s[0];
             part.used++;
           }
         }

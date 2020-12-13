@@ -55,6 +55,17 @@ extern "C" {
   #define f_path_present_working_old_length 6
 
   #define f_path_max PATH_MAX
+
+  const static f_string_t f_path_separator_s = f_path_separator;
+  const static f_string_t f_path_separator_current_s = f_path_separator_current;
+  const static f_string_t f_path_separator_variable_s = f_path_separator_variable;
+
+  #define f_path_extension_separator_s f_path_separator_current_s
+
+  const static f_string_t f_path_environment_s = f_path_environment;
+  const static f_string_t f_path_home_wildcard_s = f_path_home_wildcard;
+  const static f_string_t f_path_present_working_s = f_path_present_working;
+  const static f_string_t f_path_present_working_old_s = f_path_present_working_old;
 #endif // _di_f_path_defines_
 
 #ifdef __cplusplus

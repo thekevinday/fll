@@ -65,10 +65,10 @@ extern "C" {
       memcpy(path_destination_sub, destination.string, destination.used);
       memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      path_source_sub[source.used] = f_path_separator[0];
+      path_source_sub[source.used] = f_path_separator_s[0];
       path_source_sub[source_sub.used] = 0;
 
-      path_destination_sub[destination.used] = f_path_separator[0];
+      path_destination_sub[destination.used] = f_path_separator_s[0];
       path_destination_sub[destination_sub.used] = 0;
 
       source_sub.string = path_source_sub;
@@ -139,12 +139,12 @@ extern "C" {
 
     memcpy(path_source, source.string, source.used);
     memcpy(path_source + source.used + 1, file.string, file.used);
-    path_source[source.used] = f_path_separator[0];
+    path_source[source.used] = f_path_separator_s[0];
     path_source[source.used + file.used + 1] = 0;
 
     memcpy(path_destination, destination.string, destination.used);
     memcpy(path_destination + destination.used + 1, file.string, file.used);
-    path_destination[destination.used] = f_path_separator[0];
+    path_destination[destination.used] = f_path_separator_s[0];
     path_destination[destination.used + file.used + 1] = 0;
 
     f_status_t status = f_file_clone(path_source, path_destination, role, recurse.size_block, recurse.exclusive);
@@ -275,10 +275,10 @@ extern "C" {
       memcpy(path_destination_sub, destination.string, destination.used);
       memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      path_source_sub[source.used] = f_path_separator[0];
+      path_source_sub[source.used] = f_path_separator_s[0];
       path_source_sub[source_sub.used] = 0;
 
-      path_destination_sub[destination.used] = f_path_separator[0];
+      path_destination_sub[destination.used] = f_path_separator_s[0];
       path_destination_sub[destination_sub.used] = 0;
 
       source_sub.string = path_source_sub;
@@ -335,12 +335,12 @@ extern "C" {
 
     memcpy(path_source, source.string, source.used);
     memcpy(path_source + source.used + 1, file.string, file.used);
-    path_source[source.used] = f_path_separator[0];
+    path_source[source.used] = f_path_separator_s[0];
     path_source[source.used + file.used + 1] = 0;
 
     memcpy(path_destination, destination.string, destination.used);
     memcpy(path_destination + destination.used + 1, file.string, file.used);
-    path_destination[destination.used] = f_path_separator[0];
+    path_destination[destination.used] = f_path_separator_s[0];
     path_destination[destination.used + file.used + 1] = 0;
 
     f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.exclusive);
@@ -603,7 +603,7 @@ extern "C" {
             return status;
           }
 
-          if (destination->string[i] == f_path_separator[0]) {
+          if (destination->string[i] == f_path_separator_s[0]) {
             if (i - 1 > 0) {
               for (j = i - 1; j > 0; j--) {
                 if (!destination->string[j]) continue;
@@ -617,7 +617,7 @@ extern "C" {
                   return status;
                 }
 
-                if (destination->string[j] == f_path_separator[0]) {
+                if (destination->string[j] == f_path_separator_s[0]) {
                   destination->used = j + 1;
                 }
                 else {
@@ -635,7 +635,7 @@ extern "C" {
         } // for
 
         if (destination->used > 0 && !i) {
-          if (destination->string[0] != 0 && destination->string[0] != f_path_separator[0]) {
+          if (destination->string[0] != 0 && destination->string[0] != f_path_separator_s[0]) {
             separator_prepend = F_true;
             total++;
           }
@@ -654,7 +654,7 @@ extern "C" {
           return status;
         }
 
-        if (source[i] == f_path_separator[0]) {
+        if (source[i] == f_path_separator_s[0]) {
           if (!separator_prepend && destination->used > 0) {
             destination->used--;
           }
@@ -672,7 +672,7 @@ extern "C" {
                 return status;
               }
 
-              if (source[j] == f_path_separator[0]) {
+              if (source[j] == f_path_separator_s[0]) {
                 length_truncated = j + 1;
               }
               else {
@@ -689,7 +689,7 @@ extern "C" {
         break;
       } // for
 
-      if (!i && source[0] != f_path_separator[0]) {
+      if (!i && source[0] != f_path_separator_s[0]) {
         separator_append = F_true;
         total++;
       }
@@ -708,7 +708,7 @@ extern "C" {
 
         start = i;
 
-        if (source[0] == f_path_separator[0]) {
+        if (source[0] == f_path_separator_s[0]) {
           if (i + 1 < length_truncated) {
             for (j = i + 1; j < length_truncated; j++) {
               if (!source[j]) continue;
@@ -722,7 +722,7 @@ extern "C" {
                 return status;
               }
 
-              if (source[j] == f_path_separator[0]) {
+              if (source[j] == f_path_separator_s[0]) {
                 start = j;
               }
               else {
@@ -748,7 +748,7 @@ extern "C" {
     }
 
     if (separator_prepend) {
-      destination->string[destination->used] = f_path_separator[0];
+      destination->string[destination->used] = f_path_separator_s[0];
       destination->used++;
       total--;
     }
@@ -761,11 +761,11 @@ extern "C" {
 
     if (separator_append) {
       if (terminated_null) {
-        destination->string[destination->used - 2] = f_path_separator[0];
+        destination->string[destination->used - 2] = f_path_separator_s[0];
         destination->string[destination->used - 1] = 0;
       }
       else {
-        destination->string[destination->used - 1] = f_path_separator[0];
+        destination->string[destination->used - 1] = f_path_separator_s[0];
       }
     }
     else if (terminated_null) {

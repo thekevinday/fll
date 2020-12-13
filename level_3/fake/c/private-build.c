@@ -1123,7 +1123,7 @@ extern "C" {
             break;
           }
 
-          *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &source_path);
+          *status = fl_string_append_assure(f_path_separator_s, f_path_separator_length, &source_path);
 
           if (F_status_is_error(*status)) {
             fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
@@ -1190,8 +1190,8 @@ extern "C" {
     {
       // add the guaranteed environment variables.
       const f_string_t variables_name[] = {
-        f_path_environment,
-        f_path_present_working
+        f_path_environment_s,
+        f_path_present_working_s
       };
 
       const f_string_length_t variables_length[] = {
@@ -2032,7 +2032,7 @@ extern "C" {
           }
 
           if (settings_single_type[i] == 2) {
-            *status = fl_string_append_assure(f_path_separator, f_path_separator_length, settings_single_destination[i]);
+            *status = fl_string_append_assure(f_path_separator_s, f_path_separator_length, settings_single_destination[i]);
             if (F_status_is_error(*status)) {
               fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);
               break;
@@ -2445,7 +2445,7 @@ extern "C" {
           break;
         }
 
-        *status = fl_string_append_assure(f_path_separator, f_path_separator_length, &destination_path);
+        *status = fl_string_append_assure(f_path_separator_s, f_path_separator_length, &destination_path);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append_assure", F_true);

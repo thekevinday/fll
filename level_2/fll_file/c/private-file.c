@@ -54,7 +54,7 @@ extern "C" {
           memcpy(path_sub, path, path_length);
           memcpy(path_sub + path_length + 1, list[i]->array[j].string, list[i]->array[j].used);
 
-          path_sub[path_length] = f_path_separator[0];
+          path_sub[path_length] = f_path_separator_s[0];
           path_sub[length] = 0;
 
           status = f_file_mode_set(path_sub, mode);
@@ -75,7 +75,7 @@ extern "C" {
       memcpy(path_sub, path, path_length);
       memcpy(path_sub + path_length + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      path_sub[path_length] = f_path_separator[0];
+      path_sub[path_length] = f_path_separator_s[0];
       path_sub[length] = 0;
 
       status = f_directory_exists(path_sub);
@@ -151,7 +151,7 @@ extern "C" {
           memcpy(path_sub, path, path_length);
           memcpy(path_sub + path_length + 1, list[i]->array[j].string, list[i]->array[j].used);
 
-          path_sub[path_length] = f_path_separator[0];
+          path_sub[path_length] = f_path_separator_s[0];
           path_sub[length] = 0;
 
           status = f_file_role_change(path_sub, uid, gid, dereference);
@@ -170,7 +170,7 @@ extern "C" {
       memcpy(path_sub, path, path_length);
       memcpy(path_sub + path_length + 1, listing.directory.array[i].string, listing.directory.array[i].used);
 
-      path_sub[path_length] = f_path_separator[0];
+      path_sub[path_length] = f_path_separator_s[0];
       path_sub[length] = 0;
 
       status = f_directory_exists(path_sub);
