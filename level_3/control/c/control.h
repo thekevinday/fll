@@ -13,6 +13,7 @@
 #ifndef _control_h
 
 // libc includes
+#include <unistd.h>
 
 // fll-0 includes
 #include <level_0/type.h>

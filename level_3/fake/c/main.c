@@ -45,6 +45,11 @@ int main(const unsigned long argc, const f_string_t *argv) {
 
   f_signal_close(&data.signal);
 
+  // close all open file descriptors.
+  close(f_type_descriptor_output);
+  close(f_type_descriptor_input);
+  close(f_type_descriptor_error);
+
   if (F_status_is_error(status)) {
     return 1;
   }

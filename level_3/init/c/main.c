@@ -3,7 +3,6 @@
 int main(const unsigned long argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
   init_data_t data = init_data_initialize;
-  f_status_t status = F_none;
 
   f_signal_set_empty(&data.signal.set);
   f_signal_set_add(F_signal_abort, &data.signal.set);
@@ -25,9 +24,14 @@ int main(const unsigned long argc, const f_string_t *argv) {
   // restore umask.
   umask(data.umask);
 
-  status = init_main(arguments, &data);
+  const f_status_t status = init_main(arguments, &data);
 
   f_signal_close(&data.signal);
+
+  // close all open file descriptors.
+  close(f_type_descriptor_output);
+  close(f_type_descriptor_input);
+  close(f_type_descriptor_error);
 
   if (F_status_is_error(status)) {
     return 1;

@@ -20,6 +20,7 @@
 
 // libc includes
 #include <sys/mount.h>
+#include <unistd.h>
 
 // fll-0 includes
 #include <level_0/type.h>
