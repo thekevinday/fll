@@ -115,11 +115,16 @@ extern "C" {
  *   The part of the path to the program representing the program name to copy from.
  * @param fixed_arguments
  *   A fixed array of strings representing the arguments.
- * @param execute_path
+ * @param program_is
  *   If TRUE then execvp() is called to perform execution.
  *   If FALSE then execv() is called to perform execution.
  * @param set_signal
  *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
  *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
@@ -127,8 +132,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_child on success but this is the child thread.
- *   F_fork (with error bit set) on fork failure.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
  *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  * @see execv()
  * @see execvp()
@@ -136,7 +142,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-  extern f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_path, const f_signal_how_t *signals, int *result) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
 
 /**
@@ -146,7 +152,7 @@ extern "C" {
  *   The part of the path to the program representing the program name to copy from.
  * @param fixed_arguments
  *   A fixed array of strings representing the arguments.
- * @param execute_program
+ * @param program_is
  *   If TRUE then execvp() is called to perform execution.
  *   If FALSE then execv() is called to perform execution.
  * @param names
@@ -160,14 +166,20 @@ extern "C" {
  * @param signals
  *   (optional) A pointer to the set of signals.
  *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
  * @return
  *   F_none on success.
  *   F_child on success but this is the child thread.
- *   F_fork (with error bit set) on fork failure.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
  *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  * @see execv()
  * @see execvpe()
@@ -175,7 +187,7 @@ extern "C" {
  * @see fll_execute_program_environment()
  */
 #if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
-  extern f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
 
 /**

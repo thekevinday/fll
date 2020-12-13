@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fss_extended_write
+project_name f_execute
 
 version_major 0
 version_minor 5
@@ -12,26 +12,24 @@ environment
 process_pre
 process_post
 
-modes individual level monolithic
-modes_default monolithic
+modes individual
+modes_default individual
 
 build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_program -lfl_color -lfl_conversion -lfl_directory -lfl_fss -lfl_status -lfl_string -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_utf
-build_libraries-level -lfll_2 -lfll_1 -lfll_0
-build_libraries-monolithic -lfll
-build_sources_library fss_extended_write.c private-fss_extended_write.c
-build_sources_program main.c
-build_sources_headers fss_extended_write.h
+build_libraries-individual -lf_memory
+build_sources_library
+build_sources_program
+build_sources_headers execute.h execute-common.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static yes
 
-path_headers level_3
+path_headers level_0
 path_headers_preserve no
 path_library_script script
 path_library_shared shared

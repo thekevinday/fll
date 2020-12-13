@@ -25,6 +25,7 @@
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/environment.h>
+#include <level_0/execute.h>
 #include <level_0/file.h>
 #include <level_0/path.h>
 #include <level_0/signal.h>
@@ -350,25 +351,38 @@ extern "C" {
  * Instead, this returns F_child and assigns the child's return code to result.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation.
  *
+ * When the passed pipe parameter is not NULL, this function is effectively asynchronous and will not block.
+ * The caller is then expected to handle all read/write operations to/from the pipe.
+ * The caller is expected to appropriately call waitpid() or similar as needed.
+ * The caller is expected to handle both parent and child process (status is F_parent for parent and F_child for child.).
+ * When the passed paremeter is NULL, then this function is effectively synchronous and blocks until child exits.
+ *
  * @param program_path
  *   The entire path to the program.
  * @param arguments
  *   An array of strings representing the arguments.
- * @param set_signal
+ * @param signals
  *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
  *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
- *   F_failure (with error bit) if result is non-zero.
- *   F_fork (with error bit) if fork failed.
+ *   F_child on success but this is the child thread.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
+ *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_signal_set_handle().
  *
+ * @see dup2()
  * @see execv()
  * @see exit()
  * @see fork()
@@ -380,7 +394,7 @@ extern "C" {
  * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_path_
-  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
+  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result);
 #endif // _di_fll_execute_path_
 
 /**
@@ -393,6 +407,12 @@ extern "C" {
  * This does not call exit() when the child process exits.
  * Instead, this returns F_child and assigns the child's return code to result.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation.
+ *
+ * When the passed pipe parameter is not NULL, this function is effectively asynchronous and will not block.
+ * The caller is then expected to handle all read/write operations to/from the pipe.
+ * The caller is expected to appropriately call waitpid() or similar as needed.
+ * The caller is expected to handle both parent and child process (status is F_parent for parent and F_child for child.).
+ * When the passed paremeter is NULL, then this function is effectively synchronous and blocks until child exits.
  *
  * @param program_path
  *   The entire path to the program.
@@ -409,21 +429,28 @@ extern "C" {
  * @param signals
  *   (optional) A pointer to the set of signals.
  *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program_path.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
- *   F_failure (with error bit) if result is non-zero.
- *   F_fork (with error bit) if fork failed.
+ *   F_child on success but this is the child thread.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
+ *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  *   Errors (with error bit) from: f_environment_set_dynamic().
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_signal_set_handle().
  *
- * @see execv()
  * @see clearenv()
+ * @see dup2()
+ * @see execv()
  * @see fork()
  * @see memcpy()
  * @see strnlen()
@@ -434,7 +461,7 @@ extern "C" {
  * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_path_environment_
-  extern f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result);
+  extern f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result);
 #endif // _di_fll_execute_path_environment_
 
 /**
@@ -446,25 +473,38 @@ extern "C" {
  * Instead, this returns F_child and assigns the child's return code to result.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation.
  *
+ * When the passed pipe parameter is not NULL, this function is effectively asynchronous and will not block.
+ * The caller is then expected to handle all read/write operations to/from the pipe.
+ * The caller is expected to appropriately call waitpid() or similar as needed.
+ * The caller is expected to handle both parent and child process (status is F_parent for parent and F_child for child.).
+ * When the passed paremeter is NULL, then this function is effectively synchronous and blocks until child exits.
+ *
  * @param program_name
  *   The name of the program.
  * @param arguments
  *   An array of strings representing the arguments.
- * @param set_signal
+ * @param signals
  *   (optional) A pointer to the set of signals.
+ *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
  *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
- *   F_failure (with error bit) if result is non-zero.
- *   F_fork (with error bit) if fork failed.
+ *   F_child on success but this is the child thread.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
+ *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_signal_set_handle().
  *
+ * @see dup2()
  * @see execvp()
  * @see fork()
  * @see strnlen()
@@ -474,7 +514,7 @@ extern "C" {
  * @see f_signal_set_handle()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result);
+  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result);
 #endif // _di_fll_execute_program_
 
 /**
@@ -489,6 +529,12 @@ extern "C" {
  * Unlike the execv() family of functions, this does not call exit() when the child process exits.
  * Instead, this returns F_child and assigns the child's return code to result.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation.
+ *
+ * When the passed pipe parameter is not NULL, this function is effectively asynchronous and will not block.
+ * The caller is then expected to handle all read/write operations to/from the pipe.
+ * The caller is expected to appropriately call waitpid() or similar as needed.
+ * The caller is expected to handle both parent and child process (status is F_parent for parent and F_child for child.).
+ * When the passed paremeter is NULL, then this function is effectively synchronous and blocks until child exits.
  *
  * @param program_name
  *   The name of the program.
@@ -505,14 +551,20 @@ extern "C" {
  * @param signals
  *   (optional) A pointer to the set of signals.
  *   Set to 0 to disable.
+ * @param pipe
+ *   (optional) A pointer to the set of pipe desciptors (I/O) to be used by the child process.
+ *   When a non-zero address, the child process will assign these as the standard I/O file descriptors for piping to/from the parent/child.
+ *   For each pipe, setting a value of -1 means to use the default pipe.
+ *   Set to 0 to disable.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread (this may happen when calling scripts rather than executing a binary).
- *   F_failure (with error bit) if result is non-zero.
- *   F_fork (with error bit) if fork failed.
+ *   F_child on success but this is the child thread.
+ *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
+ *   F_failure (with error bit set) on execution failure.
+ *   F_fork (with error bit set) on fork failure.
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
@@ -523,6 +575,8 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
+ * @see clearenv()
+ * @see dup2()
  * @see execvp()
  * @see fork()
  * @see memcpy()
@@ -537,7 +591,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_environment_
-  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result);
+  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result);
 #endif // _di_fll_execute_program_environment_
 
 #ifdef __cplusplus

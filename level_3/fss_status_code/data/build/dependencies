@@ -22,7 +22,6 @@ fl_status
 fl_string
 fl_utf
 fll_error
-fll_execute
 fll_file
 fll_fss
 fll_program

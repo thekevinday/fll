@@ -21,7 +21,6 @@ fl_print
 fl_status
 fl_string
 fll_error
-fll_execute
 fll_file
 fll_fss
 fll_program

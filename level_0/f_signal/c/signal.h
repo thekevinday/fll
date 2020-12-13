@@ -21,12 +21,12 @@
 #include <level_0/type.h>
 #include <level_0/status.h>
 
+// fll-0 signal includes
+#include <level_0/signal-common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-// fll-0 signal includes
-#include <level_0/signal-common.h>
 
 /**
  * Close an open signal descriptor.

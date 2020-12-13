@@ -9,6 +9,7 @@ f_color
 f_console
 f_directory
 f_environment
+f_execute
 f_file
 f_fss
 f_path

@@ -3847,10 +3847,10 @@ extern "C" {
     f_signal_set_fill(&signals.block_not);
 
     if (as_shell) {
-      status = fll_execute_path_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, &return_code);
+      status = fll_execute_path_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, 0, &return_code);
     }
     else {
-      status = fll_execute_program_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, &return_code);
+      status = fll_execute_program_environment(program.string, arguments, data_make->environment.names, data_make->environment.values, &signals, 0, &return_code);
     }
 
     if (status == F_status_set_error(F_signal)) {

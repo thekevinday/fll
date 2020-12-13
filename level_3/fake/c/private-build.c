@@ -664,7 +664,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      *status = fll_execute_path_environment(path.string, arguments, data_build.environment.names, data_build.environment.values, &signals, &return_code);
+      *status = fll_execute_path_environment(path.string, arguments, data_build.environment.names, data_build.environment.values, &signals, 0, &return_code);
 
       f_macro_string_dynamics_t_delete_simple(arguments);
 

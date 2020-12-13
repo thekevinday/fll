@@ -26,6 +26,7 @@
 #include <level_0/utf.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
+#include <level_0/execute.h>
 #include <level_0/file.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>

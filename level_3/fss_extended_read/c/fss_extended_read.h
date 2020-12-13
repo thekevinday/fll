@@ -41,7 +41,6 @@
 
 // fll-2 includes
 #include <level_2/error.h>
-#include <level_2/execute.h>
 #include <level_2/file.h>
 #include <level_2/fss_extended.h>
 #include <level_2/program.h>

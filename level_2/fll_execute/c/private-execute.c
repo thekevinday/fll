@@ -111,7 +111,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 #if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_signal_how_t *signals, int *result) {
+  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
 
     const pid_t process_id = fork();
 
@@ -119,15 +119,33 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child process.
-    if (!process_id) {
+    if (process_id) {
+      if (pipe) {
+        return F_parent;
+      }
+    }
+    else {
 
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
       }
 
-      const int code = execute_program ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+      if (pipe) {
+        if (pipe->input != -1) {
+          dup2(pipe->input, f_type_descriptor_input);
+        }
+
+        if (pipe->output != -1) {
+          dup2(pipe->input, f_type_descriptor_output);
+        }
+
+        if (pipe->error != -1) {
+          dup2(pipe->error, f_type_descriptor_error);
+        }
+      }
+
+      const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
 
       if (result) {
         *result = code;
@@ -152,7 +170,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
-  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool execute_program, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) {
+  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
 
     const pid_t process_id = fork();
 
@@ -160,8 +178,12 @@ extern "C" {
       return F_status_set_error(F_fork);
     }
 
-    // child process.
-    if (!process_id) {
+    if (process_id) {
+      if (pipe) {
+        return F_parent;
+      }
+    }
+    else {
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
@@ -173,7 +195,21 @@ extern "C" {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
       } // for
 
-      const int code = execute_program ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+      if (pipe) {
+        if (pipe->input != -1) {
+          dup2(pipe->input, f_type_descriptor_input);
+        }
+
+        if (pipe->output != -1) {
+          dup2(pipe->input, f_type_descriptor_output);
+        }
+
+        if (pipe->error != -1) {
+          dup2(pipe->error, f_type_descriptor_error);
+        }
+      }
+
+      const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
 
       if (result) {
         *result = code;

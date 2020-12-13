@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
+  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -158,12 +158,12 @@ extern "C" {
       }
     }
 
-    return private_fll_execute_fork(program_name, fixed_arguments, F_false, signals, result);
+    return private_fll_execute_fork(program_name, fixed_arguments, F_false, signals, pipe, result);
   }
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) {
+  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -189,12 +189,12 @@ extern "C" {
       }
     }
 
-    return private_fll_execute_fork_environment(program_name, fixed_arguments, F_false, names, values, signals, result);
+    return private_fll_execute_fork_environment(program_name, fixed_arguments, F_false, names, values, signals, pipe, result);
   }
 #endif // _di_fll_execute_path_environment_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, int *result) {
+  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -211,12 +211,12 @@ extern "C" {
     // insert the required array terminated.
     fixed_arguments[arguments.used + 1] = 0;
 
-    return private_fll_execute_fork(program_name, fixed_arguments, F_true, signals, result);
+    return private_fll_execute_fork(program_name, fixed_arguments, F_true, signals, pipe, result);
   }
 #endif // _di_fll_execute_program_
 
 #ifndef _di_fll_execute_program_environment_
-  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, int *result) {
+  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -315,7 +315,7 @@ extern "C" {
     f_macro_string_dynamics_t_delete(status, paths);
     if (F_status_is_error(status)) return status;
 
-    return private_fll_execute_fork_environment(program_name, fixed_arguments, F_true, names, values, signals, result);
+    return private_fll_execute_fork_environment(program_name, fixed_arguments, F_true, names, values, signals, pipe, result);
   }
 #endif // _di_fll_execute_program_environment_
 
