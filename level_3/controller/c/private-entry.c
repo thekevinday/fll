@@ -396,13 +396,13 @@ extern "C" {
             for (j = 2; j < action->parameters.used; ++j) {
 
               if (fl_string_dynamic_compare_string(controller_string_asynchronous, action->parameters.array[j], controller_string_asynchronous_length) == F_equal_to) {
-                // do nothing.
+                action->code = controller_entry_rule_code_asynchronous;
               }
               else if (fl_string_dynamic_compare_string(controller_string_require, action->parameters.array[j], controller_string_require_length) == F_equal_to) {
-                // do nothing.
+                action->code = controller_entry_rule_code_require;
               }
               else if (fl_string_dynamic_compare_string(controller_string_wait, action->parameters.array[j], controller_string_wait_length) == F_equal_to) {
-                // do nothing.
+                action->code = controller_entry_rule_code_wait;
               }
               else {
                 if (action->status == F_none) {
@@ -428,7 +428,7 @@ extern "C" {
               }
             } // for
           }
-          else if (action->type == controller_entry_action_type_item) {
+          else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
             if (fl_string_dynamic_compare_string(controller_string_main, action->parameters.array[0], controller_string_main_length) == F_equal_to) {
               action->status = F_status_set_error(F_supported_not);
 
@@ -445,14 +445,15 @@ extern "C" {
             }
           }
           else if (action->type == controller_entry_action_type_timeout) {
+
             if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to) {
-              // do nothing
+              action->code = controller_entry_timeout_code_kill;
             }
             else if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to) {
-              // do nothing
+              action->code = controller_entry_timeout_code_start;
             }
             else if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to) {
-              // do nothing
+              action->code = controller_entry_timeout_code_stop;
             }
             else {
               action->status = F_status_set_error(F_supported_not);
@@ -804,7 +805,7 @@ extern "C" {
                 if (F_status_is_error(action->status)) continue;
 
                 if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
-                  missing &= 0x1;
+                  missing |= 0x1;
 
                   for (k = 0; k < entry->items.used; ++k) {
 
@@ -818,7 +819,7 @@ extern "C" {
                   } // for
 
                   if (missing & 0x1) {
-                    missing &= 0x2;
+                    missing |= 0x2;
 
                     cache->line_action = action->line;
                     cache->line_item = entry->items.array[i].line;
@@ -832,17 +833,24 @@ extern "C" {
 
                     if (data.error.verbosity != f_console_verbosity_quiet) {
                       fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                      fprintf(data.error.to.stream, "The requested entry item '");
+                      fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                       fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
                       fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
                       controller_entry_error_print(data.error, *cache);
                     }
 
-                    entry->status = controller_status_simplify(F_found_not);
+                    action->number = 0;
+                    action->status = controller_status_simplify(F_found_not);
+
+                    // @fixme review how entry->status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
+                    //entry->status = controller_status_simplify(F_found_not);
 
                     cache->name_action.used = 0;
                     cache->name_item.used = 0;
+                  }
+                  else {
+                    action->number = k;
                   }
                 }
               } // for
@@ -850,7 +858,8 @@ extern "C" {
 
             // the error is already fully printed and the entry status is already assigned, so immediately exit.
             if (missing & 0x2) {
-              return entry->status;
+              // @fixme review how entry->status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
+              //return entry->status;
             }
           }
         }

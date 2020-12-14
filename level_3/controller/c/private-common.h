@@ -239,6 +239,10 @@ extern "C" {
     f_status_t status;
     f_number_signed_t process; // @todo: for background/threaded support (ideally should hold the process id, but remove if this ends up not being the strategy) (this can also be used by the parent/main process to check to see if the child no longer a child of this process).
 
+    f_number_unsigned_t timeout_kill;
+    f_number_unsigned_t timeout_start;
+    f_number_unsigned_t timeout_stop;
+
     f_time_spec_t timestamp;
 
     f_string_dynamic_t id;
@@ -260,6 +264,8 @@ extern "C" {
   #define controller_rule_t_initialize \
     { \
       F_known_not, \
+      0, \
+      0, \
       0, \
       0, \
       f_time_spec_t_initialize, \
@@ -457,8 +463,15 @@ extern "C" {
 
   typedef struct {
     bool interruptable;
-    bool lock; // @todo: this is intend for mutex write locking of this setting for thread safety, remove this if another approach is used.
+    bool lock; // @todo: this is intended for mutex write locking of this setting for thread safety, remove this if another approach is used.
     uint8_t ready;
+
+    f_number_unsigned_t timeout_kill;
+    f_number_unsigned_t timeout_start;
+    f_number_unsigned_t timeout_stop;
+
+    bool failsafe_enabled;
+    f_array_length_t failsafe_rule_id;
 
     f_string_dynamic_t path_pid;
     f_string_dynamic_t path_setting;
@@ -470,6 +483,11 @@ extern "C" {
   #define controller_setting_t_initialize \
     { \
       F_false, \
+      F_false, \
+      0, \
+      3, \
+      3, \
+      3, \
       F_false, \
       0, \
       f_string_dynamic_t_initialize, \

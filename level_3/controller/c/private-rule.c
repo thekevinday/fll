@@ -1876,18 +1876,24 @@ extern "C" {
   }
 #endif // _di_controller_rule_simulate_
 
-#ifndef _di_controller_rules_increase_by_
-  f_return_status controller_rules_increase_by(const f_array_length_t amount, controller_rules_t *rules) {
+#ifndef _di_controller_rules_increase_
+  f_return_status controller_rules_increase(controller_rules_t *rules) {
 
-    if (rules->used + amount > rules->size) {
-      if (rules->used + amount > f_array_length_t_size) {
-        return F_status_set_error(F_array_too_large);
+    if (rules->used + 1 > rules->size) {
+      f_array_length_t size = rules->used + controller_default_allocation_step;
+
+      if (size > f_string_length_t_size) {
+        if (rules->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
       }
 
-      const f_status_t status = f_memory_resize((void **) & rules->array, sizeof(controller_rule_t), rules->size, rules->used + amount);
+      const f_status_t status = f_memory_resize((void **) & rules->array, sizeof(controller_rule_t), rules->size, size);
 
       if (F_status_is_error_not(status)) {
-        rules->size = rules->used + amount;
+        rules->size = size;
       }
 
       return status;
@@ -1895,7 +1901,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_controller_rule_increase_by_
+#endif // _di_controller_rules_increase_
 
 #ifdef __cplusplus
 } // extern "C"

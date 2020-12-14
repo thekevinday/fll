@@ -539,6 +539,20 @@ extern "C" {
           return status;
         }
 
+        if (F_status_is_error(actions->array[cache->ats.array[at_j]].status)) {
+          if (simulate) {
+            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "The entry item action '");
+            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, cache->name_action.string, data.context.set.title.after->string);
+            fprintf(data.output.stream, "' is in a %sfailed%s state, skipping execution.%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          }
+          else {
+            // @todo check to see if this rule is "required" and if so immediately fail, otherwise report a failure as a warning (normal verbosity, not debug verbosity).
+          }
+
+          continue;
+        }
+
         if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready) {
 
           if (setting->ready == controller_setting_ready_wait) {
@@ -625,10 +639,10 @@ extern "C" {
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_consider || actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
-          status = controller_rules_increase_by(controller_default_allocation_step, &setting->rules);
+          status = controller_rules_increase(&setting->rules);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "controller_rules_increase_by", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "controller_rules_increase", F_true);
             controller_entry_error_print(data.error, *cache);
 
             return status;
@@ -715,30 +729,69 @@ extern "C" {
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_timeout) {
+
           if (simulate) {
+            f_string_t code = "";
+
+            if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_kill) {
+              code = controller_string_kill;
+            }
+            else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_start) {
+              code = controller_string_start;
+            }
+            else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_stop) {
+              code = controller_string_stop;
+            }
+
             fprintf(data.output.stream, "%c", f_string_eol_s[0]);
             fprintf(data.output.stream, "Processing entry item action '");
             fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_timeout, data.context.set.title.after->string);
             fprintf(data.output.stream, "' setting '");
-            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
+            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, code, data.context.set.important.after->string);
             fprintf(data.output.stream, "' to '");
-            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
-            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "%s%llu%s", data.context.set.important.before->string, actions->array[cache->ats.array[at_j]].number, data.context.set.important.after->string);
+            fprintf(data.output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
           }
 
-          // @todo set the appropriate timeout value (set the entry actions timeouts which are later used as the initial defaults as the rule timeouts).
+          if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_kill) {
+            setting->timeout_kill = actions->array[cache->ats.array[at_j]].number;
+          }
+          else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_start) {
+            setting->timeout_start = actions->array[cache->ats.array[at_j]].number;
+          }
+          else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_stop) {
+            setting->timeout_stop = actions->array[cache->ats.array[at_j]].number;
+          }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_failsafe) {
-          if (simulate) {
-            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.output.stream, "Processing entry item action '");
-            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_failsafe, data.context.set.title.after->string);
-            fprintf(data.output.stream, "' setting value to '");
-            fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, "@todo", data.context.set.important.after->string);
-            fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
-          }
 
-          // @todo set the failsafe rule to this rule id (find the rule and then assign by the rule id and then assign by the array index).
+          if (actions->array[cache->ats.array[at_j]].number == 0 || actions->array[cache->ats.array[at_j]].number >= setting->entry.items.used) {
+
+            // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
+            if (data.error.verbosity != f_console_verbosity_quiet) {
+              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.error.to.stream, "%s%sInvalid entry item index ", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+              fprintf(data.error.to.stream, "%s%s%llu%s", data.error.context.after->string, data.error.notable.before->string, actions->array[cache->ats.array[at_j]].number, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s detected.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+            }
+
+            controller_entry_error_print(data.error, *cache);
+
+            return F_status_is_error(F_critical);
+          }
+          else {
+            setting->failsafe_enabled = F_true;
+            setting->failsafe_rule_id = actions->array[cache->ats.array[at_j]].number;
+
+            if (simulate) {
+              fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.output.stream, "Processing entry item action '");
+              fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_failsafe, data.context.set.title.after->string);
+              fprintf(data.output.stream, "' setting value to '");
+              fprintf(data.output.stream, "%s%s%s", data.context.set.important.before->string, setting->entry.items.array[setting->failsafe_rule_id].name.string, data.context.set.important.after->string);
+              fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
+            }
+          }
         }
 
       } // for

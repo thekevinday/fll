@@ -462,12 +462,8 @@ extern "C" {
 #endif // _di_controller_rule_simulate_
 
 /**
- * Increase the size of the rules array by the specified amount, but only if necessary.
+ * Increase the size of the rules array, but only if necessary.
  *
- * This only increases size if the current used plus amount is greater than the currently allocated size.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
  * @param rules
  *   The rules to resize.
  *
@@ -479,9 +475,9 @@ extern "C" {
  *
  * @see f_memory_resize()
  */
-#ifndef _di_controller_rules_increase_by_
-  extern f_return_status controller_rules_increase_by(const f_array_length_t amount, controller_rules_t *rules) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_increase_by_
+#ifndef _di_controller_rules_increase_
+  extern f_return_status controller_rules_increase(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_
 
 #ifdef __cplusplus
 } // extern "C"
