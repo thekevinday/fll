@@ -93,6 +93,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see calloc()
+ * @see memset()
  */
 #ifndef _di_f_memory_new_
   extern f_return_status f_memory_new(void **pointer, const f_memory_size_t size, const f_memory_length length);

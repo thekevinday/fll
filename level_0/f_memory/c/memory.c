@@ -8,18 +8,23 @@ extern "C" {
   f_return_status f_memory_new(void **pointer, const f_memory_size_t size, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
       if (size <= 0) return F_status_set_error(F_parameter);
-      if (length <= 0) return F_status_set_error(F_parameter);
+      if (length < 0) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-allocations.
-    if (*pointer) return F_none;
+    if (*pointer || length == 0) return F_none;
 
     // Some people use malloc(size * length) to produce the same results.
     // This has been observed to sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
     *pointer = calloc(size, length);
 
     if (*pointer) {
+
+      // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
+      // this is done to avoid problems with (void *) having arithmetic issues.
+      memset(((uint8_t *) *pointer), 0, size * length);
+
       return F_none;
     }
 
@@ -48,13 +53,13 @@ extern "C" {
 #if !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
   f_return_status f_memory_destroy(void **pointer, const f_memory_size_t size, const f_memory_length length) {
     #ifndef _di_level_0_parameter_checking_
-      if (length <  0) return F_status_set_error(F_parameter);
+      if (length < 0) return F_status_set_error(F_parameter);
       if (size <= 0) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (!*pointer || !size || !length) return F_none;
+    if (!*pointer || !length) return F_none;
 
     if (length > 0) {
       memset(*pointer, 0, size * length);
