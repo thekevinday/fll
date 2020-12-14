@@ -45,6 +45,10 @@ int main(const unsigned long argc, const f_string_t *argv) {
 
   f_signal_close(&data.signal);
 
+  // flush output pipes before closing.
+  fflush(f_type_output);
+  fflush(f_type_error);
+
   // close all open file descriptors.
   close(f_type_descriptor_output);
   close(f_type_descriptor_input);

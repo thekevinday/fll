@@ -10,6 +10,10 @@ int main(const unsigned long argc, const f_string_t *argv) {
 
   const f_status_t status = fss_extended_write_main(arguments, &data);
 
+  // flush output pipes before closing.
+  fflush(f_type_output);
+  fflush(f_type_error);
+
   // close all open file descriptors.
   close(f_type_descriptor_output);
   close(f_type_descriptor_input);
