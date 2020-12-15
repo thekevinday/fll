@@ -54,15 +54,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
  *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
  * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -100,15 +100,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -148,15 +146,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -182,15 +178,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -212,15 +206,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -252,15 +244,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -294,15 +284,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -326,15 +314,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete_simple().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *   Errors (with error bit) from: fl_string_dynamics_increase().
  *
- * @see f_macro_string_dynamic_t_delete_simple()
- * @see f_macro_string_dynamics_t_resize()
  * @see fl_string_append()
+ * @see fl_string_dynamic_delete()
  * @see fl_string_dynamic_terminate()
  * @see fl_string_dynamics_increase()
  */
@@ -376,8 +362,8 @@ extern "C" {
  *   F_none on success.
  *   F_child on success but this is the child thread.
  *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
- *   F_failure (with error bit set) on execution failure.
- *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit) on execution failure.
+ *   F_fork (with error bit) on fork failure.
  *
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_signal_set_handle().
@@ -441,8 +427,8 @@ extern "C" {
  *   F_none on success.
  *   F_child on success but this is the child thread.
  *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
- *   F_failure (with error bit set) on execution failure.
- *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit) on execution failure.
+ *   F_fork (with error bit) on fork failure.
  *
  *   Errors (with error bit) from: f_environment_set_dynamic().
  *   Errors (with error bit) from: f_file_exists().
@@ -498,8 +484,8 @@ extern "C" {
  *   F_none on success.
  *   F_child on success but this is the child thread.
  *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
- *   F_failure (with error bit set) on execution failure.
- *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit) on execution failure.
+ *   F_fork (with error bit) on fork failure.
  *
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_signal_set_handle().
@@ -563,8 +549,8 @@ extern "C" {
  *   F_none on success.
  *   F_child on success but this is the child thread.
  *   F_parent on success but this is the parent thread and pipe is non-zero (function is not blocking).
- *   F_failure (with error bit set) on execution failure.
- *   F_fork (with error bit set) on fork failure.
+ *   F_failure (with error bit) on execution failure.
+ *   F_fork (with error bit) on fork failure.
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().

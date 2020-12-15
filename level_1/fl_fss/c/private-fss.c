@@ -1,5 +1,6 @@
 #include "fss.h"
 #include "private-fss.h"
+#include "private-fss_macro.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -1137,6 +1138,12 @@ extern "C" {
   }
 #endif // !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
+#if !defined(_di_fl_fss_embedded_list_content_read_)
+  void private_fl_fss_objects_delete(f_fss_objects_t *objects) {
+    f_macro_fss_objects_t_delete_simple((*objects));
+  }
+#endif // !defined(_di_fl_fss_embedded_list_content_read_)
+
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   f_return_status private_fl_fss_ranges_increase(f_string_ranges_t *ranges) {
 
@@ -1161,6 +1168,12 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
+
+#if !defined(_di_fl_fss_embedded_list_content_read_)
+  void private_fl_fss_string_lengths_delete(f_string_lengths_t *lengths) {
+    f_macro_string_lengths_t_delete_simple((*lengths));
+  }
+#endif // !defined(_di_fl_fss_embedded_list_content_read_)
 
 #ifdef __cplusplus
 } // extern "C"

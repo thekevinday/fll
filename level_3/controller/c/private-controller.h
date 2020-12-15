@@ -244,7 +244,7 @@ extern "C" {
  *   The status code (without the error bit set) to simplify.
  *
  * @return
- *   A subset of status codes with error bit set.
+ *   A subset of status codes with error bit.
  */
 #ifndef _di_controller_status_simplify_
   extern f_return_status controller_status_simplify(const f_status_t status) f_gcc_attribute_visibility_internal;

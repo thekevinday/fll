@@ -144,7 +144,7 @@ extern "C" {
         status = f_directory_exists(path_directory.string);
       }
 
-      f_macro_string_dynamic_t_delete_simple(path_directory);
+      fl_string_dynamic_delete(&path_directory);
 
       if (F_status_is_error(status)) return status;
 
@@ -213,7 +213,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(pid_buffer);
+    fl_string_dynamic_delete(&pid_buffer);
   }
 #endif // _di_controller_file_pid_delete_
 

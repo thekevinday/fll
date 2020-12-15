@@ -147,8 +147,8 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(file_data_build_process_post);
-      f_macro_string_dynamic_t_delete_simple(file_data_build_process_pre);
+      fl_string_dynamic_delete(&file_data_build_process_post);
+      fl_string_dynamic_delete(&file_data_build_process_pre);
       return status;
     }
 

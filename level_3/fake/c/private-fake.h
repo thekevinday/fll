@@ -34,8 +34,8 @@ extern "C" {
   }
 
   #define fake_macro_environment_t_delete_simple(environment) \
-    f_macro_string_dynamics_t_delete_simple(environment.names) \
-    f_macro_string_dynamics_t_delete_simple(environment.values)
+    fl_string_dynamics_delete(&environment.names); \
+    fl_string_dynamics_delete(&environment.values);
 #endif // _di_fake_environment_t_
 
 /**

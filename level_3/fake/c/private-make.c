@@ -486,12 +486,12 @@ extern "C" {
             } // for
 
             if (F_status_is_error(*status)) {
-              f_macro_string_dynamic_t_delete_simple(name_define);
+              fl_string_dynamic_delete(&name_define);
               break;
             }
 
             *status = F_none;
-            f_macro_string_dynamic_t_delete_simple(name_define);
+            fl_string_dynamic_delete(&name_define);
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail, data_make->buffer, fake_make_setting_fail_length, settings.objects.array[i]) == F_equal_to) {
             if (unmatched_fail) {
@@ -745,7 +745,7 @@ extern "C" {
           }
         } // for
 
-        f_macro_string_dynamic_t_delete_simple(combined);
+        fl_string_dynamic_delete(&combined);
       }
 
       f_macro_string_map_multis_t_delete_simple(define);
@@ -1794,12 +1794,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(value);
+      fl_string_dynamic_delete(&value);
       return status;
     }
 
     if (unmatched) {
-      f_macro_string_dynamic_t_delete_simple(value);
+      fl_string_dynamic_delete(&value);
       return F_false;
     }
 
@@ -1822,7 +1822,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(value);
+    fl_string_dynamic_delete(&value);
 
     if (F_status_is_error_not(status)) {
       return F_true;
@@ -1847,15 +1847,15 @@ extern "C" {
 
       status = f_environment_get(name.string, &value);
 
-      f_macro_string_dynamic_t_delete_simple(name);
+      fl_string_dynamic_delete(&name);
     }
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(value);
+      fl_string_dynamic_delete(&value);
       return status;
     }
     else if (status == F_exist_not) {
-      f_macro_string_dynamic_t_delete_simple(value);
+      fl_string_dynamic_delete(&value);
       return F_false;
     }
 
@@ -1878,7 +1878,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(value);
+    fl_string_dynamic_delete(&value);
 
     if (F_status_is_error_not(status)) {
       return F_true;
@@ -2233,7 +2233,7 @@ extern "C" {
 
     if (*status == F_status_set_error(F_signal)) {
       for (i = 0; i < section->objects.used; i++) {
-        f_macro_string_dynamics_t_delete_simple(arguments[i]);
+        fl_string_dynamics_delete(&arguments[i]);
       } // for
 
       return 0;
@@ -2268,7 +2268,7 @@ extern "C" {
     }
 
     for (i = 0; i < section->objects.used; i++) {
-      f_macro_string_dynamics_t_delete_simple(arguments[i]);
+      fl_string_dynamics_delete(&arguments[i]);
     } // for
 
     section_stack->used--;
@@ -3563,7 +3563,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_pop) {
-      f_macro_string_dynamic_t_delete_simple(data_make->path.stack.array[data_make->path.stack.used - 1]);
+      fl_string_dynamic_delete(&data_make->path.stack.array[data_make->path.stack.used - 1]);
 
       data_make->path.stack.used--;
 
@@ -3711,7 +3711,7 @@ extern "C" {
 
       // clear stack, except for the project root.
       for (f_array_length_t i = 1; i < data_make->path.stack.used; i++) {
-        f_macro_string_dynamic_t_delete_simple(data_make->path.stack.array[i]);
+        fl_string_dynamic_delete(&data_make->path.stack.array[i]);
       } // for
 
       data_make->path.stack.used = 1;
@@ -3904,13 +3904,13 @@ extern "C" {
 
           fll_error_print(data_make->error, F_status_set_fine(*status), "f_conversion_number_signed_to_string", F_true);
 
-          f_macro_string_dynamic_t_delete_simple(number);
+          fl_string_dynamic_delete(&number);
           return;
         }
 
         status2 = fl_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
-        f_macro_string_dynamic_t_delete_simple(number);
+        fl_string_dynamic_delete(&number);
       }
       else {
         status2 = fl_string_append("0", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
@@ -3971,7 +3971,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
 
-          f_macro_string_dynamics_t_delete_simple(args);
+          fl_string_dynamics_delete(&args);
           return status;
         }
 
@@ -3980,7 +3980,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "fl_string_dynamic_terminate", F_true);
 
-          f_macro_string_dynamics_t_delete_simple(args);
+          fl_string_dynamics_delete(&args);
           return status;
         }
 
@@ -3990,7 +3990,7 @@ extern "C" {
 
     status = fake_make_operate_process_execute(data, *program, args, as_shell, data_make);
 
-    f_macro_string_dynamics_t_delete_simple(args);
+    fl_string_dynamics_delete(&args);
     return status;
   }
 #endif // _di_fake_make_operate_process_run_

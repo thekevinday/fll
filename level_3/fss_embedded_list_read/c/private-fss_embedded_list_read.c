@@ -234,7 +234,7 @@ extern "C" {
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
+        fl_string_dynamic_delete(&data->buffer);
 
         if (data->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol[0]);
@@ -246,7 +246,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
+        fl_string_dynamic_delete(&data->buffer);
 
         return status;
       }

@@ -1,5 +1,6 @@
 #include "fss_extended_list.h"
 #include "private-fss.h"
+#include "private-fss_macro.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,7 +97,7 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
+        private_fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
         if (buffer.string[range->start] == f_fss_extended_list_open) {
           graph_first = F_false;
@@ -116,7 +117,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
           } // while
 
-          fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
+          private_fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
           if (buffer.string[range->start] == f_fss_eol) {
             start = range->start;
@@ -192,7 +193,7 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        fl_macro_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
+        private_fl_macro_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
         if (buffer.string[range->start] == f_fss_eol) {
           found->stop = stop;
@@ -234,7 +235,7 @@ extern "C" {
       }
     } // while
 
-    fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
+    private_fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
     status = f_utf_buffer_increment(buffer, range, 1);
 
@@ -262,7 +263,7 @@ extern "C" {
     f_status_t status = f_fss_skip_past_delimit(buffer, range);
     if (F_status_is_error(status)) return status;
 
-    fl_macro_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
+    private_fl_macro_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
     status = private_fl_fss_ranges_increase(found);
     if (F_status_is_error(status)) return status;

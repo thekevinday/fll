@@ -314,9 +314,9 @@ extern "C" {
       status = fss_embedded_list_write_process(data, output, quote, &object, &content, ignore, buffer);
     }
 
-    f_macro_string_dynamic_t_delete_simple(block);
-    f_macro_string_dynamic_t_delete_simple(object);
-    f_macro_string_dynamic_t_delete_simple(content);
+    fl_string_dynamic_delete(&block);
+    fl_string_dynamic_delete(&object);
+    fl_string_dynamic_delete(&content);
     return status;
   }
 #endif // _di_fss_embedded_list_write_process_pipe_

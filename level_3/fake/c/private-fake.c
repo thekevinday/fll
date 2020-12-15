@@ -108,7 +108,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
-            f_macro_string_dynamic_t_delete_simple((*buffer));
+            fl_string_dynamic_delete(&(*buffer));
             return status;
           }
         }
@@ -141,7 +141,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
-      f_macro_string_dynamic_t_delete_simple((*buffer));
+      fl_string_dynamic_delete(&(*buffer));
     }
 
     return status;

@@ -325,12 +325,12 @@ Consider the "*.device" files such that they are also use IKI.
       f_macro_iki_variable_t_delete_simple(variable);
       f_macro_iki_vocabulary_t_delete_simple(vocabulary);
       f_macro_iki_content_t_delete_simple(content);
-      f_macro_string_dynamic_t_delete_simple(cache);
+      fl_string_dynamic_delete(&cache);
     }
 
     f_file_stream_close(F_true, &command_line);
 
-    f_macro_string_dynamic_t_delete_simple(buffer);
+    fl_string_dynamic_delete(&buffer);
 
     return status;
   }

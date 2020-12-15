@@ -205,7 +205,7 @@ extern "C" {
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_macro_string_dynamic_t_delete_simple(name);
+          fl_string_dynamic_delete(&name);
           return status;
         }
 
@@ -217,14 +217,14 @@ extern "C" {
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             return status;
           }
 
           if (status == F_equal_to) {
             matched = F_true;
 
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             break;
           }
         } // for
@@ -237,14 +237,14 @@ extern "C" {
         if (values[j]->used == values[j]->size) {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_t_size) {
             if (values[j]->used == f_array_length_t_size) {
-              f_macro_string_dynamic_t_delete_simple(name);
+              fl_string_dynamic_delete(&name);
               return F_status_set_error(F_array_too_large);
             }
 
             f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + 1);
 
             if (F_status_is_error(status)) {
-              f_macro_string_dynamic_t_delete_simple(name);
+              fl_string_dynamic_delete(&name);
               return status;
             }
 
@@ -257,7 +257,7 @@ extern "C" {
             f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
 
             if (F_status_is_error(status)) {
-              f_macro_string_dynamic_t_delete_simple(name);
+              fl_string_dynamic_delete(&name);
               return status;
             }
 
@@ -274,7 +274,7 @@ extern "C" {
           status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[1], &map->value);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             return status;
           }
         }
@@ -294,7 +294,7 @@ extern "C" {
       } // for
     } // for
 
-    f_macro_string_dynamic_t_delete_simple(name);
+    fl_string_dynamic_delete(&name);
     return F_none;
   }
 #endif // _di_fll_fss_snatch_map_
@@ -514,7 +514,7 @@ extern "C" {
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_macro_string_dynamic_t_delete_simple(name);
+          fl_string_dynamic_delete(&name);
           return status;
         }
 
@@ -526,7 +526,7 @@ extern "C" {
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             return status;
           }
 
@@ -605,7 +605,7 @@ extern "C" {
       } // for
     } // for
 
-    f_macro_string_dynamic_t_delete_simple(name);
+    fl_string_dynamic_delete(&name);
     return F_none;
   }
 #endif // _di_fll_fss_snatch_map_mash_apart_
@@ -649,7 +649,7 @@ extern "C" {
         status = fl_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
-          f_macro_string_dynamic_t_delete_simple(name);
+          fl_string_dynamic_delete(&name);
           return status;
         }
 
@@ -661,14 +661,14 @@ extern "C" {
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             return status;
           }
 
           if (status == F_equal_to) {
             matched = F_true;
 
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             break;
           }
         } // for
@@ -682,14 +682,14 @@ extern "C" {
           if (values[j]->used == values[j]->size) {
             if (values[j]->used + f_fss_default_allocation_step > f_array_length_t_size) {
               if (values[j]->used == f_array_length_t_size) {
-                f_macro_string_dynamic_t_delete_simple(name);
+                fl_string_dynamic_delete(&name);
                 return F_status_set_error(F_array_too_large);
               }
 
               f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + 1);
 
               if (F_status_is_error(status)) {
-                f_macro_string_dynamic_t_delete_simple(name);
+                fl_string_dynamic_delete(&name);
                 return status;
               }
 
@@ -702,7 +702,7 @@ extern "C" {
               f_macro_string_maps_t_resize(status, (*values[j]), values[j]->used + f_fss_default_allocation_step);
 
               if (F_status_is_error(status)) {
-                f_macro_string_dynamic_t_delete_simple(name);
+                fl_string_dynamic_delete(&name);
                 return status;
               }
 
@@ -733,14 +733,14 @@ extern "C" {
           status = fl_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[1], &map->value);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(name);
+            fl_string_dynamic_delete(&name);
             return status;
           }
         }
       } // for
     } // for
 
-    f_macro_string_dynamic_t_delete_simple(name);
+    fl_string_dynamic_delete(&name);
     return F_none;
   }
 #endif // _di_fll_fss_snatch_map_together_

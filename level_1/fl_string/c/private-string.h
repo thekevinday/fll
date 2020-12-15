@@ -35,14 +35,22 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see memcpy()
+ *
+ * @see f_macro_string_dynamic_t_resize()
  * @see fl_string_append()
- * @see fl_string_mash()
  * @see fl_string_dynamic_append()
  * @see fl_string_dynamic_mash()
+ * @see fl_string_mash()
  */
-#if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
+#if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
   extern f_return_status private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_)
+#endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
 
 /**
  * Private implementation of fl_string_append_nulless().
@@ -58,20 +66,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
  *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see memcpy()
+ *
+ * @see f_macro_string_dynamic_t_resize()
  * @see fl_string_append_nulless()
- * @see fl_string_mash_nulless()
  * @see fl_string_dynamic_append_nulless()
  * @see fl_string_dynamic_mash_nulless()
+ * @see fl_string_mash_nulless()
  */
-#if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
+#if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
   extern f_return_status private_fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_)
+#endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
 
 /**
  * Private implementation of fl_string_compare().
@@ -94,7 +102,6 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_string_compare()
  * @see fl_string_dynamic_compare()
@@ -131,7 +138,6 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_string_compare_except()
  * @see fl_string_dynamic_compare_except()
@@ -168,10 +174,11 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if a character is not valid UTF-8.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_whitespace()
  * @see fl_string_compare_except_trim()
  * @see fl_string_dynamic_compare_except_trim()
  * @see fl_string_dynamic_partial_compare_except_trim()
@@ -201,10 +208,11 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if a character is not valid UTF-8.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_whitespace()
  * @see fl_string_compare_trim()
  * @see fl_string_dynamic_compare_trim()
  * @see fl_string_dynamic_partial_compare_trim()
@@ -212,6 +220,22 @@ extern "C" {
 #if !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
   extern f_return_status private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
+
+/**
+ * Private implementation of fl_string_dynamic_delete().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string
+ *   The string to delete.
+ *
+ * @see fl_string_dynamic_decrease()
+ * @see fl_string_dynamic_decrease_by()
+ * @see fl_string_dynamic_delete()
+ */
+#if !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_delete_)
+  extern void private_fl_string_dynamic_delete(f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_delete_)
 
 /**
  * Private implementation of fl_string_dynamic_increase_by().
@@ -225,15 +249,185 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_string_too_large on success, but requested size is too small (resize is smaller than requested length).
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see memcpy()
+ *
+ * @see fl_string_append()
+ * @see fl_string_append_mash()
+ * @see fl_string_append_nulless()
+ * @see fl_string_dynamic_append()
+ * @see fl_string_dynamic_append_nulless()
+ * @see fl_string_dynamic_increase_by()
+ * @see fl_string_dynamic_mash()
+ * @see fl_string_dynamic_mash_nulless()
+ * @see fl_string_dynamic_prepend()
+ * @see fl_string_dynamic_prepend_nulless()
+ * @see fl_string_mash_nulless()
+ * @see fl_string_prepend()
+ * @see fl_string_prepend_nulless()
  */
 #if !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
   extern f_return_status private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see f_macro_string_dynamic_t_resize()
+ * @see fl_string_dynamic_decrease()
+ * @see fl_string_dynamic_decrease_by()
+ * @see fl_string_dynamic_increase()
+ * @see fl_string_dynamic_increase_by()
+ * @see fl_string_dynamic_terminate()
+ * @see fl_string_dynamic_terminate_after()
+ */
+#if !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_increase_) || !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_dynamic_terminate_) || !defined(_di_fl_string_dynamic_terminate_after_)
+  extern f_return_status private_fl_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_increase_) || !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_dynamic_terminate_) || !defined(_di_fl_string_dynamic_terminate_after_)
+
+/**
+ * Private implementation of fl_string_dynamics_delete().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param strings
+ *   The strings to delete.
+ *
+ * @see fl_string_dynamics_decrease()
+ * @see fl_string_dynamics_decrease_by()
+ * @see fl_string_dynamics_delete()
+ */
+#if !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_delete_)
+  extern void private_fl_string_dynamics_delete(f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_delete_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param strings
+ *   The strings to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
+ *
+ * @see f_macro_string_dynamics_t_resize()
+ * @see fl_string_dynamics_decrease()
+ * @see fl_string_dynamics_decrease_by()
+ * @see fl_string_dynamics_increase()
+ * @see fl_string_dynamics_increase_by()
+ * @see fl_string_dynamics_terminate()
+ * @see fl_string_dynamics_terminate_after()
+ */
+#if !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
+  extern f_return_status private_fl_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
+
+/**
+ * Private implementation of fl_string_lengths_delete().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param lengths
+ *   The lengths to delete.
+ *
+ * @see fl_string_lengths_decrease()
+ * @see fl_string_lengths_decrease_by()
+ * @see fl_string_lengths_delete()
+ */
+#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
+  extern void private_fl_string_lengths_delete(f_string_lengths_t *lengths) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param lengths
+ *   The lengths to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_macro_string_lengths_t_resize().
+ *
+ * @see f_macro_string_lengths_t_resize()
+ * @see fl_string_lengths_decrease()
+ * @see fl_string_lengths_decrease_by()
+ * @see fl_string_lengths_increase()
+ * @see fl_string_lengths_increase_by()
+ * @see fl_string_lengths_terminate()
+ * @see fl_string_lengths_terminate_after()
+ */
+#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
+  extern f_return_status private_fl_string_lengths_resize(const f_string_length_t length, f_string_lengths_t *lengths) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
+
+/**
+ * Private implementation of fl_string_maps_delete().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param maps
+ *   The maps to delete.
+ *
+ * @see fl_string_maps_decrease()
+ * @see fl_string_maps_decrease_by()
+ * @see fl_string_maps_delete()
+ */
+#if !defined(fl_string_maps_decrease) || !defined(fl_string_maps_decrease_by) || !defined(_di_fl_string_maps_delete_)
+  extern void private_fl_string_maps_delete(f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
+#endif // !defined(fl_string_maps_decrease) || !defined(fl_string_maps_decrease_by) || !defined(_di_fl_string_maps_delete_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param maps
+ *   The maps to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_macro_string_maps_t_resize().
+ *
+ * @see f_macro_string_dynamic_t_resize()
+ * @see fl_string_maps_decrease()
+ * @see fl_string_maps_decrease_by()
+ * @see fl_string_maps_increase()
+ * @see fl_string_maps_increase_by()
+ * @see fl_string_maps_terminate()
+ * @see fl_string_maps_terminate_after()
+ */
+#if !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
+  extern f_return_status private_fl_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
 
 /**
  * Private implementation of fl_string_prepend().
@@ -249,17 +443,26 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- * @see fl_string_prepend()
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see memcopy()
+ * @see memmove()
+ *
+ * @see fl_string_dynamic_mish()
+ * @see fl_string_dynamic_partial_mish()
+ * @see fl_string_dynamic_partial_prepend_assure()
+ * @see fl_string_dynamic_partial_prepend()
+ * @see fl_string_dynamic_prepend_assure()
  * @see fl_string_dynamic_prepend()
+ * @see fl_string_mish()
+ * @see fl_string_prepend_assure()
+ * @see fl_string_prepend()
  */
-#if !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
+#if !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
   extern f_return_status private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
+#endif // !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
 
 /**
  * Private implementation of fl_string_prepend_nulless().
@@ -275,17 +478,26 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- * @see fl_string_prepend_nulless()
+ *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *
+ * @see memcopy()
+ * @see memmove()
+ *
+ * @see fl_string_dynamic_mish_nulless()
+ * @see fl_string_dynamic_partial_mish_nulless()
+ * @see fl_string_dynamic_partial_prepend_assure_nulless()
+ * @see fl_string_dynamic_partial_prepend_nulless()
+ * @see fl_string_dynamic_prepend_assure_nulless()
  * @see fl_string_dynamic_prepend_nulless()
+ * @see fl_string_mish_nulless()
+ * @see fl_string_prepend_assure_nulless()
+ * @see fl_string_prepend_nulless()
  */
-#if !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
+#if !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
   extern f_return_status private_fl_string_prepend_nulless(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_append_mish_) || !defined(_di_fl_string_dynamic_mish_)
+#endif // !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
 
 /**
  * Private implementation of fl_string_rip(), but only the part for finding the start/stop range.
@@ -304,12 +516,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but only whitespace found.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_utf (with error bit) if a character is not valid UTF-8.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see fl_string_dynamic_rip()
  * @see fl_string_rip()
+ * @see fl_string_rip_nulless()
+ * @see fl_string_dynamic_rip_nulless()
  */
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
   extern f_return_status private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) f_gcc_attribute_visibility_internal;

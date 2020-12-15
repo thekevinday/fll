@@ -351,9 +351,9 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        f_macro_string_dynamic_t_delete_simple(buffer);
-        f_macro_string_dynamic_t_delete_simple(object);
-        f_macro_string_dynamic_t_delete_simple(content);
+        fl_string_dynamic_delete(&buffer);
+        fl_string_dynamic_delete(&object);
+        fl_string_dynamic_delete(&content);
       }
 
       if (F_status_is_error_not(status)) {
@@ -382,7 +382,7 @@ extern "C" {
         }
       }
 
-      f_macro_string_dynamic_t_delete_simple(escaped);
+      fl_string_dynamic_delete(&escaped);
     }
 
     if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
@@ -413,7 +413,7 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
-    f_macro_string_dynamic_t_delete_simple(data->buffer);
+    fl_string_dynamic_delete(&data->buffer);
 
     f_macro_color_context_t_delete_simple(data->context);
 

@@ -317,17 +317,17 @@ extern "C" {
   }
 
   #define fake_macro_make_parameter_delete_simple(parameter) \
-    f_macro_string_dynamics_t_delete_simple(parameter.build) \
-    f_macro_string_dynamics_t_delete_simple(parameter.color) \
-    f_macro_string_dynamics_t_delete_simple(parameter.data) \
-    f_macro_string_dynamics_t_delete_simple(parameter.define) \
-    f_macro_string_dynamics_t_delete_simple(parameter.fakefile) \
-    f_macro_string_dynamics_t_delete_simple(parameter.mode) \
-    f_macro_string_dynamics_t_delete_simple(parameter.process) \
-    f_macro_string_dynamics_t_delete_simple(parameter.settings) \
-    f_macro_string_dynamics_t_delete_simple(parameter.sources) \
-    f_macro_string_dynamics_t_delete_simple(parameter.verbosity) \
-    f_macro_string_dynamics_t_delete_simple(parameter.work)
+    fl_string_dynamics_delete(&parameter.build); \
+    fl_string_dynamics_delete(&parameter.color); \
+    fl_string_dynamics_delete(&parameter.data); \
+    fl_string_dynamics_delete(&parameter.define); \
+    fl_string_dynamics_delete(&parameter.fakefile); \
+    fl_string_dynamics_delete(&parameter.mode); \
+    fl_string_dynamics_delete(&parameter.process); \
+    fl_string_dynamics_delete(&parameter.settings); \
+    fl_string_dynamics_delete(&parameter.sources); \
+    fl_string_dynamics_delete(&parameter.verbosity); \
+    fl_string_dynamics_delete(&parameter.work);
 #endif // _di_fake_make_parameter_t_
 
 #ifndef _di_fake_make_path_t_
@@ -345,7 +345,7 @@ extern "C" {
   }
 
   #define fake_macro_make_path_delete_simple(path) \
-    f_macro_string_dynamics_t_delete_simple(path.stack)
+    fl_string_dynamics_delete(&path.stack);
 #endif // _di_fake_make_path_t_
 
 #ifndef _di_fake_make_data_t_
@@ -388,8 +388,8 @@ extern "C" {
     fake_macro_make_parameter_delete_simple(data.parameter) \
     fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_t_delete_simple(data.fakefile) \
-    f_macro_string_dynamic_t_delete_simple(data.buffer) \
-    f_macro_string_dynamic_t_delete_simple(data.path_cache)
+    fl_string_dynamic_delete(&data.buffer); \
+    fl_string_dynamic_delete(&data.path_cache);
 #endif // _di_fake_make_data_t_
 
 /**
@@ -632,8 +632,8 @@ extern "C" {
  *   The current operation stack.
  * @param status
  *   F_none on success.
- *   F_valid_not (with error bit set) is returned if any part of the section is invalid, such as an invalid operation name.
- *   F_recurse (with error bit set) is returned if unable to recurse to another operation section (usually max stack depth reached).
+ *   F_valid_not (with error bit) is returned if any part of the section is invalid, such as an invalid operation name.
+ *   F_recurse (with error bit) is returned if unable to recurse to another operation section (usually max stack depth reached).
  *
  *   Status codes (with error bit) are returned on any problem.
  *

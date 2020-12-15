@@ -1,5 +1,6 @@
 #include "fss_extended.h"
 #include "private-fss.h"
+#include "private-fss_macro.h"
 
 #ifdef __cplusplus
 extern "C" {

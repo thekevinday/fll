@@ -17,7 +17,7 @@ extern "C" {
       status = fl_string_append(source, length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        fl_string_dynamic_delete(&argument);
         return status;
       }
     }
@@ -25,7 +25,7 @@ extern "C" {
     status = fl_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      fl_string_dynamic_delete(&argument);
       return status;
     }
 
@@ -50,7 +50,7 @@ extern "C" {
       status = fl_string_append(prefix, prefix_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        fl_string_dynamic_delete(&argument);
         return status;
       }
     }
@@ -59,7 +59,7 @@ extern "C" {
       status = fl_string_append(name, name_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        fl_string_dynamic_delete(&argument);
         return status;
       }
     }
@@ -67,7 +67,7 @@ extern "C" {
     status = fl_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      fl_string_dynamic_delete(&argument);
       return status;
     }
 
@@ -82,7 +82,7 @@ extern "C" {
       status = fl_string_append(value, value_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        fl_string_dynamic_delete(&argument);
         return status;
       }
     }
@@ -90,14 +90,14 @@ extern "C" {
     status = fl_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      fl_string_dynamic_delete(&argument);
       return status;
     }
 
     status = fl_string_dynamics_increase(arguments);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      fl_string_dynamic_delete(&argument);
       return status;
     }
 

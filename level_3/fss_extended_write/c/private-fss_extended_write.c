@@ -324,9 +324,9 @@ extern "C" {
       status = fss_extended_write_process(data, output, quote, &object, &contents, buffer);
     }
 
-    f_macro_string_dynamic_t_delete_simple(block);
-    f_macro_string_dynamic_t_delete_simple(object);
-    f_macro_string_dynamics_t_delete_simple(contents);
+    fl_string_dynamic_delete(&block);
+    fl_string_dynamic_delete(&object);
+    fl_string_dynamics_delete(&contents);
     return status;
   }
 #endif // _di_fss_extended_write_process_pipe_

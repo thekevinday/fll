@@ -99,18 +99,18 @@ extern "C" {
 
   #define f_cells_t_initialize {0, 0, 0}
 
-  #define f_macro_cells_t_clear(ranges) f_macro_memory_structure_t_clear(ranges)
+  #define f_macro_cells_t_clear(cells) f_macro_memory_structure_t_clear(cells)
 
-  #define f_macro_cells_t_new(status, ranges, length) f_macro_memory_structure_t_new(status, ranges, f_cell_t, length)
+  #define f_macro_cells_t_new(status, cells, length) f_macro_memory_structure_t_new(status, cells, f_cell_t, length)
 
-  #define f_macro_cells_t_delete(status, ranges)  f_macro_memory_structure_t_delete(status, ranges, f_cell_t)
-  #define f_macro_cells_t_destroy(status, ranges) f_macro_memory_structure_t_destroy(status, ranges, f_cell_t)
+  #define f_macro_cells_t_delete(status, cells)  f_macro_memory_structure_t_delete(status, cells, f_cell_t)
+  #define f_macro_cells_t_destroy(status, cells) f_macro_memory_structure_t_destroy(status, cells, f_cell_t)
 
-  #define f_macro_cells_t_delete_simple(ranges)  f_macro_memory_structure_t_delete_simple(ranges, f_cell_t)
-  #define f_macro_cells_t_destroy_simple(ranges) f_macro_memory_structure_t_destroy_simple(ranges, f_cell_t)
+  #define f_macro_cells_t_delete_simple(cells)  f_macro_memory_structure_t_delete_simple(cells, f_cell_t)
+  #define f_macro_cells_t_destroy_simple(cells) f_macro_memory_structure_t_destroy_simple(cells, f_cell_t)
 
-  #define f_macro_cells_t_resize(status, ranges, new_length) f_macro_memory_structure_t_resize(status, ranges, f_cell_t, new_length)
-  #define f_macro_cells_t_adjust(status, ranges, new_length) f_macro_memory_structure_t_adjust(status, ranges, f_cell_t, new_length)
+  #define f_macro_cells_t_resize(status, cells, new_length) f_macro_memory_structure_t_resize(status, cells, f_cell_t, new_length)
+  #define f_macro_cells_t_adjust(status, cells, new_length) f_macro_memory_structure_t_adjust(status, cells, f_cell_t, new_length)
 #endif // _di_f_cells_t_
 
 /**

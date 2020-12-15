@@ -250,8 +250,8 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(path);
-      f_macro_string_dynamics_t_delete_simple(paths);
+      fl_string_dynamic_delete(&path);
+      fl_string_dynamics_delete(&paths);
       return status;
     }
 
@@ -298,13 +298,13 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamics_t_delete_simple(paths);
+        fl_string_dynamics_delete(&paths);
         return status;
       }
     } // for
 
     if (!found) {
-      f_macro_string_dynamics_t_delete_simple(paths);
+      fl_string_dynamics_delete(&paths);
       return F_status_set_error(F_file_found_not);
     }
 
@@ -312,7 +312,7 @@ extern "C" {
 
     memcpy(&program_path, found->string, found->used);
 
-    f_macro_string_dynamics_t_delete(status, paths);
+    status = fl_string_dynamics_delete(&paths);
     if (F_status_is_error(status)) return status;
 
     return private_fll_execute_fork_environment(program_name, fixed_arguments, F_true, names, values, signals, pipe, result);

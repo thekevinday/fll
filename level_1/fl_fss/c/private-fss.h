@@ -337,6 +337,21 @@ extern "C" {
 #endif // !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 /**
+ * Private implementation for deleting fss objects.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param objects
+ *   The objects to delete.
+ *
+ * @see f_macro_fss_objects_t_delete_simple()
+ * @see fl_fss_embedded_list_content_read()
+ */
+#if !defined(_di_fl_fss_embedded_list_content_read_)
+  extern void private_fl_fss_objects_delete(f_fss_objects_t *objects) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_embedded_list_content_read_)
+
+/**
  * Increase the size of a given range buffer, but only if necessary.
  *
  * @param ranges
@@ -361,6 +376,21 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
   extern f_return_status private_fl_fss_ranges_increase(f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
+
+/**
+ * Private implementation for deleting string lengths.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param lengths
+ *   The string lengths to delete.
+ *
+ * @see f_macro_string_lengths_t_delete_simple()
+ * @see fl_fss_embedded_list_content_read()
+ */
+#if !defined(_di_fl_fss_embedded_list_content_read_)
+  extern void private_fl_fss_string_lengths_delete(f_string_lengths_t *lengths) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_fss_embedded_list_content_read_)
 
 #ifdef __cplusplus
 } // extern "C"

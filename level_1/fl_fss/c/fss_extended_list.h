@@ -26,7 +26,6 @@
 #include <level_1/fss.h>
 #include <level_1/fss_basic.h>
 #include <level_1/fss_status.h>
-#include <level_1/fss_macro.h>
 
 #ifdef __cplusplus
 extern "C" {
