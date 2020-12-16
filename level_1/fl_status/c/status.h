@@ -227,6 +227,8 @@ extern "C" {
     #define FL_status_string_mount_not        "F_mount_not"
     #define FL_status_string_name             "F_name"
     #define FL_status_string_name_not         "F_name_not"
+    #define FL_status_string_optional         "F_optional"
+    #define FL_status_string_optional_not     "F_optional_not"
     #define FL_status_string_output           "F_output"
     #define FL_status_string_output_not       "F_output_not"
     #define FL_status_string_parameter        "F_parameter"
@@ -244,12 +246,14 @@ extern "C" {
     #define FL_status_string_read             "F_read"
     #define FL_status_string_read_not         "F_read_not"
     #define FL_status_string_read_only        "F_read_only"
-    #define FL_status_string_ready             "F_ready"
-    #define FL_status_string_ready_not         "F_ready_not"
+    #define FL_status_string_ready            "F_ready"
+    #define FL_status_string_ready_not        "F_ready_not"
     #define FL_status_string_recurse          "F_recurse"
     #define FL_status_string_recurse_not      "F_recurse_not"
     #define FL_status_string_relative         "F_relative"
     #define FL_status_string_relative_not     "F_relative_not"
+    #define FL_status_string_require          "F_require"
+    #define FL_status_string_require_not      "F_require_not"
     #define FL_status_string_resource         "F_resource"
     #define FL_status_string_resource_not     "F_resource_not"
     #define FL_status_string_search           "F_search"
@@ -346,6 +350,8 @@ extern "C" {
     #define FL_status_string_mount_not_length        11
     #define FL_status_string_name_length             6
     #define FL_status_string_name_not_length         10
+    #define FL_status_string_optional_length         10
+    #define FL_status_string_optional_not_length     14
     #define FL_status_string_output_length           8
     #define FL_status_string_output_not_length       12
     #define FL_status_string_parameter_length        11
@@ -369,6 +375,8 @@ extern "C" {
     #define FL_status_string_recurse_not_length      13
     #define FL_status_string_relative_length         10
     #define FL_status_string_relative_not_length     14
+    #define FL_status_string_require_length          9
+    #define FL_status_string_require_not_length      13
     #define FL_status_string_resource_length         10
     #define FL_status_string_resource_not_length     14
     #define FL_status_string_search_length           8

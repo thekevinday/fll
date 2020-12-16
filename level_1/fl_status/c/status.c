@@ -407,6 +407,12 @@ extern "C" {
         case F_name_not:
           *string = FL_status_string_name_not;
           break;
+        case F_optional:
+          *string = FL_status_string_optional;
+          break;
+        case F_optional_not:
+          *string = FL_status_string_optional_not;
+          break;
         case F_output:
           *string = FL_status_string_output;
           break;
@@ -475,6 +481,12 @@ extern "C" {
           break;
         case F_relative_not:
           *string = FL_status_string_relative_not;
+          break;
+        case F_require:
+          *string = FL_status_string_require;
+          break;
+        case F_require_not:
+          *string = FL_status_string_require_not;
           break;
         case F_resource:
           *string = FL_status_string_resource;
