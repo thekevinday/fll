@@ -7,6 +7,24 @@
 extern "C" {
 #endif
 
+#ifndef _di_controller_entry_action_parameters_print_
+  void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) {
+
+    f_array_length_t index = 0;
+
+    for (;;) {
+
+      f_print_dynamic(stream, action.parameters.array[index]);
+
+      ++index;
+
+      if (index == action.parameters.used) break;
+
+      fprintf(stream, " ");
+    } // for
+  }
+#endif // _di_controller_entry_action_parameters_print_
+
 #ifndef _di_controller_entry_action_type_name_
   f_string_static_t controller_entry_action_type_name(const uint8_t type) {
 
@@ -396,13 +414,13 @@ extern "C" {
             for (j = 2; j < action->parameters.used; ++j) {
 
               if (fl_string_dynamic_compare_string(controller_string_asynchronous, action->parameters.array[j], controller_string_asynchronous_length) == F_equal_to) {
-                action->code = controller_entry_rule_code_asynchronous;
+                action->code |= controller_entry_rule_code_asynchronous;
               }
               else if (fl_string_dynamic_compare_string(controller_string_require, action->parameters.array[j], controller_string_require_length) == F_equal_to) {
-                action->code = controller_entry_rule_code_require;
+                action->code |= controller_entry_rule_code_require;
               }
               else if (fl_string_dynamic_compare_string(controller_string_wait, action->parameters.array[j], controller_string_wait_length) == F_equal_to) {
-                action->code = controller_entry_rule_code_wait;
+                action->code |= controller_entry_rule_code_wait;
               }
               else {
                 if (action->status == F_none) {

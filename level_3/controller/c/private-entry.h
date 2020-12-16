@@ -13,6 +13,18 @@ extern "C" {
 #endif
 
 /**
+ * Print all parameters for some action, separated by a space.
+ *
+ * @param stream
+ *   The file stream to print to.
+ * @param action
+ *   The entry action whose parameters will be printed.
+ */
+#ifndef _di_controller_entry_action_parameters_print_
+  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_parameters_print_
+
+/**
  * Get a string representing the entry action type.
  *
  * @param type

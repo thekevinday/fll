@@ -228,14 +228,19 @@ extern "C" {
 
       // report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
       if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
-
-        controller_entry_error_print(data.error, *cache);
 
         // always return immediately on memory errors.
         if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          fll_error_file_print(data.error, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
+
+          controller_entry_error_print(data.error, *cache);
+
           return status;
         }
+
+        fll_error_file_print(data.warning, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
+
+        controller_entry_error_print(data.warning, *cache);
 
         status = F_none;
       }
@@ -472,6 +477,8 @@ extern "C" {
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
+    uint8_t rule_options = 0;
+
     controller_entry_actions_t *actions = 0;
 
     const bool simulate = data.parameters[controller_parameter_test].result == f_console_result_found;
@@ -540,14 +547,96 @@ extern "C" {
         }
 
         if (F_status_is_error(actions->array[cache->ats.array[at_j]].status)) {
-          if (simulate) {
-            fprintf(data.output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.output.stream, "The entry item action '");
-            fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, cache->name_action.string, data.context.set.title.after->string);
-            fprintf(data.output.stream, "' is in a %sfailed%s state, skipping execution.%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+
+          if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
+
+            if (simulate) {
+              fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.output.stream, "The entry item action '");
+              fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, cache->name_action.string, data.context.set.title.after->string);
+
+              if (actions->array[cache->ats.array[at_j]].parameters.used) {
+                fprintf(data.output.stream, " ");
+                fprintf(data.output.stream, "%s", data.context.set.notable.before->string);
+                controller_entry_action_parameters_print(data.output.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(data.output.stream, "%s", data.context.set.notable.after->string);
+              }
+
+              fprintf(data.output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require ? "required" : "optional", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+            }
+            else if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require) {
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sThe entry item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->name_action.string);
+
+                if (actions->array[cache->ats.array[at_j]].parameters.used) {
+                  fprintf(data.error.to.stream, " ");
+                  controller_entry_action_parameters_print(data.error.to.stream, actions->array[cache->ats.array[at_j]]);
+                }
+
+                fprintf(data.error.to.stream, "%s%s' is ", data.error.notable.after->string, data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%srequired%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s and is in a ", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%sfailed%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s state, skipping execution.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+
+              controller_entry_error_print(data.error, *cache);
+
+              return F_status_is_error(F_require);
+            }
+            else if (data.warning.verbosity == f_console_verbosity_debug) {
+              fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.warning.to.stream, "%s%sThe entry item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+              fprintf(data.warning.to.stream, "%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->name_action.string);
+
+              if (actions->array[cache->ats.array[at_j]].parameters.used) {
+                fprintf(data.warning.to.stream, " ");
+                controller_entry_action_parameters_print(data.warning.to.stream, actions->array[cache->ats.array[at_j]]);
+              }
+
+              fprintf(data.warning.to.stream, "%s%s' is ", data.warning.notable.after->string, data.warning.context.before->string);
+              fprintf(data.warning.to.stream, "%s%srequired%s", data.warning.context.after->string, data.warning.notable.before->string, data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s and is in a ", data.warning.context.before->string);
+              fprintf(data.warning.to.stream, "%s%sfailed%s", data.warning.context.after->string, data.warning.notable.before->string, data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s state, skipping execution.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+
+              controller_entry_error_print(data.warning, *cache);
+            }
           }
           else {
-            // @todo check to see if this rule is "required" and if so immediately fail, otherwise report a failure as a warning (normal verbosity, not debug verbosity).
+            if (simulate) {
+              fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.output.stream, "The entry item action '");
+              fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, cache->name_action.string, data.context.set.title.after->string);
+
+              if (actions->array[cache->ats.array[at_j]].parameters.used) {
+                fprintf(data.output.stream, " ");
+                fprintf(data.output.stream, "%s", data.context.set.notable.before->string);
+                controller_entry_action_parameters_print(data.output.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(data.output.stream, "%s", data.context.set.notable.after->string);
+              }
+
+              fprintf(data.output.stream, "' is in a %sfailed%s state, skipping.%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+            }
+            else if (data.warning.verbosity == f_console_verbosity_debug) {
+              fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.warning.to.stream, "%s%sThe entry item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
+              fprintf(data.warning.to.stream, "%s%s", data.warning.notable.before->string, cache->name_action.string);
+
+              if (actions->array[cache->ats.array[at_j]].parameters.used) {
+                fprintf(data.warning.to.stream, " ");
+                controller_entry_action_parameters_print(data.warning.to.stream, actions->array[cache->ats.array[at_j]]);
+              }
+
+              fprintf(data.warning.to.stream, "%s' is in a ", data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s%sfailed%s", data.warning.context.after->string, data.warning.notable.before->string, data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s state, skipping.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+
+              controller_entry_error_print(data.warning, *cache);
+            }
           }
 
           continue;
@@ -574,7 +663,7 @@ extern "C" {
             fprintf(data.output.stream, "%c", f_string_eol_s[0]);
             fprintf(data.output.stream, "Ignoring entry item action '");
             fprintf(data.output.stream, "%s%s%s", data.context.set.title.before->string, controller_string_ready, data.context.set.title.after->string);
-            fprintf(data.output.stream, "', state is already ready.%c", f_string_eol_s[0]);
+            fprintf(data.output.stream, "', state already is ready.%c", f_string_eol_s[0]);
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
@@ -667,8 +756,42 @@ extern "C" {
             fprintf(data.output.stream, "'.%c", f_string_eol_s[0]);
           }
 
+          // the rule is not yet loaded, ensure that it is loaded.
           if (at == setting->rules.used) {
+
+            // rule execution will re-use the existing cache, so save the current cache.
+            const f_array_length_t cache_line_action = cache->line_action;
+            const f_array_length_t cache_line_item = cache->line_item;
+
+            const f_string_length_t cache_name_action_used = cache->name_action.used;
+            const f_string_length_t cache_name_item_used = cache->name_item.used;
+            const f_string_length_t cache_name_file_used = cache->name_file.used;
+
+            char cache_name_action[cache_name_action_used];
+            char cache_name_item[cache_name_item_used];
+            char cache_name_file[cache_name_file_used];
+
+            memcpy(cache_name_action, cache->name_action.string, cache->name_action.used);
+            memcpy(cache_name_item, cache->name_item.string, cache->name_item.used);
+            memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
+
             status = controller_rule_read(data, *setting, rule_id, cache, &setting->rules.array[setting->rules.used]);
+
+            // restore cache.
+            memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
+            memcpy(cache->name_item.string, cache_name_item, cache_name_item_used);
+            memcpy(cache->name_file.string, cache_name_file, cache_name_file_used);
+
+            cache->name_action.string[cache_name_action_used] = 0;
+            cache->name_item.string[cache_name_item_used] = 0;
+            cache->name_file.string[cache_name_file_used] = 0;
+
+            cache->name_action.used = cache_name_action_used;
+            cache->name_item.used = cache_name_item_used;
+            cache->name_file.used = cache_name_file_used;
+
+            cache->line_action = cache_line_action;
+            cache->line_item = cache_line_item;
 
             if (F_status_is_error(status)) {
               controller_entry_error_print(data.error, *cache);
@@ -699,8 +822,22 @@ extern "C" {
             memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
 
             if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
+              rule_options = 0;
+
+              if (simulate) {
+                rule_options |= controller_rule_option_simulate;
+              }
+
+              if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_asynchronous) {
+                rule_options |= controller_rule_option_asynchronous;
+              }
+
+              if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_wait) {
+                rule_options |= controller_rule_option_wait;
+              }
+
               // @todo: this will also need to support the asynchronous/wait behavior.
-              status = controller_rule_process(data, at, simulate, setting, cache);
+              status = controller_rule_process(data, at, rule_options, setting, cache);
             }
 
             // restore cache.
@@ -793,7 +930,6 @@ extern "C" {
             }
           }
         }
-
       } // for
 
       cache->line_action = 0;

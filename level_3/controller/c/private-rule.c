@@ -728,7 +728,7 @@ extern "C" {
 #endif // _di_controller_rule_path_
 
 #ifndef _di_controller_rule_process_
-  f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) {
+  f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const uint8_t options, controller_setting_t *setting, controller_cache_t *cache) {
 
     if (index >= setting->rules.used) {
       fll_error_print(data.error, F_parameter, "controller_rule_process", F_true);
@@ -817,8 +817,8 @@ extern "C" {
 
     controller_rule_t *rule = &setting->rules.array[index];
 
-    if (simulate && data.parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_simulate(data, *cache, index, setting);
+    if ((options & controller_rule_option_simulate) && data.parameters[controller_parameter_validate].result == f_console_result_found) {
+      controller_rule_simulate(data, *cache, index, options, setting);
     }
 
     {
@@ -850,7 +850,7 @@ extern "C" {
               status = F_status_set_error(F_found_not);
               controller_rule_error_print(data.error, *cache, F_true);
 
-              if (!simulate) break;
+              if (!(options & controller_rule_option_simulate)) break;
             }
             else {
               if (data.warning.verbosity == f_console_verbosity_debug) {
@@ -895,7 +895,7 @@ extern "C" {
               memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
 
               // @todo: this should pass or use the asynchronous state.
-              status = controller_rule_process(data, at, simulate, setting, cache);
+              status = controller_rule_process(data, at, options, setting, cache);
 
               // restore cache.
               memcpy(cache->name_action.string, cache_name_action, cache_name_action_used);
@@ -918,7 +918,7 @@ extern "C" {
                   controller_rule_error_need_want_wish_print(data.error, strings[i], dynamics[i]->array[j].string, "failed during execution");
                   controller_rule_error_print(data.error, *cache, F_true);
 
-                  if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                  if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
                     break;
                   }
                 }
@@ -938,7 +938,7 @@ extern "C" {
                 status = F_status_set_error(F_found_not);
                 controller_rule_error_print(data.error, *cache, F_true);
 
-                if (!simulate) break;
+                if (!(options & controller_rule_option_simulate)) break;
               }
               else {
                 if (data.warning.verbosity == f_console_verbosity_debug) {
@@ -950,11 +950,11 @@ extern "C" {
           }
         } // for
 
-        if (F_status_is_error(status) && !simulate) break;
+        if (F_status_is_error(status) && !(options & controller_rule_option_simulate)) break;
       } // for
     }
 
-    if (!simulate && F_status_is_error_not(status)) {
+    if (!(options & controller_rule_option_simulate) && F_status_is_error_not(status)) {
       status = controller_rule_execute(data, *cache, index, setting);
 
       if (F_status_is_error(status)) {
@@ -1721,7 +1721,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_
 
 #ifndef _di_controller_rule_simulate_
-  void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) {
+  void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t options, controller_setting_t *setting) {
 
     // @todo this needs the "action" in which to perform, such as "start", "stop", "restart", etc..
 
@@ -1731,6 +1731,8 @@ extern "C" {
     fprintf(data.output.stream, "Rule %s%s%s {%c", data.context.set.title.before->string, rule->id.used ? rule->id.string : f_string_empty_s, data.context.set.title.after->string, f_string_eol_s[0]);
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_name, data.context.set.important.after->string, rule->name.used ? rule->name.string : f_string_empty_s, f_string_eol_s[0]);
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_control_group, data.context.set.important.after->string, rule->control_group.used ? rule->control_group.string : f_string_empty_s, f_string_eol_s[0]);
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_how, data.context.set.important.after->string, options & controller_rule_option_asynchronous ? controller_string_asynchronous : controller_string_synchronous, f_string_eol_s[0]);
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_wait, data.context.set.important.after->string, options & controller_rule_option_wait ? controller_string_yes : controller_string_no, f_string_eol_s[0]);
 
     f_array_length_t i = 0;
 

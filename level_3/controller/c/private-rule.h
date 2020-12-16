@@ -351,9 +351,11 @@ extern "C" {
  *   The program data.
  * @param index
  *   Position in the rules array representing the rule to execute
- * @param simulate
- *   If TRUE, then the rule execution is simulated (printing a message that the rule would be executed but does not execut the rule).
- *   If FALSE, the rule is not simulated and is executed as normal.
+ * @param options
+ *   A number using bits to represent specific boolean options.
+ *   If no bits set, then operate normally in a synchronous manner.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_rule_option_asynchronous, then run asynchronously.
  * @param setting
  *   The controller settings data.
  * @param cache
@@ -365,7 +367,7 @@ extern "C" {
  *    F_none on success.
  */
 #ifndef _di_controller_rule_process_
-  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const bool simulate, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const uint8_t options, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**
@@ -454,11 +456,16 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
+ * @param options
+ *   A number using bits to represent specific boolean options.
+ *   If no bits set, then operate normally in a synchronous manner.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_rule_option_asynchronous, then run asynchronously.
  * @param setting
  *   The controller settings data.
  */
 #ifndef _di_controller_rule_simulate_
-  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t options, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_simulate_
 
 /**
