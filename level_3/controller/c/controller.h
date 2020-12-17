@@ -13,6 +13,9 @@
  *
  * @todo research containers and build in container support into this, providing "container" appropriate verbiage for individual rules.
  * @todo research namespaces and user_namespaces, they may be important to support.
+ *
+ * @todo Implement "exit" files that are the opposite of "entry" files whereas rules specified within are all called via the "stop" action type.
+ *       This would then allow for switching modes.
  */
 #ifndef _controller_h
 
@@ -30,11 +33,13 @@
 #include <level_0/color.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
+#include <level_0/execute.h>
 #include <level_0/file.h>
 #include <level_0/fss.h>
 #include <level_0/path.h>
 #include <level_0/pipe.h>
 #include <level_0/print.h>
+#include <level_0/signal.h>
 
 // fll-1 includes
 #include <level_1/color.h>
@@ -142,11 +147,15 @@ extern "C" {
 
     f_string_lengths_t remaining;
     bool process_pipe;
-    pid_t pid;
 
     f_file_t output;
     fll_error_print_t error;
     fll_error_print_t warning;
+
+    pid_t pid;
+    mode_t umask;
+    int child;
+    f_signal_t signal;
 
     f_color_context_t context;
   } controller_data_t;
@@ -156,10 +165,13 @@ extern "C" {
       controller_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      0, \
       f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       fll_macro_error_print_t_initialize_warning(), \
+      0, \
+      0, \
+      0, \
+      f_signal_t_initialize, \
       f_color_context_t_initialize, \
     }
 #endif // _di_controller_data_t_

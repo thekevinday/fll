@@ -257,7 +257,7 @@ extern "C" {
             }
 
             fprintf(data.error.to.stream, "exactly ", data.error.context.before->string);
-            fprintf(data.error.to.stream, "%s%s%u%s", data.error.context.after->string, parameters, data.error.notable.after->string);
+            fprintf(data.error.to.stream, "%s%s%u%s", data.error.context.after->string, data.error.notable.before->string, parameters, data.error.notable.after->string);
             fprintf(data.error.to.stream, "%s parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
           }
         }

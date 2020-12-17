@@ -171,24 +171,35 @@ extern "C" {
 /**
  * Perform an execution of the given rule.
  *
- * @param data
- *   The program data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
+ * @param data
+ *   The program data.
  * @param setting
  *   The controller settings data.
  *
  * @return
  *   F_none on success.
+ *   F_child on child process exiting.
+ *   F_signal on (exit) signal received.
  *
  *   On success and the rule is run synchronously, then the individual status for the rule is set to F_complete.
  *   On success and the rule is run asynchronously, then the individual status for the rule is set to F_busy.
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_return_status controller_rule_execute(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t action, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -345,17 +356,24 @@ extern "C" {
  *
  * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
  *
- * @todo add asynchronous boolean? (will also need a wait boolean, so this should probably be a uint8_t with using bitwise states).
- *
- * @param data
- *   The program data.
  * @param index
  *   Position in the rules array representing the rule to execute
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If no bits set, then operate normally in a synchronous manner.
  *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  *   If bit controller_rule_option_asynchronous, then run asynchronously.
+ * @param data
+ *   The program data.
  * @param setting
  *   The controller settings data.
  * @param cache
@@ -364,10 +382,12 @@ extern "C" {
  *   This utilizes line_action, line_item, name_action, and name_item from cache, but they are backed up before starting and then restored after finishing.
  *
  * @return
- *    F_none on success.
+ *   F_none on success.
+ *   F_child on child process exiting.
+ *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_return_status controller_rule_process(const controller_data_t data, const f_array_length_t index, const uint8_t options, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**
@@ -456,6 +476,15 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If no bits set, then operate normally in a synchronous manner.
@@ -465,7 +494,7 @@ extern "C" {
  *   The controller settings data.
  */
 #ifndef _di_controller_rule_simulate_
-  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t options, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_simulate_
 
 /**

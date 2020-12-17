@@ -51,10 +51,9 @@
 
 // fll-0 includes
 #include <level_0/type.h>
-#include <level_0/status.h>
 #include <level_0/type_array.h>
+#include <level_0/status.h>
 #include <level_0/memory.h>
-#include <level_0/signal.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/account.h>
@@ -65,6 +64,7 @@
 #include <level_0/file.h>
 #include <level_0/iki.h>
 #include <level_0/path.h>
+#include <level_0/signal.h>
 
 // fll-1 includes
 #include <level_1/color.h>

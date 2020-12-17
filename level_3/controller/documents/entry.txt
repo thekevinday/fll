@@ -50,6 +50,8 @@ Entry Documentation:
   Until that execution succeeds and the daemon goes into the background the representing rule will block.
   After the daemon goes into the background, then the representing rule will be fully executed.
 
+  Any "rule" specified in this entry file is always executed using the "start" rule action type.
+
   The "timeout" Action provides default global settings for each of the three special situations: "start", "stop", and "kill".
   Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
   Each successive "timeout" Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).

@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * A set containing the three standard descriptors for use in pipes.
+ * A set containing the standard descriptors for use in pipes during the execution process.
  *
  * Future versions may suppot stdwarn and stddebug if there ever is such a thing.
  *

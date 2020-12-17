@@ -25,6 +25,7 @@ extern "C" {
   #define controller_string_entry         "entry"
   #define controller_string_entries       "entries"
   #define controller_string_environment   "environment"
+  #define controller_string_fail          "fail"
   #define controller_string_failsafe      "failsafe"
   #define controller_string_group         "group"
   #define controller_string_how           "how"
@@ -35,12 +36,14 @@ extern "C" {
   #define controller_string_name          "name"
   #define controller_string_need          "need"
   #define controller_string_no            "no"
+  #define controller_string_optional      "optional"
   #define controller_string_parameter     "parameter"
   #define controller_string_path          "path"
   #define controller_string_pid           "pid"
   #define controller_string_ready         "ready"
   #define controller_string_reload        "reload"
   #define controller_string_require       "require"
+  #define controller_string_required      "required"
   #define controller_string_restart       "restart"
   #define controller_string_rule          "rule"
   #define controller_string_rules         "rules"
@@ -49,6 +52,7 @@ extern "C" {
   #define controller_string_setting       "setting"
   #define controller_string_start         "start"
   #define controller_string_stop          "stop"
+  #define controller_string_succeed       "succeed"
   #define controller_string_synchronous   "synchronous"
   #define controller_string_timeout       "timeout"
   #define controller_string_type          "type"
@@ -71,6 +75,7 @@ extern "C" {
   #define controller_string_entry_length         5
   #define controller_string_entries_length       7
   #define controller_string_environment_length   11
+  #define controller_string_fail_length          4
   #define controller_string_failsafe_length      8
   #define controller_string_group_length         5
   #define controller_string_how_length           3
@@ -81,12 +86,14 @@ extern "C" {
   #define controller_string_name_length          4
   #define controller_string_need_length          4
   #define controller_string_no_length            2
+  #define controller_string_optional_length      8
   #define controller_string_parameter_length     9
   #define controller_string_path_length          4
   #define controller_string_pid_length           3
   #define controller_string_ready_length         5
   #define controller_string_reload_length        6
   #define controller_string_require_length       7
+  #define controller_string_required_length      8
   #define controller_string_restart_length       7
   #define controller_string_rule_length          4
   #define controller_string_rules_length         5
@@ -95,6 +102,7 @@ extern "C" {
   #define controller_string_setting_length       7
   #define controller_string_start_length         5
   #define controller_string_stop_length          4
+  #define controller_string_succeed_length       7
   #define controller_string_synchronous_length   11
   #define controller_string_timeout_length       7
   #define controller_string_type_length          4
@@ -243,9 +251,10 @@ extern "C" {
     controller_rule_setting_type_wish,
   };
 
-  #define controller_rule_option_simulate     0x1
-  #define controller_rule_option_asynchronous 0x2
-  #define controller_rule_option_wait         0x4
+  #define controller_rule_option_asynchronous 0x1
+  #define controller_rule_option_require      0x2
+  #define controller_rule_option_simulate     0x4
+  #define controller_rule_option_wait         0x8
 
   typedef struct {
     f_status_t status;

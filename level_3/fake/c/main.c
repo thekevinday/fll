@@ -43,8 +43,6 @@ int main(const unsigned long argc, const f_string_t *argv) {
 
   status = fake_main(arguments, &data);
 
-  f_signal_close(&data.signal);
-
   // flush output pipes before closing.
   fflush(f_type_output);
   fflush(f_type_error);
@@ -54,12 +52,14 @@ int main(const unsigned long argc, const f_string_t *argv) {
   close(f_type_descriptor_input);
   close(f_type_descriptor_error);
 
-  if (F_status_is_error(status)) {
-    return 1;
-  }
+  f_signal_close(&data.signal);
 
   if (status == F_child) {
     exit(data.child);
+  }
+
+  if (F_status_is_error(status)) {
+    return 1;
   }
 
   return 0;

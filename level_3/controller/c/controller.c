@@ -273,7 +273,9 @@ extern "C" {
         if (f_file_exists(setting.path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s, data->error.context.after->string, f_string_eol_s[0]);
+            fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+            fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting.path_pid.string, data->error.notable.after->string);
+            fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_available_not);
@@ -302,7 +304,9 @@ extern "C" {
           if (f_file_exists(setting.path_pid.string) == F_true) {
             if (data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->error.to.stream, "%s%sThe pid file must not already exist.%s%c", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s, data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+              fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting.path_pid.string, data->error.notable.after->string);
+              fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
             }
 
             status = F_status_set_error(F_available_not);
@@ -310,25 +314,27 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            status = controller_process_entry(*data, &setting, &cache);
+            status = controller_process_entry(data, &setting, &cache);
           }
 
-          if (F_status_is_error(status)) {
-            setting.ready = controller_setting_ready_fail;
-          }
-          else {
-            setting.ready = controller_setting_ready_done;
+          if (!(status == F_child || status == F_signal)) {
+            if (F_status_is_error(status)) {
+              setting.ready = controller_setting_ready_fail;
+            }
+            else {
+              setting.ready = controller_setting_ready_done;
 
-            // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
-            // @todo clear cache periodically while waiting.
-            // controller_macro_cache_t_delete_simple(cache);
+              // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
+              // @todo clear cache periodically while waiting.
+              // controller_macro_cache_t_delete_simple(cache);
+            }
           }
         }
       }
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (data->error.verbosity != f_console_verbosity_quiet) {
+    if (!(status == F_child || status == F_signal) && data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
@@ -340,6 +346,10 @@ extern "C" {
     controller_macro_cache_t_delete_simple(cache);
 
     controller_delete_data(data);
+
+    if (status == F_child || status == F_signal) {
+      return status;
+    }
 
     if (setting.ready == controller_setting_ready_fail) {
       // @todo trigger failsafe/fallback execution, if defined.

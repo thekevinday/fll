@@ -234,7 +234,7 @@ extern "C" {
  * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_process_entry_
-  extern f_return_status controller_process_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**
