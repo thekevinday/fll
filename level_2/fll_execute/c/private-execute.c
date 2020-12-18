@@ -111,47 +111,69 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 #if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) {
+
+    int descriptors[2] = { -1, -1 };
+
+    if (pipe_data) {
+       if (pipe(descriptors) == -1) {
+         return F_status_set_error(F_pipe);
+       }
+    }
 
     const pid_t process_id = fork();
 
     if (process_id < 0) {
+
+      if (pipe_data) {
+        close(descriptors[0]);
+        close(descriptors[1]);
+      }
+
       return F_status_set_error(F_fork);
     }
 
     if (process_id) {
-      if (pipe) {
-        return F_parent;
-      }
+
+      // close the read pipe for the parent.
+      close(descriptors[0]);
     }
     else {
+
+      // close the write pipe for the child.
+      close(descriptors[1]);
 
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
       }
 
-      if (pipe) {
-        if (pipe->input != -1) {
-          dup2(pipe->input, f_type_descriptor_input);
-        }
-
-        if (pipe->output != -1) {
-          dup2(pipe->input, f_type_descriptor_output);
-        }
-
-        if (pipe->error != -1) {
-          dup2(pipe->error, f_type_descriptor_error);
-        }
+      if (pipe_data) {
+        dup2(descriptors[0], f_type_descriptor_input);
       }
 
       const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+
+      // close the write pipe for the child when done.
+      if (pipe_data) {
+        close(descriptors[0]);
+      }
 
       if (result) {
         *result = code;
       }
 
       return F_child;
+    }
+
+    // write all data, if child doesn't read this could block until child closes the pipe.
+    if (pipe_data) {
+      const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
+
+      f_file_write(file, *pipe_data, 0);
+
+      // close the write pipe for the parent when finished writing.
+      close(descriptors[1]);
     }
 
     // have the parent wait for the child process to finish.
@@ -170,20 +192,38 @@ extern "C" {
 #endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
-  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) {
+
+    int descriptors[2] = { -1, -1 };
+
+    if (pipe_data) {
+       if (pipe(descriptors) == -1) {
+         return F_status_set_error(F_pipe);
+       }
+    }
 
     const pid_t process_id = fork();
 
     if (process_id < 0) {
+
+      if (pipe_data) {
+        close(descriptors[0]);
+        close(descriptors[1]);
+      }
+
       return F_status_set_error(F_fork);
     }
 
     if (process_id) {
-      if (pipe) {
-        return F_parent;
-      }
+
+      // close the read pipe for the parent.
+      close(descriptors[0]);
     }
     else {
+
+      // close the write pipe for the child.
+      close(descriptors[1]);
+
       if (signals) {
         f_signal_set_handle(SIG_BLOCK, &signals->block);
         f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
@@ -195,27 +235,32 @@ extern "C" {
         f_environment_set_dynamic(names.array[i], values.array[i], F_true);
       } // for
 
-      if (pipe) {
-        if (pipe->input != -1) {
-          dup2(pipe->input, f_type_descriptor_input);
-        }
-
-        if (pipe->output != -1) {
-          dup2(pipe->input, f_type_descriptor_output);
-        }
-
-        if (pipe->error != -1) {
-          dup2(pipe->error, f_type_descriptor_error);
-        }
+      if (pipe_data) {
+        dup2(descriptors[0], f_type_descriptor_input);
       }
 
       const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
+
+      // close the write pipe for the child when done.
+      if (pipe_data) {
+        close(descriptors[0]);
+      }
 
       if (result) {
         *result = code;
       }
 
       return F_child;
+    }
+
+    // write all data, if child doesn't read this could block until child closes the pipe.
+    if (pipe_data) {
+      const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
+
+      f_file_write(file, *pipe_data, 0);
+
+      // close the write pipe for the parent when finished writing.
+      close(descriptors[1]);
     }
 
     // have the parent wait for the child process to finish.

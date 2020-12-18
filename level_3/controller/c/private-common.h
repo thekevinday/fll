@@ -16,6 +16,7 @@ extern "C" {
   #define controller_string_action        "action"
   #define controller_string_actions       "actions"
   #define controller_string_asynchronous  "asynchronous"
+  #define controller_string_bash          "bash"
   #define controller_string_create        "create"
   #define controller_string_command       "command"
   #define controller_string_consider      "consider"
@@ -66,6 +67,7 @@ extern "C" {
   #define controller_string_action_length        6
   #define controller_string_actions_length       7
   #define controller_string_asynchronous_length  12
+  #define controller_string_bash_length          4
   #define controller_string_create_length        6
   #define controller_string_command_length       7
   #define controller_string_consider_length      8

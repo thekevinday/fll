@@ -401,45 +401,43 @@ extern "C" {
 #endif // _di_controller_rule_error_need_want_wish_print_
 
 #ifndef _di_controller_rule_execute_
-  f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t action, controller_data_t *data, controller_setting_t *setting) {
+  f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) {
+    f_status_t status = F_none;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
     f_array_length_t k = 0;
 
-    controller_rule_item_t *rule_item = 0;
-    controller_rule_action_t *rule_action = 0;
+    controller_rule_item_t *item = 0;
+    controller_rule_action_t *action = 0;
 
     for (i = 0; i < setting->rules.array[index].items.used; ++i) {
 
       if (setting->rules.array[index].items.array[i].type == controller_rule_item_type_setting) continue;
 
-      rule_item = &setting->rules.array[index].items.array[i];
+      item = &setting->rules.array[index].items.array[i];
 
-      for (j = 0; j < rule_item->actions.used; ++j) {
+      for (j = 0; j < item->actions.used; ++j) {
 
-        if (rule_item->actions.array[j].type != action) continue;
+        if (item->actions.array[j].type != type) continue;
 
-        rule_action = &rule_item->actions.array[j];
+        action = &item->actions.array[j];
+        status = F_none;
 
-        if (rule_item->type == controller_rule_item_type_command) {
-          if (rule_action->method == controller_rule_action_method_extended) {
+        if (item->type == controller_rule_item_type_command) {
+          if (action->method == controller_rule_action_method_extended) {
             // @todo
           }
           else {
             // @todo extended list execution.
           }
         }
-        else if (rule_item->type == controller_rule_item_type_script) {
-          if (rule_action->method == controller_rule_action_method_extended) {
-          // @todo
-          }
-          else {
-            // @todo extended list execution.
-          }
+        else if (item->type == controller_rule_item_type_script) {
+          status = controller_rule_execute_script(*action, 0, data);
+          if (F_status_is_error(status)) break;
         }
-        else if (rule_item->type == controller_rule_item_type_service) {
-          if (rule_action->method == controller_rule_action_method_extended) {
+        else if (item->type == controller_rule_item_type_service) {
+          if (action->method == controller_rule_action_method_extended) {
           // @todo
           }
           else {
@@ -450,39 +448,46 @@ extern "C" {
           // unknown, just ignore for now. (@todo print a warning when in debug mode.)
           continue;
         }
+
+        if (status == F_child || status == F_signal) break;
       } // for
+
+      if (status == F_child || status == F_signal) break;
     } // for
 
-    return F_none;
+    return status;
   }
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_script_
-  f_return_status controller_rule_execute_script(const controller_rule_action_t action, controller_data_t *data) {
+  f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, controller_data_t *data) {
 
     // child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
-    f_execute_pipe_t pipe = f_execute_pipe_t_initialize;
+    int result = 0;
 
-    f_status_t status = F_none;
-    //f_status_t status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &signals, &pipe, &data->child);
+    const f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
+
+    // @todo script program (such as: "bash") should be configurable somehow (a new entry setting? a new rule setting? both?).
+    // @todo have the environment variables built before executing the script and then instead call fll_execute_program_environment() for all execute functions (with environment.names, environment.values).
+    f_status_t status = fll_execute_program(controller_string_bash, arguments, &signals, action.parameters.used ? &action.parameters.array[0] : 0, &result);
 
     if (status == F_child) {
-      // @todo wait for parent pipe.
-      // @todo how do I get status code? there will likely need to be more changes to fll_execute_program_environment()...
+      data->child = result;
+
       return F_child;
     }
 
-    // parent process should print to the pipe.
-
     // @todo handle errors, print messages, etc..
-    if (data->child != 0) {
+    if (result != 0) {
       status = F_status_set_error(F_failure);
     }
     else if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "fll_execute_program_environment", F_true);
+      return status;
     }
 
     data->child = 0;
@@ -1103,6 +1108,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "controller_rule_execute", F_true);
+          controller_rule_error_print(data->error, *cache, F_true);
         }
 
         if (status == F_child) {

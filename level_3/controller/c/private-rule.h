@@ -175,7 +175,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
- * @param action
+ * @param type
  *   The action to perform based on the action type codes.
  *
  *   Only subset of the action type codes are supported:
@@ -199,8 +199,38 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t action, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
+
+/**
+ * Perform an execution of the given rule for the script execution type.
+ *
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
+ * @param options
+ *   The execute options.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_child on child process exiting.
+ *   F_signal on (exit) signal received.
+ *
+ *   Errors (with error bit) from: fll_execute_program().
+ *
+ * @see fll_execute_program()
+ */
+#ifndef _di_controller_rule_execute_script_
+  extern f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, controller_data_t *data) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_script_
 
 /**
  * Search the already loaded rules to see if one is found.

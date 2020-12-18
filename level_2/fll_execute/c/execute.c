@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 #ifndef _di_fll_execute_path_
-  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -163,7 +163,7 @@ extern "C" {
 #endif // _di_fll_execute_path_
 
 #ifndef _di_fll_execute_path_environment_
-  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -194,7 +194,7 @@ extern "C" {
 #endif // _di_fll_execute_path_environment_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -216,7 +216,7 @@ extern "C" {
 #endif // _di_fll_execute_program_
 
 #ifndef _di_fll_execute_program_environment_
-  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_execute_pipe_t * const pipe, int *result) {
+  f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
