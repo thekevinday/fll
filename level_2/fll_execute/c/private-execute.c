@@ -110,173 +110,143 @@ extern "C" {
   }
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
-#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) {
-
-    int descriptors[2] = { -1, -1 };
-
-    if (pipe_data) {
-       if (pipe(descriptors) == -1) {
-         return F_status_set_error(F_pipe);
-       }
-    }
+#if !defined(_di_fll_execute_program_)
+  f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) {
 
     const pid_t process_id = fork();
 
     if (process_id < 0) {
-
-      if (pipe_data) {
-        close(descriptors[0]);
-        close(descriptors[1]);
-      }
-
       return F_status_set_error(F_fork);
     }
 
     if (process_id) {
 
-      // close the read pipe for the parent.
-      close(descriptors[0]);
-    }
-    else {
+      // have the parent wait for the child process to finish.
+      waitpid(process_id, result, WUNTRACED | WCONTINUED);
 
-      // close the write pipe for the child.
-      close(descriptors[1]);
+      // this must explicitly check for 0 (as opposed to checking (!result)).
+      if (result != 0) {
+        if (WIFEXITED(*result)) {
+          return F_none;
+        }
 
-      if (signals) {
-        f_signal_set_handle(SIG_BLOCK, &signals->block);
-        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
+        return F_status_set_error(F_failure);
       }
 
-      if (pipe_data) {
-        dup2(descriptors[0], f_type_descriptor_input);
-      }
-
-      const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
-
-      // close the write pipe for the child when done.
-      if (pipe_data) {
-        close(descriptors[0]);
-      }
-
-      if (result) {
-        *result = code;
-      }
-
-      return F_child;
+      return F_none;
     }
 
-    // write all data, if child doesn't read this could block until child closes the pipe.
-    if (pipe_data) {
-      const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
-
-      f_file_write(file, *pipe_data, 0);
-
-      // close the write pipe for the parent when finished writing.
-      close(descriptors[1]);
+    if (parameter && parameter->signals) {
+      f_signal_set_handle(SIG_BLOCK, &parameter->signals->block);
+      f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
     }
 
-    // have the parent wait for the child process to finish.
-    waitpid(process_id, result, WUNTRACED | WCONTINUED);
-
-    if (result != 0) {
-      if (WIFEXITED(*result)) {
-        return F_none;
-      }
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-
-#if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
-  f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) {
-
-    int descriptors[2] = { -1, -1 };
-
-    if (pipe_data) {
-       if (pipe(descriptors) == -1) {
-         return F_status_set_error(F_pipe);
-       }
-    }
-
-    const pid_t process_id = fork();
-
-    if (process_id < 0) {
-
-      if (pipe_data) {
-        close(descriptors[0]);
-        close(descriptors[1]);
-      }
-
-      return F_status_set_error(F_fork);
-    }
-
-    if (process_id) {
-
-      // close the read pipe for the parent.
-      close(descriptors[0]);
-    }
-    else {
-
-      // close the write pipe for the child.
-      close(descriptors[1]);
-
-      if (signals) {
-        f_signal_set_handle(SIG_BLOCK, &signals->block);
-        f_signal_set_handle(SIG_UNBLOCK, &signals->block_not);
-      }
-
+    if (parameter && parameter->names) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < names.used; i++) {
-        f_environment_set_dynamic(names.array[i], values.array[i], F_true);
+      for (f_array_length_t i = 0; i < parameter->names->used && i < parameter->values->used; i++) {
+        f_environment_set_dynamic(parameter->names->array[i], parameter->values->array[i], F_true);
       } // for
-
-      if (pipe_data) {
-        dup2(descriptors[0], f_type_descriptor_input);
-      }
-
-      const int code = program_is ? execvp(program_path, fixed_arguments) : execv(program_path, fixed_arguments);
-
-      // close the write pipe for the child when done.
-      if (pipe_data) {
-        close(descriptors[0]);
-      }
-
-      if (result) {
-        *result = code;
-      }
-
-      return F_child;
     }
 
-    // write all data, if child doesn't read this could block until child closes the pipe.
-    if (pipe_data) {
-      const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
+    const int code = parameter && (parameter->option & fl_execute_parameter_option_path) ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
-      f_file_write(file, *pipe_data, 0);
-
-      // close the write pipe for the parent when finished writing.
-      close(descriptors[1]);
+    if (result) {
+      *result = code;
     }
 
-    // have the parent wait for the child process to finish.
-    waitpid(process_id, result, WUNTRACED | WCONTINUED);
-
-    if (result != 0) {
-      if (WIFEXITED(*result)) {
-        return F_none;
-      }
-
-      return F_status_set_error(F_failure);
+    if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+      exit(code);
     }
+
+    return F_child;
   }
-#endif // !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+#endif // !defined(_di_fll_execute_program_)
 
-#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+#if !defined(_di_fll_execute_program_)
+  f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) {
+
+    int descriptors[2] = { -1, -1 };
+
+    if (pipe(descriptors) == -1) {
+      return F_status_set_error(F_pipe);
+    }
+
+    const pid_t process_id = fork();
+
+    if (process_id < 0) {
+      close(descriptors[0]);
+      close(descriptors[1]);
+
+      return F_status_set_error(F_fork);
+    }
+
+    if (process_id) {
+
+      // close the read pipe for the parent.
+      close(descriptors[0]);
+
+      // write all data, if child doesn't read this could block until child closes the pipe.
+      {
+        const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
+
+        f_file_write(file, *parameter->data, 0);
+
+        // close the write pipe for the parent when finished writing.
+        close(descriptors[1]);
+      }
+
+      // have the parent wait for the child process to finish.
+      waitpid(process_id, result, WUNTRACED | WCONTINUED);
+
+      // this must explicitly check for 0 (as opposed to checking (!result)).
+      if (result != 0) {
+        if (WIFEXITED(*result)) {
+          return F_none;
+        }
+
+        return F_status_set_error(F_failure);
+      }
+
+      return F_none;
+    }
+
+    // close the write pipe for the child.
+    close(descriptors[1]);
+
+    if (parameter && parameter->signals) {
+      f_signal_set_handle(SIG_BLOCK, &parameter->signals->block);
+      f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
+    }
+
+    if (parameter && parameter->names) {
+      clearenv();
+
+      for (f_array_length_t i = 0; i < parameter->names->used && i < parameter->values->used; i++) {
+        f_environment_set_dynamic(parameter->names->array[i], parameter->values->array[i], F_true);
+      } // for
+    }
+
+    dup2(descriptors[0], f_type_descriptor_input);
+
+    const int code = parameter && parameter->option & fl_execute_parameter_option_path ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+
+    // close the write pipe for the child when done.
+    close(descriptors[0]);
+
+    if (result) {
+      *result = code;
+    }
+
+    if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+      exit(code);
+    }
+
+    return F_child;
+  }
+#endif // !defined(_di_fll_execute_program_)
+
+#if !defined(_di_fll_execute_program_)
   void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
 
     memcpy(program_name, program_path, name_size);
@@ -296,7 +266,7 @@ extern "C" {
     // insert the required end of array designator.
     fixed_arguments[arguments.used + 1] = 0;
   }
-#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+#endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus
 } // extern "C"

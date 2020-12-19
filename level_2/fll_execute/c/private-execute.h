@@ -107,21 +107,78 @@ extern "C" {
 /**
  * Private function for performing the fork and execute operation.
  *
- * @param program_path
- *   The part of the path to the program representing the program name to copy from.
- * @param fixed_arguments
- *   A fixed array of strings representing the arguments.
- * @param program_is
- *   If TRUE then execvp() is called to perform execution.
- *   If FALSE then execv() is called to perform execution.
- * @param set_signal
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe_data
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
+ * This implementation ignores parameter.data.
+ *
+ * @param program
+ *   The name or path of the program.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param parameter
+ *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   names:
+ *     An array of strings representing the environment variable names.
+ *     At most names.used variables are created.
+ *     Duplicate names are overwritten.
+ *   values:
+ *     An array of strings representing the environment variable values.
+ *     The values.used must be of at least names.used.
+ *     Set individual strings.used to 0 for empty/null values.
+ *   signals:
+ *     A pointer to the set of signals to have the child process block or not block.
+ *     When not specified, the child process uses the signal blocking behavior of the parent process.
+ *   data:
+ *     A pointer to a string to pipe as standard input to the child process.
+ *     The parent will block until the standard input is fully read or the child process exits.
  * @param result
- *   The code returned after finishing execution of program_path.
+ *   The code returned after finishing execution of program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_child on success but this is the child thread.
+ *   F_failure (with error bit) on execution failure.
+ *   F_fork (with error bit) on fork failure.
+ *
+ * @see clearenv()
+ * @see execv()
+ * @see execvp()
+ * @see fork()
+ * @see waitpid()
+ *
+ * @see f_environment_set_dynamic()
+ * @see f_signal_set_handle()
+ * @see fll_execute_program()
+ */
+#if !defined(_di_fll_execute_program_)
+  extern f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_program_)
+
+/**
+ * Private function for performing the fork and execute operation.
+ *
+ * This implementation requires parameter.data.
+ *
+ * @param program
+ *   The name or path of the program.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param parameter
+ *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   names:
+ *     An array of strings representing the environment variable names.
+ *     At most names.used variables are created.
+ *     Duplicate names are overwritten.
+ *   values:
+ *     An array of strings representing the environment variable values.
+ *     The values.used must be of at least names.used.
+ *     Set individual strings.used to 0 for empty/null values.
+ *   signals:
+ *     A pointer to the set of signals to have the child process block or not block.
+ *     When not specified, the child process uses the signal blocking behavior of the parent process.
+ *   data:
+ *     A pointer to a string to pipe as standard input to the child process.
+ *     The parent will block until the standard input is fully read or the child process exits.
+ * @param result
+ *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
@@ -130,6 +187,7 @@ extern "C" {
  *   F_fork (with error bit) on fork failure.
  *   F_pipe (with error bit) on pipe failure.
  *
+ * @see clearenv()
  * @see close()
  * @see dup2()
  * @see execv()
@@ -138,63 +196,13 @@ extern "C" {
  * @see pipe()
  * @see waitpid()
  *
- * @see fll_execute_path()
+ * @see f_environment_set_dynamic()
+ * @see f_signal_set_handle()
  * @see fll_execute_program()
  */
-#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-  extern f_return_status private_fll_execute_fork(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_program_)
-
-/**
- * Private function for performing the fork and execute operation using a specified environment.
- *
- * @param program_path
- *   The part of the path to the program representing the program name to copy from.
- * @param fixed_arguments
- *   A fixed array of strings representing the arguments.
- * @param program_is
- *   If TRUE then execvp() is called to perform execution.
- *   If FALSE then execv() is called to perform execution.
- * @param names
- *   An array of strings representing the environment variable names.
- *   At most names.used variables are created.
- *   Duplicate names are overwritten.
- * @param values
- *   An array of strings representing the environment variable names.
- *   The values.used must be of at least names.used.
- *   Set individual strings.used to 0 for empty/NULL values.
- * @param signals
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe_data
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
- * @param result
- *   The code returned after finishing execution of program_path.
- *
- * @return
- *   F_none on success.
- *   F_child on success but this is the child thread.
- *   F_failure (with error bit) on execution failure.
- *   F_fork (with error bit) on fork failure.
- *   F_pipe (with error bit) on pipe failure.
- *
- * @see close()
- * @see clearenv()
- * @see dup2()
- * @see execvp()
- * @see fork()
- * @see memcpy()
- * @see pipe()
- * @see strnlen()
- * @see waitpid()
- *
- * @see fll_execute_path_environment()
- * @see fll_execute_program_environment()
- */
-#if !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
-  extern f_return_status private_fll_execute_fork_environment(const f_string_t program_path, const f_string_t fixed_arguments[], const bool program_is, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe_data, int *result) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fll_execute_path_environment_) || !defined(_di_fll_execute_program_environment_)
+#if !defined(_di_fll_execute_program_)
+  extern f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_program_)
 
 /**
  * Private function for reconstructing the arguments into a fixed array.
@@ -213,12 +221,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- * @see fll_execute_path()
- * @see fll_execute_path_environment()
+ * @see fll_execute_program()
  */
-#if !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+#if !defined(_di_fll_execute_program_)
   extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fll_execute_path_) || !defined(_di_fll_execute_path_environment_)
+#endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus
 } // extern "C"

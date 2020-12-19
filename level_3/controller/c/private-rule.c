@@ -470,10 +470,11 @@ extern "C" {
     int result = 0;
 
     const f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
+    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, 0, 0, &signals, action.parameters.used ? &action.parameters.array[0] : 0);
 
     // @todo script program (such as: "bash") should be configurable somehow (a new entry setting? a new rule setting? both?).
     // @todo have the environment variables built before executing the script and then instead call fll_execute_program_environment() for all execute functions (with environment.names, environment.values).
-    f_status_t status = fll_execute_program(controller_string_bash, arguments, &signals, action.parameters.used ? &action.parameters.array[0] : 0, &result);
+    f_status_t status = fll_execute_program(controller_string_bash, arguments, &parameter, &result);
 
     if (status == F_child) {
       data->child = result;

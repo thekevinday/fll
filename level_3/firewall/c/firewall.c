@@ -251,7 +251,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -284,7 +284,7 @@ extern "C" {
           parameters.array[4].used = 9;
           parameters.array[5].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -313,7 +313,7 @@ extern "C" {
           parameters.array[2].used = 9;
           parameters.array[3].used = 6;
 
-          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, 0, &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_iptables, parameters, 0, &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {

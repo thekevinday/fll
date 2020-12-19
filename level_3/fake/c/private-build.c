@@ -664,7 +664,9 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      *status = fll_execute_path_environment(path.string, arguments, data_build.environment.names, data_build.environment.values, &signals, 0, &return_code);
+      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_path, &data_build.environment.names, &data_build.environment.values, &signals, 0);
+
+      *status = fll_execute_program(path.string, arguments, &parameter, &return_code);
 
       fl_string_dynamics_delete(&arguments);
 
@@ -683,7 +685,7 @@ extern "C" {
             }
           }
           else {
-            fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_path_environment", F_true);
+            fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_program", F_true);
           }
         }
         else {

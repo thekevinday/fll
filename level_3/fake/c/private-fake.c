@@ -41,7 +41,9 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      *status = fll_execute_program_environment(program.string, arguments, environment.names, environment.values, &signals, 0, &return_code);
+      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment.names, &environment.values, &signals, 0);
+
+      *status = fll_execute_program(program.string, arguments, &parameter, &return_code);
 
       if (fake_signal_received(data)) {
         *status = F_status_set_error(F_signal);

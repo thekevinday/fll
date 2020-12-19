@@ -32,6 +32,7 @@
 
 // fll-1 includes
 #include <level_1/environment.h>
+#include <level_1/execute.h>
 #include <level_1/string.h>
 
 #ifdef __cplusplus
@@ -329,191 +330,40 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 /**
- * Execute a program given some path + program name (such as "/bin/bash").
+ * Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
  *
- * This does validate that the program path exists.
+ * If parameter.names is specified:
+ *   Uses the provided environment array to designate the environment for the program being executed.
+ *   The environment is defined by the names and values pair.
+ *   This requires paramete.values to also be specified with the same used length as parameter.names.
  *
- * This does not call exit() when the child process exits.
- * Instead, this returns F_child and assigns the child's return code to result for the child process.
- * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process.
+ * When parameter.option has the fl_execute_parameter_option_path bit set, then this does validate the path to the program.
+ * Otherwise, this does not validate the path to the program.
  *
- * @param program_path
- *   The entire path to the program.
+ * When the parameter.option has the fl_execute_parameter_option_exit bit set, then this calls exit() when the child process returns.
+ * Otherwise, this returns F_child and assigns the child's return code to result for the child process.
+ * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when F_child is returned.
+ *
+ * @param program
+ *   The name or path of the program.
  * @param arguments
  *   An array of strings representing the arguments.
- * @param signals
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
- * @param result
- *   The code returned after finishing execution of program_path.
- *
- * @return
- *   F_none on success.
- *   F_child on success but this is the child thread.
- *   F_failure (with error bit) on execution failure.
- *   F_fork (with error bit) on fork failure.
- *   F_pipe (with error bit) on pipe failure.
- *
- *   Errors (with error bit) from: f_file_exists().
- *   Errors (with error bit) from: f_signal_set_handle().
- *
- * @see close()
- * @see dup2()
- * @see execv()
- * @see execvp()
- * @see fork()
- * @see pipe()
- * @see waitpid()
- *
- * @see f_file_exists()
- * @see f_signal_set_handle()
- */
-#ifndef _di_fll_execute_path_
-  extern f_return_status fll_execute_path(const f_string_t program_path, const f_string_statics_t arguments, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result);
-#endif // _di_fll_execute_path_
-
-/**
- * Execute a program given some path + program name (such as "/bin/bash").
- *
- * Uses the provided environment array to designate the environment for the program being executed.
- * The environment is defined by the names and values pair.
- *
- * This does validate that the program path exists.
- *
- * This does not call exit() when the child process exits.
- * Instead, this returns F_child and assigns the child's return code to result for the child process.
- * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process.
- *
- * @param program_path
- *   The entire path to the program.
- * @param arguments
- *   An array of strings representing the arguments.
- * @param names
- *   An array of strings representing the environment variable names.
- *   At most names.used variables are created.
- *   Duplicate names are overwritten.
- * @param values
- *   An array of strings representing the environment variable names.
- *   The values.used must be of at least names.used.
- *   Set individual strings.used to 0 for empty/NULL values.
- * @param signals
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
- * @param result
- *   The code returned after finishing execution of program_path.
- *
- * @return
- *   F_none on success.
- *   F_child on success but this is the child thread.
- *   F_failure (with error bit) on execution failure.
- *   F_fork (with error bit) on fork failure.
- *   F_pipe (with error bit) on pipe failure.
- *
- *   Errors (with error bit) from: f_environment_set_dynamic().
- *   Errors (with error bit) from: f_file_exists().
- *   Errors (with error bit) from: f_signal_set_handle().
- *
- * @see close()
- * @see clearenv()
- * @see dup2()
- * @see execvp()
- * @see fork()
- * @see memcpy()
- * @see pipe()
- * @see strnlen()
- * @see waitpid()
- *
- * @see f_environment_set_dynamic()
- * @see f_file_exists()
- * @see f_signal_set_handle()
- */
-#ifndef _di_fll_execute_path_environment_
-  extern f_return_status fll_execute_path_environment(const f_string_t program_path, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result);
-#endif // _di_fll_execute_path_environment_
-
-/**
- * Execute a program given by name found in the PATH environment (such as "bash").
- *
- * This does not validate the path to the program.
- *
- * This does not call exit() when the child process exits.
- * Instead, this returns F_child and assigns the child's return code to result for the child process.
- * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process.
- *
- * @param program_name
- *   The name of the program.
- * @param arguments
- *   An array of strings representing the arguments.
- * @param signals
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
- * @param result
- *   The code returned after finishing execution of program.
- *
- * @return
- *   F_none on success.
- *   F_child on success but this is the child thread.
- *   F_failure (with error bit) on execution failure.
- *   F_fork (with error bit) on fork failure.
- *   F_pipe (with error bit) on pipe failure.
- *
- *   Errors (with error bit) from: f_file_exists().
- *   Errors (with error bit) from: f_signal_set_handle().
- *
- * @see close()
- * @see dup2()
- * @see execv()
- * @see execvp()
- * @see fork()
- * @see pipe()
- * @see waitpid()
- *
- * @see f_file_exists()
- * @see f_signal_set_handle()
- */
-#ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string_t program_name, const f_string_statics_t arguments, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result);
-#endif // _di_fll_execute_program_
-
-/**
- * Execute a program given by name found in the PATH environment (such as "bash").
- *
- * Uses the provided environment array to designate the environment for the program being executed.
- * The environment is defined by the names and values pair.
- *
- * This does not validate the path to the program.
- *
- * This does not call exit() when the child process exits.
- * Instead, this returns F_child and assigns the child's return code to result for the child process.
- * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process.
- *
- * @param program_name
- *   The name of the program.
- * @param arguments
- *   An array of strings representing the arguments.
- * @param names
- *   An array of strings representing the environment variable names.
- *   At most names.used variables are created.
- *   Duplicate names are overwritten.
- * @param values
- *   An array of strings representing the environment variable names.
- *   The values.used must be of at least names.used.
- *   Set individual strings.used to 0 for empty/null values.
- * @param signals
- *   (optional) A pointer to the set of signals.
- *   Set to 0 to disable.
- * @param pipe
- *   (optional) A pointer to a string to pipe as standard input to the child process.
- *   Set to 0 to disable.
+ * @param parameter
+ *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   names:
+ *     An array of strings representing the environment variable names.
+ *     At most names.used variables are created.
+ *     Duplicate names are overwritten.
+ *   values:
+ *     An array of strings representing the environment variable names.
+ *     The values.used must be of at least names.used.
+ *     Set individual strings.used to 0 for empty/null values.
+ *   signals:
+ *     A pointer to the set of signals to have the child process block or not block.
+ *     When not specified, the child process uses the signal blocking behavior of the parent process.
+ *   data:
+ *     A pointer to a string to pipe as standard input to the child process.
+ *     The parent will block until the standard input is fully read or the child process exits.
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -536,7 +386,9 @@ extern "C" {
  * @see close()
  * @see clearenv()
  * @see dup2()
+ * @see execv()
  * @see execvp()
+ * @see exit()
  * @see fork()
  * @see memcpy()
  * @see pipe()
@@ -550,9 +402,9 @@ extern "C" {
  * @see fl_string_append()
  * @see fl_string_dynamic_terminate()
  */
-#ifndef _di_fll_execute_program_environment_
-  extern f_return_status fll_execute_program_environment(const f_string_t program_name, const f_string_statics_t arguments, const f_string_statics_t names, const f_string_statics_t values, const f_signal_how_t *signals, f_string_static_t * const pipe, int *result);
-#endif // _di_fll_execute_program_environment_
+#ifndef _di_fll_execute_program_
+  extern f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, int *result);
+#endif // _di_fll_execute_program_
 
 #ifdef __cplusplus
 } // extern "C"
