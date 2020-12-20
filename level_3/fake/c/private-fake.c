@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  int fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+  int fake_execute(const fake_data_t data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return 1;
 
     if (data.error.verbosity == f_console_verbosity_verbose) {
@@ -41,7 +41,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment.names, &environment.values, &signals, 0);
+      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment, &signals, 0);
 
       *status = fll_execute_program(program.string, arguments, &parameter, &return_code);
 

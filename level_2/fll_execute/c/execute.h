@@ -332,6 +332,43 @@ extern "C" {
 /**
  * Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
  *
+ * The program will be executed directly and not via a child process.
+ *
+ * Because this directly executes a program, it potentially may not return.
+ * If and when it does, the executed program is finished executing (be it failure or success).
+ * Often times scripts may return and binaries may not.
+ *
+ * @param program
+ *   The name or path of the program.
+ * @param arguments
+ *   An array of strings representing the arguments.
+ * @param option
+ *   A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
+ *   If fl_execute_parameter_option_path: this is a program path (such as "/bin/bash"), otherwise this is a program (such as "bash").
+ *   If fl_execute_parameter_option_fixated: this is a program path is already in the arguments at index 0.
+ * @param result
+ *   The code returned after finishing execution of program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_failure (with error bit) on execution failure.
+ *
+ * @see execv()
+ * @see execvp()
+ * @see exit()
+ * @see memcpy()
+ * @see strnlen()
+ */
+#ifndef _di_fll_execute_into_
+  extern f_return_status fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result);
+#endif // _di_fll_execute_into_
+
+/**
+ * Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
+ *
+ * The program will be executed via a forked child process.
+ *
  * If parameter.names is specified:
  *   Uses the provided environment array to designate the environment for the program being executed.
  *   The environment is defined by the names and values pair.
@@ -349,7 +386,9 @@ extern "C" {
  * @param arguments
  *   An array of strings representing the arguments.
  * @param parameter
- *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   option:
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.
@@ -376,11 +415,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
- *   Errors (with error bit) from: f_macro_string_dynamic_t_delete().
  *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
  *   Errors (with error bit) from: f_signal_set_handle().
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
  *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
  * @see close()

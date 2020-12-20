@@ -288,7 +288,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      f_macro_string_dynamic_t_delete(status, ripped);
+      status = fl_string_dynamic_delete(&ripped);
     }
 
     if (status == F_none && start == destination->used) {

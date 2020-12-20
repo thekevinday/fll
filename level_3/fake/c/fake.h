@@ -75,6 +75,7 @@
 #include <level_1/string.h>
 
 // fll-2 includes
+#include <level_2/environment.h>
 #include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/file.h>

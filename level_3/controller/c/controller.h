@@ -33,6 +33,7 @@
 #include <level_0/color.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
+#include <level_0/environment.h>
 #include <level_0/execute.h>
 #include <level_0/file.h>
 #include <level_0/fss.h>
@@ -49,6 +50,7 @@
 #include <level_1/type.h>
 
 // fll-2 includes
+#include <level_2/environment.h>
 #include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/fss.h>

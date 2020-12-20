@@ -153,6 +153,23 @@ extern "C" {
 #endif // _di_controller_rule_error_print_
 
 /**
+ * Print an error or warning message related to the failed execution of some program or script.
+ *
+ * @param output
+ *   The error or warning output structure.
+ * @param program_is
+ *   If TRUE, then this represents a program.
+ *   If FALSE, then this represents a script.
+ * @param name
+ *   The name of the program or script.
+ * @param code
+ *   The code returned by the executed program or script.
+ */
+#ifndef _di_controller_rule_error_print_execute_
+  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool program_is, const f_string_t name, const int code) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_execute_
+
+/**
  * Print an error or warning message related to need/want/wish settings of some rule.
  *
  * @param output
@@ -164,9 +181,9 @@ extern "C" {
  * @param why
  *   A short explanation on why this is an error or warning.
  */
-#ifndef _di_controller_rule_error_need_want_wish_print_
-  extern void controller_rule_error_need_want_wish_print(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_need_want_wish_print_
+#ifndef _di_controller_rule_error_print_need_want_wish_
+  extern void controller_rule_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_need_want_wish_
 
 /**
  * Perform an execution of the given rule.
@@ -215,7 +232,13 @@ extern "C" {
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
  * @param options
- *   The execute options.
+ *   The controller execute options (and not fl_execute_parameter_t.option).
+ *   This is for designating asynchronous and other controller specific execution options.
+ *   @todo this is not yet implemented.
+ * @param arguments
+ *   The arguments to pass to the script.
+ * @param parameter
+ *   The execute parameter settings.
  * @param data
  *   The program data.
  *
@@ -229,7 +252,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_script_
-  extern f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, const f_string_dynamics_t arguments, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_script_
 
 /**

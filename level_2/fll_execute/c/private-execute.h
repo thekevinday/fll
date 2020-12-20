@@ -114,7 +114,9 @@ extern "C" {
  * @param arguments
  *   An array of strings representing the arguments.
  * @param parameter
- *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   option:
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.
@@ -162,7 +164,9 @@ extern "C" {
  * @param arguments
  *   An array of strings representing the arguments.
  * @param parameter
- *   (optional) This and each of its fields are optional and are disabled when set to 0.
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   option:
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.
@@ -211,6 +215,9 @@ extern "C" {
  *   The part of the path to the program representing the program name to copy from.
  * @param arguments
  *   An array of strings representing the arguments.
+ * @param option
+ *   The bitwise option from fl_execute_parameter_t.option.
+ *   This only cares about fl_execute_parameter_option_fixated.
  * @param name_size
  *   The size of the program_path to copy.
  * @param program_name
@@ -224,7 +231,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
+  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const uint8_t option, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus

@@ -66,7 +66,7 @@ typedef struct {
   }
 
 #define firewall_macro_delete_fss_buffers(status, buffer, objects, contents) \
-  f_macro_string_dynamic_t_delete(status, buffer); \
+  fl_string_dynamic_delete(&buffer); \
   f_macro_fss_objects_t_delete(status, objects); \
   f_macro_fss_contents_t_delete(status, contents);
 

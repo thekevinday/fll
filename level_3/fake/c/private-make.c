@@ -3779,50 +3779,20 @@ extern "C" {
     f_status_t status = F_none;
 
     // reset the environment.
-    for (f_array_length_t i = 0; i < data_make->environment.names.used; i++) {
-      data_make->environment.names.array[i].used = 0;
-      data_make->environment.values.array[i].used = 0;
+    for (f_array_length_t i = 0; i < data_make->environment.used; i++) {
+      data_make->environment.array[i].name.used = 0;
+      data_make->environment.array[i].value.used = 0;
     } // for
 
-    data_make->environment.names.used = 0;
-    data_make->environment.values.used = 0;
+    data_make->environment.used = 0;
 
-    // load all environment variables found.
-    for (f_array_length_t i = 0; i < data_make->setting_build.environment.used; i++) {
+    status = fll_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
-      // pre-allocate name and value if necessary.
-      if (data_make->environment.names.used + 1 > data_make->environment.names.size) {
-        f_macro_string_dynamics_t_resize(status, data_make->environment.names, data_make->environment.names.size + f_memory_default_allocation_step);
+    if (F_status_is_error(status)) {
+      fll_error_print(data_make->error, F_status_set_fine(status), "fll_environment_load_names", F_true);
 
-        if (F_status_is_error_not(status)) {
-          f_macro_string_dynamics_t_resize(status, data_make->environment.values, data_make->environment.values.size + f_memory_default_allocation_step);
-        }
-
-        if (F_status_is_error(status)) {
-          fll_error_print(data_make->error, F_status_set_fine(status), "f_macro_string_dynamics_t_resize", F_true);
-          return status;
-        }
-      }
-
-      status = f_environment_get(data_make->setting_build.environment.array[i].string, &data_make->environment.values.array[data_make->environment.values.used]);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_environment_get", F_true);
-        return status;
-      }
-
-      if (status == F_exist_not) continue;
-
-      fl_string_dynamic_append(data_make->setting_build.environment.array[i], &data_make->environment.names.array[data_make->environment.names.used]);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_environment_get", F_true);
-        return status;
-      }
-
-      data_make->environment.names.used++;
-      data_make->environment.values.used++;
-    } // for
+      return status;
+    }
 
     if (data.error.verbosity == f_console_verbosity_verbose) {
       fprintf(data.output.stream, "%s", program.string);
@@ -3846,7 +3816,7 @@ extern "C" {
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
-    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(as_shell ? 0 : fl_execute_parameter_option_path, &data_make->environment.names, &data_make->environment.values, &signals, 0);
+    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(as_shell ? 0 : fl_execute_parameter_option_path, &data_make->environment, &signals, 0);
 
     status = fll_execute_program(program.string, arguments, &parameter, &return_code);
 

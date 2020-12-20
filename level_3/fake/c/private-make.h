@@ -353,7 +353,7 @@ extern "C" {
     fake_build_setting_t setting_build;
     fake_make_setting_t setting_make;
 
-    fake_environment_t environment;
+    f_string_maps_t environment;
 
     fake_make_parameter_t parameter;
     fake_make_path_t path; // @todo review this, check if path.current is used anymore.
@@ -371,7 +371,7 @@ extern "C" {
   #define fake_make_data_t_initialize { \
     fake_build_setting_t_initialize, \
     fake_make_setting_t_initialize, \
-    fake_environment_t_initialize, \
+    f_string_maps_t_initialize, \
     fake_make_parameter_t_initialize, \
     fake_make_path_t_initialize, \
     fll_error_print_t_initialize, \
@@ -384,7 +384,7 @@ extern "C" {
   #define fake_macro_make_data_t_delete_simple(data) \
     fake_macro_build_setting_t_delete_simple(data.setting_build) \
     fake_macro_make_setting_t_delete_simple(data.setting_make) \
-    fake_macro_environment_t_delete_simple(data.environment) \
+    fl_string_maps_delete(&data.environment); \
     fake_macro_make_parameter_delete_simple(data.parameter) \
     fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_t_delete_simple(data.fakefile) \

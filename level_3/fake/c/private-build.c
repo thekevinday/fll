@@ -664,7 +664,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_path, &data_build.environment.names, &data_build.environment.values, &signals, 0);
+      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_path, &data_build.environment, &signals, 0);
 
       *status = fll_execute_program(path.string, arguments, &parameter, &return_code);
 
@@ -1200,10 +1200,16 @@ extern "C" {
 #endif // _di_fake_build_library_static_
 
 #ifndef _di_fake_build_load_environment_
-  void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, fake_environment_t *environment, f_status_t *status) {
+  void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
-    f_string_dynamics_t names = f_string_dynamics_t_initialize;
+    // reset the environment.
+    for (f_array_length_t i = 0; i < environment->used; i++) {
+      environment->array[i].name.used = 0;
+      environment->array[i].value.used = 0;
+    } // for
+
+    environment->used = 0;
 
     {
       // add the guaranteed environment variables.
@@ -1217,156 +1223,42 @@ extern "C" {
         f_path_present_working_length
       };
 
-      f_macro_string_dynamics_new(*status, names, 2);
-
-      if (F_status_is_error(*status)) {
-        fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_new", F_true);
-
-        fl_string_dynamics_delete(&names);
-        return;
-      }
-
-      f_string_dynamic_t part = f_string_dynamic_t_initialize;
-
       for (uint8_t i = 0; i < 2; i++) {
 
-        *status = fl_string_append(variables_name[i], variables_length[i], &part);
-        if (F_status_is_error(*status)) break;
+        *status = fll_environment_load_name(variables_name[i], variables_length[i], environment);
 
-        names.array[names.used].string = part.string;
-        names.array[names.used].used = part.used;
-        names.array[names.used].size = part.size;
-        names.used++;
-
-        f_macro_string_dynamic_t_clear(part);
+        if (F_status_is_error(*status)) {
+          fll_error_print(data.error, F_status_set_fine(*status), "fll_environment_load_name", F_true);
+          break;
+        }
       } // for
 
-      if (F_status_is_error_not(*status)) {
-        if (names.used + data_build.setting.environment.used > names.size) {
-          if (names.used + data_build.setting.environment.used > f_array_length_t_size) {
-            if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-              fl_color_print(data.error.to.stream, data.context.set.error, "%sThe values for the setting '", fll_error_print_error);
-              fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_environment);
-              fl_color_print(data.error.to.stream, data.context.set.error, "' of setting file '");
-              fl_color_print(data.error.to.stream, data.context.set.notable, "%s", data.file_data_build_settings.string);
-              fl_color_print(data.error.to.stream, data.context.set.error, "' is too large.");
-              fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-            }
-
-            fl_string_dynamic_delete(&part);
-            fl_string_dynamics_delete(&names);
-            *status = F_status_set_error(F_array_too_large);
-            return;
-          }
-
-          f_macro_string_dynamics_t_resize(*status, names, names.used + data_build.setting.environment.used);
-
-          if (F_status_is_error(*status)) {
-            fll_error_print(data.error, F_status_set_fine(*status), "f_macro_string_dynamics_t_resize", F_true);
-
-            fl_string_dynamic_delete(&part);
-            fl_string_dynamics_delete(&names);
-            return;
-          }
-        }
-
-        for (f_string_length_t i = 0; i < data_build.setting.environment.used; i++) {
-
-          *status = fl_string_dynamic_append_nulless(data_build.setting.environment.array[i], &part);
-          if (F_status_is_error(*status)) break;
-
-          names.array[names.used].string = part.string;
-          names.array[names.used].used = part.used;
-          names.array[names.used].size = part.size;
-          names.used++;
-
-          f_macro_string_dynamic_t_clear(part);
-        } // for
-      }
-
-      fl_string_dynamic_delete(&part);
-
       if (F_status_is_error(*status)) {
-        fll_error_print(data.error, F_status_set_fine(*status), "fl_string_append", F_true);
-
-        fl_string_dynamics_delete(&names);
         return;
       }
     }
 
-    f_string_t function = f_string_t_initialize;
-    f_string_dynamic_t variable_name = f_string_dynamic_t_initialize;
-    f_string_dynamic_t variable_value = f_string_dynamic_t_initialize;
+    if (environment->used + data_build.setting.environment.used > environment->size) {
+      if (environment->used + data_build.setting.environment.used > f_array_length_t_size) {
+        if (data.error.verbosity != f_console_verbosity_quiet) {
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "%sThe values for the setting '", fll_error_print_error);
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", fake_build_setting_name_environment);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' of setting file '");
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s", data.file_data_build_settings.string);
+          fl_color_print(data.error.to.stream, data.context.set.error, "' is too large.");
+          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+        }
 
-    for (f_string_length_t i = 0; i < names.used; i++) {
-
-      if (fake_signal_received(data)) {
-        *status = F_status_set_error(F_signal);
-        break;
+        *status = F_status_set_error(F_array_too_large);
+        return;
       }
+    }
 
-      *status = f_environment_get_dynamic(names.array[i], &variable_value);
+    *status = fll_environment_load_names(data_build.setting.environment, environment);
 
-      if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_memory_reallocation) {
-          function = "f_macro_string_dynamics_t_resize";
-          break;
-        }
-      }
-
-      if (F_status_is_error_not(*status) && environment->names.used + 1 > environment->names.size) {
-        if (environment->names.size + f_memory_default_allocation_step > f_array_length_t_size) {
-          if (environment->names.size + 1 > f_array_length_t_size) {
-            *status = F_status_set_error(F_array_too_large);
-          }
-          else {
-            f_macro_string_dynamics_t_resize(*status, environment->names, environment->names.size + 1);
-          }
-        }
-        else {
-          f_macro_string_dynamics_t_resize(*status, environment->names, environment->names.size + f_memory_default_allocation_step);
-        }
-
-        if (F_status_is_error(*status)) {
-          function = "f_macro_string_dynamics_t_resize";
-          break;
-        }
-
-        f_macro_string_dynamics_t_resize(*status, environment->values, environment->names.size);
-        if (F_status_is_error(*status)) {
-          function = "f_macro_string_dynamics_t_resize";
-          break;
-        }
-      }
-
-      *status = fl_string_dynamic_append(names.array[i], &variable_name);
-
-      if (F_status_is_error(*status)) {
-        function = "fl_string_append";
-        break;
-      }
-
-      environment->names.array[environment->names.used].string = variable_name.string;
-      environment->names.array[environment->names.used].used = variable_name.used;
-      environment->names.array[environment->names.used].size = variable_name.size;
-      environment->names.used++;
-
-      environment->values.array[environment->values.used].string = variable_value.string;
-      environment->values.array[environment->values.used].used = variable_value.used;
-      environment->values.array[environment->values.used].size = variable_value.size;
-      environment->values.used++;
-
-      f_macro_string_dynamic_t_clear(variable_name);
-      f_macro_string_dynamic_t_clear(variable_value);
-    } // for
-
-    fl_string_dynamics_delete(&names);
-    fl_string_dynamic_delete(&variable_name);
-    fl_string_dynamic_delete(&variable_value);
-
-    if (F_status_is_error(*status) && F_status_set_fine(*status) != F_signal) {
-      fll_error_print(data.error, *status, function, F_true);
+    if (F_status_is_error(*status)) {
+      fll_error_print(data.error, F_status_set_fine(*status), "fll_environment_load_names", F_true);
     }
   }
 #endif // _di_fake_build_load_environment_

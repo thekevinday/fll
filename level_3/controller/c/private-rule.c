@@ -388,8 +388,22 @@ extern "C" {
   }
 #endif // _di_controller_rule_error_print_
 
-#ifndef _di_controller_rule_error_need_want_wish_print_
-  void controller_rule_error_need_want_wish_print(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
+#ifndef _di_controller_rule_error_print_execute_
+  void controller_rule_error_print_execute(const fll_error_print_t output, const bool program_is, const f_string_t name, const int code) {
+
+    if (output.verbosity != f_console_verbosity_quiet) {
+      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(output.to.stream, "%s%sThe %s '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s, program_is ? controller_string_program : controller_string_script);
+      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, name ? name : f_string_empty_s, output.notable.after->string);
+      fprintf(output.to.stream, "%s' failed with the exit code '", output.context.before->string);
+      fprintf(output.to.stream, "%s%s%d%s", output.context.after->string, output.notable.before->string, code, output.notable.after->string);
+      fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+    }
+  }
+#endif // _di_controller_rule_error_print_execute_
+
+#ifndef _di_controller_rule_error_print_need_want_wish_
+  void controller_rule_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       fprintf(output.to.stream, "%c", f_string_eol_s[0]);
@@ -398,7 +412,7 @@ extern "C" {
       fprintf(output.to.stream, "%s' %s.%s%c", output.context.before->string, why, output.context.after->string, f_string_eol_s[0]);
     }
   }
-#endif // _di_controller_rule_error_need_want_wish_print_
+#endif // _di_controller_rule_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_execute_
   f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) {
@@ -410,6 +424,23 @@ extern "C" {
 
     controller_rule_item_t *item = 0;
     controller_rule_action_t *action = 0;
+
+    // child processes should receive all signals, without blocking.
+    f_signal_how_t signals = f_signal_how_t_initialize;
+    f_signal_set_empty(&signals.block);
+    f_signal_set_fill(&signals.block_not);
+
+    f_string_maps_t environment = f_string_maps_t_initialize;
+
+    const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
+    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment, &signals, 0);
+
+    status = fll_environment_load_names(setting->rules.array[index].environment, &environment);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "fll_environment_load_names", F_true);
+      return status;
+    }
 
     for (i = 0; i < setting->rules.array[index].items.used; ++i) {
 
@@ -424,6 +455,9 @@ extern "C" {
         action = &item->actions.array[j];
         status = F_none;
 
+        parameter.data = 0;
+        parameter.option = 0;
+
         if (item->type == controller_rule_item_type_command) {
           if (action->method == controller_rule_action_method_extended) {
             // @todo
@@ -433,12 +467,14 @@ extern "C" {
           }
         }
         else if (item->type == controller_rule_item_type_script) {
-          status = controller_rule_execute_script(*action, 0, data);
+          parameter.data = &action->parameters.array[0];
+
+          status = controller_rule_execute_script(*action, 0, arguments_none, &parameter, data);
           if (F_status_is_error(status)) break;
         }
         else if (item->type == controller_rule_item_type_service) {
           if (action->method == controller_rule_action_method_extended) {
-          // @todo
+            // @todo
           }
           else {
             // @todo extended list execution.
@@ -460,21 +496,11 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_script_
-  f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, controller_data_t *data) {
-
-    // child processes should receive all signals, without blocking.
-    f_signal_how_t signals = f_signal_how_t_initialize;
-    f_signal_set_empty(&signals.block);
-    f_signal_set_fill(&signals.block_not);
-
+  f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, const f_string_dynamics_t arguments, fl_execute_parameter_t * const parameter, controller_data_t *data) {
     int result = 0;
 
-    const f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
-    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, 0, 0, &signals, action.parameters.used ? &action.parameters.array[0] : 0);
-
     // @todo script program (such as: "bash") should be configurable somehow (a new entry setting? a new rule setting? both?).
-    // @todo have the environment variables built before executing the script and then instead call fll_execute_program_environment() for all execute functions (with environment.names, environment.values).
-    f_status_t status = fll_execute_program(controller_string_bash, arguments, &parameter, &result);
+    f_status_t status = fll_execute_program(controller_string_bash, arguments, parameter, &result);
 
     if (status == F_child) {
       data->child = result;
@@ -482,13 +508,13 @@ extern "C" {
       return F_child;
     }
 
-    // @todo handle errors, print messages, etc..
     if (result != 0) {
+      controller_rule_error_print_execute(data->error, F_false, controller_string_bash, result);
+
       status = F_status_set_error(F_failure);
     }
     else if (F_status_is_error(status)) {
       fll_error_print(data->error, F_status_set_fine(status), "fll_execute_program_environment", F_true);
-      return status;
     }
 
     data->child = 0;
@@ -955,7 +981,7 @@ extern "C" {
 
           if (at == setting->rules.used) {
             if (i == 0) {
-              controller_rule_error_need_want_wish_print(data->error, strings[i], dynamics[i]->array[j].string, "was not found");
+              controller_rule_error_print_need_want_wish(data->error, strings[i], dynamics[i]->array[j].string, "was not found");
 
               status = F_status_set_error(F_found_not);
               controller_rule_error_print(data->error, *cache, F_true);
@@ -964,7 +990,7 @@ extern "C" {
             }
             else {
               if (data->warning.verbosity == f_console_verbosity_debug) {
-                controller_rule_error_need_want_wish_print(data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
+                controller_rule_error_print_need_want_wish(data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
                 controller_rule_error_print(data->warning, *cache, F_true);
               }
             }
@@ -1027,7 +1053,7 @@ extern "C" {
               if (F_status_is_error(status)) {
                 if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
 
-                  controller_rule_error_need_want_wish_print(data->error, strings[i], dynamics[i]->array[j].string, "failed during execution");
+                  controller_rule_error_print_need_want_wish(data->error, strings[i], dynamics[i]->array[j].string, "failed during execution");
                   controller_rule_error_print(data->error, *cache, F_true);
 
                   if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
@@ -1036,7 +1062,7 @@ extern "C" {
                 }
                 else {
                   if (data->warning.verbosity == f_console_verbosity_debug) {
-                    controller_rule_error_need_want_wish_print(data->warning, strings[i], dynamics[i]->array[j].string, "failed during execution");
+                    controller_rule_error_print_need_want_wish(data->warning, strings[i], dynamics[i]->array[j].string, "failed during execution");
                     controller_rule_error_print(data->warning, *cache, F_true);
                   }
                 }
@@ -1045,7 +1071,7 @@ extern "C" {
             else if (F_status_is_error(setting->rules.array[at].status)) {
 
               if (i == 0 || i == 1) {
-                controller_rule_error_need_want_wish_print(data->error, strings[i], dynamics[i]->array[j].string, "is in a failed state");
+                controller_rule_error_print_need_want_wish(data->error, strings[i], dynamics[i]->array[j].string, "is in a failed state");
 
                 status = F_status_set_error(F_found_not);
                 controller_rule_error_print(data->error, *cache, F_true);
@@ -1054,7 +1080,7 @@ extern "C" {
               }
               else {
                 if (data->warning.verbosity == f_console_verbosity_debug) {
-                  controller_rule_error_need_want_wish_print(data->warning, strings[i], dynamics[i]->array[j].string, "is in a failed state");
+                  controller_rule_error_print_need_want_wish(data->warning, strings[i], dynamics[i]->array[j].string, "is in a failed state");
                   controller_rule_error_print(data->warning, *cache, F_true);
                 }
               }

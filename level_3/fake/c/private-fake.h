@@ -22,22 +22,6 @@ extern "C" {
   #define fake_common_setting_bool_no_length  2
 #endif // _di_fake_common_
 
-#ifndef _di_fake_environment_t_
-  typedef struct {
-    f_string_dynamics_t names;
-    f_string_dynamics_t values;
-  } fake_environment_t;
-
-  #define fake_environment_t_initialize { \
-    f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
-  }
-
-  #define fake_macro_environment_t_delete_simple(environment) \
-    fl_string_dynamics_delete(&environment.names); \
-    fl_string_dynamics_delete(&environment.values);
-#endif // _di_fake_environment_t_
-
 /**
  * Execute the given command and arguments.
  *
@@ -59,7 +43,7 @@ extern "C" {
  *   A value of 1 is returned if status has the error bit set.
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(const fake_data_t data, const fake_environment_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_execute(const fake_data_t data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_execute_
 
 /**

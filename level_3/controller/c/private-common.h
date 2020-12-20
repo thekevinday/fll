@@ -41,6 +41,7 @@ extern "C" {
   #define controller_string_parameter     "parameter"
   #define controller_string_path          "path"
   #define controller_string_pid           "pid"
+  #define controller_string_program       "program"
   #define controller_string_ready         "ready"
   #define controller_string_reload        "reload"
   #define controller_string_require       "require"
@@ -92,6 +93,7 @@ extern "C" {
   #define controller_string_parameter_length     9
   #define controller_string_path_length          4
   #define controller_string_pid_length           3
+  #define controller_string_program_length       7
   #define controller_string_ready_length         5
   #define controller_string_reload_length        6
   #define controller_string_require_length       7

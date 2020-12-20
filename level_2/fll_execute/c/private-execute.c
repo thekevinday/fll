@@ -51,6 +51,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fl_string_dynamic_delete(&argument);
+
         return status;
       }
     }
@@ -60,6 +61,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fl_string_dynamic_delete(&argument);
+
         return status;
       }
     }
@@ -68,6 +70,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fl_string_dynamic_delete(&argument);
+
       return status;
     }
 
@@ -83,6 +86,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fl_string_dynamic_delete(&argument);
+
         return status;
       }
     }
@@ -91,6 +95,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fl_string_dynamic_delete(&argument);
+
       return status;
     }
 
@@ -98,6 +103,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fl_string_dynamic_delete(&argument);
+
       return status;
     }
 
@@ -141,11 +147,11 @@ extern "C" {
       f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
     }
 
-    if (parameter && parameter->names) {
+    if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->names->used && i < parameter->values->used; i++) {
-        f_environment_set_dynamic(parameter->names->array[i], parameter->values->array[i], F_true);
+      for (f_array_length_t i = 0; i < parameter->environment->used; i++) {
+        f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
 
@@ -219,11 +225,11 @@ extern "C" {
       f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
     }
 
-    if (parameter && parameter->names) {
+    if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->names->used && i < parameter->values->used; i++) {
-        f_environment_set_dynamic(parameter->names->array[i], parameter->values->array[i], F_true);
+      for (f_array_length_t i = 0; i < parameter->environment->used; i++) {
+        f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
 
@@ -247,21 +253,32 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
+  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const uint8_t option, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
 
-    memcpy(program_name, program_path, name_size);
-    program_name[name_size] = 0;
+    if (option & fl_execute_parameter_option_fixated) {
 
-    if (name_size) {
-      fixed_arguments[0] = program_name;
+      for (f_string_length_t i = 0; i < arguments.used; i++) {
+        fixed_arguments[i] = arguments.array[i].string;
+      } // for
+
+      // insert the required end of array designator.
+      fixed_arguments[arguments.used] = 0;
     }
     else {
-      fixed_arguments[0] = 0;
-    }
+      memcpy(program_name, program_path, name_size);
+      program_name[name_size] = 0;
 
-    for (f_string_length_t i = 0; i < arguments.used; i++) {
-      fixed_arguments[i + 1] = arguments.array[i].string;
-    } // for
+      if (name_size) {
+        fixed_arguments[0] = program_name;
+      }
+      else {
+        fixed_arguments[0] = 0;
+      }
+
+      for (f_string_length_t i = 0; i < arguments.used; i++) {
+        fixed_arguments[i + 1] = arguments.array[i].string;
+      } // for
+    }
 
     // insert the required end of array designator.
     fixed_arguments[arguments.used + 1] = 0;

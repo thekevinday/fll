@@ -129,16 +129,10 @@ extern "C" {
   }
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
-#ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, int *result) {
+#ifndef _di_fll_execute_into_
+  f_return_status fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
-
-      if (parameter && parameter->names) {
-        if (!parameter->values || parameter->names->used != parameter->values->used) {
-          return F_status_set_error(F_parameter);
-        }
-      }
     #endif // _di_level_2_parameter_checking_
 
     // create a string array that is compatible with execv() calls.
@@ -151,10 +145,47 @@ extern "C" {
 
     program_name[name_size] = 0;
 
-    private_fll_execute_path_arguments_fixate(last_slash ? last_slash : program, arguments, name_size, program_name, fixed_arguments);
+    private_fll_execute_path_arguments_fixate(last_slash ? last_slash : program, arguments, option, name_size, program_name, fixed_arguments);
+
+    const int code = option & fl_execute_parameter_option_path ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+
+    // generally this does not return, but in some cases (such as with scripts) this does return so handle the results.
+    if (result) {
+      *result = code;
+    }
+
+    if (option & fl_execute_parameter_option_exit) {
+      exit(code);
+    }
+
+    if (code) {
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_fll_execute_into_
+
+#ifndef _di_fll_execute_program_
+  f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, int *result) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!result) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
+
+    // create a string array that is compatible with execv() calls.
+    f_string_t fixed_arguments[arguments.used + 2];
+
+    const f_string_t last_slash = strrchr(program, f_path_separator_s[0]);
+    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_max) : strnlen(program, f_path_max);
+
+    char program_name[name_size + 1];
+
+    program_name[name_size] = 0;
+
+    private_fll_execute_path_arguments_fixate(last_slash ? last_slash : program, arguments, parameter->option, name_size, program_name, fixed_arguments);
 
     // when the environment is to be cleared, a full path must be used.
-    if (parameter && !(parameter->option & fl_execute_parameter_option_path) && parameter->names) {
+    if (parameter && !(parameter->option & fl_execute_parameter_option_path) && parameter->environment) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
 
@@ -178,7 +209,7 @@ extern "C" {
         return status;
       }
 
-      f_macro_string_dynamic_t_delete(status, path);
+      status = fl_string_dynamic_delete(&path);
 
       if (F_status_is_error(status)) {
         f_macro_string_dynamics_t_delete_simple(paths);

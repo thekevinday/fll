@@ -332,17 +332,17 @@ extern "C" {
 #ifndef _di_fake_build_data_t_
   typedef struct {
     fake_build_setting_t setting;
-    fake_environment_t environment;
+    f_string_maps_t environment;
   } fake_build_data_t;
 
   #define fake_build_data_t_initialize { \
     fake_build_setting_t_initialize, \
-    fake_environment_t_initialize, \
+    f_string_maps_t_initialize, \
   }
 
   #define fake_macro_build_data_delete_simple(build) \
     fake_macro_build_setting_t_delete_simple(build.setting) \
-    fake_macro_environment_t_delete_simple(build.environment)
+    fl_string_maps_delete(&build.environment);
 #endif // _di_fake_build_data_t_
 
 #ifndef _di_fake_build_parameter_
@@ -679,7 +679,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, fake_environment_t *environment, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_build_load_environment_
 
 /**
