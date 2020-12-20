@@ -491,6 +491,8 @@ extern "C" {
       if (status == F_child || status == F_signal) break;
     } // for
 
+    fl_string_maps_delete(&environment);
+
     return status;
   }
 #endif // _di_controller_rule_execute_
