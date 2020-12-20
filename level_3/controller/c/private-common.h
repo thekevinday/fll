@@ -143,7 +143,6 @@ extern "C" {
   };
 
   typedef struct {
-    uint8_t method;
     uint8_t type;
 
     f_string_length_t line;
@@ -155,7 +154,6 @@ extern "C" {
 
   #define controller_rule_action_t_initialize \
     { \
-      0, \
       0, \
       0, \
       F_known_not, \
@@ -251,6 +249,7 @@ extern "C" {
     controller_rule_setting_type_need,
     controller_rule_setting_type_parameter,
     controller_rule_setting_type_path,
+    controller_rule_setting_type_script,
     controller_rule_setting_type_want,
     controller_rule_setting_type_wish,
   };
@@ -274,6 +273,7 @@ extern "C" {
     f_string_dynamic_t name;
     f_string_dynamic_t control_group;
     f_string_dynamic_t path;
+    f_string_dynamic_t script;
 
     f_string_maps_t define;
     f_string_maps_t parameter;
@@ -298,6 +298,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_dynamics_t_initialize, \
@@ -312,6 +313,7 @@ extern "C" {
     fl_string_dynamic_delete(&rule.name); \
     fl_string_dynamic_delete(&rule.control_group); \
     fl_string_dynamic_delete(&rule.path); \
+    fl_string_dynamic_delete(&rule.script); \
     f_macro_string_maps_t_delete_simple(rule.define) \
     f_macro_string_maps_t_delete_simple(rule.parameter) \
     fl_string_dynamics_delete(&rule.environment); \

@@ -340,13 +340,13 @@ extern "C" {
  *
  * @param program
  *   The name or path of the program.
+ *   The string pointer may be set to 0, to designate that the first index in arguments is assumed to be the program.
  * @param arguments
  *   An array of strings representing the arguments.
  * @param option
  *   A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
  *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
  *   If fl_execute_parameter_option_path: this is a program path (such as "/bin/bash"), otherwise this is a program (such as "bash").
- *   If fl_execute_parameter_option_fixated: this is a program path is already in the arguments at index 0.
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -383,6 +383,7 @@ extern "C" {
  *
  * @param program
  *   The name or path of the program.
+ *   The string pointer may be set to 0, to designate that the first index in arguments is assumed to be the program.
  * @param arguments
  *   An array of strings representing the arguments.
  * @param parameter

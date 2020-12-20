@@ -1,0 +1,17 @@
+# fss-000d
+
+setting:
+  name "Scipt #2"
+  need script succeed
+
+script:
+  start {
+    \#!/bin/bash
+    my_function() {
+      echo "Hello this is the second script."
+      return 1;
+    \}
+
+    my_function
+  }
+

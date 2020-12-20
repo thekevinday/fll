@@ -1,0 +1,21 @@
+# fss-000d
+
+setting:
+  name "PHP script"
+  environment PATH
+  script php
+
+script:
+  start {
+    <?php
+    print("\nThis is a PHP script.\n\n");
+
+    print(date("Y/m/d h:i:s a") . "\n\n");
+
+    var_dump(getenv());
+    print("\n");
+
+    print("Now executing 'date' program, assuming that it exists in \$PATH.\n");
+    passthru("date");
+    print("\n");
+  }

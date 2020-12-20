@@ -253,35 +253,35 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const uint8_t option, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
+  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const bool fixated_is, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
 
-    if (option & fl_execute_parameter_option_fixated) {
+    memcpy(program_name, program_path, name_size);
+    program_name[name_size] = 0;
 
-      for (f_string_length_t i = 0; i < arguments.used; i++) {
-        fixed_arguments[i] = arguments.array[i].string;
-      } // for
-
-      // insert the required end of array designator.
-      fixed_arguments[arguments.used] = 0;
+    if (name_size) {
+      fixed_arguments[0] = program_name;
     }
     else {
-      memcpy(program_name, program_path, name_size);
-      program_name[name_size] = 0;
+      fixed_arguments[0] = 0;
+    }
 
-      if (name_size) {
-        fixed_arguments[0] = program_name;
-      }
-      else {
-        fixed_arguments[0] = 0;
-      }
+    f_string_length_t i = 0;
 
-      for (f_string_length_t i = 0; i < arguments.used; i++) {
+    if (fixated_is) {
+      for (i = 1; i < arguments.used; ++i) {
+        fixed_arguments[i] = arguments.array[i].string;
+      } // for
+    }
+    else {
+      for (; i < arguments.used; ++i) {
         fixed_arguments[i + 1] = arguments.array[i].string;
       } // for
+
+      i++;
     }
 
     // insert the required end of array designator.
-    fixed_arguments[arguments.used + 1] = 0;
+    fixed_arguments[i] = 0;
   }
 #endif // !defined(_di_fll_execute_program_)
 

@@ -1,0 +1,25 @@
+# fss-0005
+
+main:
+  timeout start 7
+  timeout stop 7
+  timeout kill 3
+
+  failsafe boom
+
+  item first
+  item last
+
+first:
+  rule script succeed
+  rule script php
+  rule command multiple
+
+  # uncomment python to see it fail.
+  #rule script python
+
+last:
+  rule script fail
+
+boom:
+  rule maintenance explode

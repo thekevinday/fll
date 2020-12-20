@@ -35,6 +35,7 @@ Rule Specification:
     "need": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
     "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
+    "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
     "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
     "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 

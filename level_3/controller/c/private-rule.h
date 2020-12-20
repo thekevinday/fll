@@ -157,17 +157,32 @@ extern "C" {
  *
  * @param output
  *   The error or warning output structure.
- * @param program_is
- *   If TRUE, then this represents a program.
- *   If FALSE, then this represents a script.
+ * @param script_is
+ *   If TRUE, then this represents a script.
+ *   If FALSE, then this represents a program.
  * @param name
  *   The name of the program or script.
  * @param code
  *   The code returned by the executed program or script.
  */
 #ifndef _di_controller_rule_error_print_execute_
-  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool program_is, const f_string_t name, const int code) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_execute_
+
+/**
+ * Print an error or warning message related to the failed execution of some program or script for when the program or script is not found.
+ *
+ * @param output
+ *   The error or warning output structure.
+ * @param script_is
+ *   If TRUE, then this represents a script.
+ *   If FALSE, then this represents a program.
+ * @param code
+ *   The code returned by the executed program or script.
+ */
+#ifndef _di_controller_rule_error_print_execute_not_found_
+  extern void controller_rule_error_print_execute_not_found(const fll_error_print_t output, const bool script_is, const f_string_t name) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_execute_not_found_
 
 /**
  * Print an error or warning message related to need/want/wish settings of some rule.
@@ -220,8 +235,10 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 /**
- * Perform an execution of the given rule for the script execution type.
+ * Perform an execution of the given rule in the foreground.
  *
+ * @param type
+ *   The item type code.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -231,12 +248,14 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
+ * @param program
+ *   The script program to use (such as "bash").
+ * @param arguments
+ *   The arguments to pass to the script.
  * @param options
  *   The controller execute options (and not fl_execute_parameter_t.option).
  *   This is for designating asynchronous and other controller specific execution options.
  *   @todo this is not yet implemented.
- * @param arguments
- *   The arguments to pass to the script.
  * @param parameter
  *   The execute parameter settings.
  * @param data
@@ -251,9 +270,9 @@ extern "C" {
  *
  * @see fll_execute_program()
  */
-#ifndef _di_controller_rule_execute_script_
-  extern f_return_status controller_rule_execute_script(const controller_rule_action_t action, const uint8_t options, const f_string_dynamics_t arguments, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_execute_script_
+#ifndef _di_controller_rule_execute_foreground_
+  extern f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_foreground_
 
 /**
  * Search the already loaded rules to see if one is found.

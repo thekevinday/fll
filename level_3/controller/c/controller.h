@@ -81,6 +81,8 @@ extern "C" {
   // This specifically must be at least 2 for this project.
   #define controller_default_allocation_step 4
 
+  #define controller_default_program_script "bash"
+
   #define controller_path_pid      "/var/run/controller/controller-"
   #define controller_path_settings "/etc/controller"
   #define controller_path_suffix   ".pid"

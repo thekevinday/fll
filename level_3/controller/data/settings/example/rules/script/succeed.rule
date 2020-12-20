@@ -1,0 +1,17 @@
+# fss-000d
+
+setting:
+  name "Scipt #1"
+  environment PATH
+  script sh
+
+script:
+  start {
+    echo
+    echo "Hello this is script #1 and should succeed."
+    echo
+
+    date
+    echo
+  }
+

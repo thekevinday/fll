@@ -16,6 +16,7 @@ Rule Documentation:
     "need": A single rule required to be executed (must exist and must succeed) before this rule starts.
     "parameter": A statically defined IKI name and its associated value for use in this rule file.
     "path": A single Content used to set a custom PATH environment variable value.
+    "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     "want": A single rule desired to be executed (may exist and must succeed) before this rule starts.
     "wish": A single rule desired to be executed (may exist and is not required to succeed) before this rule starts.
 
@@ -29,13 +30,13 @@ Rule Documentation:
   A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
   These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
 
-  The "command" outer most part provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
+  The "command" Rule Type provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
   A "command" always operates in the foreground.
 
-  The "service" outer most part provides a "command" accompanied with a PID file (Process Identifier file).
+  The "service" Rule Type provides a "command" accompanied with a PID file (Process Identifier file).
   Unlike the "command", a "service" always operates in the background.
 
-  The "script" outer most part provides a series of lines to be executed by a (Bash) script.
+  The "script" Rule Type provides a series of lines to be executed by a (Bash) script.
   This "script" operates in the foreground, but individual things done within the script may operate in foreground or background.
   The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
   Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.

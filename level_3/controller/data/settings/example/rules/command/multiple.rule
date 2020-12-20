@@ -1,0 +1,10 @@
+# fss-000d
+
+setting:
+  name "Multiple Commands: whoami and date"
+
+command:
+  start whoami
+
+command:
+  start date
