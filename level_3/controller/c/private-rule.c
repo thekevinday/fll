@@ -439,6 +439,7 @@ extern "C" {
 #ifndef _di_controller_rule_execute_
   f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) {
     f_status_t status = F_none;
+    f_status_t success = F_false;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -487,7 +488,13 @@ extern "C" {
           }
 
           status = controller_rule_execute_foreground(item->type, *action, 0, action->parameters, 0, &parameter, data);
-          if (F_status_is_error(status)) break;
+
+          if (F_status_is_error(status)) {
+            action->status = F_status_set_error(F_failure);
+            break;
+          }
+
+          success = F_true;
         }
         else if (item->type == controller_rule_item_type_script) {
           parameter.data = &action->parameters.array[0];
@@ -497,7 +504,13 @@ extern "C" {
           }
 
           status = controller_rule_execute_foreground(item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, data);
-          if (F_status_is_error(status)) break;
+
+          if (F_status_is_error(status)) {
+            action->status = F_status_set_error(F_failure);
+            break;
+          }
+
+          success = F_true;
         }
         else if (item->type == controller_rule_item_type_service) {
 
@@ -505,14 +518,30 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          // @todo
-          //status = controller_rule_execute_background(item->type, *action, 0, action->parameters, 0, &parameter, data);
-          //if (F_status_is_error(status)) break;
+          status = controller_rule_execute_pid_with(item->type, *action, 0, action->parameters, 0, &parameter, data);
+
+          if (F_status_is_error(status)) {
+            action->status = F_status_set_error(F_failure);
+            break;
+          }
+
+          success = F_true;
         }
         else {
-          status = F_none;
 
-          // unknown, just ignore for now. (@todo print a warning when in debug mode.)
+          if (data->warning.verbosity == f_console_verbosity_debug) {
+            fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data->warning.to.stream, "%s%sAction type is unknown, ignoring.%s%c", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s, data->warning.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data->warning, cache, F_true);
+          }
+
+          action->status = F_ignore;
+
+          if (success != F_true) {
+            success = F_ignore;
+          }
+
           continue;
         }
 
@@ -524,15 +553,71 @@ extern "C" {
 
     fl_string_maps_delete(&environment);
 
-    return status;
+    if (F_status_is_error(status) || success == F_false) {
+      rule->status = F_status_set_error(F_failure);
+    }
+    else if (success == F_ignore || success == F_busy) {
+      rule->status = success;
+    }
+    else {
+      rule->status = F_none;
+    }
+
+    return rule->status;
   }
 #endif // _di_controller_rule_execute_
+
+#ifndef _di_controller_rule_execute_pid_with_
+  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) {
+    int result = 0;
+
+    // @todo check to see if pid file exists.
+
+    // @todo this needs to support/use an option to designate that the process automatically forks in the background.
+    //       in which case fll_execute_program() is called.
+    //       otherwise this needs to call an asynchronous execute process.
+    //       until then, this controller_rule_execute_pid_with() function is not correct and only represents a process that forks to the background.
+    f_status_t status = fll_execute_program(program, arguments, parameter, 0, &result);
+
+    if (status == F_child) {
+      data->child = result;
+
+      return F_child;
+    }
+
+    if (result != 0) {
+      status = F_status_set_error(F_failure);
+    }
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_failure) {
+        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program, result);
+      }
+      else if (F_status_set_fine(status) == F_file_found_not) {
+        controller_rule_error_print_execute_not_found(data->error, F_false, program);
+      }
+      else {
+        fll_error_print(data->error, F_status_set_fine(status), "fll_execute_program_environment", F_true);
+      }
+
+      data->child = 0;
+
+      return status;
+    }
+
+    // @todo wait for pid file or timeout.
+
+    data->child = 0;
+
+    return status;
+  }
+#endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_foreground_
   f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) {
     int result = 0;
 
-    f_status_t status = fll_execute_program(program, arguments, parameter, &result);
+    f_status_t status = fll_execute_program(program, arguments, parameter, 0, &result);
 
     if (status == F_child) {
       data->child = result;

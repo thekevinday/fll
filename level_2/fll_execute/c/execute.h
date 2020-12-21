@@ -15,6 +15,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -381,6 +382,9 @@ extern "C" {
  * Otherwise, this returns F_child and assigns the child's return code to result for the child process.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when F_child is returned.
  *
+ * This returns F_capability, F_group, and F_user only for the child process and must be treated the same as F_child for the purposes of understanding what the current process is.
+ * These are essentialy F_child with explicit error codes that are returned instead of performing the desired execution.
+ *
  * @param program
  *   The name or path of the program.
  *   The string pointer may be set to 0, to designate that the first index in arguments is assumed to be the program.
@@ -404,15 +408,22 @@ extern "C" {
  *   data:
  *     A pointer to a string to pipe as standard input to the child process.
  *     The parent will block until the standard input is fully read or the child process exits.
+ * @param as
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread.
+ *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
+ *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
+ *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
+ *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
  *   F_pipe (with error bit) on pipe failure.
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
@@ -423,6 +434,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
+ * @see cap_set_proc()
  * @see close()
  * @see clearenv()
  * @see dup2()
@@ -430,8 +442,14 @@ extern "C" {
  * @see execvp()
  * @see exit()
  * @see fork()
+ * @see getpid()
  * @see memcpy()
+ * @see nice()
  * @see pipe()
+ * @see sched_setscheduler()
+ * @see setgid()
+ * @see setgroups()
+ * @see setuid()
  * @see strnlen()
  * @see waitpid()
  *
@@ -443,7 +461,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, int *result);
+  extern f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus

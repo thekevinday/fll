@@ -242,6 +242,12 @@ extern "C" {
         case F_bound_not:
           *string = FL_status_string_bound_not;
           break;
+        case F_capability:
+          *string = FL_status_string_capability;
+          break;
+        case F_capability_not:
+          *string = FL_status_string_capability_not;
+          break;
         case F_child:
           *string = FL_status_string_child;
           break;
@@ -259,6 +265,12 @@ extern "C" {
           break;
         case F_connected_not:
           *string = FL_status_string_connected_not;
+          break;
+        case F_container:
+          *string = FL_status_string_container;
+          break;
+        case F_container_not:
+          *string = FL_status_string_container_not;
           break;
         case F_critical:
           *string = FL_status_string_critical;
@@ -338,6 +350,18 @@ extern "C" {
         case F_found_not:
           *string = FL_status_string_found_not;
           break;
+        case F_group:
+          *string = FL_status_string_group;
+          break;
+        case F_group_not:
+          *string = FL_status_string_group_not;
+          break;
+        case F_ignore:
+          *string = FL_status_string_ignore;
+          break;
+        case F_ignore_not:
+          *string = FL_status_string_ignore_not;
+          break;
         case F_input:
           *string = FL_status_string_input;
           break;
@@ -406,6 +430,12 @@ extern "C" {
           break;
         case F_name_not:
           *string = FL_status_string_name_not;
+          break;
+        case F_nice:
+          *string = FL_status_string_nice;
+          break;
+        case F_nice_not:
+          *string = FL_status_string_nice_not;
           break;
         case F_optional:
           *string = FL_status_string_optional;
@@ -500,6 +530,12 @@ extern "C" {
         case F_search_not:
           *string = FL_status_string_search_not;
           break;
+        case F_schedule:
+          *string = FL_status_string_schedule;
+          break;
+        case F_schedule_not:
+          *string = FL_status_string_schedule_not;
+          break;
         case F_signal:
           *string = FL_status_string_signal;
           break;
@@ -548,6 +584,12 @@ extern "C" {
         case F_supported_not:
           *string = FL_status_string_supported_not;
           break;
+        case F_user:
+          *string = FL_status_string_user;
+          break;
+        case F_user_not:
+          *string = FL_status_string_user_not;
+          break;
         case F_utf:
           *string = FL_status_string_utf;
           break;
@@ -571,6 +613,12 @@ extern "C" {
           break;
         case F_warn_not:
           *string = FL_status_string_warn_not;
+          break;
+        case F_world:
+          *string = FL_status_string_world;
+          break;
+        case F_world_not:
+          *string = FL_status_string_world_not;
           break;
         case F_write:
           *string = FL_status_string_write;

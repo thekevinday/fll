@@ -666,7 +666,7 @@ extern "C" {
 
       fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_path, &data_build.environment, &signals, 0);
 
-      *status = fll_execute_program(path.string, arguments, &parameter, &return_code);
+      *status = fll_execute_program(path.string, arguments, &parameter, 0, &return_code);
 
       fl_string_dynamics_delete(&arguments);
 

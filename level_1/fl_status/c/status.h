@@ -172,12 +172,16 @@ extern "C" {
     #define FL_status_string_block_not        "F_block_not"
     #define FL_status_string_bound            "F_bound"
     #define FL_status_string_bound_not        "F_bound_not"
+    #define FL_status_string_capability       "F_capability"
+    #define FL_status_string_capability_not   "F_capability_not"
     #define FL_status_string_child            "F_child"
     #define FL_status_string_child_not        "F_child_not"
     #define FL_status_string_complete         "F_complete"
     #define FL_status_string_complete_not     "F_complete_not"
     #define FL_status_string_connected        "F_connected"
     #define FL_status_string_connected_not    "F_connected_not"
+    #define FL_status_string_container        "F_container"
+    #define FL_status_string_container_not    "F_container_not"
     #define FL_status_string_critical         "F_critical"
     #define FL_status_string_critical_not     "F_critical_not"
     #define FL_status_string_deadlock         "F_deadlock"
@@ -204,6 +208,10 @@ extern "C" {
     #define FL_status_string_fork_not         "F_fork_not"
     #define FL_status_string_found            "F_found"
     #define FL_status_string_found_not        "F_found_not"
+    #define FL_status_string_group            "F_group"
+    #define FL_status_string_group_not        "F_group_not"
+    #define FL_status_string_ignore           "F_ignore"
+    #define FL_status_string_ignore_not       "F_ignore_not"
     #define FL_status_string_input            "F_input"
     #define FL_status_string_input_not        "F_input_not"
     #define FL_status_string_input_output     "F_input_output"
@@ -227,6 +235,8 @@ extern "C" {
     #define FL_status_string_mount_not        "F_mount_not"
     #define FL_status_string_name             "F_name"
     #define FL_status_string_name_not         "F_name_not"
+    #define FL_status_string_nice             "F_nice"
+    #define FL_status_string_nice_not         "F_nice_not"
     #define FL_status_string_optional         "F_optional"
     #define FL_status_string_optional_not     "F_optional_not"
     #define FL_status_string_output           "F_output"
@@ -258,6 +268,8 @@ extern "C" {
     #define FL_status_string_resource_not     "F_resource_not"
     #define FL_status_string_search           "F_search"
     #define FL_status_string_search_not       "F_search_not"
+    #define FL_status_string_schedule         "F_schedule"
+    #define FL_status_string_schedule_not     "F_schedule_not"
     #define FL_status_string_signal           "F_signal"
     #define FL_status_string_signal_not       "F_signal_not"
     #define FL_status_string_space            "F_space"
@@ -272,6 +284,8 @@ extern "C" {
     #define FL_status_string_syntax_not       "F_syntax_not"
     #define FL_status_string_supported        "F_supported"
     #define FL_status_string_supported_not    "F_supported_not"
+    #define FL_status_string_user             "F_user"
+    #define FL_status_string_user_not         "F_user_not"
     #define FL_status_string_utf              "F_utf"
     #define FL_status_string_utf_not          "F_utf_not"
     #define FL_status_string_valid            "F_valid"
@@ -282,6 +296,8 @@ extern "C" {
     #define FL_status_string_wait_not         "F_wait_not"
     #define FL_status_string_warn             "F_warn"
     #define FL_status_string_warn_not         "F_warn_not"
+    #define FL_status_string_world            "F_world"
+    #define FL_status_string_world_not        "F_world_not"
     #define FL_status_string_write            "F_write"
     #define FL_status_string_write_not        "F_write_not"
     #define FL_status_string_write_only       "F_write_only"
@@ -295,12 +311,16 @@ extern "C" {
     #define FL_status_string_block_not_length        11
     #define FL_status_string_bound_length            7
     #define FL_status_string_bound_not_length        11
+    #define FL_status_string_capability_length       12
+    #define FL_status_string_capability_not_length   16
     #define FL_status_string_child_length            7
     #define FL_status_string_child_not_length        11
     #define FL_status_string_complete_length         10
     #define FL_status_string_complete_not_length     14
     #define FL_status_string_connected_length        11
     #define FL_status_string_connected_not_length    15
+    #define FL_status_string_container_length        11
+    #define FL_status_string_container_not_length    15
     #define FL_status_string_critical_length         10
     #define FL_status_string_critical_not_length     14
     #define FL_status_string_deadlock_length         10
@@ -327,6 +347,10 @@ extern "C" {
     #define FL_status_string_fork_not_length         10
     #define FL_status_string_found_length            7
     #define FL_status_string_found_not_length        11
+    #define FL_status_string_group_length            7
+    #define FL_status_string_group_not_length        11
+    #define FL_status_string_ignore_length           8
+    #define FL_status_string_ignore_not_length       12
     #define FL_status_string_input_length            7
     #define FL_status_string_input_not_length        11
     #define FL_status_string_input_output_length     14
@@ -350,6 +374,8 @@ extern "C" {
     #define FL_status_string_mount_not_length        11
     #define FL_status_string_name_length             6
     #define FL_status_string_name_not_length         10
+    #define FL_status_string_nice_length             6
+    #define FL_status_string_nice_not_length         10
     #define FL_status_string_optional_length         10
     #define FL_status_string_optional_not_length     14
     #define FL_status_string_output_length           8
@@ -381,6 +407,8 @@ extern "C" {
     #define FL_status_string_resource_not_length     14
     #define FL_status_string_search_length           8
     #define FL_status_string_search_not_length       12
+    #define FL_status_string_schedule_length         10
+    #define FL_status_string_schedule_not_length     14
     #define FL_status_string_signal_length           8
     #define FL_status_string_signal_not_length       12
     #define FL_status_string_space_length            7
@@ -395,6 +423,8 @@ extern "C" {
     #define FL_status_string_supported_not_length    15
     #define FL_status_string_syntax_length           8
     #define FL_status_string_syntax_not_length       12
+    #define FL_status_string_user_length             6
+    #define FL_status_string_user_not_length         10
     #define FL_status_string_utf_length              5
     #define FL_status_string_utf_not_length          9
     #define FL_status_string_valid_length            7
@@ -405,6 +435,8 @@ extern "C" {
     #define FL_status_string_wait_not_length         10
     #define FL_status_string_warn_length             6
     #define FL_status_string_warn_not_length         10
+    #define FL_status_string_world_length            7
+    #define FL_status_string_world_not_length        11
     #define FL_status_string_write_length            7
     #define FL_status_string_write_not_length        11
     #define FL_status_string_write_only_length       12

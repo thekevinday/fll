@@ -105,6 +105,44 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 /**
+ * Private function for perform the execute as operations.
+ *
+ * This should be executed in the child thread.
+ *
+ * @param as
+ *   The "as" operations to perform.
+ * @param parameter
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   This function only cares about "option" on this structure.
+ *   option:
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ * @param result
+ *   The code returned after finishing execution of program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_capability (with error bit) on failure to set capabilities.
+ *   F_group (with error bit) on failure to set GID.
+ *   F_nice (with error bit) on failure to set process niceness.
+ *   F_schedule (with error bit) on failure to set scheduler.
+ *   F_user (with error bit) on failure to set UID.
+ *
+ * @see cap_set_proc()
+ * @see exit()
+ * @see getpid()
+ * @see nice()
+ * @see sched_setscheduler()
+ * @see setgid()
+ * @see setgroups()
+ * @see setuid()
+ *
+ * @see fll_execute_program()
+ */
+#if !defined(_di_fll_execute_program_)
+  extern f_return_status private_fll_execute_as(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_program_)
+
+/**
  * Private function for performing the fork and execute operation.
  *
  * This implementation ignores parameter.data.
@@ -131,14 +169,21 @@ extern "C" {
  *   data:
  *     A pointer to a string to pipe as standard input to the child process.
  *     The parent will block until the standard input is fully read or the child process exits.
+ * @param as
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
+ *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_child on success but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
+ *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
+ *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  * @see clearenv()
  * @see execv()
@@ -151,7 +196,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -181,15 +226,22 @@ extern "C" {
  *   data:
  *     A pointer to a string to pipe as standard input to the child process.
  *     The parent will block until the standard input is fully read or the child process exits.
+ * @param as
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
  * @param result
  *   The code returned after finishing execution of program.
  *
  * @return
  *   F_none on success.
+ *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_child on success but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
+ *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
+ *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
  *   F_pipe (with error bit) on pipe failure.
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  * @see clearenv()
  * @see close()
@@ -205,7 +257,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**

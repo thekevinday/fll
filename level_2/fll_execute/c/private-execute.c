@@ -117,7 +117,94 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 #if !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) {
+  f_return_status private_fll_execute_as(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) {
+
+    if (as.nice) {
+      errno = 0;
+
+      if (nice(*as.nice) == -1 && errno == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_nice);
+      }
+    }
+
+    if (as.scheduler) {
+      const int process_id = getpid();
+
+      errno = 0;
+
+      if (sched_setscheduler(process_id, as.scheduler->policy, as.scheduler->parameter) == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_schedule);
+      }
+    }
+
+    /* @todo library dependencies, if this is not in libc, then this may not be supported. more investigation is needed.
+    if (as.capability) {
+      if (cap_set_proc(*as.capability) == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_capability);
+      }
+    }
+    */
+
+    if (as.ids_group) {
+      if (setgroups(as.ids_group->size, as.ids_group->groups) == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_group);
+      }
+    }
+
+    if (as.id_group) {
+      if (setgid(*as.id_group) == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_group);
+      }
+    }
+
+    if (as.id_user) {
+      if (setuid(*as.id_user) == -1) {
+        *result = -1;
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(*result);
+        }
+
+        return F_status_set_error(F_user);
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fll_execute_program_)
+
+#if !defined(_di_fll_execute_program_)
+  f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
 
     const pid_t process_id = fork();
 
@@ -155,6 +242,14 @@ extern "C" {
       } // for
     }
 
+    if (as) {
+      const f_status_t status = private_fll_execute_as(*as, parameter, result);
+
+      if (F_status_is_error(status)) {
+        return status;
+      }
+    }
+
     const int code = parameter && (parameter->option & fl_execute_parameter_option_path) ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
     if (result) {
@@ -170,7 +265,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, int *result) {
+  f_return_status private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -234,6 +329,14 @@ extern "C" {
     }
 
     dup2(descriptors[0], f_type_descriptor_input);
+
+    if (as) {
+      const f_status_t status = private_fll_execute_as(*as, parameter, result);
+
+      if (F_status_is_error(status)) {
+        return status;
+      }
+    }
 
     const int code = parameter && parameter->option & fl_execute_parameter_option_path ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 

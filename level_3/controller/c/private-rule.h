@@ -235,6 +235,50 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 /**
+ * Perform an execution of the given rule in the foreground or background and creating a PID file.
+ *
+ * When this is synchronous, this will wait for the PID file to be generated before continuing.
+ * When this is asynchronous, this will continue on adding the rule id and action to the asynchronous list.
+ *
+ * @param type
+ *   The item type code.
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
+ * @param program
+ *   The program to use (such as "bash").
+ * @param arguments
+ *   The arguments to pass to the program.
+ * @param options
+ *   The controller execute options (and not fl_execute_parameter_t.option).
+ *   This is for designating asynchronous and other controller specific execution options.
+ *   @todo this is not yet implemented.
+ * @param parameter
+ *   The execute parameter settings.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_busy on successful execute in asynchronous mode (executed process may or may not fail later on).
+ *   F_child on child process exiting.
+ *   F_signal on (exit) signal received.
+ *
+ *   Errors (with error bit) from: fll_execute_program().
+ *
+ * @see fll_execute_program()
+ */
+#ifndef _di_controller_rule_execute_pid_with_
+  extern f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_pid_with_
+
+/**
  * Perform an execution of the given rule in the foreground.
  *
  * @param type
@@ -249,9 +293,9 @@ extern "C" {
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
  * @param program
- *   The script program to use (such as "bash").
+ *   The program to use (such as "bash").
  * @param arguments
- *   The arguments to pass to the script.
+ *   The arguments to pass to the program.
  * @param options
  *   The controller execute options (and not fl_execute_parameter_t.option).
  *   This is for designating asynchronous and other controller specific execution options.

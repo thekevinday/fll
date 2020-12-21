@@ -168,7 +168,7 @@ extern "C" {
 #endif // _di_fll_execute_into_
 
 #ifndef _di_fll_execute_program_
-  f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, int *result) {
+  f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!program && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
@@ -274,17 +274,17 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       if (parameter && parameter->data) {
-        return private_fll_execute_fork_data(program_path, fixed_arguments, parameter, result);
+        return private_fll_execute_fork_data(program_path, fixed_arguments, parameter, as, result);
       }
 
-      return private_fll_execute_fork(program_path, fixed_arguments, parameter, result);
+      return private_fll_execute_fork(program_path, fixed_arguments, parameter, as, result);
     }
 
     if (parameter && parameter->data) {
-      return private_fll_execute_fork_data(program, fixed_arguments, parameter, result);
+      return private_fll_execute_fork_data(program, fixed_arguments, parameter, as, result);
     }
 
-    return private_fll_execute_fork(program, fixed_arguments, parameter, result);
+    return private_fll_execute_fork(program, fixed_arguments, parameter, as, result);
   }
 #endif // _di_fll_execute_program_
 

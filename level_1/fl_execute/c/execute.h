@@ -6,11 +6,18 @@
  * Licenses: lgplv2.1
  *
  * Provides execute processing functionality.
+ *
+ * This utilizes setgroups() to set multiple supplementary groups.
+ * It appears that POSIX failed to provide this (despite providing getgroups()).
+ * There may be compatibility issues as a result of supporting setgroups().
  */
 #ifndef _FL_execute_h
 #define _FL_execute_h
 
 // libc includes
+#include <grp.h>
+#include <sched.h>
+//#include <sys/capability.h> // @todo
 
 // fll-0 includes
 #include <level_0/type.h>

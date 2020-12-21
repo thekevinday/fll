@@ -3818,7 +3818,7 @@ extern "C" {
 
     fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(as_shell ? 0 : fl_execute_parameter_option_path, &data_make->environment, &signals, 0);
 
-    status = fll_execute_program(program.string, arguments, &parameter, &return_code);
+    status = fll_execute_program(program.string, arguments, &parameter, 0, &return_code);
 
     if (status == F_status_set_error(F_signal)) {
       return status;
