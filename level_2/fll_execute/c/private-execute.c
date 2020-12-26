@@ -149,9 +149,10 @@ extern "C" {
       }
     }
 
-    /* @todo library dependencies, if this is not in libc, then this may not be supported. more investigation is needed.
     if (as.capability) {
-      if (cap_set_proc(*as.capability) == -1) {
+      const f_status_t status = f_capability_process_set(as.capability);
+
+      if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
         *result = -1;
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
@@ -161,10 +162,9 @@ extern "C" {
         return F_status_set_error(F_capability);
       }
     }
-    */
 
-    if (as.ids_group) {
-      if (setgroups(as.ids_group->size, as.ids_group->groups) == -1) {
+    if (as.id_groups) {
+      if (setgroups(as.id_groups->used, as.id_groups->array) == -1) {
         *result = -1;
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {

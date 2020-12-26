@@ -18,7 +18,7 @@ modes_default level
 build_compiler gcc
 build_indexer ar
 build_language c
-build_libraries -lc
+build_libraries -lc -lcap
 build_libraries-level -lfll_1 -lfll_0
 build_sources_library environment.c error.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status.c iki.c private-iki.c path.c program.c status.c
 build_sources_program
@@ -42,6 +42,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
+#defines_all -D_di_libcap_
 defines_all
 defines_static
 defines_shared

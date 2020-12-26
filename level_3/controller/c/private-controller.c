@@ -218,6 +218,90 @@ extern "C" {
   }
 #endif // _di_controller_file_pid_delete_
 
+#ifndef _di_controller_get_id_user_
+  f_return_status controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
+    f_number_unsigned_t number = 0;
+
+    // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_number) {
+        cache->buffer_other.used = 0;
+
+        status = fl_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
+
+        if (F_status_is_error(status)) {
+          return F_status_set_error(status);
+        }
+
+        status = f_account_id_user_by_name(cache->buffer_other.string, id);
+
+        if (F_status_is_error(status)) {
+          return F_status_set_error(status);
+        }
+        else if (status == F_exist_not) {
+          return F_status_set_error(F_exist_not);
+        }
+
+        return F_none;
+      }
+
+      return F_status_set_error(status);
+    }
+    else if (number > f_type_size_32_unsigned) {
+      return F_status_set_error(F_number_too_large);
+    }
+
+    *id = (uid_t) number;
+    return status;
+  }
+#endif // _di_controller_get_id_user_
+
+#ifndef _di_controller_get_id_group_
+  f_return_status controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) {
+    f_number_unsigned_t number = 0;
+
+    // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_number) {
+        cache->buffer_other.used = 0;
+
+        status = fl_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
+
+        if (F_status_is_error(status)) {
+          return F_status_set_error(status);
+        }
+
+        status = f_account_id_group_by_name(cache->buffer_other.string, id);
+
+        if (F_status_is_error(status)) {
+          return F_status_set_error(status);
+        }
+        else if (status == F_exist_not) {
+          return F_status_set_error(F_exist_not);
+        }
+
+        return F_none;
+      }
+
+      return F_status_set_error(status);
+    }
+    else if (number > f_type_size_32_unsigned) {
+      return F_status_set_error(F_number_too_large);
+    }
+
+    *id = (gid_t) number;
+    return status;
+  }
+#endif // _di_controller_get_id_group_
+
 #ifndef _di_controller_perform_ready_
   f_return_status controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
     f_status_t status = F_none;

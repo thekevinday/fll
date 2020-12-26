@@ -458,6 +458,35 @@ extern "C" {
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
     fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment, &signals, 0);
+    fl_execute_as_t as = fl_execute_as_t_initialize;
+
+    if (rule->has & controller_rule_has_nice) {
+      as.nice = &rule->nice;
+    }
+
+    if (rule->has & controller_rule_has_user) {
+      as.id_user = &rule->user;
+    }
+
+    if (rule->has & controller_rule_has_group) {
+      as.id_group = &rule->group;
+
+      if (rule->groups.used) {
+        as.id_groups = &rule->groups;
+      }
+    }
+
+    if (rule->capability) {
+      as.capability = rule->capability;
+    }
+
+    if (rule->scheduler.used) {
+      // @todo: as.scheduler =
+    }
+
+    if (rule->control.used) {
+      // @todo: as.controls =
+    }
 
     status = fll_environment_load_names(rule->environment, &environment);
 
@@ -487,7 +516,11 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, 0, action->parameters, 0, &parameter, data);
+          status = controller_rule_execute_foreground(item->type, *action, 0, action->parameters, 0, &parameter, &as, data);
+
+          if (status == F_child) {
+            break;
+          }
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
@@ -503,7 +536,11 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, data);
+          status = controller_rule_execute_foreground(item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, &as, data);
+
+          if (status == F_child) {
+            break;
+          }
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
@@ -518,7 +555,7 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(item->type, *action, 0, action->parameters, 0, &parameter, data);
+          status = controller_rule_execute_pid_with(item->type, *action, 0, action->parameters, 0, &parameter, &as, data);
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
@@ -553,6 +590,10 @@ extern "C" {
 
     fl_string_maps_delete(&environment);
 
+    if (status == F_child) {
+      return status;
+    }
+
     if (F_status_is_error(status) || success == F_false) {
       rule->status = F_status_set_error(F_failure);
     }
@@ -568,7 +609,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) {
+  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
     int result = 0;
 
     // @todo check to see if pid file exists.
@@ -577,7 +618,18 @@ extern "C" {
     //       in which case fll_execute_program() is called.
     //       otherwise this needs to call an asynchronous execute process.
     //       until then, this controller_rule_execute_pid_with() function is not correct and only represents a process that forks to the background.
-    f_status_t status = fll_execute_program(program, arguments, parameter, 0, &result);
+    f_status_t status = fll_execute_program(program, arguments, parameter, as, &result);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_schedule || status == F_user) {
+        status = F_child;
+      }
+      else {
+        status = F_status_set_error(status);
+      }
+    }
 
     if (status == F_child) {
       data->child = result;
@@ -591,7 +643,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_failure) {
-        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program, result);
+        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result);
       }
       else if (F_status_set_fine(status) == F_file_found_not) {
         controller_rule_error_print_execute_not_found(data->error, F_false, program);
@@ -614,10 +666,21 @@ extern "C" {
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) {
+  f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
     int result = 0;
 
-    f_status_t status = fll_execute_program(program, arguments, parameter, 0, &result);
+    f_status_t status = fll_execute_program(program, arguments, parameter, as, &result);
+
+    if (F_status_is_error(status)) {
+      status = F_status_set_fine(status);
+
+      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_schedule || status == F_user) {
+        status = F_child;
+      }
+      else {
+        status = F_status_set_error(status);
+      }
+    }
 
     if (status == F_child) {
       data->child = result;
@@ -631,7 +694,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_failure) {
-        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program, result);
+        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result);
       }
       else if (F_status_set_fine(status) == F_file_found_not) {
         controller_rule_error_print_execute_not_found(data->error, F_false, program);
@@ -1078,7 +1141,7 @@ extern "C" {
     controller_rule_t *rule = &setting->rules.array[index];
 
     if ((options & controller_rule_option_simulate) && data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_simulate(*data, *cache, index, controller_rule_action_type_start, options, setting);
+      controller_rule_simulate(*data, index, controller_rule_action_type_start, options, cache, setting);
     }
 
     {
@@ -1285,19 +1348,41 @@ extern "C" {
     bool for_item = F_true;
 
     rule->status = F_known_not;
+    rule->process = 0;
+
+    // @todo: timeouts may be passed from entry, consider to or not to initialize in a more consistent manner.
+    //rule->timeout_kill = 2;
+    //rule->timeout_start = 2;
+    //rule->timeout_stop = 2;
+
+    rule->has = 0;
+    rule->group = 0;
+    rule->user = 0;
+    rule->nice = 0;
 
     f_macro_time_spec_t_clear(rule->timestamp);
 
     rule->id.used = 0;
     rule->name.used = 0;
+    rule->control.used = 0;
+    rule->path.used = 0;
+    rule->scheduler.used = 0;
+    rule->script.used = 0;
 
     rule->define.used = 0;
     rule->parameter.used = 0;
 
+    if (rule->capability) {
+      f_capability_delete(&rule->capability);
+    }
+
+    rule->capability = 0;
     rule->environment.used = 0;
     rule->need.used = 0;
     rule->want.used = 0;
     rule->wish.used = 0;
+
+    rule->groups.used = 0;
 
     rule->items.used = 0;
 
@@ -1465,7 +1550,7 @@ extern "C" {
           else {
             for_item = F_false;
 
-            status = controller_rule_setting_read(data, cache, rule);
+            status = controller_rule_setting_read(data, setting, cache, rule);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
@@ -1490,7 +1575,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) {
+  f_return_status controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
@@ -1545,8 +1630,11 @@ extern "C" {
         continue;
       }
 
-      if (fl_string_dynamic_compare_string(controller_string_control_group, cache->name_item, controller_string_control_group_length) == F_equal_to) {
-        type = controller_rule_setting_type_control_group;
+      if (fl_string_dynamic_compare_string(controller_string_capability, cache->name_item, controller_string_capability_length) == F_equal_to) {
+        type = controller_rule_setting_type_capability;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_control, cache->name_item, controller_string_control_length) == F_equal_to) {
+        type = controller_rule_setting_type_control;
       }
       else if (fl_string_dynamic_compare_string(controller_string_define, cache->name_item, controller_string_define_length) == F_equal_to) {
         type = controller_rule_setting_type_define;
@@ -1554,11 +1642,17 @@ extern "C" {
       else if (fl_string_dynamic_compare_string(controller_string_environment, cache->name_item, controller_string_environment_length) == F_equal_to) {
         type = controller_rule_setting_type_environment;
       }
+      else if (fl_string_dynamic_compare_string(controller_string_group, cache->name_item, controller_string_group_length) == F_equal_to) {
+        type = controller_rule_setting_type_group;
+      }
       else if (fl_string_dynamic_compare_string(controller_string_name, cache->name_item, controller_string_name_length) == F_equal_to) {
         type = controller_rule_setting_type_name;
       }
       else if (fl_string_dynamic_compare_string(controller_string_need, cache->name_item, controller_string_need_length) == F_equal_to) {
         type = controller_rule_setting_type_need;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_nice, cache->name_item, controller_string_nice_length) == F_equal_to) {
+        type = controller_rule_setting_type_nice;
       }
       else if (fl_string_dynamic_compare_string(controller_string_parameter, cache->name_item, controller_string_parameter_length) == F_equal_to) {
         type = controller_rule_setting_type_parameter;
@@ -1566,8 +1660,14 @@ extern "C" {
       else if (fl_string_dynamic_compare_string(controller_string_path, cache->name_item, controller_string_path_length) == F_equal_to) {
         type = controller_rule_setting_type_path;
       }
+      else if (fl_string_dynamic_compare_string(controller_string_scheduler, cache->name_item, controller_string_scheduler_length) == F_equal_to) {
+        type = controller_rule_setting_type_scheduler;
+      }
       else if (fl_string_dynamic_compare_string(controller_string_script, cache->name_item, controller_string_script_length) == F_equal_to) {
         type = controller_rule_setting_type_script;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_user, cache->name_item, controller_string_user_length) == F_equal_to) {
+        type = controller_rule_setting_type_user;
       }
       else if (fl_string_dynamic_compare_string(controller_string_want, cache->name_item, controller_string_want_length) == F_equal_to) {
         type = controller_rule_setting_type_want;
@@ -1637,10 +1737,13 @@ extern "C" {
       if (type == controller_rule_setting_type_define || type == controller_rule_setting_type_parameter) {
 
         if (cache->content_actions.array[i].used != 2) {
-          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
 
-          controller_rule_error_print(data.error, *cache, F_false);
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
 
           if (F_status_is_error_not(status_return)) {
             status_return = F_status_set_error(F_valid_not);
@@ -1723,9 +1826,9 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_control_group || type == controller_rule_setting_type_name || type == controller_rule_setting_type_path || type == controller_rule_setting_type_script) {
-        if (type == controller_rule_setting_type_control_group) {
-          setting_value = &rule->control_group;
+      if (type == controller_rule_setting_type_control || type == controller_rule_setting_type_name || type == controller_rule_setting_type_path || type == controller_rule_setting_type_scheduler || type == controller_rule_setting_type_script) {
+        if (type == controller_rule_setting_type_control) {
+          setting_value = &rule->control;
         }
         else if (type == controller_rule_setting_type_name) {
           setting_value = &rule->name;
@@ -1733,15 +1836,21 @@ extern "C" {
         else if (type == controller_rule_setting_type_path) {
           setting_value = &rule->path;
         }
+        else if (type == controller_rule_setting_type_scheduler) {
+          setting_value = &rule->scheduler;
+        }
         else if (type == controller_rule_setting_type_script) {
           setting_value = &rule->script;
         }
 
         if (setting_value->used || cache->content_actions.array[i].used != 1) {
-          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
 
-          controller_rule_error_print(data.error, *cache, F_false);
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
 
           if (F_status_is_error_not(status_return)) {
             status_return = F_status_set_error(F_valid_not);
@@ -1750,9 +1859,7 @@ extern "C" {
           continue;
         }
 
-        setting_value->used = 0;
-
-        if (type == controller_rule_setting_type_control_group || type == controller_rule_setting_type_name || type == controller_rule_setting_type_script) {
+        if (type == controller_rule_setting_type_control || type == controller_rule_setting_type_name || type == controller_rule_setting_type_script) {
 
           status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
@@ -1771,37 +1878,47 @@ extern "C" {
             continue;
           }
 
-          status = controller_validate_has_graph(*setting_value);
+          if (type == controller_rule_setting_type_control) {
+            // @todo validate that this is a valid path.
+            // @todo append setting.path_control, then path_separator, and then this string.
+            // @todo the control path doesn't have to exist just yet, but print a warning if it doesn't and debug is visible.
+          }
+          else if (type == controller_rule_setting_type_name || type == controller_rule_setting_type_script) {
+            status = controller_validate_has_graph(*setting_value);
 
-          if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
-            if (status == F_false) {
-              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-              fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-              f_print_dynamic(data.error.to.stream, *setting_value);
-              fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-              fprintf(data.error.to.stream, "%s', there must be at least 1 graph character.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+            if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
+              if (status == F_false) {
+
+                if (data.error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                  f_print_dynamic(data.error.to.stream, *setting_value);
+                  fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s', there must be at least 1 graph character.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+
+                  controller_rule_error_print(data.error, *cache, F_false);
+                }
+
+                if (F_status_is_error_not(status_return)) {
+                  status_return = F_status_set_error(F_valid_not);
+                }
+              }
+              else {
+
+                // this function should only return F_complete_not_utf on error.
+                fll_error_print(data.error, F_complete_not_utf, "controller_validate_has_graph", F_true);
+
+                if (F_status_is_error_not(status_return)) {
+                  status_return = status;
+                }
+              }
+
+              setting_value->used = 0;
 
               controller_rule_error_print(data.error, *cache, F_false);
-
-              if (F_status_is_error_not(status_return)) {
-                status_return = F_status_set_error(F_valid_not);
-              }
+              continue;
             }
-            else {
-
-              // this function should only return F_complete_not_utf on error.
-              fll_error_print(data.error, F_complete_not_utf, "controller_validate_has_graph", F_true);
-
-              if (F_status_is_error_not(status_return)) {
-                status_return = status;
-              }
-            }
-
-            setting_value->used = 0;
-
-            controller_rule_error_print(data.error, *cache, F_false);
-            continue;
           }
         }
         else if (type == controller_rule_setting_type_path) {
@@ -1833,6 +1950,281 @@ extern "C" {
             continue;
           }
         }
+        else if (type == controller_rule_setting_type_scheduler) {
+          // @todo
+        }
+
+        continue;
+      }
+
+      if (type == controller_rule_setting_type_capability || type == controller_rule_setting_type_nice || type == controller_rule_setting_type_user) {
+
+        if (cache->content_actions.array[i].used != 1 || type == controller_rule_setting_type_capability && rule->capability || type == controller_rule_setting_type_group && (rule->has & controller_rule_has_group) || type == controller_rule_setting_type_nice && (rule->has & controller_rule_has_nice) || type == controller_rule_setting_type_user && (rule->has & controller_rule_has_user)) {
+
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = F_status_set_error(F_valid_not);
+          }
+
+          continue;
+        }
+
+        if (type == controller_rule_setting_type_capability) {
+          cache->buffer_other.used = 0;
+
+          status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->buffer_other);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              return status;
+            }
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(F_valid_not);
+            }
+          }
+
+          status = fl_string_dynamic_terminate_after(&cache->buffer_other);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              return status;
+            }
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(F_valid_not);
+            }
+          }
+
+          status = f_capability_from_text(cache->buffer_other.string, &rule->capability);
+
+          if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
+
+            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              fll_error_print(data.error, F_status_set_fine(status), "f_capability_from_text", F_true);
+              controller_rule_error_print(data.error, *cache, F_false);
+
+              return status;
+            }
+
+            if (data.error.verbosity != f_console_verbosity_quiet) {
+              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(data.error.to.stream, "%s%sRule setting failed to process the capabilities.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+              controller_rule_error_print(data.error, *cache, F_false);
+            }
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(F_valid_not);
+            }
+
+            continue;
+          }
+        }
+        else if (type == controller_rule_setting_type_nice) {
+          f_number_signed_t number = 0;
+
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[0]);
+
+          if (F_status_is_error(status) || number < -20 || number > 19) {
+            status = F_status_set_fine(status);
+
+            if (number < -20 || number > 19 || status == F_data_not || status == F_number || status == F_number_overflow) {
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s', only the whole numbers inclusively between ", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s-20%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s and ", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s19%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s are allowed.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+
+                controller_rule_error_print(data.error, *cache, F_false);
+              }
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = F_status_set_error(F_valid_not);
+              }
+            }
+            else {
+              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              status = F_status_set_error(status);
+            }
+          }
+          else {
+            rule->nice = number;
+            rule->has |= controller_rule_has_nice;
+          }
+        }
+        else if (type == controller_rule_setting_type_user) {
+          uid_t number = 0;
+
+          status = controller_get_id_user(cache->buffer_item, cache->content_actions.array[i].array[0], cache, &number);
+
+          if (F_status_is_error(status)) {
+            status = F_status_set_fine(status);
+
+            if (status == F_exist_not) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because no user was found by that name.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else if (status == F_number_too_large) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because the given ID is too large.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else if (status == F_number) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else {
+              fll_error_print(data.error, status, "f_account_id_user_by_name", F_true);
+            }
+
+            controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(status);
+            }
+          }
+          else {
+            rule->user = number;
+            rule->has |= controller_rule_has_user;
+          }
+        }
+
+        continue;
+      }
+
+      if (type == controller_rule_setting_type_group) {
+        if (!cache->content_actions.array[i].used) {
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting requires one or more Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = F_status_set_error(F_valid_not);
+          }
+
+          continue;
+        }
+
+        gid_t number = 0;
+
+        rule->groups.used = 0;
+
+        for (j = 0; j < cache->content_actions.array[i].used; ++j) {
+
+          status = fl_type_int32s_increase(&rule->groups);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data.error, F_status_set_fine(status), "fl_type_int32s_increase", F_true);
+
+            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              return status;
+            }
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = status;
+            }
+
+            controller_rule_error_print(data.error, *cache, F_false);
+            continue;
+          }
+
+          status = controller_get_id_group(cache->buffer_item, cache->content_actions.array[i].array[j], cache, &number);
+
+          if (F_status_is_error(status)) {
+            status = F_status_set_fine(status);
+
+            if (status == F_exist_not) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because no group was found by that name.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else if (status == F_number_too_large) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because the given ID is too large.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else if (status == F_number) {
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              }
+            }
+            else {
+              fll_error_print(data.error, status, "f_account_id_group_by_name", F_true);
+            }
+
+            controller_rule_error_print(data.error, *cache, F_false);
+
+            if (F_status_is_error_not(status_return)) {
+              status_return = F_status_set_error(status);
+            }
+          }
+          else {
+            if (rule->has & controller_rule_has_group) {
+              rule->groups.array[rule->groups.used++] = number;
+            }
+            else {
+              rule->group = number;
+              rule->has |= controller_rule_has_group;
+            }
+          }
+        } // for
 
         continue;
       }
@@ -1893,12 +2285,15 @@ extern "C" {
 
           if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
             if (status == F_false) {
-              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sRule setting has an invalid environment variable name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used].string, data.error.notable.after->string);
-              fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
-              controller_rule_error_print(data.error, *cache, F_false);
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid environment variable name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used].string, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+
+                controller_rule_error_print(data.error, *cache, F_false);
+              }
 
               if (F_status_is_error_not(status_return)) {
                 status_return = F_status_set_error(F_valid_not);
@@ -2035,7 +2430,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_read_
 
 #ifndef _di_controller_rule_simulate_
-  void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_setting_t *setting) {
+  void controller_rule_simulate(const controller_data_t data, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_cache_t *cache, controller_setting_t *setting) {
 
     switch (action) {
       case controller_rule_action_type_kill:
@@ -2053,7 +2448,7 @@ extern "C" {
           fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_rule_action_type_name(action).string, data.error.notable.after->string);
           fprintf(data.error.to.stream, "%s' while attempting to simulate rule execution.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
-          controller_rule_error_print(data.error, cache, F_true);
+          controller_rule_error_print(data.error, *cache, F_true);
         }
 
         return;
@@ -2098,7 +2493,41 @@ extern "C" {
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_name, data.context.set.important.after->string, rule->name.used ? rule->name.string : f_string_empty_s, f_string_eol_s[0]);
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_how, data.context.set.important.after->string, options & controller_rule_option_asynchronous ? controller_string_asynchronous : controller_string_synchronous, f_string_eol_s[0]);
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_wait, data.context.set.important.after->string, options & controller_rule_option_wait ? controller_string_yes : controller_string_no, f_string_eol_s[0]);
-    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_control_group, data.context.set.important.after->string, rule->control_group.used ? rule->control_group.string : f_string_empty_s, f_string_eol_s[0]);
+
+    if (f_capability_supported()) {
+      fprintf(data.output.stream, "  %s%s%s ", data.context.set.important.before->string, controller_string_capability, data.context.set.important.after->string);
+
+      if (rule->capability) {
+        cache->buffer_other.used = 0;
+
+        if (F_status_is_error_not(f_capability_to_text(rule->capability, &cache->buffer_other))) {
+          fprintf(data.output.stream, "%s", cache->buffer_other.string);
+        }
+      }
+
+      fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+    }
+    else {
+      fprintf(data.output.stream, "  %s%s%s ", data.context.set.important.before->string, controller_string_capability, data.context.set.important.after->string, f_string_eol_s[0]);
+      fprintf(data.output.stream, "%s(unsupported)%s%c", data.context.set.warning.before->string, data.context.set.warning.after->string, f_string_eol_s[0]);
+    }
+
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_control, data.context.set.important.after->string, rule->control.used ? rule->control.string : f_string_empty_s, f_string_eol_s[0]);
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_path, data.context.set.important.after->string, rule->path.used ? rule->path.string : f_string_empty_s, f_string_eol_s[0]);
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_scheduler, data.context.set.important.after->string, rule->scheduler.used ? rule->scheduler.string : f_string_empty_s, f_string_eol_s[0]);
+    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_script, data.context.set.important.after->string, rule->script.used ? rule->script.string : f_string_empty_s, f_string_eol_s[0]);
+
+    fprintf(data.output.stream, "  %s%s%s", data.context.set.important.before->string, controller_string_nice, data.context.set.important.after->string);
+    if (rule->has & controller_rule_has_nice) {
+      fprintf(data.output.stream, " %i", rule->nice);
+    }
+    fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+
+    fprintf(data.output.stream, "  %s%s%s", data.context.set.important.before->string, controller_string_user, data.context.set.important.after->string);
+    if (rule->has & controller_rule_has_user) {
+      fprintf(data.output.stream, " %i", rule->user);
+    }
+    fprintf(data.output.stream, "%c", f_string_eol_s[0]);
 
     fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_define, data.context.set.important.after->string, f_string_eol_s[0]);
 
@@ -2107,19 +2536,6 @@ extern "C" {
 
         if (rule->define.array[i].name.used && rule->define.array[i].value.used) {
           fprintf(data.output.stream, "    %s %s=%s %s%c", rule->define.array[i].name.string, data.context.set.important.before->string, data.context.set.important.after->string, rule->define.array[i].value.string, f_string_eol_s[0]);
-        }
-      } // for
-    }
-
-    fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
-
-    fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_parameter, data.context.set.important.after->string, f_string_eol_s[0]);
-
-    if (rule->parameter.used) {
-      for (i = 0; i < rule->parameter.used; ++i) {
-
-        if (rule->parameter.array[i].name.used && rule->parameter.array[i].value.used) {
-          fprintf(data.output.stream, "    %s %s=%s %s%c", rule->parameter.array[i].name.string, data.context.set.important.before->string, data.context.set.important.after->string, rule->parameter.array[i].value.string, f_string_eol_s[0]);
         }
       } // for
     }
@@ -2139,6 +2555,18 @@ extern "C" {
 
     fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
 
+    fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_group, data.context.set.important.after->string, f_string_eol_s[0]);
+
+    if (rule->has & controller_rule_has_group) {
+      fprintf(data.output.stream, "    %i%c", rule->group, f_string_eol_s[0]);
+
+      for (i = 0; i < rule->groups.used; ++i) {
+        fprintf(data.output.stream, "    %i%c", rule->groups.array[i], f_string_eol_s[0]);
+      } // for
+    }
+
+    fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
+
     fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_need, data.context.set.important.after->string, f_string_eol_s[0]);
 
     if (rule->need.used) {
@@ -2146,6 +2574,19 @@ extern "C" {
 
         if (rule->need.array[i].used) {
           fprintf(data.output.stream, "    %s%c", rule->need.array[i].string, f_string_eol_s[0]);
+        }
+      } // for
+    }
+
+    fprintf(data.output.stream, "  }%c", f_string_eol_s[0]);
+
+    fprintf(data.output.stream, "  %s%s%s {%c", data.context.set.important.before->string, controller_string_parameter, data.context.set.important.after->string, f_string_eol_s[0]);
+
+    if (rule->parameter.used) {
+      for (i = 0; i < rule->parameter.used; ++i) {
+
+        if (rule->parameter.array[i].name.used && rule->parameter.array[i].value.used) {
+          fprintf(data.output.stream, "    %s %s=%s %s%c", rule->parameter.array[i].name.string, data.context.set.important.before->string, data.context.set.important.after->string, rule->parameter.array[i].value.string, f_string_eol_s[0]);
         }
       } // for
     }

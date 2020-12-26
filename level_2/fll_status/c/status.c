@@ -1219,6 +1219,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_number_too_large, length, FL_status_string_number_too_large_length) == F_equal_to) {
+        *code = F_number_too_large;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_number_too_small, length, FL_status_string_number_too_small_length) == F_equal_to) {
+        *code = F_number_too_small;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_number_underflow, length, FL_status_string_number_underflow_length) == F_equal_to) {
         *code = F_number_underflow;
         return F_none;

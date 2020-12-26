@@ -613,7 +613,11 @@ extern "C" {
       }
 
       if (string[i] == 0x30) {
-        j = i + 1;
+
+        // skip past all NULLs.
+        for (j = i + 1; j <= range.stop; ++j) {
+          if (string[j]) break;
+        } // for
 
         // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
         if (j > range.stop) {
@@ -765,7 +769,11 @@ extern "C" {
       }
 
       if (string[i] == 0x30) {
-        j = i + 1;
+
+        // skip past all NULLs.
+        for (j = i + 1; j <= range.stop; ++j) {
+          if (string[j]) break;
+        } // for
 
         // Immediate next value must be either a number, 'x', 'X', 'd', 'D', 'o', 'O', 'b', or 'B'.
         if (j > range.stop) {

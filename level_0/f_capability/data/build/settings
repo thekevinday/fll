@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fl_execute
+project_name f_capability
 
 version_major 0
 version_minor 5
@@ -19,10 +19,10 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc -lcap
-build_libraries-individual -lf_capability -lf_memory -lf_signal
-build_sources_library
+build_libraries-individual -lf_memory
+build_sources_library capability.c
 build_sources_program
-build_sources_headers execute.h execute-common.h
+build_sources_headers capability.h capability-common.h
 build_sources_script
 build_sources_setting
 build_script yes
@@ -44,7 +44,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_en_libcap_
+#defines_all -D_di_libcap_
 defines_all
 defines_static
 defines_shared

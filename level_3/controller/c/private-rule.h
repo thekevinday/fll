@@ -261,6 +261,8 @@ extern "C" {
  *   @todo this is not yet implemented.
  * @param parameter
  *   The execute parameter settings.
+ * @param as
+ *   The execute as settings.
  * @param data
  *   The program data.
  *
@@ -275,7 +277,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
@@ -302,6 +304,8 @@ extern "C" {
  *   @todo this is not yet implemented.
  * @param parameter
  *   The execute parameter settings.
+ * @param as
+ *   The execute as settings.
  * @param data
  *   The program data.
  *
@@ -315,7 +319,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -552,6 +556,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param setting
+ *   The controller settings data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param rule
@@ -576,7 +582,7 @@ extern "C" {
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_return_status controller_rule_setting_read(const controller_data_t data, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
 
 /**
@@ -588,10 +594,10 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param cache
- *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
+ * @param cache
+ *   A structure for containing and caching relevant data.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -610,7 +616,7 @@ extern "C" {
  *   The controller settings data.
  */
 #ifndef _di_controller_rule_simulate_
-  extern void controller_rule_simulate(const controller_data_t data, const controller_cache_t cache, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_simulate(const controller_data_t data, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_cache_t *cache, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_simulate_
 
 /**

@@ -28,38 +28,39 @@ Rule Specification:
   The other Rule Types are processed top-down.
 
   The "settings" Rule Type has the following FSS-0001 (Extended)\:
-    "control_group": One Content representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    "capability": One Content representing capabilities.
+    "control": One Content representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
     "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    "group": One or more Content representing group names or group ids.
     "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
     "need": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
+    "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
     "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
+    "scheduler": One Content representing a scheduler name.
     "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
+    "user": One Content representing a user name or user id.
     "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
     "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 
   The "service" Rule Type allows the following the FSS-0001 (Extended)\:
     "create": One Content representing the path to a PID file.
-    "group": One Content representing a group name or group id.
     "kill": One or more Content representing a program being executed and its arguments.
     "restart": One or more Content representing a program being executed and its arguments.
     "reload": One or more Content representing a program being executed and its arguments.
     "start": One or more Content representing a program being executed and its arguments.
     "stop": One or more Content representing a program being executed and its arguments.
     "use": One Content representing the path to a PID file.
-    "user": One Content representing a user name or user id.
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
-    "group": One Content representing a group name or group id.
     "kill": One or more Content representing a program being executed and its arguments.
     "restart": One or more Content representing a program being executed and its arguments.
     "reload": One or more Content representing a program being executed and its arguments.
     "start": One or more Content representing a program being executed and its arguments.
     "stop": One or more Content representing a program being executed and its arguments.
-    "user": One Content representing a user name or user id.
 
-  The "command", "script", and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
+  The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
     "kill": A list repesenting multiple programs and their respective arguments to execute.
     "restart": A list repesenting multiple programs and their respective arguments to execute.
     "reload": A list repesenting multiple programs and their respective arguments to execute.

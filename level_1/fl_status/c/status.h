@@ -509,6 +509,8 @@ extern "C" {
     #define FL_status_string_number_overflow       "F_number_overflow"
     #define FL_status_string_number_positive       "F_number_positive"
     #define FL_status_string_number_positive_not   "F_number_positive_not"
+    #define FL_status_string_number_too_large      "F_number_too_large"
+    #define FL_status_string_number_too_small      "F_number_too_small"
     #define FL_status_string_number_underflow      "F_number_underflow"
     #define FL_status_string_number_whole          "F_number_whole"
     #define FL_status_string_number_whole_not      "F_number_whole_not"
@@ -525,6 +527,8 @@ extern "C" {
     #define FL_status_string_number_overflow_length       17
     #define FL_status_string_number_positive_length       17
     #define FL_status_string_number_positive_not_length   21
+    #define FL_status_string_number_too_large_length      18
+    #define FL_status_string_number_too_small_length      18
     #define FL_status_string_number_underflow_length      18
     #define FL_status_string_number_whole_length          14
     #define FL_status_string_number_whole_not_length      18

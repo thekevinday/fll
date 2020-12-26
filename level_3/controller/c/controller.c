@@ -26,6 +26,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
+    fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Specify a custom control group file path, such as '" controller_path_control "'.");
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
     fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
@@ -244,6 +245,49 @@ extern "C" {
       if (F_status_is_error_not(status)) {
         status = fl_string_append(controller_path_suffix, controller_path_suffix_length, &setting.path_pid);
       }
+
+      if (F_status_is_error(status)) {
+        if (data->error.verbosity != f_console_verbosity_quiet) {
+          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+        }
+      }
+    }
+
+    if (data->parameters[controller_parameter_control].result == f_console_result_found) {
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_control, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+      }
+
+      status = F_status_set_error(F_parameter);
+    }
+    else if (data->parameters[controller_parameter_control].locations.used) {
+      const f_array_length_t location = data->parameters[controller_parameter_control].values.array[data->parameters[controller_parameter_control].values.used - 1];
+
+      if (strnlen(arguments.argv[location], f_console_length_size)) {
+        status = fll_path_canonical(arguments.argv[location], &setting.path_control);
+
+        if (F_status_is_error(status)) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            fll_error_print(data->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+          }
+        }
+      }
+      else {
+        if (data->warning.verbosity == f_console_verbosity_debug) {
+          fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
+          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable, controller_long_control, data->warning.notable.after->string);
+          fprintf(data->warning.to.stream, "%s' must be a file directory path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
+        }
+      }
+    }
+
+    // a control file path is required.
+    if (!setting.path_control.used) {
+      status = fl_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
 
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {

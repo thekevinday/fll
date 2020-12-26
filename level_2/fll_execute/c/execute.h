@@ -6,6 +6,9 @@
  * Licenses: lgplv2.1
  *
  * Provides program execution operations similar to system().
+ *
+ * Some functions support capabilities, which are POSIX compliant as of POSIX 1003.1e (as a draft).
+ * Because it is only in POSIX as a draft, they are available via libcap instead of libc.
  */
 #ifndef _FLL_execute_h
 #define _FLL_execute_h
@@ -25,6 +28,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/capability.h>
 #include <level_0/environment.h>
 #include <level_0/execute.h>
 #include <level_0/file.h>
@@ -425,6 +429,7 @@ extern "C" {
  *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
  *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
+ *   Errors (with error bit) from: f_capability_process_set().
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
@@ -434,7 +439,6 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_delete().
  *   Errors (with error bit) from: fl_string_dynamic_terminate().
  *
- * @see cap_set_proc()
  * @see close()
  * @see clearenv()
  * @see dup2()
@@ -453,6 +457,7 @@ extern "C" {
  * @see strnlen()
  * @see waitpid()
  *
+ * @see f_capability_process_set()
  * @see f_environment_get()
  * @see f_file_exists()
  * @see f_signal_set_handle()

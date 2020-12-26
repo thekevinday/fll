@@ -5,6 +5,8 @@
 
 setting:
   name "D-BUS"
+  capability "all="
+  nice 15
 
 service:
   use /var/run/dbus/dbus.pid

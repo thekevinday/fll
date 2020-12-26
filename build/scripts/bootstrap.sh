@@ -623,7 +623,7 @@ bootstrap_operation_build() {
   if [[ $libraries == "" ]] ; then
     libraries=${variables[$(bootstrap_id build_libraries-$mode)]}
   else
-    libraries="$libraries ${variables[$(bootstrap_id build_libraries-$mode)]}"
+    libraries="${variables[$(bootstrap_id build_libraries-$mode)]} $libraries"
   fi
 
   if [[ $defines == "" ]] ; then

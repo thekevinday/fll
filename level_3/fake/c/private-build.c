@@ -25,6 +25,8 @@ extern "C" {
       memcpy(build_libraries + fake_build_parameter_library_link_path_length, data.path_build_libraries_static.string, data.path_build_libraries_static.used);
     }
 
+    build_libraries[build_libraries_length] = 0;
+
     f_string_length_t build_includes_length = fake_build_parameter_library_include_length + data.path_build_includes.used;
 
     char build_includes[build_includes_length + 1];
@@ -1545,6 +1547,8 @@ extern "C" {
     *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value, 0);
 
     if (*status == F_none) {
+      const int total_build_libraries = setting->build_libraries.used;
+
       f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total];
       f_string_t settings_mode_names[fake_build_setting_total];
       f_string_length_t setting_mode_lengths[fake_build_setting_total];
@@ -1623,6 +1627,29 @@ extern "C" {
 
         if (F_status_is_error(*status)) break;
       } // for
+
+      // "build_libaries" is appended after all modes to help assist with static linker file issues (@todo there should likely be more options to have a postfix linker parameter that can be added here instead, such as "build_libraries_last").
+      if (total_build_libraries) {
+        f_string_dynamic_t temporary[total_build_libraries];
+
+        for (i = 0; i < total_build_libraries; ++i) {
+          temporary[i].string = setting->build_libraries.array[i].string;
+          temporary[i].used = setting->build_libraries.array[i].used;
+          temporary[i].size = setting->build_libraries.array[i].size;
+        } // for
+
+        for (i = 0, j = total_build_libraries; j < setting->build_libraries.used; ++i, ++j) {
+          setting->build_libraries.array[i].string = setting->build_libraries.array[j].string;
+          setting->build_libraries.array[i].used = setting->build_libraries.array[j].used;
+          setting->build_libraries.array[i].size = setting->build_libraries.array[j].size;
+        } // for
+
+        for (i = setting->build_libraries.used - total_build_libraries, j = 0; j < total_build_libraries; ++i, ++j) {
+          setting->build_libraries.array[i].string = temporary[j].string;
+          setting->build_libraries.array[i].used = temporary[j].used;
+          setting->build_libraries.array[i].size = temporary[j].size;
+        } // for
+      }
     }
 
     if (F_status_is_error(*status)) {

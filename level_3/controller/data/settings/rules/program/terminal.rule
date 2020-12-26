@@ -5,24 +5,24 @@
 
 setting:
   name "System Terminal"
+  capability "all="
 
-service: 
+service:
   use /var/run/tty/tty1.pid
 
   start qingy tty1 -d -l -n -t
-    
+
 service:
   use /var/run/tty/tty2.pid
 
   start qingy tty2 -d -l -n -t
-      
+
 service:
   use /var/run/tty/tty3.pid
 
   start qingy tty3 -d -l -n -t
-        
+
 service:
   use /var/run/tty/tty4.pid
 
   start qingy tty4 -d -l -n -t
-

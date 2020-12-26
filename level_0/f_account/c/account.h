@@ -37,6 +37,7 @@ extern "C" {
  *
  * @param name
  *   The group name.
+ *   The name must be NULL terminated.
  * @param id
  *   The id associated with the given name.
  *
@@ -50,7 +51,7 @@ extern "C" {
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_failure (with error bit) on any other failure.
+ *   F_failure (with error bit) on any other error.
  *
  * @see getgrnam_r()
  */
@@ -63,6 +64,7 @@ extern "C" {
  *
  * @param name
  *   The user name.
+ *   The name must be NULL terminated.
  * @param id
  *   The id associated with the given name.
  *
@@ -76,7 +78,7 @@ extern "C" {
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_failure (with error bit) on any other failure.
+ *   F_failure (with error bit) on any other error.
  *
  * @see getpwnam_r()
  */

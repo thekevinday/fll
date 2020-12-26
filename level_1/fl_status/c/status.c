@@ -737,6 +737,12 @@ extern "C" {
         case F_number_positive_not:
           *string = FL_status_string_number_positive_not;
           break;
+        case F_number_too_large:
+          *string = FL_status_string_number_too_large;
+          break;
+        case F_number_too_small:
+          *string = FL_status_string_number_too_small;
+          break;
         case F_number_underflow:
           *string = FL_status_string_number_underflow;
           break;

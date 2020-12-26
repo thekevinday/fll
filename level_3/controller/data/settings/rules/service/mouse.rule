@@ -5,6 +5,8 @@
 
 setting:
   name "Console Mouse"
+  capability "all="
+  nice 15
 
   # @todo consider adding iki support.
 

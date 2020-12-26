@@ -5,6 +5,8 @@
 
 setting:
   name "System Logger"
+  capability "all="
+  nice 19
 
 service:
   # @todo consider adding support for IKI to make "/var/run/logger/logger.pid" a variable.

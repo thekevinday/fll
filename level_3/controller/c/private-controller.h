@@ -159,6 +159,60 @@ extern "C" {
 #endif // _di_controller_file_pid_delete_
 
 /**
+ * Convert the string from a string representation of an ID or a user name into the numeric representation of that ID or user name.
+ *
+ * @param buffer
+ *   A string containing user name or ID.
+ * @param range
+ *   The range within the buffer specifically containing the name or ID.
+ * @param cache
+ *   The cache.
+ * @param id
+ *   The determined user ID.
+ *
+ * @return
+ *   F_none on success.
+ *   F_exist_not (with error bit) if failed to match the name to an ID.
+ *   F_number_too_large (with error bit) if the given ID is too large.
+ *
+ *   Errors (with error bit) from: f_account_id_user_by_name().
+ *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *
+ * @see f_account_id_user_by_name()
+ * @see fl_conversion_string_to_number_unsigned()
+ */
+#ifndef _di_controller_get_id_user_
+  f_return_status controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_get_id_user_
+
+/**
+ * Convert the string from a string representation of an ID or a group name into the numeric representation of that ID or group name.
+ *
+ * @param buffer
+ *   A string containing group name or ID.
+ * @param range
+ *   The range within the buffer specifically containing the name or ID.
+ * @param cache
+ *   The cache.
+ * @param id
+ *   The determined group ID.
+ *
+ * @return
+ *   F_none on success.
+ *   F_exist_not (with error bit) if failed to match the name to an ID.
+ *   F_number_too_large (with error bit) if the given ID is too large.
+ *
+ *   Errors (with error bit) from: f_account_id_group_by_name().
+ *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *
+ * @see f_account_id_group_by_name()
+ * @see fl_conversion_string_to_number_unsigned()
+ */
+#ifndef _di_controller_get_id_group_
+  f_return_status controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_get_id_group_
+
+/**
  * Perform all activities requiring the state to be "ready".
  *
  * This prints messages on errors.

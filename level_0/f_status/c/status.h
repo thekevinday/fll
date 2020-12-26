@@ -326,6 +326,8 @@ extern "C" {
       F_number_overflow,
       F_number_positive,
       F_number_positive_not,
+      F_number_too_large,
+      F_number_too_small,
       F_number_underflow,
       F_number_whole,
       F_number_whole_not,

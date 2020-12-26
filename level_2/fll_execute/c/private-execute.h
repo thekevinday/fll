@@ -127,7 +127,6 @@ extern "C" {
  *   F_schedule (with error bit) on failure to set scheduler.
  *   F_user (with error bit) on failure to set UID.
  *
- * @see cap_set_proc()
  * @see exit()
  * @see getpid()
  * @see nice()
@@ -136,6 +135,7 @@ extern "C" {
  * @see setgroups()
  * @see setuid()
  *
+ * @see f_capability_process_set()
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)

@@ -1,7 +1,17 @@
 # fss-000d
 
 setting:
-  name "Multiple Commands: whoami and date"
+  name "Multiple Commands: id, whoami, date, etc.."
+  capability "all="
+  nice 15
+  #user kevin
+  #group list 8 root
+
+command:
+  start {
+    id
+    sleep 20
+  }
 
 command:
   start whoami

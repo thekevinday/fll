@@ -6,6 +6,10 @@ extern "C" {
 
 #ifndef _di_f_account_id_group_by_name_
   f_return_status f_account_id_group_by_name(const f_string_t name, gid_t *id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -81,13 +85,17 @@ extern "C" {
 
 #ifndef _di_f_account_id_user_by_name_
   f_return_status f_account_id_user_by_name(const f_string_t name, uid_t *id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
     f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
     // note: pointer seems pointless except that it is used to determine if the name was found.
     struct passwd password;
-    struct passwd *pointer;
+    struct passwd *pointer = 0;
 
     size_t length = length_max;
 

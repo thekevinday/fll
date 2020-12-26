@@ -9,16 +9,28 @@ Rule Documentation:
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
   The "settings" Rule Type has the following FSS-0001 (Extended) Content\:
-    "control_group": Define a control group (cgroup) in which everything within this rule executes under.
+    "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
+    "control": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
+    "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
     "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
     "need": A single rule required to be executed (must exist and must succeed) before this rule starts.
+    "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
     "parameter": A statically defined IKI name and its associated value for use in this rule file.
     "path": A single Content used to set a custom PATH environment variable value.
     "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
+    "scheduler": A valid name of a scheduler to use.
+    "user": A single user name or ID to execute as.
     "want": A single rule desired to be executed (may exist and must succeed) before this rule starts.
     "wish": A single rule desired to be executed (may exist and is not required to succeed) before this rule starts.
+
+  In the case of "capability", if the user the controller program is run as does not have the desired capabilities already, they cannot be added.
+  This essentially maintains or reduces the capabilities already available.
+  Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
+  If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
+
+  In the case of "group" and "user", only users and groups that the user the controller program is being run as may be used.
 
   In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 
@@ -55,10 +67,14 @@ Rule Documentation:
   When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
   Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  The "group" inner Content, an associated "command", "service", or "script" are executed with that group ID or group name.
-  The "user" inner Content, an associated "command", "service", or "script" are executed with that user ID or user name.
-  The "group" and "user" can only be switched to if the user this controller program being operated under is allowed to switch to.
-
   The "create" Content designates that this controller program to create the PID file after successfully starting the service.
   The "use" Content designates that the called program will provide the PID file after successfully starting the service.
   For both "create" and "program" the PID file is expected to only exist on success or failure and the existence thereof designates the success or failure rate.
+
+  The following Content are the same as those specified in the Settings above except that they apply to a specific Rule Item instead of all Rule Items in the file\:
+  - "capability"
+  - "control"
+  - "group"
+  - "nice"
+  - "scheduler"
+  - "user"
