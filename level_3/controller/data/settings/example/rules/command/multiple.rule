@@ -4,6 +4,7 @@ setting:
   name "Multiple Commands: id, whoami, date, etc.."
   capability "all="
   nice 15
+  scheduler batch 0
   #user kevin
   #group list 8 root
 

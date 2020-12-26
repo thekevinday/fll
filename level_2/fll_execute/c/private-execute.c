@@ -136,9 +136,12 @@ extern "C" {
     if (as.scheduler) {
       const int process_id = getpid();
 
+      struct sched_param parameter_schedule;
+      parameter_schedule.sched_priority = as.scheduler->priority;
+
       errno = 0;
 
-      if (sched_setscheduler(process_id, as.scheduler->policy, as.scheduler->parameter) == -1) {
+      if (sched_setscheduler(process_id, as.scheduler->policy, &parameter_schedule) == -1) {
         *result = -1;
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {

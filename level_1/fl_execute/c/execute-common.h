@@ -54,22 +54,22 @@ extern "C" {
 /**
  * A structure representing a scheduler and its parameters for execution.
  *
- * policy:    the scheduler policy.
- * parameter: a pointer to the scheduler parameters;
+ * policy:   the scheduler policy.
+ * priority: the scheduler priority;
  */
 #ifndef _di_fl_execute_scheduler_t_
   typedef struct {
     int policy;
-    const struct sched_param *parameter;
+    int priority;
   } fl_execute_scheduler_t;
 
   #define fl_execute_scheduler_t_initialize { 0, 0 }
 
-  #define fl_macro_execute_scheduler_t_initialize(policy, parameter) { policy, parameter }
+  #define fl_macro_execute_scheduler_t_initialize(policy, priority) { policy, priority }
 
   #define fl_execute_scheduler_t_clear(scheduler) \
     scheduler.policy = 0; \
-    scheduler.parameter = 0;
+    scheduler.priority = 0;
 #endif // _di_fl_execute_scheduler_t_
 
 /**

@@ -38,7 +38,7 @@ Rule Specification:
     "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
     "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
-    "scheduler": One Content representing a scheduler name.
+    "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
     "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
     "user": One Content representing a user name or user id.
     "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").

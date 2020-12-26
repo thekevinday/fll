@@ -20,8 +20,10 @@
 #ifndef _controller_h
 
 // libc includes
+#include <sched.h>
 #include <string.h>
 #include <sys/types.h>
+#include <linux/sched.h>
 #include <unistd.h>
 
 // fll-0 includes

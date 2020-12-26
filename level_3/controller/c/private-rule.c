@@ -480,8 +480,8 @@ extern "C" {
       as.capability = rule->capability;
     }
 
-    if (rule->scheduler.used) {
-      // @todo: as.scheduler =
+    if (rule->has & controller_rule_has_scheduler) {
+      as.scheduler = &rule->scheduler;
     }
 
     if (rule->control.used) {
@@ -1366,7 +1366,8 @@ extern "C" {
     rule->name.used = 0;
     rule->control.used = 0;
     rule->path.used = 0;
-    rule->scheduler.used = 0;
+    rule->scheduler.policy = 0;
+    rule->scheduler.priority = 0;
     rule->script.used = 0;
 
     rule->define.used = 0;
@@ -1826,7 +1827,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_control || type == controller_rule_setting_type_name || type == controller_rule_setting_type_path || type == controller_rule_setting_type_scheduler || type == controller_rule_setting_type_script) {
+      if (type == controller_rule_setting_type_control || type == controller_rule_setting_type_name || type == controller_rule_setting_type_path || type == controller_rule_setting_type_script) {
         if (type == controller_rule_setting_type_control) {
           setting_value = &rule->control;
         }
@@ -1835,9 +1836,6 @@ extern "C" {
         }
         else if (type == controller_rule_setting_type_path) {
           setting_value = &rule->path;
-        }
-        else if (type == controller_rule_setting_type_scheduler) {
-          setting_value = &rule->scheduler;
         }
         else if (type == controller_rule_setting_type_script) {
           setting_value = &rule->script;
@@ -1950,9 +1948,123 @@ extern "C" {
             continue;
           }
         }
-        else if (type == controller_rule_setting_type_scheduler) {
-          // @todo
+
+        continue;
+      }
+
+
+      if (type == controller_rule_setting_type_scheduler) {
+
+        if (cache->content_actions.array[i].used < 1 || cache->content_actions.array[i].used > 2 || rule->has & controller_rule_has_scheduler) {
+
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting requires either one or two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = F_status_set_error(F_valid_not);
+          }
+
+          continue;
         }
+
+        if (fl_string_dynamic_partial_compare_string(controller_string_batch, cache->buffer_item, controller_string_batch_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_BATCH;
+          rule->scheduler.priority = 0;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_deadline, cache->buffer_item, controller_string_deadline_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_DEADLINE;
+          rule->scheduler.priority = 49;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_fifo, cache->buffer_item, controller_string_fifo_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_FIFO;
+          rule->scheduler.priority = 49;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_idle, cache->buffer_item, controller_string_idle_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_IDLE;
+          rule->scheduler.priority = 0;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_other, cache->buffer_item, controller_string_other_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_OTHER;
+          rule->scheduler.priority = 0;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_round_robin, cache->buffer_item, controller_string_round_robin_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          rule->scheduler.policy = SCHED_RR;
+          rule->scheduler.priority = 49;
+        }
+        else {
+          if (data.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data.error.to.stream, "%s%sRule setting has an unknown scheduler '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+            f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+            fprintf(data.error.to.stream, "%s%s'.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print(data.error, *cache, F_false);
+          }
+
+          if (F_status_is_error_not(status_return)) {
+            status_return = F_status_set_error(F_valid_not);
+          }
+
+          continue;
+        }
+
+        if (cache->content_actions.array[i].used > 1) {
+          const bool zero_only = rule->scheduler.policy == SCHED_BATCH || rule->scheduler.policy == SCHED_IDLE || rule->scheduler.policy == SCHED_OTHER;
+
+          f_number_signed_t number = 0;
+
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[1]);
+
+          if (F_status_is_error(status) || (zero_only && number) || (!zero_only && (number < 1 || number > 99))) {
+            status = F_status_set_fine(status);
+
+            if ((zero_only && number) || (!zero_only && (number < 1 || number > 99)) || status == F_data_not || status == F_number || status == F_number_overflow) {
+
+              if (data.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
+                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+
+                if (zero_only) {
+                  fprintf(data.error.to.stream, "%s%s', only ", data.error.notable.after->string, data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s0%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s is", data.error.context.before->string);
+                }
+                else {
+                  fprintf(data.error.to.stream, "%s%s', only the whole numbers inclusively between ", data.error.notable.after->string, data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s1%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s and ", data.error.context.before->string);
+                  fprintf(data.error.to.stream, "%s%s99%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s are", data.error.context.before->string);
+                }
+
+                fprintf(data.error.to.stream, " allowed for the designated scheduler.%s%c", data.error.context.after->string, f_string_eol_s[0]);
+
+                controller_rule_error_print(data.error, *cache, F_false);
+              }
+
+              if (F_status_is_error_not(status_return)) {
+                status_return = F_status_set_error(F_valid_not);
+              }
+            }
+            else {
+              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              status = F_status_set_error(status);
+            }
+
+            continue;
+          }
+
+          rule->scheduler.priority = number;
+        }
+
+        rule->has |= controller_rule_has_scheduler;
 
         continue;
       }
@@ -2050,8 +2162,7 @@ extern "C" {
                 fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
                 fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
                 f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s', only the whole numbers inclusively between ", data.error.context.before->string);
+                fprintf(data.error.to.stream, "%s%s', only the whole numbers inclusively between ", data.error.notable.after->string, data.error.context.before->string);
                 fprintf(data.error.to.stream, "%s%s-20%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s and ", data.error.context.before->string);
                 fprintf(data.error.to.stream, "%s%s19%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
@@ -2514,7 +2625,35 @@ extern "C" {
 
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_control, data.context.set.important.after->string, rule->control.used ? rule->control.string : f_string_empty_s, f_string_eol_s[0]);
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_path, data.context.set.important.after->string, rule->path.used ? rule->path.string : f_string_empty_s, f_string_eol_s[0]);
-    fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_scheduler, data.context.set.important.after->string, rule->scheduler.used ? rule->scheduler.string : f_string_empty_s, f_string_eol_s[0]);
+
+
+    fprintf(data.output.stream, "  %s%s%s", data.context.set.important.before->string, controller_string_scheduler, data.context.set.important.after->string);
+    if (rule->has & controller_rule_has_scheduler) {
+      f_string_t policy = "";
+
+      if (rule->scheduler.policy == SCHED_BATCH) {
+        policy = controller_string_batch;
+      }
+      else if (rule->scheduler.policy == SCHED_DEADLINE) {
+        policy = controller_string_deadline;
+      }
+      else if (rule->scheduler.policy == SCHED_FIFO) {
+        policy = controller_string_fifo;
+      }
+      else if (rule->scheduler.policy == SCHED_IDLE) {
+        policy = controller_string_idle;
+      }
+      else if (rule->scheduler.policy == SCHED_OTHER) {
+        policy = controller_string_other;
+      }
+      else if (rule->scheduler.policy == SCHED_RR) {
+        policy = controller_string_round_robin;
+      }
+
+      fprintf(data.output.stream, " %s %i", policy, rule->scheduler.priority);
+    }
+    fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+
     fprintf(data.output.stream, "  %s%s%s %s%c", data.context.set.important.before->string, controller_string_script, data.context.set.important.after->string, rule->script.used ? rule->script.string : f_string_empty_s, f_string_eol_s[0]);
 
     fprintf(data.output.stream, "  %s%s%s", data.context.set.important.before->string, controller_string_nice, data.context.set.important.after->string);

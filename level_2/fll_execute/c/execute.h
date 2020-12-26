@@ -15,6 +15,7 @@
 
 // libc includes
 #include <memory.h>
+#include <sched.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>

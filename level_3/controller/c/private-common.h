@@ -17,11 +17,13 @@ extern "C" {
   #define controller_string_actions       "actions"
   #define controller_string_asynchronous  "asynchronous"
   #define controller_string_bash          "bash"
+  #define controller_string_batch         "batch"
   #define controller_string_capability    "capability"
   #define controller_string_create        "create"
   #define controller_string_command       "command"
   #define controller_string_consider      "consider"
   #define controller_string_control       "control"
+  #define controller_string_deadline      "deadline"
   #define controller_string_default       "default"
   #define controller_string_define        "define"
   #define controller_string_entry         "entry"
@@ -29,9 +31,11 @@ extern "C" {
   #define controller_string_environment   "environment"
   #define controller_string_fail          "fail"
   #define controller_string_failsafe      "failsafe"
+  #define controller_string_fifo          "fifo"
   #define controller_string_group         "group"
   #define controller_string_groups        "groups"
   #define controller_string_how           "how"
+  #define controller_string_idle          "idle"
   #define controller_string_item          "item"
   #define controller_string_kill          "kill"
   #define controller_string_main          "main"
@@ -41,6 +45,7 @@ extern "C" {
   #define controller_string_nice          "nice"
   #define controller_string_no            "no"
   #define controller_string_optional      "optional"
+  #define controller_string_other         "other"
   #define controller_string_parameter     "parameter"
   #define controller_string_path          "path"
   #define controller_string_pid           "pid"
@@ -50,6 +55,7 @@ extern "C" {
   #define controller_string_require       "require"
   #define controller_string_required      "required"
   #define controller_string_restart       "restart"
+  #define controller_string_round_robin   "round_robin"
   #define controller_string_rule          "rule"
   #define controller_string_rules         "rules"
   #define controller_string_scheduler     "scheduler"
@@ -73,11 +79,13 @@ extern "C" {
   #define controller_string_actions_length       7
   #define controller_string_asynchronous_length  12
   #define controller_string_bash_length          4
+  #define controller_string_batch_length         5
   #define controller_string_capability_length    10
   #define controller_string_create_length        6
   #define controller_string_command_length       7
   #define controller_string_consider_length      8
   #define controller_string_control_length       7
+  #define controller_string_deadline_length      8
   #define controller_string_define_length        6
   #define controller_string_default_length       7
   #define controller_string_entry_length         5
@@ -85,8 +93,10 @@ extern "C" {
   #define controller_string_environment_length   11
   #define controller_string_fail_length          4
   #define controller_string_failsafe_length      8
+  #define controller_string_fifo_length          4
   #define controller_string_group_length         5
   #define controller_string_how_length           3
+  #define controller_string_idle_length          4
   #define controller_string_item_length          4
   #define controller_string_kill_length          4
   #define controller_string_main_length          4
@@ -96,6 +106,7 @@ extern "C" {
   #define controller_string_nice_length          4
   #define controller_string_no_length            2
   #define controller_string_optional_length      8
+  #define controller_string_other_length         5
   #define controller_string_parameter_length     9
   #define controller_string_path_length          4
   #define controller_string_pid_length           3
@@ -105,6 +116,7 @@ extern "C" {
   #define controller_string_require_length       7
   #define controller_string_required_length      8
   #define controller_string_restart_length       7
+  #define controller_string_round_robin_length   11
   #define controller_string_rule_length          4
   #define controller_string_rules_length         5
   #define controller_string_scheduler_length     9
@@ -272,9 +284,10 @@ extern "C" {
   #define controller_rule_option_wait         0x8
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
-  #define controller_rule_has_group 0x1
-  #define controller_rule_has_nice  0x2
-  #define controller_rule_has_user  0x4
+  #define controller_rule_has_group     0x1
+  #define controller_rule_has_nice      0x2
+  #define controller_rule_has_scheduler 0x4
+  #define controller_rule_has_user      0x8
 
   typedef struct {
     f_status_t status;
@@ -295,7 +308,6 @@ extern "C" {
     f_string_dynamic_t name;
     f_string_dynamic_t control;
     f_string_dynamic_t path;
-    f_string_dynamic_t scheduler;
     f_string_dynamic_t script;
 
     f_string_maps_t define;
@@ -308,6 +320,7 @@ extern "C" {
 
     f_capability_t capability;
     f_int32s_t groups;
+    fl_execute_scheduler_t scheduler;
 
     controller_rule_items_t items;
   } controller_rule_t;
@@ -329,7 +342,6 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_dynamics_t_initialize, \
@@ -338,6 +350,7 @@ extern "C" {
       f_string_dynamics_t_initialize, \
       f_capability_t_initialize, \
       f_int32s_t_initialize, \
+      fl_execute_scheduler_t_initialize, \
       controller_rule_items_initialize, \
     }
 
@@ -346,7 +359,6 @@ extern "C" {
     fl_string_dynamic_delete(&rule.name); \
     fl_string_dynamic_delete(&rule.control); \
     fl_string_dynamic_delete(&rule.path); \
-    fl_string_dynamic_delete(&rule.scheduler); \
     fl_string_dynamic_delete(&rule.script); \
     f_macro_string_maps_t_delete_simple(rule.define) \
     f_macro_string_maps_t_delete_simple(rule.parameter) \
