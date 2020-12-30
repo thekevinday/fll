@@ -117,7 +117,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
 
 #if !defined(_di_fll_execute_program_)
-  f_return_status private_fll_execute_as(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) {
+  f_return_status private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) {
 
     if (as.nice) {
       errno = 0;
@@ -130,25 +130,6 @@ extern "C" {
         }
 
         return F_status_set_error(F_nice);
-      }
-    }
-
-    if (as.scheduler) {
-      const int process_id = getpid();
-
-      struct sched_param parameter_schedule;
-      parameter_schedule.sched_priority = as.scheduler->priority;
-
-      errno = 0;
-
-      if (sched_setscheduler(process_id, as.scheduler->policy, &parameter_schedule) == -1) {
-        *result = -1;
-
-        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
-        }
-
-        return F_status_set_error(F_schedule);
       }
     }
 
@@ -207,18 +188,92 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
+  f_return_status private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) {
+
+    if (as.scheduler) {
+      struct sched_param parameter_schedule;
+      parameter_schedule.sched_priority = as.scheduler->priority;
+
+      errno = 0;
+
+      if (sched_setscheduler(id_child, as.scheduler->policy, &parameter_schedule) == -1) {
+        result[0] = '1';
+
+        return F_status_set_error(F_schedule);
+      }
+    }
+
+    if (as.control_group) {
+      if (F_status_is_error(fl_control_group_apply(*as.control_group, id_child))) {
+        result[0] = '1';
+
+        return F_status_set_error(F_control_group);
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fll_execute_program_)
+
+#if !defined(_di_fll_execute_program_)
   f_return_status private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
 
-    const pid_t process_id = fork();
+    int descriptors[2] = { -1, -1 };
 
-    if (process_id < 0) {
+    if (as) {
+      if (pipe(descriptors) == -1) {
+        return F_status_set_error(F_pipe);
+      }
+    }
+
+    const pid_t id_process = fork();
+
+    if (id_process < 0) {
+      if (as) {
+        close(descriptors[0]);
+        close(descriptors[1]);
+      }
+
       return F_status_set_error(F_fork);
     }
 
-    if (process_id) {
+    if (id_process) {
+
+      if (as) {
+
+        // close the read pipe for the parent.
+        close(descriptors[0]);
+
+        // have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
+        {
+          char string_result[2] = { '0', 0 };
+
+          const f_file_t file = f_macro_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+
+          f_string_static_t result = f_string_static_t_initialize;
+
+          result.string = string_result;
+          result.used = 1;
+          result.size = 2;
+
+          const f_status_t status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
+
+          // inform the child that it can now safely begin (or exit).
+          if (F_status_is_error(f_file_write(file, result, 0))) {
+            string_result[0] = '1';
+          }
+
+          // close the write pipe for the parent when finished writing.
+          close(descriptors[1]);
+
+          if (F_status_is_error(status)) {
+            return status;
+          }
+        }
+      }
 
       // have the parent wait for the child process to finish.
-      waitpid(process_id, result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, result, WUNTRACED | WCONTINUED);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
@@ -230,6 +285,38 @@ extern "C" {
       }
 
       return F_none;
+    }
+
+    if (as) {
+
+      // close the write pipe for the child.
+      close(descriptors[1]);
+
+      char string_response[2] = { 0, 0 };
+
+      f_string_static_t response = f_string_static_t_initialize;
+
+      response.string = string_response;
+      response.used = 0;
+      response.size = 2;
+
+      const f_file_t file = f_macro_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+
+      f_file_read_block(file, &response);
+
+      if (!response.used || response.string[0] == '1') {
+        close(descriptors[0]);
+
+        if (result) {
+          *result = -1;
+        }
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(-1);
+        }
+
+        return F_child;
+      }
     }
 
     if (parameter && parameter->signals) {
@@ -246,7 +333,11 @@ extern "C" {
     }
 
     if (as) {
-      const f_status_t status = private_fll_execute_as(*as, parameter, result);
+
+      // close the write pipe for the child when done.
+      close(descriptors[0]);
+
+      const f_status_t status = private_fll_execute_as_child(*as, parameter, result);
 
       if (F_status_is_error(status)) {
         return status;
@@ -276,32 +367,58 @@ extern "C" {
       return F_status_set_error(F_pipe);
     }
 
-    const pid_t process_id = fork();
+    const pid_t id_process = fork();
 
-    if (process_id < 0) {
+    if (id_process < 0) {
       close(descriptors[0]);
       close(descriptors[1]);
 
       return F_status_set_error(F_fork);
     }
 
-    if (process_id) {
+    if (id_process) {
 
       // close the read pipe for the parent.
       close(descriptors[0]);
 
-      // write all data, if child doesn't read this could block until child closes the pipe.
       {
-        const f_file_t file = f_macro_file_t_initialize(0, descriptors[1], f_file_flag_write_only);
+        char string_result[2] = { '0', 0 };
 
-        f_file_write(file, *parameter->data, 0);
+        const f_file_t file = f_macro_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+
+        f_status_t status = F_none;
+
+        // have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
+        if (as) {
+          f_string_static_t result = f_string_static_t_initialize;
+
+          result.string = string_result;
+          result.used = 1;
+          result.size = 2;
+
+          status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
+
+          // inform the child that it can now safely begin (or exit).
+          if (F_status_is_error(f_file_write(file, result, 0))) {
+            string_result[0] = '1';
+          }
+        }
+
+        // write all data, if child doesn't read this could block until child closes the pipe.
+        if (string_result[0] == '0') {
+          f_file_write(file, *parameter->data, 0);
+        }
 
         // close the write pipe for the parent when finished writing.
         close(descriptors[1]);
+
+        if (F_status_is_error(status)) {
+          return status;
+        }
       }
 
       // have the parent wait for the child process to finish.
-      waitpid(process_id, result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, result, WUNTRACED | WCONTINUED);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
@@ -317,6 +434,35 @@ extern "C" {
 
     // close the write pipe for the child.
     close(descriptors[1]);
+
+    // wait for parent to tell child to begin.
+    if (as) {
+      char string_response[2] = { 0, 0 };
+
+      f_string_static_t response = f_string_static_t_initialize;
+
+      response.string = string_response;
+      response.used = 0;
+      response.size = 2;
+
+      const f_file_t file = f_macro_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+
+      f_file_read_block(file, &response);
+
+      if (!response.used || response.string[0] == '1') {
+        close(descriptors[0]);
+
+        if (result) {
+          *result = -1;
+        }
+
+        if (parameter && parameter->option & fl_execute_parameter_option_exit) {
+          exit(-1);
+        }
+
+        return F_child;
+      }
+    }
 
     if (parameter && parameter->signals) {
       f_signal_set_handle(SIG_BLOCK, &parameter->signals->block);
@@ -334,7 +480,7 @@ extern "C" {
     dup2(descriptors[0], f_type_descriptor_input);
 
     if (as) {
-      const f_status_t status = private_fll_execute_as(*as, parameter, result);
+      const f_status_t status = private_fll_execute_as_child(*as, parameter, result);
 
       if (F_status_is_error(status)) {
         return status;

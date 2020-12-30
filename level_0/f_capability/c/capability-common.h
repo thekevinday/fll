@@ -7,7 +7,7 @@
  *
  * Defines common data to be used for/by capability related functionality.
  *
- * This is auto-included by account.h and should not need to be explicitly included.
+ * This is auto-included by capability.h and should not need to be explicitly included.
  */
 #ifndef _F_capability_common_h
 #define _F_capability_common_h

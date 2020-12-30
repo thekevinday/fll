@@ -164,9 +164,11 @@ extern "C" {
  *   The name of the program or script.
  * @param code
  *   The code returned by the executed program or script.
+ * @param status
+ *   The status code representing the failure (without the error bit set).
  */
 #ifndef _di_controller_rule_error_print_execute_
-  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_execute_
 
 /**
@@ -206,7 +208,7 @@ extern "C" {
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param index
- *   The position in the setting.rules array representing the rule to simulate.
+ *   The position in the setting.rules array representing the rule to execute.
  * @param type
  *   The action to perform based on the action type codes.
  *

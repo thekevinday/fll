@@ -272,6 +272,18 @@ extern "C" {
         case F_container_not:
           *string = FL_status_string_container_not;
           break;
+        case F_control:
+          *string = FL_status_string_control;
+          break;
+        case F_control_not:
+          *string = FL_status_string_control_not;
+          break;
+        case F_control_group:
+          *string = FL_status_string_control_group;
+          break;
+        case F_control_group_not:
+          *string = FL_status_string_control_group_not;
+          break;
         case F_critical:
           *string = FL_status_string_critical;
           break;

@@ -1,7 +1,7 @@
 # fss-000d
 
 setting:
-  name "Scipt #1"
+  name "Script #1"
   environment PATH
   script sh
 

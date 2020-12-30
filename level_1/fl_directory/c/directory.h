@@ -83,7 +83,7 @@ extern "C" {
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
-  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), 0, 0 }
+  #define fl_directory_recurse_t_initialize { fl_directory_recurse_depth_max, f_file_default_read_size, F_false, f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), 0, 0 }
 #endif // _di_fl_directory_recurse_t_
 
 /**

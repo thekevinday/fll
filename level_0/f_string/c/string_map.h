@@ -184,7 +184,7 @@ extern "C" {
 
   #define f_macro_string_map_multi_t_clear(map) \
     f_macro_string_dynamic_t_clear(map.name) \
-    f_macro_string_dynamics_clear(map.value)
+    f_macro_string_dynamics_t_clear(map.value)
 
   #define f_macro_string_map_multi_t_delete(status, map) \
     f_macro_string_dynamic_t_delete(status, map.name) \

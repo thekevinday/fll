@@ -11,6 +11,8 @@ main:
   item last
 
 first:
+  consider script require_me
+
   rule script succeed
   rule script php
   rule command multiple

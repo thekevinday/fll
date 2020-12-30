@@ -14,6 +14,9 @@
 #ifndef _FL_execute_h
 #define _FL_execute_h
 
+// include pre-requirements
+#define _GNU_SOURCE
+
 // libc includes
 #include <grp.h>
 #include <sched.h>

@@ -4,12 +4,14 @@ f_type
 f_status
 f_memory
 f_string
+f_account
 f_capability
 f_environment
 f_execute
 f_file
 f_path
 f_signal
+fl_control_group
 fl_environment
 fl_execute
 fl_string

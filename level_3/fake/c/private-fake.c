@@ -73,7 +73,7 @@ extern "C" {
         }
       }
       else {
-        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_program_environment", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_program", F_true);
       }
     }
 

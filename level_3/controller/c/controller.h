@@ -19,6 +19,9 @@
  */
 #ifndef _controller_h
 
+// include pre-requirements
+#define _GNU_SOURCE
+
 // libc includes
 #include <sched.h>
 #include <string.h>
@@ -36,6 +39,7 @@
 #include <level_0/capability.h>
 #include <level_0/color.h>
 #include <level_0/console.h>
+#include <level_0/control_group.h>
 #include <level_0/directory.h>
 #include <level_0/environment.h>
 #include <level_0/execute.h>
@@ -49,11 +53,13 @@
 // fll-1 includes
 #include <level_1/color.h>
 #include <level_1/console.h>
+#include <level_1/control_group.h>
 #include <level_1/fss.h>
 #include <level_1/string.h>
 #include <level_1/type.h>
 
 // fll-2 includes
+#include <level_2/control_group.h>
 #include <level_2/environment.h>
 #include <level_2/error.h>
 #include <level_2/execute.h>
@@ -180,7 +186,7 @@ extern "C" {
       controller_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
       F_false, \
-      f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+      f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       fll_macro_error_print_t_initialize_warning(), \
       0, \

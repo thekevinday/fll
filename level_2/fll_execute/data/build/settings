@@ -19,7 +19,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc -lcap
-build_libraries-individual -lfl_environment -lfl_string -lf_capability -lf_environment -lf_file -lf_memory -lf_path -lf_signal -lf_utf
+build_libraries-individual -lfl_control_group -lfl_environment -lfl_string -lf_account -lf_capability -lf_environment -lf_file -lf_memory -lf_path -lf_signal -lf_utf
 build_sources_library execute.c private-execute.c
 build_sources_program
 build_sources_headers execute.h

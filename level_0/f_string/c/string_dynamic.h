@@ -146,10 +146,10 @@ extern "C" {
 
   #define f_string_dynamics_t_initialize f_string_statics_t_initialize
 
-  #define f_macro_string_dynamics_clear(dynamics) f_macro_string_statics_t_clear(dynamics)
+  #define f_macro_string_dynamics_t_clear(dynamics) f_macro_string_statics_t_clear(dynamics)
 
   #define f_macro_string_dynamics_new(status, dynamics, length) \
-    f_macro_string_dynamics_clear(dynamics) \
+    f_macro_string_dynamics_t_clear(dynamics) \
     status = f_memory_new((void **) & dynamics.array, sizeof(f_string_dynamic_t), length); \
     if (status == F_none) { \
       dynamics.size = length; \

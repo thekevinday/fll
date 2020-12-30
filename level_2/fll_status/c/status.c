@@ -456,6 +456,26 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_control, length, FL_status_string_control_length) == F_equal_to) {
+        *code = F_control;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_control_not, length, FL_status_string_control_not_length) == F_equal_to) {
+        *code = F_control_not;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_control_group, length, FL_status_string_control_group_length) == F_equal_to) {
+        *code = F_control_group;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_control_group_not, length, FL_status_string_control_group_not_length) == F_equal_to) {
+        *code = F_control_group_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_critical, length, FL_status_string_critical_length) == F_equal_to) {
         *code = F_critical;
         return F_none;

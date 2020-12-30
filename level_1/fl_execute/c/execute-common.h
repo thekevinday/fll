@@ -80,13 +80,13 @@ extern "C" {
  * Control Groups, or cgroups, exist here as a full file path in which the PID of a child process is to be written to.
  * This may change as more is learned about using cgroups, but it is not known if there are any functions available like set_cgroup(..).
  *
- * nice:       the niceness value to assign the child process to, set to 0 to not use.
- * id_user:    the id of the user to assign the child process to, set to 0 to not use.
- * id_group:   the id of the group to assign the child process to, set to 0 to not use.
- * capability: all of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
- * id_groups:  the ids of each supplemental group to assign the child process to, set to 0 to not use.
- * scheduler:  the scheduler to assign the child process to, set to 0 to not use.
- * controls:   an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
+ * nice:          the niceness value to assign the child process to, set to 0 to not use.
+ * id_user:       the id of the user to assign the child process to, set to 0 to not use.
+ * id_group:      the id of the group to assign the child process to, set to 0 to not use.
+ * capability:    all of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
+ * id_groups:     the ids of each supplemental group to assign the child process to, set to 0 to not use.
+ * scheduler:     the scheduler to assign the child process to, set to 0 to not use.
+ * control_group: an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
  */
 #ifndef _di_fl_execute_as_t_
   typedef struct {
@@ -97,12 +97,12 @@ extern "C" {
 
     f_int32s_t *id_groups;
     fl_execute_scheduler_t *scheduler;
-    f_string_dynamics_t *controls;
+    f_control_group_t *control_group;
   } fl_execute_as_t;
 
   #define fl_execute_as_t_initialize { 0, 0, 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, capability, id_groups, scheduler, controls) { nice, id_user, id_group, capability, id_groups, scheduler, controls }
+  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, capability, id_groups, scheduler, control_group) { nice, id_user, id_group, capability, id_groups, scheduler, control_group }
 
   #define fl_execute_as_t_clear(as) \
     as.nice = 0; \
@@ -111,7 +111,7 @@ extern "C" {
     as.capability = 0; \
     as.id_groups = 0; \
     as.scheduler = 0; \
-    as.controls = 0;
+    as.control_group = 0;
 #endif // _di_fl_execute_as_t_
 
 #ifdef __cplusplus

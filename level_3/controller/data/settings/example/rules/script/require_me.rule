@@ -1,0 +1,14 @@
+# fss-000d
+
+setting:
+  name "Example script for needs, wants, and wishes."
+  environment PATH
+  script sh
+
+script:
+  start {
+    echo
+    echo "This should be included via a need, want, or wish."
+    echo
+  }
+

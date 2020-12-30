@@ -9,6 +9,7 @@ f_account
 f_capability
 f_color
 f_console
+f_control_group
 f_conversion
 f_directory
 f_environment
@@ -22,11 +23,13 @@ f_print
 f_signal
 fl_color
 fl_console
+fl_control_group
 fl_conversion
 fl_fss
 fl_iki
 fl_string
 fl_type
+fll_control_group
 fll_environment
 fll_error
 fll_execute

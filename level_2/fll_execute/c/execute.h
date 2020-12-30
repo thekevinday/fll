@@ -13,6 +13,9 @@
 #ifndef _FLL_execute_h
 #define _FLL_execute_h
 
+// include pre-requirements
+#define _GNU_SOURCE
+
 // libc includes
 #include <memory.h>
 #include <sched.h>
@@ -30,6 +33,7 @@
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/capability.h>
+#include <level_0/control_group.h>
 #include <level_0/environment.h>
 #include <level_0/execute.h>
 #include <level_0/file.h>
@@ -37,6 +41,7 @@
 #include <level_0/signal.h>
 
 // fll-1 includes
+#include <level_1/control_group.h>
 #include <level_1/environment.h>
 #include <level_1/execute.h>
 #include <level_1/string.h>
@@ -387,8 +392,10 @@ extern "C" {
  * Otherwise, this returns F_child and assigns the child's return code to result for the child process.
  * The caller is expected to handle the appropriate exit procedures and memory deallocation for the child process when F_child is returned.
  *
- * This returns F_capability, F_group, and F_user only for the child process and must be treated the same as F_child for the purposes of understanding what the current process is.
+ * This returns F_capability, F_group, and F_user only by the child process and must be treated the same as F_child for the purposes of understanding what the current process is.
  * These are essentialy F_child with explicit error codes that are returned instead of performing the desired execution.
+ *
+ * This returns F_control_group and F_schedule only by the parent process and represents that the child process could not be executed.
  *
  * @param program
  *   The name or path of the program.
@@ -420,14 +427,16 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_child on success but this is the child thread.
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
+ *   F_control_group (with error bit) on failure to set capabilities in the child (only the parent process returns this).
  *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
  *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
  *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
  *   F_pipe (with error bit) on pipe failure.
- *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the parent process returns this).
  *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  *   Errors (with error bit) from: f_capability_process_set().
@@ -462,6 +471,7 @@ extern "C" {
  * @see f_environment_get()
  * @see f_file_exists()
  * @see f_signal_set_handle()
+ * @see fl_control_group_apply()
  * @see fl_environment_path_explode_dynamic()
  * @see fl_string_append()
  * @see fl_string_dynamic_terminate()

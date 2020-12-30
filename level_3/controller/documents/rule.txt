@@ -10,7 +10,7 @@ Rule Documentation:
 
   The "settings" Rule Type has the following FSS-0001 (Extended) Content\:
     "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
-    "control": Define a control group (cgroup) in which everything within this rule executes under.
+    "control_group": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
@@ -29,6 +29,8 @@ Rule Documentation:
   This essentially maintains or reduces the capabilities already available.
   Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
   If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
+
+  In the case of "control", the first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
   In the case of "group" and "user", only users and groups that the user the controller program is being run as may be used.
 
@@ -75,11 +77,3 @@ Rule Documentation:
   The "create" Content designates that this controller program to create the PID file after successfully starting the service.
   The "use" Content designates that the called program will provide the PID file after successfully starting the service.
   For both "create" and "program" the PID file is expected to only exist on success or failure and the existence thereof designates the success or failure rate.
-
-  The following Content are the same as those specified in the Settings above except that they apply to a specific Rule Item instead of all Rule Items in the file\:
-  - "capability"
-  - "control"
-  - "group"
-  - "nice"
-  - "scheduler"
-  - "user"

@@ -3,10 +3,20 @@
 setting:
   name "Multiple Commands: id, whoami, date, etc.."
   capability "all="
+  control_group new memory/example
   nice 15
   scheduler batch 0
   #user kevin
   #group list 8 root
+
+  need script require_me
+
+script:
+  start {
+    echo
+    echo "Current cgroup for self (PPID $PPID, PID $$) is: '$(cat /proc/self/cgroup)'"
+    sleep 20
+  }
 
 command:
   start {

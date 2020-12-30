@@ -260,7 +260,7 @@ extern "C" {
     { \
       init_console_parameter_t_initialize, \
       f_string_lengths_t_initialize, \
-      f_macro_file_t_initialize(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+      f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       0, \
       f_signal_t_initialize, \

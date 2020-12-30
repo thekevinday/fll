@@ -139,7 +139,47 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_return_status private_fll_execute_as(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+  extern f_return_status private_fll_execute_as_child(const fl_execute_as_t as, fl_execute_parameter_t * const parameter, int *result) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fll_execute_program_)
+
+/**
+ * Private function for perform the execute as operations.
+ *
+ * This should be executed in the parent thread.
+ *
+ * @param as
+ *   The "as" operations to perform.
+ * @param id_child
+ *   The child PID.
+ * @param parameter
+ *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   This function only cares about "option" on this structure.
+ *   option:
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ * @param result
+ *   A NULL termianted 2-byte string array where the first character represents the return code ('0' for success, '1' for failure).
+ *
+ * @return
+ *   F_none on success.
+ *   F_capability (with error bit) on failure to set capabilities.
+ *   F_group (with error bit) on failure to set GID.
+ *   F_nice (with error bit) on failure to set process niceness.
+ *   F_schedule (with error bit) on failure to set scheduler.
+ *   F_user (with error bit) on failure to set UID.
+ *
+ * @see exit()
+ * @see getpid()
+ * @see nice()
+ * @see sched_setscheduler()
+ * @see setgid()
+ * @see setgroups()
+ * @see setuid()
+ *
+ * @see f_capability_process_set()
+ * @see fll_execute_program()
+ */
+#if !defined(_di_fll_execute_program_)
+  extern f_return_status private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -176,23 +216,30 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_child on success but this is the child thread.
+ *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
+ *   F_control_group (with error bit) on failure to set capabilities in the child (only the parent process returns this).
+ *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
  *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
  *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
- *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_pipe (with error bit) on pipe failure.
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the parent process returns this).
  *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  * @see clearenv()
+ * @see close()
+ * @see dup2()
  * @see execv()
  * @see execvp()
  * @see fork()
+ * @see pipe()
  * @see waitpid()
  *
  * @see f_environment_set_dynamic()
  * @see f_signal_set_handle()
+ * @see fl_control_group_apply()
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
@@ -233,14 +280,16 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_child on success but this is the child thread.
+ *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
+ *   F_control_group (with error bit) on failure to set capabilities in the child (only the parent process returns this).
+ *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
  *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
  *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
  *   F_pipe (with error bit) on pipe failure.
- *   F_schedule (with error bit) on failure to set scheduler in the child (only the child process returns this).
+ *   F_schedule (with error bit) on failure to set scheduler in the child (only the parent process returns this).
  *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  * @see clearenv()

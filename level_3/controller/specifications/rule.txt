@@ -29,7 +29,7 @@ Rule Specification:
 
   The "settings" Rule Type has the following FSS-0001 (Extended)\:
     "capability": One Content representing capabilities.
-    "control": One Content representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
+    "control_group": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
     "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     "group": One or more Content representing group names or group ids.

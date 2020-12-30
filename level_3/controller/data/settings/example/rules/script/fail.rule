@@ -1,7 +1,7 @@
 # fss-000d
 
 setting:
-  name "Scipt #2"
+  name "Script #2"
   need script succeed
 
 script:
