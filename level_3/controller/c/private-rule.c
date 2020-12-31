@@ -369,23 +369,26 @@ extern "C" {
 
       if (cache.name_action.used) {
         fprintf(output.to.stream, "%s '", item ? "action" : "value");
-        fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_action.string, output.notable.after->string);
-        fprintf(output.to.stream, "%s' on line ", output.context.before->string);
+        fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
+        f_print_dynamic(output.to.stream, cache.name_action);
+        fprintf(output.to.stream, "%s%s' on line ", output.notable.after->string, output.context.before->string);
         fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_action, output.notable.after->string);
         fprintf(output.to.stream, "%s for ", output.context.before->string);
       }
 
       if (cache.name_item.used) {
         fprintf(output.to.stream, "rule %s '", item ? "item" : "setting");
-        fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_item.string, output.notable.after->string);
-        fprintf(output.to.stream, "%s' on line ", output.context.before->string);
+        fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
+        f_print_dynamic(output.to.stream, cache.name_item);
+        fprintf(output.to.stream, "%s%s' on line ", output.notable.after->string, output.context.before->string);
         fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_item, output.notable.after->string);
         fprintf(output.to.stream, "%s for ", output.context.before->string);
       }
 
       if (cache.name_file.used) {
         fprintf(output.to.stream, "file '");
-        fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, cache.name_file.string, output.notable.after->string);
+        fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
+        f_print_dynamic(output.to.stream, cache.name_file);
         fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
       }
     }
@@ -442,7 +445,7 @@ extern "C" {
 #endif // _di_controller_rule_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_execute_
-  f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) {
+  f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, const bool simulate, controller_data_t *data, controller_setting_t *setting) {
     f_status_t status = F_none;
     f_status_t success = F_false;
 
@@ -535,7 +538,7 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, 0, action->parameters, 0, &parameter, &as, data);
+          status = controller_rule_execute_foreground(item->type, *action, simulate, 0, action->parameters, 0, &parameter, &as, data);
 
           if (status == F_child) {
             break;
@@ -543,7 +546,8 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
-            break;
+
+            if (!simulate) break;
           }
 
           success = F_true;
@@ -555,7 +559,7 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, &as, data);
+          status = controller_rule_execute_foreground(item->type, *action, simulate, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, &as, data);
 
           if (status == F_child) {
             break;
@@ -563,7 +567,8 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
-            break;
+
+            if (!simulate) break;
           }
 
           success = F_true;
@@ -574,11 +579,12 @@ extern "C" {
             parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(item->type, *action, 0, action->parameters, 0, &parameter, &as, data);
+          status = controller_rule_execute_pid_with(item->type, *action, simulate, 0, action->parameters, 0, &parameter, &as, data);
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
-            break;
+
+            if (!simulate) break;
           }
 
           success = F_true;
@@ -604,7 +610,7 @@ extern "C" {
         if (status == F_child || status == F_signal) break;
       } // for
 
-      if (status == F_child || status == F_signal || F_status_is_error(status)) break;
+      if (status == F_child || status == F_signal || F_status_is_error(status) && !simulate) break;
     } // for
 
     fl_string_maps_delete(&environment);
@@ -628,7 +634,9 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+
+    f_status_t status = F_none;
     int result = 0;
 
     // @todo check to see if pid file exists.
@@ -637,12 +645,39 @@ extern "C" {
     //       in which case fll_execute_program() is called.
     //       otherwise this needs to call an asynchronous execute process.
     //       until then, this controller_rule_execute_pid_with() function is not correct and only represents a process that forks to the background.
-    f_status_t status = fll_execute_program(program, arguments, parameter, as, &result);
+
+    if (simulate) {
+
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(data->output.stream, "Simulating execution of '");
+        fprintf(data->output.stream, "%s%s%s", data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, data->context.reset.string);
+        fprintf(data->output.stream, "' with the arguments: '%s", data->context.title.string);
+
+        for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
+          fprintf(data->output.stream, "%s%s", (program && i || !program && i > 1) ? " " : "", arguments.array[i].string);
+        } // for
+
+        fprintf(data->output.stream, "%s'.%c", data->context.reset.string, f_string_eol_s[0]);
+      }
+
+      // sleep for less than a second to better show simulation of synchronous vs asynchronous.
+      usleep(200000);
+
+      const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
+      const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(parameter->option, parameter->environment, parameter->signals, &simulated_program);
+
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, as, &result);
+    }
+    else {
+      status = fll_execute_program(program, arguments, parameter, as, &result);
+    }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_schedule || status == F_user) {
+      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_user) {
         status = F_child;
       }
       else {
@@ -687,15 +722,43 @@ extern "C" {
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+
+    f_status_t status = F_none;
     int result = 0;
 
-    f_status_t status = fll_execute_program(program, arguments, parameter, as, &result);
+    if (simulate) {
+
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(data->output.stream, "Simulating execution of '");
+        fprintf(data->output.stream, "%s%s%s", data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, data->context.reset.string);
+        fprintf(data->output.stream, "' with the arguments: '%s", data->context.title.string);
+
+        for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
+          fprintf(data->output.stream, "%s%s", (program && i || !program && i > 1) ? " " : "", arguments.array[i].string);
+        } // for
+
+        fprintf(data->output.stream, "%s'.%c", data->context.reset.string, f_string_eol_s[0]);
+      }
+
+      // sleep for less than a second to better show simulation of synchronous vs asynchronous.
+      usleep(200000);
+
+      const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
+      const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(parameter->option, parameter->environment, parameter->signals, &simulated_program);
+
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, as, &result);
+    }
+    else {
+      status = fll_execute_program(program, arguments, parameter, as, &result);
+    }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_schedule || status == F_user) {
+      if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_user) {
         status = F_child;
       }
       else {
@@ -861,8 +924,14 @@ extern "C" {
       else if (fl_string_dynamic_compare_string(controller_string_kill, cache->name_action, controller_string_kill_length) == F_equal_to) {
         type = controller_rule_action_type_kill;
       }
+      else if (fl_string_dynamic_compare_string(controller_string_pause, cache->name_action, controller_string_pause_length) == F_equal_to) {
+        type = controller_rule_action_type_pause;
+      }
       else if (fl_string_dynamic_compare_string(controller_string_restart, cache->name_action, controller_string_restart_length) == F_equal_to) {
         type = controller_rule_action_type_restart;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_resume, cache->name_action, controller_string_resume_length) == F_equal_to) {
+        type = controller_rule_action_type_resume;
       }
       else if (fl_string_dynamic_compare_string(controller_string_reload, cache->name_action, controller_string_reload_length) == F_equal_to) {
         type = controller_rule_action_type_reload;
@@ -1057,11 +1126,15 @@ extern "C" {
   f_return_status controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) {
 
     switch (action) {
+      case controller_rule_action_type_freeze:
       case controller_rule_action_type_kill:
+      case controller_rule_action_type_pause:
       case controller_rule_action_type_reload:
       case controller_rule_action_type_restart:
+      case controller_rule_action_type_resume:
       case controller_rule_action_type_start:
       case controller_rule_action_type_stop:
+      case controller_rule_action_type_thaw:
         break;
 
       default:
@@ -1243,7 +1316,7 @@ extern "C" {
               memcpy(cache_name_file, cache->name_file.string, cache->name_file.used);
 
               // @todo: this should pass or use the asynchronous state.
-              status = controller_rule_process(at, controller_rule_action_type_start, options, data, setting, cache);
+              status = controller_rule_process(at, action, options, data, setting, cache);
 
               if (status == F_child || status == F_signal) break;
 
@@ -1306,7 +1379,7 @@ extern "C" {
       } // for
     }
 
-    if (!(options & controller_rule_option_simulate) && F_status_is_error_not(status)) {
+    if (!(options & controller_rule_option_validate) && F_status_is_error_not(status)) {
 
       // find at least one of the requested action when the rule is required.
       if (options & controller_rule_option_require) {
@@ -1343,7 +1416,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(*cache, index, action, data, setting);
+        status = controller_rule_execute(*cache, index, action, options & controller_rule_option_simulate, data, setting);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(data->error, *cache, F_true);

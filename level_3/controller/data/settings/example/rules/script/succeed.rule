@@ -11,7 +11,7 @@ script:
     echo "Hello this is script #1 and should succeed."
     echo
 
-    date
+    date -u
     echo
   }
 

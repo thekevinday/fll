@@ -62,13 +62,15 @@ Rule Documentation:
   A "script" is assumed to be in GNU Bash, which is the default expected behavior, but the specification does not explicitly require this.
   Another scripting language can be used but changing this incurs the responsibility to ensure all rules are updated to the appropriate scripting language.
 
-  There are five primary inner Content to perform: "kill", "restart", "reload", "start", and "stop".
+  There are seven primary inner Content to perform: "kill", "pause", "restart", "resume", "reload", "start", and "stop".
 
   The "kill" Content is performed whenever this rule is executed using the kill action (which is, in general, a forced stop).
+  The "pause" Content is performed whenever this rule is executed using the pause action.
+  The "restart" Content is performed whenever this rule is executed using the restart action.
+  The "resume" Content is performed whenever this rule is executed using the resume action.
+  The "reload" Content is performed whenever this rule is executed using the reload action.
   The "start" Content is performed whenever this rule is executed using the start action.
   The "stop" Content is performed whenever this rule is executed using the stop action.
-  The "restart" Content is performed whenever this rule is executed using the restart action.
-  The "reload" Content is performed whenever this rule is executed using the reload action.
 
   When "restart" Content is not provided, then "start" and "stop" is called when the rule is executed using the restart action, if both "start" and "stop" are provided.
   When "reload", "start", or "stop" Content are not provided, then no respective action is performed.

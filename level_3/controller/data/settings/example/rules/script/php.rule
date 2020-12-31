@@ -15,7 +15,7 @@ script:
     var_dump(getenv());
     print("\n");
 
-    print("Now executing 'date' program, assuming that it exists in \$PATH.\n");
-    passthru("date");
+    print("Now executing 'date -u' program, assuming that it exists in \$PATH.\n");
+    passthru("date -u");
     print("\n");
   }

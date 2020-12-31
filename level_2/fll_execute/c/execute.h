@@ -429,7 +429,7 @@ extern "C" {
  *   F_none on success.
  *   F_child on success but this is the child thread.
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
- *   F_control_group (with error bit) on failure to set capabilities in the child (only the parent process returns this).
+ *   F_control_group (with error bit) on failure to set control group in the child (only the parent process returns this).
  *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.

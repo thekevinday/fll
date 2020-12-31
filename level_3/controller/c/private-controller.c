@@ -567,6 +567,7 @@ extern "C" {
     controller_entry_actions_t *actions = 0;
 
     const bool simulate = data->parameters[controller_parameter_test].result == f_console_result_found;
+    const bool validate = data->parameters[controller_parameter_validate].result == f_console_result_found;
 
     cache->ats.used = 0;
     cache->line_action = 0;

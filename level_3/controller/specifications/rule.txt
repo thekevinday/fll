@@ -55,6 +55,8 @@ Rule Specification:
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
     "kill": One or more Content representing a program being executed and its arguments.
+    "pause": One or more Content representing a program being executed and its arguments.
+    "resume": One or more Content representing a program being executed and its arguments.
     "restart": One or more Content representing a program being executed and its arguments.
     "reload": One or more Content representing a program being executed and its arguments.
     "start": One or more Content representing a program being executed and its arguments.
@@ -62,6 +64,8 @@ Rule Specification:
 
   The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
     "kill": A list repesenting multiple programs and their respective arguments to execute.
+    "pause": A list repesenting multiple programs and their respective arguments to execute.
+    "resume": A list repesenting multiple programs and their respective arguments to execute.
     "restart": A list repesenting multiple programs and their respective arguments to execute.
     "reload": A list repesenting multiple programs and their respective arguments to execute.
     "start": A list repesenting multiple programs and their respective arguments to execute.
@@ -69,6 +73,8 @@ Rule Specification:
 
   The "script" Rule Types allow the following the FSS-0003 (Extended List)\:
     "kill": A list repesenting the contents of a (Bash) shell script.
+    "pause": A list repesenting the contents of a (Bash) shell script.
+    "resume": A list repesenting the contents of a (Bash) shell script.
     "restart": A list repesenting the contents of a (Bash) shell script.
     "reload": A list repesenting the contents of a (Bash) shell script.
     "start": A list repesenting the contents of a (Bash) shell script.

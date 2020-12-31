@@ -34,6 +34,7 @@ extern "C" {
   #define controller_string_fail          "fail"
   #define controller_string_failsafe      "failsafe"
   #define controller_string_fifo          "fifo"
+  #define controller_string_freeze        "freeze"
   #define controller_string_group         "group"
   #define controller_string_groups        "groups"
   #define controller_string_how           "how"
@@ -51,6 +52,7 @@ extern "C" {
   #define controller_string_other         "other"
   #define controller_string_parameter     "parameter"
   #define controller_string_path          "path"
+  #define controller_string_pause         "pause"
   #define controller_string_pid           "pid"
   #define controller_string_program       "program"
   #define controller_string_ready         "ready"
@@ -58,6 +60,7 @@ extern "C" {
   #define controller_string_require       "require"
   #define controller_string_required      "required"
   #define controller_string_restart       "restart"
+  #define controller_string_resume        "resume"
   #define controller_string_round_robin   "round_robin"
   #define controller_string_rule          "rule"
   #define controller_string_rules         "rules"
@@ -69,6 +72,7 @@ extern "C" {
   #define controller_string_stop          "stop"
   #define controller_string_succeed       "succeed"
   #define controller_string_synchronous   "synchronous"
+  #define controller_string_thaw          "thaw"
   #define controller_string_timeout       "timeout"
   #define controller_string_type          "type"
   #define controller_string_use           "use"
@@ -99,6 +103,7 @@ extern "C" {
   #define controller_string_fail_length          4
   #define controller_string_failsafe_length      8
   #define controller_string_fifo_length          4
+  #define controller_string_freeze_length        6
   #define controller_string_group_length         5
   #define controller_string_how_length           3
   #define controller_string_idle_length          4
@@ -115,6 +120,7 @@ extern "C" {
   #define controller_string_other_length         5
   #define controller_string_parameter_length     9
   #define controller_string_path_length          4
+  #define controller_string_pause_length         5
   #define controller_string_pid_length           3
   #define controller_string_program_length       7
   #define controller_string_ready_length         5
@@ -122,6 +128,7 @@ extern "C" {
   #define controller_string_require_length       7
   #define controller_string_required_length      8
   #define controller_string_restart_length       7
+  #define controller_string_resume_length        6
   #define controller_string_round_robin_length   11
   #define controller_string_rule_length          4
   #define controller_string_rules_length         5
@@ -133,6 +140,7 @@ extern "C" {
   #define controller_string_stop_length          4
   #define controller_string_succeed_length       7
   #define controller_string_synchronous_length   11
+  #define controller_string_thaw_length          4
   #define controller_string_timeout_length       7
   #define controller_string_type_length          4
   #define controller_string_use_length           3
@@ -157,12 +165,16 @@ extern "C" {
 
   enum {
     controller_rule_action_type_create = 1,
+    controller_rule_action_type_freeze,
     controller_rule_action_type_group,
     controller_rule_action_type_kill,
-    controller_rule_action_type_restart,
+    controller_rule_action_type_pause,
     controller_rule_action_type_reload,
+    controller_rule_action_type_restart,
+    controller_rule_action_type_resume,
     controller_rule_action_type_start,
     controller_rule_action_type_stop,
+    controller_rule_action_type_thaw,
     controller_rule_action_type_use,
     controller_rule_action_type_user,
   };
@@ -287,7 +299,8 @@ extern "C" {
   #define controller_rule_option_asynchronous 0x1
   #define controller_rule_option_require      0x2
   #define controller_rule_option_simulate     0x4
-  #define controller_rule_option_wait         0x8
+  #define controller_rule_option_validate     0x8
+  #define controller_rule_option_wait         0x10
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
   #define controller_rule_has_control_group 0x1
@@ -327,7 +340,7 @@ extern "C" {
     f_capability_t capability;
     f_control_group_t control_group;
     f_int32s_t groups;
-    fl_execute_scheduler_t scheduler;
+    f_execute_scheduler_t scheduler;
 
     controller_rule_items_t items;
   } controller_rule_t;
@@ -357,7 +370,7 @@ extern "C" {
       f_capability_t_initialize, \
       f_control_group_t_initialize, \
       f_int32s_t_initialize, \
-      fl_execute_scheduler_t_initialize, \
+      f_execute_scheduler_t_initialize, \
       controller_rule_items_initialize, \
     }
 

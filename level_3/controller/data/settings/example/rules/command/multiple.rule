@@ -28,4 +28,4 @@ command:
   start whoami
 
 command:
-  start date
+  start date -u

@@ -214,10 +214,15 @@ extern "C" {
  *
  *   Only subset of the action type codes are supported:
  *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_pause
  *   - controller_rule_action_type_reload
  *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_resume
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
+ * @param simulate
+ *   If TRUE, then run a simulated action (outputing result and executing an empty script).
+ *   If FALSE, perform the real execution.
  * @param data
  *   The program data.
  * @param setting
@@ -233,7 +238,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, const bool simulate, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -253,6 +258,9 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
+ * @param simulate
+ *   If TRUE, then run a simulated action (outputing result and executing an empty script).
+ *   If FALSE, perform the real execution.
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
@@ -279,7 +287,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
@@ -296,6 +304,9 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
+ * @param simulate
+ *   If TRUE, then run a simulated action (outputing result and executing an empty script).
+ *   If FALSE, perform the real execution.
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
@@ -321,7 +332,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**

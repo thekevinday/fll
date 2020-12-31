@@ -52,27 +52,6 @@ extern "C" {
 #endif // _di_fl_execute_parameter_t_
 
 /**
- * A structure representing a scheduler and its parameters for execution.
- *
- * policy:   the scheduler policy.
- * priority: the scheduler priority;
- */
-#ifndef _di_fl_execute_scheduler_t_
-  typedef struct {
-    int policy;
-    int priority;
-  } fl_execute_scheduler_t;
-
-  #define fl_execute_scheduler_t_initialize { 0, 0 }
-
-  #define fl_macro_execute_scheduler_t_initialize(policy, priority) { policy, priority }
-
-  #define fl_execute_scheduler_t_clear(scheduler) \
-    scheduler.policy = 0; \
-    scheduler.priority = 0;
-#endif // _di_fl_execute_scheduler_t_
-
-/**
  * A structure for containing identity and access related parameters for the execute functions that call the execv() family of functions.
  *
  * There are likely many more identity and access related things that can be done but this focuses on a small core set of those.
@@ -84,34 +63,34 @@ extern "C" {
  * id_user:       the id of the user to assign the child process to, set to 0 to not use.
  * id_group:      the id of the group to assign the child process to, set to 0 to not use.
  * capability:    all of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
+ * control_group: an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
  * id_groups:     the ids of each supplemental group to assign the child process to, set to 0 to not use.
  * scheduler:     the scheduler to assign the child process to, set to 0 to not use.
- * control_group: an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
  */
 #ifndef _di_fl_execute_as_t_
   typedef struct {
     int *nice;
     uid_t *id_user;
     gid_t *id_group;
-    f_capability_t capability;
 
-    f_int32s_t *id_groups;
-    fl_execute_scheduler_t *scheduler;
+    f_capability_t capability;
     f_control_group_t *control_group;
+    f_int32s_t *id_groups;
+    f_execute_scheduler_t *scheduler;
   } fl_execute_as_t;
 
   #define fl_execute_as_t_initialize { 0, 0, 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, capability, id_groups, scheduler, control_group) { nice, id_user, id_group, capability, id_groups, scheduler, control_group }
+  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, capability, control_group, id_groups, scheduler) { nice, id_user, id_group, capability, control_group, id_groups, scheduler }
 
   #define fl_execute_as_t_clear(as) \
     as.nice = 0; \
     as.id_user = 0; \
     as.id_group = 0; \
     as.capability = 0; \
+    as.control_group = 0; \
     as.id_groups = 0; \
-    as.scheduler = 0; \
-    as.control_group = 0;
+    as.scheduler = 0;
 #endif // _di_fl_execute_as_t_
 
 #ifdef __cplusplus

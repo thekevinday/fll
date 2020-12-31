@@ -16,6 +16,27 @@
 extern "C" {
 #endif
 
+/**
+ * A structure representing a scheduler and its parameters for execution.
+ *
+ * policy:   the scheduler policy.
+ * priority: the scheduler priority;
+ */
+#ifndef _di_f_execute_scheduler_t_
+  typedef struct {
+    int policy;
+    int priority;
+  } f_execute_scheduler_t;
+
+  #define f_execute_scheduler_t_initialize { 0, 0 }
+
+  #define f_macro_execute_scheduler_t_initialize(policy, priority) { policy, priority }
+
+  #define f_execute_scheduler_t_clear(scheduler) \
+    scheduler.policy = 0; \
+    scheduler.priority = 0;
+#endif // _di_f_execute_scheduler_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
