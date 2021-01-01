@@ -55,7 +55,7 @@ extern "C" {
 #ifndef _di_iki_write_version_
   #define iki_write_major_version "0"
   #define iki_write_minor_version "5"
-  #define iki_write_micro_version "2"
+  #define iki_write_micro_version "3"
   #define iki_write_version iki_write_major_version "." iki_write_minor_version "." iki_write_micro_version
 #endif // _di_iki_write_version_
 

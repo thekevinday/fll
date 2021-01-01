@@ -51,7 +51,7 @@ extern "C" {
 #ifndef _di_init_version_
   #define init_major_version "0"
   #define init_minor_version "5"
-  #define init_micro_version "2"
+  #define init_micro_version "3"
   #define init_version init_major_version "." init_minor_version "." init_micro_version
 #endif // _di_init_version_
 

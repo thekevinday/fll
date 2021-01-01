@@ -54,7 +54,7 @@ extern "C" {
 #ifndef _di_iki_read_version_
   #define iki_read_major_version "0"
   #define iki_read_minor_version "5"
-  #define iki_read_micro_version "2"
+  #define iki_read_micro_version "3"
   #define iki_read_version iki_read_major_version "." iki_read_minor_version "." iki_read_micro_version
 #endif // _di_iki_read_version_
 

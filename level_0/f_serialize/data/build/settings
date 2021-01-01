@@ -4,7 +4,7 @@ project_name f_serialize
 
 version_major 0
 version_minor 5
-version_micro 2
+version_micro 3
 version_target major
 
 environment

@@ -43,7 +43,7 @@ extern "C" {
 #ifndef _di_control_version_
   #define control_major_version "0"
   #define control_minor_version "5"
-  #define control_micro_version "2"
+  #define control_micro_version "3"
   #define control_version control_major_version "." control_minor_version "." control_micro_version
 #endif // _di_control_version_
 
