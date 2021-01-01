@@ -6,12 +6,12 @@ extern "C" {
 
 #ifndef _di_fll_fss_embedded_list_read_
   f_return_status fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
-    #ifndef _di_level_3_parameter_checking_
+    #ifndef _di_level_2_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
       if (!objects_delimits) return F_status_set_error(F_parameter);
       if (!comments) return F_status_set_error(F_parameter);
-    #endif // _di_level_3_parameter_checking_
+    #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
     f_status_t status2 = F_none;

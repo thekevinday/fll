@@ -316,9 +316,9 @@ extern "C" {
 
 #ifndef _di_fl_directory_path_pop_
   f_return_status fl_directory_path_pop(f_string_static_t *path) {
-    #ifndef _di_level_0_parameter_checking_
+    #ifndef _di_level_1_parameter_checking_
       if (path->used > path->size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     if (!path->used) {
       return F_data_not;
@@ -388,10 +388,10 @@ extern "C" {
 
 #ifndef _di_fl_directory_path_push_
   f_return_status fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) {
-    #ifndef _di_level_0_parameter_checking_
+    #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     if (!length) {
       return F_data_not;
@@ -403,10 +403,10 @@ extern "C" {
 
 #ifndef _di_fl_directory_path_push_dynamic_
   f_return_status fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination) {
-    #ifndef _di_level_0_parameter_checking_
+    #ifndef _di_level_1_parameter_checking_
       if (source.used > source.size) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     if (!source.used) {
       return F_data_not;
