@@ -269,6 +269,8 @@ extern "C" {
       F_supported_not,
       F_syntax,
       F_syntax_not,
+      F_thread,
+      F_thread_not,
       F_user,
       F_user_not,
       F_utf,

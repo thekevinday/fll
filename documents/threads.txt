@@ -1,0 +1,10 @@
+# fss-002
+
+Threads Documentation:
+  With the inclusion of the f_thread project, the Featureless Linux Library supports and uses threads by default.
+  This essentially adds -pthread to all level and monolithic builds with all projects depending on f_thread requiring passing -pthread.
+
+  To compile without this thread support, remove all occurances of "-pthread" from each of the build settings files.
+  Be sure to remove f_thread project from the compile list as well (which can be found either in the individual projects build settings file or the appropriate level or monolithic build settings file).
+
+  Any project or library depending on f_thread must have -pthread passed to guarantee a correct and valid compilation.

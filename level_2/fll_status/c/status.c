@@ -986,6 +986,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_thread, length, FL_status_string_thread_length) == F_equal_to) {
+        *code = F_thread;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_thread_not, length, FL_status_string_thread_not_length) == F_equal_to) {
+        *code = F_thread_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_user, length, FL_status_string_user_length) == F_equal_to) {
         *code = F_user;
         return F_none;

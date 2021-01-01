@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fll_2
+project_name f_thread
 
 version_major 0
 version_minor 5
@@ -12,24 +12,24 @@ environment
 process_pre
 process_post
 
-modes level
-modes_default level
+modes individual
+modes_default individual
 
 build_compiler gcc
 build_indexer ar
 build_language c
-build_libraries -lc -lcap
-build_libraries-level -lfll_1 -lfll_0
-build_sources_library control_group.c environment.c error.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status.c iki.c private-iki.c path.c program.c status.c
+build_libraries -lc
+build_libraries-individual -lf_memory
+build_sources_library thread.c private-thread.c
 build_sources_program
-build_sources_headers control_group.h environment.h error.h error-common.h execute.h file.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h path.h program.h status.h
+build_sources_headers thread.h thread-common.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static yes
 
-path_headers level_2
+path_headers level_0
 path_headers_preserve no
 path_library_script script
 path_library_shared shared
@@ -37,12 +37,13 @@ path_library_static static
 path_program_script script
 path_program_shared shared
 path_program_static static
+path_sources
+path_standard yes
 
 search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_di_libcap_
 defines_all
 defines_static
 defines_shared

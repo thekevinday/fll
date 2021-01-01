@@ -584,6 +584,12 @@ extern "C" {
         case F_syntax_not:
           *string = FL_status_string_syntax_not;
           break;
+        case F_thread:
+          *string = FL_status_string_thread;
+          break;
+        case F_thread_not:
+          *string = FL_status_string_thread_not;
+          break;
         case F_known:
           *string = FL_status_string_known;
           break;
