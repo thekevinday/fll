@@ -271,6 +271,8 @@ extern "C" {
       F_syntax_not,
       F_thread,
       F_thread_not,
+      F_time,
+      F_time_not,
       F_user,
       F_user_not,
       F_utf,

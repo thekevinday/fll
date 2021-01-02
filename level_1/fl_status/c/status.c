@@ -590,6 +590,12 @@ extern "C" {
         case F_thread_not:
           *string = FL_status_string_thread_not;
           break;
+        case F_time:
+          *string = FL_status_string_time;
+          break;
+        case F_time_not:
+          *string = FL_status_string_time_not;
+          break;
         case F_known:
           *string = FL_status_string_known;
           break;

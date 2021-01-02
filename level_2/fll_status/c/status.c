@@ -996,6 +996,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_time, length, FL_status_string_time_length) == F_equal_to) {
+        *code = F_time;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_time_not, length, FL_status_string_time_not_length) == F_equal_to) {
+        *code = F_time_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_user, length, FL_status_string_user_length) == F_equal_to) {
         *code = F_user;
         return F_none;
