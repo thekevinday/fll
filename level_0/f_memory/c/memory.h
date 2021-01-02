@@ -68,14 +68,6 @@ extern "C" {
 #endif // _di_f_memory_default_allocation_step_
 
 /**
- * Memory types.
- */
-#ifndef _di_f_memory_types_
-  #define f_memory_size_t size_t
-  #define f_memory_length size_t
-#endif // _di_f_memory_types_
-
-/**
  * Create some dynamically allocated array of some length.
  *
  * @param pointer
@@ -96,8 +88,33 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_new_
-  extern f_return_status f_memory_new(void **pointer, const f_memory_size_t size, const f_memory_length length);
+  extern f_return_status f_memory_new(void **pointer, const size_t size, const size_t length);
 #endif // _di_f_memory_new_
+
+/**
+ * Create some dynamically allocated array of some length, guaranteeing aligned memory.
+ *
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
+ * @param alignment
+ *   The size of the alignment, such as sizeof(void *).
+ *   Must be greater than 0.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
+ *   Must be a multiple of alignment.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see posix_memalign()
+ * @see memset()
+ */
+#ifndef _di_f_memory_new_aligned_
+  extern f_return_status f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
+#endif // _di_f_memory_new_aligned_
 
 /**
  * Delete dynamically allocated data.
@@ -122,7 +139,7 @@ extern "C" {
  * @see free()
  */
 #if !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
-  extern f_return_status f_memory_delete(void **pointer, const f_memory_size_t size, const f_memory_length length);
+  extern f_return_status f_memory_delete(void **pointer, const size_t size, const size_t length);
 #endif // !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
 
 /**
@@ -147,7 +164,7 @@ extern "C" {
  * @see memset()
  */
 #if !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
-  extern f_return_status f_memory_destroy(void **pointer, const f_memory_size_t size, const f_memory_length length);
+  extern f_return_status f_memory_destroy(void **pointer, const size_t size, const size_t length);
 #endif // !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
 
 /**
@@ -174,7 +191,7 @@ extern "C" {
  * @see realloc()
  */
 #if !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
-  extern f_return_status f_memory_resize(void **pointer, const f_memory_size_t size, const f_memory_length old_length, const f_memory_length new_length);
+  extern f_return_status f_memory_resize(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
 #endif // !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
 
 /**
@@ -201,7 +218,7 @@ extern "C" {
  * @see realloc()
  */
 #if !(defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_fast_memory_))
-  extern f_return_status f_memory_adjust(void **pointer, const f_memory_size_t size, const f_memory_length old_length, const f_memory_length new_length);
+  extern f_return_status f_memory_adjust(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
 #endif // _di_f_memory_adjust_
 
 #ifdef __cplusplus
