@@ -187,24 +187,24 @@ extern "C" {
       for (j = i + 1; j < depths->used; j++) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe value '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may only be specified once for the parameter '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_read_long_depth);
-          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_read_long_depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may not have the value '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' before the value '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[j].depth);
-          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
         }
@@ -237,7 +237,7 @@ extern "C" {
         fl_string_dynamic_delete(&data->buffer);
 
         if (data->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(data->output.stream, "0%c", f_string_eol[0]);
+          fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
           return F_none;
         }
 
@@ -265,7 +265,7 @@ extern "C" {
     // Requested depths cannot be greater than contents depth.
     if (depths.used > data->nest.used) {
       if (data->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-        fprintf(data->output.stream, "0%c", f_string_eol[0]);
+        fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
         return F_none;
       }
 
@@ -478,7 +478,7 @@ extern "C" {
           total++;
         } // for
 
-        fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
+        fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
 
         return F_none;
       }
@@ -535,13 +535,13 @@ extern "C" {
 
           if (!data->buffer.string[j]) continue;
 
-          if (data->buffer.string[j] == f_string_eol[0]) {
+          if (data->buffer.string[j] == f_string_eol_s[0]) {
             total++;
           }
         } // for
       } // for
 
-      fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
+      fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
       return F_none;
     }
 
@@ -570,7 +570,7 @@ extern "C" {
         if (line_current != line) {
           for (; j <= items->array[i].content.array[0].stop; ++j) {
 
-            if (data->buffer.string[j] == f_string_eol[0]) {
+            if (data->buffer.string[j] == f_string_eol_s[0]) {
               line_current++;
 
               if (line_current == line) {
@@ -588,8 +588,8 @@ extern "C" {
 
             if (!data->buffer.string[j]) continue;
 
-            if (data->buffer.string[j] == f_string_eol[0]) {
-              fprintf(data->output.stream, "%c", f_string_eol[0]);
+            if (data->buffer.string[j] == f_string_eol_s[0]) {
+              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               break;
             }
 

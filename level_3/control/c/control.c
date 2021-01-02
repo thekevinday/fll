@@ -47,38 +47,26 @@ extern "C" {
           data->warning.notable = data->context.set.notable;
         }
         else {
-          data->context.set.warning.before = &f_color_set_string_null_s;
-          data->context.set.warning.after = &f_color_set_string_null_s;
-          data->context.set.error.before = &f_color_set_string_null_s;
-          data->context.set.error.after = &f_color_set_string_null_s;
-          data->context.set.title.before = &f_color_set_string_null_s;
-          data->context.set.title.after = &f_color_set_string_null_s;
-          data->context.set.notable.before = &f_color_set_string_null_s;
-          data->context.set.notable.after = &f_color_set_string_null_s;
-          data->context.set.important.before = &f_color_set_string_null_s;
-          data->context.set.important.after = &f_color_set_string_null_s;
-          data->context.set.standout.before = &f_color_set_string_null_s;
-          data->context.set.standout.after = &f_color_set_string_null_s;
-          data->context.set.normal.before = &f_color_set_string_null_s;
-          data->context.set.normal.after = &f_color_set_string_null_s;
-          data->context.set.normal_reset.before = &f_color_set_string_null_s;
-          data->context.set.normal_reset.after = &f_color_set_string_null_s;
+          data->context.set.warning = f_color_set_empty_s;
+          data->context.set.error = f_color_set_empty_s;
+          data->context.set.title = f_color_set_empty_s;
+          data->context.set.notable = f_color_set_empty_s;
+          data->context.set.important = f_color_set_empty_s;
+          data->context.set.standout = f_color_set_empty_s;
+          data->context.set.normal = f_color_set_empty_s;
+          data->context.set.normal_reset = f_color_set_empty_s;
 
-          data->error.context.before = &f_color_set_string_null_s;
-          data->error.context.after = &f_color_set_string_null_s;
-          data->error.notable.before = &f_color_set_string_null_s;
-          data->error.notable.after = &f_color_set_string_null_s;
+          data->error.context = f_color_set_empty_s;
+          data->error.notable = f_color_set_empty_s;
 
-          data->warning.context.before = &f_color_set_string_null_s;
-          data->warning.context.after = &f_color_set_string_null_s;
-          data->warning.notable.before = &f_color_set_string_null_s;
-          data->warning.notable.after = &f_color_set_string_null_s;
+          data->warning.context = f_color_set_empty_s;
+          data->warning.notable = f_color_set_empty_s;
         }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
           control_delete_data(data);
@@ -135,7 +123,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 

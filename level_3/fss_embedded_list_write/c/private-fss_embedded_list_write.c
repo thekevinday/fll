@@ -12,14 +12,14 @@ extern "C" {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sMust specify both the '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_write_long_object);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter and the '");
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_write_long_content);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter the same number of times when not specifying the ");
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_write_long_partial);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol[0]);
+    fl_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_embedded_list_write_error_parameter_same_times_print_
 
@@ -30,10 +30,10 @@ extern "C" {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "\\n");
-    fl_color_print(data.error.to.stream, data.context.set.error, "' in objects.%c", f_string_eol[0]);
+    fl_color_print(data.error.to.stream, data.context.set.error, "' in objects.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_embedded_list_write_error_parameter_unsupported_eol_print_
 
@@ -44,10 +44,10 @@ extern "C" {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol[0]);
+    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
     fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", symbol, parameter);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
+    fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_embedded_list_write_error_parameter_value_missing_print_
 
@@ -238,8 +238,8 @@ extern "C" {
 
             if (block.string[range.start] == fss_embedded_list_write_pipe_content_start) {
               if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol[0]);
-                fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol[0]);
+                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+                fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_supported_not);

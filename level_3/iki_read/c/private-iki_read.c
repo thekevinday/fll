@@ -14,13 +14,13 @@ extern "C" {
     range->start = 0;
     if (data->line > 0) {
       for (; line < data->line && range->start < data->buffer.used; range->start++) {
-        if (data->buffer.string[range->start] == f_string_eol[0]) line++;
+        if (data->buffer.string[range->start] == f_string_eol_s[0]) line++;
       } // for
     }
 
     if (line == data->line) {
       for (range->stop = range->start; range->stop < data->buffer.used; range->stop++) {
-        if (data->buffer.string[range->stop] == f_string_eol[0]) break;
+        if (data->buffer.string[range->stop] == f_string_eol_s[0]) break;
       } // for
 
       return F_true;
@@ -173,7 +173,7 @@ extern "C" {
               f_print_dynamic_partial(data->output.stream, data->buffer, ranges->array[j]);
             }
 
-            printf("%c", f_string_eol[0]);
+            printf("%c", f_string_eol_s[0]);
           }
         } // for
       } // for
@@ -196,7 +196,7 @@ extern "C" {
           f_print_dynamic_partial(data->output.stream, data->buffer, ranges->array[i]);
         }
 
-        printf("%c", f_string_eol[0]);
+        printf("%c", f_string_eol_s[0]);
       } // for
 
       status = F_none;

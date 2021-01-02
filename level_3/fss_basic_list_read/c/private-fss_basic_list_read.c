@@ -19,7 +19,7 @@ extern "C" {
       fss_basic_list_read_macro_depths_t_new(status, (*depths), depth_size);
 
       if (F_status_is_error(status)) {
-        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
+        fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
         return status;
       }
 
@@ -103,12 +103,12 @@ extern "C" {
 
             // @todo: move error printing into common function.
             if (status_code == F_memory_allocation || status_code == F_memory_reallocation) {
-              fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
             }
             else if (status_code == f_string_length_t_size) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to process '", fll_error_print_error);
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_trim);
-              fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
             }
             else {
               f_string_t function = "fl_string_append";
@@ -121,7 +121,7 @@ extern "C" {
               fl_color_print(data.error.to.stream, data.context.set.notable, "%u", status_code);
               fl_color_print(data.error.to.stream, data.context.set.error, ") has occurred while calling ");
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s()", function);
-              fl_color_print(data.error.to.stream, data.context.set.error, ".%c", f_string_eol[0]);
+              fl_color_print(data.error.to.stream, data.context.set.error, ".%c", f_string_eol_s[0]);
             }
 
             return status;
@@ -130,7 +130,7 @@ extern "C" {
           if (!depths->array[i].value_name.used) {
             fl_color_print(data.error.to.stream, data.context.set.error, "%sThe '", fll_error_print_error);
             fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_name);
-            fl_color_print(data.error.to.stream, data.context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
+            fl_color_print(data.error.to.stream, data.context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
 
             return F_status_set_error(F_parameter);
           }
@@ -147,7 +147,7 @@ extern "C" {
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may only be specified once for the parameter '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_list_read_long_depth);
-          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
         }
@@ -158,7 +158,7 @@ extern "C" {
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' before the value '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[j].depth);
-          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol[0]);
+          fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
         }
@@ -199,7 +199,7 @@ extern "C" {
         fl_string_dynamic_delete(&data->buffer);
 
         if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(data->output.stream, "0%c", f_string_eol[0]);
+          fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
           return F_none;
         }
 
@@ -296,10 +296,10 @@ extern "C" {
       if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
         if (depths.array[0].index_at > 0) {
           if (depths.array[0].value_at < data->objects.used && names[depths.array[0].value_at]) {
-            fprintf(data->output.stream, "1%c", f_string_eol[0]);
+            fprintf(data->output.stream, "1%c", f_string_eol_s[0]);
           }
           else {
-            fprintf(data->output.stream, "0%c", f_string_eol[0]);
+            fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
           }
         }
         else if (depths.array[0].index_name > 0) {
@@ -311,10 +311,10 @@ extern "C" {
             total++;
           } // for
 
-          fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
+          fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
         }
         else {
-          fprintf(data->output.stream, "%llu%c", data->objects.used, f_string_eol[0]);
+          fprintf(data->output.stream, "%llu%c", data->objects.used, f_string_eol_s[0]);
         }
 
         return F_none;
@@ -382,7 +382,7 @@ extern "C" {
     if (depths.array[0].index_at > 0) {
       if (depths.array[0].value_at >= data->objects.used) {
         if (names[depths.array[0].value_at] && data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(data->output.stream, "0%c", f_string_eol[0]);
+          fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
         }
 
         return F_none;
@@ -398,7 +398,7 @@ extern "C" {
           if (at == depths.array[0].value_at) {
             if (data->parameters[fss_basic_list_read_parameter_total].result == f_console_result_found) {
               if (!data->contents.array[i].used) {
-                fprintf(data->output.stream, "0%c", f_string_eol[0]);
+                fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
               }
               else {
                 total = 1;
@@ -406,12 +406,12 @@ extern "C" {
                 for (j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
                   if (!data->buffer.string[j]) continue;
 
-                  if (data->buffer.string[j] == f_string_eol[0]) {
+                  if (data->buffer.string[j] == f_string_eol_s[0]) {
                     total++;
                   }
                 } // for
 
-                fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
+                fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
               }
 
               return F_none;
@@ -420,7 +420,7 @@ extern "C" {
             if (data->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
               if (!data->contents.array[i].used) {
                 if (include_empty && !line) {
-                  fprintf(data->output.stream, "%c", f_string_eol[0]);
+                  fprintf(data->output.stream, "%c", f_string_eol_s[0]);
                   fss_basic_list_read_print_set_end(*data);
                 }
               }
@@ -430,8 +430,8 @@ extern "C" {
                 if (!line) {
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
                     if (!data->buffer.string[i]) continue;
-                    if (data->buffer.string[i] == f_string_eol[0]) {
-                      fprintf(data->output.stream, "%c", f_string_eol[0]);
+                    if (data->buffer.string[i] == f_string_eol_s[0]) {
+                      fprintf(data->output.stream, "%c", f_string_eol_s[0]);
                       break;
                     }
 
@@ -444,7 +444,7 @@ extern "C" {
                   for (; i <= data->contents.array[i].array[0].stop; i++) {
                     if (!data->buffer.string[i]) continue;
 
-                    if (data->buffer.string[i] == f_string_eol[0]) {
+                    if (data->buffer.string[i] == f_string_eol_s[0]) {
                       line_current++;
 
                       if (line_current == line) {
@@ -453,8 +453,8 @@ extern "C" {
                         for (; i <= data->contents.array[i].array[0].stop; i++) {
                           if (!data->buffer.string[i]) continue;
 
-                          if (data->buffer.string[i] == f_string_eol[0]) {
-                            fprintf(data->output.stream, "%c", f_string_eol[0]);
+                          if (data->buffer.string[i] == f_string_eol_s[0]) {
+                            fprintf(data->output.stream, "%c", f_string_eol_s[0]);
                             break;
                           }
 
@@ -479,7 +479,7 @@ extern "C" {
               fss_basic_list_read_print_set_end(*data);
             }
             else if (include_empty) {
-              fprintf(data->output.stream, "%c", f_string_eol[0]);
+              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               fss_basic_list_read_print_set_end(*data);
             }
 
@@ -510,13 +510,13 @@ extern "C" {
         for (j = data->contents.array[i].array[0].start; j <= data->contents.array[i].array[0].stop; j++) {
           if (!data->buffer.string[j]) continue;
 
-          if (data->buffer.string[j] == f_string_eol[0]) {
+          if (data->buffer.string[j] == f_string_eol_s[0]) {
             total++;
           }
         } // for
       } // for
 
-      fprintf(data->output.stream, "%llu%c", total, f_string_eol[0]);
+      fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
       return F_none;
     }
 
@@ -527,7 +527,7 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (include_empty) {
             if (line_current == line) {
-              fprintf(data->output.stream, "%c", f_string_eol[0]);
+              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               fss_basic_list_read_print_set_end(*data);
               break;
             }
@@ -543,7 +543,7 @@ extern "C" {
         if (line_current != line) {
           for (; j <= data->contents.array[i].array[0].stop; j++) {
 
-            if (data->buffer.string[j] == f_string_eol[0]) {
+            if (data->buffer.string[j] == f_string_eol_s[0]) {
               line_current++;
 
               if (line_current == line) {
@@ -560,8 +560,8 @@ extern "C" {
           for (; j <= data->contents.array[i].array[0].stop; j++) {
             if (!data->buffer.string[j]) continue;
 
-            if (data->buffer.string[j] == f_string_eol[0]) {
-              fprintf(data->output.stream, "%c", f_string_eol[0]);
+            if (data->buffer.string[j] == f_string_eol_s[0]) {
+              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               break;
             }
 
@@ -580,7 +580,7 @@ extern "C" {
 
       if (!data->contents.array[i].used) {
         if (include_empty) {
-          fprintf(data->output.stream, "%c", f_string_eol[0]);
+          fprintf(data->output.stream, "%c", f_string_eol_s[0]);
           fss_basic_list_read_print_set_end(*data);
         }
 

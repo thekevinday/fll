@@ -266,17 +266,19 @@ extern "C" {
 
   #define f_color_set_t_initialize { 0, 0 }
 
+  #define f_macro_color_set_t_initialize(before, after) { before, after }
+
   #define f_macro_color_set_t_clear(set) \
     set.before = 0; \
     set.after = 0;
 #endif // _di_f_color_set_t_
 
 /**
- * Set the context and notable to this to safely allow for fprintf uses when there is no color to be used.
+ * Provide a global (static) color set of global (static) empty strings.
  */
-#ifndef _di_f_color_set_string_null_s_
-  const static f_string_static_t f_color_set_string_null_s = f_macro_string_static_t_initialize(f_string_empty_s, 0);
-#endif // _di_f_color_set_string_null_s_
+#ifndef _di_f_color_set_string_empty_s_
+  const static f_color_set_t f_color_set_empty_s = f_macro_color_set_t_initialize(&f_string_static_empty_s, &f_string_static_empty_s);
+#endif // _di_f_color_set_string_empty_s_
 
 /**
  * Provide a set of color contexts.
@@ -305,6 +307,8 @@ extern "C" {
   } f_color_set_context_t;
 
   #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
+
+  #define f_macro_color_set_context_t_initialize(warning, error, title, notable, important, standout, normal, normal_reset) { warning, error, title, notable, important, standout, normal, normal_reset }
 
   #define f_macro_color_set_context_t_clear(set) \
     f_macro_color_set_t_clear(set.warning); \

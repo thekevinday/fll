@@ -19,10 +19,10 @@ extern "C" {
     fll_program_print_help_usage(output, context, init_name, f_string_empty_s);
 
     fl_color_print(output.stream, context.set.important, " Notes:");
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "  This program is intended to be directly called by the kernel during boot.%c", f_string_eol[0]);
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "  This program is intended to be directly called by the kernel during boot.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     // @todo: this should still print the kernel command options.
 
@@ -43,13 +43,28 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        data->error.context = data->context.set.error;
-        data->error.notable = data->context.set.notable;
+        if (data->context.set.error.before) {
+          data->error.context = data->context.set.error;
+          data->error.notable = data->context.set.notable;
+        }
+        else {
+          data->context.set.warning = f_color_set_empty_s;
+          data->context.set.error = f_color_set_empty_s;
+          data->context.set.title = f_color_set_empty_s;
+          data->context.set.notable = f_color_set_empty_s;
+          data->context.set.important = f_color_set_empty_s;
+          data->context.set.standout = f_color_set_empty_s;
+          data->context.set.normal = f_color_set_empty_s;
+          data->context.set.normal_reset = f_color_set_empty_s;
+
+          data->error.context = f_color_set_empty_s;
+          data->error.notable = f_color_set_empty_s;
+        }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
           init_delete_data(data);
@@ -79,7 +94,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 

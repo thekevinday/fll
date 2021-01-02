@@ -7,13 +7,13 @@ extern "C" {
 #ifndef _di_fll_program_print_help_header_
   f_return_status fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
-    fprintf(file.stream, "%c", f_string_eol[0]);
+    fprintf(file.stream, "%c", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.title, " %s", name);
 
-    fprintf(file.stream, "%c", f_string_eol[0]);
+    fprintf(file.stream, "%c", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.notable, "  Version %s", version);
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.important, " Available Options: ");
 
     return F_none;
@@ -23,7 +23,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_
   f_return_status fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
-    fprintf(file.stream, "%c  %s", f_string_eol[0], symbol_short);
+    fprintf(file.stream, "%c  %s", f_string_eol_s[0], symbol_short);
     fl_color_print(file.stream, context.set.standout, option_short);
 
     fprintf(file.stream, ", %s", symbol_long);
@@ -38,7 +38,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_long_
   f_return_status fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
-    fprintf(file.stream, "%c      %s", f_string_eol[0], symbol_long);
+    fprintf(file.stream, "%c      %s", f_string_eol_s[0], symbol_long);
     fl_color_print(file.stream, context.set.standout, option_long);
 
     fprintf(file.stream, "  %s", description);
@@ -50,7 +50,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_other_
   f_return_status fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
-    fprintf(file.stream, "%c  ", f_string_eol[0]);
+    fprintf(file.stream, "%c  ", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.standout, option_other);
 
     fprintf(file.stream, "  %s", description);
@@ -62,10 +62,10 @@ extern "C" {
 #ifndef _di_fll_program_print_help_usage_
   f_return_status fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.important, " Usage:");
 
-    fprintf(file.stream, "%c  ", f_string_eol[0]);
+    fprintf(file.stream, "%c  ", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.standout, name);
 
     fprintf(file.stream, " ");
@@ -82,7 +82,7 @@ extern "C" {
       fl_color_print(file.stream, context.set.notable, "]");
     }
 
-    fprintf(file.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
     return F_none;
   }
@@ -91,7 +91,7 @@ extern "C" {
 #ifndef _di_fll_program_print_version_
   f_return_status fll_program_print_version(const f_file_t file, const f_string_t version) {
 
-    fprintf(file.stream, "%s%c", version, f_string_eol[0]);
+    fprintf(file.stream, "%s%c", version, f_string_eol_s[0]);
 
     return F_none;
   }

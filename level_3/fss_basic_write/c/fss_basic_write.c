@@ -20,7 +20,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fll_program_print_help_option(output, context, fss_basic_write_short_file, fss_basic_write_long_file, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Specify a file to send output to.");
     fll_program_print_help_option(output, context, fss_basic_write_short_content, fss_basic_write_long_content, f_console_symbol_short_enable, f_console_symbol_long_enable, "The Content to output.");
@@ -38,19 +38,19 @@ extern "C" {
     fl_color_print(output.stream, context.set.notable, "\\b");
     fprintf(output.stream, "' (");
     fl_color_print(output.stream, context.set.notable, "U+0008");
-    fprintf(output.stream, ") to designate the start of a Content.%c", f_string_eol[0]);
+    fprintf(output.stream, ") to designate the start of a Content.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  The pipe uses the Form Feed character '");
     fl_color_print(output.stream, context.set.notable, "\\f");
     fprintf(output.stream, "' (");
     fl_color_print(output.stream, context.set.notable, "U+000C");
-    fprintf(output.stream, ") to designate the end of the last Content.%c", f_string_eol[0]);
+    fprintf(output.stream, ") to designate the end of the last Content.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  The pipe uses the Vertical Line character '");
     fl_color_print(output.stream, context.set.notable, "\\v");
     fprintf(output.stream, "' (");
     fl_color_print(output.stream, context.set.notable, "U+000B");
-    fprintf(output.stream, ") is used to ignore a content range, which does nothing in this program.%c", f_string_eol[0]);
+    fprintf(output.stream, ") is used to ignore a content range, which does nothing in this program.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  For the pipe, an Object is terminated by either a Backspace character '");
     fl_color_print(output.stream, context.set.notable, "\\b");
@@ -60,24 +60,24 @@ extern "C" {
     fl_color_print(output.stream, context.set.notable, "\\f");
     fprintf(output.stream, "' (");
     fl_color_print(output.stream, context.set.notable, "U+000C");
-    fprintf(output.stream, ").%c", f_string_eol[0]);
+    fprintf(output.stream, ").%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "  The end of the pipe represents the end of any Object or Content.%c", f_string_eol[0]);
+    fprintf(output.stream, "  The end of the pipe represents the end of any Object or Content.%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '");
     fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_prepend);
-    fprintf(output.stream, "' does nothing.%c", f_string_eol[0]);
+    fprintf(output.stream, "' does nothing.%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  This program does not use the parameter '");
     fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_ignore);
-    fprintf(output.stream, "', which therefore does nothing.%c", f_string_eol[0]);
-    fprintf(output.stream, "  This parameter requires two values.%c", f_string_eol[0]);
+    fprintf(output.stream, "', which therefore does nothing.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  This parameter requires two values.%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     return F_none;
   }
@@ -96,8 +96,23 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        data->error.context = data->context.set.error;
-        data->error.notable = data->context.set.notable;
+        if (data->context.set.error.before) {
+          data->error.context = data->context.set.error;
+          data->error.notable = data->context.set.notable;
+        }
+        else {
+          data->context.set.warning = f_color_set_empty_s;
+          data->context.set.error = f_color_set_empty_s;
+          data->context.set.title = f_color_set_empty_s;
+          data->context.set.notable = f_color_set_empty_s;
+          data->context.set.important = f_color_set_empty_s;
+          data->context.set.standout = f_color_set_empty_s;
+          data->context.set.normal = f_color_set_empty_s;
+          data->context.set.normal_reset = f_color_set_empty_s;
+
+          data->error.context = f_color_set_empty_s;
+          data->error.notable = f_color_set_empty_s;
+        }
 
         if (F_status_is_error(status)) {
           fss_basic_write_delete_data(data);
@@ -159,10 +174,10 @@ extern "C" {
       if (data->parameters[fss_basic_write_parameter_file].result == f_console_result_additional) {
         if (data->parameters[fss_basic_write_parameter_file].values.used > 1) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_file);
-            fl_color_print(data->error.to.stream, data->context.set.error, "' may only be specified once.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' may only be specified once.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -203,14 +218,14 @@ extern "C" {
           else if (data->parameters[fss_basic_write_parameter_content].locations.used && data->parameters[fss_basic_write_parameter_partial].locations.used) {
             if (data->parameters[fss_basic_write_parameter_content].result == f_console_result_additional) {
               if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
                 fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
                 fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_partial);
                 fl_color_print(data->error.to.stream, data->context.set.error, "' parameter only allows either the '");
                 fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
                 fl_color_print(data->error.to.stream, data->context.set.error, "' parameter or the '");
                 fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_content);
-                fl_color_print(data->error.to.stream, data->context.set.error, "' parameter, but not both.%c", f_string_eol[0]);
+                fl_color_print(data->error.to.stream, data->context.set.error, "' parameter, but not both.%c", f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_parameter);
@@ -232,12 +247,12 @@ extern "C" {
 
                 if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
                   if (data->error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+                    fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
                     fl_color_print(data->error.to.stream, data->context.set.error, "%sEach ", fll_error_print_error);
                     fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
                     fl_color_print(data->error.to.stream, data->context.set.error, "' parameter must be specified before a '");
                     fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_content);
-                    fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+                    fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol_s[0]);
                   }
 
                   status = F_status_set_error(F_parameter);
@@ -260,12 +275,12 @@ extern "C" {
       }
       else if (!data->process_pipe) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThis requires either piped data or the use of the '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_object);
           fl_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_content);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -274,10 +289,10 @@ extern "C" {
       if (F_status_is_error_not(status) && data->process_pipe) {
         if (data->parameters[fss_basic_write_parameter_partial].result == f_console_result_found) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_partial);
-            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -288,10 +303,10 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_basic_write_parameter_prepend].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_prepend);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -312,10 +327,10 @@ extern "C" {
 
             if (status == F_false) {
               if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
                 fl_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
                 fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_prepend);
-                fl_color_print(data->error.to.stream, data->context.set.error, "' must only contain whitespace.%c", f_string_eol[0]);
+                fl_color_print(data->error.to.stream, data->context.set.error, "' must only contain whitespace.%c", f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_parameter);
@@ -325,10 +340,10 @@ extern "C" {
         }
         else {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_prepend);
-            fl_color_print(data->error.to.stream, data->context.set.error, "' must not be an empty string.%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -339,10 +354,10 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (data->parameters[fss_basic_write_parameter_ignore].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_ignore);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no values were given.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no values were given.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
@@ -352,10 +367,10 @@ extern "C" {
         const f_array_length_t total_arguments = data->parameters[fss_basic_write_parameter_ignore].values.used;
 
         if (total_locations * 2 > total_arguments) {
-          fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
           fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_write_long_ignore);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' requires two values.%c", f_string_eol[0]);
+          fl_color_print(data->error.to.stream, data->context.set.error, "' requires two values.%c", f_string_eol_s[0]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -389,10 +404,10 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "input pipe");
-            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
           }
         }
       }
@@ -444,15 +459,15 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fl_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
             fl_color_print(data->error.to.stream, data->context.set.notable, "input arguments");
-            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+            fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
           }
         }
         else if (data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_basic_write_parameter_file].result == f_console_result_none) {
           // ensure there is always a newline at the end, unless in quiet mode.
-          fprintf(data->output.stream, "%c", f_string_eol[0]);
+          fprintf(data->output.stream, "%c", f_string_eol_s[0]);
         }
       }
 
@@ -477,7 +492,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (data->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol[0]);
+        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 

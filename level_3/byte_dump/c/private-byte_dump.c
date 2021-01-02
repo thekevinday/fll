@@ -202,11 +202,11 @@ extern "C" {
         byte_dump_print_text(data, characters, invalid, &previous, &offset);
       }
       else {
-        fprintf(data.output.stream, "%c", f_string_eol[0]);
+        fprintf(data.output.stream, "%c", f_string_eol_s[0]);
       }
     }
 
-    fprintf(data.output.stream, "%c", f_string_eol[0]);
+    fprintf(data.output.stream, "%c", f_string_eol_s[0]);
 
     // make sure to flush standard out to help prevent standard error from causing poblems.
     fflush(data.output.stream);
@@ -215,7 +215,7 @@ extern "C" {
       fl_color_print(data.error.to.stream, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
       fl_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
       fl_color_print(data.error.to.stream, data.context.set.error, "'.");
-      fprintf(data.error.to.stream, "%c%c", f_string_eol[0], f_string_eol[0]);
+      fprintf(data.error.to.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     }
 
     if (size < 0) {
@@ -223,7 +223,7 @@ extern "C" {
       fl_color_print(data.error.to.stream, data.context.set.error, "%sread() failed for '", fll_error_print_error);
       fl_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
       fl_color_print(data.error.to.stream, data.context.set.error, "'.");
-      fprintf(data.error.to.stream, "%c%x", f_string_eol[0], f_string_eol[0]);
+      fprintf(data.error.to.stream, "%c%x", f_string_eol_s[0], f_string_eol_s[0]);
 
       status = F_status_set_error(F_failure);
     }
@@ -399,7 +399,7 @@ extern "C" {
         byte_dump_print_text(data, characters, invalid, previous, offset);
       }
       else {
-        fprintf(data.output.stream, "%c", f_string_eol[0]);
+        fprintf(data.output.stream, "%c", f_string_eol_s[0]);
       }
 
       cell->column = 0;
@@ -828,7 +828,7 @@ extern "C" {
     }
 
     fl_color_print(data.output.stream, data.context.set.notable, " |");
-    fprintf(data.output.stream, "%c", f_string_eol[0]);
+    fprintf(data.output.stream, "%c", f_string_eol_s[0]);
   }
 #endif // _di_byte_dump_file_
 

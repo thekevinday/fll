@@ -1002,7 +1002,7 @@ extern "C" {
     if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (string[range->start] != f_string_eol[0]) {
+    while (string[range->start] != f_string_eol_s[0]) {
       range->start++;
 
       if (range->start > range->stop) return F_none_stop;
@@ -1023,7 +1023,7 @@ extern "C" {
 
     while (string[range->start] != seek_to_this) {
 
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       range->start++;
 
@@ -1058,7 +1058,7 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol[0]) return F_none_eol;
+        if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
         if (seek_width == width) {
           if (string[range->start] == seek_to_this) return F_none;
@@ -1107,7 +1107,7 @@ extern "C" {
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       width = f_macro_utf_byte_width_is(string[range->start]);
 
@@ -1151,7 +1151,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       width = f_macro_utf_byte_width_is(string[range->start]);
 
@@ -1782,7 +1782,7 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
 
     while (string[range->start] != seek_to) {
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       range->start++;
 
@@ -1817,7 +1817,7 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol[0]) return F_none_eol;
+        if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
         if (seek_width == width) {
           if (string[range->start] == seek_to) return F_none;
@@ -1859,7 +1859,7 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       width = f_macro_utf_byte_width_is(string[range->start]);
 
@@ -1905,7 +1905,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start] == f_string_eol[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
       width = f_macro_utf_byte_width_is(string[range->start]);
 

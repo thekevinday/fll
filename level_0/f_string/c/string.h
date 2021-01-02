@@ -45,6 +45,10 @@ extern "C" {
   const static f_string_t f_string_placeholder_s = f_string_placeholder;
 #endif // _di_f_string_has_placeholder_
 
+#ifndef _di_f_string_static_empty_s_
+  const static f_string_static_t f_string_static_empty_s = f_macro_string_static_t_initialize(f_string_empty_s, 0);
+#endif // _di_f_string_static_empty_s_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

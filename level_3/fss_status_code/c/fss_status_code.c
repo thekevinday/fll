@@ -20,7 +20,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol[0]);
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fll_program_print_help_option(output, context, fss_status_code_short_is_fine, fss_status_code_long_is_fine, f_console_symbol_short_enable, f_console_symbol_long_enable, "   Print F_true if the error code is not an error, F_false otherwise.");
     fll_program_print_help_option(output, context, fss_status_code_short_is_warning, fss_status_code_long_is_warning, f_console_symbol_short_enable, f_console_symbol_long_enable, "Print F_true if the error code is a warning, F_false otherwise.");
@@ -46,8 +46,23 @@ extern "C" {
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
 
-        data->error.context = data->context.set.error;
-        data->error.notable = data->context.set.notable;
+        if (data->context.set.error.before) {
+          data->error.context = data->context.set.error;
+          data->error.notable = data->context.set.notable;
+        }
+        else {
+          data->context.set.warning = f_color_set_empty_s;
+          data->context.set.error = f_color_set_empty_s;
+          data->context.set.title = f_color_set_empty_s;
+          data->context.set.notable = f_color_set_empty_s;
+          data->context.set.important = f_color_set_empty_s;
+          data->context.set.standout = f_color_set_empty_s;
+          data->context.set.normal = f_color_set_empty_s;
+          data->context.set.normal_reset = f_color_set_empty_s;
+
+          data->error.context = f_color_set_empty_s;
+          data->error.notable = f_color_set_empty_s;
+        }
 
         if (F_status_is_error(status)) {
           fss_status_code_delete_data(data);
@@ -105,7 +120,7 @@ extern "C" {
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_error);
         fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_warning);
-        fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
         fss_status_code_delete_data(data);
         return F_status_set_error(status);
@@ -115,7 +130,7 @@ extern "C" {
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_error);
         fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
         fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_fine);
-        fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+        fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
         fss_status_code_delete_data(data);
         return F_status_set_error(status);
@@ -126,14 +141,14 @@ extern "C" {
       fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_warning);
       fl_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
       fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable, fss_status_code_long_is_fine);
-      fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
       fss_status_code_delete_data(data);
       return F_status_set_error(status);
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
-      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify an error code.%c", fll_error_print_error, f_string_eol[0]);
+      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify an error code.%c", fll_error_print_error, f_string_eol_s[0]);
 
       fss_status_code_delete_data(data);
       return F_status_set_error(F_parameter);

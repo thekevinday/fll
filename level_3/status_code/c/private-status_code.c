@@ -55,13 +55,13 @@ extern "C" {
       status = fl_conversion_string_to_number_unsigned(value, &number, range);
 
       if (status == F_none) {
-        fl_color_print(data.output.stream, data.context.set.error, "invalid name%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "invalid name%c", f_string_eol_s[0]);
 
         return F_status_set_error(F_parameter);
       }
 
       if (status == F_data_not || F_status_set_fine(status) == F_parameter) {
-        fl_color_print(data.output.stream, data.context.set.error, "invalid data%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "invalid data%c", f_string_eol_s[0]);
 
         return status;
       }
@@ -73,17 +73,17 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_color_print(data.output.stream, data.context.set.error, "unknown name%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "unknown name%c", f_string_eol_s[0]);
       }
       else {
-        fl_color_print(data.output.stream, data.context.set.error, "failed to convert%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "failed to convert%c", f_string_eol_s[0]);
       }
 
       return status;
     }
 
     if (status == F_data) {
-      fl_color_print(data.output.stream, data.context.set.warning, "unknown code%c", f_string_eol[0]);
+      fl_color_print(data.output.stream, data.context.set.warning, "unknown code%c", f_string_eol_s[0]);
 
       return F_none;
     }
@@ -110,10 +110,10 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
-        fl_color_print(data.output.stream, data.context.set.error, "unknown code%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "unknown code%c", f_string_eol_s[0]);
       }
       else {
-        fl_color_print(data.output.stream, data.context.set.error, "failed to convert%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "failed to convert%c", f_string_eol_s[0]);
       }
 
       return status;
@@ -132,17 +132,17 @@ extern "C" {
     f_status_t status = fl_conversion_string_to_number_unsigned(value, number, range);
 
     if (*number > F_status_size_max_with_signal) {
-      fl_color_print(data.output.stream, data.context.set.error, "out of range%c", f_string_eol[0]);
+      fl_color_print(data.output.stream, data.context.set.error, "out of range%c", f_string_eol_s[0]);
 
       return status;
     }
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_number_negative) {
-        fl_color_print(data.output.stream, data.context.set.error, "out of range%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "out of range%c", f_string_eol_s[0]);
       }
       else {
-        fl_color_print(data.output.stream, data.context.set.error, "invalid number%c", f_string_eol[0]);
+        fl_color_print(data.output.stream, data.context.set.error, "invalid number%c", f_string_eol_s[0]);
       }
 
       return status;
