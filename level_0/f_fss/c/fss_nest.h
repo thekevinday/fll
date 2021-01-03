@@ -270,11 +270,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & items.array, sizeof(f_fss_item_t), items.size, new_length); \
     if (status == F_none) { \
-      if (new_length > items.size) { \
-        for (f_array_length_t _macro__i = items.size; _macro__i < new_length; _macro__i++) { \
-          memset(&items.array[_macro__i], 0, sizeof(f_fss_item_t)); \
-        } \
-      } \
       items.size = new_length; \
       if (items.used > items.size) items.used = new_length; \
     }
@@ -296,11 +291,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & items.array, sizeof(f_fss_item_t), items.size, new_length); \
     if (status == F_none) { \
-      if (new_length > items.size) { \
-        for (length_variable _macro__i = items.size; _macro__i < new_length; _macro__i++) { \
-          memset(&items.array[_macro__i], 0, sizeof(f_fss_item_t)); \
-        } \
-      } \
       items.size = new_length; \
       if (items.used > items.size) items.used = new_length; \
     }
@@ -438,11 +428,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & nest.depth, sizeof(f_fss_items_t), nest.size, new_length); \
     if (status == F_none) { \
-      if (new_length > nest.size) { \
-        for (f_array_length_t _macro__i = nest.size; _macro__i < new_length; _macro__i++) { \
-          memset(&nest.depth[_macro__i], 0, sizeof(f_fss_items_t)); \
-        } \
-      } \
       nest.size = new_length; \
       if (nest.used > nest.size) nest.used = new_length; \
     }
@@ -464,11 +449,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & nest.depth, sizeof(f_fss_item_t), nest.size, new_length); \
     if (status == F_none) { \
-      if (new_length > nest.size) { \
-        for (f_array_length_t _macro__i = nest.size; _macro__i < new_length; _macro__i++) { \
-          memset(&items.depth[_macro__i], 0, sizeof(f_fss_item_t)); \
-        } \
-      } \
       nest.size = new_length; \
       if (nest.used > nest.size) nest.used = new_length; \
     }
@@ -601,11 +581,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & nests.array, sizeof(f_fss_nest_t), nests.size, new_length); \
     if (status == F_none) { \
-      if (new_length > nests.size) { \
-        for (f_array_length_t _macro__i = nests.size; _macro__i < new_length; _macro__i++) { \
-          memset(&nests.array[_macro__i], 0, sizeof(f_fss_nest_t)); \
-        } \
-      } \
       nests.size = new_length; \
       if (nests.used > nests.size) nests.used = new_length; \
     }
@@ -627,11 +602,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & nests.array, sizeof(f_fss_nest_t), nests.size, new_length); \
     if (status == F_none) { \
-      if (new_length > nests.size) { \
-        for (f_array_length_t _macro__i = nests.size; _macro__i < new_length; _macro__i++) { \
-          memset(&nests.array[_macro__i], 0, sizeof(f_fss_nest_t)); \
-        } \
-      } \
       nests.size = new_length; \
       if (nests.used > nests.size) nests.used = new_length; \
     }

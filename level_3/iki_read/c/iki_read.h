@@ -199,12 +199,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
     if (status == F_none) { \
-      if (new_length > replacements.size) { \
-        f_array_length_t i = replacements.size; \
-        for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_substitution_t)); \
-        } \
-      } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }
@@ -219,12 +213,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
     if (status == F_none) { \
-      if (new_length > replacements.size) { \
-        f_array_length_t i = replacements.size; \
-        for (; i < new_length; i++) { \
-          memset(&replacements.array[i], 0, sizeof(iki_read_substitution_t)); \
-        } \
-      } \
       replacements.size = new_length; \
       if (replacements.used > replacements.size) replacements.used = new_length; \
     }

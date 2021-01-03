@@ -206,11 +206,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size, new_length); \
     if (status == F_none) { \
-      if (new_length > dynamics.size) { \
-        for (f_array_length_t _macro__i = dynamics.size; _macro__i < new_length; _macro__i++) { \
-          memset(&dynamics.array[_macro__i], 0, sizeof(f_string_dynamic_t)); \
-        } \
-      } \
       dynamics.size = new_length; \
       if (dynamics.used > dynamics.size) dynamics.used = new_length; \
     }
@@ -225,11 +220,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size, new_length); \
     if (status == F_none) { \
-      if (new_length > dynamics.size) { \
-        for (f_array_length_t _macro__i = dynamics.size; _macro__i < new_length; _macro__i++) { \
-          memset(&dynamics.array[_macro__i], 0, sizeof(f_string_dynamic_t)); \
-        } \
-      } \
       dynamics.size = new_length; \
       if (dynamics.used > dynamics.size) dynamics.used = new_length; \
     }

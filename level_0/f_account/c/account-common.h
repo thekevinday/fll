@@ -170,11 +170,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & accounts.array, sizeof(f_account_t), accounts.size, new_length); \
     if (status == F_none) { \
-      if (new_length > accounts.size) { \
-        for (f_array_length_t _macro__i = accounts.size; _macro__i < new_length; _macro__i++) { \
-          memset(&accounts.array[_macro__i], 0, sizeof(f_account_t)); \
-        } \
-      } \
       accounts.size = new_length; \
       if (accounts.used > accounts.size) accounts.used = new_length; \
     }
@@ -189,11 +184,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & accounts.array, sizeof(f_account_t), accounts.size, new_length); \
     if (status == F_none) { \
-      if (new_length > accounts.size) { \
-        for (f_array_length_t _macro__i = accounts.size; _macro__i < new_length; _macro__i++) { \
-          memset(&accounts.array[_macro__i], 0, sizeof(f_account_t)); \
-        } \
-      } \
       accounts.size = new_length; \
       if (accounts.used > accounts.size) accounts.used = new_length; \
     }

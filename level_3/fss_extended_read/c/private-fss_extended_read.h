@@ -104,12 +104,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_extended_read_depth_t), depths.size, new_length); \
     if (status == F_none) { \
-      if (new_length > depths.size) { \
-        f_array_length_t i = depths.size; \
-        for (; i < new_length; i++) { \
-          memset(&depths.array[i], 0, sizeof(fss_extended_read_depth_t)); \
-        } \
-      } \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \
     }
@@ -125,12 +119,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_extended_read_depth_t), depths.size, new_length); \
     if (status == F_none) { \
-      if (new_length > depths.size) { \
-        f_array_length_t i = depths.size; \
-        for (; i < new_length; i++) { \
-          memset(&depths.array[i], 0, sizeof(fss_extended_read_depth_t)); \
-        } \
-      } \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \
     }

@@ -197,11 +197,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
     if (status == F_none) { \
-      if (new_length > structures.size) { \
-        for (f_array_length_t _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
-          memset(&structures.array[_macro__i], 0, sizeof(f_directory_status_t)); \
-        } \
-      } \
       structures.size = new_length; \
       if (structures.used > structures.size) structures.used = new_length; \
     }
@@ -216,11 +211,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
     if (status == F_none) { \
-      if (new_length > structures.size) { \
-        for (f_array_length_t _macro__i = structures.size; _macro__i < new_length; _macro__i++) { \
-          memset(&structures.array[_macro__i], 0, sizeof(f_directory_status_t)); \
-        } \
-      } \
       structures.size = new_length; \
       if (structures.used > structures.size) structures.used = new_length; \
     }

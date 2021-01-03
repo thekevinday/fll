@@ -152,11 +152,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & triples.array, sizeof(f_string_triple_t), triples.size, new_length); \
     if (status == F_none) { \
-      if (new_length > triples.size) { \
-        for (f_array_length_t _macro__i = triples.size; _macro__i < new_length; _macro__i++) { \
-          memset(&triples.array[_macro__i], 0, sizeof(f_string_triple_t)); \
-        } \
-      } \
       triples.size = new_length; \
       if (triples.used > triples.size) triples.used = new_length; \
     }
@@ -171,11 +166,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & triples.array, sizeof(f_string_triple_t), triples.size, new_length); \
     if (status == F_none) { \
-      if (new_length > triples.size) { \
-        for (f_array_length_t _macro__i = triples.size; _macro__i < new_length; _macro__i++) { \
-          memset(&triples.array[_macro__i], 0, sizeof(f_string_triple_t)); \
-        } \
-      } \
       triples.size = new_length; \
       if (triples.used > triples.size) triples.used = new_length; \
     }

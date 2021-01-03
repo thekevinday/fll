@@ -85,11 +85,6 @@ extern "C" {
   #define f_macro_thread_attributes_t_resize(status, attributes, new_length) \
     status = f_memory_resize((void **) & attributes.array, sizeof(f_thread_attribute_t), attributes.size, new_length); \
     if (status == F_none) { \
-      if (new_length > attributes.size) { \
-        for (f_array_length_t _macro__i = attributes.size; _macro__i < new_length; _macro__i++) { \
-          memset(&attributes.array[_macro__i], 0, sizeof(f_thread_attribute_t)); \
-        } \
-      } \
       attributes.size = new_length; \
       if (attributes.used > attributes.size) attributes.used = new_length; \
     }
@@ -97,11 +92,6 @@ extern "C" {
   #define f_macro_thread_attributes_t_adjust(status, attributes, new_length) \
     status = f_memory_adjust((void **) & attributes.array, sizeof(f_thread_attribute_t), attributes.size, new_length); \
     if (status == F_none) { \
-      if (new_length > attributes.size) { \
-        for (f_array_length_t _macro__i = attributes.size; _macro__i < new_length; _macro__i++) { \
-          memset(&attributes.array[_macro__i], 0, sizeof(f_thread_attribute_t)); \
-        } \
-      } \
       attributes.size = new_length; \
       if (attributes.used > attributes.size) attributes.used = new_length; \
     }
@@ -175,11 +165,6 @@ extern "C" {
   #define f_macro_thread_conditions_t_resize(status, conditions, new_length) \
     status = f_memory_resize((void **) & conditions.array, sizeof(f_thread_condition_t), conditions.size, new_length); \
     if (status == F_none) { \
-      if (new_length > conditions.size) { \
-        for (f_array_length_t _macro__i = conditions.size; _macro__i < new_length; _macro__i++) { \
-          memset(&conditions.array[_macro__i], 0, sizeof(f_thread_condition_t)); \
-        } \
-      } \
       conditions.size = new_length; \
       if (conditions.used > conditions.size) conditions.used = new_length; \
     }
@@ -187,11 +172,6 @@ extern "C" {
   #define f_macro_thread_conditions_t_adjust(status, conditions, new_length) \
     status = f_memory_adjust((void **) & conditions.array, sizeof(f_thread_condition_t), conditions.size, new_length); \
     if (status == F_none) { \
-      if (new_length > conditions.size) { \
-        for (f_array_length_t _macro__i = conditions.size; _macro__i < new_length; _macro__i++) { \
-          memset(&conditions.array[_macro__i], 0, sizeof(f_thread_condition_t)); \
-        } \
-      } \
       conditions.size = new_length; \
       if (conditions.used > conditions.size) conditions.used = new_length; \
     }
@@ -265,11 +245,6 @@ extern "C" {
   #define f_macro_thread_ids_t_resize(status, ids, new_length) \
     status = f_memory_resize((void **) & ids.array, sizeof(f_thread_id_t), ids.size, new_length); \
     if (status == F_none) { \
-      if (new_length > ids.size) { \
-        for (f_array_length_t _macro__i = ids.size; _macro__i < new_length; _macro__i++) { \
-          memset(&ids.array[_macro__i], 0, sizeof(f_thread_id_t)); \
-        } \
-      } \
       ids.size = new_length; \
       if (ids.used > ids.size) ids.used = new_length; \
     }
@@ -277,11 +252,6 @@ extern "C" {
   #define f_macro_thread_ids_t_adjust(status, ids, new_length) \
     status = f_memory_adjust((void **) & ids.array, sizeof(f_thread_id_t), ids.size, new_length); \
     if (status == F_none) { \
-      if (new_length > ids.size) { \
-        for (f_array_length_t _macro__i = ids.size; _macro__i < new_length; _macro__i++) { \
-          memset(&ids.array[_macro__i], 0, sizeof(f_thread_id_t)); \
-        } \
-      } \
       ids.size = new_length; \
       if (ids.used > ids.size) ids.used = new_length; \
     }
@@ -355,11 +325,6 @@ extern "C" {
   #define f_macro_thread_keys_t_resize(status, keys, new_length) \
     status = f_memory_resize((void **) & keys.array, sizeof(f_thread_key_t), keys.size, new_length); \
     if (status == F_none) { \
-      if (new_length > keys.size) { \
-        for (f_array_length_t _macro__i = keys.size; _macro__i < new_length; _macro__i++) { \
-          memset(&keys.array[_macro__i], 0, sizeof(f_thread_key_t)); \
-        } \
-      } \
       keys.size = new_length; \
       if (keys.used > keys.size) keys.used = new_length; \
     }
@@ -367,11 +332,6 @@ extern "C" {
   #define f_macro_thread_keys_t_adjust(status, keys, new_length) \
     status = f_memory_adjust((void **) & keys.array, sizeof(f_thread_key_t), keys.size, new_length); \
     if (status == F_none) { \
-      if (new_length > keys.size) { \
-        for (f_array_length_t _macro__i = keys.size; _macro__i < new_length; _macro__i++) { \
-          memset(&keys.array[_macro__i], 0, sizeof(f_thread_key_t)); \
-        } \
-      } \
       keys.size = new_length; \
       if (keys.used > keys.size) keys.used = new_length; \
     }
@@ -445,11 +405,6 @@ extern "C" {
   #define f_macro_thread_locks_t_resize(status, locks, new_length) \
     status = f_memory_resize((void **) & locks.array, sizeof(f_thread_lock_t), locks.size, new_length); \
     if (status == F_none) { \
-      if (new_length > locks.size) { \
-        for (f_array_length_t _macro__i = locks.size; _macro__i < new_length; _macro__i++) { \
-          memset(&locks.array[_macro__i], 0, sizeof(f_thread_lock_t)); \
-        } \
-      } \
       locks.size = new_length; \
       if (locks.used > locks.size) locks.used = new_length; \
     }
@@ -457,11 +412,6 @@ extern "C" {
   #define f_macro_thread_locks_t_adjust(status, locks, new_length) \
     status = f_memory_adjust((void **) & locks.array, sizeof(f_thread_lock_t), locks.size, new_length); \
     if (status == F_none) { \
-      if (new_length > locks.size) { \
-        for (f_array_length_t _macro__i = locks.size; _macro__i < new_length; _macro__i++) { \
-          memset(&locks.array[_macro__i], 0, sizeof(f_thread_lock_t)); \
-        } \
-      } \
       locks.size = new_length; \
       if (locks.used > locks.size) locks.used = new_length; \
     }
@@ -535,11 +485,6 @@ extern "C" {
   #define f_macro_thread_mutexs_t_resize(status, mutexs, new_length) \
     status = f_memory_resize((void **) & mutexs.array, sizeof(f_thread_mutex_t), mutexs.size, new_length); \
     if (status == F_none) { \
-      if (new_length > mutexs.size) { \
-        for (f_array_length_t _macro__i = mutexs.size; _macro__i < new_length; _macro__i++) { \
-          memset(&mutexs.array[_macro__i], 0, sizeof(f_thread_mutex_t)); \
-        } \
-      } \
       mutexs.size = new_length; \
       if (mutexs.used > mutexs.size) mutexs.used = new_length; \
     }
@@ -547,11 +492,6 @@ extern "C" {
   #define f_macro_thread_mutexs_t_adjust(status, mutexs, new_length) \
     status = f_memory_adjust((void **) & mutexs.array, sizeof(f_thread_mutex_t), mutexs.size, new_length); \
     if (status == F_none) { \
-      if (new_length > mutexs.size) { \
-        for (f_array_length_t _macro__i = mutexs.size; _macro__i < new_length; _macro__i++) { \
-          memset(&mutexs.array[_macro__i], 0, sizeof(f_thread_mutex_t)); \
-        } \
-      } \
       mutexs.size = new_length; \
       if (mutexs.used > mutexs.size) mutexs.used = new_length; \
     }
@@ -625,11 +565,6 @@ extern "C" {
   #define f_macro_thread_mutex_attributes_t_resize(status, mutex_attributes, new_length) \
     status = f_memory_resize((void **) & mutex_attributes.array, sizeof(f_thread_mutex_attribute_t), mutex_attributes.size, new_length); \
     if (status == F_none) { \
-      if (new_length > mutex_attributes.size) { \
-        for (f_array_length_t _macro__i = mutex_attributes.size; _macro__i < new_length; _macro__i++) { \
-          memset(&mutex_attributes.array[_macro__i], 0, sizeof(f_thread_mutex_attribute_t)); \
-        } \
-      } \
       mutex_attributes.size = new_length; \
       if (mutex_attributes.used > mutex_attributes.size) mutex_attributes.used = new_length; \
     }
@@ -637,11 +572,6 @@ extern "C" {
   #define f_macro_thread_mutex_attributes_t_adjust(status, mutex_attributes, new_length) \
     status = f_memory_adjust((void **) & mutex_attributes.array, sizeof(f_thread_mutex_attribute_t), mutex_attributes.size, new_length); \
     if (status == F_none) { \
-      if (new_length > mutex_attributes.size) { \
-        for (f_array_length_t _macro__i = mutex_attributes.size; _macro__i < new_length; _macro__i++) { \
-          memset(&mutex_attributes.array[_macro__i], 0, sizeof(f_thread_mutex_attribute_t)); \
-        } \
-      } \
       mutex_attributes.size = new_length; \
       if (mutex_attributes.used > mutex_attributes.size) mutex_attributes.used = new_length; \
     }
@@ -715,11 +645,6 @@ extern "C" {
   #define f_macro_thread_onces_t_resize(status, onces, new_length) \
     status = f_memory_resize((void **) & onces.array, sizeof(f_thread_once_t), onces.size, new_length); \
     if (status == F_none) { \
-      if (new_length > onces.size) { \
-        for (f_array_length_t _macro__i = onces.size; _macro__i < new_length; _macro__i++) { \
-          memset(&onces.array[_macro__i], 0, sizeof(f_thread_once_t)); \
-        } \
-      } \
       onces.size = new_length; \
       if (onces.used > onces.size) onces.used = new_length; \
     }
@@ -727,11 +652,6 @@ extern "C" {
   #define f_macro_thread_onces_t_adjust(status, onces, new_length) \
     status = f_memory_adjust((void **) & onces.array, sizeof(f_thread_once_t), onces.size, new_length); \
     if (status == F_none) { \
-      if (new_length > onces.size) { \
-        for (f_array_length_t _macro__i = onces.size; _macro__i < new_length; _macro__i++) { \
-          memset(&onces.array[_macro__i], 0, sizeof(f_thread_once_t)); \
-        } \
-      } \
       onces.size = new_length; \
       if (onces.used > onces.size) onces.used = new_length; \
     }
@@ -816,11 +736,6 @@ extern "C" {
   #define f_macro_thread_sets_t_resize(status, threads, new_length) \
     status = f_memory_resize((void **) & threads.array, sizeof(f_thread_set_t), threads.size, new_length); \
     if (status == F_none) { \
-      if (new_length > threads.size) { \
-        for (f_array_length_t _macro__i = threads.size; _macro__i < new_length; _macro__i++) { \
-          memset(&threads.array[_macro__i], 0, sizeof(f_thread_set_t)); \
-        } \
-      } \
       threads.size = new_length; \
       if (threads.used > threads.size) threads.used = new_length; \
     }
@@ -828,11 +743,6 @@ extern "C" {
   #define f_macro_thread_sets_t_adjust(status, threads, new_length) \
     status = f_memory_adjust((void **) & threads.array, sizeof(f_thread_set_t), threads.size, new_length); \
     if (status == F_none) { \
-      if (new_length > threads.size) { \
-        for (f_array_length_t _macro__i = threads.size; _macro__i < new_length; _macro__i++) { \
-          memset(&threads.array[_macro__i], 0, sizeof(f_thread_set_t)); \
-        } \
-      } \
       threads.size = new_length; \
       if (threads.used > threads.size) threads.used = new_length; \
     }

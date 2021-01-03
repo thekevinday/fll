@@ -139,11 +139,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & maps.array, sizeof(f_string_map_t), maps.size, new_length); \
     if (status == F_none) { \
-      if (new_length > maps.size) { \
-        for (f_array_length_t _macro__i = maps.size; _macro__i < new_length; _macro__i++) { \
-          memset(&maps.array[_macro__i], 0, sizeof(f_string_map_t)); \
-        } \
-      } \
       maps.size = new_length; \
       if (maps.used > maps.size) maps.used = new_length; \
     }
@@ -158,11 +153,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & maps.array, sizeof(f_string_map_t), maps.size, new_length); \
     if (status == F_none) { \
-      if (new_length > maps.size) { \
-        for (f_array_length_t _macro__i = maps.size; _macro__i < new_length; _macro__i++) { \
-          memset(&maps.array[_macro__i], 0, sizeof(f_string_map_t)); \
-        } \
-      } \
       maps.size = new_length; \
       if (maps.used > maps.size) maps.used = new_length; \
     }
@@ -284,11 +274,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_resize((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size, new_length); \
     if (status == F_none) { \
-      if (new_length > maps.size) { \
-        for (f_array_length_t _macro__i = maps.size; _macro__i < new_length; _macro__i++) { \
-          memset(&maps.array[_macro__i], 0, sizeof(f_string_map_multi_t)); \
-        } \
-      } \
       maps.size = new_length; \
       if (maps.used > maps.size) maps.used = new_length; \
     }
@@ -303,11 +288,6 @@ extern "C" {
     } \
     if (status == F_none) status = f_memory_adjust((void **) & maps.array, sizeof(f_string_map_multi_t), maps.size, new_length); \
     if (status == F_none) { \
-      if (new_length > maps.size) { \
-        for (f_array_length_t _macro__i = maps.size; _macro__i < new_length; _macro__i++) { \
-          memset(&maps.array[_macro__i], 0, sizeof(f_string_map_multi_t)); \
-        } \
-      } \
       maps.size = new_length; \
       if (maps.used > maps.size) maps.used = new_length; \
     }
