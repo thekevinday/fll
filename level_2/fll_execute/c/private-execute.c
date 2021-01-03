@@ -320,8 +320,23 @@ extern "C" {
     }
 
     if (parameter && parameter->signals) {
-      f_signal_set_handle(SIG_BLOCK, &parameter->signals->block);
-      f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
+      #ifdef _di_pthread_support_
+
+        f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+        f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+
+      #else // _di_pthread_support_
+
+        if (parameter->option & fl_execute_parameter_option_threadsafe) {
+          f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+          f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+        }
+        else {
+          f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+          f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+        }
+
+      #endif // _di_pthread_support_
     }
 
     if (parameter && parameter->environment) {
@@ -465,8 +480,23 @@ extern "C" {
     }
 
     if (parameter && parameter->signals) {
-      f_signal_set_handle(SIG_BLOCK, &parameter->signals->block);
-      f_signal_set_handle(SIG_UNBLOCK, &parameter->signals->block_not);
+      #ifdef _di_pthread_support_
+
+        f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+        f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+
+      #else // _di_pthread_support_
+
+        if (parameter->option & fl_execute_parameter_option_threadsafe) {
+          f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+          f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+        }
+        else {
+          f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
+          f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
+        }
+
+      #endif // _di_pthread_support_
     }
 
     if (parameter && parameter->environment) {

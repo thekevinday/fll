@@ -5,8 +5,718 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_thread_at_fork_
+  f_return_status f_thread_at_fork(void (*before) (void), void (*after_parent) (void), void (*after_child) (void)) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!before) return F_status_set_error(F_parameter);
+      if (!after_parent) return F_status_set_error(F_parameter);
+      if (!after_child) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_atfork(before, after_parent, after_child);
+
+    if (error) {
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_key_create_
+
+#ifndef _di_f_thread_attribute_affinity_get_
+  f_return_status f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t *affinity_set) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!affinity_set) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getaffinity_np(&attribute, affinity_size, affinity_set);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_affinity_get_
+
+#ifndef _di_f_thread_attribute_affinity_set_
+  f_return_status f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setaffinity_np(attribute, affinity_size, affinity_set);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_affinity_set_
+
+#ifndef _di_f_thread_attribute_create_
+  f_return_status f_thread_attribute_create(f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_init(attribute);
+
+    if (error) {
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_create_
+
+#ifndef _di_f_thread_attribute_default_get_
+  f_return_status f_thread_attribute_default_get(f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_getattr_default_np(attribute);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_default_get_
+
+#ifndef _di_f_thread_attribute_default_set_
+  f_return_status f_thread_attribute_default_set(f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_setattr_default_np(attribute);
+
+    if (error) {
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_default_set_
+
+#ifndef _di_f_thread_attribute_delete_
+  f_return_status f_thread_attribute_delete(f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_destroy(attribute);
+
+    if (error) {
+      return F_status_set_error(F_failure);
+    }
+
+    attribute = 0;
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_delete_
+
+#ifndef _di_f_thread_attribute_detach_get_
+  f_return_status f_thread_attribute_detach_get(const f_thread_attribute_t attribute, int *state) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!state) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getdetachstate(&attribute, state);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_detach_get_
+
+#ifndef _di_f_thread_attribute_detach_set_
+  f_return_status f_thread_attribute_detach_set(const int state, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setdetachstate(attribute, state);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_detach_set_
+
+#ifndef _di_f_thread_attribute_guard_get_
+  f_return_status f_thread_attribute_guard_get(const f_thread_attribute_t attribute, size_t *guard) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!guard) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getguardsize(&attribute, guard);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_guard_get_
+
+#ifndef _di_f_thread_attribute_guard_set_
+  f_return_status f_thread_attribute_guard_set(const size_t guard, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setguardsize(attribute, guard);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_guard_set_
+
+#ifndef _di_f_thread_attribute_scheduler_inherit_get_
+  f_return_status f_thread_attribute_scheduler_inherit_get(const f_thread_attribute_t attribute, int *inherit) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!inherit) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getinheritsched(&attribute, inherit);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_inherit_get_
+
+#ifndef _di_f_thread_attribute_scheduler_inherit_set_
+  f_return_status f_thread_attribute_scheduler_inherit_set(const int inherit, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setinheritsched(attribute, inherit);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_inherit_set_
+
+#ifndef _di_f_thread_attribute_scheduler_parameter_get_
+  f_return_status f_thread_attribute_scheduler_parameter_get(const f_thread_attribute_t attribute, struct sched_param *parameter) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!parameter) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getschedparam(&attribute, parameter);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_parameter_get_
+
+#ifndef _di_f_thread_attribute_scheduler_parameter_set_
+  f_return_status f_thread_attribute_scheduler_parameter_set(const struct sched_param parameter, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setschedparam(attribute, &parameter);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_parameter_set_
+
+#ifndef _di_f_thread_attribute_scheduler_policy_get_
+  f_return_status f_thread_attribute_scheduler_policy_get(const f_thread_attribute_t attribute, int *policy) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!policy) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getschedpolicy(&attribute, policy);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_policy_get_
+
+#ifndef _di_f_thread_attribute_scheduler_policy_set_
+  f_return_status f_thread_attribute_scheduler_policy_set(const int policy, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setschedpolicy(attribute, policy);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scheduler_policy_set_
+
+#ifndef _di_f_thread_attribute_scope_get_
+  f_return_status f_thread_attribute_scope_get(const f_thread_attribute_t attribute, int *scope) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!scope) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getscope(&attribute, scope);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scope_get_
+
+#ifndef _di_f_thread_attribute_scope_set_
+  f_return_status f_thread_attribute_scope_set(const int scope, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setscope(attribute, scope);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_scope_set_
+
+#ifndef _di_f_thread_attribute_stack_get_
+  f_return_status f_thread_attribute_stack_get(const f_thread_attribute_t attribute, size_t *stack_size, void **stack) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!stack) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_getstack(&attribute, stack, stack_size);
+
+    if (error) {
+      if (error == EACCES) return F_status_set_error(F_access_denied);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_stack_get_
+
+#ifndef _di_f_thread_attribute_stack_set_
+  f_return_status f_thread_attribute_stack_set(const size_t stack_size, void * const stack, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_attr_setstack(attribute, stack, stack_size);
+
+    if (error) {
+      if (error == EACCES) return F_status_set_error(F_access_denied);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_stack_set_
+
+#ifndef _di_f_thread_attributes_decrease_
+  f_return_status f_thread_attributes_decrease(f_thread_attributes_t *attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (attributes->size > 1) {
+      return private_f_thread_attributes_resize(attributes->size - 1, attributes);
+    }
+
+    return private_f_thread_attributes_delete(attributes);
+  }
+#endif // _di_f_thread_attributes_decrease_
+
+#ifndef _di_f_thread_attributes_decrease_by_
+  f_return_status f_thread_attributes_decrease_by(const f_array_length_t amount, f_thread_attributes_t *attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (attributes->size - amount > 0) {
+      return private_f_thread_attributes_resize(attributes->size - amount, attributes);
+    }
+
+    return private_f_thread_attributes_delete(attributes);
+  }
+#endif // _di_f_thread_attributes_decrease_by_
+
+#ifndef _di_f_thread_attributes_delete_
+  f_return_status f_thread_attributes_delete(f_thread_attributes_t *attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_attributes_delete(attributes);
+  }
+#endif // _di_f_thread_attributes_delete_
+
+#ifndef _di_f_thread_attributes_increase_
+  f_return_status f_thread_attributes_increase(f_thread_attributes_t *attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (attributes->used + 1 > attributes->size) {
+      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (attributes->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_attributes_resize(size, attributes);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attributes_increase_
+
+#ifndef _di_f_thread_attributes_increase_by_
+  f_return_status f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t *attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (attributes->used + amount > attributes->size) {
+      if (attributes->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_attributes_resize(attributes->used + amount, attributes);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_attributes_increase_by_
+
+#ifndef _di_f_thread_caller_
+  f_thread_id_t f_thread_caller() {
+    return pthread_self();
+  }
+#endif // _di_f_thread_caller_
+
+#ifndef _di_f_thread_cancel_
+  f_return_status f_thread_cancel(const f_thread_id_t id) {
+
+    const int error = pthread_cancel(id);
+
+    if (error) {
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_cancel_
+
+#ifndef _di_f_thread_cancel_state_set_
+  f_return_status f_thread_cancel_state_set(const int state, int *previous) {
+
+    const int error = pthread_setcancelstate(state, previous);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_cancel_state_set_
+
+#ifndef _di_f_thread_cancel_test_
+  f_return_status f_thread_cancel_test() {
+
+    pthread_testcancel();
+
+    return F_none;
+  }
+#endif // _di_f_thread_cancel_test_
+
+#ifndef _di_f_thread_cancel_type_set_
+  f_return_status f_thread_cancel_type_set(const int type, int *previous) {
+
+    const int error = pthread_setcanceltype(type, previous);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_cancel_type_set_
+
+#ifndef _di_f_thread_clock_get_id_
+  f_return_status f_thread_clock_get_id(const f_thread_id_t id_thread, clockid_t *id_clock) {
+
+    const int error = pthread_getcpuclockid(id_thread, id_clock);
+
+    if (error) {
+      if (error == ENOENT) return F_status_set_error(F_supported_not);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_clock_get_id_
+
+#ifndef _di_f_thread_compare_
+  f_return_status f_thread_compare(const f_thread_id_t id1, const f_thread_id_t id2) {
+
+    if (pthread_equal(id1, id2)) {
+      return F_equal_to;
+    }
+
+    return F_equal_to_not;
+  }
+#endif // _di_f_thread_compare_
+
+#ifndef _di_f_thread_condition_unblock_all_
+  f_return_status f_thread_condition_unblock_all(f_thread_condition_t *condition) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!condition) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_cond_broadcast(condition);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_unblock_all_
+
+#ifndef _di_f_thread_condition_unblock_any_
+  f_return_status f_thread_condition_unblock_any(f_thread_condition_t *condition) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!condition) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_cond_signal(condition);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_unblock_any_
+
+#ifndef _di_f_thread_condition_wait_
+  f_return_status f_thread_condition_wait(f_thread_condition_t *condition, f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!condition) return F_status_set_error(F_parameter);
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_cond_wait(condition, mutex);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_wait_
+
+#ifndef _di_f_thread_condition_wait_timed_
+  f_return_status f_thread_condition_wait_timed(const struct timespec *wait, f_thread_condition_t *condition, f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!condition) return F_status_set_error(F_parameter);
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_cond_timedwait(condition, mutex, wait);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_wait_timed_
+
+#ifndef _di_f_thread_conditions_decrease_
+  f_return_status f_thread_conditions_decrease(f_thread_conditions_t *conditions) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!conditions) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (conditions->size > 1) {
+      return private_f_thread_conditions_resize(conditions->size - 1, conditions);
+    }
+
+    return private_f_thread_conditions_delete(conditions);
+  }
+#endif // _di_f_thread_conditions_decrease_
+
+#ifndef _di_f_thread_conditions_decrease_by_
+  f_return_status f_thread_conditions_decrease_by(const f_array_length_t amount, f_thread_conditions_t *conditions) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!conditions) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (conditions->size - amount > 0) {
+      return private_f_thread_conditions_resize(conditions->size - amount, conditions);
+    }
+
+    return private_f_thread_conditions_delete(conditions);
+  }
+#endif // _di_f_thread_conditions_decrease_by_
+
+#ifndef _di_f_thread_conditions_delete_
+  f_return_status f_thread_conditions_delete(f_thread_conditions_t *conditions) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!conditions) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_conditions_delete(conditions);
+  }
+#endif // _di_f_thread_conditions_delete_
+
+#ifndef _di_f_thread_conditions_increase_
+  f_return_status f_thread_conditions_increase(f_thread_conditions_t *conditions) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!conditions) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (conditions->used + 1 > conditions->size) {
+      f_array_length_t size = conditions->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (conditions->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_conditions_resize(size, conditions);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_conditions_increase_
+
+#ifndef _di_f_thread_conditions_increase_by_
+  f_return_status f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t *conditions) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!conditions) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (conditions->used + amount > conditions->size) {
+      if (conditions->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_conditions_resize(conditions->used + amount, conditions);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_conditions_increase_by_
+
 #ifndef _di_f_thread_create_
-  f_return_status f_thread_create(const pthread_attr_t *attribute, pthread_t *id, void *(*routine) (void *), void *argument) {
+  f_return_status f_thread_create(const f_thread_attribute_t *attribute, f_thread_id_t *id, void *(*routine) (void *), void *argument) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!id) return F_status_set_error(F_parameter);
@@ -20,6 +730,7 @@ extern "C" {
       if (error == EAGAIN) return F_status_set_error(F_resource_not);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == EPERM) return F_status_set_error(F_prohibited);
+      if (error == ETIMEDOUT) return F_time;
 
       return F_status_set_error(F_failure);
     }
@@ -28,63 +739,829 @@ extern "C" {
   }
 #endif // _di_f_thread_create_
 
-#ifndef _di_f_thread_sets_decrease_
-  f_return_status f_thread_sets_decrease(f_thread_sets_t *thread_sets) {
+#ifndef _di_f_thread_exit_
+  f_return_status f_thread_exit(int *result) {
     #ifndef _di_level_0_parameter_checking_
-      if (!thread_sets) return F_status_set_error(F_parameter);
+      if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (thread_sets->size > 1) {
-      return private_f_thread_sets_resize(thread_sets->size - 1, thread_sets);
+    pthread_exit(result);
+
+    return F_none;
+  }
+#endif // _di_f_thread_exit_
+
+#ifndef _di_f_thread_ids_decrease_
+  f_return_status f_thread_ids_decrease(f_thread_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->size > 1) {
+      return private_f_thread_ids_resize(ids->size - 1, ids);
     }
 
-    return private_f_thread_sets_delete(thread_sets);
+    return private_f_thread_ids_delete(ids);
   }
-#endif // _di_f_thread_sets_decrease_
+#endif // _di_f_thread_ids_decrease_
 
-#ifndef _di_f_thread_sets_decrease_by_
-  f_return_status f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t *thread_sets) {
+#ifndef _di_f_thread_ids_decrease_by_
+  f_return_status f_thread_ids_decrease_by(const f_array_length_t amount, f_thread_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
-      if (!thread_sets) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (thread_sets->size - amount > 0) {
-      return private_f_thread_sets_resize(thread_sets->size - amount, thread_sets);
+    if (ids->size - amount > 0) {
+      return private_f_thread_ids_resize(ids->size - amount, ids);
     }
 
-    return private_f_thread_sets_delete(thread_sets);
+    return private_f_thread_ids_delete(ids);
   }
-#endif // _di_f_thread_sets_decrease_by_
+#endif // _di_f_thread_ids_decrease_by_
 
-#ifndef _di_f_thread_sets_delete_
-  f_return_status f_thread_sets_delete(f_thread_sets_t *thread_sets) {
+#ifndef _di_f_thread_ids_delete_
+  f_return_status f_thread_ids_delete(f_thread_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!thread_sets) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    return private_f_thread_sets_delete(thread_sets);
+    return private_f_thread_ids_delete(ids);
   }
-#endif // _di_f_thread_sets_delete_
+#endif // _di_f_thread_ids_delete_
 
-#ifndef _di_f_thread_sets_increase_
-  f_return_status f_thread_sets_increase(f_thread_sets_t *thread_sets) {
+#ifndef _di_f_thread_ids_increase_
+  f_return_status f_thread_ids_increase(f_thread_ids_t *ids) {
     #ifndef _di_level_0_parameter_checking_
-      if (!thread_sets) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (thread_sets->used + 1 > thread_sets->size) {
-      f_array_length_t size = thread_sets->used + f_memory_default_allocation_step;
+    if (ids->used + 1 > ids->size) {
+      f_array_length_t size = ids->used + f_memory_default_allocation_step;
 
       if (size > f_array_length_t_size) {
-        if (thread_sets->used + 1 > f_array_length_t_size) {
+        if (ids->used + 1 > f_array_length_t_size) {
           return F_status_set_error(F_array_too_large);
         }
 
         size = f_array_length_t_size;
       }
 
-      return private_f_thread_sets_resize(size, thread_sets);
+      return private_f_thread_ids_resize(size, ids);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_ids_increase_
+
+#ifndef _di_f_thread_ids_increase_by_
+  f_return_status f_thread_ids_increase_by(const f_array_length_t amount, f_thread_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->used + amount > ids->size) {
+      if (ids->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_ids_resize(ids->used + amount, ids);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_ids_increase_by_
+
+#ifndef _di_f_thread_join_
+  f_return_status f_thread_join(const f_thread_id_t id, void **result) {
+
+    const int error = pthread_join(id, result);
+
+    if (error) {
+      if (error == EDEADLK) return F_status_set_error(F_deadlock);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_join_
+
+#ifndef _di_f_thread_join_try_
+  f_return_status f_thread_try(const f_thread_id_t id, void **result) {
+
+    const int error = pthread_tryjoin_np(id, result);
+
+    if (error) {
+      if (error == EBUSY) return F_busy;
+      if (error == EDEADLK) return F_status_set_error(F_deadlock);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_join_try_
+
+#ifndef _di_f_thread_join_timed_
+  f_return_status f_thread_timed(const f_thread_id_t id, const struct timespec wait, void **result) {
+
+    const int error = pthread_timedjoin_np(id, result, &wait);
+
+    if (error) {
+      if (error == EBUSY) return F_busy;
+      if (error == EDEADLK) return F_status_set_error(F_deadlock);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+      if (error == ETIMEDOUT) return F_time;
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_join_timed_
+
+#ifndef _di_f_thread_key_create_
+  f_return_status f_thread_key_create(void (*routine) (void *), f_thread_key_t *key) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!routine) return F_status_set_error(F_parameter);
+      if (!key) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_key_create(key, routine);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_key_create_
+
+#ifndef _di_f_thread_key_get_
+  f_return_status f_thread_key_get(const f_thread_key_t key, void **value) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!value) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    *value = pthread_getspecific(key);
+
+    return F_none;
+  }
+#endif // _di_f_thread_key_get_
+
+#ifndef _di_f_thread_key_set_
+  f_return_status f_thread_key_set(const f_thread_key_t key, const void *value) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!value) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_setspecific(key, value);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_key_set_
+
+#ifndef _di_f_thread_keys_decrease_
+  f_return_status f_thread_keys_decrease(f_thread_keys_t *keys) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!keys) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (keys->size > 1) {
+      return private_f_thread_keys_resize(keys->size - 1, keys);
+    }
+
+    return private_f_thread_keys_delete(keys);
+  }
+#endif // _di_f_thread_keys_decrease_
+
+#ifndef _di_f_thread_keys_decrease_by_
+  f_return_status f_thread_keys_decrease_by(const f_array_length_t amount, f_thread_keys_t *keys) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!keys) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (keys->size - amount > 0) {
+      return private_f_thread_keys_resize(keys->size - amount, keys);
+    }
+
+    return private_f_thread_keys_delete(keys);
+  }
+#endif // _di_f_thread_keys_decrease_by_
+
+#ifndef _di_f_thread_keys_delete_
+  f_return_status f_thread_keys_delete(f_thread_keys_t *keys) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!keys) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_keys_delete(keys);
+  }
+#endif // _di_f_thread_keys_delete_
+
+#ifndef _di_f_thread_keys_increase_
+  f_return_status f_thread_keys_increase(f_thread_keys_t *keys) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!keys) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (keys->used + 1 > keys->size) {
+      f_array_length_t size = keys->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (keys->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_keys_resize(size, keys);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_keys_increase_
+
+#ifndef _di_f_thread_keys_increase_by_
+  f_return_status f_thread_keys_increase_by(const f_array_length_t amount, f_thread_keys_t *keys) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!keys) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (keys->used + amount > keys->size) {
+      if (keys->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_keys_resize(keys->used + amount, keys);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_keys_increase_by_
+
+#ifndef _di_f_thread_lock_
+  f_return_status f_thread_lock(f_thread_lock_t *lock) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!lock) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_rwlock_rdlock(lock);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EDEADLK) return F_status_set_error(F_deadlock);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_lock_
+
+#ifndef _di_f_thread_lock_try_
+  f_return_status f_thread_lock_try(f_thread_lock_t *lock) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!lock) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_rwlock_tryrdlock(lock);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EBUSY) return F_busy;
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_lock_try_
+
+#ifndef _di_f_thread_locks_decrease_
+  f_return_status f_thread_locks_decrease(f_thread_locks_t *locks) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!locks) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (locks->size > 1) {
+      return private_f_thread_locks_resize(locks->size - 1, locks);
+    }
+
+    return private_f_thread_locks_delete(locks);
+  }
+#endif // _di_f_thread_locks_decrease_
+
+#ifndef _di_f_thread_locks_decrease_by_
+  f_return_status f_thread_locks_decrease_by(const f_array_length_t amount, f_thread_locks_t *locks) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!locks) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (locks->size - amount > 0) {
+      return private_f_thread_locks_resize(locks->size - amount, locks);
+    }
+
+    return private_f_thread_locks_delete(locks);
+  }
+#endif // _di_f_thread_locks_decrease_by_
+
+#ifndef _di_f_thread_locks_delete_
+  f_return_status f_thread_locks_delete(f_thread_locks_t *locks) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!locks) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_locks_delete(locks);
+  }
+#endif // _di_f_thread_locks_delete_
+
+#ifndef _di_f_thread_locks_increase_
+  f_return_status f_thread_locks_increase(f_thread_locks_t *locks) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!locks) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (locks->used + 1 > locks->size) {
+      f_array_length_t size = locks->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (locks->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_locks_resize(size, locks);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_locks_increase_
+
+#ifndef _di_f_thread_locks_increase_by_
+  f_return_status f_thread_locks_increase_by(const f_array_length_t amount, f_thread_locks_t *locks) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!locks) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (locks->used + amount > locks->size) {
+      if (locks->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_locks_resize(locks->used + amount, locks);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_locks_increase_by_
+
+#ifndef _di_f_thread_mutex_create_
+  f_return_status f_thread_mutex_create(f_thread_mutex_attribute_t * const attribute, f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutex_init(mutex, attribute);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_create_
+
+#ifndef _di_f_thread_mutex_delete_
+  f_return_status f_thread_mutex_delete(f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutex_destroy(mutex);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_delete_
+
+#ifndef _di_f_thread_mutex_lock_
+  f_return_status f_thread_mutex_lock(f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutex_lock(mutex);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EDEADLK) return F_status_set_error(F_deadlock);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_lock_
+
+#ifndef _di_f_thread_mutex_lock_try_
+  f_return_status f_thread_mutex_lock_try(f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutex_trylock(mutex);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EBUSY) return F_busy;
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_lock_try_
+
+#ifndef _di_f_thread_mutex_unlock_
+  f_return_status f_thread_mutex_unlock(f_thread_mutex_t *mutex) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutex_unlock(mutex);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_unlock_
+
+#ifndef _di_f_thread_mutexs_decrease_
+  f_return_status f_thread_mutexs_decrease(f_thread_mutexs_t *mutexs) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutexs) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutexs->size > 1) {
+      return private_f_thread_mutexs_resize(mutexs->size - 1, mutexs);
+    }
+
+    return private_f_thread_mutexs_delete(mutexs);
+  }
+#endif // _di_f_thread_mutexs_decrease_
+
+#ifndef _di_f_thread_mutexs_decrease_by_
+  f_return_status f_thread_mutexs_decrease_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!mutexs) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutexs->size - amount > 0) {
+      return private_f_thread_mutexs_resize(mutexs->size - amount, mutexs);
+    }
+
+    return private_f_thread_mutexs_delete(mutexs);
+  }
+#endif // _di_f_thread_mutexs_decrease_by_
+
+#ifndef _di_f_thread_mutexs_delete_
+  f_return_status f_thread_mutexs_delete(f_thread_mutexs_t *mutexs) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutexs) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_mutexs_delete(mutexs);
+  }
+#endif // _di_f_thread_mutexs_delete_
+
+#ifndef _di_f_thread_mutexs_increase_
+  f_return_status f_thread_mutexs_increase(f_thread_mutexs_t *mutexs) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutexs) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutexs->used + 1 > mutexs->size) {
+      f_array_length_t size = mutexs->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (mutexs->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_mutexs_resize(size, mutexs);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutexs_increase_
+
+#ifndef _di_f_thread_mutexs_increase_by_
+  f_return_status f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutexs) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutexs->used + amount > mutexs->size) {
+      if (mutexs->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_mutexs_resize(mutexs->used + amount, mutexs);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutexs_increase_by_
+
+#ifndef _di_f_thread_mutex_attributes_decrease_
+  f_return_status f_thread_mutex_attributes_decrease(f_thread_mutex_attributes_t *mutex_attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex_attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutex_attributes->size > 1) {
+      return private_f_thread_mutex_attributes_resize(mutex_attributes->size - 1, mutex_attributes);
+    }
+
+    return private_f_thread_mutex_attributes_delete(mutex_attributes);
+  }
+#endif // _di_f_thread_mutex_attributes_decrease_
+
+#ifndef _di_f_thread_mutex_attributes_decrease_by_
+  f_return_status f_thread_mutex_attributes_decrease_by(const f_array_length_t amount, f_thread_mutex_attributes_t *mutex_attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!mutex_attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutex_attributes->size - amount > 0) {
+      return private_f_thread_mutex_attributes_resize(mutex_attributes->size - amount, mutex_attributes);
+    }
+
+    return private_f_thread_mutex_attributes_delete(mutex_attributes);
+  }
+#endif // _di_f_thread_mutex_attributes_decrease_by_
+
+#ifndef _di_f_thread_mutex_attributes_delete_
+  f_return_status f_thread_mutex_attributes_delete(f_thread_mutex_attributes_t *mutex_attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex_attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_mutex_attributes_delete(mutex_attributes);
+  }
+#endif // _di_f_thread_mutex_attributes_delete_
+
+#ifndef _di_f_thread_mutex_attributes_increase_
+  f_return_status f_thread_mutex_attributes_increase(f_thread_mutex_attributes_t *mutex_attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex_attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutex_attributes->used + 1 > mutex_attributes->size) {
+      f_array_length_t size = mutex_attributes->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (mutex_attributes->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_mutex_attributes_resize(size, mutex_attributes);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_attributes_increase_
+
+#ifndef _di_f_thread_mutex_attributes_increase_by_
+  f_return_status f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t *mutex_attributes) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mutex_attributes) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (mutex_attributes->used + amount > mutex_attributes->size) {
+      if (mutex_attributes->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_mutex_attributes_resize(mutex_attributes->used + amount, mutex_attributes);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_attributes_increase_by_
+
+#ifndef _di_f_thread_once_
+  f_return_status f_thread_once(void (*routine) (void), f_thread_once_t *once) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!routine) return F_status_set_error(F_parameter);
+      if (!once) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_once(once, routine);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_once_
+
+#ifndef _di_f_thread_onces_decrease_
+  f_return_status f_thread_onces_decrease(f_thread_onces_t *onces) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!onces) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (onces->size > 1) {
+      return private_f_thread_onces_resize(onces->size - 1, onces);
+    }
+
+    return private_f_thread_onces_delete(onces);
+  }
+#endif // _di_f_thread_onces_decrease_
+
+#ifndef _di_f_thread_onces_decrease_by_
+  f_return_status f_thread_onces_decrease_by(const f_array_length_t amount, f_thread_onces_t *onces) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!onces) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (onces->size - amount > 0) {
+      return private_f_thread_onces_resize(onces->size - amount, onces);
+    }
+
+    return private_f_thread_onces_delete(onces);
+  }
+#endif // _di_f_thread_onces_decrease_by_
+
+#ifndef _di_f_thread_onces_delete_
+  f_return_status f_thread_onces_delete(f_thread_onces_t *onces) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!onces) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_onces_delete(onces);
+  }
+#endif // _di_f_thread_onces_delete_
+
+#ifndef _di_f_thread_onces_increase_
+  f_return_status f_thread_onces_increase(f_thread_onces_t *onces) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!onces) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (onces->used + 1 > onces->size) {
+      f_array_length_t size = onces->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (onces->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_onces_resize(size, onces);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_onces_increase_
+
+#ifndef _di_f_thread_onces_increase_by_
+  f_return_status f_thread_onces_increase_by(const f_array_length_t amount, f_thread_onces_t *onces) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!onces) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (onces->used + amount > onces->size) {
+      if (onces->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_onces_resize(onces->used + amount, onces);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_onces_increase_by_
+
+#ifndef _di_f_thread_sets_decrease_
+  f_return_status f_thread_sets_decrease(f_thread_sets_t *sets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!sets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sets->size > 1) {
+      return private_f_thread_sets_resize(sets->size - 1, sets);
+    }
+
+    return private_f_thread_sets_delete(sets);
+  }
+#endif // _di_f_thread_sets_decrease_
+
+#ifndef _di_f_thread_sets_decrease_by_
+  f_return_status f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t *sets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!sets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sets->size - amount > 0) {
+      return private_f_thread_sets_resize(sets->size - amount, sets);
+    }
+
+    return private_f_thread_sets_delete(sets);
+  }
+#endif // _di_f_thread_sets_decrease_by_
+
+#ifndef _di_f_thread_sets_delete_
+  f_return_status f_thread_sets_delete(f_thread_sets_t *sets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!sets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_sets_delete(sets);
+  }
+#endif // _di_f_thread_sets_delete_
+
+#ifndef _di_f_thread_sets_increase_
+  f_return_status f_thread_sets_increase(f_thread_sets_t *sets) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!sets) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sets->used + 1 > sets->size) {
+      f_array_length_t size = sets->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (sets->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_sets_resize(size, sets);
     }
 
     return F_none;
@@ -92,22 +1569,82 @@ extern "C" {
 #endif // _di_f_thread_sets_increase_
 
 #ifndef _di_f_thread_sets_increase_by_
-  f_return_status f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t *thread_sets) {
+  f_return_status f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
-      if (!thread_sets) return F_status_set_error(F_parameter);
+      if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (thread_sets->used + amount > thread_sets->size) {
-      if (thread_sets->used + amount > f_array_length_t_size) {
+    if (sets->used + amount > sets->size) {
+      if (sets->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_array_too_large);
       }
 
-      return private_f_thread_sets_resize(thread_sets->used + amount, thread_sets);
+      return private_f_thread_sets_resize(sets->used + amount, sets);
     }
 
     return F_none;
   }
 #endif // _di_f_thread_sets_increase_by_
+
+#ifndef _di_f_thread_signal_
+  f_return_status f_thread_signal(const f_thread_id_t id, const int signal) {
+
+    const int error = pthread_kill(id, signal);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      if (error == ESRCH) {
+        if (signal) return F_status_set_error(F_found_not);
+
+        return F_found_not;
+      }
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (signal) {
+      return F_none;
+    }
+
+    return F_found;
+  }
+#endif // _di_f_thread_signal_
+
+#ifndef _di_f_thread_signal_mask_
+  f_return_status f_thread_signal_mask(const int how, const sigset_t *next, sigset_t *current) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!next && !current) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (pthread_sigmask(how, next, current) < 0) {
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_signal_mask_
+
+#ifndef _di_f_thread_signal_queue_
+  f_return_status f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
+
+    const int error = pthread_sigqueue(id, signal, value);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == ENOSYS) return F_status_set_error(F_supported_not);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_signal_queue_
 
 #ifdef __cplusplus
 } // extern "C"

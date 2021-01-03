@@ -40,6 +40,10 @@
 #include <level_0/path.h>
 #include <level_0/signal.h>
 
+#ifndef _di_pthread_support_
+  #include <level_0/thread.h>
+#endif // _di_pthread_support_
+
 // fll-1 includes
 #include <level_1/control_group.h>
 #include <level_1/environment.h>
@@ -443,7 +447,8 @@ extern "C" {
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
- *   Errors (with error bit) from: f_signal_set_handle().
+ *   Errors (with error bit) from: f_signal_mask().
+ *   Errors (with error bit) from: f_thread_signal_mask().
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
  *   Errors (with error bit) from: fl_string_append().
  *   Errors (with error bit) from: fl_string_dynamic_delete().
@@ -470,7 +475,8 @@ extern "C" {
  * @see f_capability_process_set()
  * @see f_environment_get()
  * @see f_file_exists()
- * @see f_signal_set_handle()
+ * @see f_signal_mask()
+ * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
  * @see fl_environment_path_explode_dynamic()
  * @see fl_string_append()

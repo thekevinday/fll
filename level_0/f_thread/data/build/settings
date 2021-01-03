@@ -18,7 +18,7 @@ modes_default individual
 build_compiler gcc
 build_indexer ar
 build_language c
-build_libraries -lc
+build_libraries -pthread -lc
 build_libraries-individual -lf_memory
 build_sources_library thread.c private-thread.c
 build_sources_program
@@ -27,7 +27,7 @@ build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_0
 path_headers_preserve no
@@ -48,7 +48,7 @@ defines_all
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -pthread
+flags_all -z now -g -fdiagnostics-color=always
 flags_shared
 flags_static
 flags_library -fPIC

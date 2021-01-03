@@ -25,13 +25,13 @@ int main(const unsigned long argc, const f_string_t *argv) {
   f_signal_set_add(F_signal_interrupt, &data.signal.set);
   f_signal_set_add(F_signal_quit, &data.signal.set);
   f_signal_set_add(F_signal_termination, &data.signal.set);
-  f_signal_set_handle(SIG_BLOCK, &data.signal.set);
+  f_signal_mask(SIG_BLOCK, &data.signal.set, 0);
 
   status = f_signal_open(&data.signal);
 
   // if there is an error opening a signal descriptor, then do not handle signals.
   if (F_status_is_error(status)) {
-    f_signal_set_handle(SIG_UNBLOCK, &data.signal.set);
+    f_signal_mask(SIG_UNBLOCK, &data.signal.set, 0);
     f_signal_close(&data.signal);
   }
 

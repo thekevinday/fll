@@ -11,21 +11,6 @@
 #ifndef _PRIVATE_FLL_execute_h
 #define _PRIVATE_FLL_execute_h
 
-// libc includes
-#include <memory.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-// fll-0 includes
-#include <level_0/status.h>
-#include <level_0/memory.h>
-#include <level_0/string.h>
-#include <level_0/type.h>
-
-// fll-1 includes
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -238,7 +223,8 @@ extern "C" {
  * @see waitpid()
  *
  * @see f_environment_set_dynamic()
- * @see f_signal_set_handle()
+ * @see f_signal_mask()
+ * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
  * @see fll_execute_program()
  */
@@ -302,7 +288,8 @@ extern "C" {
  * @see waitpid()
  *
  * @see f_environment_set_dynamic()
- * @see f_signal_set_handle()
+ * @see f_signal_mask()
+ * @see f_thread_signal_mask()
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)

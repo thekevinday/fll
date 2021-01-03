@@ -12,7 +12,7 @@ environment
 process_pre
 process_post
 
-modes level
+modes level level_threadless
 modes_default level
 
 build_compiler gcc
@@ -20,14 +20,17 @@ build_indexer ar
 build_language c
 build_libraries -lc -lcap
 build_libraries-level
-build_sources_library account.c private-account.c capability.c console.c conversion.c directory.c private-directory.c environment.c private-environment.c file.c private-file.c fss.c iki.c private-iki.c memory.c path.c private-path.c pipe.c print.c private-print.c serialize.c private-serialize.c signal.c socket.c thread.c private-thread.c utf.c private-utf.c
+build_libraries-level_threadless
+build_sources_library account.c private-account.c capability.c console.c conversion.c directory.c private-directory.c environment.c private-environment.c file.c private-file.c fss.c iki.c private-iki.c memory.c path.c private-path.c pipe.c print.c private-print.c serialize.c private-serialize.c signal.c socket.c utf.c private-utf.c
+build_sources_library-level thread.c private-thread.c
 build_sources_program
-build_sources_headers account.h account-common.h capability.h capability-common.h color.h console.h console-common.h control_group.h control_group-common.h conversion.h conversion-common.h directory.h directory_type.h directory-common.h environment.h environment-common.h execute.h execute-common.h file.h file-common.h fss.h fss-common.h fss_comment.h fss_delimit.h fss_named.h fss_nest.h fss_quote.h fss_set.h iki.h iki-common.h memory.h memory_structure.h path.h path-common.h pipe.h print.h serialize.h serialize-common.h signal.h signal-common.h socket.h socket-common.h status.h status_array.h string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_triple.h thread.h thread-common.h type.h type_array.h utf.h utf-common.h
+build_sources_headers account.h account-common.h capability.h capability-common.h color.h console.h console-common.h control_group.h control_group-common.h conversion.h conversion-common.h directory.h directory_type.h directory-common.h environment.h environment-common.h execute.h execute-common.h file.h file-common.h fss.h fss-common.h fss_comment.h fss_delimit.h fss_named.h fss_nest.h fss_quote.h fss_set.h iki.h iki-common.h memory.h memory_structure.h path.h path-common.h pipe.h print.h serialize.h serialize-common.h signal.h signal-common.h socket.h socket-common.h status.h status_array.h string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_triple.h type.h type_array.h utf.h utf-common.h
+build_sources_headers-level thread.h thread-common.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_0
 path_headers_preserve no
@@ -44,10 +47,12 @@ search_static yes
 
 #defines_all -D_di_libcap_
 defines_all
+defines_all-level_threadless -D_di_pthread_support_
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -pthread
+flags_all -z now -g -fdiagnostics-color=always
+flags_all-level -pthread
 flags_shared
 flags_static
 flags_library -fPIC

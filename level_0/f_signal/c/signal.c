@@ -170,55 +170,38 @@ extern "C" {
   }
 #endif // _di_f_signal_set_fill_
 
-#ifndef _di_f_signal_set_get_
-  f_return_status f_signal_set_get(sigset_t *set) {
+#ifndef _di_f_signal_mask_
+  f_return_status f_signal_mask(const int how, const sigset_t *next, sigset_t *current) {
     #ifndef _di_level_0_parameter_checking_
-      if (!set) return F_status_set_error(F_parameter);
+      if (!next && !current) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    #ifdef _threadsafe_f_signal_handle
-      #define f_macro_signal_set_get_sigmask pthread_sigmask
-    #else
-      #define f_macro_signal_set_get_sigmask sigprocmask
-    #endif
-
-    if (f_macro_signal_set_get_sigmask(0, NULL, set) < 0) {
+    if (sigprocmask(how, next, current) < 0) {
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }
 
-    #undef f_macro_signal_set_get_sigmask
-
     return F_none;
   }
-#endif // _di_f_signal_set_get_
+#endif // _di_f_signal_mask_
 
-#ifndef _di_f_signal_set_handle_
-  f_return_status f_signal_set_handle(const int how, const sigset_t *set) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+#ifndef _di_f_signal_queue_
+  f_return_status f_signal_queue(const pid_t id, const int signal, const union sigval value) {
 
-    #ifdef _threadsafe_f_signal_handle
-      #define f_macro_signal_set_get_sigmask pthread_sigmask
-    #else
-      #define f_macro_signal_set_get_sigmask sigprocmask
-    #endif
-
-    if (f_macro_signal_set_get_sigmask(how, set, NULL) < 0) {
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
+    if (sigqueue(id, signal, value) < 0) {
+      if (errno == EAGAIN) return F_status_set_error(F_resource_not);
+      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ESRCH) return F_status_set_error(F_found_not);
 
       return F_status_set_error(F_failure);
     }
 
-    #undef f_macro_signal_set_get_sigmask
-
     return F_none;
   }
-#endif // _di_f_signal_set_handle_
+#endif // _di_f_signal_queue_
 
 #ifndef _di_f_signal_set_has_
   f_return_status f_signal_set_has(const int signal, const sigset_t *set) {

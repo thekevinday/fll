@@ -27,7 +27,7 @@ build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_0
 path_headers_preserve no
@@ -45,12 +45,10 @@ search_shared yes
 search_static yes
 
 defines_all
-#defines_all -D_threadsafe_f_signal_handle
 defines_static
 defines_shared
 
 flags_all -z now -g -fdiagnostics-color=always
-#flags_all -z now -g -pthread
 flags_shared
 flags_static
 flags_library -fPIC

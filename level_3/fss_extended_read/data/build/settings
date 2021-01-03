@@ -29,7 +29,7 @@ build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_3
 path_headers_preserve no

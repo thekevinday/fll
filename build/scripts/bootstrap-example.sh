@@ -9,8 +9,8 @@
 # This only accepts two arguments, followed by two optional arguments (first two are required and in the specified order):
 # 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
 # 2) The version number of the project, such as "0.5.2".
-# 3) Optional, may be one of: +V, +q, +n, +l, +d.
-# 4) Optional, may be one of: +V, +q, +n, +l, +d.
+# 3) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
+# 4) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 #
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
@@ -20,20 +20,35 @@ original_path="$PWD/"
 install_path="${original_path}fll/"
 
 verbose=
-if [[ $3 == "+V" || $4 == "+V" ]] ; then
-  verbose="+V"
-elif [[ $3 == "+q" || $4 == "+q" ]] ; then
-  verbose="+q"
-fi
-
 color=
-if [[ $3 == "+d" || $4 == "+d" ]] ; then
-  color="+d"
-elif [[ $3 == "+l" || $4 == "+l" ]] ; then
-  color="+l"
-elif [[ $3 == "+n" || $4 == "+n" ]] ; then
-  color="+n"
-fi
+shared=
+static=
+
+let i=3
+
+while [[ $i -le $# ]] ; do
+  if [[ ${!i} == "+V" ]] ; then
+    verbose="+V"
+  elif [[ ${!i} == "+q" ]] ; then
+    verbose="+q"
+  elif [[ ${!i} == "+d" ]] ; then
+    verbose="+d"
+  elif [[ ${!i} == "+l" ]] ; then
+    verbose="+l"
+  elif [[ ${!i} == "+n" ]] ; then
+    verbose="+n"
+  elif [[ ${!i} == "--enable-static" ]] ; then
+    static="--enable-static"
+  elif [[ ${!i} == "--disable-static" ]] ; then
+    static="--disable-static"
+  elif [[ ${!i} == "--enable-shared" ]] ; then
+    shared="--enable-shared"
+  elif [[ ${!i} == "--disable-shared" ]] ; then
+    shared="--disable-shared"
+  fi
+
+  let i++
+done
 
 mkdir -vp $install_path
 
@@ -48,9 +63,9 @@ if [[ $1 == "individual" ]] ; then
 
       ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build $verbose $color -w $install_path -m individual &&
+      ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m individual &&
 
-      ./install.sh $verbose $color -w $install_path &&
+      ./install.sh $verbose $color $shared $static -w $install_path &&
 
       cd $original_path || break
     done
@@ -62,31 +77,31 @@ if [[ $1 == "level" ]] ; then
 
   cd package/level/fll-level_0-$2/ &&
 
-  ./bootstrap.sh $verbose $color clean &&
+  ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
 
-  ./install.sh $verbose $color -w $install_path &&
+  ./install.sh $verbose $color $shared $static -w $install_path &&
 
   cd $original_path &&
 
   cd package/level/fll-level_1-$2/ &&
 
-  ./bootstrap.sh $verbose $color clean &&
+  ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
 
-  ./install.sh $verbose $color -w $install_path &&
+  ./install.sh $verbose $color $shared $static -w $install_path &&
 
   cd $original_path &&
 
   cd package/level/fll-level_2-$2/ &&
 
-  ./bootstrap.sh $verbose $color clean &&
+  ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh $verbose $color build -w $install_path -m level &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m level &&
 
-  ./install.sh $verbose $color -w $install_path
+  ./install.sh $verbose $color $shared $static -w $install_path
 fi
 
 if [[ $1 == "monolithic" ]] ; then
@@ -94,11 +109,11 @@ if [[ $1 == "monolithic" ]] ; then
 
   cd package/monolithic/fll-$2/ &&
 
-  ./bootstrap.sh $verbose $color clean &&
+  ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh $verbose $color build -w $install_path -m monolithic &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m monolithic &&
 
-  ./install.sh $verbose $color -w $install_path
+  ./install.sh $verbose $color $shared $static -w $install_path
 fi
 
 # the following in an example on building the Featureless Make project (fake) from the project bootstrapped from above.
@@ -115,11 +130,11 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
 
   cd package/program/fake-$2/ &&
 
-  ./bootstrap.sh $verbose $color clean &&
+  ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh $verbose $color build -w $install_path -m $build_mode &&
+  ./bootstrap.sh build $verbose $color $shared $static -w $install_path -m $build_mode &&
 
-  ./install.sh $verbose $color -w $install_path
+  ./install.sh $verbose $color $shared $static -w $install_path
 fi
 
 # regardless of what happens always return to the starting directory.

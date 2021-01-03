@@ -8,3 +8,20 @@ Threads Documentation:
   Be sure to remove f_thread project from the compile list as well (which can be found either in the individual projects build settings file or the appropriate level or monolithic build settings file).
 
   Any project or library depending on f_thread must have -pthread passed to guarantee a correct and valid compilation.
+
+  Some projects that optionally support pthreads may support the macro _di_pthread_support_ for disabling threads.
+
+  Thread support is a very common functionality and there may be changes to the FLL scripts and fakefile to support the options "--disable-thread" and "--enable-thread" to make utilizing threads slightly easier.
+  Some libraries and programs in this project require threads to work and will not compile with threads disabled.
+
+GLIBC Problems:
+  Some versions of GLIBC butcher static linking in some way or another.
+  One of the problems encountered is that with compiling against threads (-pthread) some programs may get messages like\:
+    multiple definition of `__lll_lock_wait_private' ... libpthread.a(lowlevellock.o): in function `__lll_unlock_wake_private' ...
+
+  An immediate solution would be to fix the GLIBC and set __lll_lock_wait_private to a weak_function.
+  This is not practical for most users, so it may be that thread support in statically compiled libraries for GLIBC will not be possible.
+  An alternative could be to use a more sane libc instead of GLIBC (if you can find one, like musl-libc).
+
+  There needs to be more investigation into the cause of this.
+  Maybe there is some way to fix this during compile or link time without having to fix GLIBC or use a different libc for static linking.

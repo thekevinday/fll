@@ -12,14 +12,15 @@ environment
 process_pre
 process_post
 
-modes level
+modes level level_threadless
 modes_default level
 
 build_compiler gcc
 build_indexer ar
 build_language c
-build_libraries -lc -lcap
+build_libraries -lc -lcap -lfll_1 -lfll_0
 build_libraries-level -lfll_1 -lfll_0
+build_libraries-level_threadless -lfll_1 -lfll_0
 build_sources_library control_group.c environment.c error.c private-error.c execute.c private-execute.c file.c private-file.c fss.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c fss_status.c iki.c private-iki.c path.c program.c status.c
 build_sources_program
 build_sources_headers control_group.h environment.h error.h error-common.h execute.h file.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h path.h program.h status.h
@@ -27,7 +28,7 @@ build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_2
 path_headers_preserve no
@@ -44,10 +45,12 @@ search_static yes
 
 #defines_all -D_di_libcap_
 defines_all
+defines_all-level_threadless -D_di_pthread_support_
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -pthread
+flags_all -z now -g -fdiagnostics-color=always
+flags_all-level -pthread
 flags_shared
 flags_static
 flags_library -fPIC

@@ -27,7 +27,7 @@ build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
-build_static yes
+build_static no
 
 path_headers level_1
 path_headers_preserve no
@@ -44,7 +44,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_en_libcap_
+#defines_all -D_di_libcap_
 defines_all
 defines_static
 defines_shared

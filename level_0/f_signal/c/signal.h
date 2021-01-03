@@ -176,40 +176,54 @@ extern "C" {
 #endif // _di_f_signal_set_fill_
 
 /**
- * Get the current signal set in use.
+ * Get or assign the current signal set in use.
  *
- * @param set
- *   The current set of signals being handled.
- *
- * @return
- *   F_none on success but no signal found.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_failure (with error bit) for any other error.
- *
- * @see pthread_sigmask()
- */
-#ifndef _di_f_signal_set_get_
-  extern f_return_status f_signal_set_get(sigset_t *set);
-#endif // _di_f_signal_set_get_
-
-/**
- * Designate how to handle or not handle a set of signals designated by the set.
+ * Either set or previous may be NULL but not both (at least one is required).
  *
  * @param how
- *   How to process the signal, such as SIG_BLOCK, SIG_UNBLOCK, or SIG_SETMASK.
- * @param set
- *   The set of signals to handle.
+ *   How to handle the signal.
+ *   Set this to 0 when only trying to get the current signal set.
+ * @param next
+ *   (optional) The new set of signals to handle.
+ *   Set to NULL to not use.
+ * @param current
+ *   (optional) The current set of signals being handled.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success but no signal found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
- * @see pthread_sigmask()
+ * @see sigprocmask()
  */
-#ifndef _di_f_signal_set_handle_
-  extern f_return_status f_signal_set_handle(const int how, const sigset_t *set);
-#endif // _di_f_signal_set_handle_
+#ifndef _di_f_signal_mask_
+  extern f_return_status f_signal_mask(const int how, const sigset_t *next, sigset_t *current);
+#endif // _di_f_signal_mask_
+
+/**
+ * Send the signal and value to the given process.
+ *
+ * @param id
+ *   The PID to signal.
+ * @param signal
+ *   The signal to send to the thread.
+ * @param value
+ *   The signal value to send.
+ *
+ * @return
+ *   F_none on success but no signal found.
+ *   F_found_not (with error bit) if the given PID was found.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_resource_not (with error bit) if the max signals is reached.
+ *   F_supported_not (with error bit) if this action is not supported by the current OS.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see sigqueue()
+ */
+#ifndef _di_f_signal_queue_
+  extern f_return_status f_signal_queue(const pid_t id, const int signal, const union sigval value);
+#endif // _di_f_signal_queue_
 
 /**
  * Check to see if the given signal set has a given signal.

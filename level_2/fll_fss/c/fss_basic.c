@@ -183,7 +183,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        destination->string[destination->used++] = f_string_eol[0];
+        destination->string[destination->used++] = f_string_eol_s[0];
       }
     }
 
