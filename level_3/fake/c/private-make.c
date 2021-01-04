@@ -588,7 +588,7 @@ extern "C" {
 
                     if (F_status_is_error_not(*status) && j + 1 < settings.contents.array[i].used) {
                       function_name = "fl_string_append_assure";
-                      *status = fl_string_append_assure(" ", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
+                      *status = fl_string_append_assure(f_string_space_s, 1, &data_make->setting_make.parameter.array[0].value.array[0]);
                     }
 
                     if (F_status_is_error(*status)) {
@@ -702,7 +702,7 @@ extern "C" {
 
             for (f_array_length_t j = 0; j < define.array[i].value.used; j++) {
 
-              *status = fl_string_dynamic_mash(" ", 1, define.array[i].value.array[j], &combined);
+              *status = fl_string_dynamic_mash(f_string_space_s, 1, define.array[i].value.array[j], &combined);
 
               if (F_status_is_error(*status)) {
                 fll_error_print(data.error, F_status_set_fine(*status), "fl_string_dynamic_mash_nulless", F_true);
@@ -1370,7 +1370,7 @@ extern "C" {
                   for (l = 0; l < reserved_value[k]->used; l++) {
 
                     if (l > 0) {
-                      *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+                      *status = fl_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
 
                       if (F_status_is_error(*status)) {
                         fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_append", F_true);
@@ -1411,7 +1411,7 @@ extern "C" {
                       for (l = 0; l < parameter->array[k].value.used; l++) {
 
                         if (l > 0) {
-                          *status = fl_string_append(" ", 1, &arguments->array[arguments->used]);
+                          *status = fl_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
 
                           if (F_status_is_error(*status)) {
                             fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_append", F_true);
@@ -1781,7 +1781,7 @@ extern "C" {
 
           for (f_array_length_t j = 0; j < dynamics_value[i].used; j++) {
 
-            status = fl_string_dynamic_mash(" ", 1, dynamics_value[i].array[j], &value);
+            status = fl_string_dynamic_mash(f_string_space_s, 1, dynamics_value[i].array[j], &value);
 
             if (F_status_is_error(status)) {
               break;
@@ -3597,7 +3597,7 @@ extern "C" {
         f_print_dynamic(data->output.stream, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
-          fprintf(data->output.stream, " ");
+          fprintf(data->output.stream, f_string_space_s);
         }
       } // for
 

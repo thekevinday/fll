@@ -66,8 +66,10 @@ extern "C" {
  * nice:          the niceness value to assign the child process to, set to 0 to not use.
  * id_user:       the id of the user to assign the child process to, set to 0 to not use.
  * id_group:      the id of the group to assign the child process to, set to 0 to not use.
+ * affinity:      the cpu affinity to assign the child process to, set to 0 to not use (this is an array of CPU ids, starting from 0).
  * capability:    all of the capabilities to assign the child process to, set to 0 to not use (f_capability_t is a pointer).
  * control_group: an array of cgroups (control groups) to assign the child PID to, set to 0 to not use.
+ * limits:        the resource limits to assign the child process to, set to 0 to not use.
  * id_groups:     the ids of each supplemental group to assign the child process to, set to 0 to not use.
  * scheduler:     the scheduler to assign the child process to, set to 0 to not use.
  */
@@ -77,23 +79,27 @@ extern "C" {
     uid_t *id_user;
     gid_t *id_group;
 
+    f_int32s_t *affinity;
     f_capability_t capability;
     f_control_group_t *control_group;
     f_int32s_t *id_groups;
+    f_limit_sets_t *limits;
     f_execute_scheduler_t *scheduler;
   } fl_execute_as_t;
 
-  #define fl_execute_as_t_initialize { 0, 0, 0, 0, 0, 0, 0 }
+  #define fl_execute_as_t_initialize { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, capability, control_group, id_groups, scheduler) { nice, id_user, id_group, capability, control_group, id_groups, scheduler }
+  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler) { nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler }
 
   #define fl_execute_as_t_clear(as) \
     as.nice = 0; \
     as.id_user = 0; \
     as.id_group = 0; \
+    as.affinity = 0; \
     as.capability = 0; \
     as.control_group = 0; \
     as.id_groups = 0; \
+    as.limits = 0; \
     as.scheduler = 0;
 #endif // _di_fl_execute_as_t_
 

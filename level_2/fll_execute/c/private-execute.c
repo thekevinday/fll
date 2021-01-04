@@ -190,6 +190,42 @@ extern "C" {
 #if !defined(_di_fll_execute_program_)
   f_return_status private_fll_execute_as_parent(const fl_execute_as_t as, const pid_t id_child, fl_execute_parameter_t * const parameter, char *result) {
 
+    if (as.affinity && as.affinity->used) {
+      cpu_set_t *set = CPU_ALLOC(as.affinity->used);
+
+      if (set == 0) {
+        result[0] = '1';
+
+        return F_status_set_error(F_processor);
+      }
+
+      size_t size = CPU_ALLOC_SIZE(as.affinity->used);
+
+      CPU_ZERO_S(size, set);
+
+      for (f_array_length_t i = 0; i < as.affinity->used; ++i) {
+        CPU_SET_S(as.affinity->array[i], size, set);
+      } // for
+
+      const int response = sched_setaffinity(id_child, size, set);
+
+      CPU_FREE(set);
+
+      if (response == -1) {
+        result[0] = '1';
+
+        return F_status_set_error(F_processor);
+      }
+    }
+
+    if (as.control_group) {
+      if (F_status_is_error(fl_control_group_apply(*as.control_group, id_child))) {
+        result[0] = '1';
+
+        return F_status_set_error(F_control_group);
+      }
+    }
+
     if (as.scheduler) {
       struct sched_param parameter_schedule;
       parameter_schedule.sched_priority = as.scheduler->priority;
@@ -203,12 +239,15 @@ extern "C" {
       }
     }
 
-    if (as.control_group) {
-      if (F_status_is_error(fl_control_group_apply(*as.control_group, id_child))) {
-        result[0] = '1';
+    if (as.limits) {
+      for (f_array_length_t i = 0; i < as.limits->used; ++i) {
 
-        return F_status_set_error(F_control_group);
-      }
+        if (F_status_is_error(f_limit_process(id_child, as.limits->array[i].type, &as.limits->array[i].value, 0))) {
+          result[0] = '1';
+
+          return F_status_set_error(F_limit);
+        }
+      } // for
     }
 
     return F_none;

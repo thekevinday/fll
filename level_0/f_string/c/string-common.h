@@ -30,35 +30,42 @@ extern "C" {
  */
 #ifndef _di_f_string_has_eol_
   #define f_string_eol "\n"
+  #define f_string_eol_length 1
 #endif // _di_f_string_has_eol_
 
 #ifndef _di_f_string_has_placeholder_
   #define f_string_placeholder "\0"
+  #define f_string_placeholder_length 1
 #endif // _di_f_string_has_placeholder_
 
+#ifndef _di_f_string_has_space_
+  #define f_string_space " "
+  #define f_string_space_length 1
+#endif // _di_f_string_has_space_
+
 #ifndef _di_string_format_pointers_
-  #define string_format_string             "%s"
-  #define string_format_character          "%c"
-  #define string_format_wide_string        "%ls"
-  #define string_format_wide_character     "%lc"
-  #define string_format_integer            "%i"
-  #define string_format_unsigned           "%u"
-  #define string_format_double             "%d"
-  #define string_format_float              "%f"
-  #define string_format_short_integer      "%hi"
-  #define string_format_short_unsigned     "%hu"
-  #define string_format_long_integer       "%li"
-  #define string_format_long_unsigned      "%lu"
-  #define string_format_long_double        "%ld"
-  #define string_format_long_long_integer  "%lli"
-  #define string_format_long_long_unsigned "%llu"
+  #define f_string_format_string             "%s"
+  #define f_string_format_character          "%c"
+  #define f_string_format_wide_string        "%ls"
+  #define f_string_format_wide_character     "%lc"
+  #define f_string_format_integer            "%i"
+  #define f_string_format_unsigned           "%u"
+  #define f_string_format_double             "%d"
+  #define f_string_format_float              "%f"
+  #define f_string_format_short_integer      "%hi"
+  #define f_string_format_short_unsigned     "%hu"
+  #define f_string_format_long_integer       "%li"
+  #define f_string_format_long_unsigned      "%lu"
+  #define f_string_format_long_double        "%ld"
+  #define f_string_format_long_long_integer  "%lli"
+  #define f_string_format_long_long_unsigned "%llu"
 #endif // _di_string_format_pointers_
 
-#ifndef _di_f_array_t_length_printf_
+#ifndef _di_f_array_length_printf_
   #define f_array_length_printf       string_format_integer
   #define f_array_length_short_printf string_format_short_integer
   #define f_array_length_long_printf  string_format_long_integer
-#endif // _di_f_array_t_length_printf_
+#endif // _di_f_array_length_printf_
 
 /**
  * Define the basic string type.

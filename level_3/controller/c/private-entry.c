@@ -20,7 +20,7 @@ extern "C" {
 
       if (index == action.parameters.used) break;
 
-      fprintf(stream, " ");
+      fprintf(stream, f_string_space_s);
     } // for
   }
 #endif // _di_controller_entry_action_parameters_print_
@@ -32,32 +32,32 @@ extern "C" {
 
     switch (type) {
       case controller_entry_action_type_consider:
-        buffer.string = controller_string_consider;
+        buffer.string = controller_string_consider_s;
         buffer.used = controller_string_consider_length;
         break;
 
       case controller_entry_action_type_failsafe:
-        buffer.string = controller_string_failsafe;
+        buffer.string = controller_string_failsafe_s;
         buffer.used = controller_string_failsafe_length;
         break;
 
       case controller_entry_action_type_item:
-        buffer.string = controller_string_item;
+        buffer.string = controller_string_item_s;
         buffer.used = controller_string_item_length;
         break;
 
       case controller_entry_action_type_ready:
-        buffer.string = controller_string_ready;
+        buffer.string = controller_string_ready_s;
         buffer.used = controller_string_ready_length;
         break;
 
       case controller_entry_action_type_rule:
-        buffer.string = controller_string_rule;
+        buffer.string = controller_string_rule_s;
         buffer.used = controller_string_rule_length;
         break;
 
       case controller_entry_action_type_timeout:
-        buffer.string = controller_string_timeout;
+        buffer.string = controller_string_timeout_s;
         buffer.used = controller_string_timeout_length;
         break;
     }
@@ -179,22 +179,22 @@ extern "C" {
         break;
       }
 
-      if (fl_string_dynamic_compare_string(controller_string_consider, cache->name_action, controller_string_consider_length) == F_equal_to) {
+      if (fl_string_dynamic_compare_string(controller_string_consider_s, cache->name_action, controller_string_consider_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_consider;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_failsafe, cache->name_action, controller_string_failsafe_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_failsafe_s, cache->name_action, controller_string_failsafe_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_failsafe;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_item, cache->name_action, controller_string_item_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_item_s, cache->name_action, controller_string_item_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_item;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_ready, cache->name_action, controller_string_ready_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_ready_s, cache->name_action, controller_string_ready_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_ready;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_rule, cache->name_action, controller_string_rule_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_rule_s, cache->name_action, controller_string_rule_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_rule;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_timeout, cache->name_action, controller_string_timeout_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_timeout_s, cache->name_action, controller_string_timeout_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_timeout;
       }
       else {
@@ -413,13 +413,13 @@ extern "C" {
 
             for (j = 2; j < action->parameters.used; ++j) {
 
-              if (fl_string_dynamic_compare_string(controller_string_asynchronous, action->parameters.array[j], controller_string_asynchronous_length) == F_equal_to) {
+              if (fl_string_dynamic_compare_string(controller_string_asynchronous_s, action->parameters.array[j], controller_string_asynchronous_length) == F_equal_to) {
                 action->code |= controller_entry_rule_code_asynchronous;
               }
-              else if (fl_string_dynamic_compare_string(controller_string_require, action->parameters.array[j], controller_string_require_length) == F_equal_to) {
+              else if (fl_string_dynamic_compare_string(controller_string_require_s, action->parameters.array[j], controller_string_require_length) == F_equal_to) {
                 action->code |= controller_entry_rule_code_require;
               }
-              else if (fl_string_dynamic_compare_string(controller_string_wait, action->parameters.array[j], controller_string_wait_length) == F_equal_to) {
+              else if (fl_string_dynamic_compare_string(controller_string_wait_s, action->parameters.array[j], controller_string_wait_length) == F_equal_to) {
                 action->code |= controller_entry_rule_code_wait;
               }
               else {
@@ -434,11 +434,11 @@ extern "C" {
                 if (data.error.verbosity != f_console_verbosity_quiet) {
                   fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(data.error.to.stream, "%s%sThe entry item action third parameter (and beyond) must be one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_asynchronous, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_asynchronous_s, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
-                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_require, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_require_s, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
-                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_wait, data.error.notable.after->string);
+                  fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_wait_s, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
                   fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[j].string, data.error.notable.after->string);
                   fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
@@ -447,7 +447,7 @@ extern "C" {
             } // for
           }
           else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
-            if (fl_string_dynamic_compare_string(controller_string_main, action->parameters.array[0], controller_string_main_length) == F_equal_to) {
+            if (fl_string_dynamic_compare_string(controller_string_main_s, action->parameters.array[0], controller_string_main_length) == F_equal_to) {
               action->status = F_status_set_error(F_supported_not);
 
               if (F_status_is_error_not(status_action)) {
@@ -457,20 +457,20 @@ extern "C" {
               if (data.error.verbosity != f_console_verbosity_quiet) {
                 fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(data.error.to.stream, "%s%sThe entry item action may not specify the reserved item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main_s, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
               }
             }
           }
           else if (action->type == controller_entry_action_type_timeout) {
 
-            if (fl_string_dynamic_compare_string(controller_string_kill, action->parameters.array[0], controller_string_kill_length) == F_equal_to) {
+            if (fl_string_dynamic_compare_string(controller_string_kill_s, action->parameters.array[0], controller_string_kill_length) == F_equal_to) {
               action->code = controller_entry_timeout_code_kill;
             }
-            else if (fl_string_dynamic_compare_string(controller_string_start, action->parameters.array[0], controller_string_start_length) == F_equal_to) {
+            else if (fl_string_dynamic_compare_string(controller_string_start_s, action->parameters.array[0], controller_string_start_length) == F_equal_to) {
               action->code = controller_entry_timeout_code_start;
             }
-            else if (fl_string_dynamic_compare_string(controller_string_stop, action->parameters.array[0], controller_string_stop_length) == F_equal_to) {
+            else if (fl_string_dynamic_compare_string(controller_string_stop_s, action->parameters.array[0], controller_string_stop_length) == F_equal_to) {
               action->code = controller_entry_timeout_code_stop;
             }
             else {
@@ -483,11 +483,11 @@ extern "C" {
               if (data.error.verbosity != f_console_verbosity_quiet) {
                 fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(data.error.to.stream, "%s%sThe entry item action must have one of '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_kill_s, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s', '", data.error.context.before->string);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_start_s, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s', or '", data.error.context.before->string);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop, data.error.notable.after->string);
+                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_stop_s, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s' but instead has '", data.error.context.before->string);
                 fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
                 fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
@@ -634,7 +634,7 @@ extern "C" {
     cache->name_action.used = 0;
     cache->name_item.used = 0;
 
-    status = controller_file_load(data, setting, controller_string_entries, entry_name, controller_string_entry, controller_string_entries_length, controller_string_entry_length, cache);
+    status = controller_file_load(data, setting, controller_string_entries_s, entry_name, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, cache);
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
@@ -749,7 +749,7 @@ extern "C" {
 
           range = &cache->content_items.array[i].array[0];
 
-          if (fl_string_dynamic_compare_string(controller_string_main, cache->name_item, controller_string_main_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_string(controller_string_main_s, cache->name_item, controller_string_main_length) == F_equal_to) {
             code |= 0x1;
 
             at = 0;
@@ -798,7 +798,7 @@ extern "C" {
             if (data.error.verbosity != f_console_verbosity_quiet) {
               fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(data.error.to.stream, "%s%sThe required entry item '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main, data.error.notable.after->string);
+              fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, controller_string_main_s, data.error.notable.after->string);
               fprintf(data.error.to.stream, "%s' was not found.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
             }
 

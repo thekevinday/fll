@@ -389,11 +389,11 @@ extern "C" {
         case F_interrupt_not:
           *string = FL_status_string_interrupt_not;
           break;
-        case F_valid:
-          *string = FL_status_string_valid;
+        case F_limit:
+          *string = FL_status_string_limit;
           break;
-        case F_valid_not:
-          *string = FL_status_string_valid_not;
+        case F_limit_not:
+          *string = FL_status_string_limit_not;
           break;
         case F_link:
           *string = FL_status_string_link;
@@ -484,6 +484,12 @@ extern "C" {
           break;
         case F_port_not:
           *string = FL_status_string_port_not;
+          break;
+        case F_processor:
+          *string = FL_status_string_processor;
+          break;
+        case F_processor_not:
+          *string = FL_status_string_processor_not;
           break;
         case F_prohibited:
           *string = FL_status_string_prohibited;
@@ -619,6 +625,12 @@ extern "C" {
           break;
         case F_utf_not:
           *string = FL_status_string_utf_not;
+          break;
+        case F_valid:
+          *string = FL_status_string_valid;
+          break;
+        case F_valid_not:
+          *string = FL_status_string_valid_not;
           break;
         case F_value:
           *string = FL_status_string_value;

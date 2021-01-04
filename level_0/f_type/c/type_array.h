@@ -27,7 +27,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_array_t_lengths_t_
+#ifndef _di_f_array_lengths_t_
   typedef struct {
     f_array_length_t *array;
 
@@ -49,7 +49,7 @@ extern "C" {
 
   #define f_macro_array_lengths_t_resize(status, lengths, new_length) f_macro_memory_structure_t_resize(status, lengths, f_array_length_t, new_length)
   #define f_macro_array_lengths_t_adjust(status, lengths, new_length) f_macro_memory_structure_t_adjust(status, lengths, f_array_length_t, new_length)
-#endif // _di_f_array_t_lengths_t_
+#endif // _di_f_array_lengths_t_
 
 /**
  * An array of an array of array lengths.
@@ -58,7 +58,7 @@ extern "C" {
  * size: total amount of allocated space.
  * used: total number of allocated spaces used.
  */
-#ifndef _di_f_array_t_lengthss_t_
+#ifndef _di_f_array_lengthss_t_
   typedef struct {
     f_array_lengths_t *array;
 
@@ -80,7 +80,7 @@ extern "C" {
 
   #define f_macro_array_lengthss_t_resize(status, lengths, new_length) f_macro_memory_structures_t_resize(status, lengths, f_array_length_t, f_array_lengths_t, new_length, f_array_length_t)
   #define f_macro_array_lengthss_t_adjust(status, lengths, new_length) f_macro_memory_structures_t_adjust(status, lengths, f_array_length_t, f_array_lengths_t, new_length, f_array_length_t)
-#endif // _di_f_array_t_lengthss_t_
+#endif // _di_f_array_lengthss_t_
 
 /**
  * An array of f_cell_t.

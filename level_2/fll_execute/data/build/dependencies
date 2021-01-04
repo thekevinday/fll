@@ -9,6 +9,7 @@ f_capability
 f_environment
 f_execute
 f_file
+f_limit
 f_path
 f_signal
 f_thread

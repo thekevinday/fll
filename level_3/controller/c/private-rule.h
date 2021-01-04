@@ -448,6 +448,20 @@ extern "C" {
 #endif // _di_controller_rule_items_increase_by_
 
 /**
+ * Get a string representing the rule setting limit type.
+ *
+ * @param type
+ *   The rule setting limit type code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_setting_limit_type_name_
+  extern f_string_static_t controller_rule_setting_limit_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // di_controller_rule_setting_limit_type_name_
+
+/**
  * Construct a canonical rule file path from the given path directory and name.
  *
  * @param data

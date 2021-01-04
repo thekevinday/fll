@@ -9,15 +9,17 @@ Rule Documentation:
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
   The "settings" Rule Type has the following FSS-0001 (Extended) Content\:
+    "affinity": Define one ore more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
     "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
     "control_group": Define a control group (cgroup) in which everything within this rule executes under.
-    "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule.
+    "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
     "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
+    "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
     "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
     "need": A single rule required to be executed (must exist and must succeed) before this rule starts.
     "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
-    "parameter": A statically defined IKI name and its associated value for use in this rule file.
+    "parameter": A statically defined IKI name and its associated value for use in this rule file. @todo make sure this is implemented and make sure to perform iki substitutions (with "define" being a reserved iki parameter name for environment variable usage, such as define:"PATH").
     "path": A single Content used to set a custom PATH environment variable value.
     "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     "scheduler": A valid name of a scheduler to use followed by an optional priority number.
@@ -33,6 +35,11 @@ Rule Documentation:
   In the case of "control", the first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
   In the case of "group" and "user", only users and groups that the user the controller program is being run as may be used.
+
+  In the case of "limit", first parameter must be one of the following: as, core, cpu, data, fsize, locks, memlock, msgqueue, nice, nofile, nproc, rss, rtprio, rttime, sigpending, and stack.
+  The second parameter repesents the soft limit.
+  The third parameter represents the hard limit.
+  This may be specified multiply times, but only once for each type.
 
   In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 

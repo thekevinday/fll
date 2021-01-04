@@ -9,23 +9,49 @@ setting:
   #user kevin
   #group list 8 root
 
+  limit nofile 5000 10000
+  limit nproc 1000 2000
+  limit nice 1 2
+
+  affinity 0
+
   need script require_me
 
 script:
   start {
     echo
+    echo "Current ulimit is"
+    ulimit -a
+    sleep 5
+
+    echo
     echo "Current cgroup for self (PPID $PPID, PID $$) is: '$(cat /proc/self/cgroup)'"
-    sleep 20
+    sleep 5
   }
 
 command:
   start {
     id
-    sleep 20
+    sleep 5
   }
+
+script:
+  start echo
 
 command:
   start whoami
 
+script:
+  start echo
+
+command:
+  start sleep 5
+
 command:
   start date -u
+
+script:
+  start echo
+
+script:
+  start sleep 5

@@ -406,7 +406,7 @@ extern "C" {
             if (data.warning.verbosity == f_console_verbosity_debug) {
               fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(data.warning.to.stream, "%s%sMultiple '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-              fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, controller_string_ready, data.warning.notable.after->string);
+              fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, controller_string_ready_s, data.warning.notable.after->string);
               fprintf(data.warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
               controller_entry_error_print(data.warning, *cache);
@@ -419,7 +419,7 @@ extern "C" {
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
           error_has = F_false;
 
-          if (fl_string_dynamic_compare_string(controller_string_main, actions->array[cache->ats.array[at_j]].parameters.array[0], controller_string_main_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_string(controller_string_main_s, actions->array[cache->ats.array[at_j]].parameters.array[0], controller_string_main_length) == F_equal_to) {
             continue;
           }
 
@@ -610,7 +610,7 @@ extern "C" {
     if (simulate) {
       fprintf(data->output.stream, "%c", f_string_eol_s[0]);
       fprintf(data->output.stream, "Processing entry item rule '");
-      fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_main, data->context.set.title.after->string);
+      fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_main_s, data->context.set.title.after->string);
       fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
     }
 
@@ -642,7 +642,7 @@ extern "C" {
               fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, cache->name_action.string, data->context.set.title.after->string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->output.stream, " ");
+                fprintf(data->output.stream, f_string_space_s);
                 fprintf(data->output.stream, "%s", data->context.set.notable.before->string);
                 controller_entry_action_parameters_print(data->output.stream, actions->array[cache->ats.array[at_j]]);
                 fprintf(data->output.stream, "%s", data->context.set.notable.after->string);
@@ -658,7 +658,7 @@ extern "C" {
                 fprintf(data->error.to.stream, "%s%s%s", data->error.context.after->string, data->error.notable.before->string, cache->name_action.string);
 
                 if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                  fprintf(data->error.to.stream, " ");
+                  fprintf(data->error.to.stream, f_string_space_s);
                   controller_entry_action_parameters_print(data->error.to.stream, actions->array[cache->ats.array[at_j]]);
                 }
 
@@ -679,7 +679,7 @@ extern "C" {
               fprintf(data->warning.to.stream, "%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, cache->name_action.string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->warning.to.stream, " ");
+                fprintf(data->warning.to.stream, f_string_space_s);
                 controller_entry_action_parameters_print(data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
               }
 
@@ -699,7 +699,7 @@ extern "C" {
               fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, cache->name_action.string, data->context.set.title.after->string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->output.stream, " ");
+                fprintf(data->output.stream, f_string_space_s);
                 fprintf(data->output.stream, "%s", data->context.set.notable.before->string);
                 controller_entry_action_parameters_print(data->output.stream, actions->array[cache->ats.array[at_j]]);
                 fprintf(data->output.stream, "%s", data->context.set.notable.after->string);
@@ -713,7 +713,7 @@ extern "C" {
               fprintf(data->warning.to.stream, "%s%s", data->warning.notable.before->string, cache->name_action.string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->warning.to.stream, " ");
+                fprintf(data->warning.to.stream, f_string_space_s);
                 controller_entry_action_parameters_print(data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
               }
 
@@ -735,7 +735,7 @@ extern "C" {
             if (simulate) {
               fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(data->output.stream, "Processing entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready, data->context.set.title.after->string);
+              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready_s, data->context.set.title.after->string);
               fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
             }
             else {
@@ -748,7 +748,7 @@ extern "C" {
           else if (simulate) {
             fprintf(data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(data->output.stream, "Ignoring entry item action '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready, data->context.set.title.after->string);
+            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready_s, data->context.set.title.after->string);
             fprintf(data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
           }
         }
@@ -963,18 +963,18 @@ extern "C" {
             f_string_t code = "";
 
             if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_kill) {
-              code = controller_string_kill;
+              code = controller_string_kill_s;
             }
             else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_start) {
-              code = controller_string_start;
+              code = controller_string_start_s;
             }
             else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_stop) {
-              code = controller_string_stop;
+              code = controller_string_stop_s;
             }
 
             fprintf(data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(data->output.stream, "Processing entry item action '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_timeout, data->context.set.title.after->string);
+            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_timeout_s, data->context.set.title.after->string);
             fprintf(data->output.stream, "' setting '");
             fprintf(data->output.stream, "%s%s%s", data->context.set.important.before->string, code, data->context.set.important.after->string);
             fprintf(data->output.stream, "' to '");
@@ -1015,7 +1015,7 @@ extern "C" {
             if (simulate) {
               fprintf(data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(data->output.stream, "Processing entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_failsafe, data->context.set.title.after->string);
+              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_failsafe_s, data->context.set.title.after->string);
               fprintf(data->output.stream, "' setting value to '");
               fprintf(data->output.stream, "%s%s%s", data->context.set.important.before->string, setting->entry.items.array[setting->failsafe_rule_id].name.string, data->context.set.important.after->string);
               fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);

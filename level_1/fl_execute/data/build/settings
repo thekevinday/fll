@@ -19,7 +19,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc -lcap
-build_libraries-individual -lf_capability -lf_memory -lf_signal
+build_libraries-individual -lf_capability -lf_limit -lf_memory -lf_signal
 build_sources_library
 build_sources_program
 build_sources_headers execute.h execute-common.h

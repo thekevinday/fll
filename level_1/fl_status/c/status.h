@@ -223,6 +223,8 @@ extern "C" {
     #define FL_status_string_interrupt_not     "F_interrupt_not"
     #define FL_status_string_known             "F_known"
     #define FL_status_string_known_not         "F_known_not"
+    #define FL_status_string_limit             "F_limit"
+    #define FL_status_string_limit_not         "F_limit_not"
     #define FL_status_string_link              "F_link"
     #define FL_status_string_link_not          "F_link_not"
     #define FL_status_string_lock              "F_lock"
@@ -253,6 +255,8 @@ extern "C" {
     #define FL_status_string_pipe_not          "F_pipe_not"
     #define FL_status_string_port              "F_port"
     #define FL_status_string_port_not          "F_port_not"
+    #define FL_status_string_processor         "F_processor"
+    #define FL_status_string_processor_not     "F_processor_not"
     #define FL_status_string_prohibited        "F_prohibited"
     #define FL_status_string_prohibited_not    "F_prohibited_not"
     #define FL_status_string_range             "F_range"
@@ -370,6 +374,8 @@ extern "C" {
     #define FL_status_string_interrupt_not_length     15
     #define FL_status_string_known_length             7
     #define FL_status_string_known_not_length         11
+    #define FL_status_string_limit_length             7
+    #define FL_status_string_limit_not_length         11
     #define FL_status_string_link_length              6
     #define FL_status_string_link_not_length          10
     #define FL_status_string_lock_length              6
@@ -400,6 +406,8 @@ extern "C" {
     #define FL_status_string_pipe_not_length          10
     #define FL_status_string_port_length              6
     #define FL_status_string_port_not_length          10
+    #define FL_status_string_processor_length         11
+    #define FL_status_string_processor_not_length     15
     #define FL_status_string_prohibited_length        12
     #define FL_status_string_prohibited_not_length    16
     #define FL_status_string_range_length             7

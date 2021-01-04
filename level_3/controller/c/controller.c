@@ -154,7 +154,7 @@ extern "C" {
       entry_name.size = entry_name.used;
     }
     else {
-      entry_name.string = controller_string_default;
+      entry_name.string = controller_string_default_s;
       entry_name.used = controller_string_default_length;
       entry_name.size = entry_name.used;
     }

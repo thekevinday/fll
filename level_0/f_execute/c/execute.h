@@ -10,7 +10,11 @@
 #ifndef _F_execute_h
 #define _F_execute_h
 
+// include pre-requirements
+#define _GNU_SOURCE
+
 // libc includes
+#include <sched.h>
 
 // fll-0 includes
 #include <level_0/type.h>

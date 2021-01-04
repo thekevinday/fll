@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fll_execute
+project_name f_limit
 
 version_major 0
 version_minor 5
@@ -12,25 +12,24 @@ environment
 process_pre
 process_post
 
-modes individual individual_threadless
+modes individual
 modes_default individual
 
 build_compiler gcc
 build_indexer ar
 build_language c
-build_libraries -lc -lcap
-build_libraries-individual -lfl_control_group -lfl_environment -lfl_string -lf_account -lf_capability -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_thread -lf_utf
-build_libraries-individual_threadless -lfl_control_group -lfl_environment -lfl_string -lf_account -lf_capability -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_utf
-build_sources_library execute.c private-execute.c
+build_libraries -lc
+build_libraries-individual -lf_memory
+build_sources_library limit.c private-limit.c
 build_sources_program
-build_sources_headers execute.h
+build_sources_headers limit.h limit-common.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static no
 
-path_headers level_2
+path_headers level_0
 path_headers_preserve no
 path_library_script script
 path_library_shared shared
@@ -45,14 +44,11 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-#defines_all -D_di_libcap_
 defines_all
-defines_all-individual_threadless -D_di_pthread_support_
 defines_static
 defines_shared
 
 flags_all -z now -g -fdiagnostics-color=always
-flags_all-individual -pthread
 flags_shared
 flags_static
 flags_library -fPIC

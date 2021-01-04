@@ -526,7 +526,7 @@ extern "C" {
       if (data.define.used) {
         for (f_array_length_t i = 0; i < data.define.used; i++) {
 
-          *status = fl_string_dynamic_mash(" ", 1, data.define.array[i], &defines);
+          *status = fl_string_dynamic_mash(f_string_space_s, 1, data.define.array[i], &defines);
 
           if (F_status_is_error(*status)) {
             break;

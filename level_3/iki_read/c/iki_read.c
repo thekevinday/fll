@@ -55,11 +55,11 @@ extern "C" {
     fl_color_print(output.stream, context.set.notable, "<");
     fprintf(output.stream, "%s", iki_read_substitution_vocabulary);
     fl_color_print(output.stream, context.set.notable, ">");
-    fprintf(output.stream, " ");
+    fprintf(output.stream, f_string_space_s);
     fl_color_print(output.stream, context.set.notable, "<");
     fprintf(output.stream, "%s", iki_read_substitution_replace);
     fl_color_print(output.stream, context.set.notable, ">");
-    fprintf(output.stream, " ");
+    fprintf(output.stream, f_string_space_s);
     fl_color_print(output.stream, context.set.notable, "<");
     fprintf(output.stream, "%s", iki_read_substitution_with);
     fl_color_print(output.stream, context.set.notable, ">");

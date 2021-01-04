@@ -37,6 +37,7 @@
 #include <level_0/environment.h>
 #include <level_0/execute.h>
 #include <level_0/file.h>
+#include <level_0/limit.h>
 #include <level_0/path.h>
 #include <level_0/signal.h>
 
@@ -399,7 +400,7 @@ extern "C" {
  * This returns F_capability, F_group, and F_user only by the child process and must be treated the same as F_child for the purposes of understanding what the current process is.
  * These are essentialy F_child with explicit error codes that are returned instead of performing the desired execution.
  *
- * This returns F_control_group and F_schedule only by the parent process and represents that the child process could not be executed.
+ * This returns F_control_group, F_limit, F_processor, and F_schedule only by the parent process and represents that the child process could not be executed.
  *
  * @param program
  *   The name or path of the program.
@@ -438,14 +439,17 @@ extern "C" {
  *   F_failure (with error bit) on execution failure.
  *   F_fork (with error bit) on fork failure.
  *   F_group (with error bit) on failure to set GID in the child (only the child process returns this).
+ *   F_limit (with error bit) on failure to set a resource limit in the child (only the parent process returns this).
  *   F_nice (with error bit) on failure to set process niceness in the child (only the child process returns this).
  *   F_pipe (with error bit) on pipe failure.
+ *   F_processor (with error bit) on failure to set a processor (cpu) affinity in the child (only the parent process returns this).
  *   F_schedule (with error bit) on failure to set scheduler in the child (only the parent process returns this).
  *   F_user (with error bit) on failure to set UID in the child (only the child process returns this).
  *
  *   Errors (with error bit) from: f_capability_process_set().
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_limit_process().
  *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_thread_signal_mask().
@@ -465,6 +469,7 @@ extern "C" {
  * @see memcpy()
  * @see nice()
  * @see pipe()
+ * @see sched_setaffinity()
  * @see sched_setscheduler()
  * @see setgid()
  * @see setgroups()
@@ -475,6 +480,7 @@ extern "C" {
  * @see f_capability_process_set()
  * @see f_environment_get()
  * @see f_file_exists()
+ * @see f_limit_process()
  * @see f_signal_mask()
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()

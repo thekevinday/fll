@@ -19,6 +19,8 @@ extern "C" {
 /**
  * A structure representing a scheduler and its parameters for execution.
  *
+ * @todo move this into a f_scheduler project.
+ *
  * policy:   the scheduler policy.
  * priority: the scheduler priority;
  */
