@@ -305,7 +305,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_firewall_print_help_
-  extern f_return_status firewall_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t firewall_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_firewall_print_help_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  * @see firewall_delete_data()
  */
 #ifndef _di_firewall_main_
-  extern f_return_status firewall_main(const f_console_arguments_t arguments, firewall_data_t *data);
+  extern f_status_t firewall_main(const f_console_arguments_t arguments, firewall_data_t *data);
 #endif // _di_firewall_main_
 
 /**
@@ -345,7 +345,7 @@ extern "C" {
  * @see firewall_main()
  */
 #ifndef _di_firewall_delete_data_
-  extern f_return_status firewall_delete_data(firewall_data_t *data);
+  extern f_status_t firewall_delete_data(firewall_data_t *data);
 #endif // _di_firewall_delete_data_
 
 #ifdef __cplusplus

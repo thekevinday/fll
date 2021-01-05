@@ -42,7 +42,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_identify_
-  extern f_return_status f_console_identify(const f_string_t input, f_console_id_t *result);
+  extern f_status_t f_console_identify(const f_string_t input, f_console_id_t *result);
 #endif // _di_f_console_identify_
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_return_status f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining);
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining);
 #endif // _di_f_console_parameter_process_
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
-  extern f_return_status f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
+  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
 #endif // _di_f_console_parameter_prioritize_left_
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
-  extern f_return_status f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
+  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision);
 #endif // _di_f_console_parameter_prioritize_right_
 
 #ifdef __cplusplus

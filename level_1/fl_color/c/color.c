@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_color_set_
-  f_return_status fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_fl_color_set_
 
 #ifndef _di_fl_color_set_to_
-  f_return_status fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -49,7 +49,7 @@ extern "C" {
 #endif // _di_fl_color_set_to_
 
 #ifndef _di_fl_color_save_
-  f_return_status fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_fl_color_save_
 
 #ifndef _di_fl_color_print_
-  f_return_status fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...) {
+  f_status_t fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
@@ -163,7 +163,7 @@ extern "C" {
 #endif // _di_fl_color_print_
 
 #ifndef _di_fl_color_print2_
-  f_return_status fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
+  f_status_t fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
@@ -200,7 +200,7 @@ extern "C" {
 #endif // _di_fl_color_print2_
 
 #ifndef _di_fl_color_print_code_
-  f_return_status fl_color_print_code(FILE *stream, const f_string_static_t color) {
+  f_status_t fl_color_print_code(FILE *stream, const f_string_static_t color) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -214,7 +214,7 @@ extern "C" {
 #endif // _di_fl_color_print_code_
 
 #ifndef _di_fl_color_print_code_to_
-  f_return_status fl_color_print_code_to(const int id, const f_string_static_t color) {
+  f_status_t fl_color_print_code_to(const int id, const f_string_static_t color) {
     #ifndef _di_level_1_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -228,7 +228,7 @@ extern "C" {
 #endif // _di_fl_color_print_code_to_
 
 #ifndef _di_fl_color_print_to_
-  f_return_status fl_color_print_to(const int id, const f_color_set_t set, const f_string_t string, ...) {
+  f_status_t fl_color_print_to(const int id, const f_color_set_t set, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
@@ -255,7 +255,7 @@ extern "C" {
 #endif // _di_fl_color_print_to_
 
 #ifndef _di_fl_color_print2_to_
-  f_return_status fl_color_print2_to(const int id, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
+  f_status_t fl_color_print2_to(const int id, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
@@ -292,7 +292,7 @@ extern "C" {
 #endif // _di_fl_color_print2_to_
 
 #ifndef _di_fl_color_load_context_
-  f_return_status fl_color_load_context(f_color_context_t *context, const bool use_light_colors) {
+  f_status_t fl_color_load_context(f_color_context_t *context, const bool use_light_colors) {
     #ifndef _di_level_1_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

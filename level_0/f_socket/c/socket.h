@@ -60,7 +60,7 @@ extern "C"{
  * @see bind()
  */
 #ifndef _di_f_socket_file_bind_
-  extern f_return_status f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address);
+  extern f_status_t f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address);
 #endif // _di_f_socket_file_bind_
 
 /**
@@ -83,7 +83,7 @@ extern "C"{
  * @see listen()
  */
 #ifndef _di_f_socket_listen_
-  extern f_return_status f_socket_listen(const int id, const unsigned int max_backlog);
+  extern f_status_t f_socket_listen(const int id, const unsigned int max_backlog);
 #endif // _di_f_socket_listen_
 
 /**
@@ -113,7 +113,7 @@ extern "C"{
  * @see shutdown()
  */
 #ifndef _di_f_socket_close_client_
-  extern f_return_status f_socket_close_client(const int id, const unsigned short action);
+  extern f_status_t f_socket_close_client(const int id, const unsigned short action);
 #endif // _di_f_socket_close_client_
 
 #ifdef __cplusplus

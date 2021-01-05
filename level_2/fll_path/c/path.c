@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_path_canonical_
-  f_return_status fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical) {
+  f_status_t fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical) {
     #ifndef _di_level_2_parameter_checking_
       if (!canonical) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

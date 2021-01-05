@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_utf_file_read_
-  f_return_status fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
@@ -67,7 +67,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_
 
 #ifndef _di_fl_utf_file_read_block_
-  f_return_status fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
@@ -127,7 +127,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
-  f_return_status fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_until_
 
 #ifndef _di_fl_utf_file_write_
-  f_return_status fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
+  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -219,7 +219,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_
 
 #ifndef _di_fl_utf_file_write_block_
-  f_return_status fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
+  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_block_
 
 #ifndef _di_fl_utf_file_write_until_
-  f_return_status fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_length_t total, f_utf_string_length_t *written) {
+  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_length_t total, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -279,7 +279,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_until_
 
 #ifndef _di_fl_utf_file_write_range_
-  f_return_status fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_utf_string_length_t *written) {
+  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_utf_string_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);

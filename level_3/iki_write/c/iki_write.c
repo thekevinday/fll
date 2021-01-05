@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_print_help_
-  f_return_status iki_write_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t iki_write_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, iki_write_name_long, iki_write_version);
 
@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_iki_write_print_help_
 
 #ifndef _di_iki_write_main_
-  f_return_status iki_write_main(const f_console_arguments_t arguments, iki_write_data_t *data) {
+  f_status_t iki_write_main(const f_console_arguments_t arguments, iki_write_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -419,7 +419,7 @@ extern "C" {
 #endif // _di_iki_write_main_
 
 #ifndef _di_iki_write_delete_data_
-  f_return_status iki_write_delete_data(iki_write_data_t *data) {
+  f_status_t iki_write_delete_data(iki_write_data_t *data) {
 
     for (f_string_length_t i = 0; i < iki_write_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);

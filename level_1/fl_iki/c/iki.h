@@ -62,7 +62,7 @@ extern "C" {
  *   Errors (with error bit) from: f_iki_read().
  */
 #ifndef _di_fl_iki_read_
-  extern f_return_status fl_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);
+  extern f_status_t fl_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

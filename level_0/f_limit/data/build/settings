@@ -20,7 +20,7 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
-build_sources_library limit.c private-limit.c
+build_sources_library limit.c
 build_sources_program
 build_sources_headers limit.h limit-common.h
 build_sources_script

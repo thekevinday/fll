@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_extended_list_write_process_
-  f_return_status fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) {
+  f_status_t fss_extended_list_write_process(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_string_range_t_initialize;
@@ -121,7 +121,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_process_
 
 #ifndef _di_fss_extended_list_write_process_pipe_
-  f_return_status fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) {
+  f_status_t fss_extended_list_write_process_pipe(const fss_extended_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) {
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 
@@ -322,7 +322,7 @@ extern "C" {
 #endif // _di_fss_extended_list_write_process_pipe_
 
 #ifndef _di_fss_extended_list_write_process_parameter_ignore_
-  f_return_status fss_extended_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_extended_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
+  f_status_t fss_extended_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_extended_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) {
     f_status_t status = F_none;
 
     f_array_length_t i = 0;

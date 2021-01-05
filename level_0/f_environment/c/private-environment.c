@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_environment_get_) || !defined(_di_f_environment_get_dynamic_)
-  f_return_status private_f_environment_get(const f_string_t name, f_string_dynamic_t *value) {
+  f_status_t private_f_environment_get(const f_string_t name, f_string_dynamic_t *value) {
     const f_string_t result = getenv(name);
 
     if (!result) {
@@ -39,7 +39,7 @@ extern "C" {
 #endif // !defined(_di_f_environment_get_) || !defined(_di_f_environment_get_dynamic_)
 
 #if !defined(_di_f_environment_set_) || !defined(_di_f_environment_set_dynamic_)
-  f_return_status private_f_environment_set(const f_string_t name, const f_string_t value, const bool replace) {
+  f_status_t private_f_environment_set(const f_string_t name, const f_string_t value, const bool replace) {
 
     if (setenv(name, value, replace) < 0) {
       if (errno == EINVAL) {
@@ -57,7 +57,7 @@ extern "C" {
 #endif // !defined(_di_f_environment_set_) || !defined(_di_f_environment_set_dynamic_)
 
 #if !defined(_di_f_environment_unset_) || !defined(_di_f_environment_unset_dynamic_)
-  f_return_status private_f_environment_unset(const f_string_t name) {
+  f_status_t private_f_environment_unset(const f_string_t name) {
 
     if (unsetenv(name) < 0) {
       if (errno == EINVAL) {

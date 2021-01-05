@@ -70,7 +70,7 @@ extern "C" {
  *   F_failure (with error bit) on failure, usually when read() fails.
  */
 #ifndef _di_byte_dump_file_
-  extern f_return_status byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, const f_file_t file) f_gcc_attribute_visibility_internal;
+  extern f_status_t byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, const f_file_t file) f_gcc_attribute_visibility_internal;
 #endif // _di_byte_dump_file_
 
 /**

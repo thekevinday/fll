@@ -45,7 +45,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #if !defined(_di_fll_file_mode_set_all_)
-  extern f_return_status private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_file_mode_set_all_)
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #if !defined(_di_fll_file_role_change_all_)
-  extern f_return_status private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_file_role_change_all_)
 
 #ifdef __cplusplus

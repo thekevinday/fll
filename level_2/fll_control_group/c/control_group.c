@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_control_group_prepare_
-  f_return_status fll_control_group_prepare(const f_control_group_t control_group) {
+  f_status_t fll_control_group_prepare(const f_control_group_t control_group) {
     f_status_t status = F_none;
 
     if (control_group.path.used) {

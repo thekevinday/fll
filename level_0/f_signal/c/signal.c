@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_signal_close_
-  f_return_status f_signal_close(f_signal_t *signal) {
+  f_status_t f_signal_close(f_signal_t *signal) {
     #ifndef _di_level_0_parameter_checking_
       if (!signal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -30,7 +30,7 @@ extern "C" {
 #endif // _di_f_signal_close_
 
 #ifndef _di_f_signal_open_
-  f_return_status f_signal_open(f_signal_t *signal) {
+  f_status_t f_signal_open(f_signal_t *signal) {
     #ifndef _di_level_0_parameter_checking_
       if (!signal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_signal_open_
 
 #ifndef _di_f_signal_read_
-  f_return_status f_signal_read(const f_signal_t signal, struct signalfd_siginfo *information) {
+  f_status_t f_signal_read(const f_signal_t signal, struct signalfd_siginfo *information) {
 
     if (!signal.id) {
       return F_data_not;
@@ -100,7 +100,7 @@ extern "C" {
 #endif // _di_f_signal_read_
 
 #ifndef _di_f_signal_set_add_
-  f_return_status f_signal_set_add(const int signal, sigset_t *set) {
+  f_status_t f_signal_set_add(const int signal, sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -118,7 +118,7 @@ extern "C" {
 #endif // _di_f_signal_set_add_
 
 #ifndef _di_f_signal_set_delete_
-  f_return_status f_signal_set_delete(const int signal, sigset_t *set) {
+  f_status_t f_signal_set_delete(const int signal, sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_f_signal_set_delete_
 
 #ifndef _di_f_signal_set_empty_
-  f_return_status f_signal_set_empty(sigset_t *set) {
+  f_status_t f_signal_set_empty(sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -154,7 +154,7 @@ extern "C" {
 #endif // _di_f_signal_set_empty_
 
 #ifndef _di_f_signal_set_fill_
-  f_return_status f_signal_set_fill(sigset_t *set) {
+  f_status_t f_signal_set_fill(sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -171,7 +171,7 @@ extern "C" {
 #endif // _di_f_signal_set_fill_
 
 #ifndef _di_f_signal_mask_
-  f_return_status f_signal_mask(const int how, const sigset_t *next, sigset_t *current) {
+  f_status_t f_signal_mask(const int how, const sigset_t *next, sigset_t *current) {
     #ifndef _di_level_0_parameter_checking_
       if (!next && !current) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -188,7 +188,7 @@ extern "C" {
 #endif // _di_f_signal_mask_
 
 #ifndef _di_f_signal_queue_
-  f_return_status f_signal_queue(const pid_t id, const int signal, const union sigval value) {
+  f_status_t f_signal_queue(const pid_t id, const int signal, const union sigval value) {
 
     if (sigqueue(id, signal, value) < 0) {
       if (errno == EAGAIN) return F_status_set_error(F_resource_not);
@@ -204,7 +204,7 @@ extern "C" {
 #endif // _di_f_signal_queue_
 
 #ifndef _di_f_signal_set_has_
-  f_return_status f_signal_set_has(const int signal, const sigset_t *set) {
+  f_status_t f_signal_set_has(const int signal, const sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

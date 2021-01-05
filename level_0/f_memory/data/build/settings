@@ -20,9 +20,9 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual
-build_sources_library memory.c
+build_sources_library memory.c memory_structure.c private-memory.c
 build_sources_program
-build_sources_headers memory.h memory_structure.h
+build_sources_headers memory.h memory_structure.h memory-common.h
 build_sources_script
 build_sources_setting
 build_script yes

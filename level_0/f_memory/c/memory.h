@@ -21,178 +21,16 @@
 
 // fll-0 includes
 #include <level_0/type.h>
+#include <level_0/type_array.h>
 #include <level_0/status.h>
 
 // fll-0 memory includes
+#include <level_0/memory-common.h>
 #include <level_0/memory_structure.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Provide defines to alter compile time uses of certain memory functions.
- *
- * These are not intended as macros but are instead intended as a tool to automatically replace one function call with another (via the macro).
- *
- * If _f_memory_FORCE_secure_memory_ is defined, then memory operations are all set to be removed address spaces to 0 before freeing or resizing.
- * If _f_memory_FORCE_fast_memory_ is defined, then memory operations are all set to not set to be removed address spaces to 0 before freeing or resizing.
- */
-#ifdef _f_memory_FORCE_secure_memory_
-  #define f_memory_delete(the_pointer, the_type, the_length) f_memory_destroy(the_pointer, the_type, the_length)
-  #define f_memory_resize(the_pointer, the_type, the_old_length, the_new_length) f_memory_adjust(the_pointer, the_type, the_old_length, the_new_length)
-
-  #ifdef _f_memory_FORCE_fast_memory_
-    #error You cannot define both _f_memory_FORCE_fast_memory_ and _f_memory_FORCE_secure_memory_ at the same time
-  #endif // _f_memory_FORCE_fast_memory_
-#endif // _f_memory_FORCE_secure_memory_
-
-#ifdef _f_memory_FORCE_fast_memory_
-  #define f_memory_destroy(the_pointer, the_type, the_length) f_memory_delete(the_pointer, the_type, the_length)
-  #define f_memory_adjust(the_pointer, the_type, the_old_length, the_new_length) f_memory_resize(the_pointer, the_type, the_old_length, the_new_length)
-#endif // _f_memory_FORCE_fast_memory_
-
-/**
- * Default allocation step.
- *
- * Everytime some array needs a single new element, reallocated by this amount.
- *
- * Normally, this should be small, but when a large number of singular allocations are made, the overhead can be reduced by not having to reallocate space as often.
- * The problem then is that the more space allocated beyond what is initially needed will waste precious memory.
- * Change this if you know your application can afford to reduce the allocation overhead at the cost of more memory.
- *
- * Other projects may provide their own values.
- */
-#ifndef _di_f_memory_default_allocation_step_
-  #define f_memory_default_allocation_step 4
-#endif // _di_f_memory_default_allocation_step_
-
-/**
- * Create some dynamically allocated array of some length.
- *
- * @param pointer
- *   A pointer that will be updated to the address of the newly allocated memory.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- *   Must be greater than 0.
- * @param length
- *   The total number of blocks to be allocated.
- *   Must be greater than 0.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see calloc()
- * @see memset()
- */
-#ifndef _di_f_memory_new_
-  extern f_return_status f_memory_new(void **pointer, const size_t size, const size_t length);
-#endif // _di_f_memory_new_
-
-/**
- * Create some dynamically allocated array of some length, guaranteeing aligned memory.
- *
- * @param pointer
- *   A pointer that will be updated to the address of the newly allocated memory.
- * @param alignment
- *   The size of the alignment, such as sizeof(void *).
- *   Must be greater than 0.
- * @param length
- *   The total number of blocks to be allocated.
- *   Must be greater than 0.
- *   Must be a multiple of alignment.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on allocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see posix_memalign()
- * @see memset()
- */
-#ifndef _di_f_memory_new_aligned_
-  extern f_return_status f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
-#endif // _di_f_memory_new_aligned_
-
-/**
- * Delete dynamically allocated data.
- *
- * Will not change any of the data to 0 prior to deallocation.
- *
- * Type and length are not normally used by this function but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
- *
- * @param pointer
- *   A pointer to the address that will be freed.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- *   If size is 0 then no delete is performed.
- * @param length
- *   The total number of blocks to be allocated.
- *   If length is 0 then no delete is performed.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see free()
- */
-#if !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
-  extern f_return_status f_memory_delete(void **pointer, const size_t size, const size_t length);
-#endif // !(defined(_di_f_memory_delete_) || defined(_f_memory_FORCE_secure_memory_))
-
-/**
- * Securely deletes some dynamically allocated data.
- *
- * Will change all data to 0 prior to deallocation.
- *
- * @param pointer
- *   A pointer to the address that will be freed.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- *   If size is 0 then no delete is performed.
- * @param length
- *   The total number of blocks to be allocated.
- *   If length is 0 then no delete is performed.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see free()
- * @see memset()
- */
-#if !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
-  extern f_return_status f_memory_destroy(void **pointer, const size_t size, const size_t length);
-#endif // !(defined(_di_f_memory_destroy_) || defined(_f_memory_FORCE_fast_memory_))
-
-/**
- * Resize dynamically allocated data.
- *
- * Will not change any of the data prior to deallocation.
- *
- * @param pointer
- *   A pointer to the address that will be resized.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- * @param old_length
- *   The total number of blocks representing the length to be resized from.
- * @param new_length
- *   The total number of blocks representing the length to be resized to.
- *
- * @return
- *   F_none on success.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see calloc()
- * @see memset()
- * @see realloc()
- */
-#if !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
-  extern f_return_status f_memory_resize(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
-#endif // !(defined(_di_f_memory_resize_) || defined(_f_memory_FORCE_secure_memory_))
 
 /**
  * Securely resize dynamically allocated data.
@@ -217,9 +55,136 @@ extern "C" {
  * @see memset()
  * @see realloc()
  */
-#if !(defined(_di_f_memory_adjust_) || defined(_f_memory_FORCE_fast_memory_))
-  extern f_return_status f_memory_adjust(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
+#ifndef _di_f_memory_adjust_
+  extern f_status_t f_memory_adjust(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
 #endif // _di_f_memory_adjust_
+
+/**
+ * Create some dynamically allocated array of some length, guaranteeing aligned memory.
+ *
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
+ * @param alignment
+ *   The size of the alignment, such as sizeof(void *).
+ *   Must be greater than 0.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
+ *   Must be a multiple of alignment.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see posix_memalign()
+ * @see memset()
+ */
+#ifndef _di_f_memory_new_aligned_
+  extern f_status_t f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
+#endif // _di_f_memory_new_aligned_
+
+/**
+ * Delete dynamically allocated data.
+ *
+ * Will not change any of the data to 0 prior to deallocation.
+ *
+ * Type and length are not normally used by this function but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
+ *
+ * @param pointer
+ *   A pointer to the address that will be freed.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   If length is 0 then no delete is performed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see free()
+ */
+#ifndef _di_f_memory_delete_
+  extern f_status_t f_memory_delete(void **pointer, const size_t size, const size_t length);
+#endif // _di_f_memory_delete_
+
+/**
+ * Securely deletes some dynamically allocated data.
+ *
+ * Will change all data to 0 prior to deallocation.
+ *
+ * @param pointer
+ *   A pointer to the address that will be freed.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   If length is 0 then no delete is performed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see free()
+ * @see memset()
+ */
+#ifndef _di_f_memory_destroy_
+  extern f_status_t f_memory_destroy(void **pointer, const size_t size, const size_t length);
+#endif // _di_f_memory_destroy_
+
+/**
+ * Create some dynamically allocated array of some length.
+ *
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   Must be greater than 0.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_allocation (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see calloc()
+ * @see memset()
+ */
+#ifndef _di_f_memory_new_
+  extern f_status_t f_memory_new(void **pointer, const size_t size, const size_t length);
+#endif // _di_f_memory_new_
+
+/**
+ * Resize dynamically allocated data.
+ *
+ * Will not change any of the data prior to deallocation.
+ *
+ * @param pointer
+ *   A pointer to the address that will be resized.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ * @param old_length
+ *   The total number of blocks representing the length to be resized from.
+ * @param new_length
+ *   The total number of blocks representing the length to be resized to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see calloc()
+ * @see memset()
+ * @see realloc()
+ */
+#ifndef _di_f_memory_resize_
+  extern f_status_t f_memory_resize(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
+#endif // _di_f_memory_resize_
 
 #ifdef __cplusplus
 } // extern "C"

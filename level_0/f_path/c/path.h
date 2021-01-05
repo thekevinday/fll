@@ -51,7 +51,7 @@ extern "C" {
  * @see chdir()
  */
 #ifndef _di_f_path_change_
-  extern f_return_status f_path_change(const f_string_t path);
+  extern f_status_t f_path_change(const f_string_t path);
 #endif // _di_f_path_change_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  * @see fchdir()
  */
 #ifndef _di_f_path_change_at_
-  extern f_return_status f_path_change_at(const int at_id);
+  extern f_status_t f_path_change_at(const int at_id);
 #endif // _di_f_path_change_at_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  * @see getcwd()
  */
 #ifndef _di_f_path_current_
-  extern f_return_status f_path_current(const bool real, f_string_dynamic_t *path);
+  extern f_status_t f_path_current(const bool real, f_string_dynamic_t *path);
 #endif // _di_f_path_current_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  *   F_false if this string is not a path string.
  */
 #ifndef _di_f_path_is_
-  extern f_return_status f_path_is(const f_string_t path, const f_string_length_t length);
+  extern f_status_t f_path_is(const f_string_t path, const f_string_length_t length);
 #endif // _di_f_path_is_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see realpath()
  */
 #ifndef _di_f_path_real_
-  extern f_return_status f_path_real(const f_string_t path, f_string_dynamic_t *real);
+  extern f_status_t f_path_real(const f_string_t path, f_string_dynamic_t *real);
 #endif // _di_f_path_real_
 
 #ifdef __cplusplus

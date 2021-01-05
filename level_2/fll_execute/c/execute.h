@@ -84,7 +84,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
-  extern f_return_status fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
-  extern f_return_status fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  extern f_return_status fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
-  extern f_return_status fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_set_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
-  extern f_return_status fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_
 
 /**
@@ -272,7 +272,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_
 
 /**
@@ -312,7 +312,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_parameter_set_
 
 /**
@@ -342,7 +342,7 @@ extern "C" {
  * @see fl_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
-  extern f_return_status fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 /**
@@ -377,7 +377,7 @@ extern "C" {
  * @see strnlen()
  */
 #ifndef _di_fll_execute_into_
-  extern f_return_status fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result);
+  extern f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result);
 #endif // _di_fll_execute_into_
 
 /**
@@ -489,7 +489,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_
-  extern f_return_status fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);
+  extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus

@@ -539,7 +539,7 @@ extern "C" {
     f_capability_delete(&rule.capability); \
     fl_control_group_delete(&rule.control_group); \
     fl_type_int32s_delete(&rule.groups); \
-    f_limit_sets_delete(&rule.limits); \
+    f_macro_limit_sets_t_delete_simple(rule.limits); \
     controller_macro_rule_items_t_delete_simple(rule.items)
 #endif // _di_controller_rule_t_
 

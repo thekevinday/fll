@@ -39,7 +39,7 @@ extern "C" {
  *   F_false if character is not a binary.
  */
 #ifndef _di_f_conversion_character_is_binary_
-  extern f_return_status f_conversion_character_is_binary(const int8_t character);
+  extern f_status_t f_conversion_character_is_binary(const int8_t character);
 #endif // _di_f_conversion_character_is_binary_
 
 /**
@@ -53,7 +53,7 @@ extern "C" {
  *   F_false if character is not a decimal.
  */
 #ifndef _di_f_conversion_character_is_decimal_
-  extern f_return_status f_conversion_character_is_decimal(const int8_t character);
+  extern f_status_t f_conversion_character_is_decimal(const int8_t character);
 #endif // _di_f_conversion_character_is_decimal_
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  *   F_false if character is not a duodecimal.
  */
 #ifndef _di_f_conversion_character_is_duodecimal_
-  extern f_return_status f_conversion_character_is_duodecimal(const int8_t character);
+  extern f_status_t f_conversion_character_is_duodecimal(const int8_t character);
 #endif // _di_f_conversion_character_is_duodecimal_
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  *   F_false if character is not a hexidecimal.
  */
 #ifndef _di_f_conversion_character_is_hexidecimal_
-  extern f_return_status f_conversion_character_is_hexidecimal(const int8_t character);
+  extern f_status_t f_conversion_character_is_hexidecimal(const int8_t character);
 #endif // _di_f_conversion_character_is_hexidecimal_
 
 /**
@@ -95,7 +95,7 @@ extern "C" {
  *   F_false if character is not an octal.
  */
 #ifndef _di_f_conversion_character_is_octal_
-  extern f_return_status f_conversion_character_is_octal(const int8_t character);
+  extern f_status_t f_conversion_character_is_octal(const int8_t character);
 #endif // _di_f_conversion_character_is_octal_
 
 /**
@@ -113,7 +113,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_binary_
-  extern f_return_status f_conversion_character_to_binary(const int8_t character, f_number_unsigned_t *number);
+  extern f_status_t f_conversion_character_to_binary(const int8_t character, f_number_unsigned_t *number);
 #endif // _di_f_conversion_character_to_binary_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_decimal_
-  extern f_return_status f_conversion_character_to_decimal(const int8_t character, f_number_unsigned_t *number);
+  extern f_status_t f_conversion_character_to_decimal(const int8_t character, f_number_unsigned_t *number);
 #endif // _di_f_conversion_character_to_decimal_
 
 /**
@@ -149,7 +149,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_duodecimal_
-  extern f_return_status f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned_t *number);
+  extern f_status_t f_conversion_character_to_duodecimal(const int8_t character, f_number_unsigned_t *number);
 #endif // _di_f_conversion_character_to_duodecimal_
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  extern f_return_status f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned_t *number);
+  extern f_status_t f_conversion_character_to_hexidecimal(const int8_t character, f_number_unsigned_t *number);
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_conversion_character_to_octal_
-  extern f_return_status f_conversion_character_to_octal(const int8_t character, f_number_unsigned_t *number);
+  extern f_status_t f_conversion_character_to_octal(const int8_t character, f_number_unsigned_t *number);
 #endif // _di_f_conversion_character_to_octal_
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_conversion_number_signed_to_string_
-  extern f_return_status f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination);
 #endif // _di_f_conversion_number_signed_to_string_
 
 /**
@@ -231,7 +231,7 @@ extern "C" {
  *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
-  extern f_return_status f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination);
 #endif // _di_f_conversion_number_unsigned_to_string_
 
 #ifdef __cplusplus

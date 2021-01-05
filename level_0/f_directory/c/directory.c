@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #ifndef _di_f_directory_create_
-  f_return_status f_directory_create(const f_string_t path, const mode_t mode) {
+  f_status_t f_directory_create(const f_string_t path, const mode_t mode) {
     return private_f_directory_create(path, mode);
   }
 #endif // _di_f_directory_create_
 
 #ifndef _di_f_directory_create_at_
-  f_return_status f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode) {
+  f_status_t f_directory_create_at(const int at_id, const f_string_t path, const mode_t mode) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -22,7 +22,7 @@ extern "C" {
 #endif // _di_f_directory_create_at_
 
 #ifndef _di_f_directory_exists_
-  f_return_status f_directory_exists(const f_string_t path) {
+  f_status_t f_directory_exists(const f_string_t path) {
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -47,7 +47,7 @@ extern "C" {
 #endif // _di_f_directory_exists_
 
 #ifndef _di_f_directory_exists_at_
-  f_return_status f_directory_exists_at(const int at_id, const f_string_t path, const int flag) {
+  f_status_t f_directory_exists_at(const int at_id, const f_string_t path, const int flag) {
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -73,7 +73,7 @@ extern "C" {
 #endif // _di_f_directory_exists_at_
 
 #ifndef _di_f_directory_is_
-  f_return_status f_directory_is(const f_string_t path) {
+  f_status_t f_directory_is(const f_string_t path) {
     struct stat file_stat;
 
     memset(&file_stat, AT_SYMLINK_NOFOLLOW, sizeof(struct stat));
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_f_directory_is_
 
 #ifndef _di_f_directory_is_at_
-  f_return_status f_directory_is_at(const int at_id, const f_string_t path, const int flag) {
+  f_status_t f_directory_is_at(const int at_id, const f_string_t path, const int flag) {
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -124,7 +124,7 @@ extern "C" {
 #endif // _di_f_directory_is_at_
 
 #ifndef _di_f_directory_list_
-  f_return_status f_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names) {
+  f_status_t f_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), f_string_dynamics_t *names) {
     #ifndef _di_level_0_parameter_checking_
       if (!names) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -179,7 +179,7 @@ extern "C" {
 #endif // _di_f_directory_list_
 
 #ifndef _di_f_directory_open_
-  f_return_status f_directory_open(const f_string_t path, const bool dereference, int *id) {
+  f_status_t f_directory_open(const f_string_t path, const bool dereference, int *id) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -216,7 +216,7 @@ extern "C" {
 #endif // _di_f_directory_open_
 
 #ifndef _di_f_directory_open_at_
-  f_return_status f_directory_open_at(const int at_id, const f_string_t path, const bool dereference, int *id) {
+  f_status_t f_directory_open_at(const int at_id, const f_string_t path, const bool dereference, int *id) {
     #ifndef _di_level_0_parameter_checking_
       if (at_id <= 0) return F_status_set_error(F_parameter);
       if (!id) return F_status_set_error(F_parameter);
@@ -255,7 +255,7 @@ extern "C" {
 #endif // _di_f_directory_open_at_
 
 #ifndef _di_f_directory_remove_
-  f_return_status f_directory_remove(const f_string_t path, const int depth_max, const bool preserve) {
+  f_status_t f_directory_remove(const f_string_t path, const int depth_max, const bool preserve) {
     #ifndef _di_level_0_parameter_checking_
       if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -302,7 +302,7 @@ extern "C" {
 #endif // _di_f_directory_remove_
 
 #ifndef _di_f_directory_remove_custom_
-  f_return_status f_directory_remove_custom(const f_string_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *)) {
+  f_status_t f_directory_remove_custom(const f_string_t path, const int depth_max, const bool preserve, int (*custom) (const char *, const struct stat *, int, struct FTW *)) {
     #ifndef _di_level_0_parameter_checking_
       if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -349,7 +349,7 @@ extern "C" {
 #endif // _di_f_directory_remove_custom_
 
 #ifndef _di_f_directory_touch_
-  f_return_status f_directory_touch(const f_string_t path, const mode_t mode) {
+  f_status_t f_directory_touch(const f_string_t path, const mode_t mode) {
     #ifndef _di_level_0_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -398,7 +398,7 @@ extern "C" {
 #endif // _di_f_directory_touch_
 
 #ifndef _di_f_directory_touch_at_
-  f_return_status f_directory_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag) {
+  f_status_t f_directory_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag) {
     #ifndef _di_level_0_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -1,2 +1,3 @@
 # fss-0000
-
+_f_memory_FORCE_secure_memory_ all to-be removed address spaces are set to 0 before freeing or resizing.
+_f_memory_FORCE_fast_memory_ all to-be removed address spaces remain unchanged before freeing or resizing.

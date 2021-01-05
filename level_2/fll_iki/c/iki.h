@@ -56,7 +56,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_increase_by().
  */
 #ifndef _di_fll_iki_content_escape_
-  extern f_return_status fll_iki_content_escape(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped);
+  extern f_status_t fll_iki_content_escape(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped);
 #endif // _di_fll_iki_content_escape_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_increase_by().
  */
 #ifndef _di_fll_iki_content_partial_escape_
-  extern f_return_status fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped);
+  extern f_status_t fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped);
 #endif // _di_fll_iki_content_partial_escape_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_increase_by().
  */
 #ifndef _di_fll_iki_content_escape_un_
-  extern f_return_status fll_iki_content_escape_un(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *unescaped);
+  extern f_status_t fll_iki_content_escape_un(const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *unescaped);
 #endif // _di_fll_iki_content_escape_un_
 
 /**
@@ -137,7 +137,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_increase_by().
  */
 #ifndef _di_fll_iki_content_partial_escape_un_
-  extern f_return_status fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped);
+  extern f_status_t fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped);
 #endif // _di_fll_iki_content_partial_escape_un_
 
 #ifdef __cplusplus

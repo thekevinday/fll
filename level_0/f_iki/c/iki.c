@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_iki_content_is_
-  f_return_status f_iki_content_is(const f_string_static_t content, const uint8_t quote) {
+  f_status_t f_iki_content_is(const f_string_static_t content, const uint8_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (quote != f_iki_syntax_quote_single && quote != f_iki_syntax_quote_double) return F_status_set_error(F_parameter);
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_f_iki_content_is_
 
 #ifndef _di_f_iki_content_partial_is_
-  f_return_status f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote) {
+  f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const uint8_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (content.used > content.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_f_iki_content_partial_is_
 
 #ifndef _di_f_iki_object_is_
-  f_return_status f_iki_object_is(const f_string_static_t object) {
+  f_status_t f_iki_object_is(const f_string_static_t object) {
     #ifndef _di_level_0_parameter_checking_
       if (object.used > object.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -44,7 +44,7 @@ extern "C" {
 #endif // _di_f_iki_object_is_
 
 #ifndef _di_f_iki_object_partial_is_
-  f_return_status f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
+  f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
     #ifndef _di_level_0_parameter_checking_
       if (object.used > object.size) return F_status_set_error(F_parameter);
       if (range.start > range.stop) return F_status_set_error(F_parameter);
@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
-  f_return_status f_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
+  f_status_t f_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
     #ifndef _di_level_0_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!range) return F_status_set_error(F_parameter);

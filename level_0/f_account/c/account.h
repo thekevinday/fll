@@ -57,7 +57,7 @@ extern "C" {
  * @see getpwnam_r()
  */
 #ifndef _di_f_account_by_name_
-  extern f_return_status f_account_by_name(const f_string_t name, f_account_t *account);
+  extern f_status_t f_account_by_name(const f_string_t name, f_account_t *account);
 #endif // _di_f_account_by_name_
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  * @see getpwuid_r()
  */
 #ifndef _di_f_account_by_id_
-  extern f_return_status f_account_by_id(const uid_t id, f_account_t *account);
+  extern f_status_t f_account_by_id(const uid_t id, f_account_t *account);
 #endif // _di_f_account_by_id_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see getgrnam_r()
  */
 #ifndef _di_f_account_id_group_by_name_
-  extern f_return_status f_account_id_group_by_name(const f_string_t name, gid_t *id);
+  extern f_status_t f_account_id_group_by_name(const f_string_t name, gid_t *id);
 #endif // _di_f_account_id_group_by_name_
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  * @see getpwnam_r()
  */
 #ifndef _di_f_account_id_user_by_name_
-  extern f_return_status f_account_id_user_by_name(const f_string_t name, uid_t *id);
+  extern f_status_t f_account_id_user_by_name(const f_string_t name, uid_t *id);
 #endif // _di_f_account_id_user_by_name_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see getpwuid_r()
  */
 #ifndef _di_f_account_name_user_by_id_
-  extern f_return_status f_account_name_user_by_id(const uid_t id, f_string_dynamic_t *name);
+  extern f_status_t f_account_name_user_by_id(const uid_t id, f_string_dynamic_t *name);
 #endif // _di_f_account_name_user_by_id_
 
 #ifdef __cplusplus

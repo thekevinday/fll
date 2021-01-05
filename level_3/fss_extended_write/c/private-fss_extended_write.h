@@ -82,7 +82,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_process_
-  extern f_return_status fss_extended_write_process(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_extended_write_process(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_write_process_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_extended_write_process_pipe_
-  extern f_return_status fss_extended_write_process_pipe(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_extended_write_process_pipe(const fss_extended_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_write_process_pipe_
 
 #ifdef __cplusplus

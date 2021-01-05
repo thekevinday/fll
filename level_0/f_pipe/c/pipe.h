@@ -35,7 +35,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_pipe_input_exists_
-  extern f_return_status f_pipe_input_exists();
+  extern f_status_t f_pipe_input_exists();
 #endif // _di_f_pipe_input_exists_
 
 /**
@@ -51,7 +51,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_pipe_warning_exists_
-  extern f_return_status f_pipe_warning_exists();
+  extern f_status_t f_pipe_warning_exists();
 #endif // _di_f_pipe_warning_exists_
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_pipe_error_exists_
-  extern f_return_status f_pipe_error_exists();
+  extern f_status_t f_pipe_error_exists();
 #endif // _di_f_pipe_error_exists_
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_pipe_debug_exists_
-  extern f_return_status f_pipe_debug_exists();
+  extern f_status_t f_pipe_debug_exists();
 #endif // _di_f_pipe_debug_exists_
 
 #ifdef __cplusplus

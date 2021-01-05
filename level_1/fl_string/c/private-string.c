@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
-  f_return_status private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
     if (destination->used + length > destination->size) {
@@ -22,7 +22,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
 
 #if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
-  f_return_status private_fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > f_string_length_t_size) {
       return F_status_set_error(F_string_too_large);
@@ -74,7 +74,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
 
 #if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
-  f_return_status private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
+  f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
     f_string_length_t i1 = offset1;
     f_string_length_t i2 = offset2;
 
@@ -105,7 +105,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 
 #if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
-  f_return_status private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
     f_string_length_t i1 = offset1;
     f_string_length_t i2 = offset2;
 
@@ -166,7 +166,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
 
 #if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
-  f_return_status private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
     f_string_length_t i1 = offset1;
     f_string_length_t i2 = offset2;
 
@@ -380,7 +380,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
 
 #if !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
-  f_return_status private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
+  f_status_t private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
     f_string_length_t i1 = offset1;
     f_string_length_t i2 = offset2;
 
@@ -532,7 +532,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_delete_)
 
 #if !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
-  f_return_status private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
+  f_status_t private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
 
     if (string->used + amount > string->size) {
       if (string->used + amount > f_string_length_t_size) {
@@ -547,7 +547,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
 
 #if !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_increase_) || !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_dynamic_terminate_) || !defined(_di_fl_string_dynamic_terminate_after_)
-  f_return_status private_fl_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) {
+  f_status_t private_fl_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) {
     f_status_t status = F_none;
 
     f_macro_string_dynamic_t_resize(status, (*string), length);
@@ -563,7 +563,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_delete_)
 
 #if !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
-  f_return_status private_fl_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) {
+  f_status_t private_fl_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) {
     f_status_t status = F_none;
 
     f_macro_string_dynamics_t_resize(status, (*strings), length);
@@ -572,22 +572,6 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
 
-#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
-  void private_fl_string_lengths_delete(f_string_lengths_t *lengths) {
-    f_macro_string_lengths_t_delete_simple((*lengths));
-  }
-#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
-
-#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
-  f_return_status private_fl_string_lengths_resize(const f_string_length_t length, f_string_lengths_t *lengths) {
-    f_status_t status = F_none;
-
-    f_macro_string_lengths_t_resize(status, (*lengths), length);
-
-    return status;
-  }
-#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
-
 #if !defined(fl_string_maps_decrease) || !defined(fl_string_maps_decrease_by) || !defined(_di_fl_string_maps_delete_)
   void private_fl_string_maps_delete(f_string_maps_t *maps) {
     f_macro_string_maps_t_delete_simple((*maps));
@@ -595,7 +579,7 @@ extern "C" {
 #endif // !defined(fl_string_maps_decrease) || !defined(fl_string_maps_decrease_by) || !defined(_di_fl_string_maps_delete_)
 
 #if !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
-  f_return_status private_fl_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) {
+  f_status_t private_fl_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) {
     f_status_t status = F_none;
 
     f_macro_string_maps_t_resize(status, (*maps), length);
@@ -605,7 +589,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
 
 #if !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
-  f_return_status private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > f_string_length_t_size) {
       return F_status_set_error(F_string_too_large);
@@ -630,7 +614,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
 
 #if !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
-  f_return_status private_fl_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > f_string_length_t_size) {
       return F_status_set_error(F_string_too_large);
@@ -696,7 +680,7 @@ extern "C" {
 #endif // !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
 
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
-  f_return_status private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) {
+  f_status_t private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) {
     const f_string_length_t stop_original = *stop;
 
     f_status_t status = F_none;

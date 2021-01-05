@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_read_print_help_
-  f_return_status fss_basic_list_read_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t fss_basic_list_read_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, fss_basic_list_read_name_long, fss_basic_list_read_version);
 
@@ -159,7 +159,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_help_
 
 #ifndef _di_fss_basic_list_read_main_
-  f_return_status fss_basic_list_read_main(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data) {
+  f_status_t fss_basic_list_read_main(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -536,7 +536,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_main_
 
 #ifndef _di_fss_basic_list_read_delete_data_
-  f_return_status fss_basic_list_read_delete_data(fss_basic_list_read_data_t *data) {
+  f_status_t fss_basic_list_read_delete_data(fss_basic_list_read_data_t *data) {
 
     for (f_string_length_t i = 0; i < fss_basic_list_read_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);

@@ -510,7 +510,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_fake_print_help_
-  extern f_return_status fake_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t fake_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_fake_print_help_
 
 /**
@@ -539,7 +539,7 @@ extern "C" {
  * @see fake_delete_data()
  */
 #ifndef _di_fake_main_
-  extern f_return_status fake_main(const f_console_arguments_t arguments, fake_data_t *data);
+  extern f_status_t fake_main(const f_console_arguments_t arguments, fake_data_t *data);
 #endif // _di_fake_main_
 
 /**
@@ -558,7 +558,7 @@ extern "C" {
  * @see fake_main()
  */
 #ifndef _di_fake_delete_data_
-  extern f_return_status fake_delete_data(fake_data_t *data);
+  extern f_status_t fake_delete_data(fake_data_t *data);
 #endif // _di_fake_delete_data_
 
 #ifdef __cplusplus

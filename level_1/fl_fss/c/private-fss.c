@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
-  f_return_status private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
     f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
     f_string_length_t i = 0;
@@ -103,7 +103,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
 
 #if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
-  f_return_status private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_string_range_t *range, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
 
     for (; range->start <= range->stop && range->start < buffer.used; range->start++) {
@@ -122,7 +122,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
 
 #if !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
-  f_return_status private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
     f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
     f_string_length_t i = 0;
@@ -191,7 +191,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
 
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  f_return_status private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
 
     f_status_t status = f_fss_skip_past_space(buffer, range);
     if (F_status_is_error(status)) return status;
@@ -298,7 +298,7 @@ extern "C" {
 
         // only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
         // this simplifies the number of slashes needed.
-        status = private_fl_fss_delimits_increase(delimits);
+        f_macro_fss_delimits_t_increase(status, (*delimits));
         if (F_status_is_error(status)) return status;
 
         delimits->array[delimits->used] = first_slash;
@@ -428,7 +428,7 @@ extern "C" {
               range->start = first_slash;
 
               if (slash_count % 2 == 0) {
-                status = private_fl_fss_delimits_increase_by(slash_count / 2, delimits);
+                f_macro_fss_delimits_t_increase_by(status, (*delimits), slash_count / 2);
                 if (F_status_is_error(status)) return status;
 
                 while (slash_count > 0) {
@@ -499,7 +499,7 @@ extern "C" {
                 return FL_fss_found_object;
               }
               else {
-                status = private_fl_fss_delimits_increase_by((slash_count / 2) + 1, delimits);
+                f_macro_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
                 if (F_status_is_error(status)) return status;
 
                 while (slash_count > 0) {
@@ -663,7 +663,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_)
-  f_return_status private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_string_range_t *range, f_string_dynamic_t *destination) {
 
     f_status_t status = f_fss_skip_past_space(object, range);
     if (F_status_is_error(status)) return status;
@@ -1008,51 +1008,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_)
 
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_delimits_increase(f_fss_delimits_t *delimits) {
-
-    if (delimits->used + 1 > delimits->size) {
-      f_array_length_t size = delimits->used + f_fss_default_allocation_step;
-
-      if (size > f_array_length_t_size) {
-        if (delimits->used + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = f_string_length_t_size;
-      }
-
-      f_status_t status = F_none;
-
-      f_macro_fss_delimits_t_resize(status, (*delimits), size);
-
-      return status;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_delimits_increase_by(const f_array_length_t amount, f_fss_delimits_t *delimits) {
-
-    if (delimits->used + amount > delimits->size) {
-      if (delimits->used + amount > f_array_length_t_size) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      f_status_t status = F_none;
-
-      f_macro_fss_delimits_t_resize(status, (*delimits), delimits->used + amount);
-
-      return status;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-
-#if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_destination_increase(f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_destination_increase(f_string_dynamic_t *destination) {
 
     if (destination->used + 1 > destination->size) {
       f_array_length_t size = destination->used + f_fss_default_allocation_step;
@@ -1077,7 +1033,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_destination_increase_by(const f_string_length_t amount, f_string_dynamic_t *destination) {
 
     if (destination->used + amount > destination->size) {
       if (destination->used + amount > f_string_length_t_size) {
@@ -1096,7 +1052,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_basic_content_write_string_) || !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
 
 #if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
-  f_return_status private_fl_fss_destination_prepend(const f_string_static_t *prepend, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_destination_prepend(const f_string_static_t *prepend, f_string_dynamic_t *destination) {
 
     if (!prepend || !prepend->used) {
       return F_none;
@@ -1114,7 +1070,7 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
 
 #if !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_nest_increase(f_fss_nest_t *nest) {
+  f_status_t private_fl_fss_nest_increase(f_fss_nest_t *nest) {
 
     if (nest->used + 1 > nest->size) {
       f_array_length_t size = nest->used + f_fss_default_allocation_step;
@@ -1141,37 +1097,6 @@ extern "C" {
 #if !defined(_di_fl_fss_embedded_list_content_read_)
   void private_fl_fss_objects_delete(f_fss_objects_t *objects) {
     f_macro_fss_objects_t_delete_simple((*objects));
-  }
-#endif // !defined(_di_fl_fss_embedded_list_content_read_)
-
-#if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_return_status private_fl_fss_ranges_increase(f_string_ranges_t *ranges) {
-
-    if (ranges->used + 1 > ranges->size) {
-      f_array_length_t size = ranges->used + f_fss_default_allocation_step;
-
-      if (size > f_string_length_t_size) {
-        if (ranges->used + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = f_array_length_t_size;
-      }
-
-      f_status_t status = F_none;
-
-      f_macro_string_ranges_t_resize(status, (*ranges), size);
-
-      return status;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_basic_content_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_) || !defined(_di_fl_fss_basic_list_object_read_) || !defined(_di_fl_fss_basic_list_content_read_) || !defined(_di_fl_fss_extended_list_object_read_) || !defined(_di_fl_fss_extended_list_content_read_) || !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-
-#if !defined(_di_fl_fss_embedded_list_content_read_)
-  void private_fl_fss_string_lengths_delete(f_string_lengths_t *lengths) {
-    f_macro_string_lengths_t_delete_simple((*lengths));
   }
 #endif // !defined(_di_fl_fss_embedded_list_content_read_)
 

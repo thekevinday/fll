@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_account_by_name_
-  f_return_status f_account_by_name(const f_string_t name, f_account_t *account) {
+  f_status_t f_account_by_name(const f_string_t name, f_account_t *account) {
     #ifndef _di_level_0_parameter_checking_
       if (!account) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_account_by_name_
 
 #ifndef _di_f_account_by_id_
-  f_return_status f_account_by_id(const uid_t id, f_account_t *account) {
+  f_status_t f_account_by_id(const uid_t id, f_account_t *account) {
     #ifndef _di_level_0_parameter_checking_
       if (!account) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -172,7 +172,7 @@ extern "C" {
 #endif // _di_f_account_by_id_
 
 #ifndef _di_f_account_id_group_by_name_
-  f_return_status f_account_id_group_by_name(const f_string_t name, gid_t *id) {
+  f_status_t f_account_id_group_by_name(const f_string_t name, gid_t *id) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -251,7 +251,7 @@ extern "C" {
 #endif // _di_f_account_id_group_by_name_
 
 #ifndef _di_f_account_id_user_by_name_
-  f_return_status f_account_id_user_by_name(const f_string_t name, uid_t *id) {
+  f_status_t f_account_id_user_by_name(const f_string_t name, uid_t *id) {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -330,7 +330,7 @@ extern "C" {
 #endif // _di_f_account_id_user_by_name_
 
 #ifndef _di_f_account_name_user_by_id_
-  f_return_status f_account_name_user_by_id(const uid_t id, f_string_dynamic_t *name) {
+  f_status_t f_account_name_user_by_id(const uid_t id, f_string_dynamic_t *name) {
     #ifndef _di_level_0_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

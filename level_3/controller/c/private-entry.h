@@ -57,7 +57,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_actions_increase_by_
-  extern f_return_status controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_increase_by_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -135,7 +135,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_return_status controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_items_increase_by_
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
 #ifdef __cplusplus

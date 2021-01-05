@@ -62,7 +62,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_return_status fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_file_buffer_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
-  extern f_return_status fake_path_generate(fake_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_path_generate(fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_path_generate_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_return_status fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_path_generate_string_dynamic_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_process_console_parameters_
-  extern f_return_status fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_validate_console_parameters_
 
 /**
@@ -131,7 +131,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_signal_read_
-  extern f_return_status fake_signal_received(const fake_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_signal_received(const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_signal_read_
 
 /**
@@ -150,7 +150,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_validate_parameter_directories_
-  extern f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_validate_parameter_directories_
 
 /**

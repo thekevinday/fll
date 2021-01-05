@@ -68,7 +68,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_extended_object_read().
  */
 #ifndef _di_fll_fss_extended_read_
-  extern f_return_status fll_fss_extended_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_quotess_t *contents_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
+  extern f_status_t fll_fss_extended_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_objects_t *objects, f_fss_contents_t *contents, f_fss_quotes_t *objects_quoted, f_fss_quotess_t *contents_quoted, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits);
 #endif // _di_fll_fss_extended_read_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_increase_by().
  */
 #ifndef _di_fll_fss_extended_write_string_
-  extern f_return_status fll_fss_extended_write_string(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_string_dynamic_t *destination);
+  extern f_status_t fll_fss_extended_write_string(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_string_dynamic_t *destination);
 #endif // _di_fll_fss_extended_write_string_
 
 #ifdef __cplusplus

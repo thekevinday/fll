@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-f_return_status firewall_perform_commands(const firewall_local_data_t local, const firewall_data_t data) {
+f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_data_t data) {
   f_status_t status = F_none;
 
   f_string_length_t i = 0;
@@ -866,7 +866,7 @@ f_return_status firewall_perform_commands(const firewall_local_data_t local, con
   return status;
 }
 
-f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_data_t *data) {
+f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_data_t *data) {
   f_status_t status = F_none;
 
   uint8_t tool = firewall_program_iptables;
@@ -1150,7 +1150,7 @@ f_return_status firewall_create_custom_chains(firewall_reserved_chains_t *reserv
   return status;
 }
 
-f_return_status firewall_delete_chains(const firewall_data_t data) {
+f_status_t firewall_delete_chains(const firewall_data_t data) {
   const f_string_t tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
   f_status_t status = F_none;
 
@@ -1277,7 +1277,7 @@ f_return_status firewall_delete_chains(const firewall_data_t data) {
   return status;
 }
 
-f_return_status firewall_default_lock(const firewall_data_t data) {
+f_status_t firewall_default_lock(const firewall_data_t data) {
   const f_string_t chains[3] = { firewall_chain_input, firewall_chain_output, firewall_chain_forward };
   const f_string_t tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
 
@@ -1360,7 +1360,7 @@ f_return_status firewall_default_lock(const firewall_data_t data) {
   return status;
 }
 
-f_return_status firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_data_t *data) {
+f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_data_t *data) {
   f_file_t file = f_file_t_initialize;
 
   f_status_t status = f_file_open(filename, 0, &file);
@@ -1467,7 +1467,7 @@ f_return_status firewall_buffer_rules(const f_string_t filename, const bool opti
   return status;
 }
 
-f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) {
+f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) {
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
   f_status_t status = fll_fss_extended_read(local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
@@ -1509,7 +1509,7 @@ f_return_status firewall_process_rules(f_string_range_t *range, firewall_local_d
   return status;
 }
 
-f_return_status firewall_delete_local_data(firewall_local_data_t *local) {
+f_status_t firewall_delete_local_data(firewall_local_data_t *local) {
   f_status_t status = F_none;
 
   local->is_global = F_true;

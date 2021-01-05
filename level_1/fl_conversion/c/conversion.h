@@ -52,7 +52,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_binary_signed_
-  extern f_return_status fl_conversion_string_to_binary_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
+  extern f_status_t fl_conversion_string_to_binary_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
 #endif // _di_fl_conversion_string_to_binary_signed_
 
 /**
@@ -78,7 +78,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_binary_unsigned_
-  extern f_return_status fl_conversion_string_to_binary_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_binary_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_binary_unsigned_
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_decimal_signed_
-  extern f_return_status fl_conversion_string_to_decimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
+  extern f_status_t fl_conversion_string_to_decimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
 #endif // _di_fl_conversion_string_to_decimal_signed_
 
 /**
@@ -133,7 +133,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_decimal_unsigned_
-  extern f_return_status fl_conversion_string_to_decimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_decimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_decimal_unsigned_
 
 /**
@@ -162,7 +162,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_duodecimal_signed_
-  extern f_return_status fl_conversion_string_to_duodecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
+  extern f_status_t fl_conversion_string_to_duodecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
 #endif // _di_fl_conversion_string_to_duodecimal_signed_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_duodecimal_unsigned_
-  extern f_return_status fl_conversion_string_to_duodecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_duodecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_duodecimal_unsigned_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_hexidecimal_signed_
-  extern f_return_status fl_conversion_string_to_hexidecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
+  extern f_status_t fl_conversion_string_to_hexidecimal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
 #endif // _di_fl_conversion_string_to_hexidecimal_signed_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_hexidecimal_unsigned_
-  extern f_return_status fl_conversion_string_to_hexidecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_hexidecimal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_hexidecimal_unsigned_
 
 /**
@@ -271,7 +271,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_octal_signed_
-  extern f_return_status fl_conversion_string_to_octal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
+  extern f_status_t fl_conversion_string_to_octal_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range, const bool negative);
 #endif // _di_fl_conversion_string_to_octal_signed_
 
 /**
@@ -297,7 +297,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_conversion_string_to_octal_unsigned_
-  extern f_return_status fl_conversion_string_to_octal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_octal_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_octal_unsigned_
 
 /**
@@ -339,7 +339,7 @@ extern "C" {
  * @see strtoll()
  */
 #ifndef _di_fl_conversion_string_to_number_signed_
-  extern f_return_status fl_conversion_string_to_number_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_number_signed(const f_string_t string, f_number_signed_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_number_signed_
 
 /**
@@ -383,7 +383,7 @@ extern "C" {
  * @see strtoull()
  */
 #ifndef _di_fl_conversion_string_to_number_unsigned_
-  extern f_return_status fl_conversion_string_to_number_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
+  extern f_status_t fl_conversion_string_to_number_unsigned(const f_string_t string, f_number_unsigned_t *number, const f_string_range_t range);
 #endif // _di_fl_conversion_string_to_number_unsigned_
 
 #ifdef __cplusplus

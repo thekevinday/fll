@@ -38,7 +38,7 @@ extern "C" {
  * @see f_print_dynamic_partial()
  */
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
-  extern f_return_status private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 /**
@@ -69,7 +69,7 @@ extern "C" {
  * @see f_print_except_dynamic_partial()
  */
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
-  extern f_return_status private_f_print_except(FILE *output, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_print_except(FILE *output, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 /**
@@ -101,7 +101,7 @@ extern "C" {
  * @see f_print_to_dynamic_partial()
  */
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
-  extern f_return_status private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_print_to_) || !defined(_di_f_print_to_dynamic_) || !defined(_di_f_print_to_dynamic_partial_)
 
 /**
@@ -138,7 +138,7 @@ extern "C" {
  * @see f_print_to_except_dynamic_partial()
  */
 #if !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
-  extern f_return_status private_f_print_to_except(const int id, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_print_to_except(const int id, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
 
 #ifdef __cplusplus

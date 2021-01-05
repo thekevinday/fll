@@ -52,7 +52,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
  */
 #ifndef _di_fll_path_canonical_
-  extern f_return_status fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical);
+  extern f_status_t fll_path_canonical(const f_string_t path, f_string_dynamic_t *canonical);
 #endif // _di_fll_path_canonical_
 
 #ifdef __cplusplus

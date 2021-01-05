@@ -118,7 +118,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_control_print_help_
-  extern f_return_status control_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t control_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_control_print_help_
 
 /**
@@ -139,7 +139,7 @@ extern "C" {
  * @see control_delete_data()
  */
 #ifndef _di_control_main_
-  extern f_return_status control_main(const f_console_arguments_t arguments, control_data_t *data);
+  extern f_status_t control_main(const f_console_arguments_t arguments, control_data_t *data);
 #endif // _di_control_main_
 
 /**
@@ -158,7 +158,7 @@ extern "C" {
  * @see control_main()
  */
 #ifndef _di_control_delete_data_
-  extern f_return_status control_delete_data(control_data_t *data);
+  extern f_status_t control_delete_data(control_data_t *data);
 #endif // _di_control_delete_data_
 
 #ifdef __cplusplus

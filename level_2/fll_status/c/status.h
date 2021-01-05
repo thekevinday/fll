@@ -47,7 +47,7 @@ extern "C" {
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
 #ifndef _di_fll_status_from_string_
-  extern f_return_status fll_status_from_string(const f_string_t string, f_status_t *code);
+  extern f_status_t fll_status_from_string(const f_string_t string, f_status_t *code);
 #endif // _di_fll_status_to_string_
 
 #ifdef __cplusplus

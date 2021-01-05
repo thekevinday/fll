@@ -703,7 +703,7 @@ extern "C" {
 #endif // _di_fake_build_execute_process_script_
 
 #ifndef _di_fake_build_get_file_name_without_extension_
-  f_return_status fake_build_get_file_name_without_extension(const fake_data_t data, const f_string_static_t path, f_string_dynamic_t *name) {
+  f_status_t fake_build_get_file_name_without_extension(const fake_data_t data, const f_string_static_t path, f_string_dynamic_t *name) {
     name->used = 0;
 
     if (!path.used) return F_none;
@@ -2514,7 +2514,7 @@ extern "C" {
 #endif // _di_fake_build_objects_static_
 
 #ifndef _di_fake_build_operate_
-  f_return_status fake_build_operate(const f_string_static_t setting_file, fake_data_t *data) {
+  f_status_t fake_build_operate(const f_string_static_t setting_file, fake_data_t *data) {
 
     if (fake_signal_received(*data)) {
       return F_signal;

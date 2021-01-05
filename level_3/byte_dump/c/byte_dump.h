@@ -254,7 +254,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_byte_dump_print_help_
-  extern f_return_status byte_dump_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t byte_dump_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_byte_dump_print_help_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  * @see byte_dump_delete_data()
  */
 #ifndef _di_byte_dump_main_
-  extern f_return_status byte_dump_main(const f_console_arguments_t arguments, byte_dump_data_t *data);
+  extern f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_data_t *data);
 #endif // _di_byte_dump_main_
 
 /**
@@ -293,7 +293,7 @@ extern "C" {
  * @see byte_dump_main()
  */
 #ifndef _di_byte_dump_delete_data_
-  extern f_return_status byte_dump_delete_data(byte_dump_data_t *data);
+  extern f_status_t byte_dump_delete_data(byte_dump_data_t *data);
 #endif // _di_byte_dump_delete_data_
 
 #ifdef __cplusplus

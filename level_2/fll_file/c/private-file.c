@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_file_mode_set_all_)
-  f_return_status private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+  f_status_t private_fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
 
     status = f_directory_is(path);
@@ -103,7 +103,7 @@ extern "C" {
 #endif // !defined(_di_fll_file_mode_set_all_)
 
 #if !defined(_di_fll_file_role_change_all_)
-  f_return_status private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
+  f_status_t private_fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
 
     status = f_directory_is(path);

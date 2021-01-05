@@ -5,7 +5,7 @@ extern "C"{
 #endif
 
 #ifndef _di_f_socket_file_bind_
-  f_return_status f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address) {
+  f_status_t f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address) {
 
     memset(&address, 0, sizeof(struct sockaddr_un));
     address->sun_family = AF_UNIX;
@@ -33,7 +33,7 @@ extern "C"{
 #endif // _di_f_socket_file_bind_
 
 #ifndef _di_f_socket_listen_
-  f_return_status f_socket_listen(const int id, const unsigned int max_backlog) {
+  f_status_t f_socket_listen(const int id, const unsigned int max_backlog) {
 
     if (listen(id, max_backlog) < 0) {
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
@@ -49,7 +49,7 @@ extern "C"{
 #endif // _di_f_socket_listen_
 
 #ifndef _di_f_socket_close_client_
-  f_return_status f_socket_close_client(const int id, const unsigned short action) {
+  f_status_t f_socket_close_client(const int id, const unsigned short action) {
     int result = 0;
 
     if (action == f_socket_close_fast) {

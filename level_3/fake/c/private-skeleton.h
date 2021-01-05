@@ -36,7 +36,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
-  extern f_return_status fake_skeleton_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_skeleton_operate(const fake_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_skeleton_operate_
 
 /**
@@ -54,7 +54,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
-  extern f_return_status fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_skeleton_operate_directory_create_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_return_status fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_skeleton_operate_file_create_
 
 #ifdef __cplusplus

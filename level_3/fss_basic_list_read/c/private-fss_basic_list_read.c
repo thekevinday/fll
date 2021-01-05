@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_read_main_preprocess_depth_
-  f_return_status fss_basic_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_list_read_data_t data, fss_basic_list_read_depths_t *depths) {
+  f_status_t fss_basic_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_list_read_data_t data, fss_basic_list_read_depths_t *depths) {
     f_status_t status = F_none;
 
     {
@@ -170,7 +170,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_basic_list_read_main_process_file_
-  f_return_status fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
+  f_status_t fss_basic_list_read_main_process_file(const f_console_arguments_t arguments, fss_basic_list_read_data_t *data, const f_string_t filename, const fss_basic_list_read_depths_t depths, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
     f_status_t status = F_none;
 
     const f_string_lengths_t except_none = f_string_lengths_t_initialize;
@@ -320,7 +320,7 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_basic_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;

@@ -410,7 +410,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_assure_inside_project_
-  extern f_return_status fake_make_assure_inside_project(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_assure_inside_project(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_assure_inside_project_
 
 /**
@@ -432,7 +432,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_group_
-  f_return_status fake_make_get_id_group(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
+  f_status_t fake_make_get_id_group(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, gid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_group_
 
 /**
@@ -458,7 +458,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_return_status fake_make_get_id_mode(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
+  f_status_t fake_make_get_id_mode(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_mode_
 
 /**
@@ -480,7 +480,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
-  f_return_status fake_make_get_id_owner(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
+  f_status_t fake_make_get_id_owner(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, uid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_get_id_owner_
 
 /**
@@ -538,7 +538,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_
-  extern f_return_status fake_make_operate(fake_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate(fake_data_t *data) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_
 
 /**
@@ -592,7 +592,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_return_status fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate_expand_environment(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -616,7 +616,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_return_status fake_make_operate_expand_build(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate_expand_build(const fake_data_t data, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_expand_build_
 
 /**
@@ -698,7 +698,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_execute_
-  extern f_return_status fake_make_operate_process_execute(const fake_data_t data, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate_process_execute(const fake_data_t data, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_execute_
 
 /**
@@ -736,7 +736,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_run_
-  extern f_return_status fake_make_operate_process_run(const fake_data_t data, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate_process_run(const fake_data_t data, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_run_
 
 /**
@@ -788,7 +788,7 @@ extern "C" {
  *   F_none if there is no string to validate (used = 0).
  */
 #ifndef _di_fake_make_operate_validate_define_name_
-  extern f_return_status fake_make_operate_validate_define_name(const f_string_static_t name) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_operate_validate_define_name(const f_string_static_t name) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_define_name_
 
 /**
@@ -806,7 +806,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_path_relative_
-  extern f_return_status fake_make_path_relative(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
+  extern f_status_t fake_make_path_relative(const fake_data_t data, const f_string_static_t path, fake_make_data_t *data_make) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus

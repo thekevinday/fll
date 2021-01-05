@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_skeleton_operate_
-  f_return_status fake_skeleton_operate(const fake_data_t data) {
+  f_status_t fake_skeleton_operate(const fake_data_t data) {
 
     if (fake_signal_received(data)) {
       return F_signal;
@@ -157,7 +157,7 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_
 
 #ifndef _di_fake_skeleton_operate_directory_create_
-  f_return_status fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) {
+  f_status_t fake_skeleton_operate_directory_create(const fake_data_t data, const f_string_dynamic_t path) {
     f_status_t status = F_none;
 
     if (!path.used) return F_none;
@@ -213,7 +213,7 @@ extern "C" {
 #endif // _di_fake_skeleton_operate_directory_create_
 
 #ifndef _di_fake_skeleton_operate_file_create_
-  f_return_status fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
+  f_status_t fake_skeleton_operate_file_create(const fake_data_t data, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
     f_status_t status = F_none;
 
     if (!path.used) return F_none;

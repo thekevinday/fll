@@ -53,7 +53,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_
-  extern f_return_status fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_append_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_assure_
-  extern f_return_status fl_string_append_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_append_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_append_assure_
 
 /**
@@ -102,7 +102,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_assure_nulless_
-  extern f_return_status fl_string_append_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_append_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_append_assure_nulless_
 
 /**
@@ -126,7 +126,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_append_nulless_
-  extern f_return_status fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_append_nulless_
 
 /**
@@ -150,7 +150,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_
-  extern f_return_status fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
 #endif // _di_fl_string_compare_
 
 /**
@@ -181,7 +181,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_except_
-  extern f_return_status fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_compare_except_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_except_trim_
-  extern f_return_status fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_compare_except_trim_
 
 /**
@@ -246,7 +246,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_trim_
-  extern f_return_status fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
 #endif // _di_fl_string_compare_trim_
 
 /**
@@ -266,7 +266,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_
-  extern f_return_status fl_string_dynamic_append(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_append(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_append_
 
 /**
@@ -286,7 +286,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_assure_
-  extern f_return_status fl_string_dynamic_append_assure(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_append_assure(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_append_assure_
 
 /**
@@ -308,7 +308,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_assure_nulless_
-  extern f_return_status fl_string_dynamic_append_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_append_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_append_assure_nulless_
 
 /**
@@ -330,7 +330,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_append_nulless_
-  extern f_return_status fl_string_dynamic_append_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_append_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_append_nulless_
 
 /**
@@ -350,7 +350,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_compare_
-  extern f_return_status fl_string_dynamic_compare(const f_string_static_t string1, const f_string_static_t string2);
+  extern f_status_t fl_string_dynamic_compare(const f_string_static_t string1, const f_string_static_t string2);
 #endif // _di_fl_string_dynamic_compare_
 
 /**
@@ -377,7 +377,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_compare_except_
-  extern f_return_status fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_
 
 /**
@@ -413,7 +413,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_string_
-  extern f_return_status fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_string_
 
 /**
@@ -445,7 +445,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_
-  extern f_return_status fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_trim_
 
 /**
@@ -481,7 +481,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_string_
-  extern f_return_status fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_trim_string_
 
 /**
@@ -510,7 +510,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_string_
-  extern f_return_status fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
+  extern f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
 #endif // _di_fl_string_dynamic_compare_string_
 
 /**
@@ -535,7 +535,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_
-  extern f_return_status fl_string_dynamic_compare_trim(const f_string_static_t string1, const f_string_static_t string2);
+  extern f_status_t fl_string_dynamic_compare_trim(const f_string_static_t string1, const f_string_static_t string2);
 #endif // _di_fl_string_dynamic_compare_trim_
 
 /**
@@ -564,7 +564,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_string_
-  extern f_return_status fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
+  extern f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
 #endif // _di_fl_string_dynamic_compare_trim_string_
 
 /**
@@ -583,7 +583,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_decrease_
-  extern f_return_status fl_string_dynamic_decrease(f_string_dynamic_t *string);
+  extern f_status_t fl_string_dynamic_decrease(f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_decrease_
 
 /**
@@ -605,7 +605,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_decrease_by_
-  extern f_return_status fl_string_dynamic_decrease_by(const f_string_length_t amount, f_string_dynamic_t *string);
+  extern f_status_t fl_string_dynamic_decrease_by(const f_string_length_t amount, f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_decrease_by_
 
 /**
@@ -619,7 +619,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_delete_
-  extern f_return_status fl_string_dynamic_delete(f_string_dynamic_t *string);
+  extern f_status_t fl_string_dynamic_delete(f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_delete_
 
 /**
@@ -645,7 +645,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mash_
-  extern f_return_status fl_string_dynamic_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_mash_
 
 /**
@@ -673,7 +673,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mash_nulless_
-  extern f_return_status fl_string_dynamic_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_mash_nulless_
 
 /**
@@ -699,7 +699,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mish_
-  extern f_return_status fl_string_dynamic_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_mish_
 
 /**
@@ -727,7 +727,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_mish_nulless_
-  extern f_return_status fl_string_dynamic_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_mish_nulless_
 
 /**
@@ -750,7 +750,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_
-  extern f_return_status fl_string_dynamic_partial_append(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_append(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_append_
 
 /**
@@ -775,7 +775,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_assure_
-  extern f_return_status fl_string_dynamic_partial_append_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_append_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_append_assure_
 
 /**
@@ -802,7 +802,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_assure_nulless_
-  extern f_return_status fl_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_append_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_append_assure_nulless_
 
 /**
@@ -827,7 +827,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_append_nulless_
-  extern f_return_status fl_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_append_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_append_nulless_
 
 /**
@@ -851,7 +851,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_
-  extern f_return_status fl_string_dynamic_partial_compare(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_
 
 /**
@@ -882,7 +882,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_
-  extern f_return_status fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_
 
 /**
@@ -911,7 +911,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_dynamic_
-  extern f_return_status fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_dynamic_
 
 /**
@@ -944,7 +944,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_string_
-  extern f_return_status fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_string_
 
 /**
@@ -978,7 +978,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
-  extern f_return_status fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
 
 /**
@@ -1016,7 +1016,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_string_
-  extern f_return_status fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_string_
 
 /**
@@ -1052,7 +1052,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_
-  extern f_return_status fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_
 
 /**
@@ -1074,7 +1074,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_dynamic_
-  extern f_return_status fl_string_dynamic_partial_compare_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_dynamic_
 
 /**
@@ -1100,7 +1100,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_string_
-  extern f_return_status fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_string_
 
 /**
@@ -1127,7 +1127,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_dynamic_
-  extern f_return_status fl_string_dynamic_partial_compare_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_dynamic_
 
 /**
@@ -1158,7 +1158,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_string_
-  extern f_return_status fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_string_
 
 /**
@@ -1187,7 +1187,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_
-  extern f_return_status fl_string_dynamic_partial_compare_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_
 
 /**
@@ -1216,7 +1216,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mash_
-  extern f_return_status fl_string_dynamic_partial_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_mash_
 
 /**
@@ -1247,7 +1247,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mash_nulless_
-  extern f_return_status fl_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_mash_nulless_
 
 /**
@@ -1276,7 +1276,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mish_
-  extern f_return_status fl_string_dynamic_partial_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_mish_
 
 /**
@@ -1307,7 +1307,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_mish_nulless_
-  extern f_return_status fl_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_mish_nulless_
 
 /**
@@ -1332,7 +1332,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_
-  extern f_return_status fl_string_dynamic_partial_prepend(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_prepend(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_
 
 /**
@@ -1359,7 +1359,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_assure_
-  extern f_return_status fl_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_prepend_assure(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_assure_
 
 /**
@@ -1386,7 +1386,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_assure_nulless_
-  extern f_return_status fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_prepend_assure_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_assure_nulless_
 
 /**
@@ -1411,7 +1411,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_partial_prepend_nulless_
-  extern f_return_status fl_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_partial_prepend_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_partial_prepend_nulless_
 
 /**
@@ -1434,7 +1434,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_
-  extern f_return_status fl_string_dynamic_prepend(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_prepend(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_prepend_
 
 /**
@@ -1459,7 +1459,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_assure_
-  extern f_return_status fl_string_dynamic_prepend_assure(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_prepend_assure(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_prepend_assure_
 
 /**
@@ -1484,7 +1484,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_assure_nulless_
-  extern f_return_status fl_string_dynamic_prepend_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_prepend_assure_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_prepend_assure_nulless_
 
 /**
@@ -1507,7 +1507,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_prepend_nulless_
-  extern f_return_status fl_string_dynamic_prepend_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_prepend_nulless(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_prepend_nulless_
 
 /**
@@ -1534,7 +1534,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_rip_
-  extern f_return_status fl_string_dynamic_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_rip(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_rip_
 
 /**
@@ -1562,7 +1562,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_rip_nulless_
-  extern f_return_status fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_rip_nulless_
 
 /**
@@ -1585,7 +1585,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_increase_
-  extern f_return_status fl_string_dynamic_increase(f_string_dynamic_t *string);
+  extern f_status_t fl_string_dynamic_increase(f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_increase_
 
 /**
@@ -1608,7 +1608,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_dynamic_increase_by_
-  extern f_return_status fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string);
+  extern f_status_t fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string);
 #endif // _di_fl_string_dynamic_increase_by_
 
 /**
@@ -1628,7 +1628,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_line_
-  extern f_return_status fl_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_
 
 /**
@@ -1651,7 +1651,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_
-  extern f_return_status fl_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_to_
 
 /**
@@ -1681,7 +1681,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_line_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 /**
@@ -1711,7 +1711,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
@@ -1741,7 +1741,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  extern f_return_status fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_non_graph_
 
 /**
@@ -1765,7 +1765,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_seek_to_
-  extern f_return_status fl_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_to_
 
 /**
@@ -1794,7 +1794,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_dynamic_seek_to_utf_character_
-  extern f_return_status fl_string_dynamic_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to_this, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
@@ -1815,7 +1815,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if string is too large to fit into the buffer.
  */
 #ifndef _di_fl_string_dynamic_terminate_
-  extern f_return_status fl_string_dynamic_terminate(f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_terminate(f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_terminate_
 
 /**
@@ -1838,7 +1838,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if string is too large to fit into the buffer.
  */
 #ifndef _di_fl_string_dynamic_terminate_after_
-  extern f_return_status fl_string_dynamic_terminate_after(f_string_dynamic_t *destination);
+  extern f_status_t fl_string_dynamic_terminate_after(f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_terminate_after_
 
 /**
@@ -1857,7 +1857,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamics_decrease_
-  extern f_return_status fl_string_dynamics_decrease(f_string_dynamics_t *strings);
+  extern f_status_t fl_string_dynamics_decrease(f_string_dynamics_t *strings);
 #endif // _di_fl_string_dynamics_decrease_
 
 /**
@@ -1879,7 +1879,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamics_decrease_by_
-  extern f_return_status fl_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+  extern f_status_t fl_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *strings);
 #endif // _di_fl_string_dynamics_decrease_by_
 
 /**
@@ -1893,7 +1893,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamics_delete_
-  extern f_return_status fl_string_dynamics_delete(f_string_dynamics_t *strings);
+  extern f_status_t fl_string_dynamics_delete(f_string_dynamics_t *strings);
 #endif // _di_fl_string_dynamics_delete_
 
 /**
@@ -1913,7 +1913,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_dynamics_increase_
-  extern f_return_status fl_string_dynamics_increase(f_string_dynamics_t *strings);
+  extern f_status_t fl_string_dynamics_increase(f_string_dynamics_t *strings);
 #endif // _di_fl_string_dynamics_increase_
 
 /**
@@ -1936,106 +1936,8 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_dynamics_increase_by_
-  extern f_return_status fl_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+  extern f_status_t fl_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings);
 #endif // _di_fl_string_dynamics_increase_by_
-
-/**
- * Resize the string lengths array to a smaller size, by 1.
- *
- * This will shrink the size by size - 1.
- * This will not shrink the size to less than 0.
- *
- * @param lengths
- *   The string lengths array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_lengths_decrease_
-  extern f_return_status fl_string_lengths_decrease(f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_decrease_
-
-/**
- * Resize the string lengths array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param lengths
- *   The string lengths array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_lengths_decrease_by_
-  extern f_return_status fl_string_lengths_decrease_by(const f_array_length_t amount, f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_decrease_by_
-
-/**
- * Delete the array of string lengths.
- *
- * @param lengths
- *   The string to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_lengths_delete_
-  extern f_return_status fl_string_lengths_delete(f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_delete_
-
-/**
- * Increase the size of the string lengths array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param lengths
- *   The string lengths array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
- */
-#ifndef _di_fl_string_lengths_increase_
-  extern f_return_status fl_string_lengths_increase(f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_increase_
-
-/**
- * Resize the string lengths array to a larger size.
- *
- * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param lengths
- *   The string lengths array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
- */
-#ifndef _di_fl_string_lengths_increase_by_
-  extern f_return_status fl_string_lengths_increase_by(const f_array_length_t amount, f_string_lengths_t *lengths);
-#endif // _di_fl_string_lengths_increase_by_
 
 /**
  * Resize the string maps array to a smaller size, by 1.
@@ -2053,7 +1955,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_maps_decrease_
-  extern f_return_status fl_string_maps_decrease(f_string_maps_t *maps);
+  extern f_status_t fl_string_maps_decrease(f_string_maps_t *maps);
 #endif // _di_fl_string_maps_decrease_
 
 /**
@@ -2075,7 +1977,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_maps_decrease_by_
-  extern f_return_status fl_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps);
+  extern f_status_t fl_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps);
 #endif // _di_fl_string_maps_decrease_by_
 
 /**
@@ -2089,7 +1991,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_maps_delete_
-  extern f_return_status fl_string_maps_delete(f_string_maps_t *maps);
+  extern f_status_t fl_string_maps_delete(f_string_maps_t *maps);
 #endif // _di_fl_string_maps_delete_
 
 /**
@@ -2109,7 +2011,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_maps_increase_
-  extern f_return_status fl_string_maps_increase(f_string_maps_t *maps);
+  extern f_status_t fl_string_maps_increase(f_string_maps_t *maps);
 #endif // _di_fl_string_maps_increase_
 
 /**
@@ -2132,7 +2034,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_fl_string_maps_increase_by_
-  extern f_return_status fl_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps);
+  extern f_status_t fl_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps);
 #endif // _di_fl_string_maps_increase_by_
 
 /**
@@ -2160,7 +2062,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mash_
-  extern f_return_status fl_string_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_mash_
 
 /**
@@ -2190,7 +2092,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mash_nulless_
-  extern f_return_status fl_string_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_mash_nulless_
 
 /**
@@ -2218,7 +2120,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mish_
-  extern f_return_status fl_string_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_mish_
 
 /**
@@ -2248,7 +2150,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_mish_nulless_
-  extern f_return_status fl_string_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_mish_nulless_
 
 /**
@@ -2272,7 +2174,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_
-  extern f_return_status fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_prepend_
 
 /**
@@ -2298,7 +2200,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_assure_
-  extern f_return_status fl_string_prepend_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_prepend_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_prepend_assure_
 
 /**
@@ -2325,7 +2227,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_assure_nulless_
-  extern f_return_status fl_string_prepend_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_prepend_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_prepend_assure_nulless_
 
 /**
@@ -2352,7 +2254,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_string_prepend_nulless_
-  extern f_return_status fl_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_prepend_nulless_
 
 /**
@@ -2381,7 +2283,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_
-  extern f_return_status fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_rip_
 
 /**
@@ -2412,7 +2314,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_nulless_
-  extern f_return_status fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_rip_nulless_
 
 /**
@@ -2434,7 +2336,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_line_to_
-  extern f_return_status fl_string_seek_line_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_to_
 
 /**
@@ -2462,7 +2364,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_line_to_utf_character_
-  extern f_return_status fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 /**
@@ -2491,7 +2393,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_seek_line_until_graph_
-  extern f_return_status fl_string_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_until_graph_
 
 /**
@@ -2521,7 +2423,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_seek_line_until_non_graph_
-  extern f_return_status fl_string_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_until_non_graph_
 
 /**
@@ -2544,7 +2446,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_seek_to_
-  extern f_return_status fl_string_seek_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
 #endif // _di_fl_string_seek_to_
 
 /**
@@ -2572,7 +2474,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_fl_string_seek_to_utf_character_
-  extern f_return_status fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
+  extern f_status_t fl_string_seek_to_utf_character(const f_string_t string, const f_utf_character_t seek_to, f_string_range_t *range);
 #endif // _di_fl_string_seek_to_utf_character_
 
 #ifdef __cplusplus

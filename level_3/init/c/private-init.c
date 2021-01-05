@@ -37,14 +37,14 @@ Consider the "*.device" files such that they are also use IKI.
 */
 
 #ifndef _di_init_load_failsafe_
-  f_return_status init_load_failsafe(const init_data_t data) {
+  f_status_t init_load_failsafe(const init_data_t data) {
 
     return F_none;
   }
 #endif // _di_init_load_failsafe_
 
 #ifndef _di_init_load_kernel_setting_
-  f_return_status init_load_kernel_setting(const init_data_t data, init_setting_kernel_t *setting_kernel) {
+  f_status_t init_load_kernel_setting(const init_data_t data, init_setting_kernel_t *setting_kernel) {
     f_status_t status = F_none;
 
     status = f_directory_exists(init_path_proc_cmdline);
@@ -337,7 +337,7 @@ Consider the "*.device" files such that they are also use IKI.
 #endif // _di_init_load_kernel_setting_
 
 #ifndef _di_init_signal_read_
-  f_return_status init_signal_received(const init_data_t data) {
+  f_status_t init_signal_received(const init_data_t data) {
 
     if (!data.signal.id) {
       return F_false;

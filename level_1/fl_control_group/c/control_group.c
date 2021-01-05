@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_control_group_apply_
-  f_return_status fl_control_group_apply(const f_control_group_t control_group, const pid_t id) {
+  f_status_t fl_control_group_apply(const f_control_group_t control_group, const pid_t id) {
     #ifndef _di_level_1_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -61,7 +61,7 @@ extern "C" {
 #endif // _di_fl_control_group_apply_
 
 #ifndef _di_fl_control_group_delete_
-  f_return_status fl_control_group_delete(f_control_group_t *control_group) {
+  f_status_t fl_control_group_delete(f_control_group_t *control_group) {
     f_status_t status = F_none;
 
     f_macro_control_group_t_delete(status, (*control_group));

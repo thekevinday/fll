@@ -167,7 +167,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_preprocess_depth_
-  extern f_return_status fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_data_t data, fss_embedded_list_read_depths_t *depths) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_data_t data, fss_embedded_list_read_depths_t *depths) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 /**
@@ -198,7 +198,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  extern f_return_status fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_data_t *data, const f_string_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_data_t *data, const f_string_t file_name, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see fss_embedded_list_read_main_process_file()
  */
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  extern f_return_status fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 /**
@@ -353,7 +353,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits_contents()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  extern f_return_status fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_process_delimits_within_greater_
 
 #ifdef __cplusplus

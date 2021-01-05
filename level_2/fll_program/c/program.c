@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_return_status fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
+  f_status_t fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
     fprintf(file.stream, "%c", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.title, " %s", name);
@@ -21,7 +21,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_return_status fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
     fprintf(file.stream, "%c  %s", f_string_eol_s[0], symbol_short);
     fl_color_print(file.stream, context.set.standout, option_short);
@@ -36,7 +36,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_return_status fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
     fprintf(file.stream, "%c      %s", f_string_eol_s[0], symbol_long);
     fl_color_print(file.stream, context.set.standout, option_long);
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_return_status fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+  f_status_t fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
     fprintf(file.stream, "%c  ", f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.standout, option_other);
@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_return_status fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
+  f_status_t fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
     fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     fl_color_print(file.stream, context.set.important, " Usage:");
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_return_status fll_program_print_version(const f_file_t file, const f_string_t version) {
+  f_status_t fll_program_print_version(const f_file_t file, const f_string_t version) {
 
     fprintf(file.stream, "%s%c", version, f_string_eol_s[0]);
 
@@ -98,7 +98,7 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 #ifndef _di_fll_program_parameter_process_
-  f_return_status fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context) {
+  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_string_lengths_t *remaining, f_color_context_t *context) {
     f_status_t status = F_none;
 
     status = f_console_parameter_process(arguments, parameters, remaining);
@@ -133,7 +133,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_
 
 #ifndef _di_fll_program_parameter_additional_append_
-  f_return_status fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -176,7 +176,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_append_
 
 #ifndef _di_fll_program_parameter_additional_mash_
-  f_return_status fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);
@@ -207,7 +207,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_mash_
 
 #ifndef _di_fll_program_parameter_additional_rip_
-  f_return_status fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
+  f_status_t fll_program_parameter_additional_rip(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -251,7 +251,7 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_
 
 #ifndef _di_fll_program_parameter_additional_rip_mash_
-  f_return_status fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
+  f_status_t fll_program_parameter_additional_rip_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!argv) return F_status_set_error(F_parameter);
       if (glue_length < 1) return F_status_set_error(F_parameter);

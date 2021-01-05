@@ -31,7 +31,7 @@ extern "C" {
 #endif // _di_controller_rule_action_method_name_
 
 #ifndef _di_controller_rule_parameters_read_
-  f_return_status controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) {
+  f_status_t controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) {
     f_status_t status = F_none;
 
     parameters->used = 0;
@@ -158,7 +158,7 @@ extern "C" {
 #endif // _di_controller_rule_action_type_name_
 
 #ifndef _di_controller_rule_actions_increase_by_
-  f_return_status controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) {
+  f_status_t controller_rule_actions_increase_by(const f_array_length_t amount, controller_rule_actions_t *actions) {
 
     if (actions->used + amount > actions->size) {
       if (actions->used + amount > f_array_length_t_size) {
@@ -179,7 +179,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 #ifndef _di_controller_rule_action_read_
-  f_return_status controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+  f_status_t controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
     f_status_t status = F_none;
 
     if (method == controller_rule_action_method_extended_list) {
@@ -496,7 +496,7 @@ extern "C" {
 #endif // _di_controller_rule_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_execute_
-  f_return_status controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, const bool simulate, controller_data_t *data, controller_setting_t *setting) {
+  f_status_t controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, const bool simulate, controller_data_t *data, controller_setting_t *setting) {
     f_status_t status = F_none;
     f_status_t success = F_false;
 
@@ -693,7 +693,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_return_status controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
 
     f_status_t status = F_none;
     int result = 0;
@@ -781,7 +781,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_return_status controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
 
     f_status_t status = F_none;
     int result = 0;
@@ -871,7 +871,7 @@ extern "C" {
 #endif // _di_controller_rule_find_loaded_
 
 #ifndef _di_controller_rule_id_construct_
-  f_return_status controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *id) {
+  f_status_t controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *id) {
     f_status_t status = F_none;
 
     id->used = 0;
@@ -908,7 +908,7 @@ extern "C" {
 #endif // _di_controller_rule_id_construct_
 
 #ifndef _di_controller_rule_item_read_
-  f_return_status controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
+  f_status_t controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
@@ -1091,7 +1091,7 @@ extern "C" {
 #endif // _di_controller_rule_item_type_name_
 
 #ifndef _di_controller_rule_items_increase_by_
-  f_return_status controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) {
+  f_status_t controller_rule_items_increase_by(const f_array_length_t amount, controller_rule_items_t *items) {
 
     if (items->used + amount > items->size) {
       if (items->used + amount > f_array_length_t_size) {
@@ -1205,7 +1205,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_limit_type_name_
 
 #ifndef _di_controller_rule_path_
-  f_return_status controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) {
+  f_status_t controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) {
     f_status_t status = F_none;
 
     path->used = 0;
@@ -1275,7 +1275,7 @@ extern "C" {
 #endif // _di_controller_rule_path_
 
 #ifndef _di_controller_rule_process_
-  f_return_status controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) {
+  f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) {
 
     switch (action) {
       case controller_rule_action_type_freeze:
@@ -1592,7 +1592,7 @@ extern "C" {
 #endif // _di_controller_rule_process_
 
 #ifndef _di_controller_rule_read_
-  f_return_status controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_cache_t *cache, controller_rule_t *rule) {
+  f_status_t controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
 
     bool for_item = F_true;
@@ -1838,7 +1838,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_return_status controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
+  f_status_t controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
@@ -2514,7 +2514,7 @@ extern "C" {
 
         if (F_status_is_error(status)) continue;
 
-        status = f_limit_sets_increase(&rule->limits);
+        f_macro_limit_sets_t_increase(status, rule->limits);
 
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "f_limit_sets_increase", F_true);
@@ -3787,7 +3787,7 @@ extern "C" {
 #endif // _di_controller_rule_simulate_
 
 #ifndef _di_controller_rules_increase_
-  f_return_status controller_rules_increase(controller_rules_t *rules) {
+  f_status_t controller_rules_increase(controller_rules_t *rules) {
 
     if (rules->used + 1 > rules->size) {
       f_array_length_t size = rules->used + controller_default_allocation_step;

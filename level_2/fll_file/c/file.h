@@ -64,7 +64,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_mode_set_all_
-  extern f_return_status fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max);
+  extern f_status_t fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max);
 #endif // _di_fll_file_mode_set_all_
 
 /**
@@ -124,7 +124,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #ifndef _di_fll_file_move_
-  extern f_return_status fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse);
+  extern f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse);
 #endif // _di_fll_file_move_
 
 /**
@@ -169,7 +169,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_directory_list().
  */
 #ifndef _di_fll_file_role_change_all_
-  extern f_return_status fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max);
+  extern f_status_t fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max);
 #endif // _di_fll_file_role_change_all_
 
 #ifdef __cplusplus

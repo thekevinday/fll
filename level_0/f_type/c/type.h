@@ -10,6 +10,11 @@
 #ifndef _F_type_h
 #define _F_type_h
 
+// include pre-requirements
+#ifndef _GNU_SOURCE
+  #define _GNU_SOURCE
+#endif // _GNU_SOURCE
+
 // libc includes
 #include <stdbool.h>
 #include <stdint.h>
@@ -25,17 +30,6 @@ extern "C" {
  */
 #ifndef _di_f_type_status_t_
   typedef uint16_t f_status_t;
-
-  /**
-   * The c language gives warnings about return types of constants.
-   * Remove the const for c, but keep it for c++, which is only for function call declarations & prototypes.
-   * Do not declare these for the return data types themselves, instead use f_status_t; only use these for function prototypes and declarations.
-   */
-  #ifdef __cplusplus
-    #define f_return_status const f_status_t
-  #else
-    #define f_return_status f_status_t
-  #endif // __cplusplus
 #endif // _di_f_type_status_t_
 
 /**

@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_print_help_
-  f_return_status controller_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t controller_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, controller_name_long, controller_version);
 
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_controller_print_help_
 
 #ifndef _di_controller_main_
-  f_return_status controller_main(const f_console_arguments_t arguments, controller_data_t *data) {
+  f_status_t controller_main(const f_console_arguments_t arguments, controller_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -392,7 +392,7 @@ extern "C" {
 #endif // _di_controller_main_
 
 #ifndef _di_controller_delete_data_
-  f_return_status controller_delete_data(controller_data_t *data) {
+  f_status_t controller_delete_data(controller_data_t *data) {
 
     for (f_string_length_t i = 0; i < controller_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);

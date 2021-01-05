@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
-  f_return_status controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
     f_status_t status = fl_string_dynamic_rip_nulless(source, range, destination);
     if (F_status_is_error(status)) return status;
@@ -20,7 +20,7 @@ extern "C" {
 #endif // _di_controller_string_dynamic_rip_nulless_terminated_
 
 #ifndef _di_controller_string_dynamic_append_terminated_
-  f_return_status controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
     f_status_t status = fl_string_dynamic_append(source, destination);
     if (F_status_is_error(status)) return status;
@@ -30,7 +30,7 @@ extern "C" {
 #endif // _di_controller_string_dynamic_append_terminated_
 
 #ifndef _di_controller_string_dynamic_partial_append_terminated_
-  f_return_status controller_string_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t controller_string_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
     f_status_t status = fl_string_dynamic_partial_append(source, range, destination);
     if (F_status_is_error(status)) return status;
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
 #ifndef _di_controller_file_load_
-  f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) {
+  f_status_t controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_file_t file = f_file_t_initialize;
 
@@ -127,7 +127,7 @@ extern "C" {
 #endif // _di_controller_file_load_
 
 #ifndef _di_controller_file_pid_create_
-  f_return_status controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) {
+  f_status_t controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) {
     f_status_t status = F_none;
 
     // the file exists, do not attempt to overwrite.
@@ -219,7 +219,7 @@ extern "C" {
 #endif // _di_controller_file_pid_delete_
 
 #ifndef _di_controller_get_id_user_
-  f_return_status controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
     f_number_unsigned_t number = 0;
 
     // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
@@ -261,7 +261,7 @@ extern "C" {
 #endif // _di_controller_get_id_user_
 
 #ifndef _di_controller_get_id_group_
-  f_return_status controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) {
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) {
     f_number_unsigned_t number = 0;
 
     // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
@@ -303,7 +303,7 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 #ifndef _di_controller_perform_ready_
-  f_return_status controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
+  f_status_t controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
@@ -336,7 +336,7 @@ extern "C" {
 #endif // _di_controller_perform_ready_
 
 #ifndef _di_controller_preprocess_entry_
-  f_return_status controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
+  f_status_t controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_status_t status2 = F_none;
 
@@ -552,7 +552,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_return_status controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) {
+  f_status_t controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     f_array_length_t i = 0;
@@ -1074,7 +1074,7 @@ extern "C" {
 #endif // _di_controller_process_entry_
 
 #ifndef _di_controller_status_simplify_
-  f_return_status controller_status_simplify(const f_status_t status) {
+  f_status_t controller_status_simplify(const f_status_t status) {
 
     if (status == F_memory_not || status == F_memory_allocation || status == F_memory_reallocation) {
       return F_status_set_error(F_memory);
@@ -1105,7 +1105,7 @@ extern "C" {
 #endif // _di_controller_status_simplify_
 
 #ifndef _di_controller_validate_define_name_
-  f_return_status controller_validate_environment_name(const f_string_static_t name) {
+  f_status_t controller_validate_environment_name(const f_string_static_t name) {
 
     if (!name.used) return F_none;
 
@@ -1133,7 +1133,7 @@ extern "C" {
 #endif // _di_controller_validate_define_name_
 
 #ifndef _di_controller_validate_has_graph_
-  f_return_status controller_validate_has_graph(const f_string_static_t name) {
+  f_status_t controller_validate_has_graph(const f_string_static_t name) {
 
     if (!name.used) return F_none;
 

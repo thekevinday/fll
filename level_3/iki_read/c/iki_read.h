@@ -268,7 +268,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_print_help_
-  extern f_return_status iki_read_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t iki_read_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_iki_read_print_help_
 
 /**
@@ -289,7 +289,7 @@ extern "C" {
  * @see iki_read_delete_data()
  */
 #ifndef _di_iki_read_main_
-  extern f_return_status iki_read_main(const f_console_arguments_t arguments, iki_read_data_t *data);
+  extern f_status_t iki_read_main(const f_console_arguments_t arguments, iki_read_data_t *data);
 #endif // _di_iki_read_main_
 
 /**
@@ -308,7 +308,7 @@ extern "C" {
  * @see iki_read_main()
  */
 #ifndef _di_iki_read_delete_data_
-  extern f_return_status iki_read_delete_data(iki_read_data_t *data);
+  extern f_status_t iki_read_delete_data(iki_read_data_t *data);
 #endif // _di_iki_read_delete_data_
 
 #ifdef __cplusplus

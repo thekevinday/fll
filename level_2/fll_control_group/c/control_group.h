@@ -50,7 +50,7 @@ extern "C" {
  * @see fl_directory_create()
  */
 #ifndef _di_fll_control_group_prepare_
-  extern f_return_status fll_control_group_prepare(const f_control_group_t control_group);
+  extern f_status_t fll_control_group_prepare(const f_control_group_t control_group);
 #endif // _di_fll_control_group_prepare_
 
 #ifdef __cplusplus

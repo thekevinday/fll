@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_read_is_delimited_at_depth_
-  f_return_status fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_string_length_t depth) {
+  f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_string_length_t depth) {
 
     if (data.delimit_mode == fss_extended_read_delimit_mode_none) {
       return F_false;
@@ -33,7 +33,7 @@ extern "C" {
 #endif // _di_fss_extended_read_is_delimited_at_depth_
 
 #ifndef _di_fss_extended_read_main_preprocess_depth_
-  f_return_status fss_extended_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_extended_read_data_t data, fss_extended_read_depths_t *depths) {
+  f_status_t fss_extended_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_extended_read_data_t data, fss_extended_read_depths_t *depths) {
     f_status_t status = F_none;
 
     {
@@ -197,7 +197,7 @@ extern "C" {
 #endif // _di_fss_extended_read_main_preprocess_depth_
 
 #ifndef _di_fss_extended_read_main_process_file_
-  f_return_status fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_data_t *data, const f_string_t filename, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_status_t fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_data_t *data, const f_string_t filename, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
     f_status_t status = F_none;
 
     const f_string_lengths_t except_none = f_string_lengths_t_initialize;
@@ -333,7 +333,7 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;

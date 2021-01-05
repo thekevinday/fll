@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_extended_list_object_read_
-  f_return_status fl_fss_extended_list_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_extended_list_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -124,7 +124,7 @@ extern "C" {
 
             range->start = slash_first;
 
-            status = private_fl_fss_delimits_increase_by((slash_count / 2) + 1, delimits);
+            f_macro_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
             if (F_status_is_error(status)) break;
 
             if (slash_count % 2 == 0) {
@@ -159,7 +159,7 @@ extern "C" {
           graph_first = F_false;
 
           // comments may only have whitespace before the '#', therefore only the first slash needs to be delimited.
-          status = private_fl_fss_delimits_increase(delimits);
+          f_macro_fss_delimits_t_increase(status, (*delimits));
           if (F_status_is_error(status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_object_read_
 
 #ifndef _di_fl_fss_extended_list_content_read_
-  f_return_status fl_fss_extended_list_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
+  f_status_t fl_fss_extended_list_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits, f_fss_comments_t *comments) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -265,7 +265,7 @@ extern "C" {
 
     private_fl_macro_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
-    status = private_fl_fss_ranges_increase(found);
+    f_macro_string_ranges_t_increase(status, (*found));
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;
@@ -326,7 +326,7 @@ extern "C" {
           if (range->start > range->stop || range->start >= buffer.used) break;
 
           if (buffer.string[range->start] == f_fss_eol) {
-            status = private_fl_fss_delimits_increase(delimits);
+            f_macro_fss_delimits_t_increase(status, (*delimits));
             if (F_status_is_error(status)) break;
 
             delimits->array[delimits->used++] = slash_first;
@@ -334,7 +334,7 @@ extern "C" {
           }
         }
         else if (buffer.string[range->start] == f_fss_comment) {
-          status = private_fl_fss_delimits_increase(delimits);
+          f_macro_fss_delimits_t_increase(status, (*delimits));
           if (F_status_is_error(status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -383,7 +383,7 @@ extern "C" {
         status = f_fss_seek_to_eol(buffer, range);
         if (F_status_is_error(status)) break;
 
-        status = private_fl_fss_ranges_increase(comments);
+        f_macro_string_ranges_t_increase(status, (*comments));
         if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {
@@ -414,7 +414,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_content_read_
 
 #ifndef _di_fl_fss_extended_list_object_write_string_
-  f_return_status fl_fss_extended_list_object_write_string(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_extended_list_object_write_string(const f_string_static_t object, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -620,7 +620,7 @@ extern "C" {
 #endif // _di_fl_fss_extended_list_object_write_string_
 
 #ifndef _di_fl_fss_extended_list_content_write_string_
-  f_return_status fl_fss_extended_list_content_write_string(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, const f_string_ranges_t *ignore, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_extended_list_content_write_string(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, const f_string_ranges_t *ignore, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);

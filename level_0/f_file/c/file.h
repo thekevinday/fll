@@ -65,7 +65,7 @@ extern "C" {
  * @see access()
  */
 #ifndef _di_f_file_access_
-  extern f_return_status f_file_access(const f_string_t path);
+  extern f_status_t f_file_access(const f_string_t path);
 #endif // _di_f_file_access_
 
 /**
@@ -119,7 +119,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_clone_
-  extern f_return_status f_file_clone(const f_string_t source, const f_string_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_clone(const f_string_t source, const f_string_t destination, const bool role, const f_number_unsigned_t size_block, const bool exclusive);
 #endif // _di_f_file_clone_
 
 /**
@@ -145,7 +145,7 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_close_
-  extern f_return_status f_file_close(int *id);
+  extern f_status_t f_file_close(int *id);
 #endif // _di_f_file_close_
 
 /**
@@ -197,7 +197,7 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  */
 #ifndef _di_f_file_copy_
-  extern f_return_status f_file_copy(const f_string_t source, const f_string_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive);
+  extern f_status_t f_file_copy(const f_string_t source, const f_string_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const bool exclusive);
 #endif // _di_f_file_copy_
 
 /**
@@ -235,7 +235,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_create_
-  extern f_return_status f_file_create(const f_string_t path, const mode_t mode, const bool exclusive);
+  extern f_status_t f_file_create(const f_string_t path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_
 
 /**
@@ -275,7 +275,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_create_at_
-  extern f_return_status f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive);
+  extern f_status_t f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_at_
 
 /**
@@ -313,7 +313,7 @@ extern "C" {
  * @see mknod()
  */
 #ifndef _di_f_file_create_device_
-  extern f_return_status f_file_create_device(const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
+  extern f_status_t f_file_create_device(const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
 #endif // _di_f_file_create_device_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_device_at_
-  extern f_return_status f_file_create_device_at(const int at_id, const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
+  extern f_status_t f_file_create_device_at(const int at_id, const f_string_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
 #endif // _di_f_file_create_device_at_
 
 /**
@@ -383,7 +383,7 @@ extern "C" {
  * @see mkfifo()
  */
 #ifndef _di_f_file_create_fifo_
-  extern f_return_status f_file_create_fifo(const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_create_fifo(const f_string_t path, const mode_t mode);
 #endif // _di_f_file_create_fifo_
 
 /**
@@ -415,7 +415,7 @@ extern "C" {
  * @see mkfifoat()
  */
 #ifndef _di_f_file_create_fifo_at_
-  extern f_return_status f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode);
 #endif // _di_f_file_create_fifo_at_
 
 /**
@@ -447,7 +447,7 @@ extern "C" {
  * @see mknod()
  */
 #ifndef _di_f_file_create_node_
-  extern f_return_status f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device);
+  extern f_status_t f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device);
 #endif // _di_f_file_create_node_
 
 /**
@@ -482,7 +482,7 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_node_at_
-  extern f_return_status f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device);
+  extern f_status_t f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device);
 #endif // _di_f_file_create_node_at_
 
 /**
@@ -499,7 +499,7 @@ extern "C" {
  * @see fileno()
  */
 #ifndef _di_f_file_descriptor_
-  extern f_return_status f_file_descriptor(f_file_t *file);
+  extern f_status_t f_file_descriptor(f_file_t *file);
 #endif // _di_f_file_descriptor_
 
 /**
@@ -525,7 +525,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_exists_
-  extern f_return_status f_file_exists(const f_string_t path);
+  extern f_status_t f_file_exists(const f_string_t path);
 #endif // _di_f_file_exists_
 
 /**
@@ -556,7 +556,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_exists_at_
-  extern f_return_status f_file_exists_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_file_exists_at(const int at_id, const f_string_t path, const int flag);
 #endif // _di_f_file_exists_at_
 
 /**
@@ -578,7 +578,7 @@ extern "C" {
  * @see fsync()
  */
 #ifndef _di_f_file_flush_
-  extern f_return_status f_file_flush(const int id);
+  extern f_status_t f_file_flush(const int id);
 #endif // _di_f_file_flush_
 
 /**
@@ -603,7 +603,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_group_read_
-  extern f_return_status f_file_group_read(const f_string_t path, uid_t *group);
+  extern f_status_t f_file_group_read(const f_string_t path, uid_t *group);
 #endif // _di_f_file_group_read_
 
 /**
@@ -635,7 +635,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_is_
-  extern f_return_status f_file_is(const f_string_t path, const int type, const bool dereference);
+  extern f_status_t f_file_is(const f_string_t path, const int type, const bool dereference);
 #endif // _di_f_file_is_
 
 /**
@@ -665,7 +665,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_is_at_
-  extern f_return_status f_file_is_at(const int at_id, const f_string_t path, const int type, const int flag);
+  extern f_status_t f_file_is_at(const int at_id, const f_string_t path, const int type, const int flag);
 #endif // _di_f_file_is_at_
 
 /**
@@ -701,7 +701,7 @@ extern "C" {
  * @see symlink()
  */
 #ifndef _di_f_file_link_
-  extern f_return_status f_file_link(const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link(const f_string_t target, const f_string_t point);
 #endif // _di_f_file_link_
 
 /**
@@ -740,7 +740,7 @@ extern "C" {
  * @see symlinkat()
  */
 #ifndef _di_f_file_link_at_
-  extern f_return_status f_file_link_at(const int at_id, const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link_at(const int at_id, const f_string_t target, const f_string_t point);
 #endif // _di_f_file_link_at_
 
 /**
@@ -775,7 +775,7 @@ extern "C" {
  * @see link()
  */
 #ifndef _di_f_file_link_hard_
-  extern f_return_status f_file_link_hard(const f_string_t target, const f_string_t point);
+  extern f_status_t f_file_link_hard(const f_string_t target, const f_string_t point);
 #endif // _di_f_file_link_hard_
 
 /**
@@ -817,7 +817,7 @@ extern "C" {
  * @see linkat()
  */
 #ifndef _di_f_file_link_hard_at_
-  extern f_return_status f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_t target, const f_string_t point, const int flag);
+  extern f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_t target, const f_string_t point, const int flag);
 #endif // _di_f_file_link_hard_at_
 
 /**
@@ -851,7 +851,7 @@ extern "C" {
  * @see readlink()
  */
 #ifndef _di_f_file_link_read_
-  extern f_return_status f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
 #endif // _di_f_file_link_read_
 
 /**
@@ -888,7 +888,7 @@ extern "C" {
  * @see readlinkat()
  */
 #ifndef _di_f_file_link_read_at_
-  extern f_return_status f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
+  extern f_status_t f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target);
 #endif // _di_f_file_link_read_at_
 
 /**
@@ -917,7 +917,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_determine_
-  extern f_return_status f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
+  extern f_status_t f_file_mode_determine(const mode_t mode_file, const f_file_mode_t mode_change, const uint8_t mode_replace, const bool directory_is, mode_t *mode);
 #endif // _di_f_file_mode_determine_
 
 /**
@@ -1006,7 +1006,7 @@ extern "C" {
  * @see private_f_file_mode_determine()
  */
 #ifndef _di_f_file_mode_from_string_
-  extern f_return_status f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
+  extern f_status_t f_file_mode_from_string(const f_string_t string, const mode_t umask, f_file_mode_t *mode, uint8_t *replace);
 #endif // _di_f_file_mode_from_string_
 
 /**
@@ -1031,7 +1031,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_mode_read_
-  extern f_return_status f_file_mode_read(const f_string_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read(const f_string_t path, mode_t *mode);
 #endif // _di_f_file_mode_read_
 
 /**
@@ -1058,7 +1058,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_mode_read_at_
-  extern f_return_status f_file_mode_read_at(const int at_id, const f_string_t path, mode_t *mode);
+  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_t path, mode_t *mode);
 #endif // _di_f_file_mode_read_at_
 
 /**
@@ -1089,7 +1089,7 @@ extern "C" {
  * @see chmod()
  */
 #ifndef _di_f_file_mode_set_
-  extern f_return_status f_file_mode_set(const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_mode_set(const f_string_t path, const mode_t mode);
 #endif // _di_f_file_mode_set_
 
 /**
@@ -1122,7 +1122,7 @@ extern "C" {
  * @see fchmodat()
  */
 #ifndef _di_f_file_mode_set_at_
-  extern f_return_status f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode);
+  extern f_status_t f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode);
 #endif // _di_f_file_mode_set_at_
 
 /**
@@ -1142,7 +1142,7 @@ extern "C" {
  * @see f_file_mode_from_string()
  */
 #ifndef _di_f_file_mode_to_mode_
-  extern f_return_status f_file_mode_to_mode(const f_file_mode_t from, mode_t *to);
+  extern f_status_t f_file_mode_to_mode(const f_file_mode_t from, mode_t *to);
 #endif // _di_f_file_mode_to_mode_
 
 /**
@@ -1166,7 +1166,7 @@ extern "C" {
  * @see basename()
  */
 #ifndef _di_f_file_name_base_
-  extern f_return_status f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base);
+  extern f_status_t f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base);
 #endif // _di_f_file_name_base_
 
 /**
@@ -1190,7 +1190,7 @@ extern "C" {
  * @see dirname()
  */
 #ifndef _di_f_file_name_directory_
-  extern f_return_status f_file_name_directory(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_directory);
+  extern f_status_t f_file_name_directory(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_directory);
 #endif // _di_f_file_name_directory_
 
 /**
@@ -1231,7 +1231,7 @@ extern "C" {
  * @see open()
  */
 #ifndef _di_f_file_open_
-  extern f_return_status f_file_open(const f_string_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open(const f_string_t path, const mode_t mode, f_file_t *file);
 #endif // _di_f_file_open_
 
 /**
@@ -1261,7 +1261,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_open_at_
-  extern f_return_status f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file);
+  extern f_status_t f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file);
 #endif // _di_f_file_open_at_
 
 /**
@@ -1286,7 +1286,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_owner_read_
-  extern f_return_status f_file_owner_read(const f_string_t path, uid_t *owner);
+  extern f_status_t f_file_owner_read(const f_string_t path, uid_t *owner);
 #endif // _di_f_file_owner_read_
 
 /**
@@ -1315,7 +1315,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_
-  extern f_return_status f_file_read(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read(const f_file_t file, f_string_dynamic_t *buffer);
 #endif // _di_f_file_read_
 
 /**
@@ -1345,7 +1345,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_block_
-  extern f_return_status f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read_block(const f_file_t file, f_string_dynamic_t *buffer);
 #endif // _di_f_file_read_block_
 
 /**
@@ -1381,7 +1381,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_return_status f_file_read_until(const f_file_t file, const f_string_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read_until(const f_file_t file, const f_string_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_read_until_
 
 /**
@@ -1409,7 +1409,7 @@ extern "C" {
  * @see unlink()
  */
 #ifndef _di_f_file_remove_
-  extern f_return_status f_file_remove(const f_string_t path);
+  extern f_status_t f_file_remove(const f_string_t path);
 #endif // _di_f_file_remove_
 
 /**
@@ -1441,7 +1441,7 @@ extern "C" {
  * @see unlinkat()
  */
 #ifndef _di_f_file_remove_at_
-  extern f_return_status f_file_remove_at(const int at_id, const f_string_t path, const int flag);
+  extern f_status_t f_file_remove_at(const int at_id, const f_string_t path, const int flag);
 #endif // _di_f_file_remove_at_
 
 /**
@@ -1485,7 +1485,7 @@ extern "C" {
  * @see rename()
  */
 #ifndef _di_f_file_rename_
-  extern f_return_status f_file_rename(const f_string_t source, const f_string_t destination);
+  extern f_status_t f_file_rename(const f_string_t source, const f_string_t destination);
 #endif // _di_f_file_rename_
 
 /**
@@ -1534,7 +1534,7 @@ extern "C" {
  * @see renameat()
  */
 #ifndef _di_f_file_rename_at_
-  extern f_return_status f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
+  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_t source, const f_string_t destination);
 #endif // _di_f_file_rename_at_
 
 /**
@@ -1574,7 +1574,7 @@ extern "C" {
  * @see lchown()
  */
 #ifndef _di_f_file_role_change_
-  extern f_return_status f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference);
+  extern f_status_t f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference);
 #endif // _di_f_file_role_change_
 
 /**
@@ -1615,7 +1615,7 @@ extern "C" {
  * @see fchownat()
  */
 #ifndef _di_f_file_role_change_at_
-  extern f_return_status f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag);
+  extern f_status_t f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag);
 #endif // _di_f_file_role_change_at_
 
 /**
@@ -1643,7 +1643,7 @@ extern "C" {
  * @see lseek
  */
 #ifndef _di_f_file_seek_
-  extern f_return_status f_file_seek(const int id, const int whence, const f_string_length_t offset, f_string_length_t *seeked);
+  extern f_status_t f_file_seek(const int id, const int whence, const f_string_length_t offset, f_string_length_t *seeked);
 #endif // _di_f_file_seek_
 
 /**
@@ -1671,7 +1671,7 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_f_file_size_
-  extern f_return_status f_file_size(const f_string_t path, const bool dereference, f_string_length_t *size);
+  extern f_status_t f_file_size(const f_string_t path, const bool dereference, f_string_length_t *size);
 #endif // _di_f_file_size_
 
 /**
@@ -1701,7 +1701,7 @@ extern "C" {
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_return_status f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_string_length_t *size);
+  extern f_status_t f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_string_length_t *size);
 #endif // _di_f_file_size_at_
 
 /**
@@ -1726,7 +1726,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #ifndef _di_f_file_size_by_id_
-  extern f_return_status f_file_size_by_id(const int id, f_string_length_t *size);
+  extern f_status_t f_file_size_by_id(const int id, f_string_length_t *size);
 #endif // _di_f_file_size_by_id_
 
 /**
@@ -1754,7 +1754,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_stat_
-  extern f_return_status f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file);
+  extern f_status_t f_file_stat(const f_string_t path, const bool dereference, struct stat *stat_file);
 #endif // _di_f_file_stat_
 
 /**
@@ -1783,7 +1783,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_stat_at_
-  extern f_return_status f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file);
+  extern f_status_t f_file_stat_at(const int at_id, const f_string_t path, const int flag, struct stat *stat_file);
 #endif // _di_f_file_stat_at_
 
 /**
@@ -1808,7 +1808,7 @@ extern "C" {
  * @see fstat()
  */
 #ifndef _di_f_file_stat_by_id_
-  extern f_return_status f_file_stat_by_id(const int id, struct stat *stat_file);
+  extern f_status_t f_file_stat_by_id(const int id, struct stat *stat_file);
 #endif // _di_f_file_stat_by_id_
 
 /**
@@ -1843,7 +1843,7 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_stream_close_
-  extern f_return_status f_file_stream_close(const bool complete, f_file_t *file);
+  extern f_status_t f_file_stream_close(const bool complete, f_file_t *file);
 #endif // _di_f_file_stream_close_
 
 /**
@@ -1875,7 +1875,7 @@ extern "C" {
  * @see fdopen()
  */
 #ifndef _di_f_file_stream_descriptor_
-  extern f_return_status f_file_stream_descriptor(const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_descriptor(const f_string_t mode, f_file_t *file);
 #endif // _di_f_file_stream_descriptor_
 
 /**
@@ -1919,7 +1919,7 @@ extern "C" {
  * @see fopen()
  */
 #ifndef _di_f_file_stream_open_
-  extern f_return_status f_file_stream_open(const f_string_t path, const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_open(const f_string_t path, const f_string_t mode, f_file_t *file);
 #endif // _di_f_file_stream_open_
 
 /**
@@ -1951,7 +1951,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_
-  extern f_return_status f_file_stream_read(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_
 
 /**
@@ -1984,7 +1984,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_block_
-  extern f_return_status f_file_stream_read_block(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_block(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_block_
 
 /**
@@ -2023,7 +2023,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_until_
-  extern f_return_status f_file_stream_read_until(const f_file_t file, const f_string_length_t amount, const f_string_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_string_length_t amount, const f_string_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_until_
 
 /**
@@ -2069,7 +2069,7 @@ extern "C" {
  * @see freopen()
  */
 #ifndef _di_f_file_stream_reopen_
-  extern f_return_status f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file);
+  extern f_status_t f_file_stream_reopen(const f_string_t path, const f_string_t mode, f_file_t *file);
 #endif // _di_f_file_stream_reopen_
 
 /**
@@ -2102,7 +2102,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_
-  extern f_return_status f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
 #endif // _di_f_file_stream_write_
 
 /**
@@ -2137,7 +2137,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_block_
-  extern f_return_status f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
 #endif // _di_f_file_stream_write_block_
 
 /**
@@ -2173,7 +2173,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_until_
-  extern f_return_status f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written);
 #endif // _di_f_file_stream_write_until_
 
 /**
@@ -2208,7 +2208,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_range_
-  extern f_return_status f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_range_t range, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_range_t range, f_string_length_t *written);
 #endif // _di_f_file_stream_write_range_
 
 
@@ -2250,7 +2250,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_file_touch_
-  extern f_return_status f_file_touch(const f_string_t path, const mode_t mode, const bool dereference);
+  extern f_status_t f_file_touch(const f_string_t path, const mode_t mode, const bool dereference);
 #endif // _di_f_file_touch_
 
 /**
@@ -2292,7 +2292,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_file_touch_at_
-  extern f_return_status f_file_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag);
+  extern f_status_t f_file_touch_at(const int at_id, const f_string_t path, const mode_t mode, const int flag);
 #endif // _di_f_file_touch_at_
 
 /**
@@ -2320,7 +2320,7 @@ extern "C" {
  * @see stat()
  */
 #ifndef _di_f_file_type_
-  extern f_return_status f_file_type(const f_string_t path, int *type);
+  extern f_status_t f_file_type(const f_string_t path, int *type);
 #endif //  _di_f_file_type_
 
 /**
@@ -2349,7 +2349,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_type_at_
-  extern f_return_status f_file_type_at(const int at_id, const f_string_t path, const int flag, int *type);
+  extern f_status_t f_file_type_at(const int at_id, const f_string_t path, const int flag, int *type);
 #endif // _di_f_file_type_at_
 
 /**
@@ -2379,7 +2379,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_
-  extern f_return_status f_file_write(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
+  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
 #endif // _di_f_file_write_
 
 /**
@@ -2411,7 +2411,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_block_
-  extern f_return_status f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
+  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
 #endif // _di_f_file_write_block_
 
 /**
@@ -2444,7 +2444,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_until_
-  extern f_return_status f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t total, f_string_length_t *written);
+  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t total, f_string_length_t *written);
 #endif // _di_f_file_write_until_
 
 /**
@@ -2476,7 +2476,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_range_
-  extern f_return_status f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_string_length_t *written);
+  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_string_length_t *written);
 #endif // _di_f_file_write_range_
 
 #ifdef __cplusplus

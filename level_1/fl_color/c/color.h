@@ -55,7 +55,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_set_
-  extern f_return_status fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
+  extern f_status_t fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
   #define fl_macro_color_set_1(stream, format, color1)                                 fl_color_set(stream, format, color1, 0, 0, 0, 0)
   #define fl_macro_color_set_2(stream, format, color1, color2)                         fl_color_set(stream, format, color1, color2, 0, 0, 0)
@@ -89,7 +89,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_set_to_
-  extern f_return_status fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
+  extern f_status_t fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
   #define fl_macro_color_set_to_1(id, format, color1)                                 fl_color_set_to(id, format, color1, 0, 0, 0, 0)
   #define fl_macro_color_set_to_2(id, format, color1, color2)                         fl_color_set_to(id, format, color1, color2, 0, 0, 0)
@@ -124,7 +124,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_save_
-  extern f_return_status fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
+  extern f_status_t fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
   #define fl_macro_color_save_1(buffer, format, color1)                                 fl_color_save(buffer, format, color1, 0, 0, 0, 0)
   #define fl_macro_color_save_2(buffer, format, color1, color2)                         fl_color_save(buffer, format, color1, color2, 0, 0, 0)
@@ -152,7 +152,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print_
-  extern f_return_status fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...);
+  extern f_status_t fl_color_print(FILE *stream, const f_color_set_t set, const f_string_t string, ...);
 #endif // _di_fl_color_print_
 
 /**
@@ -179,7 +179,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_print2_
-  extern f_return_status fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
+  extern f_status_t fl_color_print2(FILE *stream, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
 #endif // _di_fl_color_print2_
 
 /**
@@ -199,7 +199,7 @@ extern "C" {
  *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_code_
-  extern f_return_status fl_color_print_code(FILE *stream, const f_string_static_t color);
+  extern f_status_t fl_color_print_code(FILE *stream, const f_string_static_t color);
 #endif // _di_fl_color_print_code_
 
 /**
@@ -219,7 +219,7 @@ extern "C" {
  *   Errors (with error bit) from: f_print_to_dynamic().
  */
 #ifndef _di_fl_color_print_code_to_
-  extern f_return_status fl_color_print_code_to(const int id, const f_string_static_t color);
+  extern f_status_t fl_color_print_code_to(const int id, const f_string_static_t color);
 #endif // _di_fl_color_print_code_to_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print_to_
-  extern f_return_status fl_color_print_to(const int id, const f_color_set_t set, const f_string_t string, ...);
+  extern f_status_t fl_color_print_to(const int id, const f_color_set_t set, const f_string_t string, ...);
 #endif // _di_fl_color_print_to_
 
 /**
@@ -272,7 +272,7 @@ extern "C" {
  *   Errors (with error bit) from: f_print_dynamic().
  */
 #ifndef _di_fl_color_print2_to_
-  extern f_return_status fl_color_print2_to(const int id, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
+  extern f_status_t fl_color_print2_to(const int id, const f_color_set_t set, const f_color_set_t extra, const f_string_t string, ...);
 #endif // _di_fl_color_print2_to_
 
 /**
@@ -295,7 +295,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_load_context_
-  extern f_return_status fl_color_load_context(f_color_context_t *context, const bool use_light_colors);
+  extern f_status_t fl_color_load_context(f_color_context_t *context, const bool use_light_colors);
 #endif // _di_fl_color_load_context_
 
 #ifdef __cplusplus

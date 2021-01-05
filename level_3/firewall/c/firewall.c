@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_print_help_
-  f_return_status firewall_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t firewall_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, firewall_name_long, firewall_version);
 
@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_return_status firewall_main(const f_console_arguments_t arguments, firewall_data_t *data) {
+  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -724,7 +724,7 @@ extern "C" {
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_delete_data_
-  f_return_status firewall_delete_data(firewall_data_t *data) {
+  f_status_t firewall_delete_data(firewall_data_t *data) {
 
     for (f_string_length_t i = 0; i < firewall_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);

@@ -30,7 +30,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
-  extern f_return_status controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_string_dynamic_rip_nulless_terminated_
 
 /**
@@ -51,7 +51,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_append_terminated_
-  extern f_return_status controller_string_dynamic_append_terminated(const f_string_static_t from, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_string_dynamic_append_terminated(const f_string_static_t from, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_string_dynamic_append_terminated_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_partial_append_terminated_
-  extern f_return_status controller_string_dynamic_partial_append_terminated(const f_string_static_t from, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_string_dynamic_partial_append_terminated(const f_string_static_t from, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
 /**
@@ -116,7 +116,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_return_status controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_load_
 
 /**
@@ -141,7 +141,7 @@ extern "C" {
  * @see f_file_stream_open()
  */
 #ifndef _di_controller_file_pid_create_
-  f_return_status controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
+  f_status_t controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_pid_create_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_user_
-  f_return_status controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) f_gcc_attribute_visibility_internal;
+  f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_get_id_user_
 
 /**
@@ -209,7 +209,7 @@ extern "C" {
  * @see fl_conversion_string_to_number_unsigned()
  */
 #ifndef _di_controller_get_id_group_
-  f_return_status controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) f_gcc_attribute_visibility_internal;
+  f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_get_id_group_
 
 /**
@@ -232,7 +232,7 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_return_status controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_perform_ready_
 
 /**
@@ -262,7 +262,7 @@ extern "C" {
  * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_preprocess_entry_
-  extern f_return_status controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_preprocess_entry_
 
 /**
@@ -288,7 +288,7 @@ extern "C" {
  * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_process_entry_
-  extern f_return_status controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**
@@ -301,7 +301,7 @@ extern "C" {
  *   A subset of status codes with error bit.
  */
 #ifndef _di_controller_status_simplify_
-  extern f_return_status controller_status_simplify(const f_status_t status) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_status_simplify(const f_status_t status) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_status_simplify_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  * @see f_utf_is_alpha_digit()
  */
 #ifndef _di_controller_validate_define_name_
-  extern f_return_status controller_validate_environment_name(const f_string_static_t name) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_validate_environment_name(const f_string_static_t name) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_validate_define_name_
 
 /**
@@ -345,7 +345,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_controller_validate_has_graph_
-  extern f_return_status controller_validate_has_graph(const f_string_static_t name) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_validate_has_graph(const f_string_static_t name) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_validate_has_graph_
 
 #ifdef __cplusplus

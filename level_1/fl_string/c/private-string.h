@@ -49,7 +49,7 @@ extern "C" {
  * @see fl_string_mash()
  */
 #if !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
-  extern f_return_status private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_mash_)
 
 /**
@@ -78,7 +78,7 @@ extern "C" {
  * @see fl_string_mash_nulless()
  */
 #if !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
-  extern f_return_status private_fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_mash_nulless_)
 
 /**
@@ -108,7 +108,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare()
  */
 #if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
-  extern f_return_status private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_except()
  */
 #if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
-  extern f_return_status private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
 
 /**
@@ -184,7 +184,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_except_trim()
  */
 #if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
-  extern f_return_status private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
 
 /**
@@ -218,7 +218,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_trim()
  */
 #if !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
-  extern f_return_status private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
 /**
@@ -270,7 +270,7 @@ extern "C" {
  * @see fl_string_prepend_nulless()
  */
 #if !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
-  extern f_return_status private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_append_) || !defined(_di_fl_string_dynamic_append_) || !defined(_di_fl_string_append_mash_) || !defined(_di_fl_string_dynamic_mash_) || !defined(_di_fl_string_append_nulless_) || !defined(_di_fl_string_dynamic_append_nulless_) || !defined(_di_fl_string_mash_nulless_) || !defined(_di_fl_string_dynamic_mash_nulless_) || !defined(_di_fl_string_prepend_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_)
 
 /**
@@ -297,7 +297,7 @@ extern "C" {
  * @see fl_string_dynamic_terminate_after()
  */
 #if !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_increase_) || !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_dynamic_terminate_) || !defined(_di_fl_string_dynamic_terminate_after_)
-  extern f_return_status private_fl_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamic_decrease_) || !defined(_di_fl_string_dynamic_decrease_by_) || !defined(_di_fl_string_dynamic_increase_) || !defined(_di_fl_string_dynamic_increase_by_) || !defined(_di_fl_string_dynamic_terminate_) || !defined(_di_fl_string_dynamic_terminate_after_)
 
 /**
@@ -340,51 +340,8 @@ extern "C" {
  * @see fl_string_dynamics_terminate_after()
  */
 #if !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
-  extern f_return_status private_fl_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamics_decrease_) || !defined(_di_fl_string_dynamics_decrease_by_) || !defined(_di_fl_string_dynamics_increase_) || !defined(_di_fl_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
-
-/**
- * Private implementation of fl_string_lengths_delete().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param lengths
- *   The lengths to delete.
- *
- * @see fl_string_lengths_decrease()
- * @see fl_string_lengths_decrease_by()
- * @see fl_string_lengths_delete()
- */
-#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
-  extern void private_fl_string_lengths_delete(f_string_lengths_t *lengths) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_delete_)
-
-/**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param lengths
- *   The lengths to resize.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_macro_string_lengths_t_resize().
- *
- * @see f_macro_string_lengths_t_resize()
- * @see fl_string_lengths_decrease()
- * @see fl_string_lengths_decrease_by()
- * @see fl_string_lengths_increase()
- * @see fl_string_lengths_increase_by()
- * @see fl_string_lengths_terminate()
- * @see fl_string_lengths_terminate_after()
- */
-#if !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
-  extern f_return_status private_fl_string_lengths_resize(const f_string_length_t length, f_string_lengths_t *lengths) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_string_lengths_decrease_) || !defined(_di_fl_string_lengths_decrease_by_) || !defined(_di_fl_string_lengths_increase_) || !defined(_di_fl_string_lengths_increase_by_) || !defined(_di_fl_string_lengths_terminate_) || !defined(_di_fl_string_lengths_terminate_after_)
 
 /**
  * Private implementation of fl_string_maps_delete().
@@ -426,7 +383,7 @@ extern "C" {
  * @see fl_string_maps_terminate_after()
  */
 #if !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
-  extern f_return_status private_fl_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_maps_decrease_) || !defined(_di_fl_string_maps_decrease_by_) || !defined(_di_fl_string_maps_increase_) || !defined(_di_fl_string_maps_increase_by_) || !defined(_di_fl_string_maps_terminate_) || !defined(_di_fl_string_maps_terminate_after_)
 
 /**
@@ -461,7 +418,7 @@ extern "C" {
  * @see fl_string_prepend()
  */
 #if !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
-  extern f_return_status private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamic_mish_) || !defined(_di_fl_string_dynamic_partial_mish_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_) || !defined(_di_fl_string_dynamic_partial_prepend_) || !defined(_di_fl_string_dynamic_prepend_assure_) || !defined(_di_fl_string_dynamic_prepend_) || !defined(_di_fl_string_mish_) || !defined(_di_fl_string_prepend_assure_) || !defined(_di_fl_string_prepend_)
 
 /**
@@ -496,7 +453,7 @@ extern "C" {
  * @see fl_string_prepend_nulless()
  */
 #if !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
-  extern f_return_status private_fl_string_prepend_nulless(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_prepend_nulless(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_dynamic_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_mish_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_partial_prepend_nulless_) || !defined(_di_fl_string_dynamic_prepend_assure_nulless_) || !defined(_di_fl_string_dynamic_prepend_nulless_) || !defined(_di_fl_string_mish_nulless_) || !defined(_di_fl_string_prepend_assure_nulless_) || !defined(_di_fl_string_prepend_nulless_)
 
 /**
@@ -527,7 +484,7 @@ extern "C" {
  * @see fl_string_dynamic_rip_nulless()
  */
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
-  extern f_return_status private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
 
 #ifdef __cplusplus

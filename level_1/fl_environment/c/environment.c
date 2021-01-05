@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_environment_path_explode_
-  f_return_status fl_environment_path_explode(const f_string_t path, f_string_dynamics_t *paths) {
+  f_status_t fl_environment_path_explode(const f_string_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
@@ -81,7 +81,7 @@ extern "C" {
 #endif // _di_fl_environment_path_explode_
 
 #ifndef _di_fl_environment_path_explode_dynamic_
-  f_return_status fl_environment_path_explode_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
+  f_status_t fl_environment_path_explode_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (path.used > path.size) return F_status_set_error(F_parameter);
       if (!paths) return F_status_set_error(F_parameter);
@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_fl_environment_path_explode_dynamic_
 
 #ifndef _di_fl_environment_path_explode_reverse_
-  f_return_status fl_environment_path_explode_reverse(const f_string_t path, f_string_dynamics_t *paths) {
+  f_status_t fl_environment_path_explode_reverse(const f_string_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (!paths) return F_status_set_error(F_parameter);
       if (paths->used > paths->size) return F_status_set_error(F_parameter);
@@ -257,7 +257,7 @@ extern "C" {
 #endif // _di_fl_environment_path_explode_reverse_
 
 #ifndef _di_fl_environment_path_explode_reverse_dynamic_
-  f_return_status fl_environment_path_explode_reverse_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
+  f_status_t fl_environment_path_explode_reverse_dynamic(const f_string_static_t path, f_string_dynamics_t *paths) {
     #ifndef _di_level_0_parameter_checking_
       if (path.used > path.size) return F_status_set_error(F_parameter);
       if (!paths) return F_status_set_error(F_parameter);

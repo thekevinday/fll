@@ -20,18 +20,18 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
-  const static f_string_t f_fss_brace_left_s = "{";
-  const static f_string_t f_fss_brace_right_s = "}";
-  const static f_string_t f_fss_colon_s = ":";
-  const static f_string_t f_fss_dash_s = "-";
-  const static f_string_t f_fss_f_s = "f";
-  const static f_string_t f_fss_pound_s = "#";
-  const static f_string_t f_fss_quote_single_s = "'";
-  const static f_string_t f_fss_quote_double_s = "\"";
-  const static f_string_t f_fss_s_s = "s";
-  const static f_string_t f_fss_slash_s = "\\";
-  const static f_string_t f_fss_space_s = " ";
-  const static f_string_t f_fss_underscore_s = "_";
+  const extern f_string_t f_fss_brace_left_s;
+  const extern f_string_t f_fss_brace_right_s;
+  const extern f_string_t f_fss_colon_s;
+  const extern f_string_t f_fss_dash_s;
+  const extern f_string_t f_fss_f_s;
+  const extern f_string_t f_fss_pound_s;
+  const extern f_string_t f_fss_quote_single_s;
+  const extern f_string_t f_fss_quote_double_s;
+  const extern f_string_t f_fss_s_s;
+  const extern f_string_t f_fss_slash_s;
+  const extern f_string_t f_fss_space_s;
+  const extern f_string_t f_fss_underscore_s;
 
   #define f_fss_comment                 f_fss_pound_s[0]
   #define f_fss_eol                     f_string_eol_s[0]

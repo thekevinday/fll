@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_directory_clone_)
-  f_return_status private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+  f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -133,7 +133,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_)
 
 #if !defined(_di_fl_directory_clone_file_)
-  f_return_status private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
+  f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -217,7 +217,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_clone_file_)
 
 #if !defined(_di_fl_directory_copy_)
-  f_return_status private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+  f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -329,7 +329,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_copy_)
 
 #if !defined(_di_fl_directory_copy_file_)
-  f_return_status private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
+  f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -414,7 +414,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_copy_file_)
 
 #if !defined(_di_fl_directory_list_)
-  f_return_status private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
+  f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
     struct dirent **entity = 0;
 
     f_string_length_t size = 0;
@@ -569,7 +569,7 @@ extern "C" {
 #endif // !defined(_di_fl_directory_list_)
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  f_return_status private_fl_directory_path_push(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_directory_path_push(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
     bool terminated_null = F_false;
     bool separator_prepend = F_false;
     bool separator_append = F_false;

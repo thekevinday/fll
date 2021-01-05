@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
-  f_return_status private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) {
+  f_status_t private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) {
 
     if (status == F_array_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {

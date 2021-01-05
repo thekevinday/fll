@@ -39,7 +39,7 @@ extern "C" {
  * @see f_file_stream_close()
  */
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  extern f_return_status private_f_file_close(int *id) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_close(int *id) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
@@ -87,7 +87,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #if !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
-  extern f_return_status private_f_file_copy_content(const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_copy_content(const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
 /**
@@ -130,7 +130,7 @@ extern "C" {
  * @see f_file_create()
  */
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_create(const f_string_t path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create(const f_string_t path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  * @see f_file_create_at()
  */
 #if !defined(_di_f_file_create_at_)
-  extern f_return_status private_f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_at_)
 
 /**
@@ -208,7 +208,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #if !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_create_directory(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_directory(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_copy_)
 
 /**
@@ -245,7 +245,7 @@ extern "C" {
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_create_directory_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_directory_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_copy_at_)
 
 /**
@@ -277,7 +277,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #if !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_create_fifo(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_fifo(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
 
 /**
@@ -312,7 +312,7 @@ extern "C" {
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -351,7 +351,7 @@ extern "C" {
  * @see f_file_create_node()
  */
 #if !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_node(const f_string_t path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
 
 /**
@@ -393,7 +393,7 @@ extern "C" {
  * @see f_file_create_node_at()
  */
 #if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_create_node_at(const int at_id, const f_string_t path, const mode_t mode, const dev_t device) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -419,7 +419,7 @@ extern "C" {
  * @see f_file_flush()
  */
 #if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_flush(const int id) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_flush(const int id) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
 
 /**
@@ -455,7 +455,7 @@ extern "C" {
  * @see f_file_link()
  */
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_link(const f_string_t target, const f_string_t point) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_link(const f_string_t target, const f_string_t point) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
 
 /**
@@ -493,7 +493,7 @@ extern "C" {
  * @see f_file_link_at()
  */
 #if !defined(_di_f_file_link_at_)
-  extern f_return_status private_f_file_link_at(const int at_id, const f_string_t target, const f_string_t point) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_link_at(const int at_id, const f_string_t target, const f_string_t point) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_at_)
 
 /**
@@ -527,7 +527,7 @@ extern "C" {
  * @see f_file_link_read()
  */
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 /**
@@ -564,7 +564,7 @@ extern "C" {
  * @see f_file_link_read_at()
  */
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  extern f_return_status private_f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -595,7 +595,7 @@ extern "C" {
  * @see f_file_mode_set()
  */
 #if !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_mode_set(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_mode_set(const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
 
 /**
@@ -627,7 +627,7 @@ extern "C" {
  * @see f_file_mode_set_at()
  */
 #if !defined(_di_f_file_mode_set_at_)
-  extern f_return_status private_f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_mode_set_at(const int at_id, const f_string_t path, const mode_t mode) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_mode_set_at_)
 
 /**
@@ -655,7 +655,7 @@ extern "C" {
  * @see f_file_open()
  */
 #if !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_open(const f_string_t path, const mode_t mode, f_file_t *file) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_open(const f_string_t path, const mode_t mode, f_file_t *file) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
 /**
@@ -684,7 +684,7 @@ extern "C" {
  * @see f_file_open_at()
  */
 #if !defined(_di_f_file_open_at_)
-  extern f_return_status private_f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_open_at(const int at_id, const f_string_t path, const mode_t mode, f_file_t *file) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_open_at_)
 
 /**
@@ -722,7 +722,7 @@ extern "C" {
  * @see f_file_role_change()
  */
 #if !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
-  extern f_return_status private_f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
 
 /**
@@ -761,7 +761,7 @@ extern "C" {
  * @see f_file_role_change_at()
  */
 #if !defined(_di_f_file_role_change_at_)
-  extern f_return_status private_f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_role_change_at_)
 
 /**
@@ -795,7 +795,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
-  extern f_return_status private_f_file_stat(const f_string_t file_name, const bool dereference, struct stat *file_stat) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_stat(const f_string_t file_name, const bool dereference, struct stat *file_stat) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
 
 /**
@@ -828,7 +828,7 @@ extern "C" {
  * @see f_file_touch_at()
  */
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
-  extern f_return_status private_f_file_stat_at(const int at_id, const f_string_t file_name, const int flag, struct stat *file_stat) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_stat_at(const int at_id, const f_string_t file_name, const int flag, struct stat *file_stat) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
 
 /**
@@ -856,7 +856,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
-  extern f_return_status private_f_file_stat_by_id(const int id, struct stat *file_stat) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_stat_by_id(const int id, struct stat *file_stat) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 /**
@@ -915,7 +915,7 @@ extern "C" {
  * @see f_file_stream_write_until()
  */
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  extern f_return_status private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 /**
@@ -952,7 +952,7 @@ extern "C" {
  * @see f_file_write_until()
  */
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
-  extern f_return_status private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
 #endif // !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
 
 #ifdef __cplusplus

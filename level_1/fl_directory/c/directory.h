@@ -122,7 +122,7 @@ extern "C" {
  * @see f_directory_create()
  */
 #ifndef _di_fl_directory_create_
-  extern f_return_status fl_directory_create(const f_string_t path, const f_string_length_t length, const mode_t mode);
+  extern f_status_t fl_directory_create(const f_string_t path, const f_string_length_t length, const mode_t mode);
 #endif // _di_fl_directory_create_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_
-  extern f_return_status fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  * @see f_file_clone()
  */
 #ifndef _di_fl_directory_clone_content_
-  extern f_return_status fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_clone_content_
 
 /**
@@ -247,7 +247,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_
-  extern f_return_status fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_
 
 /**
@@ -286,7 +286,7 @@ extern "C" {
  * @see f_file_copy()
  */
 #ifndef _di_fl_directory_copy_content_
-  extern f_return_status fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
+  extern f_status_t fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse);
 #endif // _di_fl_directory_copy_content_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  * @see versionsort()
  */
 #ifndef _di_fl_directory_list_
-  extern f_return_status fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing);
+  extern f_status_t fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing);
 #endif // _di_fl_directory_list_
 
 /**
@@ -354,7 +354,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_pop_
-  extern f_return_status fl_directory_path_pop(f_string_static_t *path);
+  extern f_status_t fl_directory_path_pop(f_string_static_t *path);
 #endif // _di_fl_directory_path_pop_
 
 /**
@@ -383,7 +383,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_push_
-  extern f_return_status fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_directory_path_push_
 
 /**
@@ -409,7 +409,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_control().
  */
 #ifndef _di_fl_directory_path_push_dynamic_
-  extern f_return_status fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t fl_directory_path_push_dynamic(const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_fl_directory_path_push_dynamic_
 
 #ifdef __cplusplus

@@ -47,7 +47,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_conversion_string_to_hexidecimal_unsigned().
  */
 #ifndef _di_fll_fss_identify_
-  extern f_return_status fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header);
+  extern f_status_t fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header);
 #endif // _di_fll_fss_identify_
 
 /**
@@ -73,7 +73,7 @@ extern "C" {
  * @see f_file_read_until()
  */
 #ifndef _di_fll_fss_identify_file_
-  extern f_return_status fll_fss_identify_file(f_file_t *file, f_fss_header_t *header);
+  extern f_status_t fll_fss_identify_file(f_file_t *file, f_fss_header_t *header);
 #endif // _di_fll_fss_identify_file_
 
 /**
@@ -117,7 +117,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_
-  extern f_return_status fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_
 
 /**
@@ -163,7 +163,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_apart_
-  extern f_return_status fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_apart_
 
 /**
@@ -211,7 +211,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_
-  extern f_return_status fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_
 
 /**
@@ -261,7 +261,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_apart_
-  extern f_return_status fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_apart_
 
 /**
@@ -311,7 +311,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_map_mash_
-  extern f_return_status fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_
 
 /**
@@ -365,7 +365,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  extern f_return_status fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 /**
@@ -418,7 +418,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_together_
-  extern f_return_status fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_map_together_
 
 /**
@@ -465,7 +465,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_mash_
-  extern f_return_status fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_mash_
 
 /**
@@ -516,7 +516,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
-  extern f_return_status fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
+  extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
 #endif // _di_fll_fss_snatch_mash_apart_
 
 /**
@@ -560,7 +560,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_together_
-  extern f_return_status fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
+  extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
 #endif // _di_fll_fss_snatch_together_
 
 #ifdef __cplusplus

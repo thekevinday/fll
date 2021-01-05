@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_console_identify_
-  f_return_status f_console_identify(const f_string_t input, f_console_id_t *result) {
+  f_status_t f_console_identify(const f_string_t input, f_console_id_t *result) {
     #ifndef _di_level_0_parameter_checking_
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_f_console_identify_
 
 #ifndef _di_f_console_parameter_process_
-  f_return_status f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining) {
+  f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining) {
     #ifndef _di_level_0_parameter_checking_
       if (!remaining) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -338,7 +338,7 @@ extern "C" {
 #endif // _di_f_console_parameter_process_
 
 #ifndef _di_f_console_parameter_prioritize_left_
-  f_return_status f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
+  f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
       if (!choices.id) return F_status_set_error(F_parameter);
@@ -380,7 +380,7 @@ extern "C" {
 #endif // _di_f_console_parameter_prioritize_left_
 
 #ifndef _di_f_console_parameter_prioritize_right_
-  f_return_status f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
+  f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t *decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
       if (!choices.id) return F_status_set_error(F_parameter);

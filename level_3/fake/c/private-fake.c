@@ -82,7 +82,7 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_return_status fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) {
+  f_status_t fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) {
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
@@ -151,7 +151,7 @@ extern "C" {
 #endif // _di_fake_file_buffer_
 
 #ifndef _di_fake_path_generate_
-  f_return_status fake_path_generate(fake_data_t *data) {
+  f_status_t fake_path_generate(fake_data_t *data) {
     f_status_t status = F_none;
     uint8_t i = 0;
 
@@ -567,7 +567,7 @@ extern "C" {
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_return_status fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+  f_status_t fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < length; i++) {
@@ -580,7 +580,7 @@ extern "C" {
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifndef _di_fake_process_console_parameters_
-  f_return_status fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) {
+  f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) {
     f_status_t status = F_none;
 
     // @todo move as many of the inline error printing code into more general functions where possible to provide more accurate error reporting.
@@ -919,7 +919,7 @@ extern "C" {
 #endif // _di_fake_process_console_parameters_
 
 #ifndef _di_fake_signal_read_
-  f_return_status fake_signal_received(const fake_data_t data) {
+  f_status_t fake_signal_received(const fake_data_t data) {
 
     if (!data.signal.id) {
       return F_false;
@@ -956,7 +956,7 @@ extern "C" {
 #endif // _di_fake_signal_read_
 
 #ifndef _di_fake_validate_directories_
-  f_return_status fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) {
+  f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) {
 
     if (fake_signal_received(data)) {
       return F_signal;

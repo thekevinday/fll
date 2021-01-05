@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_status_from_string_
-  f_return_status fll_fss_status_from_string(const f_string_t string, f_status_t *code) {
+  f_status_t fll_fss_status_from_string(const f_string_t string, f_status_t *code) {
     #ifndef _di_level_2_parameter_checking_
       if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_fll_fss_status_from_string_
 
 #ifndef _di_fll_fss_status_to_string_
-  f_return_status fll_fss_status_to_string(const f_status_t code, f_string_t *string) {
+  f_status_t fll_fss_status_to_string(const f_status_t code, f_string_t *string) {
     #ifndef _di_level_2_parameter_checking_
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_fll_status_to_string_
 
 #ifndef _di_fll_fss_status_is_error_
-  f_return_status fll_fss_status_is_error(const f_status_t code) {
+  f_status_t fll_fss_status_is_error(const f_status_t code) {
 
     if (fll_fss_status_is_fine(code) == F_true) {
       return F_false;
@@ -196,7 +196,7 @@ extern "C" {
 #endif // _di_fll_fss_status_is_error_
 
 #ifndef _di_fll_fss_status_is_warning_
-  f_return_status fll_fss_status_is_warning(const f_status_t code) {
+  f_status_t fll_fss_status_is_warning(const f_status_t code) {
 
     switch (code) {
       #ifndef _di_fll_fss_status_basic_
@@ -225,7 +225,7 @@ extern "C" {
 #endif // _di_fll_fss_status_is_warning_
 
 #ifndef _di_fll_fss_status_is_fine_
-  f_return_status fll_fss_status_is_fine(const f_status_t code) {
+  f_status_t fll_fss_status_is_fine(const f_status_t code) {
 
     switch (code) {
       #ifndef _di_fll_fss_status_booleans_

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
-  f_return_status private_f_utf_character_is_alpha(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha(const f_utf_character_t character, const uint8_t width) {
 
     if (private_f_utf_character_is_zero_width(character, width)) {
       return F_false;
@@ -53,7 +53,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
 
 #if !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
-  f_return_status private_f_utf_character_is_alpha_digit(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha_digit(const f_utf_character_t character, const uint8_t width) {
 
     if (private_f_utf_character_is_digit(character, width)) {
       return F_true;
@@ -100,7 +100,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_digit_)
 
 #if !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
-  f_return_status private_f_utf_character_is_alpha_numeric(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_alpha_numeric(const f_utf_character_t character, const uint8_t width) {
 
     if (private_f_utf_character_is_numeric(character, width)) {
       return F_true;
@@ -143,7 +143,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_alpha_numeric_) || !defined(_di_f_utf_is_alpha_numeric_)
 
 #if !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
-  f_return_status private_f_utf_character_is_ascii(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_ascii(const f_utf_character_t character, const uint8_t width) {
 
     if (!width) {
       const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -158,7 +158,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_ascii_) || !defined(_di_f_utf_is_ascii_)
 
 #if !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
-  f_return_status private_f_utf_character_is_combining(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_combining(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 2) {
 
@@ -202,7 +202,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_combining_) || !defined(_di_f_utf_is_combining_)
 
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
-  f_return_status private_f_utf_character_is_control(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 2) {
 
@@ -241,7 +241,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
 
 #if !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
-  f_return_status private_f_utf_character_is_control_picture(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_control_picture(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 3) {
       // Control Pictures: U+2400 to U+2426.
@@ -260,7 +260,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
-  f_return_status private_f_utf_character_is_digit(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_digit(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 2) {
       uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
@@ -633,7 +633,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 #if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
-  f_return_status private_f_utf_character_is_emoji(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -1126,7 +1126,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
 
 #if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
-  f_return_status private_f_utf_character_is_numeric(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_numeric(const f_utf_character_t character, const uint8_t width) {
 
     if (private_f_utf_character_is_digit(character, width)) {
       return F_true;
@@ -1155,7 +1155,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
 
 #if !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
-  f_return_status private_f_utf_character_is_phonetic(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_phonetic(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 3) {
 
@@ -1175,7 +1175,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_phonetic_) || !defined(_di_f_utf_is_phonetic_)
 
 #if !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
-  f_return_status private_f_utf_character_is_private(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_private(const f_utf_character_t character, const uint8_t width) {
 
     if (width < 3) {
       return F_false;
@@ -1233,7 +1233,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_private_) || !defined(_di_f_utf_is_private_)
 
 #if !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
-  f_return_status private_f_utf_character_is_punctuation(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_punctuation(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -1900,7 +1900,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_punctuation_) || !defined(_di_f_utf_is_punctuation_)
 
 #if !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
-  f_return_status private_f_utf_character_is_symbol(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -1912,7 +1912,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_symbol_) || !defined(_di_f_utf_is_symbol_)
 
 #if !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
-  f_return_status private_f_utf_character_is_unassigned(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -1931,7 +1931,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_unassigned_) || !defined(_di_f_utf_is_unassigned_)
 
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
-  f_return_status private_f_utf_character_is_valid(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_valid(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
@@ -2033,7 +2033,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
 
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
-  f_return_status private_f_utf_character_is_whitespace(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 2) {
 
@@ -2073,7 +2073,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
 
 #if !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
-  f_return_status private_f_utf_character_is_whitespace_modifier(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace_modifier(const f_utf_character_t character, const uint8_t width) {
 
     if (width == 2) {
 
@@ -2088,7 +2088,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_modifier_)
 
 #if !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
-  f_return_status private_f_utf_character_is_whitespace_other(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_whitespace_other(const f_utf_character_t character, const uint8_t width) {
 
     // Ogham: U+1680 (isn't whitespace but is technically considered one: ( )).
     if (character == 0xe19a8000) {
@@ -2100,7 +2100,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
 
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  f_return_status private_f_utf_character_is_word(const f_utf_character_t character, const uint8_t width, const bool strict) {
+  f_status_t private_f_utf_character_is_word(const f_utf_character_t character, const uint8_t width, const bool strict) {
 
     if (private_f_utf_character_is_alpha_digit(character, width)) {
       return F_true;
@@ -2144,7 +2144,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  f_return_status private_f_utf_character_is_word_dash(const f_utf_character_t character, const uint8_t width, const bool strict) {
+  f_status_t private_f_utf_character_is_word_dash(const f_utf_character_t character, const uint8_t width, const bool strict) {
 
     if (private_f_utf_character_is_word(character, width, strict)) {
       return F_true;
@@ -2163,7 +2163,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  f_return_status private_f_utf_character_is_word_dash_plus(const f_utf_character_t character, const uint8_t width, const bool strict) {
+  f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_character_t character, const uint8_t width, const bool strict) {
 
     if (private_f_utf_character_is_word_dash(character, width, strict)) {
       return F_true;
@@ -2182,7 +2182,7 @@ extern "C" {
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
-  f_return_status private_f_utf_character_is_zero_width(const f_utf_character_t character, const uint8_t width) {
+  f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character, const uint8_t width) {
     // reduce the number of checks by grouping checks by first byte.
     const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
 

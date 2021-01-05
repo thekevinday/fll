@@ -37,7 +37,7 @@ extern "C" {
  * @see fll_fss_identify_file()
  */
 #if !defined(_di_fll_fss_identify_) || !defined(_di_fll_fss_identify_file_)
-  extern f_return_status private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_fss_identify_) || !defined(_di_fll_fss_identify_file_)
 
 #ifdef __cplusplus

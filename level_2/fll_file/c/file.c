@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_file_mode_set_all_
-  f_return_status fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max) {
+  f_status_t fll_file_mode_set_all(const f_string_t path, const mode_t mode, const f_number_unsigned_t depth_max) {
     #ifndef _di_level_2_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_fll_file_mode_set_all_
 
 #ifndef _di_fll_file_move_
-  f_return_status fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse) {
+  f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_2_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_fll_file_move_
 
 #ifndef _di_fll_file_role_change_all_
-  f_return_status fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max) {
+  f_status_t fll_file_role_change_all(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference, const f_number_unsigned_t depth_max) {
     #ifndef _di_level_2_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
       if (uid == -1 && gid == -1) return F_status_set_error(F_parameter);

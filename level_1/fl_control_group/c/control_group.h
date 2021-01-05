@@ -63,7 +63,7 @@ extern "C" {
  * @see f_file_stream_open()
  */
 #ifndef _di_fl_control_group_apply_
-  extern f_return_status fl_control_group_apply(const f_control_group_t control_group, const pid_t id);
+  extern f_status_t fl_control_group_apply(const f_control_group_t control_group, const pid_t id);
 #endif // _di_fl_control_group_apply_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_control_group_delete_
-  extern f_return_status fl_control_group_delete(f_control_group_t *control_group);
+  extern f_status_t fl_control_group_delete(f_control_group_t *control_group);
 #endif // _di_fl_control_group_delete_
 
 #ifdef __cplusplus

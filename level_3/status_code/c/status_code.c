@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_status_code_print_help_
-  f_return_status status_code_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t status_code_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, status_code_name_long, status_code_version);
 
@@ -34,7 +34,7 @@ extern "C" {
 #endif // _di_status_code_print_help_
 
 #ifndef _di_status_code_main_
-  f_return_status status_code_main(const f_console_arguments_t arguments, status_code_data_t *data) {
+  f_status_t status_code_main(const f_console_arguments_t arguments, status_code_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -211,7 +211,7 @@ extern "C" {
 #endif // _di_status_code_main_
 
 #ifndef _di_status_code_delete_data_
-  f_return_status status_code_delete_data(status_code_data_t *data) {
+  f_status_t status_code_delete_data(status_code_data_t *data) {
 
     for (f_string_length_t i = 0; i < status_code_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);

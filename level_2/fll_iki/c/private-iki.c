@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
-  f_return_status private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped) {
+  f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped) {
     f_status_t status = F_none;
 
     // ensure escaped is at least the same size as content.
@@ -70,7 +70,7 @@ extern "C" {
 #endif // !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
 
 #if !defined(_di_fll_iki_content_escape_un_) || !defined(_di_fll_iki_content_partial_escape_un_)
-  f_return_status private_fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped) {
+  f_status_t private_fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped) {
     f_status_t status = F_none;
 
     // ensure escaped is at least the same size as content.

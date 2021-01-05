@@ -138,7 +138,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_status_code_print_help_
-  extern f_return_status status_code_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t status_code_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_status_code_print_help_
 
 /**
@@ -159,7 +159,7 @@ extern "C" {
  * @see status_code_delete_data()
  */
 #ifndef _di_status_code_main_
-  extern f_return_status status_code_main(const f_console_arguments_t arguments, status_code_data_t *data);
+  extern f_status_t status_code_main(const f_console_arguments_t arguments, status_code_data_t *data);
 #endif // _di_status_code_main_
 
 /**
@@ -178,7 +178,7 @@ extern "C" {
  * @see status_code_main()
  */
 #ifndef _di_status_code_delete_data_
-  extern f_return_status status_code_delete_data(status_code_data_t *data);
+  extern f_status_t status_code_delete_data(status_code_data_t *data);
 #endif // _di_status_code_delete_data_
 
 #ifdef __cplusplus

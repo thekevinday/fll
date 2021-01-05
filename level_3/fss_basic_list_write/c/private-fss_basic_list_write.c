@@ -52,7 +52,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_basic_list_write_process_
-  f_return_status fss_basic_list_write_process(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_string_range_t_initialize;
@@ -121,7 +121,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_process_
 
 #ifndef _di_fss_basic_list_write_process_pipe_
-  f_return_status fss_basic_list_write_process_pipe(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process_pipe(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 

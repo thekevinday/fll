@@ -52,7 +52,7 @@ extern "C" {
  *   F_true is returned if the status code is unknown.
  */
 #ifndef _di_fll_error_print_
-  extern f_return_status fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback);
+  extern f_status_t fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback);
 #endif // _di_fll_error_print_
 
 /**
@@ -80,7 +80,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fll_error_file_print_
-  extern f_return_status fll_error_file_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type);
+  extern f_status_t fll_error_file_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type);
 #endif // _di_fll_error_file_print_
 
 /**
@@ -106,7 +106,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fll_error_parameter_integer_print_
-  extern f_return_status fll_error_parameter_integer_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t parameter, const f_string_t argument);
+  extern f_status_t fll_error_parameter_integer_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t parameter, const f_string_t argument);
 #endif // _di_fll_error_parameter_integer_print_
 
 #ifdef __cplusplus

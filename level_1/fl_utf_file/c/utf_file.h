@@ -55,7 +55,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_
-  extern f_return_status fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read(const f_file_t file, f_utf_string_dynamic_t *buffer);
 #endif // _di_fl_utf_file_read_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_block_
-  extern f_return_status fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read_block(const f_file_t file, f_utf_string_dynamic_t *buffer);
 #endif // _di_fl_utf_file_read_block_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_fl_utf_file_read_until_
-  extern f_return_status fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer);
+  extern f_status_t fl_utf_file_read_until(const f_file_t file, const f_utf_string_length_t total, f_utf_string_dynamic_t *buffer);
 #endif // _di_fl_utf_file_read_until_
 
 /**
@@ -154,7 +154,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_
-  extern f_return_status fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written);
+  extern f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written);
 #endif // _di_fl_utf_file_write_
 
 /**
@@ -188,7 +188,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_block_
-  extern f_return_status fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written);
+  extern f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_utf_string_length_t *written);
 #endif // _di_fl_utf_file_write_block_
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_until_
-  extern f_return_status fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_length_t total, f_utf_string_length_t *written);
+  extern f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_length_t total, f_utf_string_length_t *written);
 #endif // _di_fl_utf_file_write_until_
 
 /**
@@ -256,7 +256,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_range_
-  extern f_return_status fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_utf_string_length_t *written);
+  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_utf_string_length_t *written);
 #endif // _di_fl_utf_file_write_range_
 
 #ifdef __cplusplus

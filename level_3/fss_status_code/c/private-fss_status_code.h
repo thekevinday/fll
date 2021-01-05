@@ -34,7 +34,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_check_
-  extern f_return_status fss_status_code_process_check(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_status_code_process_check(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_status_code_process_check_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  * @see fll_fss_status_from_string()
  */
 #ifndef _di_fss_status_code_process_number_
-  extern f_return_status fss_status_code_process_number(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_status_code_process_number(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_status_code_process_number_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_normal_
-  extern f_return_status fss_status_code_process_normal(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_status_code_process_normal(const fss_status_code_data_t data, const f_string_t value) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_status_code_process_normal_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see fl_console_parameter_to_number_unsigned()
  */
 #ifndef _di_fss_status_code_convert_number_
-  extern f_return_status fss_status_code_convert_number(const fss_status_code_data_t data, const f_string_t value, f_number_unsigned_t *number) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_status_code_convert_number(const fss_status_code_data_t data, const f_string_t value, f_number_unsigned_t *number) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_status_code_convert_number_
 
 #ifdef __cplusplus

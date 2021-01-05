@@ -35,7 +35,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
-  extern f_return_status private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *location) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t *location) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
 
 #ifdef __cplusplus

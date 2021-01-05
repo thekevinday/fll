@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_fss_identify_) || !defined(_di_fll_fss_identify_file_)
-  f_return_status private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
+  f_status_t private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
     register f_string_length_t i = 0;
 
     if (buffer.used < 10) {

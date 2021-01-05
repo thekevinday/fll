@@ -69,7 +69,7 @@ extern "C" {
 #endif // _di_controller_entry_action_type_name_
 
 #ifndef _di_controller_entry_actions_increase_by_
-  f_return_status controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
+  f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
 
     if (actions->used + amount > actions->size) {
       if (actions->used + amount > f_array_length_t_size) {
@@ -90,7 +90,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_increase_by_
 
 #ifndef _di_controller_entry_actions_read_
-  f_return_status controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) {
+  f_status_t controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) {
     f_status_t status = F_none;
     f_status_t status_action = F_none;
 
@@ -572,7 +572,7 @@ extern "C" {
 #endif // _di_controller_entry_error_print_
 
 #ifndef _di_controller_entry_items_increase_by_
-  f_return_status controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) {
+  f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) {
 
     if (items->used + amount > items->size) {
       if (items->used + amount > f_array_length_t_size) {
@@ -593,7 +593,7 @@ extern "C" {
 #endif // _di_controller_entry_items_increase_by_
 
 #ifndef _di_controller_entry_read_
-  f_return_status controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) {
+  f_status_t controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) {
     f_status_t status = F_none;
 
     entry->status = F_known_not;

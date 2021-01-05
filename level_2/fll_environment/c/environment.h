@@ -56,7 +56,7 @@ extern "C" {
  * @see fl_string_maps_increase_by()
  */
 #ifndef _di_fll_environment_load_name_
-  extern f_return_status fll_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment);
+  extern f_status_t fll_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment);
 #endif // _di_fll_environment_load_name_
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  * @see fl_string_maps_increase_by()
  */
 #ifndef _di_fll_environment_load_names_
-  extern f_return_status fll_environment_load_names(const f_string_dynamics_t names, f_string_maps_t *environment);
+  extern f_status_t fll_environment_load_names(const f_string_dynamics_t names, f_string_maps_t *environment);
 #endif // _di_fll_environment_load_names_
 
 #ifdef __cplusplus

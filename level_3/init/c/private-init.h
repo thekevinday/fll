@@ -16,14 +16,14 @@ extern "C" {
  * @todo
  */
 #ifndef _di_init_load_failsafe_
-  extern f_return_status init_load_failsafe(const init_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_status_t init_load_failsafe(const init_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_init_load_failsafe_
 
 /**
  * @todo
  */
 #ifndef _di_init_load_kernel_setting_
-  extern f_return_status init_load_kernel_setting(const init_data_t data, init_setting_kernel_t *setting_kernel) f_gcc_attribute_visibility_internal;
+  extern f_status_t init_load_kernel_setting(const init_data_t data, init_setting_kernel_t *setting_kernel) f_gcc_attribute_visibility_internal;
 #endif // _di_init_load_kernel_setting_
 
 /**
@@ -39,7 +39,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_init_signal_read_
-  extern f_return_status init_signal_received(const init_data_t data) f_gcc_attribute_visibility_internal;
+  extern f_status_t init_signal_received(const init_data_t data) f_gcc_attribute_visibility_internal;
 #endif // _di_init_signal_read_
 
 #ifdef __cplusplus

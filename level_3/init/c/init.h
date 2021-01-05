@@ -281,7 +281,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_init_print_help_
-  extern f_return_status init_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t init_print_help(const f_file_t output, const f_color_context_t context);
 #endif // _di_init_print_help_
 
 /**
@@ -302,7 +302,7 @@ extern "C" {
  * @see init_delete_data()
  */
 #ifndef _di_init_main_
-  extern f_return_status init_main(const f_console_arguments_t arguments, init_data_t *data);
+  extern f_status_t init_main(const f_console_arguments_t arguments, init_data_t *data);
 #endif // _di_init_main_
 
 /**
@@ -321,7 +321,7 @@ extern "C" {
  * @see init_main()
  */
 #ifndef _di_init_delete_data_
-  extern f_return_status init_delete_data(init_data_t *data);
+  extern f_status_t init_delete_data(init_data_t *data);
 #endif // _di_init_delete_data_
 
 #ifdef __cplusplus

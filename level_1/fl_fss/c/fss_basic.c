@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_return_status fl_fss_basic_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -28,7 +28,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_return_status fl_fss_basic_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -51,7 +51,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    status = private_fl_fss_ranges_increase(found);
+    f_macro_string_ranges_t_increase(status, (*found));
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;
@@ -78,7 +78,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_string_
-  f_return_status fl_fss_basic_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -135,7 +135,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_write_string_
 
 #ifndef _di_fl_fss_basic_content_write_string_
-  f_return_status fl_fss_basic_content_write_string(const f_string_static_t content, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_content_write_string(const f_string_static_t content, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);

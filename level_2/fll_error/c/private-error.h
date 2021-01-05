@@ -39,7 +39,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
-  extern f_return_status private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
 
 /**

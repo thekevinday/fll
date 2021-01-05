@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_environment_load_name_
-  f_return_status fll_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment) {
+  f_status_t fll_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment) {
     #ifndef _di_level_2_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
       if (!environment) return F_status_set_error(F_parameter);
@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fll_environment_load_name_
 
 #ifndef _di_fll_environment_load_names_
-  f_return_status fll_environment_load_names(const f_string_dynamics_t names, f_string_maps_t *environment) {
+  f_status_t fll_environment_load_names(const f_string_dynamics_t names, f_string_maps_t *environment) {
     #ifndef _di_level_2_parameter_checking_
       if (!environment) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

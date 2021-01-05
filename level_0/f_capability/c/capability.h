@@ -55,7 +55,7 @@ extern "C" {
  * @see cap_clear()
  */
 #ifndef _di_f_capability_clear_
-  extern f_return_status f_capability_clear(f_capability_t *capability);
+  extern f_status_t f_capability_clear(f_capability_t *capability);
 #endif // _di_f_capability_clear_
 
 /**
@@ -76,7 +76,7 @@ extern "C" {
  * @see cap_clear_flag()
  */
 #ifndef _di_f_capability_clear_flag_
-  extern f_return_status f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t *capability);
+  extern f_status_t f_capability_clear_flag(const f_capability_flag_t flag, f_capability_t *capability);
 #endif // _di_f_capability_clear_flag_
 
 /**
@@ -100,7 +100,7 @@ extern "C" {
  * @see cap_compare()
  */
 #ifndef _di_f_capability_compare_
-  extern f_return_status f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags);
+  extern f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags);
 #endif // _di_f_capability_compare_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  * @see cap_free()
  */
 #ifndef _di_f_capability_delete_
-  extern f_return_status f_capability_delete(f_capability_t *capability);
+  extern f_status_t f_capability_delete(f_capability_t *capability);
 #endif // _di_f_capability_delete_
 
 /**
@@ -141,7 +141,7 @@ extern "C" {
  * @see cap_dup()
  */
 #ifndef _di_f_capability_duplicate_
-  extern f_return_status f_capability_duplicate(const f_capability_t source, f_capability_t *destination);
+  extern f_status_t f_capability_duplicate(const f_capability_t source, f_capability_t *destination);
 #endif // _di_f_capability_duplicate_
 
 /**
@@ -166,7 +166,7 @@ extern "C" {
  * @see cap_get_flag()
  */
 #ifndef _di_f_capability_flag_get_
-  extern f_return_status f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t *enabled);
+  extern f_status_t f_capability_flag_get(const f_capability_t capability, const f_capability_value_t code, const f_capability_flag_t flag, f_capability_flag_value_t *enabled);
 #endif // _di_f_capability_flag_get
 
 /**
@@ -191,7 +191,7 @@ extern "C" {
  * @see cap_set_flag()
  */
 #ifndef _di_f_capability_flag_set_
-  extern f_return_status f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t *capability);
+  extern f_status_t f_capability_flag_set(const f_capability_flag_t flag, const f_capability_flag_value_t enabled, const f_int32s_t codes, f_capability_t *capability);
 #endif // _di_f_capability_flag_set_
 
 /**
@@ -213,7 +213,7 @@ extern "C" {
  * @see cap_from_name()
  */
 #ifndef _di_f_capability_from_name_
-  extern f_return_status f_capability_from_name(const f_string_t name, f_capability_value_t *code);
+  extern f_status_t f_capability_from_name(const f_string_t name, f_capability_value_t *code);
 #endif // _di_f_capability_from_name_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see cap_from_text()
  */
 #ifndef _di_f_capability_from_text_
-  extern f_return_status f_capability_from_text(const f_string_t text, f_capability_t *capability);
+  extern f_status_t f_capability_from_text(const f_string_t text, f_capability_t *capability);
 #endif // _di_f_capability_from_text_
 
 /**
@@ -255,7 +255,7 @@ extern "C" {
  * @see cap_init()
  */
 #ifndef _di_f_capability_initialize_
-  extern f_return_status f_capability_initialize(f_capability_t *capability);
+  extern f_status_t f_capability_initialize(f_capability_t *capability);
 #endif // _di_f_capability_initialize_
 
 /**
@@ -280,7 +280,7 @@ extern "C" {
  * @see cap_drop_bound()
  */
 #ifndef _di_f_capability_process_bound_drop_
-  extern f_return_status f_capability_process_bound_drop(f_capability_value_t code, int *bound);
+  extern f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound);
 #endif // _di_f_capability_process_bound_drop_
 
 /**
@@ -303,7 +303,7 @@ extern "C" {
  * @see cap_get_bound()
  */
 #ifndef _di_f_capability_process_bound_get_
-  extern f_return_status f_capability_process_bound_get(f_capability_value_t code, int *bound);
+  extern f_status_t f_capability_process_bound_get(f_capability_value_t code, int *bound);
 #endif // _di_f_capability_process_bound_get_
 
 /**
@@ -324,7 +324,7 @@ extern "C" {
  * @see cap_get_proc()
  */
 #ifndef _di_f_capability_process_get_
-  extern f_return_status f_capability_process_get(f_capability_t *capability);
+  extern f_status_t f_capability_process_get(f_capability_t *capability);
 #endif // _di_f_capability_process_get_
 
 /**
@@ -347,7 +347,7 @@ extern "C" {
  * @see cap_get_pid()
  */
 #ifndef _di_f_capability_process_get_by_id_
-  extern f_return_status f_capability_process_get_by_id(const pid_t id, f_capability_t *capability);
+  extern f_status_t f_capability_process_get_by_id(const pid_t id, f_capability_t *capability);
 #endif // _di_f_capability_process_get_by_id_
 
 /**
@@ -367,7 +367,7 @@ extern "C" {
  * @see cap_set_proc()
  */
 #ifndef _di_f_capability_process_set_
-  extern f_return_status f_capability_process_set(const f_capability_t capability);
+  extern f_status_t f_capability_process_set(const f_capability_t capability);
 #endif // _di_f_capability_process_set_
 
 /**
@@ -418,7 +418,7 @@ extern "C" {
  * @see cap_to_name()
  */
 #ifndef _di_f_capability_to_name_
-  extern f_return_status f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t *name);
+  extern f_status_t f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t *name);
 #endif // _di_f_capability_to_name_
 
 /**
@@ -440,7 +440,7 @@ extern "C" {
  * @see cap_to_text()
  */
 #ifndef _di_f_capability_to_text_
-  extern f_return_status f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text);
+  extern f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text);
 #endif // _di_f_capability_to_text_
 
 #ifdef __cplusplus

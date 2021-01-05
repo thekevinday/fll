@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  f_return_status private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const uint8_t quote) {
+  f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const uint8_t quote) {
     f_string_length_t delimits = 0;
 
     for (f_string_length_t i = 0; i < buffer.used; i++) {
@@ -32,7 +32,7 @@ extern "C" {
 #endif // !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
 
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
-  f_return_status private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) {
+  f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) {
     f_status_t status = F_none;
 
     for (f_string_length_t i = 0; i < buffer.used; i++) {

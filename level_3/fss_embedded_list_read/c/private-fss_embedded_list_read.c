@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_embedded_list_read_main_preprocess_depth_
-  f_return_status fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_data_t data, fss_embedded_list_read_depths_t *depths) {
+  f_status_t fss_embedded_list_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_embedded_list_read_data_t data, fss_embedded_list_read_depths_t *depths) {
     f_status_t status = F_none;
 
     const f_array_length_t values_total = data.parameters[fss_embedded_list_read_parameter_depth].values.used + data.parameters[fss_embedded_list_read_parameter_at].values.used + data.parameters[fss_embedded_list_read_parameter_name].values.used;
@@ -216,7 +216,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_preprocess_depth_
 
 #ifndef _di_fss_embedded_list_read_main_process_file_
-  f_return_status fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_data_t *data, const f_string_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_status_t fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_data_t *data, const f_string_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
     f_status_t status = F_none;
 
     {
@@ -316,7 +316,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_process_file_
 
 #ifndef _di_fss_embedded_list_read_main_process_for_depth_
-  f_return_status fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
+  f_status_t fss_embedded_list_read_main_process_for_depth(const f_console_arguments_t arguments, const f_string_t filename, const fss_embedded_list_read_depths_t depths, const f_array_length_t depths_index, const f_array_length_t line, const fss_embedded_list_read_skip_t parents, fss_embedded_list_read_data_t *data, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
 
     f_fss_items_t *items = &data->nest.depth[depths.array[depths_index].depth];
 
@@ -483,7 +483,7 @@ extern "C" {
         return F_none;
       }
 
-      f_return_status (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;
@@ -862,7 +862,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  f_return_status fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) {
+  f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) {
 
     if (depth + 1 >= data.nest.used) return F_false;
 

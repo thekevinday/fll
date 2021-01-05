@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_help_
-  f_return_status fake_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t fake_print_help(const f_file_t output, const f_color_context_t context) {
 
     fll_program_print_help_header(output, context, fake_name_long, fake_version);
 
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
-  f_return_status fake_main(const f_console_arguments_t arguments, fake_data_t *data) {
+  f_status_t fake_main(const f_console_arguments_t arguments, fake_data_t *data) {
     f_status_t status = F_none;
 
     {
@@ -377,7 +377,7 @@ extern "C" {
 #endif // _di_fake_main_
 
 #ifndef _di_fake_delete_data_
-  f_return_status fake_delete_data(fake_data_t *data) {
+  f_status_t fake_delete_data(fake_data_t *data) {
 
     for (f_string_length_t i = 0; i < fake_total_parameters; i++) {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
