@@ -36,7 +36,7 @@ extern "C" {
     if (status == F_access_group) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sCurrrent user is not allowed to use the given group while trying to %s %s '", error.context.before->string, error.prefix, operation, type_name);
+        fprintf(error.to.stream, "%s%sCurrent user is not allowed to use the given group while trying to %s %s '", error.context.before->string, error.prefix, operation, type_name);
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
         fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol_s[0]);
       }
@@ -47,7 +47,7 @@ extern "C" {
     if (status == F_access_owner) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sCurrrent user is not allowed to use the given owner while trying to %s %s '", error.context.before->string, error.prefix, operation, type_name);
+        fprintf(error.to.stream, "%s%sCurrent user is not allowed to use the given owner while trying to %s %s '", error.context.before->string, error.prefix, operation, type_name);
         fprintf(error.to.stream, "%s%s%s%s", error.context.after->string, error.notable.before->string, name, error.notable.after->string);
         fprintf(error.to.stream, "%s'.%s%c", error.context.before->string, error.context.after->string, f_string_eol_s[0]);
       }
