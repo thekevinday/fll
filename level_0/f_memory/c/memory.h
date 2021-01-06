@@ -48,7 +48,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see calloc()
@@ -74,7 +74,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see posix_memalign()
@@ -149,7 +149,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see calloc()
@@ -175,7 +175,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see calloc()

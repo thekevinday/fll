@@ -214,6 +214,8 @@ extern "C" {
       F_loop_not,
       F_maybe,
       F_maybe_not,
+      F_memory,
+      F_memory_not,
       F_minor,
       F_minor_not,
       F_moderate,
@@ -390,14 +392,6 @@ extern "C" {
       F_terminated_not_nest_stop,
       F_terminated_not_stop,
     #endif // _di_F_status_buffer_
-
-    #ifndef _di_F_status_memory_
-      F_memory,
-      F_memory_allocation,
-      F_memory_deallocation,
-      F_memory_not,
-      F_memory_reallocation,
-    #endif // _di_F_status_memory_
 
     #ifndef _di_F_status_process_
       F_process,

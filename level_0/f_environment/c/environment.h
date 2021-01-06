@@ -82,7 +82,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_exist_not if name does not exist.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
@@ -110,7 +110,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if name.used is 0.
  *   F_exist_not if name does not exist.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *

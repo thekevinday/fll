@@ -8,10 +8,23 @@ extern "C" {
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
   f_status_t private_fll_error_print(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback) {
 
+    if (status == F_access_denied) {
+      if (error.verbosity != f_console_verbosity_quiet) {
+        fprintf(error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(error.to.stream, "%s%sAccess denied", error.context.before->string, error.prefix);
+
+        private_fll_error_print_function(error, function);
+
+        fprintf(error.to.stream, ".%s%c", error.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
     if (status == F_array_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sMaximum array length reached while processing ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sMaximum array length reached", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 
@@ -24,7 +37,7 @@ extern "C" {
     if (status == F_buffer_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sMaximum buffer length reached while processing ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sMaximum buffer length reached", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 
@@ -34,10 +47,10 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_memory_allocation || status == F_memory_reallocation || status == F_memory_not) {
+    if (status == F_memory_not) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sUnable to allocate memory in function ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sUnable to allocate memory", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 
@@ -63,7 +76,7 @@ extern "C" {
     if (status == F_string_too_large) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sMaximum string length reached while processing ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sMaximum string length reached", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 
@@ -76,7 +89,7 @@ extern "C" {
     if (status == F_utf) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sInvalid UTF-8 character while calling ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sInvalid UTF-8 character", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 
@@ -89,7 +102,7 @@ extern "C" {
     if (status == F_complete_not_utf) {
       if (error.verbosity != f_console_verbosity_quiet) {
         fprintf(error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character while calling ", error.context.before->string, error.prefix);
+        fprintf(error.to.stream, "%s%sInvalid (incomplete) UTF-8 character", error.context.before->string, error.prefix);
 
         private_fll_error_print_function(error, function);
 

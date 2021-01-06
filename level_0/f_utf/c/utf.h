@@ -658,7 +658,7 @@ extern "C" {
  *   F_none if conversion was successful.
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_allocation (with error bit) on memory allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  *   F_failure (with error bit) if width is not long enough to convert.
  */

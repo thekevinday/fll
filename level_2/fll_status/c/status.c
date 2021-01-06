@@ -711,6 +711,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_memory, length, FL_status_string_memory_length) == F_equal_to) {
+        *code = F_memory;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_memory_not, length, FL_status_string_memory_not_length) == F_equal_to) {
+        *code = F_memory_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_minor, length, FL_status_string_minor_length) == F_equal_to) {
         *code = F_minor;
         return F_none;
@@ -1521,33 +1531,6 @@ extern "C" {
         return F_none;
       }
     #endif // _di_F_status_buffer_
-
-    #ifndef _di_F_status_memory_
-      if (fl_string_compare(string, FL_status_string_memory, length, FL_status_string_memory_length) == F_equal_to) {
-        *code = F_memory;
-        return F_none;
-      }
-
-      if (fl_string_compare(string, FL_status_string_memory_allocation, length, FL_status_string_memory_allocation_length) == F_equal_to) {
-        *code = F_memory_allocation;
-        return F_none;
-      }
-
-      if (fl_string_compare(string, FL_status_string_memory_deallocation, length, FL_status_string_memory_deallocation_length) == F_equal_to) {
-        *code = F_memory_deallocation;
-        return F_none;
-      }
-
-      if (fl_string_compare(string, FL_status_string_memory_not, length, FL_status_string_memory_not_length) == F_equal_to) {
-        *code = F_memory_not;
-        return F_none;
-      }
-
-      if (fl_string_compare(string, FL_status_string_memory_reallocation, length, FL_status_string_memory_reallocation_length) == F_equal_to) {
-        *code = F_memory_reallocation;
-        return F_none;
-      }
-    #endif // _di_F_status_memory_
 
     #ifndef _di_F_status_process_
       if (fl_string_compare(string, FL_status_string_process, length, FL_status_string_process_length) == F_equal_to) {

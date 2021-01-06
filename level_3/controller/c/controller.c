@@ -14,32 +14,32 @@ extern "C" {
 
     fll_program_print_help_header(output, context, controller_name_long, controller_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help, f_console_standard_long_help, f_console_symbol_short_enable, f_console_symbol_long_enable, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark, f_console_standard_long_dark, f_console_symbol_short_disable, f_console_symbol_long_disable, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light, f_console_standard_long_light, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color, f_console_standard_long_no_color, f_console_symbol_short_disable, f_console_symbol_long_disable, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet, f_console_standard_long_quiet, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal, f_console_standard_long_normal, f_console_symbol_short_disable, f_console_symbol_long_disable, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose, f_console_standard_long_verbose, f_console_symbol_short_disable, f_console_symbol_long_disable, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug, f_console_standard_long_debug, f_console_symbol_short_disable, f_console_symbol_long_disable, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version, f_console_standard_long_version, f_console_symbol_short_disable, f_console_symbol_long_disable, " Print only the version number.");
+    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
+    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
+    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable, f_console_symbol_long_enable, "      Specify a custom control group file path, such as '" controller_path_control "'.");
-    fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable, f_console_symbol_long_enable, "       Run in daemon only mode (do not process the entry).");
-    fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable, f_console_symbol_long_enable, "Designate that this program can be interrupted.");
-    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable, f_console_symbol_long_enable, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
-    fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable, f_console_symbol_long_enable, "         Run in test mode, where nothing is actually run but is instead simulated.");
-    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable, f_console_symbol_long_enable, "     Validate the settings (entry and rules) without running (does not simulate).");
+    fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" controller_path_control "'.");
+    fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program can be interrupted.");
+    fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
+    fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Specify a custom settings path, such as '" controller_path_settings "'.");
+    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in test mode, where nothing is actually run but is instead simulated.");
+    fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
     fprintf(output.stream, "  When both the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, controller_long_test);
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_test);
     fprintf(output.stream, " operation and the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable, controller_long_validate);
+    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_validate);
     fprintf(output.stream, " operation are specified, then additional information on each would be executed rule is printed.");
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -163,7 +163,7 @@ extern "C" {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
         fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-        fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_settings, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_settings, data->error.notable.after->string);
         fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 
@@ -194,7 +194,7 @@ extern "C" {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
         fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_pid, data->error.notable.after->string);
         fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 
@@ -216,7 +216,7 @@ extern "C" {
         if (data->warning.verbosity == f_console_verbosity_debug) {
           fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
-          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable, controller_long_pid, data->warning.notable.after->string);
+          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable_s, controller_long_pid, data->warning.notable.after->string);
           fprintf(data->warning.to.stream, "%s' must be a file path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
         }
       }
@@ -245,7 +245,7 @@ extern "C" {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
         fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_control, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_control, data->error.notable.after->string);
         fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 
@@ -267,7 +267,7 @@ extern "C" {
         if (data->warning.verbosity == f_console_verbosity_debug) {
           fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data->warning.to.stream, "%s%sThe parameter '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
-          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable, controller_long_control, data->warning.notable.after->string);
+          fprintf(data->warning.to.stream, "%s%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, f_console_symbol_long_enable_s, controller_long_control, data->warning.notable.after->string);
           fprintf(data->warning.to.stream, "%s' must be a file directory path but instead is an empty string, falling back to the default.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
         }
       }
@@ -290,9 +290,9 @@ extern "C" {
         if (data->error.verbosity != f_console_verbosity_quiet) {
           fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_validate, data->error.notable.after->string);
+          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_validate, data->error.notable.after->string);
           fprintf(data->error.to.stream, "%s' must not be specified with the parameter '", data->error.context.before->string);
-          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable, controller_long_daemon, data->error.notable.after->string);
+          fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_daemon, data->error.notable.after->string);
           fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
         }
 

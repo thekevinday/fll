@@ -140,7 +140,7 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_max) : strnlen(program ? program : arguments.array[0].string, f_path_max);
+    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
     char program_name[name_size + 1];
 
@@ -178,7 +178,7 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_max) : strnlen(program ? program : arguments.array[0].string, f_path_max);
+    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
     char program_name[name_size + 1];
 

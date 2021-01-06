@@ -53,6 +53,24 @@ extern "C" {
       f_macro_fss_quotess_t_new(status, set.quotess, length) \
     }
 
+  #define f_macro_fss_named_t_resize(status, set, new_length) \
+    f_macro_fss_objects_t_resize(status, set.objects, new_length) \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_contents_t_resize(status, set.contents, new_length) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotess_t_resize(status, set.quotess, new_length) \
+    }
+
+  #define f_macro_fss_named_t_adjust(status, set, new_length) \
+    f_macro_fss_objects_t_adjust(status, set.objects, new_length) \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_contents_t_adjust(status, set.contents, new_length) \
+    } \
+    if (F_status_is_fine(status)) { \
+      f_macro_fss_quotess_t_adjust(status, set.quotess, new_length) \
+    }
+
   #define f_macro_fss_named_t_delete(status, set) \
     f_macro_fss_objects_t_delete(status, set.objects) \
     if (F_status_is_fine(status)) { \
@@ -80,24 +98,6 @@ extern "C" {
     f_macro_fss_objects_t_destroy_simple(set.objects) \
     f_macro_fss_contents_t_destroy_simple(set.contents) \
     f_macro_fss_quotess_t_destroy_simple(set.quotess)
-
-  #define f_macro_fss_named_t_resize(status, set, new_length) \
-    f_macro_fss_objects_t_resize(status, set.objects, new_length) \
-    if (F_status_is_fine(status)) { \
-      f_macro_fss_contents_t_resize(status, set.contents, new_length) \
-    } \
-    if (F_status_is_fine(status)) { \
-      f_macro_fss_quotess_t_resize(status, set.quotess, new_length) \
-    }
-
-  #define f_macro_fss_named_t_adjust(status, set, new_length) \
-    f_macro_fss_objects_t_adjust(status, set.objects, new_length) \
-    if (F_status_is_fine(status)) { \
-      f_macro_fss_contents_t_adjust(status, set.contents, new_length) \
-    } \
-    if (F_status_is_fine(status)) { \
-      f_macro_fss_quotess_t_adjust(status, set.quotess, new_length) \
-    }
 #endif // _di_f_fss_named_t_
 
 /**
@@ -146,6 +146,48 @@ extern "C" {
     if (status == F_none) { \
       sets.size = length; \
       sets.used = 0; \
+    }
+
+  /**
+   * Resize a fss content sets.
+   *
+   * status:     the status to return.
+   * sets:       the f_fss_nameds_t structure to operate on.
+   * new_length: the new size of the array.
+   */
+  #define f_macro_fss_nameds_t_resize(status, sets, new_length) \
+    status = F_none; \
+    if (new_length < sets.size) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
+        f_macro_fss_named_t_delete(status, sets.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_resize((void **) & sets.array, sizeof(f_fss_named_t), sets.size, new_length); \
+    if (status == F_none) { \
+      sets.size = new_length; \
+      if (sets.used > sets.size) sets.used = new_length; \
+    }
+
+  /**
+   * Adjust a fss content sets.
+   *
+   * status:     the status to return.
+   * sets:       the f_fss_nameds_t structure to operate on.
+   * new_length: he new size of the array.
+   */
+  #define f_macro_fss_nameds_t_adjust(status, sets, new_length) \
+    status = F_none; \
+    if (new_length < sets.size) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
+        f_macro_fss_named_t_destroy(status, sets.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_adjust((void **) & sets.array, sizeof(f_fss_named_t), sets.size, new_length); \
+    if (status == F_none) { \
+      sets.size = new_length; \
+      if (sets.used > sets.size) sets.used = new_length; \
     }
 
   /**
@@ -209,48 +251,6 @@ extern "C" {
     } \
     f_memory_destroy((void **) & sets.array, sizeof(f_fss_named_t), sets.size); \
     sets.size = 0;
-
-  /**
-   * Resize a fss content sets.
-   *
-   * status:     the status to return.
-   * sets:       the f_fss_nameds_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nameds_t_resize(status, sets, new_length) \
-    status = F_none; \
-    if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
-        f_macro_fss_named_t_delete(status, sets.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & sets.array, sizeof(f_fss_named_t), sets.size, new_length); \
-    if (status == F_none) { \
-      sets.size = new_length; \
-      if (sets.used > sets.size) sets.used = new_length; \
-    }
-
-  /**
-   * Adjust a fss content sets.
-   *
-   * status:     the status to return.
-   * sets:       the f_fss_nameds_t structure to operate on.
-   * new_length: he new size of the array.
-   */
-  #define f_macro_fss_nameds_t_adjust(status, sets, new_length) \
-    status = F_none; \
-    if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
-        f_macro_fss_named_t_destroy(status, sets.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & sets.array, sizeof(f_fss_named_t), sets.size, new_length); \
-    if (status == F_none) { \
-      sets.size = new_length; \
-      if (sets.used > sets.size) sets.used = new_length; \
-    }
 #endif // _di_fss_nameds_t_
 
 #ifdef __cplusplus

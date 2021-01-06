@@ -23,6 +23,7 @@
 #include <level_0/utf.h>
 #include <level_0/console.h>
 #include <level_0/conversion.h>
+#include <level_0/path.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,7 +53,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _fl_console_parameter_to_string_dynamic_directory_

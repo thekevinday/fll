@@ -60,28 +60,26 @@ extern "C" {
 
   #define f_string_ranges_t_initialize {0, 0, 0}
 
-  #define f_macro_string_ranges_t_adjust(status, ranges, length) f_macro_memory_structure_t_adjust(status, ranges, f_string_range_t, length)
+  #define f_macro_string_ranges_t_clear(ranges) f_macro_memory_structure_clear(ranges);
 
-  #define f_macro_string_ranges_t_clear(ranges) f_macro_memory_structure_t_clear(ranges)
+  #define f_macro_string_ranges_t_new(status, ranges, length) f_macro_memory_structure_new(status, ranges, f_string_range_t, length);
 
-  #define f_macro_string_ranges_t_decimate(status, ranges)            f_macro_memory_structure_decimate(status, ranges, f_string_range_t);
-  #define f_macro_string_ranges_t_decimate_by(status, ranges, amount) f_macro_memory_structure_decimate_by(status, ranges, f_string_range_t, amount);
+  #define f_macro_string_ranges_t_resize(status, ranges, length) f_macro_memory_structure_resize(status, ranges, f_string_range_t, length);
+  #define f_macro_string_ranges_t_adjust(status, ranges, length) f_macro_memory_structure_adjust(status, ranges, f_string_range_t, length);
 
-  #define f_macro_string_ranges_t_decrease(status, ranges)            f_macro_memory_structure_decrease(status, ranges, f_string_range_t);
-  #define f_macro_string_ranges_t_decrease_by(status, ranges, amount) f_macro_memory_structure_decrease_by(status, ranges, f_string_range_t, amount);
+  #define f_macro_string_ranges_t_delete(status, ranges)  f_macro_memory_structure_delete(status, ranges, f_string_range_t);
+  #define f_macro_string_ranges_t_destroy(status, ranges) f_macro_memory_structure_destroy(status, ranges, f_string_range_t);
 
-  #define f_macro_string_ranges_t_delete(status, ranges) f_macro_memory_structure_t_delete(status, ranges, f_string_range_t)
-  #define f_macro_string_ranges_t_delete_simple(ranges)  f_macro_memory_structure_t_delete_simple(ranges, f_string_range_t)
+  #define f_macro_string_ranges_t_delete_simple(ranges)  f_macro_memory_structure_delete_simple(ranges, f_string_range_t);
+  #define f_macro_string_ranges_t_destroy_simple(ranges) f_macro_memory_structure_destroy_simple(ranges, f_string_range_t);
 
-  #define f_macro_string_ranges_t_destroy(status, ranges) f_macro_memory_structure_t_destroy(status, ranges, f_string_range_t)
-  #define f_macro_string_ranges_t_destroy_simple(ranges)  f_macro_memory_structure_t_destroy_simple(ranges, f_string_range_t)
+  #define f_macro_string_ranges_t_increase(status, ranges) f_macro_memory_structure_increase(status, ranges, f_string_range_t);
+  #define f_macro_string_ranges_t_decrease(status, ranges) f_macro_memory_structure_decrease(status, ranges, f_string_range_t);
+  #define f_macro_string_ranges_t_decimate(status, ranges) f_macro_memory_structure_decimate(status, ranges, f_string_range_t);
 
-  #define f_macro_string_ranges_t_increase(status, ranges)            f_macro_memory_structure_increase(status, ranges, f_string_range_t);
   #define f_macro_string_ranges_t_increase_by(status, ranges, amount) f_macro_memory_structure_increase_by(status, ranges, f_string_range_t, amount);
-
-  #define f_macro_string_ranges_t_new(status, ranges, length) f_macro_memory_structure_t_new(status, ranges, f_string_range_t, length)
-
-  #define f_macro_string_ranges_t_resize(status, ranges, new_length) f_macro_memory_structure_t_resize(status, ranges, f_string_range_t, new_length)
+  #define f_macro_string_ranges_t_decrease_by(status, ranges, amount) f_macro_memory_structure_decrease_by(status, ranges, f_string_range_t, amount);
+  #define f_macro_string_ranges_t_decimate_by(status, ranges, amount) f_macro_memory_structure_decimate_by(status, ranges, f_string_range_t, amount);
 #endif // _di_f_string_ranges_t_
 
 /**
@@ -101,18 +99,18 @@ extern "C" {
 
   #define f_string_rangess_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_rangess_t_clear(rangess) f_macro_memory_structures_t_clear(rangess)
+  #define f_macro_string_rangess_t_clear(rangess) f_macro_memory_structures_clear(rangess);
 
-  #define f_macro_string_rangess_t_new(status, rangess, length) f_macro_memory_structures_t_new(status, rangess, f_string_ranges_t, length)
+  #define f_macro_string_rangess_t_new(status, rangess, length) f_macro_memory_structures_new(status, rangess, f_string_ranges_t, length);
 
-  #define f_macro_string_rangess_t_delete(status, rangess)  f_macro_memory_structures_t_delete(status, rangess, f_string_range_t, f_string_ranges_t)
-  #define f_macro_string_rangess_t_destroy(status, rangess) f_macro_memory_structures_t_destroy(status, rangess, f_string_range_t, f_string_ranges_t)
+  #define f_macro_string_rangess_t_resize(status, rangess, length) f_macro_memory_structures_resize(status, rangess, f_string_range_t, f_string_ranges_t, length, f_array_length_t);
+  #define f_macro_string_rangess_t_adjust(status, rangess, length) f_macro_memory_structures_adjust(status, rangess, f_string_range_t, f_string_ranges_t, length, f_array_length_t);
 
-  #define f_macro_string_rangess_t_delete_simple(rangess)  f_macro_memory_structures_t_delete_simple(rangess, f_string_range_t, f_string_ranges_t)
-  #define f_macro_string_rangess_t_destroy_simple(rangess) f_macro_memory_structures_t_destroy_simple(rangess, f_string_range_t, f_string_ranges_t)
+  #define f_macro_string_rangess_t_delete(status, rangess)  f_macro_memory_structures_delete(status, rangess, f_string_range_t, f_string_ranges_t);
+  #define f_macro_string_rangess_t_destroy(status, rangess) f_macro_memory_structures_destroy(status, rangess, f_string_range_t, f_string_ranges_t);
 
-  #define f_macro_string_rangess_t_resize(status, rangess, new_length) f_macro_memory_structures_t_resize(status, rangess, f_string_range_t, f_string_ranges_t, new_length, f_array_length_t)
-  #define f_macro_string_rangess_t_adjust(status, rangess, new_length) f_macro_memory_structures_t_adjust(status, rangess, f_string_range_t, f_string_ranges_t, new_length, f_array_length_t)
+  #define f_macro_string_rangess_t_delete_simple(rangess)  f_macro_memory_structures_delete_simple(rangess, f_string_range_t, f_string_ranges_t);
+  #define f_macro_string_rangess_t_destroy_simple(rangess) f_macro_memory_structures_destroy_simple(rangess, f_string_range_t, f_string_ranges_t);
 #endif // _di_f_string_rangess_t_
 
 #ifdef __cplusplus

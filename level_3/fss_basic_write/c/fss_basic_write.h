@@ -47,7 +47,7 @@ extern "C" {
   #define fss_basic_write_major_version "0"
   #define fss_basic_write_minor_version "5"
   #define fss_basic_write_micro_version "3"
-  #define fss_basic_write_version fss_basic_write_major_version "." fss_basic_write_minor_version "." fss_basic_write_micro_version
+  #define fss_basic_write_version fss_basic_write_major_version f_string_ascii_period fss_basic_write_minor_version f_string_ascii_period fss_basic_write_micro_version
 #endif // _di_fss_basic_write_version_
 
 #ifndef _di_fss_basic_write_name_
@@ -104,15 +104,15 @@ extern "C" {
 
   #define fss_basic_write_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(fss_basic_write_short_file, fss_basic_write_long_file, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_write_short_content, fss_basic_write_long_content, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_basic_write_short_double, fss_basic_write_long_double, 0, 0, f_console_type_normal), \

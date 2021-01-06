@@ -88,7 +88,7 @@ extern "C" {
  *   Otherwise, this gets the path as it appears to be.
  * @param path
  *   The (allocated) file path.
- *   This will have a max size of f_path_max + 1.
+ *   This will have a max size of f_path_length_max + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
@@ -99,7 +99,6 @@ extern "C" {
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -137,14 +136,14 @@ extern "C" {
  * This does check to see if the path exists or not (path must exist).
  * This processes all relative parts.
  * This processes all symbolic links.
- * This has a max size of f_path_max + 1.
+ * This has a max size of f_path_length_max + 1.
  *
  * @param path
  *   The source path to determine what the real path is.
  *   This is a NULL terminated string.
  * @param real
  *   The (allocated) real file path.
- *   This will have a max size of f_path_max + 1.
+ *   This will have a max size of f_path_length_max + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
@@ -155,7 +154,6 @@ extern "C" {
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -33,6 +33,10 @@ extern "C" {
   #define fll_error_file_type_length_directory 9
   #define fll_error_file_type_length_file      4
   #define fll_error_file_type_length_pipe      4
+
+  extern const f_string_t fll_error_file_type_string_directory_s;
+  extern const f_string_t fll_error_file_type_string_file_s;
+  extern const f_string_t fll_error_file_type_string_pipe_s;
 #endif // _di_fll_error_file_type_
 
 /**
@@ -53,6 +57,10 @@ extern "C" {
   #define fll_error_print_error_length   7
   #define fll_error_print_warning_length 9
 
+  extern const f_string_t fll_error_print_debug_s;
+  extern const f_string_t fll_error_print_error_s;
+  extern const f_string_t fll_error_print_warning_s;
+
   typedef struct {
     f_file_t to;
     uint8_t verbosity;
@@ -66,14 +74,14 @@ extern "C" {
   #define fll_error_print_t_initialize { \
     f_macro_file_t_initialize2(f_type_error, f_type_descriptor_error, f_file_flag_write_only), \
     f_console_verbosity_normal, \
-    fll_error_print_error, \
+    fll_error_print_error_s, \
     f_color_set_t_initialize, \
     f_color_set_t_initialize, \
   }
 
   #define fll_macro_error_print_t_initialize(to, verbosity, prefix, context, notable) { to, verbosity, prefix, context, notable }
-  #define fll_macro_error_print_t_initialize_debug() fll_macro_error_print_t_initialize(f_macro_file_t_initialize2(f_type_debug, f_type_descriptor_debug, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_debug, f_color_set_t_initialize, f_color_set_t_initialize)
-  #define fll_macro_error_print_t_initialize_warning() fll_macro_error_print_t_initialize(f_macro_file_t_initialize2(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_warning, f_color_set_t_initialize, f_color_set_t_initialize)
+  #define fll_macro_error_print_t_initialize_debug() fll_macro_error_print_t_initialize(f_macro_file_t_initialize2(f_type_debug, f_type_descriptor_debug, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_debug_s, f_color_set_t_initialize, f_color_set_t_initialize)
+  #define fll_macro_error_print_t_initialize_warning() fll_macro_error_print_t_initialize(f_macro_file_t_initialize2(f_type_warning, f_type_descriptor_warning, f_file_flag_write_only), f_console_verbosity_normal, fll_error_print_warning_s, f_color_set_t_initialize, f_color_set_t_initialize)
 #endif // _di_fll_error_print_t_
 
 #ifdef __cplusplus

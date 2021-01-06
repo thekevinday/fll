@@ -21,6 +21,7 @@
 extern "C" {
 #endif
 
+// @todo create external constants for each of the strings and use those.
 #ifndef _di_FL_status_string_
   #ifndef _di_F_status_boolean_
     #define FL_status_string_false "F_false"
@@ -233,6 +234,8 @@ extern "C" {
     #define FL_status_string_loop_not          "F_loop_not"
     #define FL_status_string_maybe             "F_maybe"
     #define FL_status_string_maybe_not         "F_maybe_not"
+    #define FL_status_string_memory            "F_memory"
+    #define FL_status_string_memory_not        "F_memory_not"
     #define FL_status_string_minor             "F_minor"
     #define FL_status_string_minor_not         "F_minor_not"
     #define FL_status_string_moderate          "F_moderate"
@@ -384,6 +387,8 @@ extern "C" {
     #define FL_status_string_loop_not_length          10
     #define FL_status_string_maybe_length             7
     #define FL_status_string_maybe_not_length         11
+    #define FL_status_string_memory_length            8
+    #define FL_status_string_memory_not_length        12
     #define FL_status_string_minor_length             7
     #define FL_status_string_minor_not_length         11
     #define FL_status_string_moderate_length          10
@@ -646,21 +651,6 @@ extern "C" {
     #define FL_status_string_terminated_not_nest_eos_length    25
     #define FL_status_string_terminated_not_nest_stop_length   26
   #endif // _di_F_status_buffer_
-
-  #ifndef _di_F_status_memory_
-    #define FL_status_string_memory              "F_memory"
-    #define FL_status_string_memory_allocation   "F_memory_allocation"
-    #define FL_status_string_memory_deallocation "F_memory_deallocation"
-    #define FL_status_string_memory_not          "F_memory_not"
-    #define FL_status_string_memory_reallocation "F_memory_reallocation"
-
-    #define FL_status_string_memory_length              8
-    #define FL_status_string_memory_allocation_length   19
-    #define FL_status_string_memory_deallocation_length 21
-    #define FL_status_string_memory_not_length          12
-    #define FL_status_string_memory_reallocation_length 21
-
-  #endif // _di_F_status_memory_
 
   #ifndef _di_F_status_process_
     #define FL_status_string_process          "F_process"

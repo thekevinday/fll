@@ -13,7 +13,7 @@ extern "C" {
     f_status_t status = F_none;
     f_string_length_t at = 0;
 
-    uint8_t previous_1 = '/';
+    uint8_t previous_1 = f_path_separator_s[0];
     uint8_t previous_2 = 0;
 
     f_string_length_t size_chunk = 0;
@@ -21,7 +21,7 @@ extern "C" {
 
     canonical->used = 0;
 
-    if (path[0] == '/') {
+    if (path[0] == f_path_separator_s[0]) {
       at = 1;
     }
     else {
@@ -39,14 +39,14 @@ extern "C" {
 
     for (; path[at]; at++) {
 
-      if (!size_chunk && path[at] == '.') {
-        if (!previous_1 || previous_1 == '/') {
-          previous_1 = '.';
+      if (!size_chunk && path[at] == f_path_separator_current_s[0]) {
+        if (!previous_1 || previous_1 == f_path_separator_s[0]) {
+          previous_1 = f_path_separator_current_s[0];
           previous_2 = 0;
           continue;
         }
 
-        if (previous_1 == '.') {
+        if (previous_1 == f_path_separator_current_s[0]) {
           if (previous_2) {
             previous_1 = 0;
             previous_2 = 0;
@@ -54,22 +54,22 @@ extern "C" {
             position = at - 2;
           }
           else {
-            previous_2 = '.';
+            previous_2 = f_path_separator_current_s[0];
           }
         }
       }
-      else if (path[at] == '/') {
-        if (previous_1 == '/') {
+      else if (path[at] == f_path_separator_s[0]) {
+        if (previous_1 == f_path_separator_s[0]) {
           size_chunk = 0;
           position = 0;
           continue;
         }
 
-        if (previous_1 == '.') {
-          if (previous_2 == '.') {
+        if (previous_1 == f_path_separator_current_s[0]) {
+          if (previous_2 == f_path_separator_current_s[0]) {
             if (canonical->used > 1) {
               for (canonical->used--; canonical->used > 0; canonical->used--) {
-                if (canonical->string[canonical->used - 1] == '/') break;
+                if (canonical->string[canonical->used - 1] == f_path_separator_s[0]) break;
               } // for
             }
           }
@@ -83,7 +83,7 @@ extern "C" {
           }
         }
 
-        previous_1 = '/';
+        previous_1 = f_path_separator_s[0];
         previous_2 = 0;
         size_chunk = 0;
         position = 0;
@@ -96,7 +96,7 @@ extern "C" {
             position -= 2;
             size_chunk = 2;
           }
-          else if (previous_1 && previous_1 != '/') {
+          else if (previous_1 && previous_1 != f_path_separator_s[0]) {
             position--;
             size_chunk = 1;
           }
@@ -111,14 +111,14 @@ extern "C" {
       }
     } // for
 
-    if (previous_2 == '.') {
+    if (previous_2 == f_path_separator_current_s[0]) {
       if (canonical->used > 1) {
         for (canonical->used--; canonical->used > 0; canonical->used--) {
-          if (canonical->string[canonical->used - 1] == '/') break;
+          if (canonical->string[canonical->used - 1] == f_path_separator_s[0]) break;
         } // for
       }
     }
-    else if (!(previous_1 == '.' || previous_1 == '/')) {
+    else if (!(previous_1 == f_path_separator_current_s[0] || previous_1 == f_path_separator_s[0])) {
       if (size_chunk) {
         status = fl_string_append(path + position, size_chunk, canonical);
         if (F_status_is_error(status)) return status;
@@ -126,7 +126,7 @@ extern "C" {
     }
 
     // assure there is no trailing forward slash, unless it is the first slash.
-    if (canonical->used > 1 && canonical->string[canonical->used - 1] == '/') {
+    if (canonical->used > 1 && canonical->string[canonical->used - 1] == f_path_separator_s[0]) {
       canonical->used--;
     }
 

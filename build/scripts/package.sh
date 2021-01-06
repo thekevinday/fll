@@ -469,8 +469,11 @@ package_dependencies_individual() {
   local dependencies_0=
   local dependencies_1=
   local dependencies_2=
+  local dependencies_thread=
   local dependencies_individual=
+  local dependencies_individual_threadless=
   local dependency=
+  local has_thread=
   local sub_level=
   local sub_dependencies=
   local sub_dependency=
@@ -510,10 +513,16 @@ package_dependencies_individual() {
     dependencies_0=
     dependencies_1=
     dependencies_2=
+    dependencies_thread=
     dependencies_individual=
+    has_thread=
 
     if [[ -f ${directory}/data/build/dependencies ]] ; then
       dependencies=$(cat ${directory}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
+    fi
+
+    if [[ $(echo "$dependencies" | grep -o "\<f_thread\>") != "" ]] ; then
+      has_thread="yes"
     fi
 
     for dependency in $dependencies ; do
@@ -622,7 +631,8 @@ package_dependencies_individual() {
     fi
 
     settings=${directory}/data/build/settings
-    sed -i -e "s|^\s*build_libraries-individual\>.*\$|build_libraries-individual$dependencies_individual|" $settings
+    sed -i -e "s|^\s*build_libraries-individual[[:space:]].*\$|build_libraries-individual$dependencies_individual|" $settings &&
+    sed -i -e "s|^\s*build_libraries-individual\$|build_libraries-individual$dependencies_individual|" $settings
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
@@ -633,9 +643,31 @@ package_dependencies_individual() {
       return
     fi
 
+    if [[ $has_thread == "yes" && $dependencies_individual != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" $settings) != "" ]] ; then
+      dependencies_individual_threadless=$(echo "$dependencies_individual" | sed -e "s| \-lf_thread\>||g")
+
+      if [[ $verbosity == "verbose" ]] ; then
+        echo -e " (threadless) $dependencies_individual_threadless"
+      fi
+
+      settings=${directory}/data/build/settings
+      sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless$dependencies_individual_threadless|" $settings &&
+      sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless$dependencies_individual_threadless|" $settings
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
+        fi
+
+        failure=1
+        return
+      fi
+    fi
+
     # all level 3 are expected to support all modes: individual, level, and monolithic.
     if [[ $level_current == "3" ]] ; then
-      sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
+      sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings &&
+      sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -646,7 +678,8 @@ package_dependencies_individual() {
         return
       fi
 
-      sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings
+      sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings &&
+      sed -i -e "s|^\s*build_libraries-monolithic\$|build_libraries-monolithic -lfll|" $settings
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -676,7 +709,8 @@ package_dependencies_individual_append() {
     return
   fi
 
-  libraries=$(grep -o '^\s*build_sources_library\>.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+  libraries=$(grep -o '^\s*build_sources_library\s.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
+
   if [[ $libraries != "" ]] ; then
     if [[ $(echo -n $dependencies_individual | grep -o "\-l$dependency\>") == "" ]] ; then
 
@@ -751,8 +785,12 @@ package_dependencies_level_update() {
   local level_libraries="$2"
   local level_sources_library=
   local level_sources_headers=
+  local level_sources_library_threaded=
+  local level_sources_headers_threaded=
   local monolithic_libraries=
   local monolithic_headers=
+  local monolithic_libraries_threaded=
+  local monolithic_headers_threaded=
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
@@ -772,16 +810,28 @@ package_dependencies_level_update() {
       return
     fi
 
-    libraries=$(grep -o '^\s*build_sources_library\>.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    libraries=$(grep -o '^\s*build_sources_library\s.*$' $settings | sed -e 's|^\s*build_sources_library\>||' -e 's|^\s*||' -e 's|\s*$||')
+
     for library in $libraries ; do
-      level_sources_library="$level_sources_library $library"
-      monolithic_libraries="$monolithic_libraries $level/$library"
+      if [[ $name == "f_thread" ]] ; then
+        level_sources_library_threaded="$level_sources_library_threaded $library"
+        monolithic_libraries_threaded="$monolithic_libraries_threaded $level/$library"
+      else
+        level_sources_library="$level_sources_library $library"
+        monolithic_libraries="$monolithic_libraries $level/$library"
+      fi
     done
 
-    headers=$(grep -o '^\s*build_sources_headers\>.*$' $settings | sed -e 's|^\s*build_sources_headers\>||' -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    headers=$(grep -o '^\s*build_sources_headers\s.*$' $settings | sed -e 's|^\s*build_sources_headers\>||' -e 's|^\s*||' -e 's|\s*$||')
+
     for header in $headers ; do
-      level_sources_headers="$level_sources_headers $header"
-      monolithic_headers="$monolithic_headers $level/$header"
+      if [[ $name == "f_thread" ]] ; then
+        level_sources_headers_threaded="$level_sources_headers_threaded $header"
+        monolithic_headers_threaded="$monolithic_headers_threaded $level/$header"
+      else
+        level_sources_headers="$level_sources_headers $header"
+        monolithic_headers="$monolithic_headers $level/$header"
+      fi
     done
   done
 
@@ -796,7 +846,10 @@ package_dependencies_level_update() {
     return
   fi
 
-  sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level$level_libraries|" $settings
+  sed -i -e "s|^\s*build_libraries-level\s.*\$|build_libraries-level$level_libraries|" $settings &&
+  sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level$level_libraries|" $settings &&
+  sed -i -e "s|^\s*build_libraries-level_threadless\s.*\$|build_libraries-level_threadless$level_libraries|" $settings &&
+  sed -i -e "s|^\s*build_libraries-level_threadless\$|build_libraries-level_threadless$level_libraries|" $settings
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -813,7 +866,10 @@ package_dependencies_level_update() {
     level_sources_library=" $level_sources_library"
   fi
 
-  sed -i -e "s|^\s*build_sources_library\>.*\$|build_sources_library$level_sources_library|" $settings
+  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library$level_sources_library|" $settings &&
+  sed -i -e "s|^\s*build_sources_library\$|build_sources_library$level_sources_library|" $settings &&
+  sed -i -e "s|^\s*build_sources_library-level\s.*\$|build_sources_library-level$level_sources_library_threaded|" $settings &&
+  sed -i -e "s|^\s*build_sources_library-level\$|build_sources_library-level$level_sources_library_threaded|" $settings
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -830,7 +886,10 @@ package_dependencies_level_update() {
     level_sources_headers=" $level_sources_headers"
   fi
 
-  sed -i -e "s|^\s*build_sources_headers\>.*\$|build_sources_headers$level_sources_headers|" $settings
+  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers$level_sources_headers|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers$level_sources_headers|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers-level\s.*\$|build_sources_headers-level$level_sources_headers_threaded|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers-level\$|build_sources_headers-level$level_sources_headers_threaded|" $settings
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -844,18 +903,29 @@ package_dependencies_level_update() {
   if [[ $level == "level_0" ]] ; then
     level_0_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     level_0_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+
+    level_0_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_0_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
   elif [[ $level == "level_1" ]] ; then
     level_1_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     level_1_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+
+    level_1_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_1_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
   elif [[ $level == "level_2" ]] ; then
     level_2_libraries=$(echo "$monolithic_libraries" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
     level_2_headers=$(echo "$monolithic_headers" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+
+    level_2_libraries_threaded=$(echo "$monolithic_libraries_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
+    level_2_headers_threaded=$(echo "$monolithic_headers_threaded" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||')
   fi
 }
 
 package_dependencies_monolithic() {
   local monolithic_libraries=""
+  local monolithic_libraries_threaded=""
   local monolithic_headers=""
+  local monolithic_headers_threaded=""
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
@@ -866,8 +936,16 @@ package_dependencies_monolithic() {
     monolithic_libraries="$level_0_libraries"
   fi
 
+  if [[ $level_0_libraries_threaded != "" ]] ; then
+    monolithic_libraries_threaded="$level_0_libraries_threaded"
+  fi
+
   if [[ $level_0_headers != "" ]] ; then
     monolithic_headers="$level_0_headers"
+  fi
+
+  if [[ $level_0_headers_threaded != "" ]] ; then
+    monolithic_headers_threaded="$level_0_headers_threaded"
   fi
 
   if [[ $level_1_libraries != "" ]] ; then
@@ -875,6 +953,14 @@ package_dependencies_monolithic() {
       monolithic_libraries="$level_1_libraries"
     else
       monolithic_libraries="$monolithic_libraries $level_1_libraries"
+    fi
+  fi
+
+  if [[ $level_1_libraries_threaded != "" ]] ; then
+    if [[ $monolithic_libraries_threaded == "" ]] ; then
+      monolithic_libraries_threaded="$level_1_libraries_threaded"
+    else
+      monolithic_libraries_threaded="$monolithic_libraries_threaded $level_1_libraries_threaded"
     fi
   fi
 
@@ -886,6 +972,14 @@ package_dependencies_monolithic() {
     fi
   fi
 
+  if [[ $level_1_headers_threaded != "" ]] ; then
+    if [[ $monolithic_libraries_threaded == "" ]] ; then
+      monolithic_headers_threaded="$level_1_headers_threaded"
+    else
+      monolithic_headers_threaded="$monolithic_headers_threaded $level_1_headers_threaded"
+    fi
+  fi
+
   if [[ $level_2_libraries != "" ]] ; then
     if [[ $monolithic_libraries == "" ]] ; then
       monolithic_libraries="$level_2_libraries"
@@ -894,11 +988,27 @@ package_dependencies_monolithic() {
     fi
   fi
 
+  if [[ $level_2_libraries_threaded != "" ]] ; then
+    if [[ $monolithic_libraries_threaded == "" ]] ; then
+      monolithic_libraries_threaded="$level_2_libraries_threaded"
+    else
+      monolithic_libraries_threaded="$monolithic_libraries_threaded $level_2_libraries_threaded"
+    fi
+  fi
+
   if [[ $level_2_headers != "" ]] ; then
     if [[ $monolithic_libraries == "" ]] ; then
       monolithic_headers="$level_2_headers"
     else
       monolithic_headers="$monolithic_headers $level_2_headers"
+    fi
+  fi
+
+  if [[ $level_2_headers_threaded != "" ]] ; then
+    if [[ $monolithic_libraries_threaded == "" ]] ; then
+      monolithic_headers_threaded="$level_2_headers_threaded"
+    else
+      monolithic_headers_threaded="$monolithic_headers_threaded $level_2_headers_threaded"
     fi
   fi
 
@@ -912,7 +1022,18 @@ package_dependencies_monolithic() {
     monolithic_libraries=" $monolithic_libraries"
   fi
 
-  sed -i -e "s|^\s*build_sources_library\>.*\$|build_sources_library$monolithic_libraries|" $settings
+  if [[ $monolithic_libraries_threaded != "" ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo " (threaded) $monolithic_libraries_threaded"
+    fi
+
+    monolithic_libraries_threaded=" $monolithic_libraries_threaded"
+  fi
+
+  sed -i -e "s|^\s*build_sources_library\s.*\$|build_sources_library$monolithic_libraries|" $settings &&
+  sed -i -e "s|^\s*build_sources_library\$|build_sources_library$monolithic_libraries|" $settings &&
+  sed -i -e "s|^\s*build_sources_library-monolithic\s.*\$|build_sources_library-monolithic$monolithic_libraries_threaded|" $settings &&
+  sed -i -e "s|^\s*build_sources_library-monolithic\$|build_sources_library-monolithic$monolithic_libraries_threaded|" $settings
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -923,7 +1044,6 @@ package_dependencies_monolithic() {
     return
   fi
 
-
   if [[ $monolithic_headers != "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo " $monolithic_headers"
@@ -932,7 +1052,18 @@ package_dependencies_monolithic() {
     monolithic_headers=" $monolithic_headers"
   fi
 
-  sed -i -e "s|^\s*build_sources_headers\>.*\$|build_sources_headers$monolithic_headers|" $settings
+  if [[ $monolithic_headers_threaded != "" ]] ; then
+    if [[ $verbosity != "quiet" ]] ; then
+      echo " (threaded) $monolithic_headers_threaded"
+    fi
+
+    monolithic_headers_threaded=" $monolithic_headers_threaded"
+  fi
+
+  sed -i -e "s|^\s*build_sources_headers\s.*\$|build_sources_headers$monolithic_headers|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers\$|build_sources_headers$monolithic_headers|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers-monolithic\s.*\$|build_sources_headers-monolithic$monolithic_headers_threaded|" $settings &&
+  sed -i -e "s|^\s*build_sources_headers-monolithic\$|build_sources_headers-monolithic$monolithic_headers_threaded|" $settings
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then

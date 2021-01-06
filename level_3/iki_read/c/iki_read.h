@@ -55,7 +55,7 @@ extern "C" {
   #define iki_read_major_version "0"
   #define iki_read_minor_version "5"
   #define iki_read_micro_version "3"
-  #define iki_read_version iki_read_major_version "." iki_read_minor_version "." iki_read_micro_version
+  #define iki_read_version iki_read_major_version f_string_ascii_period iki_read_minor_version f_string_ascii_period iki_read_micro_version
 #endif // _di_iki_read_version_
 
 #ifndef _di_iki_read_name_
@@ -115,15 +115,15 @@ extern "C" {
 
   #define iki_read_console_parameter_t_initialize \
     { \
-      f_console_parameter_t_initialize(f_console_standard_short_help, f_console_standard_long_help, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(f_console_standard_short_light, f_console_standard_long_light, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_dark, f_console_standard_long_dark, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_quiet, f_console_standard_long_quiet, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color, f_console_standard_long_no_color, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_normal, f_console_standard_long_normal, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_verbose, f_console_standard_long_verbose, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_debug, f_console_standard_long_debug, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version, f_console_standard_long_version, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(iki_read_short_at, iki_read_long_at, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(iki_read_short_content, iki_read_long_content, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(iki_read_short_line, iki_read_long_line, 0, 1, f_console_type_normal), \
@@ -171,23 +171,23 @@ extern "C" {
 
   #define iki_read_substitutions_t_initialize {0, 0, 0}
 
-  #define iki_read_macro_substitutions_t_clear(replacements) f_macro_memory_structure_t_clear(replacements)
+  #define iki_read_macro_substitutions_t_clear(replacements) f_macro_memory_structure_clear(replacements)
 
-  #define iki_read_macro_substitutions_t_new(status, replacements, length) f_macro_memory_structure_t_new(status, replacements, iki_read_substitution_t, length)
+  #define iki_read_macro_substitutions_t_new(status, replacements, length) f_macro_memory_structure_new(status, replacements, iki_read_substitution_t, length)
 
   #define iki_read_macro_substitutions_t_delete_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (!replacements.used) f_macro_memory_structure_t_delete_simple(replacements, iki_read_substitution_t)
+    if (!replacements.used) f_macro_memory_structure_delete_simple(replacements, iki_read_substitution_t)
 
   #define iki_read_macro_substitutions_t_destroy_simple(replacements) \
     replacements.used = replacements.size; \
     while (replacements.used > 0) { \
       replacements.used--; \
     } \
-    if (!replacements.used) f_macro_memory_structure_t_destroy_simple(replacements, iki_read_substitution_t)
+    if (!replacements.used) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
 
   #define iki_read_macro_substitutions_t_resize(status, replacements, new_length) \
     status = F_none; \

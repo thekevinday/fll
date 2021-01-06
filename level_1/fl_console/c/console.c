@@ -19,14 +19,14 @@ extern "C" {
     }
 
     if (length > 1) {
-      while (length > 1 && argument[length - 1] == '/') {
+      while (length > 1 && argument[length - 1] == f_path_separator_s[0]) {
         length--;
       } // while
 
-      if (argument[0] == '/') {
+      if (argument[0] == f_path_separator_s[0]) {
         f_string_length_t begin = 1;
 
-        while (begin < length && argument[begin] == '/') {
+        while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;
         } // while
 
@@ -42,8 +42,8 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = '/';
-          directory->string[length - 1] = '/';
+          directory->string[0] = f_path_separator_s[0];
+          directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
           f_macro_string_dynamic_t_new(status, (*directory), 1);
@@ -51,13 +51,13 @@ extern "C" {
 
           directory->used = 1;
           directory->size = 1;
-          directory->string[0] = '/';
+          directory->string[0] = f_path_separator_s[0];
         }
       }
-      else if (length > 3 && argument[0] == '.' && argument[1] == '.' && argument[2] == '/') {
+      else if (length > 3 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_current_s[0] && argument[2] == f_path_separator_s[0]) {
         f_string_length_t begin = 3;
 
-        while (begin < length && argument[begin] == '/') {
+        while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;
         } // while
 
@@ -73,10 +73,10 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = '.';
-          directory->string[1] = '.';
-          directory->string[2] = '/';
-          directory->string[length - 1] = '/';
+          directory->string[0] = f_path_separator_current_s[0];
+          directory->string[1] = f_path_separator_current_s[0];
+          directory->string[2] = f_path_separator_s[0];
+          directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
           f_macro_string_dynamic_t_new(status, (*directory), 3);
@@ -84,15 +84,15 @@ extern "C" {
 
           directory->used = 3;
           directory->size = 3;
-          directory->string[0] = '.';
-          directory->string[1] = '.';
-          directory->string[2] = '/';
+          directory->string[0] = f_path_separator_current_s[0];
+          directory->string[1] = f_path_separator_current_s[0];
+          directory->string[2] = f_path_separator_s[0];
         }
       }
-      else if (length > 2 && argument[0] == '.' && argument[1] == '/') {
+      else if (length > 2 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_s[0]) {
         f_string_length_t begin = 2;
 
-        while (begin < length && argument[begin] == '/') {
+        while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;
         } // while
 
@@ -108,9 +108,9 @@ extern "C" {
 
           directory->used = length;
           directory->size = length;
-          directory->string[0] = '.';
-          directory->string[1] = '/';
-          directory->string[length - 1] = '/';
+          directory->string[0] = f_path_separator_current_s[0];
+          directory->string[1] = f_path_separator_s[0];
+          directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
           f_macro_string_dynamic_t_new(status, (*directory), 2);
@@ -118,8 +118,8 @@ extern "C" {
 
           directory->used = 2;
           directory->size = 2;
-          directory->string[0] = '.';
-          directory->string[1] = '/';
+          directory->string[0] = f_path_separator_current_s[0];
+          directory->string[1] = f_path_separator_s[0];
         }
       }
       else {
@@ -132,10 +132,10 @@ extern "C" {
 
         directory->used = length;
         directory->size = length;
-        directory->string[length - 1] = '/';
+        directory->string[length - 1] = f_path_separator_s[0];
       }
     }
-    else if (argument[0] != '/') {
+    else if (argument[0] != f_path_separator_s[0]) {
       f_macro_string_dynamic_t_new(status, (*directory), 2);
       if (F_status_is_error(status)) return status;
 
@@ -143,7 +143,7 @@ extern "C" {
 
       directory->used = 2;
       directory->size = 2;
-      directory->string[1] = '/';
+      directory->string[1] = f_path_separator_s[0];
     }
     else {
       f_macro_string_dynamic_t_new(status, (*directory), 1);

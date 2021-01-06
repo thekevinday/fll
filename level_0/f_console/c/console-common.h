@@ -37,15 +37,8 @@ extern "C" {
 
 /**
  * The symbols passed to the program for option handling.
- *
- * The following will be processed as an integer and therefore must not be string.
- * - f_console_symbol_enable
- * - f_console_symbol_disable
  */
-#ifndef _di_f_console_symbols_
-  #define f_console_symbol_enable  '-'
-  #define f_console_symbol_disable '+'
-
+#ifndef _di_f_console_symbol_s_
   #define f_console_symbol_short_enable  "-"
   #define f_console_symbol_short_disable "+"
 
@@ -57,7 +50,13 @@ extern "C" {
 
   #define f_console_symbol_long_enable_length  2
   #define f_console_symbol_long_disable_length 2
-#endif // _di_f_console_symbols_
+
+  extern const f_string_t f_console_symbol_short_enable_s;
+  extern const f_string_t f_console_symbol_short_disable_s;
+
+  extern const f_string_t f_console_symbol_long_enable_s;
+  extern const f_string_t f_console_symbol_long_disable_s;
+#endif // _di_f_console_symbol_s_
 
 /**
  * Create some standard command line parameter options required/expected by the kevux/fss/fll specifications.
@@ -93,7 +92,7 @@ extern "C" {
  * - In the case of "status_out" the environment variable is being written to, which means that it should store the status this program exits with.
  *   - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
-#ifndef _di_f_standard_console_parameters_
+#ifndef _di_f_console_standard_s_
   #define f_console_standard_short_dark       "d"
   #define f_console_standard_short_debug      "D"
   #define f_console_standard_short_help       "h"
@@ -141,7 +140,31 @@ extern "C" {
   #define f_console_standard_long_status_out_length 10
   #define f_console_standard_long_verbose_length    7
   #define f_console_standard_long_version_length    7
-#endif // _di_f_standard_console_parameters_
+
+  extern const f_string_t f_console_standard_short_dark_s;
+  extern const f_string_t f_console_standard_short_debug_s;
+  extern const f_string_t f_console_standard_short_help_s;
+  extern const f_string_t f_console_standard_short_light_s;
+  extern const f_string_t f_console_standard_short_no_color_s;
+  extern const f_string_t f_console_standard_short_normal_s;
+  extern const f_string_t f_console_standard_short_quiet_s;
+  extern const f_string_t f_console_standard_short_status_in_s;
+  extern const f_string_t f_console_standard_short_status_out_s;
+  extern const f_string_t f_console_standard_short_verbose_s;
+  extern const f_string_t f_console_standard_short_version_s;
+
+  extern const f_string_t f_console_standard_long_dark_s;
+  extern const f_string_t f_console_standard_long_debug_s;
+  extern const f_string_t f_console_standard_long_help_s;
+  extern const f_string_t f_console_standard_long_light_s;
+  extern const f_string_t f_console_standard_long_no_color_s;
+  extern const f_string_t f_console_standard_long_normal_s;
+  extern const f_string_t f_console_standard_long_quiet_s;
+  extern const f_string_t f_console_standard_long_status_in_s;
+  extern const f_string_t f_console_standard_long_status_out_s;
+  extern const f_string_t f_console_standard_long_verbose_s;
+  extern const f_string_t f_console_standard_long_version_s;
+#endif // _di_f_console_standard_s_
 
 /**
  * The maximum size for a single parameter.
@@ -149,15 +172,6 @@ extern "C" {
 #ifndef _di_f_console_length_size_
   #define f_console_length_size f_string_length_t_size
 #endif // _di_f_console_length_size_
-
-/**
- * Provide a default allocation step.
- *
- * For a UTF-8 friendly allocation step, set to at least 4.
- */
-#ifndef _di_f_console_default_allocation_step_
-  #define f_console_default_allocation_step 4
-#endif // _di_f_console_default_allocation_step_
 
 /**
  * Provide console type enumerations:

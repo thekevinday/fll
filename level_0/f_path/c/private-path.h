@@ -24,7 +24,7 @@ extern "C" {
  *   The source path to determine what the real path is.
  * @param real
  *   The (allocated) real file path.
- *   This will have a max size of f_path_max + 1.
+ *   This will have a max size of f_path_length_max + 1.
  *   This will be NULL terminated at real->used + 1.
  *
  * @return
@@ -33,7 +33,6 @@ extern "C" {
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_loop (with error bit) on loop error.
- *   F_memory_allocation (with error bit) on allocation error.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.

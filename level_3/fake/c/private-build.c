@@ -481,16 +481,16 @@ extern "C" {
 
     // ensure console color mode is passed to the scripts so that they can also react to color mode.
     if (F_status_is_error_not(*status) && data.context.mode != f_color_mode_none) {
-      char argument[3] = { f_console_symbol_disable, 0, 0 };
+      char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
       if (data.context.mode == f_color_mode_dark) {
-        argument[1] = f_console_standard_short_dark[0];
+        argument[1] = f_console_standard_short_dark_s[0];
       }
       else if (data.context.mode == f_color_mode_light) {
-        argument[1] = f_console_standard_short_light[0];
+        argument[1] = f_console_standard_short_light_s[0];
       }
       else if (data.context.mode == f_color_mode_no_color) {
-        argument[1] = f_console_standard_short_no_color[0];
+        argument[1] = f_console_standard_short_no_color_s[0];
       }
 
       *status = fll_execute_arguments_add(argument, 2, &arguments);
@@ -498,16 +498,16 @@ extern "C" {
 
     // ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
     if (F_status_is_error_not(*status) && data.error.verbosity != f_console_verbosity_normal) {
-      char argument[3] = { f_console_symbol_disable, 0, 0 };
+      char argument[3] = { f_console_symbol_short_disable_s[0], 0, 0 };
 
       if (data.error.verbosity == f_console_verbosity_quiet) {
-        argument[1] = f_console_standard_short_quiet[0];
+        argument[1] = f_console_standard_short_quiet_s[0];
       }
       else if (data.error.verbosity == f_console_verbosity_verbose) {
-        argument[1] = f_console_standard_short_verbose[0];
+        argument[1] = f_console_standard_short_verbose_s[0];
       }
       else if (data.error.verbosity == f_console_verbosity_debug) {
-        argument[1] = f_console_standard_short_debug[0];
+        argument[1] = f_console_standard_short_debug_s[0];
       }
 
       *status = fll_execute_arguments_add(argument, 2, &arguments);
@@ -553,13 +553,13 @@ extern "C" {
       }
 
       const f_string_t parameters_prefix[] = {
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
-        f_console_symbol_short_enable,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
+        f_console_symbol_short_enable_s,
       };
 
       const f_string_length_t parameters_prefix_length[] = {
@@ -2079,16 +2079,16 @@ extern "C" {
         if (data.error.verbosity == f_console_verbosity_verbose) {
           fprintf(data.output.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data.output.stream, data.context.set.error, "%sthe parameters '", fll_error_print_warning);
-          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_disabled);
           fl_color_print(data.output.stream, data.context.set.error, "' and '");
-          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_enabled);
           fl_color_print(data.output.stream, data.context.set.error, "' contradict, defaulting to '");
 
           if (setting->build_shared) {
-            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_enabled);
+            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_enabled);
           }
           else {
-            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_shared_disabled);
+            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_disabled);
           }
 
           fl_color_print(data.output.stream, data.context.set.error, "'.");
@@ -2119,16 +2119,16 @@ extern "C" {
         if (data.error.verbosity == f_console_verbosity_verbose) {
           fprintf(data.output.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data.output.stream, data.context.set.error, "%sthe parameters '", fll_error_print_warning);
-          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_disabled);
           fl_color_print(data.output.stream, data.context.set.error, "' and '");
-          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
+          fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_enabled);
           fl_color_print(data.output.stream, data.context.set.error, "' contradict, defaulting to '");
 
           if (setting->build_static) {
-            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_enabled);
+            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_enabled);
           }
           else {
-            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fake_long_static_disabled);
+            fl_color_print(data.output.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_disabled);
           }
 
           fl_color_print(data.output.stream, data.context.set.error, "'.");

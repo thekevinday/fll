@@ -319,7 +319,7 @@ extern "C" {
  *   F_failure (with error bit) if failed to read directory information.
  *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
  *   F_file_open_max (with error bit) too many open files.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *

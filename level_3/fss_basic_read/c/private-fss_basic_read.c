@@ -102,12 +102,12 @@ extern "C" {
             f_status_t status_code = F_status_set_fine(status);
 
             // @todo: move error printing into common function.
-            if (status_code == F_memory_allocation || status_code == F_memory_reallocation) {
+            if (status_code == F_memory_not) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
             }
             else if (status_code == f_string_length_t_size) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to process '", fll_error_print_error);
-              fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_trim);
+              fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_trim);
               fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
             }
             else {
@@ -129,7 +129,7 @@ extern "C" {
 
           if (!depths->array[i].value_name.used) {
             fl_color_print(data.error.to.stream, data.context.set.error, "%sThe '", fll_error_print_error);
-            fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_name);
+            fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
             fl_color_print(data.error.to.stream, data.context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
 
             return F_status_set_error(F_parameter);
@@ -146,14 +146,14 @@ extern "C" {
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe value '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may only be specified once for the parameter '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_basic_read_long_depth);
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may not have the value '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' before the value '");

@@ -61,7 +61,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
@@ -113,7 +113,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
@@ -155,7 +155,7 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_none_stop on success after reaching stopping point .
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
@@ -203,7 +203,7 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_none_stop on success after reaching stopping point .
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *

@@ -19,7 +19,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_file -lf_memory
+build_libraries-individual -lf_control_group -lf_file -lf_memory -lf_string
 build_sources_library control_group.c
 build_sources_program
 build_sources_headers control_group.h

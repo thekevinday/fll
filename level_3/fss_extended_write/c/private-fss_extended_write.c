@@ -14,11 +14,11 @@ extern "C" {
 
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
     fl_color_print(data.error.to.stream, data.context.set.error, "%sMust specify the '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_object);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_object);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter at least once and the '");
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_content);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_content);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter one or more times when not specifying the ");
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_extended_write_long_partial);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_partial);
     fl_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_

@@ -20,18 +20,18 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
-  const extern f_string_t f_fss_brace_left_s;
-  const extern f_string_t f_fss_brace_right_s;
-  const extern f_string_t f_fss_colon_s;
-  const extern f_string_t f_fss_dash_s;
-  const extern f_string_t f_fss_f_s;
-  const extern f_string_t f_fss_pound_s;
-  const extern f_string_t f_fss_quote_single_s;
-  const extern f_string_t f_fss_quote_double_s;
-  const extern f_string_t f_fss_s_s;
-  const extern f_string_t f_fss_slash_s;
-  const extern f_string_t f_fss_space_s;
-  const extern f_string_t f_fss_underscore_s;
+  extern const f_string_t f_fss_brace_left_s;
+  extern const f_string_t f_fss_brace_right_s;
+  extern const f_string_t f_fss_colon_s;
+  extern const f_string_t f_fss_dash_s;
+  extern const f_string_t f_fss_f_s;
+  extern const f_string_t f_fss_pound_s;
+  extern const f_string_t f_fss_quote_single_s;
+  extern const f_string_t f_fss_quote_double_s;
+  extern const f_string_t f_fss_s_s;
+  extern const f_string_t f_fss_slash_s;
+  extern const f_string_t f_fss_space_s;
+  extern const f_string_t f_fss_underscore_s;
 
   #define f_fss_comment                 f_fss_pound_s[0]
   #define f_fss_eol                     f_string_eol_s[0]
@@ -61,7 +61,7 @@ extern "C" {
   #define f_fss_type_header_part5       f_fss_dash_s[0]
   #define f_fss_type_header_close       f_string_eol_s[0]
 
-  typedef unsigned long f_fss_id_t;
+  typedef uint64_t f_fss_id_t;
 #endif // _di_f_fss_types_t_
 
 /**
@@ -182,18 +182,18 @@ extern "C" {
 
   #define f_fss_headers_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_headers_clear(headers) f_macro_memory_structure_t_clear(headers)
+  #define f_macro_fss_headers_clear(headers) f_macro_memory_structure_clear(headers)
 
-  #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_t_new(status, headers, f_fss_header_t, length)
+  #define f_macro_fss_headers_new(status, headers, length) f_macro_memory_structure_new(status, headers, f_fss_header_t, length);
 
-  #define f_macro_fss_headers_delete(status, headers)  f_macro_memory_structure_t_delete(status, headers, f_fss_header_t)
-  #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_t_destroy(status, headers, f_fss_header_t)
+  #define f_macro_fss_headers_resize(status, headers, length) f_macro_memory_structure_resize(status, headers, f_fss_header_t, length);
+  #define f_macro_fss_headers_adjust(status, headers, length) f_macro_memory_structure_adjust(status, headers, f_fss_header_t, length);
 
-  #define f_macro_fss_headers_delete_simple(headers)  f_macro_memory_structure_t_delete_simple(headers, f_fss_header_t)
-  #define f_macro_fss_headers_destroy_simple(headers) f_macro_memory_structure_t_destroy_simple(headers, f_fss_header_t)
+  #define f_macro_fss_headers_delete(status, headers)  f_macro_memory_structure_delete(status, headers, f_fss_header_t);
+  #define f_macro_fss_headers_destroy(status, headers) f_macro_memory_structure_destroy(status, headers, f_fss_header_t);
 
-  #define f_macro_fss_headers_resize(status, headers, new_length) f_macro_memory_structure_t_resize(status, headers, f_fss_header_t, new_length)
-  #define f_macro_fss_headers_adjust(status, headers, new_length) f_macro_memory_structure_t_adjust(status, headers, f_fss_header_t, new_length)
+  #define f_macro_fss_headers_delete_simple(headers)  f_macro_memory_structure_delete_simple(headers, f_fss_header_t);
+  #define f_macro_fss_headers_destroy_simple(headers) f_macro_memory_structure_destroy_simple(headers, f_fss_header_t);
 #endif // _di_f_fss_headers_t_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
 
   #define f_fss_object_t_initialize f_string_range_t_initialize
 
-  #define f_macro_fss_object_t_clear(object) f_macro_string_range_t_clear(object)
+  #define f_macro_fss_object_t_clear(object) f_macro_string_range_t_clear(object);
 #endif // _di_fss_object_t_
 
 /**
@@ -219,18 +219,18 @@ extern "C" {
 
   #define f_fss_objects_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_objects_t_clear(objects) f_macro_string_ranges_t_clear(objects)
+  #define f_macro_fss_objects_t_clear(objects) f_macro_string_ranges_t_clear(objects);
 
-  #define f_macro_fss_objects_t_new(status, objects, length) f_macro_string_ranges_t_new(status, objects, length)
+  #define f_macro_fss_objects_t_new(status, objects, length) f_macro_string_ranges_t_new(status, objects, length);
 
-  #define f_macro_fss_objects_t_delete(status, objects)  f_macro_string_ranges_t_delete(status, objects)
-  #define f_macro_fss_objects_t_destroy(status, objects) f_macro_string_ranges_t_destroy(status, objects)
+  #define f_macro_fss_objects_t_resize(status, objects, length) f_macro_string_ranges_t_resize(status, objects, length);
+  #define f_macro_fss_objects_t_adjust(status, objects, length) f_macro_string_ranges_t_destroy(status, objects, length);
 
-  #define f_macro_fss_objects_t_delete_simple(objects)  f_macro_string_ranges_t_delete_simple(objects)
-  #define f_macro_fss_objects_t_destroy_simple(objects) f_macro_string_ranges_t_destroy_simple(objects)
+  #define f_macro_fss_objects_t_delete(status, objects)  f_macro_string_ranges_t_delete(status, objects);
+  #define f_macro_fss_objects_t_destroy(status, objects) f_macro_string_ranges_t_destroy(status, objects);
 
-  #define f_macro_fss_objects_t_resize(status, objects, new_length) f_macro_string_ranges_t_resize(status, objects, new_length)
-  #define f_macro_fss_objects_t_adjust(status, objects, new_length) f_macro_string_ranges_t_destroy(status, objects, new_length)
+  #define f_macro_fss_objects_t_delete_simple(objects)  f_macro_string_ranges_t_delete_simple(objects);
+  #define f_macro_fss_objects_t_destroy_simple(objects) f_macro_string_ranges_t_destroy_simple(objects);
 #endif // _di_fss_objects_t_
 
 /**
@@ -247,18 +247,18 @@ extern "C" {
 
   #define f_fss_content_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_content_t_clear(content) f_macro_string_ranges_t_clear(content)
+  #define f_macro_fss_content_t_clear(content) f_macro_string_ranges_t_clear(content);
 
-  #define f_macro_fss_content_t_new(status, content, length) f_macro_string_ranges_t_new(status, content, length)
+  #define f_macro_fss_content_t_new(status, content, length) f_macro_string_ranges_t_new(status, content, length);
 
-  #define f_macro_fss_content_t_delete(status, content)  f_macro_string_ranges_t_delete(status, content)
-  #define f_macro_fss_content_t_destroy(status, content) f_macro_string_ranges_t_destroy(status, content)
+  #define f_macro_fss_content_t_resize(status, content, length) f_macro_string_ranges_t_resize(status, content, length);
+  #define f_macro_fss_content_t_adjust(status, content, length) f_macro_string_ranges_t_adjust(status, content, length);
 
-  #define f_macro_fss_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
-  #define f_macro_fss_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
+  #define f_macro_fss_content_t_delete(status, content)  f_macro_string_ranges_t_delete(status, content);
+  #define f_macro_fss_content_t_destroy(status, content) f_macro_string_ranges_t_destroy(status, content);
 
-  #define f_macro_fss_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
-  #define f_macro_fss_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
+  #define f_macro_fss_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content);
+  #define f_macro_fss_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content);
 #endif // _di_fss_content_
 
 /**
@@ -273,18 +273,18 @@ extern "C" {
 
   #define f_fss_contents_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_fss_contents_t_clear(contents) f_macro_string_rangess_t_clear(contents)
+  #define f_macro_fss_contents_t_clear(contents) f_macro_string_rangess_t_clear(contents);
 
-  #define f_macro_fss_contents_t_new(status, contents, length) f_macro_string_rangess_t_new(status, contents, length)
+  #define f_macro_fss_contents_t_new(status, contents, length) f_macro_string_rangess_t_new(status, contents, length);
 
-  #define f_macro_fss_contents_t_delete(status, contents)  f_macro_string_rangess_t_delete(status, contents)
-  #define f_macro_fss_contents_t_destroy(status, contents) f_macro_string_rangess_t_destroy(status, contents)
+  #define f_macro_fss_contents_t_resize(status, contents, length) f_macro_string_rangess_t_resize(status, contents, length);
+  #define f_macro_fss_contents_t_adjust(status, contents, length) f_macro_string_rangess_t_adjust(status, contents, length);
 
-  #define f_macro_fss_contents_t_delete_simple(contents)  f_macro_string_rangess_t_delete_simple(contents)
-  #define f_macro_fss_contents_t_destroy_simple(contents) f_macro_string_rangess_t_destroy_simple(contents)
+  #define f_macro_fss_contents_t_delete(status, contents)  f_macro_string_rangess_t_delete(status, contents);
+  #define f_macro_fss_contents_t_destroy(status, contents) f_macro_string_rangess_t_destroy(status, contents);
 
-  #define f_macro_fss_contents_t_resize(status, contents, new_length) f_macro_string_rangess_t_resize(status, contents, new_length)
-  #define f_macro_fss_contents_t_adjust(status, contents, new_length) f_macro_string_rangess_t_adjust(status, contents, new_length)
+  #define f_macro_fss_contents_t_delete_simple(contents)  f_macro_string_rangess_t_delete_simple(contents);
+  #define f_macro_fss_contents_t_destroy_simple(contents) f_macro_string_rangess_t_destroy_simple(contents);
 #endif // _di_f_fss_contents_t_
 
 #ifdef __cplusplus

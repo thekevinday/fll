@@ -188,7 +188,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "values" parameters were expected but not found.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_console_parameter_prioritize_left().
@@ -223,8 +223,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_append().
@@ -252,8 +252,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
@@ -280,8 +280,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_rip().
@@ -311,8 +311,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_out (with error bit) on out of memory.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *

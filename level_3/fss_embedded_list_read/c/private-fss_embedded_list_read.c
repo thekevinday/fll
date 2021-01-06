@@ -191,7 +191,7 @@ extern "C" {
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe value '", fll_error_print_error);
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may only be specified once for the parameter '");
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_read_long_depth);
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
 
           return F_status_set_error(F_parameter);
@@ -199,7 +199,7 @@ extern "C" {
         else if (depths->array[i].depth > depths->array[j].depth) {
           fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, fss_embedded_list_read_long_depth);
+          fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' may not have the value '");
           fl_color_print(data.error.to.stream, data.context.set.notable, "%llu", depths->array[i].depth);
           fl_color_print(data.error.to.stream, data.context.set.error, "' before the value '");

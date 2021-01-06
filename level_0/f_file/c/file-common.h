@@ -92,8 +92,26 @@ extern "C" {
   #define f_macro_file_open_mode_read_write    "r+"
   #define f_macro_file_open_mode_truncate      "w"
 
-  // @todo consider adding the following for the different strings in this project.
-  //static char * const f_file_open_mode_append_s = f_macro_file_open_mode_append;
+  #define f_macro_file_open_mode_append_length        1
+  #define f_macro_file_open_mode_read_length          1
+  #define f_macro_file_open_mode_read_append_length   2
+  #define f_macro_file_open_mode_read_truncate_length 2
+  #define f_macro_file_open_mode_read_write_length    2
+  #define f_macro_file_open_mode_truncate_length      1
+
+  extern const f_string_t f_file_type_name_blocks;
+  extern const f_string_t f_file_type_name_character_s;
+  extern const f_string_t f_file_type_name_directory_s;
+  extern const f_string_t f_file_type_name_link_s;
+  extern const f_string_t f_file_type_name_regular_s;
+  extern const f_string_t f_file_type_name_socket_s;
+
+  extern const f_string_t f_file_open_mode_append_s;
+  extern const f_string_t f_file_open_mode_read_s;
+  extern const f_string_t f_file_open_mode_read_append_s;
+  extern const f_string_t f_file_open_mode_read_truncate_s;
+  extern const f_string_t f_file_open_mode_read_write_s;
+  extern const f_string_t f_file_open_mode_truncate_s;
 #endif // _di_f_file_type_
 
 /**

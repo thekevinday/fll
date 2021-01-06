@@ -322,7 +322,7 @@ extern "C" {
 
                 action->status = status;
 
-                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
                   break;
                 }
@@ -353,7 +353,7 @@ extern "C" {
               if (F_status_is_error(status)) {
                 fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
 
-                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
                   break;
                 }
@@ -375,7 +375,7 @@ extern "C" {
 
                       action->status = status;
 
-                      if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                      if (F_status_set_fine(status) == F_memory_not) {
                         status_action = status;
                       }
 
@@ -509,7 +509,7 @@ extern "C" {
                   action->status = controller_status_simplify(F_status_set_fine(status));
                 }
 
-                if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                if (F_status_set_fine(status) == F_memory_not) {
                   fll_error_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
 
                   status_action = status;
@@ -784,7 +784,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             controller_entry_error_print(data.error, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               break;
             }
           }

@@ -112,13 +112,31 @@ extern "C" {
     accounts.size = 0; \
     accounts.used = 0;
 
-  #define f_macro_accounts_new(status, accounts, length) \
-    f_macro_accounts_clear(accounts) \
-    status = f_memory_new((void **) & accounts.array, sizeof(f_account_t), length); \
+  #define f_macro_string_accounts_t_new(status, values, length) f_macro_memory_structure_new(status, values, f_account_t, length)
+
+  #define f_macro_string_accounts_t_resize(status, accounts, new_length) \
+    status = F_none; \
+    if (new_length < accounts.size) { \
+      for (register f_array_length_t _macro__i = accounts.size - new_length; _macro__i < accounts.size; ++_macro__i) { \
+        f_macro_account_t_delete(status, accounts.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_resize((void **) & accounts.array, sizeof(f_account_t), accounts.size, new_length); \
     if (status == F_none) { \
-      accounts.size = length; \
-      accounts.used = 0; \
+      accounts.size = new_length; \
+      if (accounts.used > accounts.size) accounts.used = new_length; \
     }
+
+  #define f_macro_string_accounts_t_adjust(status, accounts, new_length) \
+    status = F_none; \
+    if (new_length < accounts.size) { \
+      for (register f_array_length_t _macro__i = accounts.size - new_length; _macro__i < accounts.size; ++_macro__i) { \
+        f_macro_account_t_destroy(status, accounts.array[_macro__i], f_account_t); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_macro_memory_structure_resize(status, values, sizeof(f_limit_value_t));
 
   #define f_macro_string_accounts_t_delete(status, accounts) \
     status = F_none; \
@@ -153,40 +171,48 @@ extern "C" {
 
   #define f_macro_string_accounts_t_destroy_simple(accounts) \
     accounts.used = accounts.size; \
-    while (accounts.used > 0) { \
+    while (accounts.used) { \
       accounts.used--; \
       f_macro_account_t_destroy_simple(accounts.array[accounts.used]); \
     } \
     f_memory_destroy((void **) & accounts.array, sizeof(f_account_t), accounts.size); \
     accounts.size = 0;
 
-  #define f_macro_string_accounts_t_resize(status, accounts, new_length) \
-    status = F_none; \
-    if (new_length < accounts.size) { \
-      for (f_array_length_t _macro__i = accounts.size - new_length; _macro__i < accounts.size; _macro__i++) { \
-        f_macro_account_t_delete(status, accounts.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & accounts.array, sizeof(f_account_t), accounts.size, new_length); \
-    if (status == F_none) { \
-      accounts.size = new_length; \
-      if (accounts.used > accounts.size) accounts.used = new_length; \
-    }
+  #define f_macro_string_accounts_t_increase(status, values)            f_macro_memory_structure_increase(status, values, f_account_t);
 
-  #define f_macro_string_accounts_t_adjust(status, accounts, new_length) \
+  #define f_macro_accounts_t_decrease(status, accounts) \
     status = F_none; \
-    if (new_length < accounts.size) { \
-      for (f_array_length_t _macro__i = accounts.size - new_length; _macro__i < accounts.size; _macro__i++) { \
-        f_macro_account_t_destroy(status, accounts.array[_macro__i], f_account_t); \
-        if (status != F_none) break; \
-      } \
+    if (accounts.size) { \
+      f_macro_account_t_delete(status, accounts.array[accounts.size - 1]); \
+      if (status != F_none) break; \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & accounts.array, sizeof(f_account_t), accounts.size, new_length); \
-    if (status == F_none) { \
-      accounts.size = new_length; \
-      if (accounts.used > accounts.size) accounts.used = new_length; \
-    }
+    f_macro_memory_structure_destroy(status, accounts, sizeof(f_account_t));
+
+  #define f_macro_accounts_t_decimate(status, accounts) \
+    status = F_none; \
+    if (accounts.size) { \
+      f_macro_account_t_destroy(status, accounts.array[accounts.size - 1]); \
+      if (status != F_none) break; \
+    } \
+    f_macro_memory_structure_decimate(status, accounts, sizeof(f_account_t));
+
+  #define f_macro_string_accounts_t_increase_by(status, values, amount) f_macro_memory_structure_increase_by(status, values, f_account_t), amount);
+
+  #define f_macro_accounts_t_decrease_by(status, accounts, amount) \
+    status = F_none; \
+    for (register f_array_length_t _macro__i = amount <= accounts.size ? accounts.size - amount : 0; _macro__i < accounts.size; ++_macro__i) { \
+      f_macro_account_t_delete(status, accounts.array[_macro__i]); \
+      if (status != F_none) break; \
+    } \
+    if (status == F_none) status = f_macro_memory_structure_decrease_by(status, accounts, f_account_t, amount);
+
+  #define f_macro_accounts_t_decimate_by(status, accounts, amount) \
+    status = F_none; \
+    for (register f_array_length_t _macro__i = amount <= accounts.size ? accounts.size - amount : 0; _macro__i < accounts.size; ++_macro__i) { \
+      f_macro_account_t_destroy(status, accounts.array[_macro__i]); \
+      if (status != F_none) break; \
+    } \
+    if (status == F_none) status = f_macro_memory_structure_decimate_by(status, accounts, f_account_t, amount);
 #endif // _di_f_accounts_t_
 
 #ifdef __cplusplus

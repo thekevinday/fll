@@ -38,7 +38,7 @@ extern "C" {
     if (result) {
       if (result == EINVAL) return F_status_set_error(F_parameter);
 
-      return F_status_set_error(F_memory_allocation);
+      return F_status_set_error(F_memory_not);
     }
 
     // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
@@ -123,7 +123,7 @@ extern "C" {
       return F_none;
     }
 
-    return F_status_set_error(F_memory_allocation);
+    return F_status_set_error(F_memory_not);
   }
 #endif // _di_f_memory_new_
 

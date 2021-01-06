@@ -62,7 +62,7 @@ extern "C" {
  *   F_none on success.
  *   FL_fss_header_not if no header is found.
  *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
  *

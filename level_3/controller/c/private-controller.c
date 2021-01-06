@@ -158,7 +158,7 @@ extern "C" {
 
     file.flag = f_file_flag_write_only;
 
-    status = f_file_stream_open(path_pid.string, f_macro_file_open_mode_truncate, &file);
+    status = f_file_stream_open(path_pid.string, f_file_open_mode_truncate_s, &file);
     if (F_status_is_error(status)) return status;
 
     fprintf(file.stream, "%llu%c", data.pid, f_string_eol_s[0]);
@@ -182,7 +182,7 @@ extern "C" {
     f_status_t status = F_none;
     f_file_t pid_file = f_file_t_initialize;
 
-    status = f_file_stream_open(path_pid.string, f_macro_file_open_mode_read, &pid_file);
+    status = f_file_stream_open(path_pid.string, f_file_open_mode_read_s, &pid_file);
     if (F_status_is_error(status)) return;
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
@@ -315,7 +315,7 @@ extern "C" {
       if (F_status_is_error(status)) {
 
         // always return immediately on memory errors.
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           fll_error_file_print(data.error, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
 
           controller_entry_error_print(data.error, *cache);
@@ -952,7 +952,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             controller_entry_error_print(data->error, *cache);
 
-            if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (!simulate || F_status_set_fine(status) == F_memory_not) {
               break;
             }
           }
@@ -1030,7 +1030,7 @@ extern "C" {
       cache->name_action.used = 0;
 
       if (F_status_is_error(status)) {
-        if (!simulate || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (!simulate || F_status_set_fine(status) == F_memory_not) {
           break;
         }
       }
@@ -1076,7 +1076,7 @@ extern "C" {
 #ifndef _di_controller_status_simplify_
   f_status_t controller_status_simplify(const f_status_t status) {
 
-    if (status == F_memory_not || status == F_memory_allocation || status == F_memory_reallocation) {
+    if (status == F_memory_not) {
       return F_status_set_error(F_memory);
     }
 

@@ -217,7 +217,7 @@ extern "C" {
       f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
-      destination->string[destination->used] = '0';
+      destination->string[destination->used] = f_string_ascii_0_s[0];
       destination->string[destination->used + 1] = 0;
       destination->used += 2;
 
@@ -251,7 +251,7 @@ extern "C" {
     f_number_unsigned_t power = 1;
 
     if (negative) {
-      destination->string[destination->used] = '-';
+      destination->string[destination->used] = f_string_ascii_minus_s[0];
       destination->used++;
     }
 
@@ -266,52 +266,52 @@ extern "C" {
 
       switch (work) {
         case 0:
-          destination->string[destination->used] = '0';
+          destination->string[destination->used] = f_string_ascii_0_s[0];
           break;
         case 1:
-          destination->string[destination->used] = '1';
+          destination->string[destination->used] = f_string_ascii_1_s[0];
           break;
         case 2:
-          destination->string[destination->used] = '2';
+          destination->string[destination->used] = f_string_ascii_2_s[0];
           break;
         case 3:
-          destination->string[destination->used] = '3';
+          destination->string[destination->used] = f_string_ascii_3_s[0];
           break;
         case 4:
-          destination->string[destination->used] = '4';
+          destination->string[destination->used] = f_string_ascii_4_s[0];
           break;
         case 5:
-          destination->string[destination->used] = '5';
+          destination->string[destination->used] = f_string_ascii_5_s[0];
           break;
         case 6:
-          destination->string[destination->used] = '6';
+          destination->string[destination->used] = f_string_ascii_6_s[0];
           break;
         case 7:
-          destination->string[destination->used] = '7';
+          destination->string[destination->used] = f_string_ascii_7_s[0];
           break;
         case 8:
-          destination->string[destination->used] = '8';
+          destination->string[destination->used] = f_string_ascii_8_s[0];
           break;
         case 9:
-          destination->string[destination->used] = '9';
+          destination->string[destination->used] = f_string_ascii_9_s[0];
           break;
         case 10:
-          destination->string[destination->used] = 'a';
+          destination->string[destination->used] = f_string_ascii_a_s[0];
           break;
         case 11:
-          destination->string[destination->used] = 'b';
+          destination->string[destination->used] = f_string_ascii_b_s[0];
           break;
         case 12:
-          destination->string[destination->used] = 'c';
+          destination->string[destination->used] = f_string_ascii_c_s[0];
           break;
         case 13:
-          destination->string[destination->used] = 'd';
+          destination->string[destination->used] = f_string_ascii_d_s[0];
           break;
         case 14:
-          destination->string[destination->used] = 'e';
+          destination->string[destination->used] = f_string_ascii_e_s[0];
           break;
         case 15:
-          destination->string[destination->used] = 'f';
+          destination->string[destination->used] = f_string_ascii_f_s[0];
           break;
       }
 
@@ -338,7 +338,7 @@ extern "C" {
       f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
-      destination->string[destination->used] = '0';
+      destination->string[destination->used] = f_string_ascii_0_s[0];
       destination->string[destination->used + 1] = 0;
       destination->used += 2;
 
@@ -369,52 +369,52 @@ extern "C" {
 
       switch (work) {
         case 0:
-          destination->string[destination->used] = '0';
+          destination->string[destination->used] = f_string_ascii_0_s[0];
           break;
         case 1:
-          destination->string[destination->used] = '1';
+          destination->string[destination->used] = f_string_ascii_1_s[0];
           break;
         case 2:
-          destination->string[destination->used] = '2';
+          destination->string[destination->used] = f_string_ascii_2_s[0];
           break;
         case 3:
-          destination->string[destination->used] = '3';
+          destination->string[destination->used] = f_string_ascii_3_s[0];
           break;
         case 4:
-          destination->string[destination->used] = '4';
+          destination->string[destination->used] = f_string_ascii_4_s[0];
           break;
         case 5:
-          destination->string[destination->used] = '5';
+          destination->string[destination->used] = f_string_ascii_5_s[0];
           break;
         case 6:
-          destination->string[destination->used] = '6';
+          destination->string[destination->used] = f_string_ascii_6_s[0];
           break;
         case 7:
-          destination->string[destination->used] = '7';
+          destination->string[destination->used] = f_string_ascii_7_s[0];
           break;
         case 8:
-          destination->string[destination->used] = '8';
+          destination->string[destination->used] = f_string_ascii_8_s[0];
           break;
         case 9:
-          destination->string[destination->used] = '9';
+          destination->string[destination->used] = f_string_ascii_9_s[0];
           break;
         case 10:
-          destination->string[destination->used] = 'a';
+          destination->string[destination->used] = f_string_ascii_a_s[0];
           break;
         case 11:
-          destination->string[destination->used] = 'b';
+          destination->string[destination->used] = f_string_ascii_b_s[0];
           break;
         case 12:
-          destination->string[destination->used] = 'c';
+          destination->string[destination->used] = f_string_ascii_c_s[0];
           break;
         case 13:
-          destination->string[destination->used] = 'd';
+          destination->string[destination->used] = f_string_ascii_d_s[0];
           break;
         case 14:
-          destination->string[destination->used] = 'e';
+          destination->string[destination->used] = f_string_ascii_e_s[0];
           break;
         case 15:
-          destination->string[destination->used] = 'f';
+          destination->string[destination->used] = f_string_ascii_f_s[0];
           break;
       }
 

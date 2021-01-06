@@ -322,10 +322,10 @@ extern "C" {
         uint8_t current = (byte % 144) / 12;
 
         if (current == 11) {
-          fprintf(data.output.stream, "b");
+          fprintf(data.output.stream, f_string_ascii_b_s);
         }
         else if (current == 10) {
-          fprintf(data.output.stream, "a");
+          fprintf(data.output.stream, f_string_ascii_a_s);
         }
         else {
           fprintf(data.output.stream, "%01d", current);
@@ -334,10 +334,10 @@ extern "C" {
         current = (byte % 144) % 12;
 
         if (current == 11) {
-          fprintf(data.output.stream, "b");
+          fprintf(data.output.stream, f_string_ascii_b_s);
         }
         else if (current == 10) {
-          fprintf(data.output.stream, "a");
+          fprintf(data.output.stream, f_string_ascii_a_s);
         }
         else {
           fprintf(data.output.stream, "%01d", current);
@@ -358,14 +358,14 @@ extern "C" {
       else if (data.mode == byte_dump_mode_binary) {
         int8_t binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-        binary_string[0] = ((byte >> 7) & 0x01) ? '1' : '0';
-        binary_string[1] = ((byte >> 6) & 0x01) ? '1' : '0';
-        binary_string[2] = ((byte >> 5) & 0x01) ? '1' : '0';
-        binary_string[3] = ((byte >> 4) & 0x01) ? '1' : '0';
-        binary_string[4] = ((byte >> 3) & 0x01) ? '1' : '0';
-        binary_string[5] = ((byte >> 2) & 0x01) ? '1' : '0';
-        binary_string[6] = ((byte >> 1) & 0x01) ? '1' : '0';
-        binary_string[7] = (byte & 0x01) ? '1' : '0';
+        binary_string[0] = ((byte >> 7) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[1] = ((byte >> 6) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[2] = ((byte >> 5) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[3] = ((byte >> 4) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[4] = ((byte >> 3) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[5] = ((byte >> 2) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[6] = ((byte >> 1) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+        binary_string[7] = (byte & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
 
         if (invalid[character_current]) {
           fl_color_print(data.output.stream, data.context.set.error, " %s", binary_string);
@@ -446,7 +446,7 @@ extern "C" {
     if (*offset > 0) {
       if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
         while (*offset > 0 && j < data.width) {
-          fprintf(data.output.stream, ".");
+          fprintf(data.output.stream, f_string_ascii_period_s);
           (*offset)--;
           j++;
         } // while
@@ -482,7 +482,7 @@ extern "C" {
               fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-              fprintf(data.output.stream, ".");
+              fprintf(data.output.stream, f_string_ascii_period_s);
             }
             else {
               fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
@@ -622,12 +622,12 @@ extern "C" {
           fprintf(data.output.stream, f_string_space_s);
         }
         else if (data.presentation == byte_dump_presentation_classic) {
-          fprintf(data.output.stream, ".");
+          fprintf(data.output.stream, f_string_ascii_period_s);
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
         if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-          fprintf(data.output.stream, ".");
+          fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else {
           fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
@@ -635,7 +635,7 @@ extern "C" {
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
         if (data.presentation == byte_dump_presentation_classic) {
-          fprintf(data.output.stream, ".");
+          fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
@@ -647,7 +647,7 @@ extern "C" {
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
         // print a space (or '.') for control characters.
         if (data.presentation == byte_dump_presentation_classic) {
-          fl_color_print(data.output.stream, data.context.set.warning, ".");
+          fl_color_print(data.output.stream, data.context.set.warning, f_string_ascii_period_s);
         }
         else {
           fprintf(data.output.stream, f_string_space_s);
@@ -754,7 +754,7 @@ extern "C" {
             fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
           }
           else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-            fprintf(data.output.stream, ".");
+            fprintf(data.output.stream, f_string_ascii_period_s);
           }
           else {
             fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
@@ -772,7 +772,7 @@ extern "C" {
               fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-              fprintf(data.output.stream, ".");
+              fprintf(data.output.stream, f_string_ascii_period_s);
             }
             else {
               fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
@@ -790,7 +790,7 @@ extern "C" {
                 fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
               }
               else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-                fprintf(data.output.stream, ".");
+                fprintf(data.output.stream, f_string_ascii_period_s);
               }
               else {
                 fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
@@ -814,7 +814,7 @@ extern "C" {
           fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
         }
         else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-          fprintf(data.output.stream, ".");
+          fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else {
           fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);

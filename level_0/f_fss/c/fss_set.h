@@ -196,7 +196,7 @@ extern "C" {
   #define f_macro_fss_sets_t_resize(status, sets, new_length) \
     status = F_none; \
     if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
         f_macro_fss_set_t_delete(status, sets.array[_macro__i]); \
         if (status != F_none) break; \
       } \
@@ -217,7 +217,7 @@ extern "C" {
   #define f_macro_fss_sets_t_adjust(status, sets, new_length) \
     status = F_none; \
     if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
         f_macro_fss_set_t_destroy(status, sets.array[_macro__i]); \
         if (status != F_none) break; \
       } \
@@ -379,6 +379,48 @@ extern "C" {
     }
 
   /**
+   * Resize a fss content sets.
+   *
+   * status:     the status to return.
+   * sets:       the f_fss_set_quotes_t structure to operate on.
+   * new_length: the new size of the array.
+   */
+  #define f_macro_fss_set_quotes_t_resize(status, sets, new_length) \
+    status = F_none; \
+    if (new_length < sets.size) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
+        f_macro_fss_set_quote_t_delete(status, sets.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_resize((void **) & sets.array, sizeof(f_fss_set_quote_t), sets.size, new_length); \
+    if (status == F_none) { \
+      sets.size = new_length; \
+      if (sets.used > sets.size) sets.used = new_length; \
+    }
+
+  /**
+   * Adjust a fss content sets.
+   *
+   * status:     the status to return.
+   * sets:       the f_fss_set_quotes_t structure to operate on.
+   * new_length: he new size of the array.
+   */
+  #define f_macro_fss_set_quotes_t_adjust(status, sets, new_length) \
+    status = F_none; \
+    if (new_length < sets.size) { \
+      for (register f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; ++_macro__i) { \
+        f_macro_fss_set_quote_t_destroy(status, sets.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_adjust((void **) & sets.array, sizeof(f_fss_set_quote_t), sets.size, new_length); \
+    if (status == F_none) { \
+      sets.size = new_length; \
+      if (sets.used > sets.size) sets.used = new_length; \
+    }
+
+  /**
    * Delete a fss content sets.
    *
    * status: the status to return.
@@ -439,48 +481,6 @@ extern "C" {
     } \
     f_memory_destroy((void **) & sets.array, sizeof(f_fss_set_quote_t), sets.size); \
     sets.size = 0;
-
-  /**
-   * Resize a fss content sets.
-   *
-   * status:     the status to return.
-   * sets:       the f_fss_set_quotes_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_set_quotes_t_resize(status, sets, new_length) \
-    status = F_none; \
-    if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
-        f_macro_fss_set_quote_t_delete(status, sets.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & sets.array, sizeof(f_fss_set_quote_t), sets.size, new_length); \
-    if (status == F_none) { \
-      sets.size = new_length; \
-      if (sets.used > sets.size) sets.used = new_length; \
-    }
-
-  /**
-   * Adjust a fss content sets.
-   *
-   * status:     the status to return.
-   * sets:       the f_fss_set_quotes_t structure to operate on.
-   * new_length: he new size of the array.
-   */
-  #define f_macro_fss_set_quotes_t_adjust(status, sets, new_length) \
-    status = F_none; \
-    if (new_length < sets.size) { \
-      for (f_array_length_t _macro__i = sets.size - new_length; _macro__i < sets.size; _macro__i++) { \
-        f_macro_fss_set_quote_t_destroy(status, sets.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & sets.array, sizeof(f_fss_set_quote_t), sets.size, new_length); \
-    if (status == F_none) { \
-      sets.size = new_length; \
-      if (sets.used > sets.size) sets.used = new_length; \
-    }
 #endif // _di_fss_set_quotes_t_
 
 #ifdef __cplusplus

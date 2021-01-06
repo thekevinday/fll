@@ -864,57 +864,26 @@ extern "C" {
     *mode = 0;
     *replace = 0;
 
-    switch (string[0]) {
-      case '+':
-      case '-':
-      case '=':
-        switch (string[1]) {
-          case 'r':
-          case 'w':
-          case 'x':
-          case 'X':
-          case 's':
-          case 't':
-            syntax = 1;
-            break;
+    if (string[0] == f_string_ascii_plus_s[0] || string[0] == f_string_ascii_minus_s[0] || string[0] == f_string_ascii_equal_s[0]) {
 
-          case '0':
-          case '1':
-          case '2':
-          case '3':
-          case '4':
-          case '5':
-          case '6':
-          case '7':
-            syntax = 2;
-            break;
-
-          default:
-            return F_status_set_error(F_syntax);
-        }
-
-        break;
-
-      case 'u':
-      case 'g':
-      case 'o':
-      case 'a':
+      if (string[1] == f_string_ascii_r_s[0] || f_string_ascii_w_s[0] || f_string_ascii_x_s[0] || f_string_ascii_X_s[0] || f_string_ascii_s_s[0] ||f_string_ascii_t_s[0]) {
         syntax = 1;
-        break;
-
-      case '0':
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
+      }
+      else if (string[1] == f_string_ascii_0_s[0] || string[1] == f_string_ascii_1_s[0] || string[1] == f_string_ascii_2_s[0] || string[1] == f_string_ascii_3_s[0] || string[1] == f_string_ascii_4_s[0] || string[1] == f_string_ascii_5_s[0] || string[1] == f_string_ascii_6_s[0] || string[1] == f_string_ascii_7_s[0]) {
         syntax = 2;
-        break;
-
-      default:
+      }
+      else {
         return F_status_set_error(F_syntax);
+      }
+    }
+    else if (string[0] == f_string_ascii_u_s[0] || string[0] == f_string_ascii_g_s[0] || string[0] == f_string_ascii_i_s[0] || string[0] == f_string_ascii_a_s[0]) {
+      syntax = 1;
+    }
+    else if (string[0] == f_string_ascii_0_s[0] || string[0] == f_string_ascii_1_s[0] || string[0] == f_string_ascii_2_s[0] || string[0] == f_string_ascii_3_s[0] || string[0] == f_string_ascii_4_s[0] || string[0] == f_string_ascii_5_s[0] || string[0] == f_string_ascii_6_s[0] || string[0] == f_string_ascii_7_s[0]) {
+      syntax = 2;
+    }
+    else {
+      return F_status_set_error(F_syntax);
     }
 
     if (syntax == 1) {
@@ -976,136 +945,127 @@ extern "C" {
 
       for (f_string_length_t i = 0; syntax && string[i]; i++) {
 
-        switch (string[i]) {
-          case 'o':
-            on |= 1;
-            mode_mask |= f_file_mode_t_block_world;
-            break;
+        if (string[i] == f_string_ascii_o_s[0]) {
+          on |= 1;
+          mode_mask |= f_file_mode_t_block_world;
+        }
+        else if (string[i] == f_string_ascii_g_s[0]) {
+          on |= 2;
+          mode_mask |= f_file_mode_t_block_group;
+        }
+        else if (string[i] == f_string_ascii_u_s[0]) {
+          on |= 4;
+          mode_mask |= f_file_mode_t_block_owner;
+        }
+        else if (string[i] == f_string_ascii_a_s[0]) {
+          on = 7;
+          mode_mask = f_file_mode_t_block_standard;
+        }
+        else if (string[i] == f_string_ascii_plus_s[0] || string[i] == f_string_ascii_minus_s[0] || string[i] == f_string_ascii_equal_s[0]) {
+          if (string[i] == f_string_ascii_plus_s[0]) {
+            how = on ? 1 : 4;
+          }
+          else if (string[i] == f_string_ascii_minus_s[0]) {
+            how = on ? 3 : 6;
+          }
+          else {
+            how = on ? 2 : 5;
 
-          case 'g':
-            on |= 2;
-            mode_mask |= f_file_mode_t_block_group;
-            break;
+            // clear by mask to prepare for replacement, which includes clearing the special block.
+            mode_mask |= f_file_mode_t_block_special;
+            *mode -= (*mode) & mode_mask;
 
-          case 'u':
-            on |= 4;
-            mode_mask |= f_file_mode_t_block_owner;
-            break;
+            *replace |= f_file_mode_t_replace_special;
 
-          case 'a':
+            if (mode_mask & f_file_mode_t_block_owner) {
+              *replace |= f_file_mode_t_replace_owner;
+            }
+
+            if (mode_mask & f_file_mode_t_block_group) {
+              *replace |= f_file_mode_t_replace_group;
+            }
+
+            if (mode_mask & f_file_mode_t_block_world) {
+              *replace |= f_file_mode_t_replace_world;
+            }
+          }
+
+          if (!on) {
             on = 7;
-            mode_mask = f_file_mode_t_block_standard;
-            break;
+            mode_mask = f_file_mode_t_block_all;
+          }
 
-          case '+':
-          case '-':
-          case '=':
-            if (string[i] == '+') {
-              how = on ? 1 : 4;
-            }
-            else if (string[i] == '-') {
-              how = on ? 3 : 6;
-            }
-            else {
-              how = on ? 2 : 5;
+          for (i++; string[i]; i++) {
 
-              // clear by mask to prepare for replacement, which includes clearing the special block.
+            if (string[i] == f_string_ascii_r_s[0]) {
+              what = f_file_mode_t_mask_bit_read;
+            }
+            else if (string[i] == f_string_ascii_w_s[0]) {
+              what = f_file_mode_t_mask_bit_write;
+            }
+            else if (string[i] == f_string_ascii_x_s[0]) {
+              what = f_file_mode_t_mask_bit_execute;
+            }
+            else if (string[i] == f_string_ascii_X_s[0]) {
+              what = f_file_mode_t_mask_bit_execute_only;
+            }
+            else if (string[i] == f_string_ascii_s_s[0]) {
               mode_mask |= f_file_mode_t_block_special;
-              *mode -= (*mode) & mode_mask;
 
-              *replace |= f_file_mode_t_replace_special;
-
-              if (mode_mask & f_file_mode_t_block_owner) {
-                *replace |= f_file_mode_t_replace_owner;
+              if (on & 4) {
+                what = f_file_mode_t_mask_bit_set_owner;
               }
-
-              if (mode_mask & f_file_mode_t_block_group) {
-                *replace |= f_file_mode_t_replace_group;
-              }
-
-              if (mode_mask & f_file_mode_t_block_world) {
-                *replace |= f_file_mode_t_replace_world;
-              }
-            }
-
-            if (!on) {
-              on = 7;
-              mode_mask = f_file_mode_t_block_all;
-            }
-
-            for (i++; string[i]; i++) {
-
-              if (string[i] == 'r') {
-                what = f_file_mode_t_mask_bit_read;
-              }
-              else if (string[i] == 'w') {
-                what = f_file_mode_t_mask_bit_write;
-              }
-              else if (string[i] == 'x') {
-                what = f_file_mode_t_mask_bit_execute;
-              }
-              else if (string[i] == 'X') {
-                what = f_file_mode_t_mask_bit_execute_only;
-              }
-              else if (string[i] == 's') {
-                mode_mask |= f_file_mode_t_block_special;
-
-                if (on & 4) {
-                  what = f_file_mode_t_mask_bit_set_owner;
-                }
-                else if (on & 2) {
-                  what = f_file_mode_t_mask_bit_set_group;
-                }
-                else {
-                  what = 0;
-                }
-              }
-              else if (string[i] == 't') {
-                mode_mask |= f_file_mode_t_block_special;
-
-                if (on & 1) {
-                  what = f_file_mode_t_mask_bit_sticky;
-                }
-                else {
-                  what = 0;
-                }
-              }
-              else if (string[i] == ',') {
-                if (how > 3) {
-                  *mode -= *mode & mode_umask;
-                }
-
-                on = 0;
-                how = 0;
-                mode_mask = 0;
-                break;
+              else if (on & 2) {
+                what = f_file_mode_t_mask_bit_set_group;
               }
               else {
-                syntax = 0;
-                break;
+                what = 0;
+              }
+            }
+            else if (string[i] == f_string_ascii_t_s[0]) {
+              mode_mask |= f_file_mode_t_block_special;
+
+              if (on & 1) {
+                what = f_file_mode_t_mask_bit_sticky;
+              }
+              else {
+                what = 0;
+              }
+            }
+            else if (string[i] == f_string_ascii_comma_s[0]) {
+              if (how > 3) {
+                *mode -= *mode & mode_umask;
               }
 
-              if (how == 1 || how == 2 || how == 4 || how == 5) {
-                *mode |= what & mode_mask & f_file_mode_t_mask_how_add;
-              }
-              else if (how == 3 || how == 6) {
-                *mode |= what & mode_mask & f_file_mode_t_mask_how_subtract;
-              }
-            } // for
-
-            if (how > 3) {
-              *mode -= *mode & mode_umask;
+              on = 0;
+              how = 0;
+              mode_mask = 0;
+              break;
+            }
+            else {
+              syntax = 0;
+              break;
             }
 
-            break;
+            if (how == 1 || how == 2 || how == 4 || how == 5) {
+              *mode |= what & mode_mask & f_file_mode_t_mask_how_add;
+            }
+            else if (how == 3 || how == 6) {
+              *mode |= what & mode_mask & f_file_mode_t_mask_how_subtract;
+            }
+          } // for
 
-          default:
-            syntax = 0;
-            break;
+          if (how > 3) {
+            *mode -= *mode & mode_umask;
+          }
+        }
+        else {
+          syntax = 0;
         }
       } // for
     }
     else if (syntax == 2) {
+
       // 1 = add, 2 = replace, 3 = subtract.
       uint8_t how = 0;
 
@@ -1113,15 +1073,15 @@ extern "C" {
 
       *replace = 0;
 
-      if (string[0] == '+') {
+      if (string[0] == f_string_ascii_plus_s[0]) {
         how = 1;
         i = 1;
       }
-      else if (string[0] == '-') {
+      else if (string[0] == f_string_ascii_minus_s[0]) {
         how = 3;
         i = 1;
       }
-      else if (string[0] == '=') {
+      else if (string[0] == f_string_ascii_equal_s[0]) {
         how = 2;
         i = 1;
 
@@ -1133,8 +1093,8 @@ extern "C" {
         *replace = f_file_mode_t_replace_standard | f_file_mode_t_replace_directory;
       }
 
-      if (string[i] == '0') {
-        for (; string[i] == '0'; i++) {
+      if (string[i] == f_string_ascii_0_s[0]) {
+        for (; string[i] == f_string_ascii_0_s[0]; ++i) {
           // seek past leading '0's.
         } // for
       }
@@ -1148,32 +1108,24 @@ extern "C" {
             *mode <<= 8;
           }
 
-          switch (string[i]) {
-            case '0':
-              // already is a zero.
-              break;
+          if (string[i] == f_string_ascii_0_s[0]) {
+            // already is a zero.
+          }
+          else if (string[i] == f_string_ascii_1_s[0] || string[i] == f_string_ascii_2_s[0] || string[i] == f_string_ascii_3_s[0] || string[i] == f_string_ascii_4_s[0] || string[i] == f_string_ascii_5_s[0] || string[i] == f_string_ascii_6_s[0] || string[i] == f_string_ascii_7_s[0]) {
 
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-              // this assumes ASCII/UTF-8.
-              if (how == 3) {
-                *mode |= (string[i + j] - 0x30) << 4;
-              }
-              else {
-                *mode |= string[i + j] - 0x30;
-              }
+            // this assumes ASCII/UTF-8.
+            if (how == 3) {
+              *mode |= (string[i + j] - 0x30) << 4;
+            }
+            else {
+              *mode |= string[i + j] - 0x30;
+            }
+          }
+          else {
 
-              break;
-
-            default:
-              // designate that this is invalid.
-              j = 4;
-              break;
+            // designate that this is invalid.
+            j = 4;
+            break;
           }
         } // for
 

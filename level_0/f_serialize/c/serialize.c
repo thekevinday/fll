@@ -23,7 +23,7 @@ extern "C" {
       serialize->used += value.used;
     }
     else {
-      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_string, 1);
+      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s, 1);
       memcpy(serialize->string + serialize->used + 1, value.string, value.used);
       serialize->used += value.used + 1;
     }
@@ -49,8 +49,8 @@ extern "C" {
     while (i < serialize.used) {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_serialize_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
+      if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
+        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -64,7 +64,7 @@ extern "C" {
             total = (i - start) + 1;
           }
           else {
-            // subtract one from stop point to disclused the f_serialize_simple_splitter character.
+            // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
             total = ((i - 1) - start) + 1;
           }
 
@@ -115,8 +115,8 @@ extern "C" {
     for (; i < serialize.used; i += width) {
       width = f_macro_utf_byte_width(serialize.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_serialize_default_allocation_step, f_macro_string_ranges_t_resize, F_array_too_large);
+      if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
+        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_memory_default_allocation_step, f_macro_string_ranges_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -129,7 +129,7 @@ extern "C" {
           locations->array[locations->used].stop = i;
         }
         else {
-          // subtract one from stop point to disclused the f_serialize_simple_splitter character.
+          // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
           locations->array[locations->used].start = start;
           locations->array[locations->used].stop = i - 1;
         }

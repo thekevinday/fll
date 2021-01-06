@@ -27,7 +27,7 @@ extern "C" {
   #define f_iki_syntax_slash        '\\'
 #endif //_di_f_iki_syntax_
 
-#ifndef _di_iki_vocabulary_0001_
+#ifndef _di_iki_vocabulary_0001_s_
   #define iki_vocabulary_0001_address  "address"
   #define iki_vocabulary_0001_code     "code"
   #define iki_vocabulary_0001_email    "email"
@@ -49,15 +49,29 @@ extern "C" {
   #define iki_vocabulary_0001_url_length      3
   #define iki_vocabulary_0001_urn_length      3
   #define iki_vocabulary_0001_variable_length 3
-#endif // _di_iki_vocabulary_0001_
 
-#ifndef _di_iki_vocabulary_0002_
+  extern const f_string_t iki_vocabulary_0001_address_s;
+  extern const f_string_t iki_vocabulary_0001_code_s;
+  extern const f_string_t iki_vocabulary_0001_email_s;
+  extern const f_string_t iki_vocabulary_0001_name_s;
+  extern const f_string_t iki_vocabulary_0001_phone_s;
+  extern const f_string_t iki_vocabulary_0001_quote_s;
+  extern const f_string_t iki_vocabulary_0001_uri_s;
+  extern const f_string_t iki_vocabulary_0001_url_s;
+  extern const f_string_t iki_vocabulary_0001_urn_s;
+  extern const f_string_t iki_vocabulary_0001_variable_s;
+#endif // _di_iki_vocabulary_0001_s_
+
+#ifndef _di_iki_vocabulary_0002_s_
   #define iki_vocabulary_0002_define    "define"
   #define iki_vocabulary_0002_parameter "parameter"
 
   #define iki_vocabulary_0002_define_length    6
   #define iki_vocabulary_0002_parameter_length 9
-#endif // _di_iki_vocabulary_0002_
+
+  extern const f_string_t iki_vocabulary_0002_define_s;
+  extern const f_string_t iki_vocabulary_0002_parameter_s;
+#endif // _di_iki_vocabulary_0002_s_
 
 // @todo: consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
 
@@ -77,14 +91,14 @@ extern "C" {
 
   #define f_macro_iki_variable_t_new(status, variable, length) f_macro_string_ranges_t_new(status, variable, length)
 
+  #define f_macro_iki_variable_t_resize(status, variable, new_length) f_macro_string_ranges_t_resize(status, variable, new_length)
+  #define f_macro_iki_variable_t_adjust(status, variable, new_length) f_macro_string_ranges_t_adjust(status, variable, new_length)
+
   #define f_macro_iki_variable_t_delete(status, variable)  f_macro_string_ranges_t_delete(status, variable)
   #define f_macro_iki_variable_t_destroy(status, variable) f_macro_string_ranges_t_destroy(status, variable)
 
   #define f_macro_iki_variable_t_delete_simple(variable)  f_macro_string_ranges_t_delete_simple(variable)
   #define f_macro_iki_variable_t_destroy_simple(variable) f_macro_string_ranges_t_destroy_simple(variable)
-
-  #define f_macro_iki_variable_t_resize(status, variable, new_length) f_macro_string_ranges_t_resize(status, variable, new_length)
-  #define f_macro_iki_variable_t_adjust(status, variable, new_length) f_macro_string_ranges_t_adjust(status, variable, new_length)
 #endif // _di_iki_variable_t_
 
 /**
@@ -103,14 +117,14 @@ extern "C" {
 
   #define f_macro_iki_vocabulary_t_new(status, vocabulary, length) f_macro_string_ranges_t_new(status, vocabulary, length)
 
+  #define f_macro_iki_vocabulary_t_resize(status, vocabulary, new_length) f_macro_string_ranges_t_resize(status, vocabulary, new_length)
+  #define f_macro_iki_vocabulary_t_adjust(status, vocabulary, new_length) f_macro_string_ranges_t_adjust(status, vocabulary, new_length)
+
   #define f_macro_iki_vocabulary_t_delete(status, vocabulary)  f_macro_string_ranges_t_delete(status, vocabulary)
   #define f_macro_iki_vocabulary_t_destroy(status, vocabulary) f_macro_string_ranges_t_destroy(status, vocabulary)
 
   #define f_macro_iki_vocabulary_t_delete_simple(vocabulary)  f_macro_string_ranges_t_delete_simple(vocabulary)
   #define f_macro_iki_vocabulary_t_destroy_simple(vocabulary) f_macro_string_ranges_t_destroy_simple(vocabulary)
-
-  #define f_macro_iki_vocabulary_t_resize(status, vocabulary, new_length) f_macro_string_ranges_t_resize(status, vocabulary, new_length)
-  #define f_macro_iki_vocabulary_t_adjust(status, vocabulary, new_length) f_macro_string_ranges_t_adjust(status, vocabulary, new_length)
 #endif // _di_iki_vocabulary_t_
 
 /**
@@ -129,14 +143,14 @@ extern "C" {
 
   #define f_macro_iki_vocabularys_t_new(status, content, length) f_macro_string_rangess_t_new(status, content, length)
 
+  #define f_macro_iki_vocabularys_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
+  #define f_macro_iki_vocabularys_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+
   #define f_macro_iki_vocabularys_t_delete(status, content)  f_macro_string_rangess_t_delete(status, content)
   #define f_macro_iki_vocabularys_t_destroy(status, content) f_macro_string_rangess_t_destroy(status, content)
 
   #define f_macro_iki_vocabularys_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
   #define f_macro_iki_vocabularys_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
-
-  #define f_macro_iki_vocabularys_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
-  #define f_macro_iki_vocabularys_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
 #endif // _di_iki_vocabularys_t_
 
 /**
@@ -157,14 +171,14 @@ extern "C" {
 
   #define f_macro_iki_content_t_new(status, content, length) f_macro_string_ranges_t_new(status, content, length)
 
+  #define f_macro_iki_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
+  #define f_macro_iki_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
+
   #define f_macro_iki_content_t_delete(status, content)  f_macro_string_ranges_t_delete(status, content)
   #define f_macro_iki_content_t_destroy(status, content) f_macro_string_ranges_t_destroy(status, content)
 
   #define f_macro_iki_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
   #define f_macro_iki_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
-
-  #define f_macro_iki_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
-  #define f_macro_iki_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
 #endif // _di_iki_content_t_
 
 /**
@@ -183,14 +197,14 @@ extern "C" {
 
   #define f_macro_iki_contents_t_new(status, content, length) f_macro_string_rangess_t_new(status, content, length)
 
+  #define f_macro_iki_contents_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
+  #define f_macro_iki_contents_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+
   #define f_macro_iki_contents_t_delete(status, content)  f_macro_string_rangess_t_delete(status, content)
   #define f_macro_iki_contents_t_destroy(status, content) f_macro_string_rangess_t_destroy(status, content)
 
   #define f_macro_iki_contents_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
   #define f_macro_iki_contents_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
-
-  #define f_macro_iki_contents_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
-  #define f_macro_iki_contents_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
 #endif // _di_iki_contents_t_
 
 /**

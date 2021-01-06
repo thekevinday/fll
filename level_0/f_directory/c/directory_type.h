@@ -111,14 +111,14 @@ extern "C" {
 
   #define f_macro_directory_status_t_new(status, statuses, length) f_macro_string_dynamic_t_new(status, statuses.path, length)
 
+  #define f_macro_directory_status_t_resize(status, statuses, new_length) f_macro_string_dynamic_t_resize(status, statuses.path, new_length)
+  #define f_macro_directory_status_t_adjust(status, statuses, new_length) f_macro_string_dynamic_t_adjust(status, statuses.path, new_length)
+
   #define f_macro_directory_status_t_delete(status, statuses)  f_macro_string_dynamic_t_delete(status, statuses.path)
   #define f_macro_directory_status_t_destroy(status, statuses) f_macro_string_dynamic_t_destroy(status, statuses.path)
 
   #define f_macro_directory_status_t_delete_simple(statuses)  f_macro_string_dynamic_t_delete_simple(statuses.path)
   #define f_macro_directory_status_t_destroy_simple(statuses) f_macro_string_dynamic_t_destroy_simple(statuses.path)
-
-  #define f_macro_directory_status_t_resize(status, statuses, new_length) f_macro_string_dynamic_t_resize(status, statuses.path, new_length)
-  #define f_macro_directory_status_t_adjust(status, statuses, new_length) f_macro_string_dynamic_t_adjust(status, statuses.path, new_length)
 #endif // _di_f_directory_status_t_
 
 /**
@@ -137,9 +137,37 @@ extern "C" {
 
   #define f_directory_statuss_t_initialize { 0, 0, 0 }
 
-  #define f_macro_directory_statuss_t_clear(structures) f_macro_memory_structures_t_clear(structures)
+  #define f_macro_directory_statuss_t_clear(structures) f_macro_memory_structures_clear(structures)
 
-  #define f_macro_directory_statuss_t_new(status, structures, length) f_macro_memory_structures_t_new(status, structures, f_directory_status_t, length)
+  #define f_macro_directory_statuss_t_new(status, structures, length) f_macro_memory_structures_new(status, structures, f_directory_status_t, length)
+
+  #define f_macro_directory_statuss_t_resize(status, structures, new_length) \
+    status = F_none; \
+    if (new_length < structures.size) { \
+      for (register f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; ++_macro__i) { \
+        f_macro_directory_status_t_delete(status, structures.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
+    if (status == F_none) { \
+      structures.size = new_length; \
+      if (structures.used > structures.size) structures.used = new_length; \
+    }
+
+  #define f_macro_directory_statuss_t_adjust(status, structures, new_length) \
+    status = F_none; \
+    if (new_length < structures.size) { \
+      for (register f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; ++_macro__i) { \
+        f_macro_directory_status_t_destroy(status, structures.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
+    if (status == F_none) { \
+      structures.size = new_length; \
+      if (structures.used > structures.size) structures.used = new_length; \
+    }
 
   #define f_macro_directory_statuss_t_delete(status, structures) \
     status = F_none; \
@@ -185,34 +213,6 @@ extern "C" {
       if (f_memory_destroy((void **) & structures.array, sizeof(f_directory_status_t), structures.size)) { \
         structures.size = 0; \
       } \
-    }
-
-  #define f_macro_directory_statuss_t_resize(status, structures, new_length) \
-    status = F_none; \
-    if (new_length < structures.size) { \
-      for (f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
-        f_macro_directory_status_t_delete(status, structures.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
-    if (status == F_none) { \
-      structures.size = new_length; \
-      if (structures.used > structures.size) structures.used = new_length; \
-    }
-
-  #define f_macro_directory_statuss_t_adjust(status, structures, new_length) \
-    status = F_none; \
-    if (new_length < structures.size) { \
-      for (f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; _macro__i++) { \
-        f_macro_directory_status_t_destroy(status, structures.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
-    if (status == F_none) { \
-      structures.size = new_length; \
-      if (structures.used > structures.size) structures.used = new_length; \
     }
 #endif // _di_f_directory_statuss_t_
 

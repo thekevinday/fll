@@ -16,20 +16,15 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_serialize_splitters_
-  #define f_serialize_simple_splitter     ':'
-  #define f_serialize_delimited_splitter  '\''
-  #define f_serialize_delimited_delimiter '\\'
+#ifndef _di_f_serialize_splitter_s_
+  #define f_serialize_simple_splitter     ":"
+  #define f_serialize_delimited_splitter  "'"
+  #define f_serialize_delimited_delimiter "\\"
 
-  #define f_serialize_simple_splitter_string     ":"
-  #define f_serialize_delimited_splitter_string  "'"
-  #define f_serialize_delimited_delimiter_string "\\"
-#endif // _di_f_serialize_splitters_
-
-#ifndef _di_f_serialize_default_allocation_step_
-  // provide a UTF-8 friendly allocation step.
-  #define f_serialize_default_allocation_step 4
-#endif // _di_f_serialize_default_allocation_step_
+  extern const f_string_t f_serialize_simple_splitter_s;
+  extern const f_string_t f_serialize_delimited_splitter_s;
+  extern const f_string_t f_serialize_delimited_delimiter_s;
+#endif // _di_f_serialize_splitter_s_
 
 #ifdef __cplusplus
 } // extern "C"

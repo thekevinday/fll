@@ -102,6 +102,34 @@ extern "C" {
       triples.used = 0; \
     }
 
+  #define f_macro_string_triples_t_resize(status, triples, length) \
+    status = F_none; \
+    if (length < triples.size) { \
+      for (register f_array_length_t _macro__i = triples.size - length; _macro__i < triples.size; ++_macro__i) { \
+        f_macro_string_triple_t_delete(status, triples.array[_macro__i]); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_resize((void **) & triples.array, sizeof(f_string_triple_t), triples.size, length); \
+    if (status == F_none) { \
+      triples.size = length; \
+      if (triples.used > triples.size) triples.used = length; \
+    }
+
+  #define f_macro_string_triples_t_adjust(status, triples, length) \
+    status = F_none; \
+    if (length < triples.size) { \
+      for (register f_array_length_t _macro__i = triples.size - length; _macro__i < triples.size; ++_macro__i) { \
+        f_macro_string_triple_t_destroy(status, triples.array[_macro__i], f_string_triple_t); \
+        if (status != F_none) break; \
+      } \
+    } \
+    if (status == F_none) status = f_memory_adjust((void **) & triples.array, sizeof(f_string_triple_t), triples.size, length); \
+    if (status == F_none) { \
+      triples.size = length; \
+      if (triples.used > triples.size) triples.used = length; \
+    }
+
   #define f_macro_string_triples_t_delete(status, triples) \
     status = F_none; \
     triples.used = triples.size; \
@@ -141,34 +169,6 @@ extern "C" {
     } \
     f_memory_destroy((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
     triples.size = 0;
-
-  #define f_macro_string_triples_t_resize(status, triples, new_length) \
-    status = F_none; \
-    if (new_length < triples.size) { \
-      for (f_array_length_t _macro__i = triples.size - new_length; _macro__i < triples.size; _macro__i++) { \
-        f_macro_string_triple_t_delete(status, triples.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & triples.array, sizeof(f_string_triple_t), triples.size, new_length); \
-    if (status == F_none) { \
-      triples.size = new_length; \
-      if (triples.used > triples.size) triples.used = new_length; \
-    }
-
-  #define f_macro_string_triples_t_adjust(status, triples, new_length) \
-    status = F_none; \
-    if (new_length < triples.size) { \
-      for (f_array_length_t _macro__i = triples.size - new_length; _macro__i < triples.size; _macro__i++) { \
-        f_macro_string_triple_t_destroy(status, triples.array[_macro__i], f_string_triple_t); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & triples.array, sizeof(f_string_triple_t), triples.size, new_length); \
-    if (status == F_none) { \
-      triples.size = new_length; \
-      if (triples.used > triples.size) triples.used = new_length; \
-    }
 #endif // _di_f_string_triples_t_
 
 #ifdef __cplusplus

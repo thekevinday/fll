@@ -150,7 +150,7 @@ extern "C" {
     f_status_t status = f_file_clone(path_source, path_destination, role, recurse.size_block, recurse.exclusive);
 
     if (F_status_is_error(status) || status == F_supported_not) {
-      if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
+      if (status == F_status_set_error(F_memory_not)) {
         return F_status_set_error(status);
       }
 
@@ -346,7 +346,7 @@ extern "C" {
     f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.exclusive);
 
     if (F_status_is_error(status) || status == F_supported_not) {
-      if (status == F_status_set_error(F_memory_allocation) || status == F_status_set_error(F_memory_reallocation)) {
+      if (status == F_status_set_error(F_memory_not)) {
         return F_status_set_error(status);
       }
 
@@ -468,7 +468,7 @@ extern "C" {
     if (length == -1) {
       closedir(parent);
 
-      if (errno == ENOMEM) return F_status_set_error(F_memory_allocation);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       else return F_status_set_error(F_failure);
     }
 

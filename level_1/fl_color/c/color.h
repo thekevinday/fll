@@ -57,11 +57,11 @@ extern "C" {
 #ifndef _di_fl_color_set_
   extern f_status_t fl_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
-  #define fl_macro_color_set_1(stream, format, color1)                                 fl_color_set(stream, format, color1, 0, 0, 0, 0)
-  #define fl_macro_color_set_2(stream, format, color1, color2)                         fl_color_set(stream, format, color1, color2, 0, 0, 0)
-  #define fl_macro_color_set_3(stream, format, color1, color2, color3)                 fl_color_set(stream, format, color1, color2, color3, 0, 0)
-  #define fl_macro_color_set_4(stream, format, color1, color2, color3, color4)         fl_color_set(stream, format, color1, color2, color3, color4, 0)
-  #define fl_macro_color_set_5(stream, format, color1, color2, color3, color4, color5) fl_color_set(stream, format, color1, color2, color3, color4, color5)
+  #define fl_macro_color_set_1(stream, format, color1)                                 fl_color_set(stream, format, color1, 0, 0, 0, 0);
+  #define fl_macro_color_set_2(stream, format, color1, color2)                         fl_color_set(stream, format, color1, color2, 0, 0, 0);
+  #define fl_macro_color_set_3(stream, format, color1, color2, color3)                 fl_color_set(stream, format, color1, color2, color3, 0, 0);
+  #define fl_macro_color_set_4(stream, format, color1, color2, color3, color4)         fl_color_set(stream, format, color1, color2, color3, color4, 0);
+  #define fl_macro_color_set_5(stream, format, color1, color2, color3, color4, color5) fl_color_set(stream, format, color1, color2, color3, color4, color5);
 #endif // _di_fl_color_set_
 
 /**
@@ -91,11 +91,11 @@ extern "C" {
 #ifndef _di_fl_color_set_to_
   extern f_status_t fl_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
-  #define fl_macro_color_set_to_1(id, format, color1)                                 fl_color_set_to(id, format, color1, 0, 0, 0, 0)
-  #define fl_macro_color_set_to_2(id, format, color1, color2)                         fl_color_set_to(id, format, color1, color2, 0, 0, 0)
-  #define fl_macro_color_set_to_3(id, format, color1, color2, color3)                 fl_color_set_to(id, format, color1, color2, color3, 0, 0)
-  #define fl_macro_color_set_to_4(id, format, color1, color2, color3, color4)         fl_color_set_to(id, format, color1, color2, color3, color4, 0)
-  #define fl_macro_color_set_to_5(id, format, color1, color2, color3, color4, color5) fl_color_set_to(id, format, color1, color2, color3, color4, color5)
+  #define fl_macro_color_set_to_1(id, format, color1)                                 fl_color_set_to(id, format, color1, 0, 0, 0, 0);
+  #define fl_macro_color_set_to_2(id, format, color1, color2)                         fl_color_set_to(id, format, color1, color2, 0, 0, 0);
+  #define fl_macro_color_set_to_3(id, format, color1, color2, color3)                 fl_color_set_to(id, format, color1, color2, color3, 0, 0);
+  #define fl_macro_color_set_to_4(id, format, color1, color2, color3, color4)         fl_color_set_to(id, format, color1, color2, color3, color4, 0);
+  #define fl_macro_color_set_to_5(id, format, color1, color2, color3, color4, color5) fl_color_set_to(id, format, color1, color2, color3, color4, color5);
 #endif // _di_fl_color_set_to_
 
 /**
@@ -120,17 +120,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_save_
   extern f_status_t fl_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5);
 
-  #define fl_macro_color_save_1(buffer, format, color1)                                 fl_color_save(buffer, format, color1, 0, 0, 0, 0)
-  #define fl_macro_color_save_2(buffer, format, color1, color2)                         fl_color_save(buffer, format, color1, color2, 0, 0, 0)
-  #define fl_macro_color_save_3(buffer, format, color1, color2, color3)                 fl_color_save(buffer, format, color1, color2, color3, 0, 0)
-  #define fl_macro_color_save_4(buffer, format, color1, color2, color3, color4)         fl_color_save(buffer, format, color1, color2, color3, color4, 0)
-  #define fl_macro_color_save_5(buffer, format, color1, color2, color3, color4, color5) fl_color_save(buffer, format, color1, color2, color3, color4, color5)
+  #define fl_macro_color_save_1(buffer, format, color1)                                 fl_color_save(buffer, format, color1, 0, 0, 0, 0);
+  #define fl_macro_color_save_2(buffer, format, color1, color2)                         fl_color_save(buffer, format, color1, color2, 0, 0, 0);
+  #define fl_macro_color_save_3(buffer, format, color1, color2, color3)                 fl_color_save(buffer, format, color1, color2, color3, 0, 0);
+  #define fl_macro_color_save_4(buffer, format, color1, color2, color3, color4)         fl_color_save(buffer, format, color1, color2, color3, color4, 0);
+  #define fl_macro_color_save_5(buffer, format, color1, color2, color3, color4, color5) fl_color_save(buffer, format, color1, color2, color3, color4, color5);
 #endif // _di_fl_color_save_
 
 /**
@@ -291,7 +291,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_color_load_context_

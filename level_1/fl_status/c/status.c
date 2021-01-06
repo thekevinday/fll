@@ -419,6 +419,12 @@ extern "C" {
         case F_maybe_not:
           *string = FL_status_string_maybe_not;
           break;
+        case F_memory:
+          *string = FL_status_string_memory;
+          break;
+        case F_memory_not:
+          *string = FL_status_string_memory_not;
+          break;
         case F_minor:
           *string = FL_status_string_minor;
           break;
@@ -918,24 +924,6 @@ extern "C" {
           *string = FL_status_string_terminated_not_stop;
           break;
       #endif // _di_F_status_buffers_
-
-      #ifndef _di_F_status_memory_
-        case F_memory:
-          *string = FL_status_string_memory;
-          break;
-        case F_memory_allocation:
-          *string = FL_status_string_memory_allocation;
-          break;
-        case F_memory_deallocation:
-          *string = FL_status_string_memory_deallocation;
-          break;
-        case F_memory_not:
-          *string = FL_status_string_memory_not;
-          break;
-        case F_memory_reallocation:
-          *string = FL_status_string_memory_reallocation;
-          break;
-      #endif // _di_F_status_memory_
 
       #ifndef _di_F_status_process_
         case F_process:

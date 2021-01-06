@@ -47,7 +47,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_cells_increase_
@@ -65,7 +65,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_cells_increase_by_
@@ -97,7 +97,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_cellss_increase_
@@ -115,7 +115,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_cellss_increase_by_
@@ -147,7 +147,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_array_lengths_increase_
@@ -165,7 +165,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_array_lengths_increase_by_
@@ -197,7 +197,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_array_lengthss_increase_
@@ -215,7 +215,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_array_lengthss_increase_by_
@@ -247,7 +247,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int8s_increase_
@@ -265,7 +265,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int8s_increase_by_
@@ -297,7 +297,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int8ss_increase_
@@ -315,7 +315,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int8ss_increase_by_
@@ -347,7 +347,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint8s_increase_
@@ -365,7 +365,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint8s_increase_by_
@@ -397,7 +397,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint8ss_increase_
@@ -415,7 +415,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint8ss_increase_by_
@@ -447,7 +447,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int16s_increase_
@@ -465,7 +465,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int16s_increase_by_
@@ -497,7 +497,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int16ss_increase_
@@ -515,7 +515,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int16ss_increase_by_
@@ -547,7 +547,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint16s_increase_
@@ -565,7 +565,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint16s_increase_by_
@@ -597,7 +597,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint16ss_increase_
@@ -615,7 +615,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint16ss_increase_by_
@@ -647,7 +647,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int32s_increase_
@@ -665,7 +665,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int32s_increase_by_
@@ -697,7 +697,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int32ss_increase_
@@ -715,7 +715,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int32ss_increase_by_
@@ -747,7 +747,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint32s_increase_
@@ -765,7 +765,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint32s_increase_by_
@@ -797,7 +797,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint32ss_increase_
@@ -815,7 +815,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint32ss_increase_by_
@@ -847,7 +847,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_int64s_increase_
@@ -865,7 +865,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_int64s_increase_by_
@@ -897,7 +897,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_int64ss_increase_
@@ -915,7 +915,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_int64ss_increase_by_
@@ -947,7 +947,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_uint64s_increase_
@@ -965,7 +965,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_uint64s_increase_by_
@@ -997,7 +997,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_uint64ss_increase_
@@ -1015,7 +1015,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_uint64ss_increase_by_
@@ -1047,7 +1047,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int128s_increase_
@@ -1065,7 +1065,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int128s_increase_by_
@@ -1097,7 +1097,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int128ss_increase_
@@ -1115,7 +1115,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_int128ss_increase_by_
@@ -1147,7 +1147,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint128s_increase_
@@ -1165,7 +1165,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint128s_increase_by_
@@ -1197,7 +1197,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint128ss_increase_
@@ -1215,7 +1215,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if new length is larger than max array length.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_type_uint128ss_increase_by_

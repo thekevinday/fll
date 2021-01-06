@@ -33,7 +33,7 @@ extern "C" {
 
     for (i = 0; i <= length; i++) {
 
-      if (i == length || path[i] == f_path_separator_variable[0]) {
+      if (i == length || path[i] == f_path_separator_variable_s[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -112,7 +112,7 @@ extern "C" {
 
     for (i = 0; i <= path.used; i++) {
 
-      if (i == path.used || path.string[i] == f_path_separator_variable[0]) {
+      if (i == path.used || path.string[i] == f_path_separator_variable_s[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
@@ -194,11 +194,11 @@ extern "C" {
     for (; i > 0; i--) {
       j--;
 
-      if (!j || path[j] == f_path_separator_variable[0]) {
+      if (!j || path[j] == f_path_separator_variable_s[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (path[j] == f_path_separator_variable[0]) {
+        if (path[j] == f_path_separator_variable_s[0]) {
           total = last - i;
 
           if (total > 0) {
@@ -289,11 +289,11 @@ extern "C" {
     for (; i > 0; i--) {
       j--;
 
-      if (!j || path.string[j] == f_path_separator_variable[0]) {
+      if (!j || path.string[j] == f_path_separator_variable_s[0]) {
         f_macro_memory_structure_macro_increment(status, (*paths), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
-        if (path.string[j] == f_path_separator_variable[0]) {
+        if (path.string[j] == f_path_separator_variable_s[0]) {
           total = last - i;
 
           if (total > 0) {

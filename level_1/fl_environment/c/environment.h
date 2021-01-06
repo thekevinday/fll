@@ -41,8 +41,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_
@@ -65,8 +64,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_dynamic_
@@ -91,8 +89,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_reverse_
@@ -117,8 +114,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if paths array is too large for further addressing.
- *   F_memory_reallocation (with error bit) on reallocation error.
- *   F_memory_allocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_environment_path_explode_reverse_dynamic_

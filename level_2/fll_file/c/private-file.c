@@ -27,7 +27,7 @@ extern "C" {
 
     status = F_none;
 
-    const f_string_length_t path_length = strnlen(path, f_path_max);
+    const f_string_length_t path_length = strnlen(path, f_path_length_max);
 
     {
       f_string_dynamics_t * const list[] = {
@@ -124,7 +124,7 @@ extern "C" {
 
     status = F_none;
 
-    const f_string_length_t path_length = strnlen(path, f_path_max);
+    const f_string_length_t path_length = strnlen(path, f_path_length_max);
 
     {
       f_string_dynamics_t * const list[] = {

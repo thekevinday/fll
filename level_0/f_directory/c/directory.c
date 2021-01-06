@@ -137,7 +137,7 @@ extern "C" {
     const size_t length = scandir(path, &listing, filter, sort);
 
     if (length == -1) {
-      if (errno == ENOMEM) return F_status_set_error(F_memory_allocation);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       else return F_status_set_error(F_failure);
     }
 

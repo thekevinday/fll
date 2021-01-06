@@ -279,7 +279,7 @@ extern "C" {
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, parameter);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
   }
@@ -292,7 +292,7 @@ extern "C" {
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable, parameter);
+    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter);
 
     fl_color_print(data.error.to.stream, data.context.set.error, "' specified too many times.%c", f_string_eol_s[0]);
   }

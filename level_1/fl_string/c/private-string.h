@@ -30,8 +30,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source length is 0.
- *   F_memory_allocation (with error bit) on memory allocation error.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *

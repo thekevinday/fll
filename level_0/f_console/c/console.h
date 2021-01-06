@@ -39,7 +39,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not the input string is empty.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_identify_
   extern f_status_t f_console_identify(const f_string_t input, f_console_id_t *result);
@@ -83,7 +82,6 @@ extern "C" {
  *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
  */
 #ifndef _di_f_console_parameter_process_
   extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining);

@@ -17,9 +17,9 @@ extern "C" {
       return F_data_not;
     }
 
-    if (input[0] == f_console_symbol_enable) {
+    if (input[0] == f_console_symbol_short_enable_s[0]) {
       if (length > 1) {
-        if (input[1] == f_console_symbol_enable) {
+        if (input[1] == f_console_symbol_short_enable_s[0]) {
           if (length > 2) {
             *result = f_console_long_enable;
           }
@@ -29,9 +29,9 @@ extern "C" {
       }
       else *result = f_console_empty_short_enable;
     }
-    else if (input[0] == f_console_symbol_disable) {
+    else if (input[0] == f_console_symbol_short_disable_s[0]) {
       if (length > 1) {
-        if (input[1] == f_console_symbol_disable) {
+        if (input[1] == f_console_symbol_short_disable_s[0]) {
           if (length > 2) {
             *result = f_console_long_disable;
           }
@@ -82,7 +82,7 @@ extern "C" {
         i = needs_value.array[0];
 
         if (parameters.parameter[i].values.used + 1 > parameters.parameter[i].values.size) {
-          f_macro_array_lengths_t_resize(status, parameters.parameter[i].values, parameters.parameter[i].values.size + f_console_default_allocation_step);
+          f_macro_array_lengths_t_resize(status, parameters.parameter[i].values, parameters.parameter[i].values.size + f_memory_default_allocation_step);
 
           if (F_status_is_error(status)) {
             f_macro_string_lengths_t_delete_simple(needs_value);
@@ -199,7 +199,7 @@ extern "C" {
             }
 
             if (parameters.parameter[i].locations.used + 1 > parameters.parameter[i].locations.size) {
-              f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
+              f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_memory_default_allocation_step);
 
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_t_delete_simple(needs_value);
@@ -208,7 +208,7 @@ extern "C" {
             }
 
             if (parameters.parameter[i].locations_sub.used == parameters.parameter[i].locations_sub.size) {
-              f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
+              f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_memory_default_allocation_step);
 
               if (F_status_is_error(status)) {
                 f_macro_string_lengths_t_delete_simple(needs_value);
@@ -263,7 +263,7 @@ extern "C" {
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, argument_length + 1) != 0) continue;
 
           if (parameters.parameter[i].locations.used == parameters.parameter[i].locations.size) {
-            f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_console_default_allocation_step);
+            f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations, parameters.parameter[i].locations.size + f_memory_default_allocation_step);
 
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(needs_value);
@@ -272,7 +272,7 @@ extern "C" {
           }
 
           if (parameters.parameter[i].locations_sub.used == parameters.parameter[i].locations_sub.size) {
-            f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_console_default_allocation_step);
+            f_macro_string_lengths_t_resize(status, parameters.parameter[i].locations_sub, parameters.parameter[i].locations_sub.size + f_memory_default_allocation_step);
 
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(needs_value);
@@ -310,7 +310,7 @@ extern "C" {
 
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
-            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_console_default_allocation_step, f_macro_string_lengths_t_resize, F_array_too_large);
+            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_memory_default_allocation_step, f_macro_string_lengths_t_resize, F_array_too_large);
             if (F_status_is_error(status)) {
               f_macro_string_lengths_t_delete_simple(needs_value);
               return status;

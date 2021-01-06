@@ -35,18 +35,24 @@ extern "C" {
 
   #define f_fss_comments_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_comments_t_clear(delimits) f_macro_string_ranges_t_clear(delimits)
+  #define f_macro_fss_comments_t_new(status, ranges, length) f_macro_string_ranges_t_new(status, ranges, length);
 
-  #define f_macro_fss_comments_t_new(status, delimits, length) f_macro_string_ranges_t_new(status, delimits, length)
+  #define f_macro_fss_comments_t_resize(status, ranges, length) f_macro_string_ranges_t_resize(status, ranges, length);
+  #define f_macro_fss_comments_t_adjust(status, ranges, length) f_macro_string_ranges_t_adjust(status, ranges, length);
 
-  #define f_macro_fss_comments_t_delete(status, delimits)  f_macro_string_ranges_t_delete(status, delimits)
-  #define f_macro_fss_comments_t_destroy(status, delimits) f_macro_string_ranges_t_destroy(status, delimits)
+  #define f_macro_fss_comments_t_delete(status, ranges)  f_macro_string_ranges_t_delete(status, ranges);
+  #define f_macro_fss_comments_t_destroy(status, ranges) f_macro_string_ranges_t_destroy(status, ranges);
 
-  #define f_macro_fss_comments_t_delete_simple(delimits)  f_macro_string_ranges_t_delete_simple(delimits)
-  #define f_macro_fss_comments_t_destroy_simple(delimits) f_macro_string_ranges_t_destroy_simple(delimits)
+  #define f_macro_fss_comments_t_delete_simple(ranges)  f_macro_string_ranges_t_delete_simple(ranges);
+  #define f_macro_fss_comments_t_destroy_simple(ranges) f_macro_string_ranges_t_destroy_simple(ranges);
 
-  #define f_macro_fss_comments_t_resize(status, delimits, new_length) f_macro_string_ranges_t_resize(status, delimits, new_length)
-  #define f_macro_fss_comments_t_adjust(status, delimits, new_length) f_macro_string_ranges_t_adjust(status, delimits, new_length)
+  #define f_macro_fss_comments_t_increase(status, ranges) f_macro_string_ranges_t_increase(status, ranges);
+  #define f_macro_fss_comments_t_decrease(status, ranges) f_macro_string_ranges_t_decrease(status, ranges);
+  #define f_macro_fss_comments_t_decimate(status, ranges) f_macro_string_ranges_t_decimate(status, ranges);
+
+  #define f_macro_fss_comments_t_increase_by(status, ranges, amount) f_macro_string_ranges_t_increase_by(status, ranges, amount);
+  #define f_macro_fss_comments_t_decrease_by(status, ranges, amount) f_macro_string_ranges_t_decrease_by(status, ranges, amount);
+  #define f_macro_fss_comments_t_decimate_by(status, ranges, amount) f_macro_string_ranges_t_decimate_by(status, ranges, amount);
 #endif // _di_f_fss_comments_t_
 
 /**
@@ -61,18 +67,18 @@ extern "C" {
 
   #define f_fss_commentss_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_fss_commentss_t_clear(quotess) f_macro_string_rangess_t_clear(quotess)
+  #define f_macro_fss_commentss_t_clear(quotess) f_macro_string_rangess_t_clear(quotess);
 
-  #define f_macro_fss_commentss_t_new(status, quotess, length) f_macro_string_rangess_t_new(status, quotess, length)
+  #define f_macro_fss_commentss_t_new(status, quotess, length) f_macro_string_rangess_t_new(status, quotess, length);
 
-  #define f_macro_fss_commentss_t_delete(status, quotess)  f_macro_string_rangess_t_delete(status, quotess)
-  #define f_macro_fss_commentss_t_destroy(status, quotess) f_macro_string_rangess_t_destroy(status, quotess)
+  #define f_macro_fss_commentss_t_resize(status, quotess, length) f_macro_string_rangess_t_resize(status, quotess, length);
+  #define f_macro_fss_commentss_t_adjust(status, quotess, length) f_macro_string_rangess_t_adjust(status, quotess, length);
 
-  #define f_macro_fss_commentss_t_delete_simple(quotess)  f_macro_string_rangess_t_delete_simple(quotess)
-  #define f_macro_fss_commentss_t_destroy_simple(quotess) f_macro_string_rangess_t_destroy_simple(quotess)
+  #define f_macro_fss_commentss_t_delete(status, quotess)  f_macro_string_rangess_t_delete(status, quotess);
+  #define f_macro_fss_commentss_t_destroy(status, quotess) f_macro_string_rangess_t_destroy(status, quotess);
 
-  #define f_macro_fss_commentss_t_resize(status, quotess, new_length) f_macro_string_rangess_t_resize(status, quotess, new_length)
-  #define f_macro_fss_commentss_t_adjust(status, quotess, new_length) f_macro_string_rangess_t_adjust(status, quotess, new_length)
+  #define f_macro_fss_commentss_t_delete_simple(quotess)  f_macro_string_rangess_t_delete_simple(quotess);
+  #define f_macro_fss_commentss_t_destroy_simple(quotess) f_macro_string_rangess_t_destroy_simple(quotess);
 #endif // _di_f_fss_commentss_t_
 
 #ifdef __cplusplus

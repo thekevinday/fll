@@ -67,7 +67,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but size is already 0 so there is nothing to do.
  *
- *   F_memory_reallocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *
  * @see calloc()
  * @see free()
@@ -99,7 +99,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but amount is 0 so there is nothing to do.
  *
- *   F_memory_reallocation (with error bit) on allocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *
  * @see calloc()
  * @see free()

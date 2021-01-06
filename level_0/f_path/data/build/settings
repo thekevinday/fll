@@ -19,8 +19,8 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_memory
-build_sources_library path.c private-path.c
+build_libraries-individual -lf_memory -lf_string
+build_sources_library path.c path-common.c private-path.c
 build_sources_program
 build_sources_headers path.h path-common.h
 build_sources_script

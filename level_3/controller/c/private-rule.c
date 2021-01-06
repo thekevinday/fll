@@ -1488,12 +1488,12 @@ extern "C" {
               cache->line_item = cache_line_item;
 
               if (F_status_is_error(status)) {
-                if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
 
                   controller_rule_error_print_need_want_wish(data->error, strings[i], dynamics[i]->array[j].string, "failed during execution");
                   controller_rule_error_print(data->error, *cache, F_true);
 
-                  if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+                  if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                     break;
                   }
                 }
@@ -1817,7 +1817,7 @@ extern "C" {
             status = controller_rule_setting_read(data, setting, cache, rule);
 
             if (F_status_is_error(status)) {
-              if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+              if (F_status_set_fine(status) == F_memory_not) {
                 break;
               }
             }
@@ -1894,7 +1894,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
           break;
         }
@@ -2028,7 +2028,7 @@ extern "C" {
 
         controller_rule_error_print(data.error, *cache, F_false);
 
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
           break;
         }
@@ -2189,7 +2189,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_maps_increase", F_true);
 
-          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
             break;
           }
@@ -2216,7 +2216,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
 
-          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
             break;
           }
@@ -2249,7 +2249,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
             break;
           }
@@ -2364,7 +2364,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
             break;
           }
@@ -2519,7 +2519,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data.error, F_status_set_fine(status), "f_limit_sets_increase", F_true);
 
-          if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+          if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
             break;
           }
@@ -2647,7 +2647,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             setting_value->used = 0;
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -2731,7 +2731,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -2934,7 +2934,7 @@ extern "C" {
 
             controller_rule_error_print(data.error, *cache, F_false);
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -2957,7 +2957,7 @@ extern "C" {
 
             controller_rule_error_print(data.error, *cache, F_false);
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -2971,7 +2971,7 @@ extern "C" {
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               fll_error_print(data.error, F_status_set_fine(status), "f_capability_from_text", F_true);
 
               // get the current line number within the settings item.
@@ -3150,7 +3150,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_type_int32s_increase", F_true);
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -3244,7 +3244,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -3281,7 +3281,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             setting_values->array[setting_values->used].used = 0;
 
-            if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+            if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
               break;
             }
@@ -3389,7 +3389,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
 
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
           break;
         }
@@ -3413,7 +3413,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
 
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
           break;
         }
@@ -3441,7 +3441,7 @@ extern "C" {
 
         fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
 
-        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_memory_allocation || F_status_set_fine(status) == F_memory_reallocation) {
+        if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
           break;
         }

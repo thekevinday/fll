@@ -60,7 +60,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_terminated_not_eos (with error bit) if end of buffer is reached before a closing bracket is found (object was found).
@@ -102,7 +102,7 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_memory_reallocation (with error bit) on reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *

@@ -31,7 +31,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_exist_not if name does not exist.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  * @see f_environment_get()

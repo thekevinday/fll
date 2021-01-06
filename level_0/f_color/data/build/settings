@@ -19,10 +19,10 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_memory
-build_sources_library
+build_libraries-individual -lf_memory -lf_string
+build_sources_library color.c color-common.c
 build_sources_program
-build_sources_headers color.h
+build_sources_headers color.h color-common.h
 build_sources_script
 build_sources_setting
 build_script yes

@@ -46,7 +46,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_simple_
@@ -72,7 +72,7 @@ extern "C" {
  *   F_none on success.
  *   F_complete_not_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   F_array_too_large (with error bit) if a buffer would exceed maximum length.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_
@@ -98,7 +98,7 @@ extern "C" {
  *   F_none on success.
  *   F_complete_not_utf_eos if end of sting is reached before a complete UTF-8 character can be processed.
  *   F_array_too_large (with error bit) if a buffer would exceed memory max length.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_map_
@@ -155,7 +155,7 @@ extern "C" {
  *   F_none_eos on success at end of string.
  *   F_data_not_eos if end of string reached before index was reached (dynamic->used is set to 0).
  *   F_complete_not_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_serialize_un_simple_get_

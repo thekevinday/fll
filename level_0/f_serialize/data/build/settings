@@ -19,8 +19,8 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_memory -lf_utf
-build_sources_library serialize.c private-serialize.c
+build_libraries-individual -lf_memory -lf_string -lf_utf
+build_sources_library serialize.c serialize-common.c private-serialize.c
 build_sources_program
 build_sources_headers serialize.h serialize-common.h
 build_sources_script

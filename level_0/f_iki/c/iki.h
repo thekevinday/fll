@@ -137,7 +137,7 @@ extern "C" {
  *   F_data_not on success, but there were no IKI vocabulary names found.
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabulary names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabulary names found.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
  */

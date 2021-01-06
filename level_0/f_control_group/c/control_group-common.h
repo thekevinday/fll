@@ -30,9 +30,9 @@ extern "C" {
 
   #define f_control_group_pid_length_max 64
 
-  const static f_string_t f_control_group_path_system_default_s = f_control_group_path_system_default;
-  const static f_string_t f_control_group_path_system_prefix_s = f_control_group_path_system_prefix;
-  const static f_string_t f_control_group_path_system_suffix_s = f_control_group_path_system_suffix;
+  extern const f_string_t f_control_group_path_system_default_s;
+  extern const f_string_t f_control_group_path_system_prefix_s;
+  extern const f_string_t f_control_group_path_system_suffix_s;
 #endif // _di_fl_control_group_defines_
 
 /**

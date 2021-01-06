@@ -15,7 +15,7 @@ extern "C" {
     if (*pointer) {
       void *new_pointer = 0;
 
-      if (length_old > 0) {
+      if (length_old) {
         if (length_new < length_old) {
 
           // uint8_t * is of a data size size of 1, casting it to uint8_t should result in a single-length increment.
@@ -37,24 +37,24 @@ extern "C" {
       }
 
       if (new_pointer) {
-        if (new_pointer != *pointer) {
-          if (length_new > length_old) {
+        if (length_new > length_old) {
 
-            // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-            // this is done to avoid problems with (void *) having arithmetic issues.
-            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
-          }
-
-          *pointer = new_pointer;
+          // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+          // this is done to avoid problems with (void *) having arithmetic issues.
+          memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
         }
+
+        *pointer = new_pointer;
 
         return F_none;
       }
     }
-    else if (length_new > 0) {
+    else if (length_new) {
       *pointer = calloc(type_size, length_new);
 
       if (*pointer) {
+        memset(*pointer, 0, type_size * length_new);
+
         return F_none;
       }
     }
@@ -89,24 +89,24 @@ extern "C" {
       }
 
       if (new_pointer) {
-        if (new_pointer != *pointer) {
-          if (length_new > length_old) {
+        if (length_new > length_old) {
 
-            // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-            // this is done to avoid problems with (void *) having arithmetic issues.
-            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
-          }
-
-          *pointer = new_pointer;
+          // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+          // this is done to avoid problems with (void *) having arithmetic issues.
+          memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
         }
+
+        *pointer = new_pointer;
 
         return F_none;
       }
     }
-    else if (length_new > 0) {
+    else if (length_new) {
       *pointer = calloc(type_size, length_new);
 
       if (*pointer) {
+        memset(*pointer, 0, type_size * length_new);
+
         return F_none;
       }
     }

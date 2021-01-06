@@ -232,7 +232,7 @@ extern "C" {
  *   F_data_not if directory is empty.
  *   F_array_too_large (with error bit) if the directory buffer max length would be exceeded.
  *   F_failure (with error bit) if failed to read directory information.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see alphasort()
