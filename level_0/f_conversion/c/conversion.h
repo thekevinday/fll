@@ -205,7 +205,7 @@ extern "C" {
  * @return
  *   F_none if the number was converted to a string.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  */
 #ifndef _di_f_conversion_number_signed_to_string_
   extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination);
@@ -228,7 +228,7 @@ extern "C" {
  * @return
  *   F_none if the number was converted to a string.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_reallocation (with error bit) on memory reallocation error.
+ *   F_memory_not (with error bit) on out of memory.
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
   extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination);
