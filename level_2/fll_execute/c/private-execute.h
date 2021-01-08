@@ -30,15 +30,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  * @see fll_execute_arguments_add()
  * @see fll_execute_arguments_add_set()
  * @see fll_execute_arguments_dynamic_add()
@@ -71,15 +71,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  * @see fll_execute_arguments_add_parameter()
  * @see fll_execute_arguments_add_parameter_set()
  * @see fll_execute_arguments_dynamic_add_parameter()

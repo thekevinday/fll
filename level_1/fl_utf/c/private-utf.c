@@ -93,8 +93,8 @@ extern "C" {
   }
 #endif // !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
 
-#if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
-  f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
+#if !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
+  f_status_t private_fl_utfl_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
     f_utf_string_length_t i1 = offset1;
     f_utf_string_length_t i2 = offset2;
 
@@ -122,10 +122,10 @@ extern "C" {
 
     return F_equal_to;
   }
-#endif // !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
+#endif // !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
 
-#if !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
-  f_status_t private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
+#if !defined(_di_fl_utfl_string_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_trim_)
+  f_status_t private_fl_utfl_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) {
     f_utf_string_length_t i1 = offset1;
     f_utf_string_length_t i2 = offset2;
 
@@ -248,7 +248,7 @@ extern "C" {
 
     return F_equal_to;
   }
-#endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
+#endif // !defined(_di_fl_utfl_string_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_trim_)
 
 #if !defined(_di_fl_utf_string_prepend_) || !defined(_di_fl_utf_string_dynamic_prepend_)
   f_status_t private_fl_utf_string_prepend(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination) {
@@ -356,8 +356,8 @@ extern "C" {
   }
 #endif // !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_)
 
-#if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
-  f_status_t private_fl_utf_string_rip_find_range(const f_utf_string_t source, f_utf_string_length_t *start, f_utf_string_length_t *stop) {
+#if !defined(_di_fl_utfl_string_rip_) || !defined(_di_fl_utfl_string_dynamic_rip_) || !defined(_di_fl_utfl_string_rip_nulless_) || !defined(_di_fl_utfl_string_dynamic_rip_nulless_)
+  f_status_t private_fl_utfl_string_rip_find_range(const f_utf_string_t source, f_utf_string_length_t *start, f_utf_string_length_t *stop) {
 
     f_status_t status = F_none;
 
@@ -418,7 +418,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
+#endif // !defined(_di_fl_utfl_string_rip_) || !defined(_di_fl_utfl_string_dynamic_rip_) || !defined(_di_fl_utfl_string_rip_nulless_) || !defined(_di_fl_utfl_string_dynamic_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

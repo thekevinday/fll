@@ -120,7 +120,7 @@ extern "C" {
     status = F_none; \
     if (length < triples.size) { \
       for (register f_array_length_t _macro__i = triples.size - length; _macro__i < triples.size; ++_macro__i) { \
-        f_macro_string_triple_t_destroy(status, triples.array[_macro__i], f_string_triple_t); \
+        f_macro_string_triple_t_destroy(status, triples.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
@@ -170,6 +170,189 @@ extern "C" {
     f_memory_destroy((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
     triples.size = 0;
 #endif // _di_f_string_triples_t_
+
+// @todo increase, decrease, decimate, increase_by, decrease_by, decimate_by
+
+/**
+ * Resize the string triples array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_adjust_
+  extern f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples);
+#endif // _di_f_string_triples_adjust_
+
+/**
+ * Resize the string triples array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_decimate_
+  extern f_status_t f_string_triples_decimate(f_string_triples_t *triples);
+#endif // _di_f_string_triples_decimate_
+
+/**
+ * Resize the string triples array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_decimate_by_
+  extern f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t *triples);
+#endif // _di_f_string_triples_decimate_by_
+
+/**
+ * Resize the string triples array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_decrease_
+  extern f_status_t f_string_triples_decrease(f_string_triples_t *triples);
+#endif // _di_f_string_triples_decrease_
+
+/**
+ * Resize the string triples array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_decrease_by_
+  extern f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t *triples);
+#endif // _di_f_string_triples_decrease_by_
+
+/**
+ * Delete the array of string triples.
+ *
+ * @param triples
+ *   The triples to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_delete_
+  extern f_status_t f_string_triples_delete(f_string_triples_t *triples);
+#endif // _di_f_string_triples_delete_
+
+/**
+ * Delete the array of string triples.
+ *
+ * @param triples
+ *   The triples to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_destroy_
+  extern f_status_t f_string_triples_destroy(f_string_triples_t *triples);
+#endif // _di_f_string_triples_destroy_
+
+/**
+ * Increase the size of the string triples array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_increase_
+  extern f_status_t f_string_triples_increase(f_string_triples_t *triples);
+#endif // _di_f_string_triples_increase_
+
+/**
+ * Resize the string triples array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param triples
+ *   The string triples array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_string_triples_increase_by_
+  extern f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t *triples);
+#endif // _di_f_string_triples_increase_by_
+
+/**
+ * Resize the string triples array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param triples
+ *   The string triples array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_triples_adjust_
+  extern f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples);
+#endif // _di_f_string_triples_adjust_
 
 #ifdef __cplusplus
 } // extern "C"

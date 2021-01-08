@@ -151,7 +151,7 @@ extern "C" {
       if (length > 0) {
         f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
-        status = fl_string_append(argv[values.array[i]], length, &ripped);
+        status = f_string_append(argv[values.array[i]], length, &ripped);
         if (F_status_is_error(status)) return status;
 
         if (status == F_data_not) {
@@ -193,7 +193,7 @@ extern "C" {
       length = strnlen(argv[values.array[i]], f_console_length_size);
 
       if (length > 0) {
-        status = fl_string_mash(glue, glue_length, argv[values.array[i]], length, destination);
+        status = f_string_mash(glue, glue_length, argv[values.array[i]], length, destination);
         if (F_status_is_error(status)) return F_status_set_error(F_string_too_large);
       }
     } // for
@@ -272,15 +272,15 @@ extern "C" {
         status = fl_string_rip(argv[values.array[i]], length, &ripped);
 
         if (F_status_is_error(status)) {
-          fl_string_dynamic_delete(&ripped);
+          f_string_dynamic_delete(&ripped);
           return status;
         }
 
         if (ripped.used > 0) {
-          status = fl_string_dynamic_mash(glue, glue_length, ripped, destination);
+          status = f_string_dynamic_mash(glue, glue_length, ripped, destination);
 
           if (F_status_is_error(status)) {
-            fl_string_dynamic_delete(&ripped);
+            f_string_dynamic_delete(&ripped);
             return F_status_set_error(F_string_too_large);
           }
         }
@@ -288,7 +288,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      status = fl_string_dynamic_delete(&ripped);
+      status = f_string_dynamic_delete(&ripped);
     }
 
     if (status == F_none && start == destination->used) {

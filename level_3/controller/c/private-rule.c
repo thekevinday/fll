@@ -37,26 +37,26 @@ extern "C" {
     parameters->used = 0;
 
     if (object && object->start <= object->start) {
-      status = fl_string_dynamics_increase(parameters);
+      status = f_string_dynamics_increase(parameters);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
         return status;
       }
 
       parameters->array[parameters->used].used = 0;
 
-      status = fl_string_dynamic_partial_append_nulless(buffer, *object, &parameters->array[0]);
+      status = f_string_dynamic_partial_append_nulless(buffer, *object, &parameters->array[0]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
         return status;
       }
 
-      status = fl_string_dynamic_terminate_after(&parameters->array[0]);
+      status = f_string_dynamic_terminate_after(&parameters->array[0]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
         return status;
       }
 
@@ -68,26 +68,26 @@ extern "C" {
 
         if (content->array[i].start > content->array[i].start) continue;
 
-        status = fl_string_dynamics_increase(parameters);
+        status = f_string_dynamics_increase(parameters);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
           return status;
         }
 
         parameters->array[parameters->used].used = 0;
 
-        status = fl_string_dynamic_partial_append_nulless(buffer, content->array[i], &parameters->array[parameters->used]);
+        status = f_string_dynamic_partial_append_nulless(buffer, content->array[i], &parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
           return status;
         }
 
-        status = fl_string_dynamic_terminate_after(&parameters->array[parameters->used]);
+        status = f_string_dynamic_terminate_after(&parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
           return status;
         }
 
@@ -210,10 +210,10 @@ extern "C" {
           if (item->type == controller_rule_item_type_script) {
             actions->array[actions->used].parameters.used = 0;
 
-            status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
+            status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
             }
             else {
               actions->array[actions->used].type = type;
@@ -221,16 +221,16 @@ extern "C" {
               actions->array[actions->used].parameters.used = 0;
               actions->array[actions->used].status = F_known_not;
 
-              status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_action.array[0], &actions->array[actions->used].parameters.array[0]);
+              status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_action.array[0], &actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
               }
 
-              status = fl_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
+              status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
               }
               else {
                 actions->array[actions->used].parameters.used = 1;
@@ -278,10 +278,10 @@ extern "C" {
                 actions->array[actions->used].parameters.used = 0;
                 actions->array[actions->used].status = F_known_not;
 
-                status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
+                status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+                  fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
 
                   actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
                   break;
@@ -318,10 +318,10 @@ extern "C" {
           fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
         }
         else if (item->type == controller_rule_item_type_script) {
-          status = fl_string_dynamics_increase(&actions->array[actions->used].parameters);
+          status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
           }
           else {
 
@@ -333,15 +333,15 @@ extern "C" {
 
             for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
 
-              status = fl_string_dynamic_partial_mash_nulless(f_string_space_s, f_string_space_length, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
+              status = f_string_dynamic_partial_mash_nulless(f_string_space_s, f_string_space_length, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
               if (F_status_is_error(status)) break;
             } // for
 
             if (F_status_is_error_not(status)) {
-              status = fl_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
+              status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
               }
               else {
                 actions->array[actions->used].parameters.used = 1;
@@ -672,7 +672,7 @@ extern "C" {
       if (status == F_child || status == F_signal || F_status_is_error(status) && !simulate) break;
     } // for
 
-    fl_string_maps_delete(&environment);
+    f_string_maps_delete(&environment);
 
     if (status == F_child) {
       return status;
@@ -876,31 +876,31 @@ extern "C" {
 
     id->used = 0;
 
-    status = fl_string_dynamic_partial_append_nulless(source, directory, id);
+    status = f_string_dynamic_partial_append_nulless(source, directory, id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
       return status;
     }
 
-    status = fl_string_append(f_path_separator_s, f_path_separator_length, id);
+    status = f_string_append(f_path_separator_s, f_path_separator_length, id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
       return status;
     }
 
-    status = fl_string_dynamic_partial_append_nulless(source, basename, id);
+    status = f_string_dynamic_partial_append_nulless(source, basename, id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
       return status;
     }
 
-    status = fl_string_dynamic_terminate_after(id);
+    status = f_string_dynamic_terminate_after(id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
     }
 
     return status;
@@ -1211,50 +1211,50 @@ extern "C" {
     path->used = 0;
 
     if (setting.path_setting.used) {
-      status = fl_string_append(setting.path_setting.string, setting.path_setting.used, path);
+      status = f_string_append(setting.path_setting.string, setting.path_setting.used, path);
 
       if (F_status_is_error_not(status)) {
-        status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
+        status = f_string_append(f_path_separator_s, f_path_separator_length, path);
       }
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(controller_string_rules_s, controller_string_rules_length, path);
+      status = f_string_append(controller_string_rules_s, controller_string_rules_length, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
+      status = f_string_append(f_path_separator_s, f_path_separator_length, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(path_directory.string, path_directory.used, path);
+      status = f_string_append(path_directory.string, path_directory.used, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator_s, f_path_separator_length, path);
+      status = f_string_append(f_path_separator_s, f_path_separator_length, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(path_name.string, path_name.used, path);
+      status = f_string_append(path_name.string, path_name.used, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_extension_separator_s, f_path_extension_separator_length, path);
+      status = f_string_append(f_path_extension_separator_s, f_path_extension_separator_length, path);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(controller_string_rule_s, controller_string_rule_length, path);
+      status = f_string_append(controller_string_rule_s, controller_string_rule_length, path);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
       return status;
     }
 
-    status = fl_string_dynamic_terminate_after(path);
+    status = f_string_dynamic_terminate_after(path);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       return status;
     }
 
@@ -1342,45 +1342,45 @@ extern "C" {
     cache->name_item.used = 0;
     cache->name_file.used = 0;
 
-    status = fl_string_append(controller_string_rules_s, controller_string_rules_length, &cache->name_file);
+    status = f_string_append(controller_string_rules_s, controller_string_rules_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
+      status = f_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(data->error, *cache, F_true);
 
       return status;
     }
 
-    status = fl_string_dynamic_append(setting->rules.array[index].id, &cache->name_file);
+    status = f_string_dynamic_append(setting->rules.array[index].id, &cache->name_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_append", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       controller_rule_error_print(data->error, *cache, F_true);
 
       return status;
     }
 
-    status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
+    status = f_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(controller_string_rule_s, controller_string_rule_length, &cache->name_file);
+      status = f_string_append(controller_string_rule_s, controller_string_rule_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(data->error, *cache, F_true);
 
       return status;
     }
 
-    status = fl_string_dynamic_terminate_after(&cache->name_file);
+    status = f_string_dynamic_terminate_after(&cache->name_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       controller_rule_error_print(data->error, *cache, F_true);
 
       return status;
@@ -1674,16 +1674,16 @@ extern "C" {
     cache->name_file.used = 0;
     cache->name_item.used = 0;
 
-    status = fl_string_dynamic_append_nulless(rule_id, &rule->id);
+    status = f_string_dynamic_append_nulless(rule_id, &rule->id);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
     }
     else {
-      status = fl_string_dynamic_terminate_after(&rule->id);
+      status = f_string_dynamic_terminate_after(&rule->id);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       }
       else {
         status = controller_file_load(data, setting, controller_string_rules_s, rule->id, controller_string_rule_s, controller_string_rules_length, controller_string_rule_length, cache);
@@ -1791,17 +1791,17 @@ extern "C" {
             continue;
           }
 
-          status = fl_string_dynamic_partial_append(cache->buffer_file, cache->content_items.array[i].array[0], &cache->buffer_item);
+          status = f_string_dynamic_partial_append(cache->buffer_file, cache->content_items.array[i].array[0], &cache->buffer_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append", F_true);
             break;
           }
 
-          status = fl_string_dynamic_terminate_after(&cache->buffer_item);
+          status = f_string_dynamic_terminate_after(&cache->buffer_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
             break;
           }
 
@@ -1880,16 +1880,16 @@ extern "C" {
       // name_item is used to store the setting name.
       cache->name_item.used = 0;
 
-      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->object_actions.array[i], &cache->name_item);
+      status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->object_actions.array[i], &cache->name_item);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
       }
       else {
-        status = fl_string_dynamic_terminate_after(&cache->name_item);
+        status = f_string_dynamic_terminate_after(&cache->name_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
         }
       }
 
@@ -2005,16 +2005,16 @@ extern "C" {
       range2.start = cache->content_actions.array[i].array[0].start;
       range2.stop = cache->content_actions.array[i].array[cache->content_actions.array[i].used - 1].stop;
 
-      status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->name_action);
+      status = f_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->name_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
       }
       else {
-        status = fl_string_dynamic_terminate_after(&cache->name_action);
+        status = f_string_dynamic_terminate_after(&cache->name_action);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
         }
       }
 
@@ -2184,10 +2184,10 @@ extern "C" {
           setting_maps = &rule->parameter;
         }
 
-        status = fl_string_maps_increase(setting_maps);
+        status = f_string_maps_increase(setting_maps);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_maps_increase", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_maps_increase", F_true);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
@@ -2211,10 +2211,10 @@ extern "C" {
         setting_maps->array[setting_maps->used].name.used = 0;
         setting_maps->array[setting_maps->used].value.used = 0;
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_maps->array[setting_maps->used].name);
+        status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_maps->array[setting_maps->used].name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
@@ -2235,16 +2235,16 @@ extern "C" {
           continue;
         }
 
-        status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &setting_maps->array[setting_maps->used].value);
+        status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &setting_maps->array[setting_maps->used].value);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
         }
         else {
-          status = fl_string_dynamic_terminate_after(&setting_maps->array[setting_maps->used].value);
+          status = f_string_dynamic_terminate_after(&setting_maps->array[setting_maps->used].value);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
           }
         }
 
@@ -2329,33 +2329,33 @@ extern "C" {
         rule->control_group.path.used = 0;
 
         // @todo path prefix needs to be configurable via a parameter.
-        status = fl_string_append(f_control_group_path_system_prefix, f_control_group_path_system_prefix_length, &rule->control_group.path);
+        status = f_string_append(f_control_group_path_system_prefix, f_control_group_path_system_prefix_length, &rule->control_group.path);
 
         if (F_status_is_error_not(status)) {
-          status = fl_string_append(f_control_group_path_system_default, f_control_group_path_system_default_length, &rule->control_group.path);
+          status = f_string_append(f_control_group_path_system_default, f_control_group_path_system_default_length, &rule->control_group.path);
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
         }
         else {
           rule->control_group.groups.used = 0;
 
           for (j = 1; j < cache->content_actions.array[i].used; ++j) {
 
-            status = fl_string_dynamics_increase(&rule->control_group.groups);
+            status = f_string_dynamics_increase(&rule->control_group.groups);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
               break;
             }
 
             rule->control_group.groups.array[rule->control_group.groups.used].used = 0;
 
-            status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &rule->control_group.groups.array[rule->control_group.groups.used]);
+            status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &rule->control_group.groups.array[rule->control_group.groups.used]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
               break;
             }
 
@@ -2717,16 +2717,16 @@ extern "C" {
           }
         }
         else if (type == controller_rule_setting_type_path) {
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
+          status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
           }
           else {
-            status = fl_string_dynamic_terminate_after(setting_value);
+            status = f_string_dynamic_terminate_after(setting_value);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
             }
           }
 
@@ -2921,10 +2921,10 @@ extern "C" {
         if (type == controller_rule_setting_type_capability) {
           cache->buffer_other.used = 0;
 
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->buffer_other);
+          status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->buffer_other);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
 
             // get the current line number within the settings item.
             cache->line_item = line_item;
@@ -2944,10 +2944,10 @@ extern "C" {
             }
           }
 
-          status = fl_string_dynamic_terminate_after(&cache->buffer_other);
+          status = f_string_dynamic_terminate_after(&cache->buffer_other);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
             // get the current line number within the settings item.
             cache->line_item = line_item;
@@ -3239,10 +3239,10 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          status = fl_string_dynamics_increase(setting_values);
+          status = f_string_dynamics_increase(setting_values);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3265,16 +3265,16 @@ extern "C" {
 
           setting_values->array[setting_values->used].used = 0;
 
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &setting_values->array[setting_values->used]);
+          status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &setting_values->array[setting_values->used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
           }
           else {
-            status = fl_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
+            status = f_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
             }
           }
 
@@ -3384,10 +3384,10 @@ extern "C" {
         setting_values = &rule->wish;
       }
 
-      status = fl_string_dynamics_increase_by(controller_default_allocation_step, setting_values);
+      status = f_string_dynamics_increase_by(controller_default_allocation_step, setting_values);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
 
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;

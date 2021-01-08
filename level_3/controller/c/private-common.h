@@ -342,7 +342,7 @@ extern "C" {
     }
 
   #define controller_macro_rule_action_t_delete_simple(action) \
-    fl_string_dynamics_delete(&action.parameters);
+    f_string_dynamics_delete(&action.parameters);
 #endif // _di_controller_rule_action_t_
 
 #ifndef _di_controller_rule_actions_t_
@@ -525,16 +525,16 @@ extern "C" {
     }
 
   #define controller_macro_rule_t_delete_simple(rule) \
-    fl_string_dynamic_delete(&rule.id); \
-    fl_string_dynamic_delete(&rule.name); \
-    fl_string_dynamic_delete(&rule.path); \
-    fl_string_dynamic_delete(&rule.script); \
+    f_string_dynamic_delete(&rule.id); \
+    f_string_dynamic_delete(&rule.name); \
+    f_string_dynamic_delete(&rule.path); \
+    f_string_dynamic_delete(&rule.script); \
     f_macro_string_maps_t_delete_simple(rule.define) \
     f_macro_string_maps_t_delete_simple(rule.parameter) \
-    fl_string_dynamics_delete(&rule.environment); \
-    fl_string_dynamics_delete(&rule.need); \
-    fl_string_dynamics_delete(&rule.want); \
-    fl_string_dynamics_delete(&rule.wish); \
+    f_string_dynamics_delete(&rule.environment); \
+    f_string_dynamics_delete(&rule.need); \
+    f_string_dynamics_delete(&rule.want); \
+    f_string_dynamics_delete(&rule.wish); \
     fl_type_int32s_delete(&rule.affinity); \
     f_capability_delete(&rule.capability); \
     fl_control_group_delete(&rule.control_group); \
@@ -609,7 +609,7 @@ extern "C" {
     }
 
   #define controller_macro_entry_action_t_delete_simple(action) \
-    fl_string_dynamics_delete(&action.parameters);
+    f_string_dynamics_delete(&action.parameters);
 #endif // _di_controller_entry_action_t_
 
 #ifndef _di_controller_entry_actions_t_
@@ -653,7 +653,7 @@ extern "C" {
     }
 
   #define controller_macro_entry_item_t_delete_simple(item) \
-    fl_string_dynamic_delete(&item.name); \
+    f_string_dynamic_delete(&item.name); \
     controller_macro_entry_actions_t_delete_simple(item.actions)
 #endif // _di_controller_entry_item_t_
 
@@ -746,9 +746,9 @@ extern "C" {
     }
 
   #define controller_macro_setting_t_delete_simple(setting) \
-    fl_string_dynamic_delete(&setting.path_control); \
-    fl_string_dynamic_delete(&setting.path_pid); \
-    fl_string_dynamic_delete(&setting.path_setting); \
+    f_string_dynamic_delete(&setting.path_control); \
+    f_string_dynamic_delete(&setting.path_pid); \
+    f_string_dynamic_delete(&setting.path_setting); \
     controller_macro_entry_t_delete_simple(setting.entry) \
     controller_macro_rules_t_delete_simple(setting.rules)
 #endif // _di_controller_setting_t
@@ -818,13 +818,13 @@ extern "C" {
     f_macro_fss_contents_t_delete_simple(cache.content_items) \
     f_macro_fss_objects_t_delete_simple(cache.object_actions) \
     f_macro_fss_objects_t_delete_simple(cache.object_items) \
-    fl_string_dynamic_delete(&cache.buffer_file); \
-    fl_string_dynamic_delete(&cache.buffer_item); \
-    fl_string_dynamic_delete(&cache.buffer_other); \
-    fl_string_dynamic_delete(&cache.buffer_path); \
-    fl_string_dynamic_delete(&cache.name_action); \
-    fl_string_dynamic_delete(&cache.name_file); \
-    fl_string_dynamic_delete(&cache.name_item);
+    f_string_dynamic_delete(&cache.buffer_file); \
+    f_string_dynamic_delete(&cache.buffer_item); \
+    f_string_dynamic_delete(&cache.buffer_other); \
+    f_string_dynamic_delete(&cache.buffer_path); \
+    f_string_dynamic_delete(&cache.name_action); \
+    f_string_dynamic_delete(&cache.name_file); \
+    f_string_dynamic_delete(&cache.name_item);
 #endif // _di_controller_cache_t_
 
 #ifdef __cplusplus

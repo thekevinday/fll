@@ -114,40 +114,40 @@ extern "C" {
   }
 
   #define fake_macro_build_setting_t_delete_simple(setting) \
-    fl_string_dynamic_delete(&setting.build_compiler); \
-    fl_string_dynamic_delete(&setting.build_indexer); \
-    fl_string_dynamic_delete(&setting.path_headers); \
-    fl_string_dynamic_delete(&setting.path_language); \
-    fl_string_dynamic_delete(&setting.path_library_script); \
-    fl_string_dynamic_delete(&setting.path_library_shared); \
-    fl_string_dynamic_delete(&setting.path_library_static); \
-    fl_string_dynamic_delete(&setting.path_program_script); \
-    fl_string_dynamic_delete(&setting.path_program_shared); \
-    fl_string_dynamic_delete(&setting.path_program_static); \
-    fl_string_dynamic_delete(&setting.path_sources); \
-    fl_string_dynamic_delete(&setting.process_post); \
-    fl_string_dynamic_delete(&setting.process_pre); \
-    fl_string_dynamic_delete(&setting.project_name); \
-    fl_string_dynamic_delete(&setting.version_major); \
-    fl_string_dynamic_delete(&setting.version_micro); \
-    fl_string_dynamic_delete(&setting.version_minor); \
-    fl_string_dynamics_delete(&setting.build_libraries); \
-    fl_string_dynamics_delete(&setting.build_sources_headers); \
-    fl_string_dynamics_delete(&setting.build_sources_library); \
-    fl_string_dynamics_delete(&setting.build_sources_program); \
-    fl_string_dynamics_delete(&setting.build_sources_setting); \
-    fl_string_dynamics_delete(&setting.build_sources_script); \
-    fl_string_dynamics_delete(&setting.defines_all); \
-    fl_string_dynamics_delete(&setting.defines_shared); \
-    fl_string_dynamics_delete(&setting.defines_static); \
-    fl_string_dynamics_delete(&setting.environment); \
-    fl_string_dynamics_delete(&setting.flags_all); \
-    fl_string_dynamics_delete(&setting.flags_library); \
-    fl_string_dynamics_delete(&setting.flags_program); \
-    fl_string_dynamics_delete(&setting.flags_shared); \
-    fl_string_dynamics_delete(&setting.flags_static); \
-    fl_string_dynamics_delete(&setting.modes); \
-    fl_string_dynamics_delete(&setting.modes_default);
+    f_string_dynamic_delete(&setting.build_compiler); \
+    f_string_dynamic_delete(&setting.build_indexer); \
+    f_string_dynamic_delete(&setting.path_headers); \
+    f_string_dynamic_delete(&setting.path_language); \
+    f_string_dynamic_delete(&setting.path_library_script); \
+    f_string_dynamic_delete(&setting.path_library_shared); \
+    f_string_dynamic_delete(&setting.path_library_static); \
+    f_string_dynamic_delete(&setting.path_program_script); \
+    f_string_dynamic_delete(&setting.path_program_shared); \
+    f_string_dynamic_delete(&setting.path_program_static); \
+    f_string_dynamic_delete(&setting.path_sources); \
+    f_string_dynamic_delete(&setting.process_post); \
+    f_string_dynamic_delete(&setting.process_pre); \
+    f_string_dynamic_delete(&setting.project_name); \
+    f_string_dynamic_delete(&setting.version_major); \
+    f_string_dynamic_delete(&setting.version_micro); \
+    f_string_dynamic_delete(&setting.version_minor); \
+    f_string_dynamics_delete(&setting.build_libraries); \
+    f_string_dynamics_delete(&setting.build_sources_headers); \
+    f_string_dynamics_delete(&setting.build_sources_library); \
+    f_string_dynamics_delete(&setting.build_sources_program); \
+    f_string_dynamics_delete(&setting.build_sources_setting); \
+    f_string_dynamics_delete(&setting.build_sources_script); \
+    f_string_dynamics_delete(&setting.defines_all); \
+    f_string_dynamics_delete(&setting.defines_shared); \
+    f_string_dynamics_delete(&setting.defines_static); \
+    f_string_dynamics_delete(&setting.environment); \
+    f_string_dynamics_delete(&setting.flags_all); \
+    f_string_dynamics_delete(&setting.flags_library); \
+    f_string_dynamics_delete(&setting.flags_program); \
+    f_string_dynamics_delete(&setting.flags_shared); \
+    f_string_dynamics_delete(&setting.flags_static); \
+    f_string_dynamics_delete(&setting.modes); \
+    f_string_dynamics_delete(&setting.modes_default);
 
   #define fake_build_setting_name_build_compiler         "build_compiler"
   #define fake_build_setting_name_build_language         "build_language"
@@ -282,19 +282,19 @@ extern "C" {
   #define fake_build_stage_total 13
 
   #define fake_macro_build_stage_t_delete_simple(stage) \
-    fl_string_dynamic_delete(&stage.file_libraries_script); \
-    fl_string_dynamic_delete(&stage.file_libraries_shared); \
-    fl_string_dynamic_delete(&stage.file_libraries_static); \
-    fl_string_dynamic_delete(&stage.file_objects_static); \
-    fl_string_dynamic_delete(&stage.file_process_post); \
-    fl_string_dynamic_delete(&stage.file_process_pre); \
-    fl_string_dynamic_delete(&stage.file_programs_script); \
-    fl_string_dynamic_delete(&stage.file_programs_shared); \
-    fl_string_dynamic_delete(&stage.file_programs_static); \
-    fl_string_dynamic_delete(&stage.file_skeleton); \
-    fl_string_dynamic_delete(&stage.file_sources_headers); \
-    fl_string_dynamic_delete(&stage.file_sources_script); \
-    fl_string_dynamic_delete(&stage.file_sources_settings);
+    f_string_dynamic_delete(&stage.file_libraries_script); \
+    f_string_dynamic_delete(&stage.file_libraries_shared); \
+    f_string_dynamic_delete(&stage.file_libraries_static); \
+    f_string_dynamic_delete(&stage.file_objects_static); \
+    f_string_dynamic_delete(&stage.file_process_post); \
+    f_string_dynamic_delete(&stage.file_process_pre); \
+    f_string_dynamic_delete(&stage.file_programs_script); \
+    f_string_dynamic_delete(&stage.file_programs_shared); \
+    f_string_dynamic_delete(&stage.file_programs_static); \
+    f_string_dynamic_delete(&stage.file_skeleton); \
+    f_string_dynamic_delete(&stage.file_sources_headers); \
+    f_string_dynamic_delete(&stage.file_sources_script); \
+    f_string_dynamic_delete(&stage.file_sources_settings);
 
   #define fake_build_stage_built            ".built"
   #define fake_build_stage_libraries_script "libraries_script"
@@ -342,7 +342,7 @@ extern "C" {
 
   #define fake_macro_build_data_delete_simple(build) \
     fake_macro_build_setting_t_delete_simple(build.setting) \
-    fl_string_maps_delete(&build.environment);
+    f_string_maps_delete(&build.environment);
 #endif // _di_fake_build_data_t_
 
 #ifndef _di_fake_build_parameter_

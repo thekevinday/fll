@@ -121,10 +121,10 @@ extern "C" {
       }
     }
     else if (!object) {
-      status = fl_string_append(f_string_eol, 1, buffer);
+      status = f_string_append(f_string_eol, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
         return status;
       }
     }
@@ -196,10 +196,10 @@ extern "C" {
         }
 
         if (object.used + block.used > object.size) {
-          status = fl_string_dynamic_increase_by(block.used, &object);
+          status = f_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -237,10 +237,10 @@ extern "C" {
 
       if (state == 0x2) {
         if (contents.used + 1 > contents.size) {
-          status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
+          status = f_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
             break;
           }
         }
@@ -262,10 +262,10 @@ extern "C" {
 
             if (block.string[range.start] == fss_extended_write_pipe_content_start) {
               if (contents.used + 1 > contents.size) {
-                status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
+                status = f_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+                  fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
                   break;
                 }
               }
@@ -293,10 +293,10 @@ extern "C" {
             }
 
             if (contents.array[contents.used - 1].used + 1 > contents.array[contents.used - 1].size) {
-              status = fl_string_dynamic_increase_by(f_fss_default_allocation_step, &contents.array[contents.used - 1]);
+              status = f_string_dynamic_increase_by(f_fss_default_allocation_step, &contents.array[contents.used - 1]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
+                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
                 break;
               }
             }
@@ -324,9 +324,9 @@ extern "C" {
       status = fss_extended_write_process(data, output, quote, &object, &contents, buffer);
     }
 
-    fl_string_dynamic_delete(&block);
-    fl_string_dynamic_delete(&object);
-    fl_string_dynamics_delete(&contents);
+    f_string_dynamic_delete(&block);
+    f_string_dynamic_delete(&object);
+    f_string_dynamics_delete(&contents);
     return status;
   }
 #endif // _di_fss_extended_write_process_pipe_

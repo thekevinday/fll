@@ -15,27 +15,27 @@ extern "C" {
     f_status_t status = fl_string_dynamic_rip_nulless(source, range, destination);
     if (F_status_is_error(status)) return status;
 
-    return fl_string_dynamic_terminate_after(destination);
+    return f_string_dynamic_terminate_after(destination);
   }
 #endif // _di_controller_string_dynamic_rip_nulless_terminated_
 
 #ifndef _di_controller_string_dynamic_append_terminated_
   f_status_t controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
-    f_status_t status = fl_string_dynamic_append(source, destination);
+    f_status_t status = f_string_dynamic_append(source, destination);
     if (F_status_is_error(status)) return status;
 
-    return fl_string_dynamic_terminate_after(destination);
+    return f_string_dynamic_terminate_after(destination);
   }
 #endif // _di_controller_string_dynamic_append_terminated_
 
 #ifndef _di_controller_string_dynamic_partial_append_terminated_
   f_status_t controller_string_dynamic_partial_append_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
 
-    f_status_t status = fl_string_dynamic_partial_append(source, range, destination);
+    f_status_t status = f_string_dynamic_partial_append(source, range, destination);
     if (F_status_is_error(status)) return status;
 
-    return fl_string_dynamic_terminate_after(destination);
+    return f_string_dynamic_terminate_after(destination);
   }
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
@@ -49,33 +49,33 @@ extern "C" {
 
     f_macro_time_spec_t_clear(cache->timestamp);
 
-    status = fl_string_append(path_prefix, path_prefix_length, &cache->name_file);
+    status = f_string_append(path_prefix, path_prefix_length, &cache->name_file);
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
+      status = f_string_append(f_path_separator_s, f_path_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(path_name.string, path_name.used, &cache->name_file);
+      status = f_string_append(path_name.string, path_name.used, &cache->name_file);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
+      status = f_string_append(f_path_extension_separator, f_path_extension_separator_length, &cache->name_file);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_string_append(path_suffix, path_suffix_length, &cache->name_file);
+      status = f_string_append(path_suffix, path_suffix_length, &cache->name_file);
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
       return status;
     }
 
-    status = fl_string_dynamic_terminate_after(&cache->name_file);
+    status = f_string_dynamic_terminate_after(&cache->name_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       return status;
     }
 
@@ -144,7 +144,7 @@ extern "C" {
         status = f_directory_exists(path_directory.string);
       }
 
-      fl_string_dynamic_delete(&path_directory);
+      f_string_dynamic_delete(&path_directory);
 
       if (F_status_is_error(status)) return status;
 
@@ -214,7 +214,7 @@ extern "C" {
       }
     }
 
-    fl_string_dynamic_delete(&pid_buffer);
+    f_string_dynamic_delete(&pid_buffer);
   }
 #endif // _di_controller_file_pid_delete_
 
@@ -231,7 +231,7 @@ extern "C" {
       if (status == F_number) {
         cache->buffer_other.used = 0;
 
-        status = fl_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
+        status = f_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
 
         if (F_status_is_error(status)) {
           return F_status_set_error(status);
@@ -273,7 +273,7 @@ extern "C" {
       if (status == F_number) {
         cache->buffer_other.used = 0;
 
-        status = fl_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
+        status = f_string_dynamic_partial_append_nulless(buffer, range, &cache->buffer_other);
 
         if (F_status_is_error(status)) {
           return F_status_set_error(status);

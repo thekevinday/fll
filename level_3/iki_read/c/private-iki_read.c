@@ -144,16 +144,16 @@ extern "C" {
         index = data->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
 
-        status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
+        status = f_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
           for (f_array_length_t i = 0; i < variable->used; i++) {
             iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
-          fl_string_dynamic_delete(&name);
+          f_string_dynamic_delete(&name);
           return status;
         }
 
@@ -178,7 +178,7 @@ extern "C" {
         } // for
       } // for
 
-      fl_string_dynamic_delete(&name);
+      f_string_dynamic_delete(&name);
 
       if (unmatched) status = F_data_not;
       else status = F_none;
@@ -286,10 +286,10 @@ extern "C" {
             break;
           }
 
-          status = fl_string_append_nulless(arguments.argv[index], length_argument, &names.array[names.used]);
+          status = f_string_append_nulless(arguments.argv[index], length_argument, &names.array[names.used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
             break;
           }
 
@@ -302,7 +302,7 @@ extern "C" {
           iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
-        fl_string_dynamics_delete(&names);
+        f_string_dynamics_delete(&names);
         return status;
       }
     }
@@ -383,7 +383,7 @@ extern "C" {
       iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
-    fl_string_dynamics_delete(&names);
+    f_string_dynamics_delete(&names);
     return F_none;
   }
 #endif // _di_iki_read_process_buffer_ranges_whole_
@@ -429,12 +429,12 @@ extern "C" {
         index = data->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
 
-        status = fl_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
+        status = f_string_append_nulless(arguments.argv[index], strlen(arguments.argv[index]), &name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
-          fl_string_dynamic_delete(&name);
+          f_string_dynamic_delete(&name);
           return status;
         }
 
@@ -447,7 +447,7 @@ extern "C" {
         } // for
       } // for
 
-      fl_string_dynamic_delete(&name);
+      f_string_dynamic_delete(&name);
     }
     else {
       total = variable->used;

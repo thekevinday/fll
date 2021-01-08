@@ -50,8 +50,8 @@ extern "C" {
     structure.value_at = 0; \
     f_macro_string_dynamic_t_clear(structure.value_name)
 
-  #define fss_basic_read_macro_depth_t_delete(status, structure) status = fl_string_dynamic_delete(&structure.value_name);
-  #define fss_basic_read_macro_depth_t_delete_simple(structure)  fl_string_dynamic_delete(&structure.value_name);
+  #define fss_basic_read_macro_depth_t_delete(status, structure) status = f_string_dynamic_delete(&structure.value_name);
+  #define fss_basic_read_macro_depth_t_delete_simple(structure)  f_string_dynamic_delete(&structure.value_name);
 #endif // _di_fss_basic_read_depth_t_
 
 /**

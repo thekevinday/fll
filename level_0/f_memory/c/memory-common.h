@@ -266,18 +266,18 @@ extern "C" {
 /**
  * Resize a generic memory structures.
  *
- * status:          the status to return.
- * structures:      the structures to operate on.
- * type_stucture:   the structure type.
- * type_stuctures:  the structures type.
- * length:          the new size of the array.
- * length_variable: the data type of the length variable.
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ * length:         the new size of the array.
+ * type_length:    the data type of the length variable type.
  */
 #ifndef _di_f_macro_memory_structures_resize_
-  #define f_macro_memory_structures_resize(status, structures, type_structure, type_structures, length, length_variable) \
+  #define f_macro_memory_structures_resize(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
     if (length < structures.size) { \
-      for (length_variable _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
+      for (type_length _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
         f_macro_memory_structure_delete(status, structures.array[_macro__i], type_structure); \
         if (status != F_none) break; \
       } \
@@ -292,18 +292,18 @@ extern "C" {
 /**
  * Adjust a generic memory structures.
  *
- * status:          the status to return.
- * structures:      the structures to operate on.
- * type_stucture:   the structure type.
- * type_stuctures:  the structures type.
- * length:          the new size of the array.
- * length_variable: the data type of the length variable.
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ * length:         the new size of the array.
+ * type_length:    the data type of the length variable type.
  */
 #ifndef _di_f_macro_memory_structures_adjust_
-  #define f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, length, length_variable) \
+  #define f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
     if (length < structures.size) { \
-      for (length_variable _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
+      for (type_length _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
         f_macro_memory_structure_destroy(status, structures.array[_macro__i], type_structure); \
         if (status != F_none) break; \
       } \
@@ -392,6 +392,177 @@ extern "C" {
     f_memory_destroy((void **) & structures.array, sizeof(type_structures), structures.size); \
     structures.size = 0;
 #endif // _di_f_macro_memory_structures_destroy_simple_
+
+/**
+ * Increase a generic memory structures by 1.
+ *
+ * This only increases if the structure.used + 1 is greater than structure.size.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stuctures: the structures type.
+ * type_length:    the data type of the length variable type.
+ */
+#ifndef _di_f_macro_memory_structures_increase_
+  #define f_macro_memory_structures_increase(status, structures, type_structures, type_length) \
+    status = F_none; \
+    if (structures.used + 1 > structures.size) { \
+      type_length _macro__length = structures.used + f_memory_default_allocation_step; \
+      if (_macro__length > f_array_length_t_size) { \
+        if (structures.used + 1 > f_array_length_t_size) { \
+          status = F_status_set_error(F_array_too_large); \
+        } \
+        else { \
+          _macro__length = f_array_length_t_size; \
+        } \
+      } \
+      if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(type_structures), structures.size, _macro__length); \
+      if (status == F_none) { \
+        structures.size = _macro__length; \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_increase_
+
+/**
+ * Decrease a generic memory structures by 1.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ */
+#ifndef _di_f_macro_memory_structures_decrease_
+  #define f_macro_memory_structures_decrease(status, structures, type_structure, type_structures) \
+    status = F_none; \
+    if (structures.size) { \
+      f_macro_memory_structure_delete(status, structures.array[structures.size - 1], type_structure); \
+      if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(type_structures), structures.size, structures.size - 1); \
+      if (status == F_none) { \
+        structures.size--; \
+        if (structures.used > structures.size) structures.used = structures.size; \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_decrease_
+
+/**
+ * Decimate a generic memory structures by 1.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ */
+#ifndef _di_f_macro_memory_structures_decimate_
+  #define f_macro_memory_structures_decimate(status, structures, type_structure, type_structures) \
+    status = F_none; \
+    if (structures.size) { \
+      f_macro_memory_structure_destroy(status, structures.array[structures.size - 1], type_structure); \
+      if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(type_structures), structures.size, structures.size - 1); \
+      if (status == F_none) { \
+        structures.size--; \
+        if (structures.used > structures.size) structures.used = structures.size; \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_decimate_
+
+/**
+ * Increase a generic memory structures by the given amount.
+ *
+ * This only increases if the structure.used + amount is greater than structure.size.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stuctures: the structures type.
+ * type_length:    the data type of the length variable type.
+ * amount:         the amount to increase by.
+ */
+#ifndef _di_f_macro_memory_structures_increase_by_
+  #define f_macro_memory_structures_increase_by(status, structures, type_structures, type_length, amount) \
+    status = F_none; \
+    if (structures.used + amount > structures.size) { \
+      if (amount > f_array_length_t_size) { \
+        status = F_status_set_error(F_array_too_large); \
+      } \
+      if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(type_structures), structures.size, amount); \
+      if (status == F_none) { \
+        structures.size = amount; \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_increase_by_
+
+/**
+ * Decrease a generic memory structures by the given amount.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ * amount:         the amount to decrease by.
+ * type_length:    the data type of the length variable type.
+ */
+#ifndef _di_f_macro_memory_structures_decrease_by_
+  #define f_macro_memory_structures_decrease_by(status, structures, type_structure, type_structures, amount, type_length) \
+    if (amount) { \
+      status = F_none; \
+      if (amount <= structures.size) { \
+        type_length _macro__length = structures.size - amount; \
+        f_macro_memory_structures_resize(status, structures, type_structure, type_structures, _macro__length, type_length); \
+      } \
+      else { \
+        f_macro_memory_structures_delete(status, structures, type_structure, type_structures); \
+        if (status == F_none) { \
+          structures.used = 0; \
+          structures.size = 0; \
+        } \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_decrease_by_
+
+/**
+ * Decimate a generic memory structures by the given amount.
+ *
+ * status:         the status to return.
+ * structures:     the structures to operate on.
+ * type_stucture:  the structure type.
+ * type_stuctures: the structures type.
+ * amount:         the amount to decimate by.
+ * type_length:    the data type of the length variable type.
+ */
+#ifndef _di_f_macro_memory_structures_decimate_by_
+  #define f_macro_memory_structures_decimate_by(status, structures, type_structure, type_structures, amount, type_length) \
+    if (amount) { \
+      status = F_none; \
+      if (amount <= structures.size) { \
+        type_length _macro__length = structures.size - amount; \
+        f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, _macro__length, type_length); \
+      } \
+      else { \
+        f_macro_memory_structures_destroy(status, structures, type_structure, type_structures); \
+        if (status == F_none) { \
+          structures.used = 0; \
+          structures.size = 0; \
+        } \
+      } \
+    } \
+    else { \
+      status = F_data_not; \
+    }
+#endif // _di_f_macro_memory_structures_decimate_by_
 
 /**
  * Provide a macro for calling other macros for incrementing a buffer.

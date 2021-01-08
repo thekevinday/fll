@@ -181,11 +181,11 @@ extern "C" {
       }
     }
     else {
-      status = fl_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
+      status = f_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
 
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
         }
       }
     }
@@ -224,19 +224,19 @@ extern "C" {
 
     // a pid file path is required.
     if (!setting.path_pid.used) {
-      status = fl_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
+      status = f_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
 
       if (F_status_is_error_not(status)) {
-        status = fl_string_append(entry_name.string, entry_name.used, &setting.path_pid);
+        status = f_string_append(entry_name.string, entry_name.used, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_string_append(controller_path_suffix, controller_path_suffix_length, &setting.path_pid);
+        status = f_string_append(controller_path_suffix, controller_path_suffix_length, &setting.path_pid);
       }
 
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
         }
       }
     }
@@ -275,11 +275,11 @@ extern "C" {
 
     // a control file path is required.
     if (!setting.path_control.used) {
-      status = fl_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
+      status = f_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
 
       if (F_status_is_error(status)) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
         }
       }
     }

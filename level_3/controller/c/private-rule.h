@@ -48,12 +48,12 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_fss_count_lines()
- * @see fl_string_dynamic_partial_append_nulless()
- * @see fl_string_dynamics_increase()
+ * @see f_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_controller_rule_parameters_read_
   extern f_status_t controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) f_gcc_attribute_visibility_internal;
@@ -372,12 +372,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_string_append()
- * @see fl_string_dynamic_partial_append_nulless()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_id_construct_
   extern f_status_t controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *id) f_gcc_attribute_visibility_internal;
@@ -399,13 +399,13 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see controller_rule_action_read()
  * @see f_fss_count_lines()
- * @see fl_string_dynamic_partial_append_nulless()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
   extern f_status_t controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
@@ -480,15 +480,15 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fll_path_canonical().
  *
  * @see f_file_stat()
  * @see f_file_stream_open()
  * @see f_file_stream_read()
- * @see fl_string_append()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_append()
+ * @see f_string_dynamic_terminate_after()
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_path_
@@ -564,9 +564,9 @@ extern "C" {
  * @see f_file_stream_read().
  * @see f_fss_count_lines().
  * @see fl_fss_apply_delimit().
- * @see fl_string_dynamic_partial_append().
- * @see fl_string_dynamic_partial_append_nulless().
- * @see fl_string_dynamic_terminate_after().
+ * @see f_string_dynamic_partial_append().
+ * @see f_string_dynamic_partial_append_nulless().
+ * @see f_string_dynamic_terminate_after().
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
@@ -594,17 +594,17 @@ extern "C" {
  *    F_none on success.
  *    F_valid_not (with error bit) on success but there were one or more invalid settings encountered.
  *
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
- *   Errors (with error bit) from: fl_string_maps_increase().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_maps_increase().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *   Errors (with error bit) from: fll_path_canonical().
  *
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  * @see fl_string_dynamic_rip_nulless()
- * @see fl_string_dynamics_increase()
- * @see fl_string_maps_increase()
+ * @see f_string_dynamics_increase()
+ * @see f_string_maps_increase()
  * @see fll_fss_extended_read()
  * @see fll_path_canonical()
  */

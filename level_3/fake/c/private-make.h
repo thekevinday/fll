@@ -317,17 +317,17 @@ extern "C" {
   }
 
   #define fake_macro_make_parameter_delete_simple(parameter) \
-    fl_string_dynamics_delete(&parameter.build); \
-    fl_string_dynamics_delete(&parameter.color); \
-    fl_string_dynamics_delete(&parameter.data); \
-    fl_string_dynamics_delete(&parameter.define); \
-    fl_string_dynamics_delete(&parameter.fakefile); \
-    fl_string_dynamics_delete(&parameter.mode); \
-    fl_string_dynamics_delete(&parameter.process); \
-    fl_string_dynamics_delete(&parameter.settings); \
-    fl_string_dynamics_delete(&parameter.sources); \
-    fl_string_dynamics_delete(&parameter.verbosity); \
-    fl_string_dynamics_delete(&parameter.work);
+    f_string_dynamics_delete(&parameter.build); \
+    f_string_dynamics_delete(&parameter.color); \
+    f_string_dynamics_delete(&parameter.data); \
+    f_string_dynamics_delete(&parameter.define); \
+    f_string_dynamics_delete(&parameter.fakefile); \
+    f_string_dynamics_delete(&parameter.mode); \
+    f_string_dynamics_delete(&parameter.process); \
+    f_string_dynamics_delete(&parameter.settings); \
+    f_string_dynamics_delete(&parameter.sources); \
+    f_string_dynamics_delete(&parameter.verbosity); \
+    f_string_dynamics_delete(&parameter.work);
 #endif // _di_fake_make_parameter_t_
 
 #ifndef _di_fake_make_path_t_
@@ -345,7 +345,7 @@ extern "C" {
   }
 
   #define fake_macro_make_path_delete_simple(path) \
-    fl_string_dynamics_delete(&path.stack);
+    f_string_dynamics_delete(&path.stack);
 #endif // _di_fake_make_path_t_
 
 #ifndef _di_fake_make_data_t_
@@ -384,12 +384,12 @@ extern "C" {
   #define fake_macro_make_data_t_delete_simple(data) \
     fake_macro_build_setting_t_delete_simple(data.setting_build) \
     fake_macro_make_setting_t_delete_simple(data.setting_make) \
-    fl_string_maps_delete(&data.environment); \
+    f_string_maps_delete(&data.environment); \
     fake_macro_make_parameter_delete_simple(data.parameter) \
     fake_macro_make_path_delete_simple(data.path) \
     f_macro_fss_nameds_t_delete_simple(data.fakefile) \
-    fl_string_dynamic_delete(&data.buffer); \
-    fl_string_dynamic_delete(&data.path_cache);
+    f_string_dynamic_delete(&data.buffer); \
+    f_string_dynamic_delete(&data.path_cache);
 #endif // _di_fake_make_data_t_
 
 /**

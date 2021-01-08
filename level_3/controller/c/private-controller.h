@@ -24,10 +24,10 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: fl_string_dynamic_rip_nulless().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see fl_string_dynamic_rip_nulless()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_rip_nulless_terminated_
   extern f_status_t controller_string_dynamic_rip_nulless_terminated(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
@@ -44,11 +44,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_dynamic_append().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_append_terminated_
   extern f_status_t controller_string_dynamic_append_terminated(const f_string_static_t from, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
@@ -67,11 +67,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_dynamic_append().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_partial_append_terminated_
   extern f_status_t controller_string_dynamic_partial_append_terminated(const f_string_static_t from, const f_string_range_t range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
@@ -106,14 +106,14 @@ extern "C" {
  *   Errors (with error bit) from: f_file_stat().
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see f_file_stat()
  * @see f_file_stream_open()
  * @see f_file_stream_read()
- * @see fl_string_append()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_append()
+ * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
   extern f_status_t controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
@@ -250,15 +250,15 @@ extern "C" {
  *   F_recurse (with error bit) on a recursion error.
  *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
  *
- *   Errors (with error bit) from: fl_string_dynamic_append().
- *   Errors (with error bit) from: fl_string_dynamic_terminate_after().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *   Errors (with error bit) from: fl_type_array_lengths_increase_by().
  *
  *   This will detect and report all errors, but only the first error is returned.
  *   Memory related errors return immediately.
  *
- * @see fl_string_dynamic_append()
- * @see fl_string_dynamic_terminate_after()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
  * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_preprocess_entry_

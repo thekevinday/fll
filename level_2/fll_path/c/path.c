@@ -34,7 +34,7 @@ extern "C" {
       at = 0;
     }
 
-    status = fl_string_append_assure("/", 1, canonical);
+    status = f_string_append_assure("/", 1, canonical);
     if (F_status_is_error(status)) return status;
 
     for (; path[at]; at++) {
@@ -78,7 +78,7 @@ extern "C" {
           size_chunk++;
 
           if (size_chunk) {
-            status = fl_string_append(path + position, size_chunk, canonical);
+            status = f_string_append(path + position, size_chunk, canonical);
             if (F_status_is_error(status)) return status;
           }
         }
@@ -120,7 +120,7 @@ extern "C" {
     }
     else if (!(previous_1 == f_path_separator_current_s[0] || previous_1 == f_path_separator_s[0])) {
       if (size_chunk) {
-        status = fl_string_append(path + position, size_chunk, canonical);
+        status = f_string_append(path + position, size_chunk, canonical);
         if (F_status_is_error(status)) return status;
       }
     }
@@ -130,7 +130,7 @@ extern "C" {
       canonical->used--;
     }
 
-    status = fl_string_dynamic_terminate_after(canonical);
+    status = f_string_dynamic_terminate_after(canonical);
     if (F_status_is_error(status)) return status;
 
     return F_none;

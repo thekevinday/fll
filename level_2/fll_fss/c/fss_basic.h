@@ -96,7 +96,7 @@ extern "C" {
  *
  *   Errors (with error bit) from: fl_fss_basic_content_write_string().
  *   Errors (with error bit) from: fl_fss_basic_object_write_string().
- *   Errors (with error bit) from: fl_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #ifndef _di_fll_fss_basic_write_string_
   extern f_status_t fll_fss_basic_write_string(const f_string_static_t object, const f_string_static_t content, const f_fss_quote_t quote, f_string_dynamic_t *destination);

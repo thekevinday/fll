@@ -23,7 +23,7 @@ extern "C" {
 
       if (content.string[i] == quote) {
         if (escaped->used + delimits + 2 > escaped->size) {
-          status = fl_string_dynamic_increase_by(delimits + 2, escaped);
+          status = f_string_dynamic_increase_by(delimits + 2, escaped);
           if (F_status_is_error(status)) return status;
         }
 
@@ -38,7 +38,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (escaped->used + 1 > escaped->size) {
-          status = fl_string_dynamic_increase_by(f_memory_default_allocation_step, escaped);
+          status = f_string_dynamic_increase_by(f_memory_default_allocation_step, escaped);
           if (F_status_is_error(status)) return status;
         }
 
@@ -56,7 +56,7 @@ extern "C" {
     // delimits found at the end must be escaped to prevent escaping the end quote.
     if (delimits) {
       if (escaped->used + delimits > escaped->size) {
-        status = fl_string_dynamic_increase_by(delimits, escaped);
+        status = f_string_dynamic_increase_by(delimits, escaped);
         if (F_status_is_error(status)) return status;
       }
 
@@ -113,7 +113,7 @@ extern "C" {
               delimits /= 2;
 
               if (unescaped->used + delimits + 1 > unescaped->size) {
-                status = fl_string_dynamic_increase_by(delimits + 1, unescaped);
+                status = f_string_dynamic_increase_by(delimits + 1, unescaped);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -130,7 +130,7 @@ extern "C" {
             }
             else if (content.string[j]) {
               if (unescaped->used + (j - i) + 1 > unescaped->size) {
-                status = fl_string_dynamic_increase_by((j - i) + 1, unescaped);
+                status = f_string_dynamic_increase_by((j - i) + 1, unescaped);
                 if (F_status_is_error(status)) return status;
               }
 
@@ -160,7 +160,7 @@ extern "C" {
           delimits /= 2;
 
           if (unescaped->used + delimits > unescaped->size) {
-            status = fl_string_dynamic_increase_by(delimits, unescaped);
+            status = f_string_dynamic_increase_by(delimits, unescaped);
             if (F_status_is_error(status)) return status;
           }
 
@@ -173,7 +173,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (unescaped->used + 1 > unescaped->size) {
-          status = fl_string_dynamic_increase_by(f_memory_default_allocation_step, unescaped);
+          status = f_string_dynamic_increase_by(f_memory_default_allocation_step, unescaped);
           if (F_status_is_error(status)) return status;
         }
 

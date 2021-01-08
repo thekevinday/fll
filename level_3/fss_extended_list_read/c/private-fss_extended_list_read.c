@@ -95,7 +95,7 @@ extern "C" {
             status = fl_string_rip(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
           else {
-            status = fl_string_append(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = f_string_append(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
@@ -111,7 +111,7 @@ extern "C" {
               fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
             }
             else {
-              f_string_t function = "fl_string_append";
+              f_string_t function = "f_string_append";
 
               if (data.parameters[fss_extended_list_read_parameter_trim].result == f_console_result_found) {
                 function = "fl_string_rip";
@@ -196,7 +196,7 @@ extern "C" {
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
-        fl_string_dynamic_delete(&data->buffer);
+        f_string_dynamic_delete(&data->buffer);
 
         if (data->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
@@ -209,7 +209,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
-        fl_string_dynamic_delete(&data->buffer);
+        f_string_dynamic_delete(&data->buffer);
 
         return status;
       }

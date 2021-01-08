@@ -150,9 +150,9 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_utf_string_compare_
-  extern f_status_t fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t length1, const f_utf_string_length_t length2);
-#endif // _di_fl_utf_string_compare_
+#ifndef _di_fl_utfl_string_compare_
+  extern f_status_t fl_utfl_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t length1, const f_utf_string_length_t length2);
+#endif // _di_fl_utfl_string_compare_
 
 /**
  * Compare two UTF-8 strings, similar to strncmp().
@@ -179,9 +179,9 @@ extern "C" {
  *
  * @see f_utf_character_is_whitespace()
  */
-#ifndef _di_fl_utf_string_compare_trim_
-  extern f_status_t fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t length1, const f_utf_string_length_t length2);
-#endif // _di_fl_utf_string_compare_trim_
+#ifndef _di_fl_utfl_string_compare_trim_
+  extern f_status_t fl_utfl_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t length1, const f_utf_string_length_t length2);
+#endif // _di_fl_utfl_string_compare_trim_
 
 /**
  * Append the UTF-8 source string onto the destination.
@@ -284,9 +284,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_dynamic_compare_
-  extern f_status_t fl_utf_string_dynamic_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2);
-#endif // _di_fl_utf_string_dynamic_compare_
+#ifndef _di_fl_utfl_string_dynamic_compare_
+  extern f_status_t fl_utfl_string_dynamic_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2);
+#endif // _di_fl_utfl_string_dynamic_compare_
 
 /**
  * Compare two UTF-8 strings, similar to strncmp().
@@ -310,9 +310,9 @@ extern "C" {
  *
  * @see f_utf_character_is_whitespace()
  */
-#ifndef _di_f_utf_string_dynamic_compare_trim_
-  extern f_status_t f_utf_string_dynamic_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2);
-#endif // _di_f_utf_string_dynamic_compare_trim_
+#ifndef _di_f_utfl_string_dynamic_compare_trim_
+  extern f_status_t f_utfl_string_dynamic_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2);
+#endif // _di_f_utfl_string_dynamic_compare_trim_
 
 /**
  * Append the UTF-8 source string onto the destination with the glue in between.
@@ -542,9 +542,9 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_utf_string_dynamic_partial_compare_
-  extern f_status_t fl_utf_string_dynamic_partial_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
-#endif // _di_fl_utf_string_dynamic_partial_compare_
+#ifndef _di_fl_utfl_string_dynamic_partial_compare_
+  extern f_status_t fl_utfl_string_dynamic_partial_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
+#endif // _di_fl_utfl_string_dynamic_partial_compare_
 
 /**
  * Compare two UTF-8 strings, similar to strncmp(), but restricted to the given ranges.
@@ -571,9 +571,9 @@ extern "C" {
  *
  * @see f_utf_character_is_whitespace()
  */
-#ifndef _di_fl_utf_string_dynamic_partial_compare_trim_
-  extern f_status_t fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
-#endif // _di_fl_utf_string_dynamic_partial_compare_trim_
+#ifndef _di_fl_utfl_string_dynamic_partial_compare_trim_
+  extern f_status_t fl_utfl_string_dynamic_partial_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
+#endif // _di_fl_utfl_string_dynamic_partial_compare_trim_
 
 /**
  * Append the UTF-8 source string onto the destination with the glue in between, but restricted to the given range.
@@ -917,9 +917,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
-#ifndef _di_fl_utf_string_dynamic_rip_
-  extern f_status_t fl_utf_string_dynamic_rip(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
-#endif // _di_fl_utf_string_dynamic_rip_
+#ifndef _di_fl_utfl_string_dynamic_rip_
+  extern f_status_t fl_utfl_string_dynamic_rip(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+#endif // _di_fl_utfl_string_dynamic_rip_
 
 /**
  * Allocate a new UTF-8 string from the provided range in the buffer.
@@ -944,9 +944,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_utf_string_dynamic_rip_nulless_
-  extern f_status_t fl_utf_string_dynamic_rip_nulless(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
-#endif // _di_fl_utf_string_dynamic_rip_nulless_
+#ifndef _di_fl_utfl_string_dynamic_rip_nulless_
+  extern f_status_t fl_utfl_string_dynamic_rip_nulless(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+#endif // _di_fl_utfl_string_dynamic_rip_nulless_
 
 /**
  * Seek the buffer location forward until the UTF-8 character or EOL is reached.
@@ -969,9 +969,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_dynamic_seek_line_to_
-  extern f_status_t fl_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
-#endif // _di_fl_utf_string_dynamic_seek_line_to_
+#ifndef _di_fl_utfl_string_dynamic_seek_line_to_
+  extern f_status_t fl_utfl_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
+#endif // _di_fl_utfl_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the  (1-byte wide) character or EOL is reached.
@@ -993,9 +993,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_seek_line_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
-#endif // _di_fl_utf_string_seek_line_to_char_
+#ifndef _di_fl_utfl_string_seek_line_to_char_
+  extern f_status_t fl_utfl_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
+#endif // _di_fl_utfl_string_seek_line_to_char_
 
 /**
  * Increment buffer location until a graph character or an EOL is matched.
@@ -1020,9 +1020,9 @@ extern "C" {
  *
  * @see f_utf_character_is_graph()
  */
-#ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
-#endif // _di_fl_utf_string_dynamic_seek_line_until_graph_
+#ifndef _di_fl_utfl_string_dynamic_seek_line_until_graph_
+  extern f_status_t fl_utfl_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+#endif // _di_fl_utfl_string_dynamic_seek_line_until_graph_
 
 /**
  * Increment buffer location until a non-graph character or an EOL is matched.
@@ -1048,9 +1048,9 @@ extern "C" {
  *
  * @see f_utf_character_is_graph()
  */
-#ifndef _di_fl_utf_string_dynamic_seek_line_until_non_graph_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_non_graph(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
-#endif // _di_fl_utf_string_dynamic_seek_line_until_non_graph_
+#ifndef _di_fl_utfl_string_dynamic_seek_line_until_non_graph_
+  extern f_status_t fl_utfl_string_dynamic_seek_line_until_non_graph(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+#endif // _di_fl_utfl_string_dynamic_seek_line_until_non_graph_
 
 /**
  * Seek the buffer location forward until the UTF-8 character is reached.
@@ -1072,9 +1072,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_dynamic_seek_to_
-  extern f_status_t fl_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
-#endif // _di_fl_utf_string_dynamic_seek_to_
+#ifndef _di_fl_utfl_string_dynamic_seek_to_
+  extern f_status_t fl_utfl_string_dynamic_seek_to(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
+#endif // _di_fl_utfl_string_dynamic_seek_to_
 
 /**
  * Seek the buffer location forward until the UTF-8 character (1-byte wide) is reached.
@@ -1096,9 +1096,9 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_utf_string_dynamic_seek_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
-#endif // _di_fl_utf_string_dynamic_seek_to_char_
+#ifndef _di_fl_utfl_string_dynamic_seek_to_char_
+  extern f_status_t fl_utfl_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
+#endif // _di_fl_utfl_string_dynamic_seek_to_char_
 
 /**
  * Seek the buffer location forward until the (4-byte wide) UTF-8 character is reached.
@@ -1123,9 +1123,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_dynamic_seek_to_utf_character_
-  extern f_status_t fl_utf_string_dynamic_seek_to_utf_character(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
-#endif // _di_fl_utf_string_dynamic_seek_to_utf_character_
+#ifndef _di_fl_utfl_string_dynamic_seek_to_utf_character_
+  extern f_status_t fl_utfl_string_dynamic_seek_to_utf_character(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
+#endif // _di_fl_utfl_string_dynamic_seek_to_utf_character_
 
 /**
  * Guarantee that an end of UTF-8 string (NULL) exists at the end of the string.
@@ -1415,9 +1415,9 @@ extern "C" {
  *
  * @see f_utf_character_is_whitespace()
  */
-#ifndef _di_fl_utf_string_rip_
-  extern f_status_t fl_utf_string_rip(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination);
-#endif // _di_fl_utf_string_rip_
+#ifndef _di_fl_utfl_string_rip_
+  extern f_status_t fl_utfl_string_rip(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination);
+#endif // _di_fl_utfl_string_rip_
 
 /**
  * Allocate a new UTF-8 string from the provided range in the string.
@@ -1445,9 +1445,9 @@ extern "C" {
  *
  * @see f_utf_character_is_whitespace()
  */
-#ifndef _di_fl_utf_string_rip_nulless_
-  extern f_status_t fl_utf_string_rip_nulless(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination);
-#endif // _di_fl_utf_string_rip_nulless_
+#ifndef _di_fl_utfl_string_rip_nulless_
+  extern f_status_t fl_utfl_string_rip_nulless(const f_utf_string_t source, const f_utf_string_length_t length, f_utf_string_dynamic_t *destination);
+#endif // _di_fl_utfl_string_rip_nulless_
 
 /**
  * Seek the UTF-8 string location forward until the character (1-byte wide) or EOL is reached.
@@ -1467,9 +1467,9 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_utf_string_seek_line_to_
-  extern f_status_t fl_utf_string_seek_line_to(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
-#endif // _di_fl_utf_string_seek_line_to_
+#ifndef _di_fl_utfl_string_seek_line_to_
+  extern f_status_t fl_utfl_string_seek_line_to(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
+#endif // _di_fl_utfl_string_seek_line_to_
 
 /**
  * Seek the string location forward until the 1-byte wide character or EOL is reached.
@@ -1490,9 +1490,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_seek_line_to_char_
-  extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
-#endif // _di_fl_utf_string_seek_line_to_char_
+#ifndef _di_fl_utfl_string_seek_line_to_char_
+  extern f_status_t fl_utfl_string_seek_line_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
+#endif // _di_fl_utfl_string_seek_line_to_char_
 
 /**
  * Increment string location until a UTF-8 graph character or an EOL is matched.
@@ -1520,9 +1520,9 @@ extern "C" {
  *
  * @see f_utf_character_is_graph()
  */
-#ifndef _di_fl_utf_string_seek_line_until_graph_
-  extern f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
-#endif // _di_fl_utf_string_seek_line_until_graph_
+#ifndef _di_fl_utfl_string_seek_line_until_graph_
+  extern f_status_t fl_utfl_string_seek_line_until_graph(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+#endif // _di_fl_utfl_string_seek_line_until_graph_
 
 /**
  * Increment string location until a non-graph UTF-8 character or an EOL is matched.
@@ -1551,9 +1551,9 @@ extern "C" {
  *
  * @see f_utf_character_is_graph()
  */
-#ifndef _di_fl_utf_string_seek_line_until_non_graph_
-  extern f_status_t fl_utf_string_seek_line_until_non_graph(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
-#endif // _di_fl_utf_string_seek_line_until_non_graph_
+#ifndef _di_fl_utfl_string_seek_line_until_non_graph_
+  extern f_status_t fl_utfl_string_seek_line_until_non_graph(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+#endif // _di_fl_utfl_string_seek_line_until_non_graph_
 
 /**
  * Seek the string location forward until the character (1-byte wide) is reached.
@@ -1573,9 +1573,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_seek_to_
-  extern f_status_t fl_utf_string_seek_to(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
-#endif // _di_fl_utf_string_seek_to_
+#ifndef _di_fl_utfl_string_seek_to_
+  extern f_status_t fl_utfl_string_seek_to(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t seek_to_this);
+#endif // _di_fl_utfl_string_seek_to_
 
 /**
  * Seek the string location forward until the UTF-8 character (up to 4-byte wide) is reached.
@@ -1596,8 +1596,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
-#ifndef _di_fl_utf_string_seek_to_character_
-  extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
+#ifndef _di_fl_utfl_string_seek_to_character_
+  extern f_status_t fl_utfl_string_seek_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
 #endif // _di_fl_utf_string__seek_to_character_
 
 #ifdef __cplusplus

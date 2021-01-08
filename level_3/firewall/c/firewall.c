@@ -380,7 +380,7 @@ extern "C" {
         parameters.array[5].used = 0;
         parameters.array[6].used = 0;
 
-        fl_string_dynamics_delete(& parameters);
+        f_string_dynamics_delete(& parameters);
         firewall_delete_local_data(&local);
         firewall_delete_data(data);
         return status;
@@ -615,7 +615,7 @@ extern "C" {
 
             status = firewall_buffer_rules(file_path.string, F_true, &local, data);
 
-            fl_string_dynamic_delete(&file_path);
+            f_string_dynamic_delete(&file_path);
           }
 
           if (F_status_is_error(status)) {
@@ -732,9 +732,9 @@ extern "C" {
       f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    fl_string_dynamics_delete(&data->chains);
+    f_string_dynamics_delete(&data->chains);
     f_macro_string_lengths_t_delete_simple(data->remaining);
-    fl_string_dynamics_delete(&data->devices);
+    f_string_dynamics_delete(&data->devices);
 
     f_macro_color_context_t_delete_simple(data->context);
 

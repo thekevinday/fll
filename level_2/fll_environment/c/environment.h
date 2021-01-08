@@ -48,12 +48,12 @@ extern "C" {
  *   F_exist_not if name does not exist.
  *
  *   Errors (with error bit) from: f_environment_get_dynamic().
- *   Errors (with error bit) from: fl_string_dynamic_append_nulless().
- *   Errors (with error bit) from: fl_string_maps_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *   Errors (with error bit) from: f_string_maps_increase_by().
  *
  * @see f_environment_get_dynamic()
- * @see fl_string_dynamic_append_nulless()
- * @see fl_string_maps_increase_by()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_maps_increase_by()
  */
 #ifndef _di_fll_environment_load_name_
   extern f_status_t fll_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment);
@@ -78,12 +78,12 @@ extern "C" {
  *   F_data_not if names.used is 0.
  *
  *   Errors (with error bit) from: f_environment_get_dynamic().
- *   Errors (with error bit) from: fl_string_dynamic_append_nulless().
- *   Errors (with error bit) from: fl_string_maps_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *   Errors (with error bit) from: f_string_maps_increase_by().
  *
  * @see f_environment_get_dynamic()
- * @see fl_string_dynamic_append_nulless()
- * @see fl_string_maps_increase_by()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_maps_increase_by()
  */
 #ifndef _di_fll_environment_load_names_
   extern f_status_t fll_environment_load_names(const f_string_dynamics_t names, f_string_maps_t *environment);

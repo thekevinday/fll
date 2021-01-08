@@ -205,13 +205,13 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fl_string_dynamic_delete(&path);
-        fl_string_dynamics_delete(&paths);
+        f_string_dynamic_delete(&path);
+        f_string_dynamics_delete(&paths);
 
         return status;
       }
 
-      status = fl_string_dynamic_delete(&path);
+      status = f_string_dynamic_delete(&path);
 
       if (F_status_is_error(status)) {
         f_macro_string_dynamics_t_delete_simple(paths);
@@ -223,10 +223,10 @@ extern "C" {
 
       for (f_array_length_t i = 0; i < paths.used; i++) {
 
-        status = fl_string_append(program_name, name_size, &paths.array[i]);
+        status = f_string_append(program_name, name_size, &paths.array[i]);
 
         if (F_status_is_error_not(status)) {
-          status = fl_string_dynamic_terminate(&paths.array[i]);
+          status = f_string_dynamic_terminate(&paths.array[i]);
         }
 
         if (F_status_is_error_not(status)) {
@@ -254,14 +254,14 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fl_string_dynamics_delete(&paths);
+          f_string_dynamics_delete(&paths);
 
           return status;
         }
       } // for
 
       if (!found) {
-        fl_string_dynamics_delete(&paths);
+        f_string_dynamics_delete(&paths);
 
         return F_status_set_error(F_file_found_not);
       }
@@ -270,7 +270,7 @@ extern "C" {
 
       memcpy(&program_path, found->string, found->used);
 
-      status = fl_string_dynamics_delete(&paths);
+      status = f_string_dynamics_delete(&paths);
       if (F_status_is_error(status)) return status;
 
       if (parameter && parameter->data) {

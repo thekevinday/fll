@@ -174,7 +174,7 @@ extern "C" {
     status = F_none; \
     if (length < dynamics.size) { \
       for (register f_array_length_t _macro__i = dynamics.size - length; _macro__i < dynamics.size; ++_macro__i) { \
-        f_macro_string_dynamic_t_destroy(status, dynamics.array[_macro__i], f_string_dynamic_t); \
+        f_macro_string_dynamic_t_destroy(status, dynamics.array[_macro__i]); \
         if (status != F_none) break; \
       } \
     } \
@@ -223,11 +223,339 @@ extern "C" {
     } \
     f_memory_destroy((void **) & dynamics.array, sizeof(f_string_dynamic_t), dynamics.size); \
     dynamics.size = 0;
+
+  // @todo increase, decrease, decimate, increase_by, decrease_by, decimate_by
 #endif // _di_f_string_dynamics_t_
 
 #ifndef _di_f_string_static_empty_s_
   const extern f_string_static_t f_string_static_empty_s;
 #endif // _di_f_string_static_empty_s_
+
+/**
+ * Resize the dynamic string.
+ *
+ * @param length
+ *   The new size to use.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_adjust_
+  extern f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_adjust_
+
+/**
+ * Resize the dynamic string to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_decrease_
+  extern f_status_t f_string_dynamic_decrease(f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_decrease_
+
+/**
+ * Resize the dynamic string to a smaller size.
+ *
+ * This will resize making the string smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_decrease_by_
+  extern f_status_t f_string_dynamic_decrease_by(const f_string_length_t amount, f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_decrease_by_
+
+/**
+ * Delete the dynamic string.
+ *
+ * @param string
+ *   The string to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_delete_
+  extern f_status_t f_string_dynamic_delete(f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_delete_
+
+/**
+ * Destroy the dynamic string.
+ *
+ * @param string
+ *   The string to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_destroy_
+  extern f_status_t f_string_dynamic_destroy(f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_destroy_
+
+/**
+ * Resize the dynamic string to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_f_string_dynamic_increase_
+  extern f_status_t f_string_dynamic_increase(f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_increase_
+
+/**
+ * Resize the dynamic string to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ */
+#ifndef _di_f_string_dynamic_increase_by_
+  extern f_status_t f_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_increase_by_
+
+/**
+ * Resize the dynamic string.
+ *
+ * @param length
+ *   The new size to use.
+ * @param string
+ *   The string to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_resize_
+  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *string);
+#endif // _di_f_string_dynamic_resize_
+
+/**
+ * Resize the dynamic string array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_adjust_
+  extern f_status_t f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_adjust_
+
+/**
+ * Resize the dynamic string array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_decimate_
+  extern f_status_t f_string_dynamics_decimate(f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_decimate_
+
+/**
+ * Resize the dynamic string array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_decimate_by_
+  extern f_status_t f_string_dynamics_decimate_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_decimate_by_
+
+/**
+ * Resize the dynamic string array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_decrease_
+  extern f_status_t f_string_dynamics_decrease(f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_decrease_
+
+/**
+ * Resize the dynamic string array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_decrease_by_
+  extern f_status_t f_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_decrease_by_
+
+/**
+ * Delete the array of dynamic strings.
+ *
+ * @param string
+ *   The string to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_delete_
+  extern f_status_t f_string_dynamics_delete(f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_delete_
+
+/**
+ * Destroy the array of dynamic strings.
+ *
+ * @param string
+ *   The string to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_destroy_
+  extern f_status_t f_string_dynamics_destroy(f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_destroy_
+
+/**
+ * Increase the size of the dynamic string array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_string_dynamics_increase_
+  extern f_status_t f_string_dynamics_increase(f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_increase_
+
+/**
+ * Resize the dynamic string array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_string_dynamics_increase_by_
+  extern f_status_t f_string_dynamics_increase_by(const f_array_length_t amount, f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_increase_by_
+
+/**
+ * Resize the dynamic string array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param strings
+ *   The string array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamics_resize_
+  extern f_status_t f_string_dynamics_resize(const f_array_length_t length, f_string_dynamics_t *strings);
+#endif // _di_f_string_dynamics_resize_
 
 #ifdef __cplusplus
 } // extern "C"

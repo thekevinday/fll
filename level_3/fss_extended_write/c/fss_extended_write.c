@@ -441,14 +441,14 @@ extern "C" {
           else {
             object.used = 0;
 
-            status = fl_string_dynamics_increase_by(data->parameters[fss_extended_write_parameter_content].values.used, &contents);
+            status = f_string_dynamics_increase_by(data->parameters[fss_extended_write_parameter_content].values.used, &contents);
 
             if (status == F_array_too_large) {
               status = F_status_set_error(status);
             }
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+              fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
             }
             else {
               f_array_length_t i = 0;
@@ -504,10 +504,10 @@ extern "C" {
                 if (content_current < object_current || content_current > object_next) break;
               }
 
-              status = fl_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
+              status = f_string_dynamics_increase_by(f_fss_default_allocation_step, &contents);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
                 break;
               }
 
@@ -515,10 +515,10 @@ extern "C" {
                 contents.array[contents.used].used = 0;
               }
 
-              status = fl_string_append(arguments.argv[data->parameters[fss_extended_write_parameter_content].values.array[j]], strnlen(arguments.argv[data->parameters[fss_extended_write_parameter_content].values.array[j]], f_console_length_size), &contents.array[contents.used]);
+              status = f_string_append(arguments.argv[data->parameters[fss_extended_write_parameter_content].values.array[j]], strnlen(arguments.argv[data->parameters[fss_extended_write_parameter_content].values.array[j]], f_console_length_size), &contents.array[contents.used]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
                 break;
               }
 
@@ -546,7 +546,7 @@ extern "C" {
         }
       }
 
-      fl_string_dynamic_delete(&escaped);
+      f_string_dynamic_delete(&escaped);
 
       // object, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
       object.string = 0;
@@ -570,9 +570,9 @@ extern "C" {
       }
     }
 
-    fl_string_dynamic_delete(&buffer);
-    fl_string_dynamic_delete(&object);
-    fl_string_dynamics_delete(&contents);
+    f_string_dynamic_delete(&buffer);
+    f_string_dynamic_delete(&object);
+    f_string_dynamics_delete(&contents);
     fss_extended_write_delete_data(data);
     return status;
   }

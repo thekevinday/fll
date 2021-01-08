@@ -74,7 +74,7 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_append_nulless_) || !defined(_di_fl_utf_string_dynamic_append_nulless_) || !defined(_di_fl_utf_string_mash_nulless_) || !defined(_di_fl_utf_string_dynamic_mash_nulless_)
 
 /**
- * Private implementation of fl_utf_string_compare().
+ * Private implementation of fl_utfl_string_compare().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -96,16 +96,16 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_utf_string_compare()
- * @see fl_utf_string_dynamic_compare()
- * @see fl_utf_string_dynamic_partial_compare()
+ * @see fl_utfl_string_compare()
+ * @see fl_utfl_string_dynamic_compare()
+ * @see fl_utfl_string_dynamic_partial_compare()
  */
-#if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
-  extern f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
+#if !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
+  extern f_status_t private_fl_utfl_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
 
 /**
- * Private implementation of fl_utf_string_compare_trim().
+ * Private implementation of fl_utfl_string_compare_trim().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -127,13 +127,13 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_utf_string_compare_trim()
- * @see fl_utf_string_dynamic_compare_trim()
- * @see fl_utf_string_dynamic_partial_compare_trim()
+ * @see fl_utfl_string_compare_trim()
+ * @see fl_utfl_string_dynamic_compare_trim()
+ * @see fl_utfl_string_dynamic_partial_compare_trim()
  */
-#if !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
-  extern f_status_t private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
+#if !defined(_di_fl_utfl_string_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_trim_)
+  extern f_status_t private_fl_utfl_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_utf_string_length_t offset1, const f_utf_string_length_t offset2, const f_utf_string_length_t stop1, const f_utf_string_length_t stop2) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utfl_string_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_compare_trim_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_trim_)
 
 /**
  * Private implementation of fl_utf_string_prepend().
@@ -188,7 +188,7 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_prepend_nulless_) || !defined(_di_fl_utf_string_dynamic_prepend_nulless_) || !defined(_di_fl_utf_string_append_mish_) || !defined(_di_fl_utf_string_dynamic_mish_)
 
 /**
- * Private implementation of fl_utf_string_rip(), but only the part for finding the start/stop range.
+ * Private implementation of fl_utfl_string_rip(), but only the part for finding the start/stop range.
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -208,12 +208,12 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_utf_string_dynamic_rip()
- * @see fl_utf_string_rip()
+ * @see fl_utfl_string_dynamic_rip()
+ * @see fl_utfl_string_rip()
  */
-#if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
-  extern f_status_t private_fl_utf_string_rip_find_range(const f_utf_string_t source, f_utf_string_length_t *start, f_utf_string_length_t *stop) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
+#if !defined(_di_fl_utfl_string_rip_) || !defined(_di_fl_utfl_string_dynamic_rip_) || !defined(_di_fl_utfl_string_rip_nulless_) || !defined(_di_fl_utfl_string_dynamic_rip_nulless_)
+  extern f_status_t private_fl_utfl_string_rip_find_range(const f_utf_string_t source, f_utf_string_length_t *start, f_utf_string_length_t *stop) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_fl_utfl_string_rip_) || !defined(_di_fl_utfl_string_dynamic_rip_) || !defined(_di_fl_utfl_string_rip_nulless_) || !defined(_di_fl_utfl_string_dynamic_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

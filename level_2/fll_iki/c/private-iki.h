@@ -36,7 +36,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
- *   Errors (with error bit) from: fl_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
   extern f_status_t private_fll_iki_content_partial_escape(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *escaped) f_gcc_attribute_visibility_internal;
@@ -64,7 +64,7 @@ extern "C" {
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
  *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
- *   Errors (with error bit) from: fl_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #if !defined(_di_fll_iki_content_escape_un_) || !defined(_di_fll_iki_content_partial_escape_un_)
   extern f_status_t private_fll_iki_content_partial_escape_un(const f_string_static_t content, const f_string_range_t range, const uint8_t quote, f_string_dynamic_t *unescaped) f_gcc_attribute_visibility_internal;

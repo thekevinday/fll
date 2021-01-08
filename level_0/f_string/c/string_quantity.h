@@ -105,7 +105,196 @@ extern "C" {
 
   #define f_macro_string_quantityss_t_delete_simple(quantityss)  f_macro_memory_structures_delete_simple(quantityss, f_string_quantity_t, f_string_quantitys_t);
   #define f_macro_string_quantityss_t_destroy_simple(quantityss) f_macro_memory_structures_destroy_simple(quantityss, f_string_quantity_t, f_string_quantitys_t);
+
+  #define f_macro_string_quantityss_t_increase(status, string_quantitys) f_macro_memory_structures_increase(status, string_quantitys, f_string_quantity_t, f_array_length_t);
+  #define f_macro_string_quantityss_t_decrease(status, string_quantitys) f_macro_memory_structures_decrease(status, string_quantitys, f_string_quantity_t, f_string_quantity_t);
+  #define f_macro_string_quantityss_t_decimate(status, string_quantitys) f_macro_memory_structures_decimate(status, string_quantitys, f_string_quantity_t, f_string_quantity_t);
+
+  #define f_macro_string_quantityss_t_increase_by(status, string_quantitys, amount) f_macro_memory_structures_increase_by(status, string_quantitys, f_string_quantity_t, f_array_length_t, amount);
+  #define f_macro_string_quantityss_t_decrease_by(status, string_quantitys, amount) f_macro_memory_structures_decrease_by(status, string_quantitys, f_string_quantity_t, f_string_quantitys_t, f_array_length_t, amount);
+  #define f_macro_string_quantityss_t_decimate_by(status, string_quantitys, amount) f_macro_memory_structures_decimate_by(status, string_quantitys, f_string_quantity_t, f_string_quantitys_t, f_array_length_t, amount);
 #endif // _di_f_string_quantityss_t_
+
+/**
+ * Resize the string quantitys array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_adjust_
+  extern f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_adjust_
+
+/**
+ * Resize the string quantitys array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_decimate_
+  extern f_status_t f_string_quantitys_decimate(f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decimate_
+
+/**
+ * Resize the string quantitys array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_decimate_by_
+  extern f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decimate_by_
+
+/**
+ * Resize the string quantitys array to a smaller size, by 1.
+ *
+ * This will shrink the size by size - 1.
+ * This will not shrink the size to less than 0.
+ *
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_decrease_
+  extern f_status_t f_string_quantitys_decrease(f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decrease_
+
+/**
+ * Resize the string quantitys array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_decrease_by_
+  extern f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decrease_by_
+
+/**
+ * Delete the array of string quantitys.
+ *
+ * @param quantitys
+ *   The quantitys to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_delete_
+  extern f_status_t f_string_quantitys_delete(f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_delete_
+
+/**
+ * Delete the array of string quantitys.
+ *
+ * @param quantitys
+ *   The quantitys to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_destroy_
+  extern f_status_t f_string_quantitys_destroy(f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_destroy_
+
+/**
+ * Increase the size of the string quantitys array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_increase_
+  extern f_status_t f_string_quantitys_increase(f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_increase_
+
+/**
+ * Resize the string quantitys array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_string_quantitys_increase_by_
+  extern f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_increase_by_
+
+/**
+ * Resize the string quantitys array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantitys
+ *   The string quantitys array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_quantitys_adjust_
+  extern f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_adjust_
 
 #ifdef __cplusplus
 } // extern "C"

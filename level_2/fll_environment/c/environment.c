@@ -15,7 +15,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = fl_string_maps_increase(environment);
+    f_status_t status = f_string_maps_increase(environment);
     if (F_status_is_error(status)) return status;
 
     environment->array[environment->used].name.used = 0;
@@ -23,7 +23,7 @@ extern "C" {
 
     const f_string_static_t name_string = f_macro_string_static_t_initialize(name, length);
 
-    status = fl_string_dynamic_append_nulless(name_string, &environment->array[environment->used].name);
+    status = f_string_dynamic_append_nulless(name_string, &environment->array[environment->used].name);
     if (F_status_is_error(status)) return status;
 
     status = f_environment_get_dynamic(name_string, &environment->array[environment->used].value);
@@ -54,7 +54,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = fl_string_maps_increase_by(names.used, environment);
+    f_status_t status = f_string_maps_increase_by(names.used, environment);
     if (F_status_is_error(status)) return status;
 
     for (f_array_length_t i = 0; i < names.used; ++i) {
@@ -62,7 +62,7 @@ extern "C" {
       environment->array[environment->used].name.used = 0;
       environment->array[environment->used].value.used = 0;
 
-      status = fl_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].name);
+      status = f_string_dynamic_append_nulless(names.array[i], &environment->array[environment->used].name);
       if (F_status_is_error(status)) return status;
 
       status = f_environment_get_dynamic(names.array[i], &environment->array[environment->used].value);

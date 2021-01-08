@@ -8,24 +8,24 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
   f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments) {
 
-    f_status_t status = fl_string_dynamics_increase(arguments);
+    f_status_t status = f_string_dynamics_increase(arguments);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
     if (length) {
-      status = fl_string_append(source, length, &argument);
+      status = f_string_append(source, length, &argument);
 
       if (F_status_is_error(status)) {
-        fl_string_dynamic_delete(&argument);
+        f_string_dynamic_delete(&argument);
         return status;
       }
     }
 
-    status = fl_string_dynamic_terminate(&argument);
+    status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      fl_string_dynamic_delete(&argument);
+      f_string_dynamic_delete(&argument);
       return status;
     }
 
@@ -41,35 +41,35 @@ extern "C" {
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
   f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) {
 
-    f_status_t status = fl_string_dynamics_increase(arguments);
+    f_status_t status = f_string_dynamics_increase(arguments);
     if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
     if (prefix_length) {
-      status = fl_string_append(prefix, prefix_length, &argument);
+      status = f_string_append(prefix, prefix_length, &argument);
 
       if (F_status_is_error(status)) {
-        fl_string_dynamic_delete(&argument);
+        f_string_dynamic_delete(&argument);
 
         return status;
       }
     }
 
     if (name_length) {
-      status = fl_string_append(name, name_length, &argument);
+      status = f_string_append(name, name_length, &argument);
 
       if (F_status_is_error(status)) {
-        fl_string_dynamic_delete(&argument);
+        f_string_dynamic_delete(&argument);
 
         return status;
       }
     }
 
-    status = fl_string_dynamic_terminate(&argument);
+    status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      fl_string_dynamic_delete(&argument);
+      f_string_dynamic_delete(&argument);
 
       return status;
     }
@@ -82,27 +82,27 @@ extern "C" {
     f_macro_string_dynamic_t_clear(argument);
 
     if (value_length) {
-      status = fl_string_append(value, value_length, &argument);
+      status = f_string_append(value, value_length, &argument);
 
       if (F_status_is_error(status)) {
-        fl_string_dynamic_delete(&argument);
+        f_string_dynamic_delete(&argument);
 
         return status;
       }
     }
 
-    status = fl_string_dynamic_terminate(&argument);
+    status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      fl_string_dynamic_delete(&argument);
+      f_string_dynamic_delete(&argument);
 
       return status;
     }
 
-    status = fl_string_dynamics_increase(arguments);
+    status = f_string_dynamics_increase(arguments);
 
     if (F_status_is_error(status)) {
-      fl_string_dynamic_delete(&argument);
+      f_string_dynamic_delete(&argument);
 
       return status;
     }

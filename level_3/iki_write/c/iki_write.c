@@ -317,10 +317,10 @@ extern "C" {
             content.used = 0;
 
             if (buffer.used) {
-              status = fl_string_dynamic_partial_append_nulless(buffer, range, &content);
+              status = f_string_dynamic_partial_append_nulless(buffer, range, &content);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
                 break;
               }
             }
@@ -335,10 +335,10 @@ extern "C" {
           else {
             object.used = 0;
 
-            status = fl_string_dynamic_partial_append_nulless(buffer, range, &object);
+            status = f_string_dynamic_partial_append_nulless(buffer, range, &object);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+              fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
               break;
             }
 
@@ -366,9 +366,9 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
 
-        fl_string_dynamic_delete(&buffer);
-        fl_string_dynamic_delete(&object);
-        fl_string_dynamic_delete(&content);
+        f_string_dynamic_delete(&buffer);
+        f_string_dynamic_delete(&object);
+        f_string_dynamic_delete(&content);
       }
 
       if (F_status_is_error_not(status)) {
@@ -397,7 +397,7 @@ extern "C" {
         }
       }
 
-      fl_string_dynamic_delete(&escaped);
+      f_string_dynamic_delete(&escaped);
     }
 
     if (data->parameters[iki_write_parameter_file].result == f_console_result_additional) {
@@ -428,7 +428,7 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
-    fl_string_dynamic_delete(&data->buffer);
+    f_string_dynamic_delete(&data->buffer);
 
     f_macro_color_context_t_delete_simple(data->context);
 

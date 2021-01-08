@@ -227,9 +227,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_append().
+ *   Errors (with error bit) from: f_string_append().
  *
- * @see fl_string_append()
+ * @see f_string_append()
  */
 #ifndef _di_fll_program_parameter_additional_append_
   extern f_status_t fll_program_parameter_additional_append(const f_string_t *argv, const f_array_lengths_t values, f_string_dynamics_t *destination);
@@ -257,9 +257,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: fl_string_mash().
+ *   Errors (with error bit) from: f_string_mash().
  *
- * @see fl_string_mash()
+ * @see f_string_mash()
  */
 #ifndef _di_fll_program_parameter_additional_mash_
   extern f_status_t fll_program_parameter_additional_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t *argv, const f_array_lengths_t values, f_string_dynamic_t *destination);
@@ -316,10 +316,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: fl_string_dynamic_mash().
+ *   Errors (with error bit) from: f_string_dynamic_mash().
  *   Errors (with error bit) from: fl_string_rip().
  *
- * @see fl_string_dynamic_mash()
+ * @see f_string_dynamic_mash()
  * @see fl_string_rip()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_

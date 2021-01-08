@@ -169,10 +169,10 @@ extern "C" {
             }
           }
           else {
-            status = fl_string_append(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_length_size), &depths->array[depths->used].value_name);
+            status = f_string_append(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_length_size), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
               return status;
             }
           }
@@ -234,7 +234,7 @@ extern "C" {
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        fl_string_dynamic_delete(&data->buffer);
+        f_string_dynamic_delete(&data->buffer);
 
         if (data->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
@@ -246,7 +246,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        fl_string_dynamic_delete(&data->buffer);
+        f_string_dynamic_delete(&data->buffer);
 
         return status;
       }

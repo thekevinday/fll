@@ -72,16 +72,16 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_macro_string_dynamics_t_resize()
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
   extern f_status_t fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
@@ -117,15 +117,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
   extern f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
@@ -163,15 +163,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
   extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -195,15 +195,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
   extern f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -223,15 +223,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_
   extern f_status_t fll_execute_arguments_dynamic_add(const f_string_static_t source, f_string_dynamics_t *arguments);
@@ -261,15 +261,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_
   extern f_status_t fll_execute_arguments_dynamic_add_parameter(const f_string_static_t prefix, const f_string_static_t name, const f_string_static_t value, f_string_dynamics_t *arguments);
@@ -301,15 +301,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_parameter_set_
   extern f_status_t fll_execute_arguments_dynamic_add_parameter_set(const f_string_static_t prefix[], const f_string_static_t name[], const f_string_static_t value[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -331,15 +331,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
- *   Errors (with error bit) from: fl_string_dynamics_increase().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see fl_string_append()
- * @see fl_string_dynamic_delete()
- * @see fl_string_dynamic_terminate()
- * @see fl_string_dynamics_increase()
+ * @see f_string_append()
+ * @see f_string_dynamic_delete()
+ * @see f_string_dynamic_terminate()
+ * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_dynamic_add_set_
   extern f_status_t fll_execute_arguments_dynamic_add_set(const f_string_static_t source[], const f_array_length_t size, f_string_dynamics_t *arguments);
@@ -454,9 +454,9 @@ extern "C" {
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_thread_signal_mask().
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
- *   Errors (with error bit) from: fl_string_append().
- *   Errors (with error bit) from: fl_string_dynamic_delete().
- *   Errors (with error bit) from: fl_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: f_string_dynamic_delete().
+ *   Errors (with error bit) from: f_string_dynamic_terminate().
  *
  * @see close()
  * @see clearenv()
@@ -485,8 +485,8 @@ extern "C" {
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
  * @see fl_environment_path_explode_dynamic()
- * @see fl_string_append()
- * @see fl_string_dynamic_terminate()
+ * @see f_string_append()
+ * @see f_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_
   extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);

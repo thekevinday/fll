@@ -1,4 +1,5 @@
 #include "string.h"
+#include "private-string.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -114,7 +115,6 @@ extern "C" {
   const f_string_t f_string_ascii_slash_forward_s = f_string_ascii_slash_forward;
   const f_string_t f_string_ascii_slash_backward_s = f_string_ascii_slash_backward;
   const f_string_t f_string_ascii_tilde_s = f_string_ascii_tilde;
-
 #endif // _di_string_ascii_s_
 
 #ifdef __cplusplus

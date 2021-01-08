@@ -111,10 +111,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_
   extern f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
@@ -157,10 +157,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_apart_
   extern f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
@@ -205,10 +205,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_
   extern f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
@@ -255,10 +255,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_apart_
   extern f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
@@ -308,7 +308,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_map_mash_
   extern f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
@@ -359,10 +359,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_mash_nulless()
+ * @see f_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_mash_apart_
   extern f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]);
@@ -412,10 +412,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_mash_nulless()
+ * @see f_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_map_together_
   extern f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]);
@@ -462,7 +462,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
  */
 #ifndef _di_fll_fss_snatch_mash_
   extern f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);
@@ -510,10 +510,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_mash_nulless()
+ * @see f_string_dynamic_partial_mash_nulless()
  */
 #ifndef _di_fll_fss_snatch_mash_apart_
   extern f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]);
@@ -554,10 +554,10 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_string_compare_trim().
- *   Errors (with error bit) from: fl_string_dynamic_partial_mash_nulless().
+ *   Errors (with error bit) from: f_string_dynamic_partial_mash_nulless().
  *
  * @see fl_string_compare_trim()
- * @see fl_string_dynamic_partial_append_nulless()
+ * @see f_string_dynamic_partial_append_nulless()
  */
 #ifndef _di_fll_fss_snatch_together_
   extern f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_string_length_t lengths[], const f_string_length_t size, const f_string_t glue, const f_string_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]);

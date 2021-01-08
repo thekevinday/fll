@@ -110,7 +110,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
-            fl_string_dynamic_delete(&(*buffer));
+            f_string_dynamic_delete(&(*buffer));
             return status;
           }
         }
@@ -143,7 +143,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
-      fl_string_dynamic_delete(&(*buffer));
+      f_string_dynamic_delete(&(*buffer));
     }
 
     return status;
@@ -262,10 +262,10 @@ extern "C" {
       };
 
       for (i = 0; i < 15; i++) {
-        status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+        status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -379,10 +379,10 @@ extern "C" {
       };
 
       for (i = 0; i < 11; i++) {
-        status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+        status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -397,10 +397,10 @@ extern "C" {
         };
 
         for (i = 0; i < 3; i++) {
-          status = fl_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
+          status = f_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
             return status;
           }
         } // for
@@ -426,10 +426,10 @@ extern "C" {
         };
 
         for (i = 0; i < 3; i++) {
-          status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+          status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -502,10 +502,10 @@ extern "C" {
         };
 
         for (i = 0; i < 6; i++) {
-          status = fl_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
+          status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_string_append_nulless", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -553,10 +553,10 @@ extern "C" {
       for (i = 0; i < 34; i++) {
         if (!parameters_value[i]->used) continue;
 
-        status = fl_string_dynamic_terminate_after(parameters_value[i]);
+        status = f_string_dynamic_terminate_after(parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
           return status;
         }
       } // for
@@ -571,7 +571,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < length; i++) {
-      status = fl_string_dynamic_append_nulless(source, destination[i]);
+      status = f_string_dynamic_append_nulless(source, destination[i]);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -673,7 +673,7 @@ extern "C" {
               } // for
             }
 
-            status = fl_string_append(arguments.argv[location], length, parameters_value[i]);
+            status = f_string_append(arguments.argv[location], length, parameters_value[i]);
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
@@ -685,7 +685,7 @@ extern "C" {
                 }
               }
               else {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_string_append", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
               }
 
               return status;

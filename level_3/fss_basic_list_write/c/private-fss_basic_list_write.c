@@ -105,10 +105,10 @@ extern "C" {
     }
 
     if (!object || !content) {
-      status = fl_string_append(f_string_eol, 1, buffer);
+      status = f_string_append(f_string_eol, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_string_append", F_true);
+        fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
         return status;
       }
     }
@@ -172,10 +172,10 @@ extern "C" {
         }
 
         if (object.used + block.used > object.size) {
-          status = fl_string_dynamic_increase_by(block.used, &object);
+          status = f_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -221,10 +221,10 @@ extern "C" {
 
         if (total) {
           if (content.used + total > content.size) {
-            status = fl_string_dynamic_increase_by(total, &content);
+            status = f_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_increase_by", F_true);
+              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
               break;
             }
           }
@@ -275,9 +275,9 @@ extern "C" {
       status = fss_basic_list_write_process(data, output, quote, &object, &content, buffer);
     }
 
-    fl_string_dynamic_delete(&block);
-    fl_string_dynamic_delete(&object);
-    fl_string_dynamic_delete(&content);
+    f_string_dynamic_delete(&block);
+    f_string_dynamic_delete(&object);
+    f_string_dynamic_delete(&content);
     return status;
   }
 #endif // _di_fss_basic_list_write_process_pipe_

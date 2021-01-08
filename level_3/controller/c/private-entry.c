@@ -275,10 +275,10 @@ extern "C" {
       }
 
       if (allocate) {
-        status = fl_string_dynamics_increase_by(allocate, &action->parameters);
+        status = f_string_dynamics_increase_by(allocate, &action->parameters);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamics_increase_by", F_true);
+          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
 
           action->status = status;
 
@@ -293,10 +293,10 @@ extern "C" {
 
           action->parameters.array[j].used = 0;
 
-          status = fl_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
+          status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append_nulless", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
 
             action->status = status;
 
@@ -368,10 +368,10 @@ extern "C" {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
 
                   if (data.error.verbosity != f_console_verbosity_quiet) {
-                    status = fl_string_dynamic_terminate_after(&cache->buffer_path);
+                    status = f_string_dynamic_terminate_after(&cache->buffer_path);
 
                     if (F_status_is_error(status)) {
-                      fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_terminate_after", F_true);
+                      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
 
                       action->status = status;
 

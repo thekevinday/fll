@@ -228,10 +228,10 @@ Consider the "*.device" files such that they are also use IKI.
               parameter_value[j]->used = 0;
 
               if (content.array[j].start <= content.array[j].stop) {
-                status = fl_string_dynamic_partial_append(buffer, content.array[j], parameter_value[j]);
+                status = f_string_dynamic_partial_append(buffer, content.array[j], parameter_value[j]);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "fl_string_dynamic_partial_append", F_true);
+                  fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append", F_true);
 
                   i = variable.used;
                   break;
@@ -325,12 +325,12 @@ Consider the "*.device" files such that they are also use IKI.
       f_macro_iki_variable_t_delete_simple(variable);
       f_macro_iki_vocabulary_t_delete_simple(vocabulary);
       f_macro_iki_content_t_delete_simple(content);
-      fl_string_dynamic_delete(&cache);
+      f_string_dynamic_delete(&cache);
     }
 
     f_file_stream_close(F_true, &command_line);
 
-    fl_string_dynamic_delete(&buffer);
+    f_string_dynamic_delete(&buffer);
 
     return status;
   }
