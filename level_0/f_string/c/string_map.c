@@ -15,20 +15,6 @@ extern "C" {
   }
 #endif // _di_f_string_maps_adjust_
 
-#ifndef _di_f_string_maps_decimate_
-  f_status_t f_string_maps_decimate(f_string_maps_t *maps) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (maps->size > 1) {
-      return private_f_string_maps_adjust(maps->size - 1, maps);
-    }
-
-    return private_f_string_maps_destroy(maps);
-  }
-#endif // _di_f_string_maps_decimate_
-
 #ifndef _di_f_string_maps_decimate_by_
   f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t *maps) {
     #ifndef _di_level_0_parameter_checking_
@@ -43,20 +29,6 @@ extern "C" {
     return private_f_string_maps_destroy(maps);
   }
 #endif // _di_f_string_maps_decimate_by_
-
-#ifndef _di_f_string_maps_decrease_
-  f_status_t f_string_maps_decrease(f_string_maps_t *maps) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!maps) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (maps->size > 1) {
-      return private_f_string_maps_resize(maps->size - 1, maps);
-    }
-
-    return private_f_string_maps_delete(maps);
-  }
-#endif // _di_f_string_maps_decrease_
 
 #ifndef _di_f_string_maps_decrease_by_
   f_status_t f_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps) {

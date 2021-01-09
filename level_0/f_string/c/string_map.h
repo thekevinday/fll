@@ -315,24 +315,6 @@ extern "C" {
 #endif // _di_f_string_maps_adjust_
 
 /**
- * Resize the string maps array to a smaller size, by 1.
- *
- * This will shrink the size by size - 1.
- * This will not shrink the size to less than 0.
- *
- * @param maps
- *   The string maps array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_maps_decimate_
-  extern f_status_t f_string_maps_decimate(f_string_maps_t *maps);
-#endif // _di_f_string_maps_decimate_
-
-/**
  * Resize the string maps array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
@@ -352,24 +334,6 @@ extern "C" {
 #ifndef _di_f_string_maps_decimate_by_
   extern f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t *maps);
 #endif // _di_f_string_maps_decimate_by_
-
-/**
- * Resize the string maps array to a smaller size, by 1.
- *
- * This will shrink the size by size - 1.
- * This will not shrink the size to less than 0.
- *
- * @param maps
- *   The string maps array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_maps_decrease_
-  extern f_status_t f_string_maps_decrease(f_string_maps_t *maps);
-#endif // _di_f_string_maps_decrease_
 
 /**
  * Resize the string maps array to a smaller size.

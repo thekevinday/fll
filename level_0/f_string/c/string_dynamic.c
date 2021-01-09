@@ -19,20 +19,6 @@ extern "C" {
   }
 #endif // _di_f_string_dynamic_adjust_
 
-#ifndef _di_f_string_dynamic_decimate_
-  f_status_t f_string_dynamic_decimate(f_string_dynamic_t *string) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (string->size > 1) {
-      return private_f_string_dynamic_adjust(string->size - 1, string);
-    }
-
-    return private_f_string_dynamic_destroy(string);
-  }
-#endif // _di_f_string_dynamic_decimate_
-
 #ifndef _di_f_string_dynamic_decimate_by_
   f_status_t f_string_dynamic_decimate_by(const f_string_length_t amount, f_string_dynamic_t *string) {
     #ifndef _di_level_0_parameter_checking_
@@ -47,20 +33,6 @@ extern "C" {
     return private_f_string_dynamic_destroy(string);
   }
 #endif // _di_f_string_dynamic_decimate_by_
-
-#ifndef _di_f_string_dynamic_decrease_
-  f_status_t f_string_dynamic_decrease(f_string_dynamic_t *string) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (string->size > 1) {
-      return private_f_string_dynamic_resize(string->size - 1, string);
-    }
-
-    return private_f_string_dynamic_delete(string);
-  }
-#endif // _di_f_string_dynamic_decrease_
 
 #ifndef _di_f_string_dynamic_decrease_by_
   f_status_t f_string_dynamic_decrease_by(const f_string_length_t amount, f_string_dynamic_t *string) {
@@ -151,20 +123,6 @@ extern "C" {
   }
 #endif // _di_f_string_dynamics_adjust_
 
-#ifndef _di_f_string_dynamics_decimate_
-  f_status_t f_string_dynamics_decimate(f_string_dynamics_t *strings) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!strings) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (strings->size > 1) {
-      return private_f_string_dynamics_adjust(strings->size - 1, strings);
-    }
-
-    return private_f_string_dynamics_destroy(strings);
-  }
-#endif // _di_f_string_dynamics_decimate_
-
 #ifndef _di_f_string_dynamics_decimate_by_
   f_status_t f_string_dynamics_decimate_by(const f_array_length_t amount, f_string_dynamics_t *strings) {
     #ifndef _di_level_0_parameter_checking_
@@ -179,20 +137,6 @@ extern "C" {
     return private_f_string_dynamics_destroy(strings);
   }
 #endif // _di_f_string_dynamics_decimate_by_
-
-#ifndef _di_f_string_dynamics_decrease_
-  f_status_t f_string_dynamics_decrease(f_string_dynamics_t *strings) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!strings) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (strings->size > 1) {
-      return private_f_string_dynamics_resize(strings->size - 1, strings);
-    }
-
-    return private_f_string_dynamics_delete(strings);
-  }
-#endif // _di_f_string_dynamics_decrease_
 
 #ifndef _di_f_string_dynamics_decrease_by_
   f_status_t f_string_dynamics_decrease_by(const f_array_length_t amount, f_string_dynamics_t *strings) {

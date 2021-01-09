@@ -179,23 +179,6 @@ extern "C" {
     accounts.size = 0;
 
   #define f_macro_string_accounts_t_increase(status, values)            f_macro_memory_structure_increase(status, values, f_account_t);
-
-  #define f_macro_accounts_t_decrease(status, accounts) \
-    status = F_none; \
-    if (accounts.size) { \
-      f_macro_account_t_delete(status, accounts.array[accounts.size - 1]); \
-      if (status != F_none) break; \
-    } \
-    f_macro_memory_structure_destroy(status, accounts, sizeof(f_account_t));
-
-  #define f_macro_accounts_t_decimate(status, accounts) \
-    status = F_none; \
-    if (accounts.size) { \
-      f_macro_account_t_destroy(status, accounts.array[accounts.size - 1]); \
-      if (status != F_none) break; \
-    } \
-    f_macro_memory_structure_decimate(status, accounts, sizeof(f_account_t));
-
   #define f_macro_string_accounts_t_increase_by(status, values, amount) f_macro_memory_structure_increase_by(status, values, f_account_t), amount);
 
   #define f_macro_accounts_t_decrease_by(status, accounts, amount) \

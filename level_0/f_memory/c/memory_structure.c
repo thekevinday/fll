@@ -18,23 +18,6 @@ extern "C" {
   }
 #endif // _di_f_memory_structure_adjust_
 
-#ifndef _di_f_memory_structure_decimate_
-  f_status_t f_memory_structure_decimate(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!type_size) return F_status_set_error(F_parameter);
-      if (!structure) return F_status_set_error(F_parameter);
-      if (!used) return F_status_set_error(F_parameter);
-      if (!size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (*size) {
-      return private_f_memory_structure_adjust(*size - 1, type_size, structure, used, size);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_memory_structure_decimate_
-
 #ifndef _di_f_memory_structure_decimate_by_
   f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
     #ifndef _di_level_0_parameter_checking_
@@ -51,23 +34,6 @@ extern "C" {
     return F_data_not;
   }
 #endif // _di_f_memory_structure_decimate_by_
-
-#ifndef _di_f_memory_structure_decrease_
-  f_status_t f_memory_structure_decrease(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!type_size) return F_status_set_error(F_parameter);
-      if (!structure) return F_status_set_error(F_parameter);
-      if (!used) return F_status_set_error(F_parameter);
-      if (!size) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (*size) {
-      return private_f_memory_structure_resize(*size - 1, type_size, structure, used, size);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_memory_structure_decrease_
 
 #ifndef _di_f_memory_structure_decrease_by_
   f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {

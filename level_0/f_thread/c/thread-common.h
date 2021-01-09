@@ -56,10 +56,7 @@ extern "C" {
   #define f_macro_thread_attributes_t_delete_simple(attributes)  f_macro_memory_structure_delete_simple(attributes, f_thread_attribute_t);
   #define f_macro_thread_attributes_t_destroy_simple(attributes) f_macro_memory_structure_destroy_simple(attributes, f_thread_attribute_t);
 
-  #define f_macro_thread_attributes_t_increase(status, attributes) f_macro_memory_structure_increase(status, attributes, f_thread_attribute_t);
-  #define f_macro_thread_attributes_t_decrease(status, attributes) f_macro_memory_structure_decrease(status, attributes, f_thread_attribute_t);
-  #define f_macro_thread_attributes_t_decimate(status, attributes) f_macro_memory_structure_decimate(status, attributes, f_thread_attribute_t);
-
+  #define f_macro_thread_attributes_t_increase(status, attributes)            f_macro_memory_structure_increase(status, attributes, f_thread_attribute_t);
   #define f_macro_thread_attributes_t_increase_by(status, attributes, amount) f_macro_memory_structure_increase_by(status, attributes, f_thread_attribute_t, amount);
   #define f_macro_thread_attributes_t_decrease_by(status, attributes, amount) f_macro_memory_structure_decrease_by(status, attributes, f_thread_attribute_t, amount);
   #define f_macro_thread_attributes_t_decimate_by(status, attributes, amount) f_macro_memory_structure_decimate_by(status, attributes, f_thread_attribute_t, amount);
@@ -104,10 +101,7 @@ extern "C" {
   #define f_macro_thread_conditions_t_delete_simple(conditions)  f_macro_memory_structure_delete_simple(conditions, f_thread_condition_t);
   #define f_macro_thread_conditions_t_destroy_simple(conditions) f_macro_memory_structure_destroy_simple(conditions, f_thread_condition_t);
 
-  #define f_macro_thread_conditions_t_increase(status, conditions) f_macro_memory_structure_increase(status, conditions, f_thread_condition_t);
-  #define f_macro_thread_conditions_t_decrease(status, conditions) f_macro_memory_structure_decrease(status, conditions, f_thread_condition_t);
-  #define f_macro_thread_conditions_t_decimate(status, conditions) f_macro_memory_structure_decimate(status, conditions, f_thread_condition_t);
-
+  #define f_macro_thread_conditions_t_increase(status, conditions)            f_macro_memory_structure_increase(status, conditions, f_thread_condition_t);
   #define f_macro_thread_conditions_t_increase_by(status, conditions, amount) f_macro_memory_structure_increase_by(status, conditions, f_thread_condition_t, amount);
   #define f_macro_thread_conditions_t_decrease_by(status, conditions, amount) f_macro_memory_structure_decrease_by(status, conditions, f_thread_condition_t, amount);
   #define f_macro_thread_conditions_t_decimate_by(status, conditions, amount) f_macro_memory_structure_decimate_by(status, conditions, f_thread_condition_t, amount);
@@ -152,10 +146,7 @@ extern "C" {
   #define f_macro_thread_ids_t_delete_simple(ids)  f_macro_memory_structure_delete_simple(ids, f_thread_id_t);
   #define f_macro_thread_ids_t_destroy_simple(ids) f_macro_memory_structure_destroy_simple(ids, f_thread_id_t);
 
-  #define f_macro_thread_ids_t_increase(status, ids) f_macro_memory_structure_increase(status, ids, f_thread_id_t);
-  #define f_macro_thread_ids_t_decrease(status, ids) f_macro_memory_structure_decrease(status, ids, f_thread_id_t);
-  #define f_macro_thread_ids_t_decimate(status, ids) f_macro_memory_structure_decimate(status, ids, f_thread_id_t);
-
+  #define f_macro_thread_ids_t_increase(status, ids)            f_macro_memory_structure_increase(status, ids, f_thread_id_t);
   #define f_macro_thread_ids_t_increase_by(status, ids, amount) f_macro_memory_structure_increase_by(status, ids, f_thread_id_t, amount);
   #define f_macro_thread_ids_t_decrease_by(status, ids, amount) f_macro_memory_structure_decrease_by(status, ids, f_thread_id_t, amount);
   #define f_macro_thread_ids_t_decimate_by(status, ids, amount) f_macro_memory_structure_decimate_by(status, ids, f_thread_id_t, amount);
@@ -200,10 +191,7 @@ extern "C" {
   #define f_macro_thread_keys_t_delete_simple(keys)  f_macro_memory_structure_delete_simple(keys, f_thread_key_t);
   #define f_macro_thread_keys_t_destroy_simple(keys) f_macro_memory_structure_destroy_simple(keys, f_thread_key_t);
 
-  #define f_macro_thread_keys_t_increase(status, keys) f_macro_memory_structure_increase(status, keys, f_thread_key_t);
-  #define f_macro_thread_keys_t_decrease(status, keys) f_macro_memory_structure_decrease(status, keys, f_thread_key_t);
-  #define f_macro_thread_keys_t_decimate(status, keys) f_macro_memory_structure_decimate(status, keys, f_thread_key_t);
-
+  #define f_macro_thread_keys_t_increase(status, keys)            f_macro_memory_structure_increase(status, keys, f_thread_key_t);
   #define f_macro_thread_keys_t_increase_by(status, keys, amount) f_macro_memory_structure_increase_by(status, keys, f_thread_key_t, amount);
   #define f_macro_thread_keys_t_decrease_by(status, keys, amount) f_macro_memory_structure_decrease_by(status, keys, f_thread_key_t, amount);
   #define f_macro_thread_keys_t_decimate_by(status, keys, amount) f_macro_memory_structure_decimate_by(status, keys, f_thread_key_t, amount);
@@ -248,10 +236,7 @@ extern "C" {
   #define f_macro_thread_locks_t_delete_simple(locks)  f_macro_memory_structure_delete_simple(locks, f_thread_lock_t);
   #define f_macro_thread_locks_t_destroy_simple(locks) f_macro_memory_structure_destroy_simple(locks, f_thread_lock_t);
 
-  #define f_macro_thread_locks_t_increase(status, locks) f_macro_memory_structure_increase(status, locks, f_thread_lock_t);
-  #define f_macro_thread_locks_t_decrease(status, locks) f_macro_memory_structure_decrease(status, locks, f_thread_lock_t);
-  #define f_macro_thread_locks_t_decimate(status, locks) f_macro_memory_structure_decimate(status, locks, f_thread_lock_t);
-
+  #define f_macro_thread_locks_t_increase(status, locks)            f_macro_memory_structure_increase(status, locks, f_thread_lock_t);
   #define f_macro_thread_locks_t_increase_by(status, locks, amount) f_macro_memory_structure_increase_by(status, locks, f_thread_lock_t, amount);
   #define f_macro_thread_locks_t_decrease_by(status, locks, amount) f_macro_memory_structure_decrease_by(status, locks, f_thread_lock_t, amount);
   #define f_macro_thread_locks_t_decimate_by(status, locks, amount) f_macro_memory_structure_decimate_by(status, locks, f_thread_lock_t, amount);
@@ -296,10 +281,7 @@ extern "C" {
   #define f_macro_thread_mutexs_t_delete_simple(mutexs)  f_macro_memory_structure_delete_simple(mutexs, f_thread_mutex_t);
   #define f_macro_thread_mutexs_t_destroy_simple(mutexs) f_macro_memory_structure_destroy_simple(mutexs, f_thread_mutex_t);
 
-  #define f_macro_thread_mutexs_t_increase(status, mutexs) f_macro_memory_structure_increase(status, mutexs, f_thread_mutex_t);
-  #define f_macro_thread_mutexs_t_decrease(status, mutexs) f_macro_memory_structure_decrease(status, mutexs, f_thread_mutex_t);
-  #define f_macro_thread_mutexs_t_decimate(status, mutexs) f_macro_memory_structure_decimate(status, mutexs, f_thread_mutex_t);
-
+  #define f_macro_thread_mutexs_t_increase(status, mutexs)            f_macro_memory_structure_increase(status, mutexs, f_thread_mutex_t);
   #define f_macro_thread_mutexs_t_increase_by(status, mutexs, amount) f_macro_memory_structure_increase_by(status, mutexs, f_thread_mutex_t, amount);
   #define f_macro_thread_mutexs_t_decrease_by(status, mutexs, amount) f_macro_memory_structure_decrease_by(status, mutexs, f_thread_mutex_t, amount);
   #define f_macro_thread_mutexs_t_decimate_by(status, mutexs, amount) f_macro_memory_structure_decimate_by(status, mutexs, f_thread_mutex_t, amount);
@@ -344,10 +326,7 @@ extern "C" {
   #define f_macro_thread_mutex_attributes_t_delete_simple(mutex_attributes)  f_macro_memory_structure_delete_simple(mutex_attributes, f_thread_mutex_attribute_t);
   #define f_macro_thread_mutex_attributes_t_destroy_simple(mutex_attributes) f_macro_memory_structure_destroy_simple(mutex_attributes, f_thread_mutex_attribute_t);
 
-  #define f_macro_thread_mutex_attributes_t_increase(status, mutex_attributes) f_macro_memory_structure_increase(status, mutex_attributes, f_thread_mutex_attribute_t);
-  #define f_macro_thread_mutex_attributes_t_decrease(status, mutex_attributes) f_macro_memory_structure_decrease(status, mutex_attributes, f_thread_mutex_attribute_t);
-  #define f_macro_thread_mutex_attributes_t_decimate(status, mutex_attributes) f_macro_memory_structure_decimate(status, mutex_attributes, f_thread_mutex_attribute_t);
-
+  #define f_macro_thread_mutex_attributes_t_increase(status, mutex_attributes)            f_macro_memory_structure_increase(status, mutex_attributes, f_thread_mutex_attribute_t);
   #define f_macro_thread_mutex_attributes_t_increase_by(status, mutex_attributes, amount) f_macro_memory_structure_increase_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount);
   #define f_macro_thread_mutex_attributes_t_decrease_by(status, mutex_attributes, amount) f_macro_memory_structure_decrease_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount);
   #define f_macro_thread_mutex_attributes_t_decimate_by(status, mutex_attributes, amount) f_macro_memory_structure_decimate_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount);
@@ -392,10 +371,7 @@ extern "C" {
   #define f_macro_thread_onces_t_delete_simple(onces)  f_macro_memory_structure_delete_simple(onces, f_thread_once_t);
   #define f_macro_thread_onces_t_destroy_simple(onces) f_macro_memory_structure_destroy_simple(onces, f_thread_once_t);
 
-  #define f_macro_thread_onces_t_increase(status, onces) f_macro_memory_structure_increase(status, onces, f_thread_once_t);
-  #define f_macro_thread_onces_t_decrease(status, onces) f_macro_memory_structure_decrease(status, onces, f_thread_once_t);
-  #define f_macro_thread_onces_t_decimate(status, onces) f_macro_memory_structure_decimate(status, onces, f_thread_once_t);
-
+  #define f_macro_thread_onces_t_increase(status, onces)            f_macro_memory_structure_increase(status, onces, f_thread_once_t);
   #define f_macro_thread_onces_t_increase_by(status, onces, amount) f_macro_memory_structure_increase_by(status, onces, f_thread_once_t, amount);
   #define f_macro_thread_onces_t_decrease_by(status, onces, amount) f_macro_memory_structure_decrease_by(status, onces, f_thread_once_t, amount);
   #define f_macro_thread_onces_t_decimate_by(status, onces, amount) f_macro_memory_structure_decimate_by(status, onces, f_thread_once_t, amount);
@@ -450,10 +426,7 @@ extern "C" {
   #define f_macro_thread_sets_t_delete_simple(sets)  f_macro_memory_structure_delete_simple(sets, f_thread_set_t);
   #define f_macro_thread_sets_t_destroy_simple(sets) f_macro_memory_structure_destroy_simple(sets, f_thread_set_t);
 
-  #define f_macro_thread_sets_t_increase(status, sets) f_macro_memory_structure_increase(status, sets, f_thread_set_t);
-  #define f_macro_thread_sets_t_decrease(status, sets) f_macro_memory_structure_decrease(status, sets, f_thread_set_t);
-  #define f_macro_thread_sets_t_decimate(status, sets) f_macro_memory_structure_decimate(status, sets, f_thread_set_t);
-
+  #define f_macro_thread_sets_t_increase(status, sets)            f_macro_memory_structure_increase(status, sets, f_thread_set_t);
   #define f_macro_thread_sets_t_increase_by(status, sets, amount) f_macro_memory_structure_increase_by(status, sets, f_thread_set_t, amount);
   #define f_macro_thread_sets_t_decrease_by(status, sets, amount) f_macro_memory_structure_decrease_by(status, sets, f_thread_set_t, amount);
   #define f_macro_thread_sets_t_decimate_by(status, sets, amount) f_macro_memory_structure_decimate_by(status, sets, f_thread_set_t, amount);

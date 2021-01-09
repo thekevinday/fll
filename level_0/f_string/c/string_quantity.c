@@ -15,20 +15,6 @@ extern "C" {
   }
 #endif // _di_f_string_quantitys_adjust_
 
-#ifndef _di_f_string_quantitys_decimate_
-  f_status_t f_string_quantitys_decimate(f_string_quantitys_t *quantitys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (quantitys->size > 1) {
-      return private_f_string_quantitys_adjust(quantitys->size - 1, quantitys);
-    }
-
-    return private_f_string_quantitys_destroy(quantitys);
-  }
-#endif // _di_f_string_quantitys_decimate_
-
 #ifndef _di_f_string_quantitys_decimate_by_
   f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {
     #ifndef _di_level_0_parameter_checking_
@@ -43,20 +29,6 @@ extern "C" {
     return private_f_string_quantitys_destroy(quantitys);
   }
 #endif // _di_f_string_quantitys_decimate_by_
-
-#ifndef _di_f_string_quantitys_decrease_
-  f_status_t f_string_quantitys_decrease(f_string_quantitys_t *quantitys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!quantitys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (quantitys->size > 1) {
-      return private_f_string_quantitys_resize(quantitys->size - 1, quantitys);
-    }
-
-    return private_f_string_quantitys_delete(quantitys);
-  }
-#endif // _di_f_string_quantitys_decrease_
 
 #ifndef _di_f_string_quantitys_decrease_by_
   f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {

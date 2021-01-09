@@ -58,10 +58,7 @@ extern "C" {
   #define f_macro_fss_quotes_t_delete_simple(quotes)  f_macro_uint8s_t_delete_simple(quotes);
   #define f_macro_fss_quotes_t_destroy_simple(quotes) f_macro_uint8s_t_destroy_simple(quotes);
 
-  #define f_macro_fss_quotes_t_increase(status, quotes) f_macro_uint8s_t_increase(status, quotes);
-  #define f_macro_fss_quotes_t_decrease(status, quotes) f_macro_uint8s_t_decrease(status, quotes);
-  #define f_macro_fss_quotes_t_decimate(status, quotes) f_macro_uint8s_t_decimate(status, quotes);
-
+  #define f_macro_fss_quotes_t_increase(status, quotes)            f_macro_uint8s_t_increase(status, quotes);
   #define f_macro_fss_quotes_t_increase_by(status, quotes, amount) f_macro_uint8s_t_increase_by(status, quotes, amount);
   #define f_macro_fss_quotes_t_decrease_by(status, quotes, amount) f_macro_uint8s_t_decrease_by(status, quotes, amount);
   #define f_macro_fss_quotes_t_decimate_by(status, quotes, amount) f_macro_uint8s_t_decimate_by(status, quotes, amount);

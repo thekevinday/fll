@@ -49,10 +49,7 @@ extern "C" {
   #define f_macro_statuss_t_delete_simple(statuss)  f_macro_memory_structure_delete_simple(statuss, f_status_t);
   #define f_macro_statuss_t_destroy_simple(statuss) f_macro_memory_structure_destroy_simple(statuss, f_status_t);
 
-  #define f_macro_statuss_t_increase(status, statuss) f_macro_memory_structure_increase(status, statuss, f_status_t);
-  #define f_macro_statuss_t_decrease(status, statuss) f_macro_memory_structure_decrease(status, statuss, f_status_t);
-  #define f_macro_statuss_t_decimate(status, statuss) f_macro_memory_structure_decimate(status, statuss, f_status_t);
-
+  #define f_macro_statuss_t_increase(status, statuss)            f_macro_memory_structure_increase(status, statuss, f_status_t);
   #define f_macro_statuss_t_increase_by(status, statuss, amount) f_macro_memory_structure_increase_by(status, statuss, f_status_t, amount);
   #define f_macro_statuss_t_decrease_by(status, statuss, amount) f_macro_memory_structure_decrease_by(status, statuss, f_status_t, amount);
   #define f_macro_statuss_t_decimate_by(status, statuss, amount) f_macro_memory_structure_decimate_by(status, statuss, f_status_t, amount);

@@ -67,10 +67,7 @@ extern "C" {
   #define f_macro_string_quantitys_t_delete_simple(quantitys)  f_macro_memory_structure_delete_simple(quantitys, f_string_quantity_t);
   #define f_macro_string_quantitys_t_destroy_simple(quantitys) f_macro_memory_structure_destroy_simple(quantitys, f_string_quantity_t);
 
-  #define f_macro_string_quantitys_t_increase(status, quantitys) f_macro_memory_structure_increase(status, quantitys, f_string_quantity_t);
-  #define f_macro_string_quantitys_t_decrease(status, quantitys) f_macro_memory_structure_decrease(status, quantitys, f_string_quantity_t);
-  #define f_macro_string_quantitys_t_decimate(status, quantitys) f_macro_memory_structure_decimate(status, quantitys, f_string_quantity_t);
-
+  #define f_macro_string_quantitys_t_increase(status, quantitys)            f_macro_memory_structure_increase(status, quantitys, f_string_quantity_t);
   #define f_macro_string_quantitys_t_increase_by(status, quantitys, amount) f_macro_memory_structure_increase_by(status, quantitys, f_string_quantity_t, amount);
   #define f_macro_string_quantitys_t_decrease_by(status, quantitys, amount) f_macro_memory_structure_decrease_by(status, quantitys, f_string_quantity_t, amount);
   #define f_macro_string_quantitys_t_decimate_by(status, quantitys, amount) f_macro_memory_structure_decimate_by(status, quantitys, f_string_quantity_t, amount);
@@ -106,10 +103,7 @@ extern "C" {
   #define f_macro_string_quantityss_t_delete_simple(quantityss)  f_macro_memory_structures_delete_simple(quantityss, f_string_quantity_t, f_string_quantitys_t);
   #define f_macro_string_quantityss_t_destroy_simple(quantityss) f_macro_memory_structures_destroy_simple(quantityss, f_string_quantity_t, f_string_quantitys_t);
 
-  #define f_macro_string_quantityss_t_increase(status, string_quantitys) f_macro_memory_structures_increase(status, string_quantitys, f_string_quantity_t, f_array_length_t);
-  #define f_macro_string_quantityss_t_decrease(status, string_quantitys) f_macro_memory_structures_decrease(status, string_quantitys, f_string_quantity_t, f_string_quantity_t);
-  #define f_macro_string_quantityss_t_decimate(status, string_quantitys) f_macro_memory_structures_decimate(status, string_quantitys, f_string_quantity_t, f_string_quantity_t);
-
+  #define f_macro_string_quantityss_t_increase(status, string_quantitys)            f_macro_memory_structures_increase(status, string_quantitys, f_string_quantity_t, f_array_length_t);
   #define f_macro_string_quantityss_t_increase_by(status, string_quantitys, amount) f_macro_memory_structures_increase_by(status, string_quantitys, f_string_quantity_t, f_array_length_t, amount);
   #define f_macro_string_quantityss_t_decrease_by(status, string_quantitys, amount) f_macro_memory_structures_decrease_by(status, string_quantitys, f_string_quantity_t, f_string_quantitys_t, f_array_length_t, amount);
   #define f_macro_string_quantityss_t_decimate_by(status, string_quantitys, amount) f_macro_memory_structures_decimate_by(status, string_quantitys, f_string_quantity_t, f_string_quantitys_t, f_array_length_t, amount);
@@ -133,24 +127,6 @@ extern "C" {
 #endif // _di_f_string_quantitys_adjust_
 
 /**
- * Resize the string quantitys array to a smaller size, by 1.
- *
- * This will shrink the size by size - 1.
- * This will not shrink the size to less than 0.
- *
- * @param quantitys
- *   The string quantitys array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_quantitys_decimate_
-  extern f_status_t f_string_quantitys_decimate(f_string_quantitys_t *quantitys);
-#endif // _di_f_string_quantitys_decimate_
-
-/**
  * Resize the string quantitys array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
@@ -170,24 +146,6 @@ extern "C" {
 #ifndef _di_f_string_quantitys_decimate_by_
   extern f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
 #endif // _di_f_string_quantitys_decimate_by_
-
-/**
- * Resize the string quantitys array to a smaller size, by 1.
- *
- * This will shrink the size by size - 1.
- * This will not shrink the size to less than 0.
- *
- * @param quantitys
- *   The string quantitys array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_quantitys_decrease_
-  extern f_status_t f_string_quantitys_decrease(f_string_quantitys_t *quantitys);
-#endif // _di_f_string_quantitys_decrease_
 
 /**
  * Resize the string quantitys array to a smaller size.

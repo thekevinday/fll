@@ -175,10 +175,7 @@ extern "C" {
   #define f_macro_utf_string_lengths_t_delete_simple(string_lengths)  f_macro_memory_structure_delete_simple(string_lengths, f_utf_string_length_t);
   #define f_macro_utf_string_lengths_t_destroy_simple(string_lengths) f_macro_memory_structure_destroy_simple(string_lengths, f_utf_string_length_t);
 
-  #define f_macro_utf_string_lengths_t_increase(status, string_lengths) f_macro_memory_structure_increase(status, string_lengths, f_utf_string_length_t);
-  #define f_macro_utf_string_lengths_t_decrease(status, string_lengths) f_macro_memory_structure_decrease(status, string_lengths, f_utf_string_length_t);
-  #define f_macro_utf_string_lengths_t_decimate(status, string_lengths) f_macro_memory_structure_decimate(status, string_lengths, f_utf_string_length_t);
-
+  #define f_macro_utf_string_lengths_t_increase(status, string_lengths)            f_macro_memory_structure_increase(status, string_lengths, f_utf_string_length_t);
   #define f_macro_utf_string_lengths_t_increase_by(status, string_lengths, amount) f_macro_memory_structure_increase_by(status, string_lengths, f_utf_string_length_t, amount);
   #define f_macro_utf_string_lengths_t_decrease_by(status, string_lengths, amount) f_macro_memory_structure_decrease_by(status, string_lengths, f_utf_string_length_t, amount);
   #define f_macro_utf_string_lengths_t_decimate_by(status, string_lengths, amount) f_macro_memory_structure_decimate_by(status, string_lengths, f_utf_string_length_t, amount);
@@ -238,10 +235,7 @@ extern "C" {
   #define f_macro_utf_string_ranges_t_delete_simple(string_ranges)  f_macro_memory_structure_delete_simple(string_ranges, f_utf_string_range_t);
   #define f_macro_utf_string_ranges_t_destroy_simple(string_ranges) f_macro_memory_structure_destroy_simple(string_ranges, f_utf_string_range_t);
 
-  #define f_macro_utf_string_ranges_t_increase(status, string_ranges) f_macro_memory_structure_increase(status, string_ranges, f_utf_string_range_t);
-  #define f_macro_utf_string_ranges_t_decrease(status, string_ranges) f_macro_memory_structure_decrease(status, string_ranges, f_utf_string_range_t);
-  #define f_macro_utf_string_ranges_t_decimate(status, string_ranges) f_macro_memory_structure_decimate(status, string_ranges, f_utf_string_range_t);
-
+  #define f_macro_utf_string_ranges_t_increase(status, string_ranges)            f_macro_memory_structure_increase(status, string_ranges, f_utf_string_range_t);
   #define f_macro_utf_string_ranges_t_increase_by(status, string_ranges, amount) f_macro_memory_structure_increase_by(status, string_ranges, f_utf_string_range_t, amount);
   #define f_macro_utf_string_ranges_t_decrease_by(status, string_ranges, amount) f_macro_memory_structure_decrease_by(status, string_ranges, f_utf_string_range_t, amount);
   #define f_macro_utf_string_ranges_t_decimate_by(status, string_ranges, amount) f_macro_memory_structure_decimate_by(status, string_ranges, f_utf_string_range_t, amount);
@@ -298,10 +292,7 @@ extern "C" {
   #define f_macro_utf_string_quantitys_t_delete_simple(quantitys)  f_macro_memory_structure_delete_simple(quantitys, f_utf_string_quantity_t);
   #define f_macro_utf_string_quantitys_t_destroy_simple(quantitys) f_macro_memory_structure_destroy_simple(quantitys, f_utf_string_quantity_t);
 
-  #define f_macro_utf_string_quantitys_t_increase(status, quantitys) f_macro_memory_structure_increase(status, quantitys, f_utf_string_quantity_t);
-  #define f_macro_utf_string_quantitys_t_decrease(status, quantitys) f_macro_memory_structure_decrease(status, quantitys, f_utf_string_quantity_t);
-  #define f_macro_utf_string_quantitys_t_decimate(status, quantitys) f_macro_memory_structure_decimate(status, quantitys, f_utf_string_quantity_t);
-
+  #define f_macro_utf_string_quantitys_t_increase(status, quantitys)            f_macro_memory_structure_increase(status, quantitys, f_utf_string_quantity_t);
   #define f_macro_utf_string_quantitys_t_increase_by(status, quantitys, amount) f_macro_memory_structure_increase_by(status, quantitys, f_utf_string_quantity_t, amount);
   #define f_macro_utf_string_quantitys_t_decrease_by(status, quantitys, amount) f_macro_memory_structure_decrease_by(status, quantitys, f_utf_string_quantity_t, amount);
   #define f_macro_utf_string_quantitys_t_decimate_by(status, quantitys, amount) f_macro_memory_structure_decimate_by(status, quantitys, f_utf_string_quantity_t, amount);

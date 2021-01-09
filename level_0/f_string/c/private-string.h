@@ -32,10 +32,11 @@ extern "C" {
  *
  * @see f_macro_string_dynamic_t_adjust()
  * @see f_string_dynamic_adjust()
+ * @see f_string_dynamic_decimate_by()
  */
-#if !defined(_di_f_string_dynamic_adjust_)
+#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
   extern f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamic_adjust_)
+#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
 
 /**
  * Private implementation of f_string_append().
@@ -115,13 +116,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_dynamic_t_delete().
  *
- * @see f_string_dynamic_decrease()
  * @see f_string_dynamic_decrease_by()
  * @see f_string_dynamic_delete()
  */
-#if !defined(_di_f_string_dynamic_decrease_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
+#if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
   extern f_status_t private_f_string_dynamic_delete(f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamic_decrease_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
+#endif // !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
 
 /**
  * Private implementation of f_string_dynamic_destroy().
@@ -136,13 +136,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_dynamic_t_destroy().
  *
- * @see f_string_dynamic_decimate()
  * @see f_string_dynamic_decimate_by()
  * @see f_string_dynamic_destroy()
  */
-#if !defined(_di_f_string_dynamic_decimate_) || !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_destroy_)
+#if !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_destroy_)
   extern f_status_t private_f_string_dynamic_destroy(f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamic_decimate_) || !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_destroy_)
+#endif // !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_destroy_)
 
 /**
  * Private implementation of f_string_dynamic_increase_by().
@@ -196,16 +195,15 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
  *
  * @see f_macro_string_dynamic_t_resize()
- * @see f_string_dynamic_decrease()
  * @see f_string_dynamic_decrease_by()
  * @see f_string_dynamic_increase()
  * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_terminate()
  * @see f_string_dynamic_terminate_after()
  */
-#if !defined(_di_f_string_dynamic_decrease_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
+#if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
   extern f_status_t private_f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamic_decrease_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
+#endif // !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
 
 /**
  * Private implementation for resizing.
@@ -224,10 +222,11 @@ extern "C" {
  *
  * @see f_macro_string_dynamics_t_adjust()
  * @see f_string_dynamics_adjust()
+ * @see f_string_dynamics_decimate_by()
  */
-#if !defined(_di_f_string_dynamics_adjust_)
+#if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
   extern f_status_t private_f_string_dynamics_adjust(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamics_adjust_)
+#endif // !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
 
 /**
  * Private implementation of f_string_dynamics_delete().
@@ -242,13 +241,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
  *
- * @see f_string_dynamics_decrease()
  * @see f_string_dynamics_decrease_by()
  * @see f_string_dynamics_delete()
  */
-#if !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
+#if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
   extern f_status_t private_f_string_dynamics_delete(f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
+#endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
 
 /**
  * Private implementation of f_string_dynamics_destroy().
@@ -263,13 +261,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_dynamics_t_destroy().
  *
- * @see f_string_dynamics_decimate()
  * @see f_string_dynamics_decimate_by()
  * @see f_string_dynamics_destroy()
  */
-#if !defined(_di_f_string_dynamics_decimate_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_delete_)
+#if !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_delete_)
   extern f_status_t private_f_string_dynamics_destroy(f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamics_decimate_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_delete_)
+#endif // !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_delete_)
 
 /**
  * Private implementation for resizing.
@@ -287,14 +284,13 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
  *
  * @see f_macro_string_dynamics_t_resize()
- * @see f_string_dynamics_decrease()
  * @see f_string_dynamics_decrease_by()
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()
  */
-#if !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
+#if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
   extern f_status_t private_f_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
+#endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
 
 /**
  * Private implementation for resizing.
@@ -331,13 +327,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_maps_t_delete().
  *
- * @see f_string_maps_decrease()
  * @see f_string_maps_decrease_by()
  * @see f_string_maps_delete()
  */
-#if !defined(f_string_maps_decrease) || !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
+#if !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
   extern f_status_t private_f_string_maps_delete(f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_maps_decrease) || !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
+#endif // !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
 
 /**
  * Private implementation of f_string_maps_destroy().
@@ -352,13 +347,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_maps_t_destroy().
  *
- * @see f_string_maps_decimate()
  * @see f_string_maps_decimate_by()
  * @see f_string_maps_destroy()
  */
-#if !defined(f_string_maps_decimate) || !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
+#if !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
   extern f_status_t private_f_string_maps_destroy(f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_maps_decimate) || !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
+#endif // !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
 
 /**
  * Private implementation for resizing.
@@ -376,16 +370,15 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_maps_t_resize().
  *
  * @see f_macro_string_dynamic_t_resize()
- * @see f_string_maps_decrease()
  * @see f_string_maps_decrease_by()
  * @see f_string_maps_increase()
  * @see f_string_maps_increase_by()
  * @see f_string_maps_terminate()
  * @see f_string_maps_terminate_after()
  */
-#if !defined(_di_f_string_maps_decrease_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+#if !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
   extern f_status_t private_f_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_maps_decrease_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+#endif // !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
 
 /**
  * Private implementation of f_string_prepend().
@@ -492,13 +485,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_quantitys_t_delete().
  *
- * @see f_string_quantitys_decrease()
  * @see f_string_quantitys_decrease_by()
  * @see f_string_quantitys_delete()
  */
-#if !defined(f_string_quantitys_decrease) || !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
+#if !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
   extern f_status_t private_f_string_quantitys_delete(f_string_quantitys_t *quantitys) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_quantitys_decrease) || !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
+#endif // !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
 
 /**
  * Private implementation of f_string_quantitys_destroy().
@@ -513,13 +505,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_quantitys_t_destroy().
  *
- * @see f_string_quantitys_decimate()
  * @see f_string_quantitys_decimate_by()
  * @see f_string_quantitys_destroy()
  */
-#if !defined(f_string_quantitys_decimate) || !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
+#if !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
   extern f_status_t private_f_string_quantitys_destroy(f_string_quantitys_t *quantitys) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_quantitys_decimate) || !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
+#endif // !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
 
 /**
  * Private implementation for resizing.
@@ -537,16 +528,15 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_quantitys_t_resize().
  *
  * @see f_macro_string_dynamic_t_resize()
- * @see f_string_quantitys_decrease()
  * @see f_string_quantitys_decrease_by()
  * @see f_string_quantitys_increase()
  * @see f_string_quantitys_increase_by()
  * @see f_string_quantitys_terminate()
  * @see f_string_quantitys_terminate_after()
  */
-#if !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
+#if !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
   extern f_status_t private_f_string_quantitys_resize(const f_string_length_t length, f_string_quantitys_t *quantitys) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
+#endif // !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
 
 /**
  * Private implementation for resizing.
@@ -583,13 +573,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_ranges_t_delete().
  *
- * @see f_string_ranges_decrease()
  * @see f_string_ranges_decrease_by()
  * @see f_string_ranges_delete()
  */
-#if !defined(f_string_ranges_decrease) || !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
+#if !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
   extern f_status_t private_f_string_ranges_delete(f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_ranges_decrease) || !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
+#endif // !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
 
 /**
  * Private implementation of f_string_ranges_destroy().
@@ -604,13 +593,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_ranges_t_destroy().
  *
- * @see f_string_ranges_decimate()
  * @see f_string_ranges_decimate_by()
  * @see f_string_ranges_destroy()
  */
-#if !defined(f_string_ranges_decimate) || !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
+#if !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
   extern f_status_t private_f_string_ranges_destroy(f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_ranges_decimate) || !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
+#endif // !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
 
 /**
  * Private implementation for resizing.
@@ -628,16 +616,15 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_ranges_t_resize().
  *
  * @see f_macro_string_dynamic_t_resize()
- * @see f_string_ranges_decrease()
  * @see f_string_ranges_decrease_by()
  * @see f_string_ranges_increase()
  * @see f_string_ranges_increase_by()
  * @see f_string_ranges_terminate()
  * @see f_string_ranges_terminate_after()
  */
-#if !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
+#if !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
   extern f_status_t private_f_string_ranges_resize(const f_string_length_t length, f_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
+#endif // !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
 
 /**
  * Private implementation for resizing.
@@ -674,13 +661,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_triples_t_delete().
  *
- * @see f_string_triples_decrease()
  * @see f_string_triples_decrease_by()
  * @see f_string_triples_delete()
  */
-#if !defined(f_string_triples_decrease) || !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
+#if !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
   extern f_status_t private_f_string_triples_delete(f_string_triples_t *triples) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_triples_decrease) || !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
+#endif // !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
 
 /**
  * Private implementation of f_string_triples_destroy().
@@ -695,13 +681,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_macro_string_triples_t_destroy().
  *
- * @see f_string_triples_decimate()
  * @see f_string_triples_decimate_by()
  * @see f_string_triples_destroy()
  */
-#if !defined(f_string_triples_decimate) || !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
+#if !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
   extern f_status_t private_f_string_triples_destroy(f_string_triples_t *triples) f_gcc_attribute_visibility_internal;
-#endif // !defined(f_string_triples_decimate) || !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
+#endif // !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
 
 /**
  * Private implementation for resizing.
@@ -719,16 +704,15 @@ extern "C" {
  *   Errors (with error bit) from: f_macro_string_triples_t_resize().
  *
  * @see f_macro_string_dynamic_t_resize()
- * @see f_string_triples_decrease()
  * @see f_string_triples_decrease_by()
  * @see f_string_triples_increase()
  * @see f_string_triples_increase_by()
  * @see f_string_triples_terminate()
  * @see f_string_triples_terminate_after()
  */
-#if !defined(_di_f_string_triples_decrease_) || !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
+#if !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
   extern f_status_t private_f_string_triples_resize(const f_string_length_t length, f_string_triples_t *triples) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_triples_decrease_) || !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
+#endif // !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
 
 #ifdef __cplusplus
 } // extern "C"

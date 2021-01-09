@@ -86,10 +86,7 @@ extern "C" {
   #define f_macro_string_lengths_t_delete_simple(string_lengths)  f_macro_memory_structure_delete_simple(string_lengths, f_string_length_t);
   #define f_macro_string_lengths_t_destroy_simple(string_lengths) f_macro_memory_structure_destroy_simple(string_lengths, f_string_length_t);
 
-  #define f_macro_string_lengths_t_increase(status, string_lengths) f_macro_memory_structure_increase(status, string_lengths, f_string_length_t);
-  #define f_macro_string_lengths_t_decrease(status, string_lengths) f_macro_memory_structure_decrease(status, string_lengths, f_string_length_t);
-  #define f_macro_string_lengths_t_decimate(status, string_lengths) f_macro_memory_structure_decimate(status, string_lengths, f_string_length_t);
-
+  #define f_macro_string_lengths_t_increase(status, string_lengths)            f_macro_memory_structure_increase(status, string_lengths, f_string_length_t);
   #define f_macro_string_lengths_t_increase_by(status, string_lengths, amount) f_macro_memory_structure_increase_by(status, string_lengths, f_string_length_t, amount);
   #define f_macro_string_lengths_t_decrease_by(status, string_lengths, amount) f_macro_memory_structure_decrease_by(status, string_lengths, f_string_length_t, amount);
   #define f_macro_string_lengths_t_decimate_by(status, string_lengths, amount) f_macro_memory_structure_decimate_by(status, string_lengths, f_string_length_t, amount);
@@ -126,9 +123,6 @@ extern "C" {
   #define f_macro_string_lengthss_t_destroy_simple(lengthss) f_macro_memory_structures_destroy_simple(lengthss, f_string_length_t, f_string_lengths_t);
 
   #define f_macro_string_lengthss_t_increase(status, string_lengths) f_macro_memory_structures_increase(status, string_lengths, f_string_length_t, f_array_length_t);
-  #define f_macro_string_lengthss_t_decrease(status, string_lengths) f_macro_memory_structures_decrease(status, string_lengths, f_string_length_t, f_string_lengths_t);
-  #define f_macro_string_lengthss_t_decimate(status, string_lengths) f_macro_memory_structures_decimate(status, string_lengths, f_string_length_t, f_string_lengths_t);
-
   #define f_macro_string_lengthss_t_increase_by(status, string_lengths, amount) f_macro_memory_structures_increase_by(status, string_lengths, f_string_length_t, f_array_length_t, amount);
   #define f_macro_string_lengthss_t_decrease_by(status, string_lengths, amount) f_macro_memory_structures_decrease_by(status, string_lengths, f_string_length_t, f_string_lengths_t, f_array_length_t, amount);
   #define f_macro_string_lengthss_t_decimate_by(status, string_lengths, amount) f_macro_memory_structures_decimate_by(status, string_lengths, f_string_length_t, f_string_lengths_t, f_array_length_t, amount);

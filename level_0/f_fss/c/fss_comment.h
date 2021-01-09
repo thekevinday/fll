@@ -46,10 +46,7 @@ extern "C" {
   #define f_macro_fss_comments_t_delete_simple(ranges)  f_macro_string_ranges_t_delete_simple(ranges);
   #define f_macro_fss_comments_t_destroy_simple(ranges) f_macro_string_ranges_t_destroy_simple(ranges);
 
-  #define f_macro_fss_comments_t_increase(status, ranges) f_macro_string_ranges_t_increase(status, ranges);
-  #define f_macro_fss_comments_t_decrease(status, ranges) f_macro_string_ranges_t_decrease(status, ranges);
-  #define f_macro_fss_comments_t_decimate(status, ranges) f_macro_string_ranges_t_decimate(status, ranges);
-
+  #define f_macro_fss_comments_t_increase(status, ranges)            f_macro_string_ranges_t_increase(status, ranges);
   #define f_macro_fss_comments_t_increase_by(status, ranges, amount) f_macro_string_ranges_t_increase_by(status, ranges, amount);
   #define f_macro_fss_comments_t_decrease_by(status, ranges, amount) f_macro_string_ranges_t_decrease_by(status, ranges, amount);
   #define f_macro_fss_comments_t_decimate_by(status, ranges, amount) f_macro_string_ranges_t_decimate_by(status, ranges, amount);

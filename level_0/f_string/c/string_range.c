@@ -15,20 +15,6 @@ extern "C" {
   }
 #endif // _di_f_string_ranges_adjust_
 
-#ifndef _di_f_string_ranges_decimate_
-  f_status_t f_string_ranges_decimate(f_string_ranges_t *ranges) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!ranges) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (ranges->size > 1) {
-      return private_f_string_ranges_adjust(ranges->size - 1, ranges);
-    }
-
-    return private_f_string_ranges_destroy(ranges);
-  }
-#endif // _di_f_string_ranges_decimate_
-
 #ifndef _di_f_string_ranges_decimate_by_
   f_status_t f_string_ranges_decimate_by(const f_array_length_t amount, f_string_ranges_t *ranges) {
     #ifndef _di_level_0_parameter_checking_
@@ -43,20 +29,6 @@ extern "C" {
     return private_f_string_ranges_destroy(ranges);
   }
 #endif // _di_f_string_ranges_decimate_by_
-
-#ifndef _di_f_string_ranges_decrease_
-  f_status_t f_string_ranges_decrease(f_string_ranges_t *ranges) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!ranges) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (ranges->size > 1) {
-      return private_f_string_ranges_resize(ranges->size - 1, ranges);
-    }
-
-    return private_f_string_ranges_delete(ranges);
-  }
-#endif // _di_f_string_ranges_decrease_
 
 #ifndef _di_f_string_ranges_decrease_by_
   f_status_t f_string_ranges_decrease_by(const f_array_length_t amount, f_string_ranges_t *ranges) {

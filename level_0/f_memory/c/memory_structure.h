@@ -48,36 +48,6 @@ extern "C" {
 #endif // _di_f_memory_structure_adjust_
 
 /**
- * Resize the structure to a smaller size, by 1.
- *
- * This will not shrink the size to less than 0.
- * Memory being deleted will be wiped.
- *
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- *   Must be greater than 0.
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but size is already 0 so there is nothing to do.
- *
- *   F_memory_not (with error bit) on out of memory.
- *
- * @see calloc()
- * @see free()
- * @see memset()
- */
-#ifndef _di_f_memory_structure_decimate_
-  extern f_status_t f_memory_structure_decimate(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
-#endif // _di_f_memory_structure_decimate_
-
-/**
  * Resize the structure to a smaller size, by the given amount.
  *
  * This will not shrink the size to less than 0.
@@ -108,36 +78,6 @@ extern "C" {
 #ifndef _di_f_memory_structure_decimate_by_
   extern f_status_t f_memory_structure_decimate_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
 #endif // _di_f_memory_structure_decimate_by_
-
-/**
- * Resize the structure to a smaller size, by 1.
- *
- * This will not shrink the size to less than 0.
- * Memory being deleted will not be wiped.
- *
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- *   Must be greater than 0.
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but size is already 0 so there is nothing to do.
- *
- *   F_memory_not (with error bit) on allocation error.
- *
- * @see calloc()
- * @see free()
- * @see memset()
- */
-#ifndef _di_f_memory_structure_decrease_
-  extern f_status_t f_memory_structure_decrease(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
-#endif // _di_f_memory_structure_decrease_
 
 /**
  * Resize the structure to a smaller size, by the given amount.

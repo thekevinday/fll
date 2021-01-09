@@ -74,7 +74,6 @@ extern "C" {
  * @see free()
  * @see memset()
  *
- * @see f_memory_structure_decrease()
  * @see f_memory_structure_decrease_by()
  * @see f_memory_structure_delete()
  * @see f_memory_structure_increase()
@@ -84,9 +83,9 @@ extern "C" {
  *
  * @see private_f_memory_structure_resize()
  */
-#if !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
   extern f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void **pointer) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
 
 /**
  * Private implementation for resizing a structure.
@@ -111,15 +110,14 @@ extern "C" {
  *   Errors (with error bit) from: private_f_memory_adjust().
  *
  * @see f_memory_structure_adjust()
- * @see f_memory_structure_decimate()
  * @see f_memory_structure_decimate_by()
  * @see f_memory_structure_destroy()
  *
  * @see private_f_memory_adjust()
  */
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
   f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
 
 /**
  * Private implementation for resizing a structure.
@@ -143,7 +141,6 @@ extern "C" {
  *
  *   Errors (with error bit) from: private_f_memory_structure_resize().
  *
- * @see f_memory_structure_decrease()
  * @see f_memory_structure_decrease_by()
  * @see f_memory_structure_delete()
  * @see f_memory_structure_increase()
@@ -153,9 +150,9 @@ extern "C" {
  *
  * @see private_f_memory_resize()
  */
-#if !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
   f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
 
 #ifdef __cplusplus
 } // extern "C"
