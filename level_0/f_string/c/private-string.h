@@ -291,12 +291,10 @@ extern "C" {
  * @see f_string_dynamics_decrease_by()
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()
- * @see fl_string_dynamics_terminate()
- * @see fl_string_dynamics_terminate_after()
  */
-#if !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
+#if !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
   extern f_status_t private_f_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_) || !defined(_di_fl_string_dynamics_terminate_) || !defined(_di_fl_string_dynamics_terminate_after_)
+#endif // !defined(_di_f_string_dynamics_decrease_) || !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
 
 /**
  * Private implementation for resizing.

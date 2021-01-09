@@ -1227,10 +1227,10 @@ extern "C" {
 
       for (uint8_t i = 0; i < 2; i++) {
 
-        *status = fll_environment_load_name(variables_name[i], variables_length[i], environment);
+        *status = fl_environment_load_name(variables_name[i], variables_length[i], environment);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data.error, F_status_set_fine(*status), "fll_environment_load_name", F_true);
+          fll_error_print(data.error, F_status_set_fine(*status), "fl_environment_load_name", F_true);
           break;
         }
       } // for
@@ -1257,10 +1257,10 @@ extern "C" {
       }
     }
 
-    *status = fll_environment_load_names(data_build.setting.environment, environment);
+    *status = fl_environment_load_names(data_build.setting.environment, environment);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(data.error, F_status_set_fine(*status), "fll_environment_load_names", F_true);
+      fll_error_print(data.error, F_status_set_fine(*status), "fl_environment_load_names", F_true);
     }
   }
 #endif // _di_fake_build_load_environment_

@@ -567,10 +567,10 @@ extern "C" {
       as.id_user = &rule->user;
     }
 
-    status = fll_environment_load_names(rule->environment, &environment);
+    status = fl_environment_load_names(rule->environment, &environment);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fll_environment_load_names", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
 
       rule->status = F_status_set_error(F_failure);
       return status;

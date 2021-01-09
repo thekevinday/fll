@@ -71,11 +71,11 @@
 #include <level_1/console.h>
 #include <level_1/conversion.h>
 #include <level_1/directory.h>
+#include <level_1/environment.h>
 #include <level_1/iki.h>
 #include <level_1/string.h>
 
 // fll-2 includes
-#include <level_2/environment.h>
 #include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/file.h>

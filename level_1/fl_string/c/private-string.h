@@ -177,9 +177,9 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
- * @see fl_string_dynamic_rip()
  * @see fl_string_rip()
  * @see fl_string_rip_nulless()
+ * @see fl_string_dynamic_rip()
  * @see fl_string_dynamic_rip_nulless()
  */
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)

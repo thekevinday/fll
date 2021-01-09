@@ -602,9 +602,9 @@ extern "C" {
  *   Errors (with error bit) from: fll_path_canonical().
  *
  * @see f_string_dynamic_partial_append_nulless()
- * @see fl_string_dynamic_rip_nulless()
  * @see f_string_dynamics_increase()
  * @see f_string_maps_increase()
+ * @see fl_string_dynamic_rip_nulless()
  * @see fll_fss_extended_read()
  * @see fll_path_canonical()
  */

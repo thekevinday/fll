@@ -24,12 +24,12 @@ fl_console
 fl_control_group
 fl_conversion
 fl_directory
+fl_environment
 fl_fss
 fl_iki
 fl_status
 fl_string
 fl_utf
-fll_environment
 fll_error
 fll_execute
 fll_file

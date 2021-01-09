@@ -3786,10 +3786,10 @@ extern "C" {
 
     data_make->environment.used = 0;
 
-    status = fll_environment_load_names(data_make->setting_build.environment, &data_make->environment);
+    status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "fll_environment_load_names", F_true);
+      fll_error_print(data_make->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
 
       return status;
     }

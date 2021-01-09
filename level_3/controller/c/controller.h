@@ -54,13 +54,13 @@
 #include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/control_group.h>
+#include <level_1/environment.h>
 #include <level_1/fss.h>
 #include <level_1/string.h>
 #include <level_1/type.h>
 
 // fll-2 includes
 #include <level_2/control_group.h>
-#include <level_2/environment.h>
 #include <level_2/error.h>
 #include <level_2/execute.h>
 #include <level_2/fss.h>

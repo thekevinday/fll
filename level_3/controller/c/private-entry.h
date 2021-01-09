@@ -88,11 +88,11 @@ extern "C" {
  *
  * @see controller_entry_actions_increase_by()
  * @see f_fss_count_lines()
- * @see fl_fss_apply_delimit()
  * @see f_string_dynamic_partial_append_nulless()
- * @see fl_string_dynamic_rip_nulless()
  * @see f_string_dynamic_terminate_after()
  * @see f_string_dynamics_increase_by()
+ * @see fl_fss_apply_delimit()
+ * @see fl_string_dynamic_rip_nulless()
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
