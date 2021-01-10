@@ -339,7 +339,7 @@ extern "C" {
  */
 #ifndef _di_fss_set_quotes_t_
   typedef struct {
-    f_fss_set_t *array;
+    f_fss_set_quote_t *array;
 
     f_array_length_t size;
     f_array_length_t used;
