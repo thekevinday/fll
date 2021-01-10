@@ -153,7 +153,7 @@ f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, c
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quoted empty string.
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
@@ -169,7 +169,7 @@ f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, c
           if (F_status_is_error(status2)) return status2;
         }
 
-        status2 = private_fl_fss_destination_increase(destination);
+        status2 = f_string_dynamic_increase(destination);
         if (F_status_is_error(status2)) return status2;
 
         destination->string[destination->used++] = f_fss_extended_open;
@@ -193,7 +193,7 @@ f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, c
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
       // content that is empty must be represented by a quoted empty string.
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(4, destination);
+      const f_status_t status_allocation = f_string_dynamic_increase_by(4, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       destination->string[destination->used++] = quote ? quote : f_fss_delimit_quote_double;
@@ -216,7 +216,7 @@ f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, c
     }
 
     if (F_status_is_error_not(status)) {
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
 
       if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_next) {

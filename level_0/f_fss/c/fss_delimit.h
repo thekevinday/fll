@@ -76,6 +76,11 @@ extern "C" {
 
   #define f_macro_fss_delimitss_t_delete_simple(delimitss)  f_macro_string_lengthss_t_delete_simple(delimitss);
   #define f_macro_fss_delimitss_t_destroy_simple(delimitss) f_macro_string_lengthss_t_destroy_simple(delimitss);
+
+  #define f_macro_fss_delimitss_t_increase(status, lengthss)            f_macro_string_lengthss_t_increase(status, lengthss);
+  #define f_macro_fss_delimitss_t_increase_by(status, lengthss, amount) f_macro_string_lengthss_t_increase_by(status, lengthss, amount);
+  #define f_macro_fss_delimitss_t_decrease_by(status, lengthss, amount) f_macro_string_lengthss_t_decrease_by(status, lengthss, amount);
+  #define f_macro_fss_delimitss_t_decimate_by(status, lengthss, amount) f_macro_string_lengthss_t_decimate_by(status, lengthss, amount);
 #endif // _di_f_fss_delimitss_t_
 
 #ifdef __cplusplus

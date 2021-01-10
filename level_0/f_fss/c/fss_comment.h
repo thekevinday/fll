@@ -76,6 +76,11 @@ extern "C" {
 
   #define f_macro_fss_commentss_t_delete_simple(quotess)  f_macro_string_rangess_t_delete_simple(quotess);
   #define f_macro_fss_commentss_t_destroy_simple(quotess) f_macro_string_rangess_t_destroy_simple(quotess);
+
+  #define f_macro_fss_commentss_t_increase(status, rangess)            f_macro_string_rangess_t_increase(status, rangess);
+  #define f_macro_fss_commentss_t_increase_by(status, rangess, amount) f_macro_string_rangess_t_increase_by(status, rangess, amount);
+  #define f_macro_fss_commentss_t_decrease_by(status, rangess, amount) f_macro_string_rangess_t_decrease_by(status, rangess, amount);
+  #define f_macro_fss_commentss_t_decimate_by(status, rangess, amount) f_macro_string_rangess_t_decimate_by(status, rangess, amount);
 #endif // _di_f_fss_commentss_t_
 
 #ifdef __cplusplus

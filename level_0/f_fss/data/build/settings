@@ -20,9 +20,9 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_utf
-build_sources_library fss.c
+build_sources_library fss.c private-fss.c fss_named.c fss_nest.c fss_set.c
 build_sources_program
-build_sources_headers fss.h fss-common.h fss_comment.h fss_delimit.h fss_named.h fss_nest.h fss_quote.h fss_set.h
+build_sources_headers fss.h private-fss.h fss-common.h fss_comment.h fss_delimit.h fss_named.h fss_nest.h fss_quote.h fss_set.h
 build_sources_script
 build_sources_setting
 build_script yes

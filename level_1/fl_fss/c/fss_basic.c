@@ -91,7 +91,7 @@ extern "C" {
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quoted empty string.
-      const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+      const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
 
       if (F_status_is_error(status_allocation)) {
         destination->used = destination_used;
@@ -115,7 +115,7 @@ extern "C" {
           }
         }
 
-        status2 = private_fl_fss_destination_increase(destination);
+        status2 = f_string_dynamic_increase(destination);
 
         if (F_status_is_error(status2)) {
           destination->used = destination_used;
@@ -150,7 +150,7 @@ extern "C" {
 
       // content should be terminated, even if empty.
       if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
-        status = private_fl_fss_destination_increase(destination);
+        status = f_string_dynamic_increase(destination);
         if (F_status_is_error(status)) return status;
 
         destination->string[destination->used++] = f_fss_basic_close;
@@ -164,7 +164,7 @@ extern "C" {
     }
 
     // ensure that there is room for the potential terminating newline.
-    status = private_fl_fss_destination_increase_by(destination->used + (range->stop - range->start) + 1, destination);
+    status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 1, destination);
     if (F_status_is_error(status)) return status;
 
     const f_string_length_t destination_used = destination->used;

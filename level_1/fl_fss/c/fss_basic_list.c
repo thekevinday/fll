@@ -473,7 +473,7 @@ extern "C" {
 
     if (status == F_none_stop || status == F_none_eos) {
       if (complete == f_fss_complete_partial || complete == f_fss_complete_partial_trim || complete == f_fss_complete_full || complete == f_fss_complete_full_trim) {
-        const f_status_t status_allocation = private_fl_fss_destination_increase_by(2, destination);
+        const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
         destination->string[destination->used++] = f_fss_basic_list_open;
@@ -491,7 +491,7 @@ extern "C" {
     }
 
     // ensure that there is room for a slash delimit, the object open character, and the end of line character.
-    status = private_fl_fss_destination_increase_by(destination->used + (range->stop - range->start) + 3, destination);
+    status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
     const f_string_length_t input_start = range->start;
@@ -510,7 +510,7 @@ extern "C" {
       if (object.string[range->start] == f_fss_comment) {
 
         // when a comment is found, escape it.
-        status = private_fl_fss_destination_increase(destination);
+        status = f_string_dynamic_increase(destination);
         if (F_status_is_error(status)) break;
 
         destination->string[destination->used++] = f_fss_delimit_slash;
@@ -535,7 +535,7 @@ extern "C" {
         if (status == F_true) {
           width = f_macro_utf_byte_width(object.string[range->start]);
 
-          status = private_fl_fss_destination_increase_by(width, destination);
+          status = f_string_dynamic_increase_by(width, destination);
           if (F_status_is_error(status)) break;
 
           for (i = 0; i < width; i++) {
@@ -577,7 +577,7 @@ extern "C" {
           slash_count *= 2;
         }
 
-        status = private_fl_fss_destination_increase_by(slash_count, destination);
+        status = f_string_dynamic_increase_by(slash_count, destination);
         if (F_status_is_error(status)) break;
 
         while (slash_count--) {
@@ -597,7 +597,7 @@ extern "C" {
 
         width = f_macro_utf_byte_width(object.string[range->start]);
 
-        status = private_fl_fss_destination_increase_by(width, destination);
+        status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
         for (i = 0; i < width; i++) {
@@ -624,7 +624,7 @@ extern "C" {
         }
       }
 
-      status = private_fl_fss_destination_increase_by(2, destination);
+      status = f_string_dynamic_increase_by(2, destination);
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
@@ -662,7 +662,7 @@ extern "C" {
 
     if (status == F_none_stop || status == F_none_eos) {
       if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
-        const f_status_t status_allocation = private_fl_fss_destination_increase(destination);
+        const f_status_t status_allocation = f_string_dynamic_increase(destination);
         if (F_status_is_error(status_allocation)) return status_allocation;
 
         destination->string[destination->used++] = f_fss_basic_list_close;
@@ -676,7 +676,7 @@ extern "C" {
     }
 
     // ensure that there is room for a slash delimit and possibly the end of content character.
-    status = private_fl_fss_destination_increase_by(destination->used + (range->stop - range->start) + 2, destination);
+    status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 2, destination);
     if (F_status_is_error(status)) return status;
 
     const f_string_length_t input_start = range->start;
@@ -725,7 +725,7 @@ extern "C" {
           if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
             // increase by total slashes + 1, along with the basic list open and possible newline.
-            status = private_fl_fss_destination_increase_by(slash_count + 3, destination);
+            status = f_string_dynamic_increase_by(slash_count + 3, destination);
             if (F_status_is_error(status)) break;
 
             while (slash_count--) {
@@ -743,7 +743,7 @@ extern "C" {
             continue;
           }
 
-          status = private_fl_fss_destination_increase(destination);
+          status = f_string_dynamic_increase(destination);
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = f_fss_basic_list_open;
@@ -769,7 +769,7 @@ extern "C" {
         if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
 
           // increase by slash and basic list open and possible newline.
-          status = private_fl_fss_destination_increase_by(3, destination);
+          status = f_string_dynamic_increase_by(3, destination);
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash;
@@ -783,7 +783,7 @@ extern "C" {
           continue;
         }
 
-        status = private_fl_fss_destination_increase(destination);
+        status = f_string_dynamic_increase(destination);
         if (F_status_is_error(status)) break;
 
         destination->string[destination->used++] = f_fss_basic_list_open;
@@ -822,7 +822,7 @@ extern "C" {
 
         width = f_macro_utf_byte_width(content.string[range->start]);
 
-        status = private_fl_fss_destination_increase_by(width, destination);
+        status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
         for (i = 0; i < width; i++) {
@@ -840,7 +840,7 @@ extern "C" {
     }
 
     if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
-      status = private_fl_fss_destination_increase(destination);
+      status = f_string_dynamic_increase(destination);
       if (F_status_is_error(status)) return status;
 
       // check to see if a newline exists, at the end.

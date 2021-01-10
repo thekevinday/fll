@@ -41,85 +41,27 @@ extern "C" {
 
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
-  /**
-   * Reset a fss item stucture to 0 (clear all values).
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * item: the f_fss_item_t structure to operate on.
-   */
   #define f_macro_fss_item_t_clear(item) \
     item.object.start = 1; \
     item.object.stop = 0; \
     f_macro_fss_content_t_clear(item.content); \
     item.parent = 0;
 
-  /**
-   * Create a new fss item structure.
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   * This does not allocate to item.delimits, allocation must be performed separately.
-   *
-   * status:    the status to return.
-   * structure: the structure to operate on.
-   * type:      the structure type.
-   * length:    the new size of the array.
-   */
-  #define f_macro_fss_item_t_new(status, item, length) \
-    item.object.start = 1; \
-    item.object.stop = 0; \
-    f_macro_fss_content_t_new(status, item.content, length) \
-    item.parent = 0;
+  #define f_macro_fss_item_t_new(status, item, length) status = f_fss_item_new(length, &item);
 
-  /**
-   * Delete a fss item.
-   *
-   * status: the status to return.
-   * item:   the f_fss_item_t structure to operate on.
-   */
-  #define f_macro_fss_item_t_delete(status, item) \
-    f_macro_fss_content_t_delete(status, item.content) \
-    if (status == F_none) { \
-      item.object.start = 1; \
-      item.object.stop = 0; \
-      item.parent = 0; \
-    }
+  #define f_macro_fss_item_t_resize(status, item, length) status = f_fss_item_resize(length, &item);
+  #define f_macro_fss_item_t_adjust(status, item, length) status = f_fss_item_adjust(length, &item);
 
-  /**
-   * Destroy a fss item.
-   *
-   * status: the status to return.
-   * item:  the f_fss_item_t structure to operate on.
-   */
-  #define f_macro_fss_item_t_destroy(status, item) \
-    f_macro_fss_content_t_destroy(status, item.content) \
-    if (status == F_none) { \
-      item.object.start = 1; \
-      item.object.stop = 0; \
-      item.parent = 0; \
-    }
+  #define f_macro_fss_item_t_delete(status, item)  status = f_fss_item_delete(&item);
+  #define f_macro_fss_item_t_destroy(status, item) status = f_fss_item_destroy(&item);
 
-  /**
-   * Delete a fss item.
-   *
-   * item: the f_fss_item_t structure to operate on.
-   */
-  #define f_macro_fss_item_t_delete_simple(item) \
-    f_macro_fss_content_t_delete_simple(item.content); \
-    item.object.start = 1; \
-    item.object.stop = 0; \
-    item.parent = 0;
+  #define f_macro_fss_item_t_delete_simple(item)  f_fss_item_delete(&item);
+  #define f_macro_fss_item_t_destroy_simple(item) f_fss_item_destroy(&item);
 
-  /**
-   * Destroy a fss item.
-   *
-   * item: the f_fss_item_t structure to operate on.
-   */
-  #define f_macro_fss_item_t_destroy_simple(item) \
-    f_macro_fss_content_t_destroy_simple(item.content); \
-    item.object.start = 1; \
-    item.object.stop = 0; \
-    item.parent = 0;
+  #define f_macro_fss_item_t_increase(status, item)            status = f_fss_item_increase(&item);
+  #define f_macro_fss_item_t_increase_by(status, item, amount) status = f_fss_item_increase_by(amount, &item);
+  #define f_macro_fss_item_t_decrease_by(status, item, amount) status = f_fss_item_decrease_by(amount, &item);
+  #define f_macro_fss_item_t_decimate_by(status, item, amount) status = f_fss_item_decimate_by(amount, &item);
 #endif // _di_fss_item_t_
 
 /**
@@ -160,140 +102,26 @@ extern "C" {
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
 
-  /**
-   * Reset a fss items to 0 (clear all values).
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * items: the f_fss_items_t structure to operate on.
-   */
   #define f_macro_fss_items_t_clear(items) \
     items.array = 0; \
     items.size = 0; \
     items.used = 0;
 
-  /**
-   * Create a new fss items.
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * status:     the status to return.
-   * items:      the f_fss_items_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_items_t_new(status, items, length) \
-    items.array = 0; \
-    items.size = 0; \
-    items.used = 0; \
-    status = f_memory_new((void **) & items.array, sizeof(f_fss_item_t), length); \
-    if (status == F_none) { \
-      items.size = length; \
-      items.used = 0; \
-    }
+  #define f_macro_fss_items_t_new(status, items, length) f_macro_memory_structure_new(status, items, f_fss_items_t, length);
 
-  /**
-   * Resize a fss items.
-   *
-   * status:     the status to return.
-   * items:      the f_fss_items_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_items_t_resize(status, items, new_length) \
-    status = F_none; \
-    if (new_length < items.size) { \
-      for (register f_array_length_t _macro__i = items.size - new_length; _macro__i < items.size; ++_macro__i) { \
-        f_macro_fss_item_t_delete(status, items.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & items.array, sizeof(f_fss_item_t), items.size, new_length); \
-    if (status == F_none) { \
-      items.size = new_length; \
-      if (items.used > items.size) items.used = new_length; \
-    }
+  #define f_macro_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
+  #define f_macro_fss_items_t_adjust(status, items, length) status = f_fss_items_adjust(length, &items);
 
-  /**
-   * Adjust a fss items.
-   *
-   * status:     the status to return.
-   * items:      the f_fss_items_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_items_t_adjust(status, items, new_length) \
-    status = F_none; \
-    if (new_length < items.size) { \
-      for (length_variable _macro__i = items.size - new_length; _macro__i < items.size; ++_macro__i) { \
-        f_macro_fss_item_t_destroy(status, items.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & items.array, sizeof(f_fss_item_t), items.size, new_length); \
-    if (status == F_none) { \
-      items.size = new_length; \
-      if (items.used > items.size) items.used = new_length; \
-    }
+  #define f_macro_fss_items_t_delete(status, items)  status = f_fss_items_delete(&items);
+  #define f_macro_fss_items_t_destroy(status, items) status = f_fss_items_destroy(&items);
 
-  /**
-   * Delete a fss items.
-   *
-   * status: the status to return.
-   * items:  the f_fss_items_t structure to operate on.
-   */
-  #define f_macro_fss_items_t_delete(status, items) \
-    status = F_none; \
-    items.used = items.size; \
-    while (items.used) { \
-      items.used--; \
-      f_macro_fss_item_t_delete(status, items.array[items.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size); \
-    if (status == F_none) items.size = 0;
+  #define f_macro_fss_items_t_delete_simple(items)  f_fss_items_delete(&items);
+  #define f_macro_fss_items_t_destroy_simple(items) f_fss_items_destroy(&items);
 
-  /**
-   * Destroy a fss items.
-   *
-   * status: the status to return.
-   * items:  the f_fss_items_t structure to operate on.
-   */
-  #define f_macro_fss_items_t_destroy(status, items) \
-    status = F_none; \
-    items.used = items.size; \
-    while (items.used) { \
-      items.used--; \
-      f_macro_fss_item_t_destroy(status, items.array[items.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size); \
-    if (status == F_none) items.size = 0;
-
-  /**
-   * Delete a fss items.
-   *
-   * items: the f_fss_items_t structure to operate on.
-   */
-  #define f_macro_fss_items_t_delete_simple(items) \
-    items.used = items.size; \
-    while (items.used) { \
-      items.used--; \
-      f_macro_fss_item_t_delete_simple(items.array[items.used]); \
-    } \
-    f_memory_delete((void **) & items.array, sizeof(f_fss_item_t), items.size); \
-    items.size = 0;
-
-  /**
-   * Destroy a fss items.
-   *
-   * items: the f_fss_items_t structure to operate on.
-   */
-  #define f_macro_fss_items_t_destroy_simple(items) \
-    items.used = items.size; \
-    while (items.used > 0) { \
-      items.used--; \
-      f_macro_fss_item_t_destroy_simple(status, items.array[items.used]); \
-    } \
-    f_memory_destroy((void **) & items.array, sizeof(f_fss_item_t), items.size); \
-    items.size = 0;
+  #define f_macro_fss_items_t_increase(status, items)            status = f_fss_items_increase(&items);
+  #define f_macro_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
+  #define f_macro_fss_items_t_decrease_by(status, items, amount) status = f_fss_items_decrease_by(amount, &items);
+  #define f_macro_fss_items_t_decimate_by(status, items, amount) status = f_fss_items_decimate_by(amount, &items);
 #endif // _di_fss_items_t_
 
 /**
@@ -318,140 +146,26 @@ extern "C" {
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
 
-  /**
-   * Reset a fss content nest to 0 (clear all values).
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * nest: the f_fss_nest_t structure to operate on.
-   */
   #define f_macro_fss_nest_t_clear(nest) \
     nest.depth = 0; \
     nest.size = 0; \
     nest.used = 0;
 
-  /**
-   * Create a new fss content nest.
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * status:     the status to return.
-   * nest:       the f_fss_nest_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nest_t_new(status, nest, length) \
-    nest.depth = 0; \
-    nest.size = 0; \
-    nest.used = 0; \
-    status = f_memory_new((void **) & nest.depth, sizeof(f_fss_items_t), length); \
-    if (status == F_none) { \
-      nest.size = length; \
-      nest.used = 0; \
-    }
+  #define f_macro_fss_nest_t_new(status, nest, length) f_macro_memory_structure_new(status, nest, f_fss_nest_t, length);
 
-  /**
-   * Resize a fss content nest.
-   *
-   * status:     the status to return.
-   * nest:       the f_fss_nest_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nest_t_resize(status, nest, new_length) \
-    status = F_none; \
-    if (new_length < nest.size) { \
-      for (register f_array_length_t _macro__i = nest.size - new_length; _macro__i < nest.size; ++_macro__i) { \
-        f_macro_fss_items_t_delete(status, nest.depth[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & nest.depth, sizeof(f_fss_items_t), nest.size, new_length); \
-    if (status == F_none) { \
-      nest.size = new_length; \
-      if (nest.used > nest.size) nest.used = new_length; \
-    }
+  #define f_macro_fss_nest_t_resize(status, nest, length) status = f_fss_nest_resize(length, &nest);
+  #define f_macro_fss_nest_t_adjust(status, nest, length) status = f_fss_nest_adjust(length, &nest);
 
-  /**
-   * Adjust a fss content nest.
-   *
-   * status:     the status to return.
-   * nest:       the f_fss_nest_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nest_t_adjust(status, nest, new_length) \
-    status = F_none; \
-    if (new_length < nest.size) { \
-      for (register f_array_length_t _macro__i = nest.size - new_length; _macro__i < nest.size; ++_macro__i) { \
-        f_macro_fss_items_t_destroy(status, nest.depth[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & nest.depth, sizeof(f_fss_item_t), nest.size, new_length); \
-    if (status == F_none) { \
-      nest.size = new_length; \
-      if (nest.used > nest.size) nest.used = new_length; \
-    }
+  #define f_macro_fss_nest_t_delete(status, nest)  status = f_fss_nest_delete(&nest);
+  #define f_macro_fss_nest_t_destroy(status, nest) status = f_fss_nest_destroy(&nest);
 
-  /**
-   * Delete a fss content nest.
-   *
-   * status: the status to return.
-   * nest:   the f_fss_nest_t structure to operate on.
-   */
-  #define f_macro_fss_nest_t_delete(status, nest) \
-    status = F_none; \
-    nest.used = nest.size; \
-    while (nest.used) { \
-      nest.used--; \
-      f_macro_fss_items_t_delete(status, nest.depth[nest.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
-    if (status == F_none) nest.size = 0;
+  #define f_macro_fss_nest_t_delete_simple(nest)  f_fss_nest_delete(&nest);
+  #define f_macro_fss_nest_t_destroy_simple(nest) f_fss_nest_destroy(&nest);
 
-  /**
-   * Destroy a fss content nest.
-   *
-   * status: the status to return.
-   * nest:   the f_fss_nest_t structure to operate on.
-   */
-  #define f_macro_fss_nest_t_destroy(status, nest) \
-    status = F_none; \
-    nest.used = nest.size; \
-    while (nest.used) { \
-      nest.used--; \
-      f_macro_fss_items_t_destroy(status, nest.depth[nest.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
-    if (status == F_none) nest.size = 0;
-
-  /**
-   * Delete a fss content nest.
-   *
-   * nest: the f_fss_nest_t structure to operate on.
-   */
-  #define f_macro_fss_nest_t_delete_simple(nest) \
-    nest.used = nest.size; \
-    while (nest.used) { \
-      nest.used--; \
-      f_macro_fss_items_t_delete_simple(nest.depth[nest.used]); \
-    } \
-    f_memory_delete((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
-    nest.size = 0;
-
-  /**
-   * Destroy a fss content nest.
-   *
-   * nest: the f_fss_nest_t structure to operate on.
-   */
-  #define f_macro_fss_nest_t_destroy_simple(nest) \
-    nest.used = nest.size; \
-    while (nest.used > 0) { \
-      nest.used--; \
-      f_macro_fss_items_t_destroy_simple(nest.depth[nest.used]); \
-    } \
-    f_memory_destroy((void **) & nest.depth, sizeof(f_fss_items_t), nest.size); \
-    nest.size = 0;
+  #define f_macro_fss_nest_t_increase(status, nest)            status = f_fss_nest_increase(&nest);
+  #define f_macro_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
+  #define f_macro_fss_nest_t_decrease_by(status, nest, amount) status = f_fss_nest_decrease_by(amount, &nest);
+  #define f_macro_fss_nest_t_decimate_by(status, nest, amount) status = f_fss_nest_decimate_by(amount, &nest);
 #endif // _di_fss_nest_t_
 
 /**
@@ -471,141 +185,626 @@ extern "C" {
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
 
-  /**
-   * Reset a fss content nests to 0 (clear all values).
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * nests: the f_fss_nests_t structure to operate on.
-   */
   #define f_macro_fss_nests_t_clear(nests) \
     nests.array = 0; \
     nests.size = 0; \
     nests.used = 0;
 
-  /**
-   * Create a new fss content nests.
-   *
-   * This does not deallocate memory, be certain that memory is not allocated before calling this to avoid potential memory leaks.
-   *
-   * status:     the status to return.
-   * nests:      the f_fss_nests_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nests_t_new(status, nests, length) \
-    nests.array = 0; \
-    nests.size = 0; \
-    nests.used = 0; \
-    status = f_memory_new((void **) & nests.array, sizeof(f_fss_nest_t), length); \
-    if (status == F_none) { \
-      nests.size = length; \
-      nests.used = 0; \
-    }
+  #define f_macro_fss_nests_t_new(status, nests, length) f_macro_memory_structure_new(status, nests, f_fss_nests_t, length);
 
-  /**
-   * Resize a fss content nests.
-   *
-   * status:     the status to return.
-   * nests:      the f_fss_nests_t structure to operate on.
-   * new_length: the new size of the array.
-   */
-  #define f_macro_fss_nests_t_resize(status, nests, new_length) \
-    status = F_none; \
-    if (new_length < nests.size) { \
-      for (register f_array_length_t _macro__i = nests.size - new_length; _macro__i < nests.size; ++_macro__i) { \
-        f_macro_fss_nest_t_delete(status, nests.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & nests.array, sizeof(f_fss_nest_t), nests.size, new_length); \
-    if (status == F_none) { \
-      nests.size = new_length; \
-      if (nests.used > nests.size) nests.used = new_length; \
-    }
+  #define f_macro_fss_nests_t_resize(status, nests, length) status = f_fss_nests_resize(length, &nests);
+  #define f_macro_fss_nests_t_adjust(status, nests, length) status = f_fss_nests_adjust(length, &nests);
 
-  /**
-   * Adjust a fss content nests.
-   *
-   * status:     the status to return.
-   * nests:      the f_fss_nests_t structure to operate on.
-   * new_length: he new size of the array.
-   */
-  #define f_macro_fss_nests_t_adjust(status, nests, new_length) \
-    status = F_none; \
-    if (new_length < nests.size) { \
-      for (register f_array_length_t _macro__i = nests.size - new_length; _macro__i < nests.size; ++_macro__i) { \
-        f_macro_fss_nest_t_destroy(status, nests.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & nests.array, sizeof(f_fss_nest_t), nests.size, new_length); \
-    if (status == F_none) { \
-      nests.size = new_length; \
-      if (nests.used > nests.size) nests.used = new_length; \
-    }
+  #define f_macro_fss_nests_t_delete(status, nests)  status = f_fss_nests_delete(&nests);
+  #define f_macro_fss_nests_t_destroy(status, nests) status = f_fss_nests_destroy(&nests);
 
-  /**
-   * Delete a fss content nests.
-   *
-   * status: the status to return.
-   * nests:  the f_fss_nests_t structure to operate on.
-   */
-  #define f_macro_fss_nests_t_delete(nests) \
-    status = F_none; \
-    nests.used = nests.size; \
-    while (nests.used) { \
-      nests.used--; \
-      f_macro_fss_nest_t_delete(status, nests.array[nests.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
-    if (status == F_none) nests.size = 0;
+  #define f_macro_fss_nests_t_delete_simple(nests)  f_fss_nests_delete(&nests);
+  #define f_macro_fss_nests_t_destroy_simple(nests) f_fss_nests_destroy(&nests);
 
-  /**
-   * Destroy a fss content nests.
-   *
-   * status: the status to return.
-   * nests:  the f_fss_nests_t structure to operate on.
-   */
-  #define f_macro_fss_nests_t_destroy(nests) \
-    status = F_none; \
-    nests.used = nests.size; \
-    while (nests.used) { \
-      nests.used--; \
-      f_macro_fss_nest_t_destroy(status, nests.array[nests.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_destroy((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
-    if (status == F_none) nests.size = 0;
-
-  /**
-   * Delete a fss content nests.
-   *
-   * nests: the f_fss_nests_t structure to operate on.
-   */
-  #define f_macro_fss_nests_t_delete_simple(nests) \
-    nests.used = nests.size; \
-    while (nests.used) { \
-      nests.used--; \
-      f_macro_fss_nest_t_delete_simple(nests.array[nests.used]); \
-    } \
-    f_memory_delete((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
-    nests.size = 0;
-
-  /**
-   * Destroy a fss content nests.
-   *
-   * nests: the f_fss_nests_t structure to operate on.
-   */
-  #define f_macro_fss_nests_t_destroy_simple(nests) \
-    nests.used = nests.size; \
-    while (nests.used) { \
-      nests.used--; \
-      f_macro_fss_nest_t_destroy_simple(nests.array[nests.used]); \
-    } \
-    f_memory_destroy((void **) & nests.array, sizeof(f_fss_nest_t), nests.size); \
-    nests.size = 0;
+  #define f_macro_fss_nests_t_increase(status, nests)            status = f_fss_nests_increase(&nests);
+  #define f_macro_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
+  #define f_macro_fss_nests_t_decrease_by(status, nests, amount) status = f_fss_nests_decrease_by(amount, &nests);
+  #define f_macro_fss_nests_t_decimate_by(status, nests, amount) status = f_fss_nests_decimate_by(amount, &nests);
 #endif // _di_fss_nests_t_
+
+/**
+ * Resize the nest array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param item
+ *   The item array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_adjust_
+  extern f_status_t f_fss_item_adjust(const f_array_length_t length, f_fss_item_t *item);
+#endif // _di_f_fss_item_adjust_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param item
+ *   The item array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_decimate_by_
+  extern f_status_t f_fss_item_decimate_by(const f_array_length_t amount, f_fss_item_t *item);
+#endif // _di_f_fss_item_decimate_by_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param item
+ *   The item array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_decrease_by_
+  extern f_status_t f_fss_item_decrease_by(const f_array_length_t amount, f_fss_item_t *item);
+#endif // _di_f_fss_item_decrease_by_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param ranges
+ *   The ranges to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_delete_
+  extern f_status_t f_fss_item_delete(f_fss_item_t *ranges);
+#endif // _di_f_fss_item_delete_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param item
+ *   The item to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_destroy_
+  extern f_status_t f_fss_item_destroy(f_fss_item_t *item);
+#endif // _di_f_fss_item_destroy_
+
+/**
+ * Increase the size of the item array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param item
+ *   The item array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_increase_
+  extern f_status_t f_fss_item_increase(f_fss_item_t *item);
+#endif // _di_f_fss_item_increase_
+
+/**
+ * Resize the item array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param item
+ *   The item array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_fss_item_increase_by_
+  extern f_status_t f_fss_item_increase_by(const f_array_length_t amount, f_fss_item_t *item);
+#endif // _di_f_fss_item_increase_by_
+
+/**
+ * Create a new item array.
+ *
+ * This clears all pointers, so be sure the structure is no longer allocated.
+ *
+ * @param length
+ *   The new size to use.
+ * @param item
+ *   The item array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_new_
+  extern f_status_t f_fss_item_new(const f_array_length_t length, f_fss_item_t *item);
+#endif // _di_f_fss_item_new_
+
+/**
+ * Resize the item array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param item
+ *   The item array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_item_resize_
+  extern f_status_t f_fss_item_resize(const f_array_length_t length, f_fss_item_t *item);
+#endif // _di_f_fss_item_resize_
+
+/**
+ * Resize the nest array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param items
+ *   The items array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_adjust_
+  extern f_status_t f_fss_items_adjust(const f_array_length_t length, f_fss_items_t *items);
+#endif // _di_f_fss_items_adjust_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param items
+ *   The items array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_decimate_by_
+  extern f_status_t f_fss_items_decimate_by(const f_array_length_t amount, f_fss_items_t *items);
+#endif // _di_f_fss_items_decimate_by_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param items
+ *   The items array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_decrease_by_
+  extern f_status_t f_fss_items_decrease_by(const f_array_length_t amount, f_fss_items_t *items);
+#endif // _di_f_fss_items_decrease_by_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param ranges
+ *   The ranges to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_delete_
+  extern f_status_t f_fss_items_delete(f_fss_items_t *ranges);
+#endif // _di_f_fss_items_delete_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param items
+ *   The items to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_destroy_
+  extern f_status_t f_fss_items_destroy(f_fss_items_t *items);
+#endif // _di_f_fss_items_destroy_
+
+/**
+ * Increase the size of the items array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param items
+ *   The items array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_increase_
+  extern f_status_t f_fss_items_increase(f_fss_items_t *items);
+#endif // _di_f_fss_items_increase_
+
+/**
+ * Resize the items array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param items
+ *   The items array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_fss_items_increase_by_
+  extern f_status_t f_fss_items_increase_by(const f_array_length_t amount, f_fss_items_t *items);
+#endif // _di_f_fss_items_increase_by_
+
+/**
+ * Resize the items array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param items
+ *   The items array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_items_resize_
+  extern f_status_t f_fss_items_resize(const f_array_length_t length, f_fss_items_t *items);
+#endif // _di_f_fss_items_resize_
+
+/**
+ * Resize the nest array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param nest
+ *   The nest array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_adjust_
+  extern f_status_t f_fss_nest_adjust(const f_array_length_t length, f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_adjust_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param nest
+ *   The nest array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_decimate_by_
+  extern f_status_t f_fss_nest_decimate_by(const f_array_length_t amount, f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_decimate_by_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param nest
+ *   The nest array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_decrease_by_
+  extern f_status_t f_fss_nest_decrease_by(const f_array_length_t amount, f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_decrease_by_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param ranges
+ *   The ranges to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_delete_
+  extern f_status_t f_fss_nest_delete(f_fss_nest_t *ranges);
+#endif // _di_f_fss_nest_delete_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param nest
+ *   The nest to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_destroy_
+  extern f_status_t f_fss_nest_destroy(f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_destroy_
+
+/**
+ * Increase the size of the nest array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param nest
+ *   The nest array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_increase_
+  extern f_status_t f_fss_nest_increase(f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_increase_
+
+/**
+ * Resize the nest array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param nest
+ *   The nest array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_fss_nest_increase_by_
+  extern f_status_t f_fss_nest_increase_by(const f_array_length_t amount, f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_increase_by_
+
+/**
+ * Resize the nest array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param nest
+ *   The nest array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nest_resize_
+  extern f_status_t f_fss_nest_resize(const f_array_length_t length, f_fss_nest_t *nest);
+#endif // _di_f_fss_nest_resize_
+
+/**
+ * Resize the nest array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param nests
+ *   The nests array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_adjust_
+  extern f_status_t f_fss_nests_adjust(const f_array_length_t length, f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_adjust_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param nests
+ *   The nests array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_decimate_by_
+  extern f_status_t f_fss_nests_decimate_by(const f_array_length_t amount, f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_decimate_by_
+
+/**
+ * Resize the nest array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param nests
+ *   The nests array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_decrease_by_
+  extern f_status_t f_fss_nests_decrease_by(const f_array_length_t amount, f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_decrease_by_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param ranges
+ *   The ranges to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_delete_
+  extern f_status_t f_fss_nests_delete(f_fss_nests_t *ranges);
+#endif // _di_f_fss_nests_delete_
+
+/**
+ * Delete the array of nest.
+ *
+ * @param nests
+ *   The nests to destroy.
+ *
+ * @return
+ *   F_none on success.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_destroy_
+  extern f_status_t f_fss_nests_destroy(f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_destroy_
+
+/**
+ * Increase the size of the nests array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param nests
+ *   The nests array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_increase_
+  extern f_status_t f_fss_nests_increase(f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_increase_
+
+/**
+ * Resize the nests array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param nests
+ *   The nests array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_fss_nests_increase_by_
+  extern f_status_t f_fss_nests_increase_by(const f_array_length_t amount, f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_increase_by_
+
+/**
+ * Resize the nests array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param nests
+ *   The nests array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_fss_nests_resize_
+  extern f_status_t f_fss_nests_resize(const f_array_length_t length, f_fss_nests_t *nests);
+#endif // _di_f_fss_nests_resize_
 
 #ifdef __cplusplus
 } // extern "C"
