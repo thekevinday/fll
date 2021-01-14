@@ -387,60 +387,60 @@ extern "C" {
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
 
-    f_string_dynamics_delete(&data->define);
-    f_string_dynamic_delete(&data->fakefile);
-    f_string_dynamics_delete(&data->mode);
-    f_string_dynamic_delete(&data->process);
-    f_string_dynamic_delete(&data->settings);
+    f_macro_string_dynamics_t_delete_simple(data->define);
+    f_macro_string_dynamic_t_delete_simple(data->fakefile);
+    f_macro_string_dynamics_t_delete_simple(data->mode);
+    f_macro_string_dynamic_t_delete_simple(data->process);
+    f_macro_string_dynamic_t_delete_simple(data->settings);
 
-    f_string_dynamic_delete(&data->path_build);
-    f_string_dynamic_delete(&data->path_build_documents);
-    f_string_dynamic_delete(&data->path_build_includes);
-    f_string_dynamic_delete(&data->path_build_libraries);
-    f_string_dynamic_delete(&data->path_build_libraries_script);
-    f_string_dynamic_delete(&data->path_build_libraries_shared);
-    f_string_dynamic_delete(&data->path_build_libraries_static);
-    f_string_dynamic_delete(&data->path_build_objects);
-    f_string_dynamic_delete(&data->path_build_programs);
-    f_string_dynamic_delete(&data->path_build_programs_script);
-    f_string_dynamic_delete(&data->path_build_programs_shared);
-    f_string_dynamic_delete(&data->path_build_programs_static);
-    f_string_dynamic_delete(&data->path_build_settings);
-    f_string_dynamic_delete(&data->path_build_stage);
-    f_string_dynamic_delete(&data->path_work);
+    f_macro_string_dynamic_t_delete_simple(data->path_build);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_documents);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_includes);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_objects);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_settings);
+    f_macro_string_dynamic_t_delete_simple(data->path_build_stage);
+    f_macro_string_dynamic_t_delete_simple(data->path_work);
 
-    f_string_dynamic_delete(&data->path_data);
-    f_string_dynamic_delete(&data->path_data_build);
+    f_macro_string_dynamic_t_delete_simple(data->path_data);
+    f_macro_string_dynamic_t_delete_simple(data->path_data_build);
 
-    f_string_dynamic_delete(&data->path_data_settings);
+    f_macro_string_dynamic_t_delete_simple(data->path_data_settings);
 
-    f_string_dynamic_delete(&data->path_documents);
+    f_macro_string_dynamic_t_delete_simple(data->path_documents);
 
-    f_string_dynamic_delete(&data->path_licenses);
+    f_macro_string_dynamic_t_delete_simple(data->path_licenses);
 
-    f_string_dynamic_delete(&data->path_sources);
-    f_string_dynamic_delete(&data->path_sources_bash);
-    f_string_dynamic_delete(&data->path_sources_c);
-    f_string_dynamic_delete(&data->path_sources_cpp);
-    f_string_dynamic_delete(&data->path_sources_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_bash);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_c);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_cpp);
+    f_macro_string_dynamic_t_delete_simple(data->path_sources_script);
 
-    f_string_dynamic_delete(&data->path_work);
-    f_string_dynamic_delete(&data->path_work_includes);
-    f_string_dynamic_delete(&data->path_work_libraries);
-    f_string_dynamic_delete(&data->path_work_libraries_script);
-    f_string_dynamic_delete(&data->path_work_libraries_shared);
-    f_string_dynamic_delete(&data->path_work_libraries_static);
-    f_string_dynamic_delete(&data->path_work_programs);
-    f_string_dynamic_delete(&data->path_work_programs_script);
-    f_string_dynamic_delete(&data->path_work_programs_shared);
-    f_string_dynamic_delete(&data->path_work_programs_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_work);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_includes);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_script);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_static);
 
-    f_string_dynamic_delete(&data->file_data_build_defines);
-    f_string_dynamic_delete(&data->file_data_build_dependencies);
-    f_string_dynamic_delete(&data->file_data_build_fakefile);
-    f_string_dynamic_delete(&data->file_data_build_settings);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_defines);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_dependencies);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_fakefile);
+    f_macro_string_dynamic_t_delete_simple(data->file_data_build_settings);
 
-    f_string_dynamic_delete(&data->file_documents_readme);
+    f_macro_string_dynamic_t_delete_simple(data->file_documents_readme);
 
     f_macro_color_context_t_delete_simple(data->context);
 

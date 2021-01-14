@@ -400,7 +400,7 @@ extern "C" {
         }
 
         // Clear buffers before continuing.
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
       }
 
       if (F_status_is_fine(status) && data->remaining.used > 0) {
@@ -447,7 +447,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           // Clear buffers before repeating the loop.
-          f_string_dynamic_delete(&data->buffer);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
         } // for
       }
     }
@@ -482,7 +482,7 @@ extern "C" {
     } // for
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
-    f_string_dynamic_delete(&data->buffer);
+    f_macro_string_dynamic_t_delete_simple(data->buffer);
 
     f_macro_color_context_t_delete_simple(data->context);
 

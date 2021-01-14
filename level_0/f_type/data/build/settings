@@ -22,7 +22,7 @@ build_libraries -lc
 build_libraries-individual
 build_sources_library
 build_sources_program
-build_sources_headers type.h type_array.h
+build_sources_headers type.h
 build_sources_script
 build_sources_setting
 build_script yes

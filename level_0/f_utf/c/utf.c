@@ -629,8 +629,8 @@ extern "C" {
     uint8_t width = f_macro_utf_character_t_width_is(utf_character);
 
     if (!width_max) {
-      f_macro_string_t_new(status, *character, width);
-
+      f_macro_string_t_clear((*character))
+      f_macro_string_t_resize(status, (*character), 0, width)
       if (F_status_is_error(status)) return status;
 
       width = 1;
@@ -731,7 +731,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_alpha(character_utf, width);
@@ -765,7 +765,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_alpha_digit(character_utf, width);
@@ -799,7 +799,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_alpha_numeric(character_utf, width);
@@ -825,7 +825,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_ascii(character_utf, width);
@@ -856,7 +856,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_combining(character_utf, width);
@@ -890,7 +890,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_control(character_utf, width);
@@ -921,7 +921,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_control_picture(character_utf, width);
@@ -955,7 +955,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_digit(character_utf, width);
@@ -989,7 +989,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_emoji(character_utf, width);
@@ -1039,7 +1039,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     if (private_f_utf_character_is_control(character_utf, width)) {
@@ -1086,7 +1086,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_numeric(character_utf, width);
@@ -1117,7 +1117,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_phonetic(character_utf, width);
@@ -1148,7 +1148,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_private(character_utf, width);
@@ -1209,7 +1209,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_punctuation(character_utf, width);
@@ -1255,7 +1255,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_symbol(character_utf, width);
@@ -1281,7 +1281,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_unassigned(character_utf, width);
@@ -1307,7 +1307,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_valid(character_utf, width);
@@ -1341,7 +1341,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return f_utf_character_is_whitespace(character_utf);
@@ -1373,7 +1373,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_whitespace_modifier(character_utf, width);
@@ -1405,7 +1405,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_whitespace_other(character_utf, width);
@@ -1439,7 +1439,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_word(character_utf, width, strict);
@@ -1473,7 +1473,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_word_dash(character_utf, width, strict);
@@ -1507,7 +1507,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_word_dash_plus(character_utf, width, strict);
@@ -1549,7 +1549,7 @@ extern "C" {
 
       status = f_utf_char_to_character(character, width_max, &character_utf);
 
-      if (status != F_none) return status;
+      if (F_status_is_error(status)) return status;
     }
 
     return private_f_utf_character_is_zero_width(character_utf, width);

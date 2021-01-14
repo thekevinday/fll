@@ -26,7 +26,7 @@ extern "C" {
       return private_f_string_ranges_adjust(ranges->size - amount, ranges);
     }
 
-    return private_f_string_ranges_destroy(ranges);
+    return private_f_string_ranges_adjust(0, ranges);
   }
 #endif // _di_f_string_ranges_decimate_by_
 
@@ -41,29 +41,9 @@ extern "C" {
       return private_f_string_ranges_resize(ranges->size - amount, ranges);
     }
 
-    return private_f_string_ranges_delete(ranges);
+    return private_f_string_ranges_resize(0, ranges);
   }
 #endif // _di_f_string_ranges_decrease_by_
-
-#ifndef _di_f_string_ranges_delete_
-  f_status_t f_string_ranges_delete(f_string_ranges_t *ranges) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!ranges) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_ranges_delete(ranges);
-  }
-#endif // _di_f_string_ranges_delete_
-
-#ifndef _di_f_string_ranges_destroy_
-  f_status_t f_string_ranges_destroy(f_string_ranges_t *ranges) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!ranges) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_ranges_destroy(ranges);
-  }
-#endif // _di_f_string_ranges_destroy_
 
 #ifndef _di_f_string_ranges_increase_
   f_status_t f_string_ranges_increase(f_string_ranges_t *ranges) {
@@ -85,7 +65,7 @@ extern "C" {
       return private_f_string_ranges_resize(size, ranges);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_string_ranges_increase_
 
@@ -104,7 +84,7 @@ extern "C" {
       return private_f_string_ranges_resize(ranges->used + amount, ranges);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_string_ranges_increase_by_
 
@@ -117,6 +97,99 @@ extern "C" {
     return private_f_string_ranges_resize(length, ranges);
   }
 #endif // _di_f_string_ranges_resize_
+
+#ifndef _di_f_string_rangess_adjust_
+  f_status_t f_string_rangess_adjust(const f_string_length_t length, f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_rangess_adjust(length, rangess);
+  }
+#endif // _di_f_string_rangess_adjust_
+
+#ifndef _di_f_string_rangess_decimate_by_
+  f_status_t f_string_rangess_decimate_by(const f_array_length_t amount, f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rangess->size - amount > 0) {
+      return private_f_string_rangess_adjust(rangess->size - amount, rangess);
+    }
+
+    return private_f_string_rangess_adjust(0, rangess);
+  }
+#endif // _di_f_string_rangess_decimate_by_
+
+#ifndef _di_f_string_rangess_decrease_by_
+  f_status_t f_string_rangess_decrease_by(const f_array_length_t amount, f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rangess->size - amount > 0) {
+      return private_f_string_rangess_resize(rangess->size - amount, rangess);
+    }
+
+    return private_f_string_rangess_resize(0, rangess);
+  }
+#endif // _di_f_string_rangess_decrease_by_
+
+#ifndef _di_f_string_rangess_increase_
+  f_status_t f_string_rangess_increase(f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rangess->used + 1 > rangess->size) {
+      f_array_length_t size = rangess->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (rangess->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_string_rangess_resize(size, rangess);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_rangess_increase_
+
+#ifndef _di_f_string_rangess_increase_by_
+  f_status_t f_string_rangess_increase_by(const f_array_length_t amount, f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (rangess->used + amount > rangess->size) {
+      if (rangess->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_string_rangess_resize(rangess->used + amount, rangess);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_string_rangess_increase_by_
+
+#ifndef _di_f_string_rangess_resize_
+  f_status_t f_string_rangess_resize(const f_string_length_t length, f_string_rangess_t *rangess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!rangess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_string_rangess_resize(length, rangess);
+  }
+#endif // _di_f_string_rangess_resize_
 
 #ifdef __cplusplus
 } // extern "C"

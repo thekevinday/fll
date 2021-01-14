@@ -153,7 +153,7 @@ extern "C" {
             iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
-          f_string_dynamic_delete(&name);
+          f_macro_string_dynamic_t_delete_simple(name);
           return status;
         }
 
@@ -178,7 +178,7 @@ extern "C" {
         } // for
       } // for
 
-      f_string_dynamic_delete(&name);
+      f_macro_string_dynamic_t_delete_simple(name);
 
       if (unmatched) status = F_data_not;
       else status = F_none;
@@ -302,7 +302,7 @@ extern "C" {
           iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
-        f_string_dynamics_delete(&names);
+        f_macro_string_dynamics_t_delete_simple(names);
         return status;
       }
     }
@@ -383,7 +383,7 @@ extern "C" {
       iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
-    f_string_dynamics_delete(&names);
+    f_macro_string_dynamics_t_delete_simple(names);
     return F_none;
   }
 #endif // _di_iki_read_process_buffer_ranges_whole_
@@ -434,7 +434,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
-          f_string_dynamic_delete(&name);
+          f_macro_string_dynamic_t_delete_simple(name);
           return status;
         }
 
@@ -447,7 +447,7 @@ extern "C" {
         } // for
       } // for
 
-      f_string_dynamic_delete(&name);
+      f_macro_string_dynamic_t_delete_simple(name);
     }
     else {
       total = variable->used;

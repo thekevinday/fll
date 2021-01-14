@@ -368,6 +368,513 @@ extern "C" {
     date.time = 0;
 #endif // _di_f_date_t_
 
+/**
+ * An array of array lengths.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of array lengths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_array_lengths_t_
+  typedef struct {
+    f_array_length_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_array_lengths_t;
+
+  #define f_array_lengths_t_initialize { 0, 0, 0 }
+#endif // _di_f_array_lengths_t_
+
+/**
+ * An array of an array of array lengths.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array lengths.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_f_array_lengthss_t_
+  typedef struct {
+    f_array_lengths_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_array_lengthss_t;
+
+  #define f_array_lengthss_t_initialize { 0, 0, 0 }
+#endif // _di_f_array_lengthss_t_
+
+/**
+ * An array of f_cell_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of f_cell_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_f_cells_t_
+  typedef struct {
+    f_cell_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_cells_t;
+
+  #define f_cells_t_initialize { 0, 0, 0 }
+#endif // _di_f_cells_t_
+
+/**
+ * This holds an array of f_cells_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_cell_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_cellss_t_
+  typedef struct {
+    f_cells_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_cellss_t;
+
+  #define f_cellss_t_initialize { 0, 0, 0 }
+#endif // _di_f_cellss_t_
+
+/**
+ * An array of array int8_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of int8_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_array_t_int8_t_
+  typedef struct {
+    int8_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int8s_t;
+
+  #define f_int8s_t_initialize { 0, 0, 0 }
+#endif // _di_int8s_t_
+
+/**
+ * An array of an array of array int8_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array int8_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int8ss_t_
+  typedef struct {
+    f_int8s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int8ss_t;
+
+  #define f_int8ss_t_initialize { 0, 0, 0 }
+#endif // _di_int8ss_t_
+
+/**
+ * An array of array uint8_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of uint8_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_uint8s_t_
+  typedef struct {
+    uint8_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint8s_t;
+
+  #define f_uint8s_t_initialize { 0, 0, 0 }
+#endif // _di_uint8s_t_
+
+/**
+ * An array of an array of array uint8_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array uint8_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint8ss_t_
+  typedef struct {
+    f_uint8s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint8ss_t;
+
+  #define f_uint8ss_t_initialize { 0, 0, 0 }
+#endif // _di_uint8ss_t_
+
+/**
+ * An array of array int16_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of int16_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_int16s_t_
+  typedef struct {
+    int16_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int16s_t;
+
+  #define f_int16s_t_initialize { 0, 0, 0 }
+#endif // _di_int16s_t_
+
+/**
+ * An array of an array of array int16_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array int16_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int16ss_t_
+  typedef struct {
+    f_int16s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int16ss_t;
+
+  #define f_int16ss_t_initialize { 0, 0, 0 }
+#endif // _di_int16ss_t_
+
+/**
+ * An array of array uint16_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of uint16_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_uint16s_t_
+  typedef struct {
+    uint16_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint16s_t;
+
+  #define f_uint16s_t_initialize { 0, 0, 0 }
+#endif // _di_uint16s_t_
+
+/**
+ * An array of an array of array uint16_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array uint16_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint16ss_t_
+  typedef struct {
+    f_uint16s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint16ss_t;
+
+  #define f_uint16ss_t_initialize { 0, 0, 0 }
+#endif // _di_uint16ss_t_
+
+/**
+ * An array of array int32_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of int32_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_int32s_t_
+  typedef struct {
+    int32_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int32s_t;
+
+  #define f_int32s_t_initialize { 0, 0, 0 }
+#endif // _di_int32s_t_
+
+/**
+ * An array of an array of array int32_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array int32_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int32ss_t_
+  typedef struct {
+    f_int32s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int32ss_t;
+
+  #define f_int32ss_t_initialize { 0, 0, 0 }
+#endif // _di_int32ss_t_
+
+/**
+ * An array of array uint32_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of uint32_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_uint32s_t_
+  typedef struct {
+    uint32_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint32s_t;
+
+  #define f_uint32s_t_initialize { 0, 0, 0 }
+#endif // _di_uint32s_t_
+
+/**
+ * An array of an array of array uint32_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array uint32_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint32ss_t_
+  typedef struct {
+    f_uint32s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint32ss_t;
+
+  #define f_uint32ss_t_initialize { 0, 0, 0 }
+#endif // _di_uint32ss_t_
+
+/**
+ * An array of array int64_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of int64_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_int64s_t_
+  typedef struct {
+    int64_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int64s_t;
+
+  #define f_int64s_t_initialize { 0, 0, 0 }
+#endif // _di_int64s_t_
+
+/**
+ * An array of an array of array int64_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array int64_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int64ss_t_
+  typedef struct {
+    f_int64s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int64ss_t;
+
+  #define f_int64ss_t_initialize { 0, 0, 0 }
+#endif // _di_int64ss_t_
+
+/**
+ * An array of array uint64_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: An array of uint64_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_uint64s_t_
+  typedef struct {
+    uint64_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint64s_t;
+
+  #define f_uint64s_t_initialize { 0, 0, 0 }
+#endif // _di_uint64s_t_
+
+/**
+ * An array of an array of array uint64_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of an array of array uint64_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint64ss_t_
+  typedef struct {
+    f_uint64s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint64ss_t;
+
+  #define f_uint64ss_t_initialize { 0, 0, 0 }
+#endif // _di_uint64ss_t_
+
+/**
+ * Provide a 128-bit type wrapper, which could be either 64-bit or 128-bit depending on support.
+ *
+ * This is __int128_t when 128-bit is supported and int64_t when not supported.
+ */
+#ifndef __SIZEOF_INT128__
+
+  #ifndef _di_int128_t_
+    typedef __int128_t f_int128_t;
+  #endif // _di_int128_t_
+
+  #ifndef _di_uint128_t_
+    typedef __uint128_t f_uint128_t;
+  #endif // _di_uint128_t_
+
+#else // __SIZEOF_INT128__
+
+  #ifndef _di_int128_t_
+    typedef int64_t f_int128_t;
+  #endif // _di_int128_t_
+
+  #ifndef _di_uint128_t_
+    typedef uint64_t f_uint128_t;
+  #endif // _di_uint128_t_
+
+#endif // __SIZEOF_INT128__
+
+/**
+ * An array of f_int128_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of f_int128_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int128s_t_
+  typedef struct {
+    f_int128_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int128s_t;
+
+  #define f_int128s_t_initialize { 0, 0, 0 }
+#endif // _di_int128s_t_
+
+/**
+ * An array of and array of f_int128_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of and array of f_int128_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_int128ss_t_
+  typedef struct {
+    f_int128s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_int128ss_t;
+
+  #define f_int128ss_t_initialize { 0, 0, 0 }
+#endif // _di_int128ss_t_
+
+/**
+ * An array of f_uint128_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of f_uint128_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint128s_t_
+  typedef struct {
+    f_uint128_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint128s_t;
+
+  #define f_uint128s_t_initialize { 0, 0, 0 }
+#endif // _di_uint128s_t_
+
+/**
+ * An array of and array of f_uint128_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: the array of and array of f_uint128_t.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
+ */
+#ifndef _di_uint128ss_t_
+  typedef struct {
+    f_uint128s_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_uint128ss_t;
+
+  #define f_uint128ss_t_initialize { 0, 0, 0 }
+#endif // _di_uint128ss_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

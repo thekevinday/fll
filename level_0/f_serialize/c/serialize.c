@@ -69,7 +69,8 @@ extern "C" {
           }
 
           if (total > strings->array[strings->used].size) {
-            f_macro_string_dynamic_t_new(status, strings->array[strings->used], total);
+            f_macro_string_dynamic_t_clear(strings->array[strings->used])
+            f_macro_string_dynamic_t_resize(status, strings->array[strings->used], total)
             if (F_status_is_error(status)) return status;
 
             strings->array[strings->used].size = total;

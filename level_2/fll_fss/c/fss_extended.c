@@ -61,7 +61,7 @@ extern "C" {
             }
 
             if (contents->array[contents->used].used == contents->array[contents->used].size) {
-              f_macro_fss_content_t_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+              f_macro_fss_content_t_increase(status2, contents->array[contents->used])
               if (F_status_is_error(status2)) return status2;
             }
 
@@ -109,7 +109,7 @@ extern "C" {
           found_data = F_true;
 
           if (contents->array[contents->used].used == contents->array[contents->used].size) {
-            f_macro_fss_content_t_resize(status2, contents->array[contents->used], contents->array[contents->used].size + f_fss_default_allocation_step);
+            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
           }
 

@@ -240,10 +240,10 @@ extern "C" {
       const f_string_range_t name_settings_range = f_macro_string_range_t_initialize(fake_make_section_settings_length);
       const f_string_range_t name_main_range = f_macro_string_range_t_initialize(fake_make_section_main_length);
 
-      f_macro_fss_nameds_t_new((*status), data_make->fakefile, list_objects.used);
+      f_macro_fss_nameds_t_resize((*status), data_make->fakefile, list_objects.used);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data.error, F_status_set_fine(*status), "f_macro_fss_nameds_t_new", F_true);
+        fll_error_print(data.error, F_status_set_fine(*status), "f_macro_fss_nameds_t_resize", F_true);
 
         f_macro_fss_set_t_delete_simple(settings);
         f_macro_fss_objects_t_delete_simple(list_objects);
@@ -351,9 +351,9 @@ extern "C" {
 
       // always have the parameter variable "return" map at index 0 and pre-initialized.
       {
-        f_string_t function_name = "f_macro_string_map_multis_t_new";
+        f_string_t function_name = "f_macro_string_map_multis_t_resize";
 
-        f_macro_string_map_multis_t_new(*status, data_make->setting_make.parameter, f_memory_default_allocation_step);
+        f_macro_string_map_multis_t_resize(*status, data_make->setting_make.parameter, f_memory_default_allocation_step);
 
         if (F_status_is_error_not(*status)) {
           data_make->setting_make.parameter.used = 1;
@@ -368,8 +368,8 @@ extern "C" {
         }
 
         if (F_status_is_error_not(*status)) {
-          function_name = "f_macro_string_dynamics_new";
-          f_macro_string_dynamics_new(*status, data_make->setting_make.parameter.array[0].value, 1);
+          function_name = "f_string_dynamics_resize";
+          *status = f_string_dynamics_resize(1, &data_make->setting_make.parameter.array[0].value);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -486,12 +486,12 @@ extern "C" {
             } // for
 
             if (F_status_is_error(*status)) {
-              f_string_dynamic_delete(&name_define);
+              f_macro_string_dynamic_t_delete_simple(name_define);
               break;
             }
 
             *status = F_none;
-            f_string_dynamic_delete(&name_define);
+            f_macro_string_dynamic_t_delete_simple(name_define);
           }
           else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail, data_make->buffer, fake_make_setting_fail_length, settings.objects.array[i]) == F_equal_to) {
             if (unmatched_fail) {
@@ -745,7 +745,7 @@ extern "C" {
           }
         } // for
 
-        f_string_dynamic_delete(&combined);
+        f_macro_string_dynamic_t_delete_simple(combined);
       }
 
       f_macro_string_map_multis_t_delete_simple(define);
@@ -1065,10 +1065,10 @@ extern "C" {
     f_string_lengths_t section_stack = f_string_lengths_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
-    f_macro_string_dynamics_new(status, data_make.path.stack, f_memory_default_allocation_step);
+    status = f_string_dynamics_increase(&data_make.path.stack);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
       return status;
     }
 
@@ -1794,12 +1794,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&value);
+      f_macro_string_dynamic_t_delete_simple(value);
       return status;
     }
 
     if (unmatched) {
-      f_string_dynamic_delete(&value);
+      f_macro_string_dynamic_t_delete_simple(value);
       return F_false;
     }
 
@@ -1822,7 +1822,7 @@ extern "C" {
       }
     }
 
-    f_string_dynamic_delete(&value);
+    f_macro_string_dynamic_t_delete_simple(value);
 
     if (F_status_is_error_not(status)) {
       return F_true;
@@ -1847,15 +1847,15 @@ extern "C" {
 
       status = f_environment_get(name.string, &value);
 
-      f_string_dynamic_delete(&name);
+      f_macro_string_dynamic_t_delete_simple(name);
     }
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&value);
+      f_macro_string_dynamic_t_delete_simple(value);
       return status;
     }
     else if (status == F_exist_not) {
-      f_string_dynamic_delete(&value);
+      f_macro_string_dynamic_t_delete_simple(value);
       return F_false;
     }
 
@@ -1878,7 +1878,7 @@ extern "C" {
       }
     }
 
-    f_string_dynamic_delete(&value);
+    f_macro_string_dynamic_t_delete_simple(value);
 
     if (F_status_is_error_not(status)) {
       return F_true;
@@ -2233,7 +2233,7 @@ extern "C" {
 
     if (*status == F_status_set_error(F_signal)) {
       for (i = 0; i < section->objects.used; i++) {
-        f_string_dynamics_delete(&arguments[i]);
+        f_macro_string_dynamics_t_delete_simple(arguments[i]);
       } // for
 
       return 0;
@@ -2268,7 +2268,7 @@ extern "C" {
     }
 
     for (i = 0; i < section->objects.used; i++) {
-      f_string_dynamics_delete(&arguments[i]);
+      f_macro_string_dynamics_t_delete_simple(arguments[i]);
     } // for
 
     section_stack->used--;
@@ -3563,7 +3563,7 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_pop) {
-      f_string_dynamic_delete(&data_make->path.stack.array[data_make->path.stack.used - 1]);
+      f_macro_string_dynamic_t_delete_simple(data_make->path.stack.array[data_make->path.stack.used - 1]);
 
       data_make->path.stack.used--;
 
@@ -3711,7 +3711,7 @@ extern "C" {
 
       // clear stack, except for the project root.
       for (f_array_length_t i = 1; i < data_make->path.stack.used; i++) {
-        f_string_dynamic_delete(&data_make->path.stack.array[i]);
+        f_macro_string_dynamic_t_delete_simple(data_make->path.stack.array[i]);
       } // for
 
       data_make->path.stack.used = 1;
@@ -3871,13 +3871,13 @@ extern "C" {
 
           fll_error_print(data_make->error, F_status_set_fine(*status), "f_conversion_number_signed_to_string", F_true);
 
-          f_string_dynamic_delete(&number);
+          f_macro_string_dynamic_t_delete_simple(number);
           return;
         }
 
         status2 = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
-        f_string_dynamic_delete(&number);
+        f_macro_string_dynamic_t_delete_simple(number);
       }
       else {
         status2 = f_string_append("0", 1, &data_make->setting_make.parameter.array[0].value.array[0]);
@@ -3924,10 +3924,10 @@ extern "C" {
     f_string_dynamics_t args = f_string_dynamics_t_initialize;
 
     if (arguments.used > 1) {
-      f_macro_string_dynamics_new(status, args, arguments.used - 1);
+      status = f_string_dynamics_resize(arguments.used - 1, &args);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_macro_string_dynamics_new", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamics_resize", F_true);
         return status;
       }
 
@@ -3938,7 +3938,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
 
-          f_string_dynamics_delete(&args);
+          f_macro_string_dynamics_t_delete_simple(args);
           return status;
         }
 
@@ -3947,7 +3947,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_terminate", F_true);
 
-          f_string_dynamics_delete(&args);
+          f_macro_string_dynamics_t_delete_simple(args);
           return status;
         }
 
@@ -3957,7 +3957,7 @@ extern "C" {
 
     status = fake_make_operate_process_execute(data, *program, args, as_shell, data_make);
 
-    f_string_dynamics_delete(&args);
+    f_macro_string_dynamics_t_delete_simple(args);
     return status;
   }
 #endif // _di_fake_make_operate_process_run_

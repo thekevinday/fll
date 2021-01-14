@@ -26,7 +26,7 @@ extern "C" {
       return private_f_string_triples_adjust(triples->size - amount, triples);
     }
 
-    return private_f_string_triples_destroy(triples);
+    return private_f_string_triples_adjust(0, triples);
   }
 #endif // _di_f_string_triples_decimate_by_
 
@@ -41,29 +41,9 @@ extern "C" {
       return private_f_string_triples_resize(triples->size - amount, triples);
     }
 
-    return private_f_string_triples_delete(triples);
+    return private_f_string_triples_resize(0, triples);
   }
 #endif // _di_f_string_triples_decrease_by_
-
-#ifndef _di_f_string_triples_delete_
-  f_status_t f_string_triples_delete(f_string_triples_t *triples) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_triples_delete(triples);
-  }
-#endif // _di_f_string_triples_delete_
-
-#ifndef _di_f_string_triples_destroy_
-  f_status_t f_string_triples_destroy(f_string_triples_t *triples) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!triples) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_string_triples_destroy(triples);
-  }
-#endif // _di_f_string_triples_destroy_
 
 #ifndef _di_f_string_triples_increase_
   f_status_t f_string_triples_increase(f_string_triples_t *triples) {
@@ -85,7 +65,7 @@ extern "C" {
       return private_f_string_triples_resize(size, triples);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_string_triples_increase_
 
@@ -104,7 +84,7 @@ extern "C" {
       return private_f_string_triples_resize(triples->used + amount, triples);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_string_triples_increase_by_
 

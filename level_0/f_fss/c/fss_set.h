@@ -34,19 +34,14 @@ extern "C" {
   #define f_fss_set_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize }
 
   #define f_macro_fss_set_t_clear(set) \
-    f_macro_fss_objects_t_clear(set.objects); \
-    f_macro_fss_contents_t_clear(set.contents);
-
-  #define f_macro_fss_set_t_new(status, set, length) f_macro_memory_structure_new(status, set, f_fss_set_t, length);
+    f_macro_fss_objects_t_clear(set.objects) \
+    f_macro_fss_contents_t_clear(set.contents)
 
   #define f_macro_fss_set_t_resize(status, set, length) status = f_fss_set_resize(length, &set);
   #define f_macro_fss_set_t_adjust(status, set, length) status = f_fss_set_adjust(length, &set);
 
-  #define f_macro_fss_set_t_delete(status, set)  status = f_fss_set_delete(&set);
-  #define f_macro_fss_set_t_destroy(status, set) status = f_fss_set_destroy(&set);
-
-  #define f_macro_fss_set_t_delete_simple(set)  f_fss_set_delete(&set);
-  #define f_macro_fss_set_t_destroy_simple(set) f_fss_set_destroy(&set);
+  #define f_macro_fss_set_t_delete_simple(set)  f_fss_set_resize(0, &set);
+  #define f_macro_fss_set_t_destroy_simple(set) f_fss_set_adjust(0, &set);
 
   #define f_macro_fss_set_t_increase(status, set)            status = f_fss_set_increase(&set);
   #define f_macro_fss_set_t_increase_by(status, set, amount) status = f_fss_set_increase_by(amount, &set);
@@ -71,21 +66,13 @@ extern "C" {
 
   #define f_fss_sets_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_sets_t_clear(sets) \
-    sets.array = 0; \
-    sets.size = 0; \
-    sets.used = 0;
-
-  #define f_macro_fss_sets_t_new(status, sets, length) f_macro_memory_structure_new(status, sets, f_fss_set_t, length);
+  #define f_macro_fss_sets_t_clear(sets) f_macro_memory_structure_t_clear(set.objects)
 
   #define f_macro_fss_sets_t_resize(status, sets, length) status = f_fss_sets_resize(length, &sets);
   #define f_macro_fss_sets_t_adjust(status, sets, length) status = f_fss_sets_adjust(length, &sets);
 
-  #define f_macro_fss_sets_t_delete(status, sets)  status = f_fss_sets_delete(&sets);
-  #define f_macro_fss_sets_t_destroy(status, sets) status = f_fss_sets_destroy(&sets);
-
-  #define f_macro_fss_sets_t_delete_simple(sets)  f_fss_sets_delete(&sets);
-  #define f_macro_fss_sets_t_destroy_simple(sets) f_fss_sets_destroy(&sets);
+  #define f_macro_fss_sets_t_delete_simple(sets)  f_fss_sets_resize(0, &sets);
+  #define f_macro_fss_sets_t_destroy_simple(sets) f_fss_sets_adjust(0, &sets);
 
   #define f_macro_fss_sets_t_increase(status, sets)            status = f_fss_sets_increase(&sets);
   #define f_macro_fss_sets_t_increase_by(status, sets, amount) status = f_fss_sets_increase_by(amount, &sets);
@@ -99,8 +86,8 @@ extern "C" {
  * The objects, contents, and quotes should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * objects:         the array of objects.
- * contents:        the array of contents.
+ * objects:        the array of objects.
+ * contents:       the array of contents.
  * objects_quote:  the array of objects quote types.
  * contents_quote: the array of contents quote types.
  */
@@ -116,18 +103,13 @@ extern "C" {
   #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotes_t_initialize, f_fss_quotess_t_initialize }
 
   #define f_macro_fss_set_quote_t_clear(set) \
-    f_macro_fss_objects_t_clear(set.objects); \
-    f_macro_fss_contents_t_clear(set.contents); \
-    f_macro_fss_quotes_t_clear(set.objects_quote); \
-    f_macro_fss_quotess_t_clear(set.contents_quote);
-
-  #define f_macro_fss_set_quote_t_new(status, set_quote, length) f_macro_memory_structure_new(status, set_quote, f_fss_set_quote_t, length);
+    f_macro_fss_objects_t_clear(set.objects) \
+    f_macro_fss_contents_t_clear(set.contents) \
+    f_macro_fss_quotes_t_clear(set.objects_quote) \
+    f_macro_fss_quotess_t_clear(set.contents_quote)
 
   #define f_macro_fss_set_quote_t_resize(status, set_quote, length) status = f_fss_set_quote_resize(length, &set_quote);
   #define f_macro_fss_set_quote_t_adjust(status, set_quote, length) status = f_fss_set_quote_adjust(length, &set_quote);
-
-  #define f_macro_fss_set_quote_t_delete(status, set_quote)  status = f_fss_set_quote_delete(&set_quote);
-  #define f_macro_fss_set_quote_t_destroy(status, set_quote) status = f_fss_set_quote_destroy(&set_quote);
 
   #define f_macro_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_delete(&set_quote);
   #define f_macro_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_destroy(&set_quote);
@@ -155,21 +137,13 @@ extern "C" {
 
   #define f_fss_set_quotes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_set_quotes_t_clear(sets) \
-    sets.array = 0; \
-    sets.size = 0; \
-    sets.used = 0;
-
-  #define f_macro_fss_set_quotes_t_new(status, set_quotes, length) f_macro_memory_structure_new(status, set_quotes, f_fss_set_quotes_t, length);
+  #define f_macro_fss_set_quotes_t_clear(nameds) f_macro_memory_structure_clear(nameds)
 
   #define f_macro_fss_set_quotes_t_resize(status, set_quotes, length) status = f_fss_set_quotes_resize(length, &set_quotes);
   #define f_macro_fss_set_quotes_t_adjust(status, set_quotes, length) status = f_fss_set_quotes_adjust(length, &set_quotes);
 
-  #define f_macro_fss_set_quotes_t_delete(status, set_quotes)  status = f_fss_set_quotes_delete(&set_quotes);
-  #define f_macro_fss_set_quotes_t_destroy(status, set_quotes) status = f_fss_set_quotes_destroy(&set_quotes);
-
-  #define f_macro_fss_set_quotes_t_delete_simple(set_quotes)  f_fss_set_quotes_delete(&set_quotes);
-  #define f_macro_fss_set_quotes_t_destroy_simple(set_quotes) f_fss_set_quotes_destroy(&set_quotes);
+  #define f_macro_fss_set_quotes_t_delete_simple(set_quotes)  f_fss_set_quotes_resize(0, &set_quotes);
+  #define f_macro_fss_set_quotes_t_destroy_simple(set_quotes) f_fss_set_quotes_adjust(0, &set_quotes);
 
   #define f_macro_fss_set_quotes_t_increase(status, set_quotes)            status = f_fss_set_quotes_increase(&set_quotes);
   #define f_macro_fss_set_quotes_t_increase_by(status, set_quotes, amount) status = f_fss_set_quotes_increase_by(amount, &set_quotes);
@@ -187,6 +161,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -208,6 +183,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -229,40 +205,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_decrease_by_
   extern f_status_t f_fss_set_decrease_by(const f_array_length_t amount, f_fss_set_t *set);
 #endif // _di_f_fss_set_decrease_by_
-
-/**
- * Delete the array of set.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_delete_
-  extern f_status_t f_fss_set_delete(f_fss_set_t *ranges);
-#endif // _di_f_fss_set_delete_
-
-/**
- * Delete the array of set.
- *
- * @param set
- *   The set to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_destroy_
-  extern f_status_t f_fss_set_destroy(f_fss_set_t *set);
-#endif // _di_f_fss_set_destroy_
 
 /**
  * Increase the size of the set array, but only if necessary.
@@ -275,6 +224,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -297,6 +248,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -315,6 +268,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -332,6 +286,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -353,6 +308,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -374,6 +330,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -389,6 +346,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_delete_
@@ -403,6 +361,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_destroy_
@@ -420,6 +379,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -442,6 +403,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -460,6 +423,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -477,6 +441,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -498,6 +463,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -519,40 +485,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_decrease_by_
   extern f_status_t f_fss_set_quotes_decrease_by(const f_array_length_t amount, f_fss_set_quotes_t *set_quotes);
 #endif // _di_f_fss_set_quotes_decrease_by_
-
-/**
- * Delete the array of set_quote.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_quotes_delete_
-  extern f_status_t f_fss_set_quotes_delete(f_fss_set_quotes_t *ranges);
-#endif // _di_f_fss_set_quotes_delete_
-
-/**
- * Delete the array of set_quote.
- *
- * @param set_quotes
- *   The set_quotes to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_quotes_destroy_
-  extern f_status_t f_fss_set_quotes_destroy(f_fss_set_quotes_t *set_quotes);
-#endif // _di_f_fss_set_quotes_destroy_
 
 /**
  * Increase the size of the set_quotes array, but only if necessary.
@@ -565,6 +504,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -587,6 +528,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -605,6 +548,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -622,6 +566,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -643,6 +588,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -664,40 +610,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_decrease_by_
   extern f_status_t f_fss_sets_decrease_by(const f_array_length_t amount, f_fss_sets_t *sets);
 #endif // _di_f_fss_sets_decrease_by_
-
-/**
- * Delete the array of set.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_sets_delete_
-  extern f_status_t f_fss_sets_delete(f_fss_sets_t *ranges);
-#endif // _di_f_fss_sets_delete_
-
-/**
- * Delete the array of set.
- *
- * @param sets
- *   The sets to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_sets_destroy_
-  extern f_status_t f_fss_sets_destroy(f_fss_sets_t *sets);
-#endif // _di_f_fss_sets_destroy_
 
 /**
  * Increase the size of the sets array, but only if necessary.
@@ -710,6 +629,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -732,6 +653,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -750,6 +673,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

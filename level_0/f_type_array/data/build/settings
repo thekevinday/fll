@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name fl_type
+project_name f_type_array
 
 version_major 0
 version_minor 5
@@ -20,16 +20,16 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
-build_sources_library type.c private-type.c
+build_sources_library type_array.c private-type_array.c
 build_sources_program
-build_sources_headers type.h
+build_sources_headers type_array.h private-type_array.h type_array-common.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static no
 
-path_headers level_1
+path_headers level_0
 path_headers_preserve no
 path_library_script script
 path_library_shared shared

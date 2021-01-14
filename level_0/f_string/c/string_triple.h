@@ -43,24 +43,6 @@ extern "C" {
     triple.three.size = 0; \
     triple.three.used = 0;
 
-  #define f_macro_string_triple_t_delete(status, triple) \
-    f_macro_string_dynamic_t_delete(status, triple.one) \
-    if (status == F_none) { \
-      f_macro_string_dynamic_t_delete(status, triple.two) \
-    } \
-    if (status == F_none) { \
-      f_macro_string_dynamic_t_delete(status, triple.three) \
-    }
-
-  #define f_macro_string_triple_t_destroy(status, triple) \
-    f_macro_string_dynamic_t_destroy(status, triple.one) \
-    if (status == F_none) { \
-      f_macro_string_dynamic_t_destroy(status, triple.two) \
-    } \
-    if (status == F_none) { \
-      f_macro_string_dynamic_t_destroy(status, triple.three) \
-    }
-
   #define f_macro_string_triple_t_delete_simple(triple) \
     f_macro_string_dynamic_t_delete_simple(triple.one) \
     f_macro_string_dynamic_t_delete_simple(triple.two) \
@@ -76,8 +58,8 @@ extern "C" {
  * An array of string triples.
  *
  * array: the array of string triples.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
  */
 #ifndef _di_f_string_triples_t_
   typedef struct {
@@ -89,89 +71,19 @@ extern "C" {
 
   #define f_string_triples_t_initialize f_string_statics_t_initialize
 
-  #define f_macro_string_triples_t_clear(triples) \
-    triples.array = 0; \
-    triples.size = 0; \
-    triples.used = 0;
+  #define f_macro_string_triples_t_clear(triples) f_macro_memory_structure_clear(triples)
 
-  #define f_macro_string_triples_t_new(status, triples, length) \
-    f_macro_string_triples_t_clear(triples) \
-    status = f_memory_new((void **) & triples.array, sizeof(f_string_triple_t), length); \
-    if (status == F_none) { \
-      triples.size = length; \
-      triples.used = 0; \
-    }
+  #define f_macro_string_triples_t_resize(status, triples, length) status = f_string_triples_resize(length, &triples);
+  #define f_macro_string_triples_t_adjust(status, triples, length) status = f_string_triples_adjust(length, &triples);
 
-  #define f_macro_string_triples_t_resize(status, triples, length) \
-    status = F_none; \
-    if (length < triples.size) { \
-      for (register f_array_length_t _macro__i = triples.size - length; _macro__i < triples.size; ++_macro__i) { \
-        f_macro_string_triple_t_delete(status, triples.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & triples.array, sizeof(f_string_triple_t), triples.size, length); \
-    if (status == F_none) { \
-      triples.size = length; \
-      if (triples.used > triples.size) triples.used = length; \
-    }
+  #define f_macro_string_triples_t_delete_simple(triples)  f_string_triples_resize(0, &triples);
+  #define f_macro_string_triples_t_destroy_simple(triples) f_string_triples_adjust(0, &triples);
 
-  #define f_macro_string_triples_t_adjust(status, triples, length) \
-    status = F_none; \
-    if (length < triples.size) { \
-      for (register f_array_length_t _macro__i = triples.size - length; _macro__i < triples.size; ++_macro__i) { \
-        f_macro_string_triple_t_destroy(status, triples.array[_macro__i]); \
-        if (status != F_none) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & triples.array, sizeof(f_string_triple_t), triples.size, length); \
-    if (status == F_none) { \
-      triples.size = length; \
-      if (triples.used > triples.size) triples.used = length; \
-    }
-
-  #define f_macro_string_triples_t_delete(status, triples) \
-    status = F_none; \
-    triples.used = triples.size; \
-    while (triples.used) { \
-      triples.used--; \
-      f_macro_string_triple_t_delete(status, triples.array[triples.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_delete((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
-    if (status == F_none) triples.size = 0;
-
-  #define f_macro_string_triples_t_destroy(status, triples) \
-    status = F_none; \
-    triples.used = triples.size; \
-    while (triples.used) { \
-      triples.used--; \
-      f_macro_string_triple_t_destroy(status, triples.array[triples.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) status = f_memory_destroy((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
-    if (status == F_none) triples.size = 0;
-
-  #define f_macro_string_triples_t_delete_simple(triples) \
-    triples.used = triples.size; \
-    while (triples.used) { \
-      triples.used--; \
-      f_macro_string_triple_t_delete_simple(triples.array[triples.used]); \
-    } \
-    f_memory_delete((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
-    triples.size = 0;
-
-  #define f_macro_string_triples_t_destroy_simple(triples) \
-    triples.used = triples.size; \
-    while (triples.used) { \
-      triples.used--; \
-      f_macro_string_triple_t_destroy_simple(triples.array[triples.used]); \
-    } \
-    f_memory_destroy((void **) & triples.array, sizeof(f_string_triple_t), triples.size); \
-    triples.size = 0;
+  #define f_macro_string_triples_t_increase(status, triples)            status = f_string_triples_increase(triples);
+  #define f_macro_string_triples_t_increase_by(status, triples, amount) status = f_string_triples_increase_by(amount, triples);
+  #define f_macro_string_triples_t_decrease_by(status, triples, amount) status = f_string_triples_decrease_by(amount, triples);
+  #define f_macro_string_triples_t_decimate_by(status, triples, amount) status = f_string_triples_decimate_by(amount, triples);
 #endif // _di_f_string_triples_t_
-
-// @todo increase, decrease, decimate, increase_by, decrease_by, decimate_by
 
 /**
  * Resize the string triples array.
@@ -183,6 +95,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -204,6 +117,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -225,40 +139,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_triples_decrease_by_
   extern f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t *triples);
 #endif // _di_f_string_triples_decrease_by_
-
-/**
- * Delete the array of string triples.
- *
- * @param triples
- *   The triples to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_triples_delete_
-  extern f_status_t f_string_triples_delete(f_string_triples_t *triples);
-#endif // _di_f_string_triples_delete_
-
-/**
- * Delete the array of string triples.
- *
- * @param triples
- *   The triples to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_triples_destroy_
-  extern f_status_t f_string_triples_destroy(f_string_triples_t *triples);
-#endif // _di_f_string_triples_destroy_
 
 /**
  * Increase the size of the string triples array, but only if necessary.
@@ -271,6 +158,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -293,6 +182,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -311,12 +202,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_string_triples_adjust_
-  extern f_status_t f_string_triples_adjust(const f_array_length_t length, f_string_triples_t *triples);
-#endif // _di_f_string_triples_adjust_
+#ifndef _di_f_string_triples_resize_
+  extern f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t *triples);
+#endif // _di_f_string_triples_resize_
 
 #ifdef __cplusplus
 } // extern "C"

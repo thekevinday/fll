@@ -41,10 +41,10 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
   }
   else {
     if (data.devices.array[local.device].used > 0) {
-      f_macro_string_dynamic_t_new(status, device, data.devices.array[local.device].used);
+       f_macro_string_dynamic_t_resize(status, device, data.devices.array[local.device].used);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&device);
+        f_macro_string_dynamic_t_delete_simple(device);
 
         return status;
       }
@@ -66,7 +66,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     is_ip_list = F_false;
     ip_list_direction = F_false;
 
-    f_string_dynamic_delete(&ip_list);
+    f_macro_string_dynamic_t_delete_simple(ip_list);
 
     // process chain rule
     if (length >= firewall_chain_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain, length, firewall_chain_length) == F_equal_to) {
@@ -136,7 +136,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         invalid = F_true;
       }
       else if (length >= firewall_device_all_length && fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string_t) firewall_device_all, length, firewall_device_all_length) == F_equal_to) {
-        f_string_dynamic_delete(&device);
+        f_macro_string_dynamic_t_delete_simple(device);
         device_all = F_true;
         continue;
       }
@@ -153,7 +153,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           device.used = data.devices.array[local.device].used;
         }
         else {
-          f_string_dynamic_delete(&device);
+          f_macro_string_dynamic_t_delete_simple(device);
         }
 
         device_all = F_false;
@@ -172,7 +172,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           device.used = length;
         }
         else {
-          f_string_dynamic_delete(&device);
+          f_macro_string_dynamic_t_delete_simple(device);
         }
 
         device_all = F_false;
@@ -230,8 +230,8 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           use_protocol = F_false;
         }
         else if (length > 0) {
-          f_string_dynamic_delete(&protocol);
-          f_macro_string_dynamic_t_new(status, protocol, length);
+          f_macro_string_dynamic_t_delete_simple(protocol);
+           f_macro_string_dynamic_t_resize(status, protocol, length);
 
           if (F_status_is_error(status)) break;
 
@@ -319,9 +319,9 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     for (r = repeat; r > 0; r--) {
 
       // first add the program name
-      f_string_dynamics_delete(&arguments);
-      f_macro_string_dynamics_new(status, arguments, firewall_default_allocation_step);
+      f_string_dynamics_resize(0, &arguments);
 
+      status = f_string_dynamics_increase(&arguments);
       if (F_status_is_error(status)) break;
 
       if (tool == firewall_program_ip46tables) {
@@ -335,14 +335,14 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         }
       }
 
-      f_string_dynamic_delete(&argument);
+      f_macro_string_dynamic_t_delete_simple(argument);
 
       if (F_status_is_error(status)) break;
 
       // process the action when a non-none chain is specified.
       if (chain != firewall_chain_none_id && action != firewall_action_none_id) {
         if (action == firewall_action_append_id) {
-          f_macro_string_dynamic_t_new(status, argument, firewall_action_append_command_length);
+           f_macro_string_dynamic_t_resize(status, argument, firewall_action_append_command_length);
 
           if (F_status_is_error(status)) break;
 
@@ -350,7 +350,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           argument.used = firewall_action_append_command_length;
         }
         else if (action == firewall_action_insert_id) {
-          f_macro_string_dynamic_t_new(status, argument, firewall_action_insert_command_length);
+           f_macro_string_dynamic_t_resize(status, argument, firewall_action_insert_command_length);
 
           if (F_status_is_error(status)) break;
 
@@ -358,7 +358,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           argument.used = firewall_action_insert_command_length;
         }
         else if (action == firewall_action_policy_id) {
-          f_macro_string_dynamic_t_new(status, argument, firewall_action_policy_command_length);
+           f_macro_string_dynamic_t_resize(status, argument, firewall_action_policy_command_length);
 
           if (F_status_is_error(status)) break;
 
@@ -369,14 +369,14 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         if (argument.used > 0) {
           firewall_macro_append_argument_to_arguments(status, arguments, argument)
           if (F_status_is_error(status)) {
-            f_string_dynamic_delete(&argument);
+            f_macro_string_dynamic_t_delete_simple(argument);
             break;
           }
 
           // process the chain, which is required by the action.
           if (chain == firewall_chain_custom_id) {
             if (data.chains.array[local.chain_ids.array[local.chain]].used > 0) {
-              f_macro_string_dynamic_t_new(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
+               f_macro_string_dynamic_t_resize(status, argument, data.chains.array[local.chain_ids.array[local.chain]].used);
 
               if (F_status_is_error(status)) break;
 
@@ -385,7 +385,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             }
           }
           else if (chain == firewall_chain_forward_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_chain_forward_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_chain_forward_length);
 
             if (F_status_is_error(status)) break;
 
@@ -393,7 +393,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             argument.used = firewall_chain_forward_length;
           }
           else if (chain == firewall_chain_postrouting_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_chain_postrouting_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_chain_postrouting_length);
 
             if (F_status_is_error(status)) break;
 
@@ -401,7 +401,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             argument.used += firewall_chain_postrouting_length;
           }
           else if (chain == firewall_chain_prerouting_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_chain_prerouting_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_chain_prerouting_length);
 
             if (F_status_is_error(status)) break;
 
@@ -409,7 +409,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             argument.used = firewall_chain_prerouting_length;
           }
           else if (chain == firewall_chain_input_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_chain_input_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_chain_input_length);
 
             if (F_status_is_error(status)) break;
 
@@ -417,7 +417,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             argument.used = firewall_chain_input_length;
           }
           else if (chain == firewall_chain_output_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_chain_output_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_chain_output_length);
 
             if (F_status_is_error(status)) break;
 
@@ -438,14 +438,14 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
       if (device.used > 0 && (direction == firewall_direction_input_id || direction == firewall_direction_output_id)) {
         if (length < firewall_device_all_length || fl_string_compare(local.buffer.string + local.rule_contents.array[i].array[0].start, (f_string_t) firewall_device_all, length, firewall_device_all_length) == F_equal_to_not) {
           if (direction == firewall_direction_input_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_device_input_command_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_device_input_command_length);
             if (F_status_is_error(status)) break;
 
             firewall_macro_concat_string(argument.string, firewall_device_input_command, firewall_device_input_command_length);
             argument.used = firewall_device_input_command_length;
           }
           else if (direction == firewall_direction_output_id) {
-            f_macro_string_dynamic_t_new(status, argument, firewall_device_output_command_length);
+             f_macro_string_dynamic_t_resize(status, argument, firewall_device_output_command_length);
             if (F_status_is_error(status)) break;
 
             firewall_macro_concat_string(argument.string, firewall_device_output_command, firewall_device_output_command_length);
@@ -462,7 +462,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
 
         // add the device.
         if (device.used > 0) {
-          f_macro_string_dynamic_t_new(status, argument, device.used);
+           f_macro_string_dynamic_t_resize(status, argument, device.used);
 
           if (F_status_is_error(status)) break;
 
@@ -477,7 +477,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
       }
 
       if (use_protocol) {
-        f_macro_string_dynamic_t_new(status, argument, firewall_protocol_command_length);
+         f_macro_string_dynamic_t_resize(status, argument, firewall_protocol_command_length);
 
         if (F_status_is_error(status)) break;
 
@@ -490,7 +490,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         }
 
         if (protocol.used > 0) {
-          f_macro_string_dynamic_t_new(status, argument, protocol.used);
+           f_macro_string_dynamic_t_resize(status, argument, protocol.used);
 
           if (F_status_is_error(status)) break;
 
@@ -515,7 +515,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           length = firewall_macro_structure_size(local.rule_contents.array[i], subcounter);
 
           if (length > 0) {
-            f_macro_string_dynamic_t_new(status, ip_list, length);
+             f_macro_string_dynamic_t_resize(status, ip_list, length);
 
             if (F_status_is_error(status)) {
               // prevent the loop below from being processed.
@@ -535,7 +535,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           length = firewall_macro_structure_size(local.rule_contents.array[i], subcounter);
 
           if (length > 0) {
-            f_macro_string_dynamic_t_new(status, argument, length);
+             f_macro_string_dynamic_t_resize(status, argument, length);
 
             if (F_status_is_error(status)) break;
 
@@ -572,7 +572,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           f_fss_objects_t basic_objects = f_fss_objects_t_initialize;
           f_fss_contents_t basic_contents = f_fss_objects_t_initialize;
 
-          f_macro_string_dynamic_t_new(status, file_path, network_path_length + ip_list.used + firewall_default_allocation_step);
+           f_macro_string_dynamic_t_resize(status, file_path, network_path_length + ip_list.used + firewall_default_allocation_step);
 
           if (status == F_none) {
             firewall_macro_concat_string(file_path.string, network_path, network_path_length);
@@ -711,14 +711,14 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                 if (F_status_is_error(status)) {
                   fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
 
-                  f_string_dynamic_delete(&ip_list_action);
+                  f_macro_string_dynamic_t_delete_simple(ip_list_action);
                 }
                 else {
                   f_string_dynamic_t ip_argument = f_string_dynamic_t_initialize;
 
                   firewall_macro_append_argument_to_arguments(status, arguments, ip_list_action)
                   if (F_status_is_error(status)) {
-                    f_string_dynamic_delete(&ip_argument);
+                    f_macro_string_dynamic_t_delete_simple(ip_argument);
                     break;
                   }
 
@@ -727,7 +727,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
 
                     ip_length = firewall_macro_structure_size(basic_objects, buffer_counter);
 
-                    f_macro_string_dynamic_t_new(status, ip_argument, ip_length);
+                     f_macro_string_dynamic_t_resize(status, ip_argument, ip_length);
 
                     if (F_status_is_error(status)) {
                       fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
@@ -774,7 +774,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fprintf(f_type_error, "\n");
 
                       // remove ip_argument from arguments string.
-                      f_string_dynamic_delete(&arguments.array[arguments.used]);
+                      f_macro_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
                       arguments.used--;
 
                       break;
@@ -783,21 +783,21 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fl_color_print(data.error.to.stream, data.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
 
                       // remove ip_argument from arguments string.
-                      f_string_dynamic_delete(&arguments.array[arguments.used]);
+                      f_macro_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
                       arguments.used--;
 
                       break;
                     }
 
                     // remove ip_argument from arguments string.
-                    f_string_dynamic_delete(&arguments.array[arguments.used]);
+                    f_macro_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
                     arguments.used--;
                   } // for
 
-                  f_string_dynamic_delete(&ip_argument);
+                  f_macro_string_dynamic_t_delete_simple(ip_argument);
 
                   // remove ip_list_action from arguments string.
-                  f_string_dynamic_delete(&arguments.array[arguments.used]);
+                  f_macro_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
                   arguments.used--;
                 }
               }
@@ -806,8 +806,8 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             }
           }
 
-          f_string_dynamic_delete(&local_buffer);
-          f_string_dynamic_delete(&file_path);
+          f_macro_string_dynamic_t_delete_simple(local_buffer);
+          f_macro_string_dynamic_t_delete_simple(file_path);
           f_macro_fss_objects_t_delete_simple(basic_objects);
           f_macro_fss_contents_t_delete_simple(basic_contents);
 
@@ -857,11 +857,11 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     } // for
   } // for
 
-  f_string_dynamic_delete(&ip_list);
-  f_string_dynamic_delete(&argument);
-  f_string_dynamics_delete(&arguments);
-  f_string_dynamic_delete(&device);
-  f_string_dynamic_delete(&protocol);
+  f_macro_string_dynamic_t_delete_simple(ip_list);
+  f_macro_string_dynamic_t_delete_simple(argument);
+  f_macro_string_dynamics_t_delete_simple(arguments);
+  f_macro_string_dynamic_t_delete_simple(device);
+  f_macro_string_dynamic_t_delete_simple(protocol);
 
   return status;
 }
@@ -884,22 +884,19 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
   f_string_dynamic_t fixed_string = f_string_dynamic_t_initialize;
 
   f_macro_array_lengths_t_delete_simple(local->chain_ids);
-  f_macro_array_lengths_t_new(status, local->chain_ids, local->chain_objects.used);
+  f_macro_array_lengths_t_resize(status, local->chain_ids, local->chain_objects.used);
 
   if (F_status_is_error(status)) {
     return status;
   }
 
-  f_macro_string_dynamics_new(status, arguments, 2);
+  status = f_string_dynamics_resize(2, &arguments);
+  if (F_status_is_error(status)) return status;
+
+  status = f_string_dynamic_resize(firewall_chain_create_command_length, &arguments.array[0]);
 
   if (F_status_is_error(status)) {
-    return status;
-  }
-
-  f_macro_string_dynamic_t_new(status, arguments.array[0], firewall_chain_create_command_length);
-
-  if (F_status_is_error(status)) {
-    f_string_dynamics_delete(&arguments);
+    f_macro_string_dynamics_t_delete_simple(arguments);
 
     return status;
   }
@@ -908,11 +905,11 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
 
   arguments.array[0].used = firewall_chain_create_command_length;
 
-  f_macro_string_dynamic_t_new(status, arguments.array[1], firewall_default_allocation_step);
+  status = f_string_dynamic_increase(&arguments.array[1]);
 
   if (F_status_is_error(status)) {
     arguments.used = 1;
-    f_string_dynamics_delete(&arguments);
+    f_macro_string_dynamics_t_delete_simple(arguments);
 
     return status;
   }
@@ -992,7 +989,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         f_macro_string_dynamics_t_resize(status, data->chains, data->chains.used + firewall_default_allocation_step);
 
         if (F_status_is_error(status)) {
-          f_string_dynamics_delete(&arguments);
+          f_macro_string_dynamics_t_delete_simple(arguments);
 
           return status;
         }
@@ -1006,16 +1003,16 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         f_macro_string_dynamic_t_resize(status, arguments.array[1], length);
 
         if (F_status_is_error(status)) {
-          f_string_dynamics_delete(&arguments);
+          f_macro_string_dynamics_t_delete_simple(arguments);
 
           return status;
         }
       }
 
-      f_macro_string_dynamic_t_new(status, data->chains.array[data->chains.used], length);
+       f_macro_string_dynamic_t_resize(status, data->chains.array[data->chains.used], length);
 
       if (F_status_is_error(status)) {
-        f_string_dynamics_delete(&arguments);
+        f_macro_string_dynamics_t_delete_simple(arguments);
 
         return status;
       }
@@ -1134,7 +1131,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
             fl_color_print(data->error.to.stream, data->context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_execute_program()%c", fll_error_print_error, status, f_string_eol_s[0]);
           }
 
-          f_string_dynamics_delete(&arguments);
+          f_macro_string_dynamics_t_delete_simple(arguments);
           return status;
         }
       }
@@ -1145,7 +1142,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
     i++;
   } // while
 
-  f_string_dynamics_delete(&arguments);
+  f_macro_string_dynamics_t_delete_simple(arguments);
 
   return status;
 }
@@ -1520,7 +1517,7 @@ f_status_t firewall_delete_local_data(firewall_local_data_t *local) {
   local->device = 0;
   local->chain = 0;
 
-  f_string_dynamic_delete(&local->buffer);
+  f_macro_string_dynamic_t_delete_simple(local->buffer);
   f_macro_array_lengths_t_delete_simple(local->chain_ids);
   f_macro_fss_objects_t_delete_simple(local->chain_objects);
   f_macro_fss_contents_t_delete_simple(local->chain_contents);

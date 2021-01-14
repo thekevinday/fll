@@ -50,8 +50,7 @@ extern "C" {
     structure.value_at = 0; \
     f_macro_string_dynamic_t_clear(structure.value_name)
 
-  #define fss_basic_list_read_macro_depth_t_delete(status, structure) status = f_string_dynamic_delete(&structure.value_name);
-  #define fss_basic_list_read_macro_depth_t_delete_simple(structure)  f_string_dynamic_delete(&structure.value_name);
+  #define fss_basic_list_read_macro_depth_t_delete_simple(structure)  f_macro_string_dynamic_t_delete_simple(structure.value_name);
 #endif // _di_fss_basic_list_read_depth_t_
 
 /**
@@ -73,18 +72,6 @@ extern "C" {
 
   #define fss_basic_list_read_macro_depths_t_clear(depths) f_macro_memory_structure_clear(depths)
 
-  #define fss_basic_list_read_macro_depths_t_new(status, depths, length) f_macro_memory_structure_new(status, depths, fss_basic_list_read_depth_t, length)
-
-  #define fss_basic_list_read_macro_depths_t_delete(status, depths) \
-    status = F_none; \
-    depths.used = depths.size; \
-    while (depths.used > 0) { \
-      depths.used--; \
-      fss_basic_list_read_macro_depth_t_delete(status, depths.array[depths.used]); \
-      if (status != F_none) break; \
-    } \
-    if (status == F_none) f_macro_memory_structure_delete(depths, fss_basic_list_read_depth_t)
-
   #define fss_basic_list_read_macro_depths_t_delete_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
@@ -98,8 +85,7 @@ extern "C" {
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        fss_basic_list_read_macro_depth_t_delete(status, depths.array[i]); \
-        if (status != F_none) break; \
+        fss_basic_list_read_macro_depth_t_delete_simple(depths.array[i]); \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \
@@ -113,8 +99,7 @@ extern "C" {
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
       for (; i < depths.size; i++) { \
-        fss_basic_list_read_macro_depth_t_delete(status, depths.array[i]); \
-        if (status != F_none) break; \
+        fss_basic_list_read_macro_depth_t_delete_simple(depths.array[i]); \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \

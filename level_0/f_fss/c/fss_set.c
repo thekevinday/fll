@@ -45,26 +45,6 @@ extern "C" {
   }
 #endif // _di_f_fss_set_decrease_by_
 
-#ifndef _di_f_fss_set_delete_
-  f_status_t f_fss_set_delete(f_fss_set_t *set) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_resize(0, set);
-  }
-#endif // _di_f_fss_set_delete_
-
-#ifndef _di_f_fss_set_destroy_
-  f_status_t f_fss_set_destroy(f_fss_set_t *set) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_adjust(0, set);
-  }
-#endif // _di_f_fss_set_destroy_
-
 #ifndef _di_f_fss_set_increase_
   f_status_t f_fss_set_increase(f_fss_set_t *set) {
     #ifndef _di_level_0_parameter_checking_
@@ -85,7 +65,7 @@ extern "C" {
       return private_f_fss_set_resize(size, set);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_increase_
 
@@ -104,7 +84,7 @@ extern "C" {
       return private_f_fss_set_resize(set->objects.used + amount, set);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_increase_by_
 
@@ -198,7 +178,7 @@ extern "C" {
       return private_f_fss_set_quote_resize(size, set_quote);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_quote_increase_
 
@@ -217,7 +197,7 @@ extern "C" {
       return private_f_fss_set_quote_resize(set_quote->objects.used + amount, set_quote);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_quote_increase_by_
 
@@ -271,26 +251,6 @@ extern "C" {
   }
 #endif // _di_f_fss_set_quotes_decrease_by_
 
-#ifndef _di_f_fss_set_quotes_delete_
-  f_status_t f_fss_set_quotes_delete(f_fss_set_quotes_t *set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_quotes_resize(0, set_quotes);
-  }
-#endif // _di_f_fss_set_quotes_delete_
-
-#ifndef _di_f_fss_set_quotes_destroy_
-  f_status_t f_fss_set_quotes_destroy(f_fss_set_quotes_t *set_quotes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quotes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_quotes_adjust(0, set_quotes);
-  }
-#endif // _di_f_fss_set_quotes_destroy_
-
 #ifndef _di_f_fss_set_quotes_increase_
   f_status_t f_fss_set_quotes_increase(f_fss_set_quotes_t *set_quotes) {
     #ifndef _di_level_0_parameter_checking_
@@ -311,7 +271,7 @@ extern "C" {
       return private_f_fss_set_quotes_resize(size, set_quotes);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_quotes_increase_
 
@@ -330,7 +290,7 @@ extern "C" {
       return private_f_fss_set_quotes_resize(set_quotes->used + amount, set_quotes);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_set_quotes_increase_by_
 
@@ -384,26 +344,6 @@ extern "C" {
   }
 #endif // _di_f_fss_sets_decrease_by_
 
-#ifndef _di_f_fss_sets_delete_
-  f_status_t f_fss_sets_delete(f_fss_sets_t *sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_sets_resize(0, sets);
-  }
-#endif // _di_f_fss_sets_delete_
-
-#ifndef _di_f_fss_sets_destroy_
-  f_status_t f_fss_sets_destroy(f_fss_sets_t *sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_sets_adjust(0, sets);
-  }
-#endif // _di_f_fss_sets_destroy_
-
 #ifndef _di_f_fss_sets_increase_
   f_status_t f_fss_sets_increase(f_fss_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
@@ -424,7 +364,7 @@ extern "C" {
       return private_f_fss_sets_resize(size, sets);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_sets_increase_
 
@@ -443,7 +383,7 @@ extern "C" {
       return private_f_fss_sets_resize(sets->used + amount, sets);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_f_fss_sets_increase_by_
 

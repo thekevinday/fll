@@ -15,7 +15,7 @@ extern "C" {
     const f_utf_string_length_t total = destination->used + length;
 
     if (total > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), total);
+      f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
       if (F_status_is_error(status)) return status;
     }
 
@@ -48,7 +48,7 @@ extern "C" {
           f_utf_string_length_t total = destination->used + size;
 
           if (total > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), total);
+            f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
             if (F_status_is_error(status)) return status;
           }
 
@@ -71,7 +71,7 @@ extern "C" {
             f_utf_string_length_t total = destination->used + size;
 
             if (total > destination->size) {
-              f_macro_string_dynamic_t_resize(status, (*destination), total);
+              f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
               if (F_status_is_error(status)) return status;
             }
 
@@ -262,7 +262,7 @@ extern "C" {
     const f_utf_string_length_t total = destination->used + length;
 
     if (total > destination->size) {
-      f_macro_string_dynamic_t_resize(status, (*destination), total);
+      f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
       if (F_status_is_error(status)) return status;
     }
 
@@ -304,7 +304,7 @@ extern "C" {
           const f_utf_string_length_t total = destination->used + size;
 
           if (total > destination->size) {
-            f_macro_string_dynamic_t_resize(status, (*destination), total);
+            f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
             if (F_status_is_error(status)) return status;
           }
 
@@ -330,7 +330,7 @@ extern "C" {
             const f_utf_string_length_t total = destination->used + size;
 
             if (total > destination->size) {
-              f_macro_string_dynamic_t_resize(status, (*destination), total);
+              f_macro_utf_string_dynamic_t_resize(status, (*destination), total);
 
               if (F_status_is_error(status)) return status;
             }

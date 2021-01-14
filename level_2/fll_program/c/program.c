@@ -272,7 +272,7 @@ extern "C" {
         status = fl_string_rip(argv[values.array[i]], length, &ripped);
 
         if (F_status_is_error(status)) {
-          f_string_dynamic_delete(&ripped);
+          f_macro_string_dynamic_t_delete_simple(ripped);
           return status;
         }
 
@@ -280,7 +280,7 @@ extern "C" {
           status = f_string_dynamic_mash(glue, glue_length, ripped, destination);
 
           if (F_status_is_error(status)) {
-            f_string_dynamic_delete(&ripped);
+            f_macro_string_dynamic_t_delete_simple(ripped)
             return F_status_set_error(F_string_too_large);
           }
         }
@@ -288,7 +288,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      status = f_string_dynamic_delete(&ripped);
+      f_macro_string_dynamic_t_delete_simple(ripped)
     }
 
     if (status == F_none && start == destination->used) {

@@ -204,18 +204,10 @@ extern "C" {
         status = fl_environment_path_explode_dynamic(path, &paths);
       }
 
-      if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&path);
-        f_string_dynamics_delete(&paths);
-
-        return status;
-      }
-
-      status = f_string_dynamic_delete(&path);
+      f_macro_string_dynamic_t_delete_simple(path);
 
       if (F_status_is_error(status)) {
         f_macro_string_dynamics_t_delete_simple(paths);
-
         return status;
       }
 
@@ -254,14 +246,14 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          f_string_dynamics_delete(&paths);
+          f_macro_string_dynamics_t_delete_simple(paths);
 
           return status;
         }
       } // for
 
       if (!found) {
-        f_string_dynamics_delete(&paths);
+        f_macro_string_dynamics_t_delete_simple(paths);
 
         return F_status_set_error(F_file_found_not);
       }
@@ -270,7 +262,7 @@ extern "C" {
 
       memcpy(&program_path, found->string, found->used);
 
-      status = f_string_dynamics_delete(&paths);
+      status = f_macro_string_dynamics_t_delete_simple(paths);
       if (F_status_is_error(status)) return status;
 
       if (parameter && parameter->data) {

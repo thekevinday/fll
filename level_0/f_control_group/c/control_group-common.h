@@ -57,14 +57,6 @@ extern "C" {
     f_macro_string_dynamic_t_clear(control.path); \
     f_macro_string_dynamics_t_clear(control.groups);
 
-  #define f_macro_control_group_t_delete(status, control) \
-    f_macro_string_dynamic_t_delete(status, control.path); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_delete(status, control.groups);
-
-  #define f_macro_control_group_t_destroy(status, control) \
-    f_macro_string_dynamic_t_destroy(status, control.path); \
-    if (F_status_is_error_not(status)) f_macro_string_dynamics_t_destroy(status, control.groups);
-
   #define f_macro_control_group_t_delete_simple(control) \
     f_macro_string_dynamic_t_delete_simple(control.path); \
     f_macro_string_dynamics_t_delete_simple(control.groups);

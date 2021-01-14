@@ -5,11 +5,11 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void **pointer) {
 
     if (length_old == length_new) {
-      return F_none;
+      return F_data_not;
     }
 
     if (*pointer) {
@@ -59,18 +59,18 @@ extern "C" {
       }
     }
     else {
-      return F_none;
+      return F_data_not;
     }
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
 
-#if !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
   f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void **pointer) {
 
     if (length_old == length_new) {
-      return F_none;
+      return F_data_not;
     }
 
     if (*pointer) {
@@ -111,19 +111,19 @@ extern "C" {
       }
     }
     else {
-      return F_none;
+      return F_data_not;
     }
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
 
     const f_status_t status = private_f_memory_adjust(*size, length_new, type_size, structure);
 
-    if (status == F_none) {
+    if (F_status_is_error_not(status)) {
       *size = length_new;
 
       if (*used > *size) {
@@ -133,14 +133,14 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_) || !defined(_di_f_memory_structure_decimate_by_) || !defined(_di_f_memory_structure_destroy_)
+#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
 
-#if !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
   f_status_t private_f_memory_structure_resize(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size) {
 
     const f_status_t status = private_f_memory_resize(*size, length_new, type_size, structure);
 
-    if (status == F_none) {
+    if (F_status_is_error_not(status)) {
       *size = length_new;
 
       if (*used > *size) {
@@ -150,7 +150,7 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_memory_structure_decrease_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_delete_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_new_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 
 #ifdef __cplusplus
 } // extern "C"

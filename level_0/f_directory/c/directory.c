@@ -145,8 +145,8 @@ extern "C" {
       size = strnlen(listing[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
-      if (!strncmp(listing[i]->d_name, "..", 3) == 0 || strncmp(listing[i]->d_name, ".", 2))  {
-        f_memory_delete((void **) & listing[i], sizeof(char *), 1);
+      if (!strncmp(listing[i]->d_name, "..", 3) || !strncmp(listing[i]->d_name, ".", 2))  {
+        f_memory_delete((void **) & listing[i], sizeof(char *), size);
         continue;
       }
 
@@ -155,18 +155,18 @@ extern "C" {
         if (F_status_is_error(status)) break;
       }
 
-      f_macro_string_dynamic_t_new(status, names->array[names->used], size);
+      f_macro_string_dynamic_t_clear(names->array[names->used])
+      f_macro_string_dynamic_t_resize(status, names->array[names->used], size);
       if (F_status_is_error(status)) break;
 
       memcpy(names->array[names->used].string, listing[i]->d_name, size);
-      names->array[names->used].used = size;
-      names->used++;
+      names->array[names->used++].used = size;
 
-      f_memory_delete((void **) & listing[i], sizeof(char *), 1);
+      f_memory_delete((void **) & listing[i], sizeof(char *), size);
     } // for
 
     for (; i < length; i++) {
-      f_memory_delete((void **) & listing[i], sizeof(char *), 1);
+      f_memory_delete((void **) & listing[i], sizeof(char *), size);
     } // for
 
     f_memory_delete((void **) & listing, sizeof(struct dirent *), 1);

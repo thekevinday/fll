@@ -26,7 +26,7 @@ extern "C" {
  * A special f_macro_string_range_t_initialize() is provided for the special purpose of easily initialize a static string range.
  *
  * start: the start position.
- * stop: the stop position.
+ * stop:  the stop position.
  */
 #ifndef _di_f_string_range_t_
   typedef struct {
@@ -47,8 +47,8 @@ extern "C" {
  * An array of string ranges.
  *
  * array: the array of string ranges.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
  */
 #ifndef _di_f_string_ranges_t_
   typedef struct {
@@ -58,25 +58,20 @@ extern "C" {
     f_array_length_t used;
   } f_string_ranges_t;
 
-  #define f_string_ranges_t_initialize {0, 0, 0}
+  #define f_string_ranges_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_ranges_t_clear(ranges) f_macro_memory_structure_clear(ranges);
+  #define f_macro_string_ranges_t_clear(ranges) f_macro_memory_structure_clear(ranges)
 
-  #define f_macro_string_ranges_t_new(status, ranges, length) f_macro_memory_structure_new(status, ranges, f_string_range_t, length);
+  #define f_macro_string_ranges_t_resize(status, ranges, length) status = f_string_ranges_resize(length, &ranges);
+  #define f_macro_string_ranges_t_adjust(status, ranges, length) status = f_string_ranges_adjust(length, &ranges);
 
-  #define f_macro_string_ranges_t_resize(status, ranges, length) f_macro_memory_structure_resize(status, ranges, f_string_range_t, length);
-  #define f_macro_string_ranges_t_adjust(status, ranges, length) f_macro_memory_structure_adjust(status, ranges, f_string_range_t, length);
+  #define f_macro_string_ranges_t_delete_simple(ranges)  f_string_ranges_resize(0, &ranges);
+  #define f_macro_string_ranges_t_destroy_simple(ranges) f_string_ranges_adjust(0, &ranges);
 
-  #define f_macro_string_ranges_t_delete(status, ranges)  f_macro_memory_structure_delete(status, ranges, f_string_range_t);
-  #define f_macro_string_ranges_t_destroy(status, ranges) f_macro_memory_structure_destroy(status, ranges, f_string_range_t);
-
-  #define f_macro_string_ranges_t_delete_simple(ranges)  f_macro_memory_structure_delete_simple(ranges, f_string_range_t);
-  #define f_macro_string_ranges_t_destroy_simple(ranges) f_macro_memory_structure_destroy_simple(ranges, f_string_range_t);
-
-  #define f_macro_string_ranges_t_increase(status, ranges)            f_macro_memory_structure_increase(status, ranges, f_string_range_t);
-  #define f_macro_string_ranges_t_increase_by(status, ranges, amount) f_macro_memory_structure_increase_by(status, ranges, f_string_range_t, amount);
-  #define f_macro_string_ranges_t_decrease_by(status, ranges, amount) f_macro_memory_structure_decrease_by(status, ranges, f_string_range_t, amount);
-  #define f_macro_string_ranges_t_decimate_by(status, ranges, amount) f_macro_memory_structure_decimate_by(status, ranges, f_string_range_t, amount);
+  #define f_macro_string_ranges_t_increase(status, ranges)            status = f_string_ranges_increase(&ranges);
+  #define f_macro_string_ranges_t_increase_by(status, ranges, amount) status = f_string_ranges_increase_by(amount, &ranges);
+  #define f_macro_string_ranges_t_decrease_by(status, ranges, amount) status = f_string_ranges_decrease_by(amount, &ranges);
+  #define f_macro_string_ranges_t_decimate_by(status, ranges, amount) status = f_string_ranges_decimate_by(amount, &ranges);
 #endif // _di_f_string_ranges_t_
 
 /**
@@ -96,23 +91,18 @@ extern "C" {
 
   #define f_string_rangess_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_rangess_t_clear(rangess) f_macro_memory_structures_clear(rangess);
+  #define f_macro_string_rangess_t_clear(rangess) f_macro_memory_structures_clear(rangess)
 
-  #define f_macro_string_rangess_t_new(status, rangess, length) f_macro_memory_structures_new(status, rangess, f_string_ranges_t, length);
+  #define f_macro_string_rangess_t_resize(status, rangess, length) status = f_string_rangess_resize(length, &rangess);
+  #define f_macro_string_rangess_t_adjust(status, rangess, length) status = f_string_rangess_adjust(length, &rangess);
 
-  #define f_macro_string_rangess_t_resize(status, rangess, length) f_macro_memory_structures_resize(status, rangess, f_string_range_t, f_string_ranges_t, length, f_array_length_t);
-  #define f_macro_string_rangess_t_adjust(status, rangess, length) f_macro_memory_structures_adjust(status, rangess, f_string_range_t, f_string_ranges_t, length, f_array_length_t);
+  #define f_macro_string_rangess_t_delete_simple(rangess)  f_string_rangess_resize(0, &rangess);
+  #define f_macro_string_rangess_t_destroy_simple(rangess) f_string_rangess_adjust(0, &rangess);
 
-  #define f_macro_string_rangess_t_delete(status, rangess)  f_macro_memory_structures_delete(status, rangess, f_string_range_t, f_string_ranges_t);
-  #define f_macro_string_rangess_t_destroy(status, rangess) f_macro_memory_structures_destroy(status, rangess, f_string_range_t, f_string_ranges_t);
-
-  #define f_macro_string_rangess_t_delete_simple(rangess)  f_macro_memory_structures_delete_simple(rangess, f_string_range_t, f_string_ranges_t);
-  #define f_macro_string_rangess_t_destroy_simple(rangess) f_macro_memory_structures_destroy_simple(rangess, f_string_range_t, f_string_ranges_t);
-
-  #define f_macro_string_rangess_t_increase(status, string_ranges)            f_macro_memory_structures_increase(status, string_ranges, f_string_range_t, f_array_length_t);
-  #define f_macro_string_rangess_t_increase_by(status, string_ranges, amount) f_macro_memory_structures_increase_by(status, string_ranges, f_string_range_t, f_array_length_t, amount);
-  #define f_macro_string_rangess_t_decrease_by(status, string_ranges, amount) f_macro_memory_structures_decrease_by(status, string_ranges, f_string_range_t, f_string_ranges_t, f_array_length_t, amount);
-  #define f_macro_string_rangess_t_decimate_by(status, string_ranges, amount) f_macro_memory_structures_decimate_by(status, string_ranges, f_string_range_t, f_string_ranges_t, f_array_length_t, amount);
+  #define f_macro_string_rangess_t_increase(status, rangess)            status = f_string_rangess_increase(&rangess);
+  #define f_macro_string_rangess_t_increase_by(status, rangess, amount) status = f_string_rangess_increase_by(amount, &rangess);
+  #define f_macro_string_rangess_t_decrease_by(status, rangess, amount) status = f_string_rangess_decrease_by(amount, &rangess);
+  #define f_macro_string_rangess_t_decimate_by(status, rangess, amount) status = f_string_rangess_decimate_by(amount, &rangess);
 #endif // _di_f_string_rangess_t_
 
 /**
@@ -125,6 +115,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -146,6 +137,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -167,40 +159,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_ranges_decrease_by_
   extern f_status_t f_string_ranges_decrease_by(const f_array_length_t amount, f_string_ranges_t *ranges);
 #endif // _di_f_string_ranges_decrease_by_
-
-/**
- * Delete the array of string ranges.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_ranges_delete_
-  extern f_status_t f_string_ranges_delete(f_string_ranges_t *ranges);
-#endif // _di_f_string_ranges_delete_
-
-/**
- * Delete the array of string ranges.
- *
- * @param ranges
- *   The ranges to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_string_ranges_destroy_
-  extern f_status_t f_string_ranges_destroy(f_string_ranges_t *ranges);
-#endif // _di_f_string_ranges_destroy_
 
 /**
  * Increase the size of the string ranges array, but only if necessary.
@@ -210,10 +175,12 @@ extern "C" {
  *
  * @param ranges
  *   The string ranges array to resize.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  * @return
  *   F_none on success.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -235,6 +202,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -253,12 +222,138 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_string_ranges_adjust_
-  extern f_status_t f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t *ranges);
-#endif // _di_f_string_ranges_adjust_
+#ifndef _di_f_string_ranges_resize_
+  extern f_status_t f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t *ranges);
+#endif // _di_f_string_ranges_resize_
+
+/**
+ * Resize the string rangess array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param rangess
+ *   The string rangess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_rangess_adjust_
+  extern f_status_t f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_adjust_
+
+/**
+ * Resize the string rangess array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param rangess
+ *   The string rangess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_rangess_decimate_by_
+  extern f_status_t f_string_rangess_decimate_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_decimate_by_
+
+/**
+ * Resize the string rangess array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param rangess
+ *   The string rangess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_rangess_decrease_by_
+  extern f_status_t f_string_rangess_decrease_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_decrease_by_
+
+/**
+ * Increase the size of the string rangess array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param rangess
+ *   The string rangess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_rangess_increase_
+  extern f_status_t f_string_rangess_increase(f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_increase_
+
+/**
+ * Resize the string rangess array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param rangess
+ *   The string rangess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_string_rangess_increase_by_
+  extern f_status_t f_string_rangess_increase_by(const f_array_length_t amount, f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_increase_by_
+
+/**
+ * Resize the string rangess array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param rangess
+ *   The string rangess array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_rangess_resize_
+  extern f_status_t f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t *rangess);
+#endif // _di_f_string_rangess_resize_
 
 #ifdef __cplusplus
 } // extern "C"

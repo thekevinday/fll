@@ -454,7 +454,7 @@ extern "C" {
         // Clear buffers before continuing.
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
       }
 
       if (F_status_is_error_not(status) && data->remaining.used > 0) {
@@ -510,13 +510,13 @@ extern "C" {
           // Clear buffers before repeating the loop.
           f_macro_fss_contents_t_delete_simple(data->contents);
           f_macro_fss_objects_t_delete_simple(data->objects);
-          f_string_dynamic_delete(&data->buffer);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
         } // for
 
         if (F_status_is_error(status)) {
           f_macro_fss_contents_t_delete_simple(data->contents);
           f_macro_fss_objects_t_delete_simple(data->objects);
-          f_string_dynamic_delete(&data->buffer);
+          f_macro_string_dynamic_t_delete_simple(data->buffer);
         }
       }
 
@@ -544,7 +544,7 @@ extern "C" {
 
     f_macro_fss_contents_t_delete_simple(data->contents);
     f_macro_fss_objects_t_delete_simple(data->objects);
-    f_string_dynamic_delete(&data->buffer);
+    f_macro_string_dynamic_t_delete_simple(data->buffer);
     f_macro_string_lengths_t_delete_simple(data->remaining);
 
     f_macro_color_context_t_delete_simple(data->context);

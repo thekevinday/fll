@@ -16,7 +16,7 @@ extern "C" {
         depth_size = data.parameters[fss_basic_read_parameter_depth].values.used;
       }
 
-      fss_basic_read_macro_depths_t_new(status, (*depths), depth_size);
+      fss_basic_read_macro_depths_t_resize(status, (*depths), depth_size);
 
       if (F_status_is_error(status)) {
         fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
@@ -195,7 +195,7 @@ extern "C" {
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
@@ -208,7 +208,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         f_macro_fss_contents_t_delete_simple(data->contents);
         f_macro_fss_objects_t_delete_simple(data->objects);
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         return status;
       }

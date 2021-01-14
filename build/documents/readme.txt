@@ -34,10 +34,11 @@ Readme Documentation:
   - f_type: provides core typedef, #define, and similar structures for the entire set of FLL projects.
   - f_status: provides status codes and other status codes to be used by the entire set of FLL projects.
   - f_memory: provides common memory allocation/deallocation to be used by the entire set of FLL projects.
+  - f_type_array: provides an extension on f_type that requires linking to f_memory to be used by the entire set of FLL projects.
   - f_string: provides common string management to be used by the entire set of the FLL projects.
   - f_utf: provides common UTF-8 related string management to be used by the entire set of the FLL projects.
 
-  The above projects should be installed first, and in the provided order (f_type, then f_status, then f_memory, f_string, and finally f_utf).
+  The above projects should be installed first, and in the provided order (f_type, then f_status, then f_memory, then f_type_array, then f_string, and finally f_utf).
   No other level_0 project should depend on another and can be installed in any order.
 
   To facilitate building of this project, two different build systems are provided\:

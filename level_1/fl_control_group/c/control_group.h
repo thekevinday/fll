@@ -66,20 +66,6 @@ extern "C" {
   extern f_status_t fl_control_group_apply(const f_control_group_t control_group, const pid_t id);
 #endif // _di_fl_control_group_apply_
 
-/**
- * Delete the control group structure.
- *
- * @param control_group
- *   The control group to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_control_group_delete_
-  extern f_status_t fl_control_group_delete(f_control_group_t *control_group);
-#endif // _di_fl_control_group_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

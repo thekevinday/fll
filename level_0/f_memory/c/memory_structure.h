@@ -67,7 +67,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but amount is 0 so there is nothing to do.
+ *   F_data_not on success, but there is no reason to decimate size (amount = 0 or size = 0).
  *
  *   F_memory_not (with error bit) on out of memory.
  *
@@ -99,7 +99,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but amount is 0 so there is nothing to do.
+ *   F_data_not on success, but there is no reason to decrease size (amount = 0 or size = 0).
  *
  *   F_memory_not (with error bit) on allocation error.
  *
@@ -110,64 +110,6 @@ extern "C" {
 #ifndef _di_f_memory_structure_decrease_by_
   extern f_status_t f_memory_structure_decrease_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
 #endif // _di_f_memory_structure_decrease_by_
-
-/**
- * Delete the structure.
- *
- * Memory being deleted will not be wiped.
- *
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- *   Must be greater than 0.
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but amount is 0 so there is nothing to do.
- *
- *   F_memory_not (with error bit) on allocation error.
- *
- * @see calloc()
- * @see free()
- * @see memset()
- */
-#ifndef _di_f_memory_structure_delete_
-  extern f_status_t f_memory_structure_delete(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
-#endif // _di_f_memory_structure_delete_
-
-/**
- * Destroy the structure.
- *
- * Memory being deleted will be wiped.
- *
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- *   Must be greater than 0.
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   F_none on success.
- *   F_data_not on success, but amount is 0 so there is nothing to do.
- *
- *   F_memory_not (with error bit) on allocation error.
- *
- * @see calloc()
- * @see free()
- * @see memset()
- */
-#ifndef _di_f_memory_structure_destroy_
-  extern f_status_t f_memory_structure_destroy(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
-#endif // _di_f_memory_structure_destroy_
 
 /**
  * Increase the size of the structure, but only if necessary.
@@ -187,7 +129,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on allocation error.
  *
  * @see calloc()
@@ -219,8 +163,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but amount is 0 so there is nothing to do.
+ *   F_data_not on success, but there is no reason to increase size (amount = 0 or used + 1 <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on allocation error.
  *
  * @see calloc()
@@ -230,38 +175,6 @@ extern "C" {
 #ifndef _di_f_memory_structure_increase_by_
   extern f_status_t f_memory_structure_increase_by(const f_array_length_t amount, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
 #endif // _di_f_memory_structure_increase_by_
-
-/**
- * Initialize a new structure.
- *
- * The structure will be cleared before making changes.
- * Be sure any existing data is deallocation as necessary.
- *
- * @param length_new
- *   The new size of the structure array.
- *   Must be greater than 0.
- * @param type_size
- *   The size of the structure type (such as: sizeof(structure_size)).
- *   Must be greater than 0.
- * @param structure
- *   The structure to delete.
- * @param used
- *   The amount of data used by the structure.
- * @param size
- *   The amount of data allocated to the structure.
- *
- * @return
- *   F_none on success.
- *
- *   F_memory_not (with error bit) on allocation error.
- *
- * @see calloc()
- * @see free()
- * @see memset()
- */
-#ifndef _di_f_memory_structure_new_
-  extern f_status_t f_memory_structure_new(const size_t length_new, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
-#endif // _di_f_memory_structure_new_
 
 /**
  * Resize the structure.

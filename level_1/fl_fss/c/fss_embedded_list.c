@@ -271,12 +271,14 @@ extern "C" {
 
     f_string_lengths_t positions_start = f_string_lengths_t_initialize;
 
-    f_macro_string_lengths_t_new(status, positions_start, f_fss_default_allocation_step);
+    f_macro_string_lengths_t_clear(positions_start)
+    f_macro_string_lengths_t_resize(status, positions_start, f_fss_default_allocation_step)
     if (F_status_is_error(status)) return status;
 
     f_fss_objects_t objects = f_fss_objects_t_initialize;
 
-    f_macro_fss_objects_t_new(status, objects, f_fss_default_allocation_step);
+    f_macro_fss_objects_t_clear(objects)
+    f_macro_fss_objects_t_resize(status, objects, f_fss_default_allocation_step)
 
     if (F_status_is_error(status)) {
       f_macro_string_lengths_t_delete_simple(positions_start);
@@ -745,7 +747,7 @@ extern "C" {
         status = f_fss_seek_to_eol(buffer, range);
         if (F_status_is_error(status)) break;
 
-        f_macro_string_ranges_t_increase(status, (*comments));
+        f_macro_fss_comments_t_increase(status, (*comments))
         if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {

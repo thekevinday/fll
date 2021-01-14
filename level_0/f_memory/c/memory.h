@@ -21,7 +21,6 @@
 
 // fll-0 includes
 #include <level_0/type.h>
-#include <level_0/type_array.h>
 #include <level_0/status.h>
 
 // fll-0 memory includes
@@ -48,6 +47,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -58,31 +59,6 @@ extern "C" {
 #ifndef _di_f_memory_adjust_
   extern f_status_t f_memory_adjust(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
 #endif // _di_f_memory_adjust_
-
-/**
- * Create some dynamically allocated array of some length, guaranteeing aligned memory.
- *
- * @param pointer
- *   A pointer that will be updated to the address of the newly allocated memory.
- * @param alignment
- *   The size of the alignment, such as sizeof(void *).
- *   Must be greater than 0.
- * @param length
- *   The total number of blocks to be allocated.
- *   Must be greater than 0.
- *   Must be a multiple of alignment.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on allocation error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see posix_memalign()
- * @see memset()
- */
-#ifndef _di_f_memory_new_aligned_
-  extern f_status_t f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
-#endif // _di_f_memory_new_aligned_
 
 /**
  * Delete dynamically allocated data.
@@ -102,6 +78,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see free()
@@ -126,6 +104,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see free()
@@ -149,6 +129,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
  *   F_memory_not (with error bit) on allocation error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -158,6 +140,33 @@ extern "C" {
 #ifndef _di_f_memory_new_
   extern f_status_t f_memory_new(void **pointer, const size_t size, const size_t length);
 #endif // _di_f_memory_new_
+
+/**
+ * Create some dynamically allocated array of some length, guaranteeing aligned memory.
+ *
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
+ * @param alignment
+ *   The size of the alignment, such as sizeof(void *).
+ *   Must be greater than 0.
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
+ *   Must be a multiple of alignment.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
+ *   F_memory_not (with error bit) on allocation error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see posix_memalign()
+ * @see memset()
+ */
+#ifndef _di_f_memory_new_aligned_
+  extern f_status_t f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
+#endif // _di_f_memory_new_aligned_
 
 /**
  * Resize dynamically allocated data.
@@ -175,6 +184,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there was nothing to do.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *

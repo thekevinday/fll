@@ -114,12 +114,12 @@ extern "C" {
 
     f_macro_string_lengths_t_delete_simple(data->remaining);
 
-    f_string_dynamic_delete(&data->setting_kernel.root);
-    f_string_dynamic_delete(&data->setting_kernel.root_group);
-    f_string_dynamic_delete(&data->setting_kernel.root_sub);
-    f_string_dynamic_delete(&data->setting_kernel.run);
-    f_string_dynamic_delete(&data->setting_kernel.settings);
-    f_string_dynamic_delete(&data->setting_kernel.settings_name);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root_group);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root_sub);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.run);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.settings);
+    f_macro_string_dynamic_t_delete_simple(data->setting_kernel.settings_name);
 
     f_macro_color_context_t_delete_simple(data->context);
 

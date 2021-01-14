@@ -42,26 +42,20 @@ extern "C" {
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
   #define f_macro_fss_item_t_clear(item) \
-    item.object.start = 1; \
-    item.object.stop = 0; \
+    f_macro_fss_object_t_clear(item.object); \
     f_macro_fss_content_t_clear(item.content); \
     item.parent = 0;
 
-  #define f_macro_fss_item_t_new(status, item, length) status = f_fss_item_new(length, &item);
+  #define f_macro_fss_item_t_resize(status, item, length) f_macro_fss_content_t_resize(status, item.content, length)
+  #define f_macro_fss_item_t_adjust(status, item, length) f_macro_fss_content_t_adjust(status, item.content, length)
 
-  #define f_macro_fss_item_t_resize(status, item, length) status = f_fss_item_resize(length, &item);
-  #define f_macro_fss_item_t_adjust(status, item, length) status = f_fss_item_adjust(length, &item);
+  #define f_macro_fss_item_t_delete_simple(item)  f_macro_fss_content_t_delete_simple(item.content)
+  #define f_macro_fss_item_t_destroy_simple(item) f_macro_fss_content_t_destroy_simple(item.content)
 
-  #define f_macro_fss_item_t_delete(status, item)  status = f_fss_item_delete(&item);
-  #define f_macro_fss_item_t_destroy(status, item) status = f_fss_item_destroy(&item);
-
-  #define f_macro_fss_item_t_delete_simple(item)  f_fss_item_delete(&item);
-  #define f_macro_fss_item_t_destroy_simple(item) f_fss_item_destroy(&item);
-
-  #define f_macro_fss_item_t_increase(status, item)            status = f_fss_item_increase(&item);
-  #define f_macro_fss_item_t_increase_by(status, item, amount) status = f_fss_item_increase_by(amount, &item);
-  #define f_macro_fss_item_t_decrease_by(status, item, amount) status = f_fss_item_decrease_by(amount, &item);
-  #define f_macro_fss_item_t_decimate_by(status, item, amount) status = f_fss_item_decimate_by(amount, &item);
+  #define f_macro_fss_item_t_increase(status, item)            f_macro_fss_content_t_increase(status, item.content)
+  #define f_macro_fss_item_t_increase_by(status, item, amount) f_macro_fss_content_t_increase_by(status, item.content, amount)
+  #define f_macro_fss_item_t_decrease_by(status, item, amount) f_macro_fss_content_t_decrease_by(status, item.content, amount)
+  #define f_macro_fss_item_t_decimate_by(status, item, amount) f_macro_fss_content_t_decimate_by(status, item.content, amount)
 #endif // _di_fss_item_t_
 
 /**
@@ -102,21 +96,13 @@ extern "C" {
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_items_t_clear(items) \
-    items.array = 0; \
-    items.size = 0; \
-    items.used = 0;
-
-  #define f_macro_fss_items_t_new(status, items, length) f_macro_memory_structure_new(status, items, f_fss_items_t, length);
+  #define f_macro_fss_items_t_clear(items) f_macro_memory_structure_clear(items)
 
   #define f_macro_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
   #define f_macro_fss_items_t_adjust(status, items, length) status = f_fss_items_adjust(length, &items);
 
-  #define f_macro_fss_items_t_delete(status, items)  status = f_fss_items_delete(&items);
-  #define f_macro_fss_items_t_destroy(status, items) status = f_fss_items_destroy(&items);
-
-  #define f_macro_fss_items_t_delete_simple(items)  f_fss_items_delete(&items);
-  #define f_macro_fss_items_t_destroy_simple(items) f_fss_items_destroy(&items);
+  #define f_macro_fss_items_t_delete_simple(items)  f_fss_items_resize(0, &items);
+  #define f_macro_fss_items_t_destroy_simple(items) f_fss_items_adjust(0, &items);
 
   #define f_macro_fss_items_t_increase(status, items)            status = f_fss_items_increase(&items);
   #define f_macro_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
@@ -146,21 +132,13 @@ extern "C" {
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_nest_t_clear(nest) \
-    nest.depth = 0; \
-    nest.size = 0; \
-    nest.used = 0;
-
-  #define f_macro_fss_nest_t_new(status, nest, length) f_macro_memory_structure_new(status, nest, f_fss_nest_t, length);
+  #define f_macro_fss_nest_t_clear(nest) f_macro_memory_structures_clear(nest)
 
   #define f_macro_fss_nest_t_resize(status, nest, length) status = f_fss_nest_resize(length, &nest);
   #define f_macro_fss_nest_t_adjust(status, nest, length) status = f_fss_nest_adjust(length, &nest);
 
-  #define f_macro_fss_nest_t_delete(status, nest)  status = f_fss_nest_delete(&nest);
-  #define f_macro_fss_nest_t_destroy(status, nest) status = f_fss_nest_destroy(&nest);
-
-  #define f_macro_fss_nest_t_delete_simple(nest)  f_fss_nest_delete(&nest);
-  #define f_macro_fss_nest_t_destroy_simple(nest) f_fss_nest_destroy(&nest);
+  #define f_macro_fss_nest_t_delete_simple(nest)  f_fss_nest_resize(0, &nest);
+  #define f_macro_fss_nest_t_destroy_simple(nest) f_fss_nest_adjust(0, &nest);
 
   #define f_macro_fss_nest_t_increase(status, nest)            status = f_fss_nest_increase(&nest);
   #define f_macro_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
@@ -185,21 +163,13 @@ extern "C" {
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_nests_t_clear(nests) \
-    nests.array = 0; \
-    nests.size = 0; \
-    nests.used = 0;
-
-  #define f_macro_fss_nests_t_new(status, nests, length) f_macro_memory_structure_new(status, nests, f_fss_nests_t, length);
+  #define f_macro_fss_nests_t_clear(nests) f_macro_memory_structures_clear(nests)
 
   #define f_macro_fss_nests_t_resize(status, nests, length) status = f_fss_nests_resize(length, &nests);
   #define f_macro_fss_nests_t_adjust(status, nests, length) status = f_fss_nests_adjust(length, &nests);
 
-  #define f_macro_fss_nests_t_delete(status, nests)  status = f_fss_nests_delete(&nests);
-  #define f_macro_fss_nests_t_destroy(status, nests) status = f_fss_nests_destroy(&nests);
-
-  #define f_macro_fss_nests_t_delete_simple(nests)  f_fss_nests_delete(&nests);
-  #define f_macro_fss_nests_t_destroy_simple(nests) f_fss_nests_destroy(&nests);
+  #define f_macro_fss_nests_t_delete_simple(nests)  f_fss_nests_resize(0, &nests);
+  #define f_macro_fss_nests_t_destroy_simple(nests) f_fss_nests_adjust(0, &nests);
 
   #define f_macro_fss_nests_t_increase(status, nests)            status = f_fss_nests_increase(&nests);
   #define f_macro_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
@@ -212,175 +182,12 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param item
- *   The item array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_adjust_
-  extern f_status_t f_fss_item_adjust(const f_array_length_t length, f_fss_item_t *item);
-#endif // _di_f_fss_item_adjust_
-
-/**
- * Resize the nest array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decimate the size by.
- * @param item
- *   The item array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_decimate_by_
-  extern f_status_t f_fss_item_decimate_by(const f_array_length_t amount, f_fss_item_t *item);
-#endif // _di_f_fss_item_decimate_by_
-
-/**
- * Resize the nest array to a smaller size.
- *
- * This will resize making the array smaller based on (size - given length).
- * If the given length is too small, then the resize will fail.
- * This will not shrink the size to less than 0.
- *
- * @param amount
- *   A positive number representing how much to decrease the size by.
- * @param item
- *   The item array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_decrease_by_
-  extern f_status_t f_fss_item_decrease_by(const f_array_length_t amount, f_fss_item_t *item);
-#endif // _di_f_fss_item_decrease_by_
-
-/**
- * Delete the array of nest.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_delete_
-  extern f_status_t f_fss_item_delete(f_fss_item_t *ranges);
-#endif // _di_f_fss_item_delete_
-
-/**
- * Delete the array of nest.
- *
- * @param item
- *   The item to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_destroy_
-  extern f_status_t f_fss_item_destroy(f_fss_item_t *item);
-#endif // _di_f_fss_item_destroy_
-
-/**
- * Increase the size of the item array, but only if necessary.
- *
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param item
- *   The item array to resize.
- *
- * @return
- *   F_none on success.
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_increase_
-  extern f_status_t f_fss_item_increase(f_fss_item_t *item);
-#endif // _di_f_fss_item_increase_
-
-/**
- * Resize the item array to a larger size.
- *
- * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
- *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param item
- *   The item array to resize.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
- */
-#ifndef _di_f_fss_item_increase_by_
-  extern f_status_t f_fss_item_increase_by(const f_array_length_t amount, f_fss_item_t *item);
-#endif // _di_f_fss_item_increase_by_
-
-/**
- * Create a new item array.
- *
- * This clears all pointers, so be sure the structure is no longer allocated.
- *
- * @param length
- *   The new size to use.
- * @param item
- *   The item array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_new_
-  extern f_status_t f_fss_item_new(const f_array_length_t length, f_fss_item_t *item);
-#endif // _di_f_fss_item_new_
-
-/**
- * Resize the item array.
- *
- * @param length
- *   The new size to use.
- * @param item
- *   The item array to adjust.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_item_resize_
-  extern f_status_t f_fss_item_resize(const f_array_length_t length, f_fss_item_t *item);
-#endif // _di_f_fss_item_resize_
-
-/**
- * Resize the nest array.
- *
- * @param length
- *   The new size to use.
  * @param items
  *   The items array to resize.
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -402,6 +209,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -423,40 +231,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_decrease_by_
   extern f_status_t f_fss_items_decrease_by(const f_array_length_t amount, f_fss_items_t *items);
 #endif // _di_f_fss_items_decrease_by_
-
-/**
- * Delete the array of nest.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_items_delete_
-  extern f_status_t f_fss_items_delete(f_fss_items_t *ranges);
-#endif // _di_f_fss_items_delete_
-
-/**
- * Delete the array of nest.
- *
- * @param items
- *   The items to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_items_destroy_
-  extern f_status_t f_fss_items_destroy(f_fss_items_t *items);
-#endif // _di_f_fss_items_destroy_
 
 /**
  * Increase the size of the items array, but only if necessary.
@@ -469,6 +250,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -491,6 +274,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -509,6 +294,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -526,6 +312,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -547,6 +334,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -568,40 +356,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_decrease_by_
   extern f_status_t f_fss_nest_decrease_by(const f_array_length_t amount, f_fss_nest_t *nest);
 #endif // _di_f_fss_nest_decrease_by_
-
-/**
- * Delete the array of nest.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_nest_delete_
-  extern f_status_t f_fss_nest_delete(f_fss_nest_t *ranges);
-#endif // _di_f_fss_nest_delete_
-
-/**
- * Delete the array of nest.
- *
- * @param nest
- *   The nest to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_nest_destroy_
-  extern f_status_t f_fss_nest_destroy(f_fss_nest_t *nest);
-#endif // _di_f_fss_nest_destroy_
 
 /**
  * Increase the size of the nest array, but only if necessary.
@@ -614,6 +375,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -636,6 +399,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -654,6 +419,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -671,6 +437,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -692,6 +459,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -713,40 +481,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_decrease_by_
   extern f_status_t f_fss_nests_decrease_by(const f_array_length_t amount, f_fss_nests_t *nests);
 #endif // _di_f_fss_nests_decrease_by_
-
-/**
- * Delete the array of nest.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_nests_delete_
-  extern f_status_t f_fss_nests_delete(f_fss_nests_t *ranges);
-#endif // _di_f_fss_nests_delete_
-
-/**
- * Delete the array of nest.
- *
- * @param nests
- *   The nests to destroy.
- *
- * @return
- *   F_none on success.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_nests_destroy_
-  extern f_status_t f_fss_nests_destroy(f_fss_nests_t *nests);
-#endif // _di_f_fss_nests_destroy_
 
 /**
  * Increase the size of the nests array, but only if necessary.
@@ -759,6 +500,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -781,6 +524,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
@@ -799,6 +544,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

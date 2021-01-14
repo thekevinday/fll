@@ -35,21 +35,18 @@ extern "C" {
 
   #define f_fss_delimits_t_initialize f_string_lengths_t_initialize
 
-  #define f_macro_fss_delimits_t_new(status, lengths, length) f_macro_string_lengths_t_new(status, lengths, length);
+  #define f_macro_fss_delimits_t_clear(delimits) f_macro_string_lengths_t_clear(delimits)
 
-  #define f_macro_fss_delimits_t_resize(status, lengths, length) f_macro_string_lengths_t_resize(status, lengths, length);
-  #define f_macro_fss_delimits_t_adjust(status, lengths, length) f_macro_string_lengths_t_adjust(status, lengths, length);
+  #define f_macro_fss_delimits_t_resize(status, delimits, length) f_macro_string_lengths_t_resize(status, delimits, length)
+  #define f_macro_fss_delimits_t_adjust(status, delimits, length) f_macro_string_lengths_t_adjust(status, delimits, length)
 
-  #define f_macro_fss_delimits_t_delete(status, lengths)  f_macro_string_lengths_t_delete(status, lengths);
-  #define f_macro_fss_delimits_t_destroy(status, lengths) f_macro_string_lengths_t_destroy(status, lengths);
+  #define f_macro_fss_delimits_t_delete_simple(delimits)  f_macro_string_lengths_t_delete_simple(delimits)
+  #define f_macro_fss_delimits_t_destroy_simple(delimits) f_macro_string_lengths_t_destroy_simple(delimits)
 
-  #define f_macro_fss_delimits_t_delete_simple(lengths)  f_macro_string_lengths_t_delete_simple(lengths);
-  #define f_macro_fss_delimits_t_destroy_simple(lengths) f_macro_string_lengths_t_destroy_simple(lengths);
-
-  #define f_macro_fss_delimits_t_increase(status, lengths)            f_macro_string_lengths_t_increase(status, lengths);
-  #define f_macro_fss_delimits_t_increase_by(status, lengths, amount) f_macro_string_lengths_t_increase_by(status, lengths, amount);
-  #define f_macro_fss_delimits_t_decrease_by(status, lengths, amount) f_macro_string_lengths_t_decrease_by(status, lengths, amount);
-  #define f_macro_fss_delimits_t_decimate_by(status, lengths, amount) f_macro_string_lengths_t_decimate_by(status, lengths, amount);
+  #define f_macro_fss_delimits_t_increase(status, delimits)            f_macro_string_lengths_t_increase(status, delimits)
+  #define f_macro_fss_delimits_t_increase_by(status, delimits, amount) f_macro_string_lengths_t_increase_by(status, delimits, amount)
+  #define f_macro_fss_delimits_t_decrease_by(status, delimits, amount) f_macro_string_lengths_t_decrease_by(status, delimits, amount)
+  #define f_macro_fss_delimits_t_decimate_by(status, delimits, amount) f_macro_string_lengths_t_decimate_by(status, delimits, amount)
 #endif // _di_f_fss_delimits_t_
 
 /**
@@ -64,23 +61,18 @@ extern "C" {
 
   #define f_fss_delimitss_t_initialize f_string_lengthss_t_initialize
 
-  #define f_macro_fss_delimitss_t_clear(delimitss) f_macro_string_lengthss_t_clear(delimitss);
+  #define f_macro_fss_delimitss_t_clear(delimitss) f_macro_string_lengthss_t_clear(delimitss)
 
-  #define f_macro_fss_delimitss_t_new(status, delimitss, length) f_macro_string_lengthss_t_new(status, delimitss, length);
+  #define f_macro_fss_delimitss_t_resize(status, delimitss, length) f_macro_string_lengthss_t_resize(status, delimitss, length)
+  #define f_macro_fss_delimitss_t_adjust(status, delimitss, length) f_macro_string_lengthss_t_adjust(status, delimitss, length)
 
-  #define f_macro_fss_delimitss_t_resize(status, delimitss, length) f_macro_string_lengthss_t_resize(status, delimitss, length);
-  #define f_macro_fss_delimitss_t_adjust(status, delimitss, length) f_macro_string_lengthss_t_adjust(status, delimitss, length);
+  #define f_macro_fss_delimitss_t_delete_simple(delimitss)  f_macro_string_lengthss_t_delete_simple(delimitss)
+  #define f_macro_fss_delimitss_t_destroy_simple(delimitss) f_macro_string_lengthss_t_destroy_simple(delimitss)
 
-  #define f_macro_fss_delimitss_t_delete(status, delimitss)  f_macro_string_lengthss_t_delete(status, delimitss);
-  #define f_macro_fss_delimitss_t_destroy(status, delimitss) f_macro_string_lengthss_t_destroy(status, delimitss);
-
-  #define f_macro_fss_delimitss_t_delete_simple(delimitss)  f_macro_string_lengthss_t_delete_simple(delimitss);
-  #define f_macro_fss_delimitss_t_destroy_simple(delimitss) f_macro_string_lengthss_t_destroy_simple(delimitss);
-
-  #define f_macro_fss_delimitss_t_increase(status, lengthss)            f_macro_string_lengthss_t_increase(status, lengthss);
-  #define f_macro_fss_delimitss_t_increase_by(status, lengthss, amount) f_macro_string_lengthss_t_increase_by(status, lengthss, amount);
-  #define f_macro_fss_delimitss_t_decrease_by(status, lengthss, amount) f_macro_string_lengthss_t_decrease_by(status, lengthss, amount);
-  #define f_macro_fss_delimitss_t_decimate_by(status, lengthss, amount) f_macro_string_lengthss_t_decimate_by(status, lengthss, amount);
+  #define f_macro_fss_delimitss_t_increase(status, delimitss)            f_macro_string_lengthss_t_increase(status, delimitss)
+  #define f_macro_fss_delimitss_t_increase_by(status, delimitss, amount) f_macro_string_lengthss_t_increase_by(status, delimitss, amount)
+  #define f_macro_fss_delimitss_t_decrease_by(status, delimitss, amount) f_macro_string_lengthss_t_decrease_by(status, delimitss, amount)
+  #define f_macro_fss_delimitss_t_decimate_by(status, delimitss, amount) f_macro_string_lengthss_t_decimate_by(status, delimitss, amount)
 #endif // _di_f_fss_delimitss_t_
 
 #ifdef __cplusplus

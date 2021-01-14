@@ -247,7 +247,7 @@ extern "C" {
 
     private_fl_macro_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
-    f_macro_string_ranges_t_increase(status, (*found));
+    f_macro_fss_content_t_increase(status, (*found))
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;
@@ -420,7 +420,7 @@ extern "C" {
         status = f_fss_seek_to_eol(buffer, range);
         if (F_status_is_error(status)) break;
 
-        f_macro_string_ranges_t_increase(status, (*comments));
+        f_macro_fss_comments_t_increase(status, (*comments))
         if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {

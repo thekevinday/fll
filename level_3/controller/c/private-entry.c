@@ -85,7 +85,7 @@ extern "C" {
       return status;
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_controller_entry_actions_increase_by_
 
@@ -588,7 +588,7 @@ extern "C" {
       return status;
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_controller_entry_items_increase_by_
 

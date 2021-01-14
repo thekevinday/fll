@@ -35,7 +35,8 @@ extern "C" {
         if (length > 0) {
           length += 2;
 
-          f_macro_string_dynamic_t_new(status, (*directory), length);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), length)
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 1, argument + begin, length - 2);
@@ -46,7 +47,8 @@ extern "C" {
           directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
-          f_macro_string_dynamic_t_new(status, (*directory), 1);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), 1)
           if (F_status_is_error(status)) return status;
 
           directory->used = 1;
@@ -66,7 +68,8 @@ extern "C" {
         if (length > 0) {
           length += 4;
 
-          f_macro_string_dynamic_t_new(status, (*directory), length);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), length);
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 3, argument + begin, length - 4);
@@ -79,7 +82,8 @@ extern "C" {
           directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
-          f_macro_string_dynamic_t_new(status, (*directory), 3);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), 3)
           if (F_status_is_error(status)) return status;
 
           directory->used = 3;
@@ -101,7 +105,8 @@ extern "C" {
         if (length > 0) {
           length += 3;
 
-          f_macro_string_dynamic_t_new(status, (*directory), length);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), length)
           if (F_status_is_error(status)) return status;
 
           memcpy(directory->string + 2, argument + begin, length - 3);
@@ -113,7 +118,8 @@ extern "C" {
           directory->string[length - 1] = f_path_separator_s[0];
         }
         else {
-          f_macro_string_dynamic_t_new(status, (*directory), 2);
+          f_macro_string_dynamic_t_clear((*directory))
+          f_macro_string_dynamic_t_resize(status, (*directory), 2)
           if (F_status_is_error(status)) return status;
 
           directory->used = 2;
@@ -125,7 +131,8 @@ extern "C" {
       else {
         length++;
 
-        f_macro_string_dynamic_t_new(status, (*directory), length);
+        f_macro_string_dynamic_t_clear((*directory))
+        f_macro_string_dynamic_t_resize(status, (*directory), length)
         if (F_status_is_error(status)) return status;
 
         memcpy(directory->string, argument, length - 1);
@@ -136,7 +143,8 @@ extern "C" {
       }
     }
     else if (argument[0] != f_path_separator_s[0]) {
-      f_macro_string_dynamic_t_new(status, (*directory), 2);
+      f_macro_string_dynamic_t_clear((*directory))
+      f_macro_string_dynamic_t_resize(status, (*directory), 2)
       if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 2);
@@ -146,7 +154,8 @@ extern "C" {
       directory->string[1] = f_path_separator_s[0];
     }
     else {
-      f_macro_string_dynamic_t_new(status, (*directory), 1);
+      f_macro_string_dynamic_t_clear((*directory))
+      f_macro_string_dynamic_t_resize(status, (*directory), 1)
       if (F_status_is_error(status)) return status;
 
       memcpy(directory->string, argument, 1);

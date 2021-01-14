@@ -17,7 +17,7 @@ extern "C" {
       status = f_string_append(source, length, &argument);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&argument);
+        f_macro_string_dynamic_t_delete_simple(argument);
         return status;
       }
     }
@@ -25,7 +25,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&argument);
+      f_macro_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
@@ -50,7 +50,7 @@ extern "C" {
       status = f_string_append(prefix, prefix_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&argument);
+        f_string_dynamic_resize(0, &argument);
 
         return status;
       }
@@ -60,7 +60,7 @@ extern "C" {
       status = f_string_append(name, name_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&argument);
+        f_string_dynamic_resize(0, &argument);
 
         return status;
       }
@@ -69,15 +69,14 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&argument);
+      f_string_dynamic_resize(0, &argument);
 
       return status;
     }
 
     arguments->array[arguments->used].string = argument.string;
     arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used].size = argument.size;
-    arguments->used++;
+    arguments->array[arguments->used++].size = argument.size;
 
     f_macro_string_dynamic_t_clear(argument);
 
@@ -85,7 +84,7 @@ extern "C" {
       status = f_string_append(value, value_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_string_dynamic_delete(&argument);
+        f_macro_string_dynamic_t_delete_simple(argument);
 
         return status;
       }
@@ -94,7 +93,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&argument);
+      f_macro_string_dynamic_t_delete_simple(argument);
 
       return status;
     }
@@ -102,15 +101,14 @@ extern "C" {
     status = f_string_dynamics_increase(arguments);
 
     if (F_status_is_error(status)) {
-      f_string_dynamic_delete(&argument);
+      f_string_dynamic_resize(0, &argument);
 
       return status;
     }
 
     arguments->array[arguments->used].string = argument.string;
     arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used].size = argument.size;
-    arguments->used++;
+    arguments->array[arguments->used++].size = argument.size;
 
     return F_none;
   }

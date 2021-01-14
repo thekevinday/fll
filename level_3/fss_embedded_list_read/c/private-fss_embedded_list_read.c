@@ -102,7 +102,7 @@ extern "C" {
         i = data.parameters[fss_embedded_list_read_parameter_depth].values.used + 1;
       }
 
-      fss_embedded_list_read_macro_depths_t_new(status, (*depths), i);
+      fss_embedded_list_read_macro_depths_t_resize(status, (*depths), i);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);
@@ -234,7 +234,7 @@ extern "C" {
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         if (data->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
@@ -246,7 +246,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         f_macro_fss_nest_t_delete_simple(data->nest);
-        f_string_dynamic_delete(&data->buffer);
+        f_macro_string_dynamic_t_delete_simple(data->buffer);
 
         return status;
       }

@@ -298,7 +298,6 @@ extern "C" {
   #define f_macro_utf_string_quantitys_t_decimate_by(status, quantitys, amount) f_macro_memory_structure_decimate_by(status, quantitys, f_utf_string_quantity_t, amount);
 #endif // _di_f_utf_string_quantitys_t_
 
-
 /**
  * A string that is analogous to f_utf_string_dynamic_t but intended for static-only uses.
  *
@@ -425,7 +424,7 @@ extern "C" {
     if (new_length < dynamics.size) { \
       for (f_utf_string_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; ++_macro__i) { \
         f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[_macro__i]); \
-        if (status != F_none) break; \
+        if (F_status_is_error(status)) break; \
       } \
     } \
     if (status == F_none) status = f_memory_resize((void **) & dynamics.array, sizeof(f_utf_string_dynamic_t), dynamics.size, new_length); \
@@ -439,7 +438,7 @@ extern "C" {
     if (new_length < dynamics.size) { \
       for (f_utf_string_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; ++_macro__i) { \
         f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[_macro__i], f_utf_string_dynamic_t); \
-        if (status != F_none) break; \
+        if (F_status_is_error(status)) break; \
       } \
     } \
     if (status == F_none) status = f_memory_adjust((void **) & dynamics.array, sizeof(f_utf_string_dynamic_t), dynamics.size, new_length); \
@@ -453,7 +452,7 @@ extern "C" {
     while (dynamics.size > 0) { \
       --dynamics.size; \
       f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[dynamics.size]); \
-      if (status != F_none) break; \
+      if (F_status_is_error(status)) break; \
     } \
     if (status == F_none) status = f_memory_delete((void **) & dynamics.array, sizeof(f_utf_string_dynamic_t), dynamics.size); \
     if (status == F_none) dynamics.used = 0;
@@ -463,7 +462,7 @@ extern "C" {
     while (dynamics.size > 0) { \
       --dynamics.size; \
       f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[dynamics.size]); \
-      if (status != F_none) break; \
+      if (F_status_is_error(status)) break; \
     } \
     if (status == F_none) status = f_memory_destroy((void **) & dynamics.array, sizeof(f_utf_string_dynamic_t), dynamics.size); \
     if (status == F_none) dynamics.used = 0;

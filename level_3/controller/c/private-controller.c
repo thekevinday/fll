@@ -144,7 +144,7 @@ extern "C" {
         status = f_directory_exists(path_directory.string);
       }
 
-      f_string_dynamic_delete(&path_directory);
+      f_macro_string_dynamic_t_delete_simple(path_directory)
 
       if (F_status_is_error(status)) return status;
 
@@ -214,7 +214,7 @@ extern "C" {
       }
     }
 
-    f_string_dynamic_delete(&pid_buffer);
+    f_macro_string_dynamic_t_delete_simple(pid_buffer);
   }
 #endif // _di_controller_file_pid_delete_
 
@@ -358,10 +358,10 @@ extern "C" {
     cache->name_action.used = 0;
     cache->name_item.used = 0;
 
-    status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->ats);
+    f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+      fll_error_print(data.error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       return status;
     }
 
@@ -452,10 +452,10 @@ extern "C" {
 
               if (error_has) break;
 
-              status2 = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->ats);
+              f_macro_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
 
               if (F_status_is_error(status2)) {
-                fll_error_print(data.error, F_status_set_fine(status2), "fl_type_array_lengths_increase_by", F_true);
+                fll_error_print(data.error, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true);
                 controller_entry_error_print(data.error, *cache);
 
                 return status2;
@@ -581,10 +581,10 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->ats);
+    f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       controller_entry_error_print(data->error, *cache);
 
       return status;
@@ -769,10 +769,10 @@ extern "C" {
             return F_status_is_error(F_critical);
           }
 
-          status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->ats);
+          f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
             controller_entry_error_print(data->error, *cache);
 
             return status;

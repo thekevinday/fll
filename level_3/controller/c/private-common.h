@@ -342,7 +342,7 @@ extern "C" {
     }
 
   #define controller_macro_rule_action_t_delete_simple(action) \
-    f_string_dynamics_delete(&action.parameters);
+    f_macro_string_dynamics_t_delete_simple(action.parameters);
 #endif // _di_controller_rule_action_t_
 
 #ifndef _di_controller_rule_actions_t_
@@ -525,21 +525,21 @@ extern "C" {
     }
 
   #define controller_macro_rule_t_delete_simple(rule) \
-    f_string_dynamic_delete(&rule.id); \
-    f_string_dynamic_delete(&rule.name); \
-    f_string_dynamic_delete(&rule.path); \
-    f_string_dynamic_delete(&rule.script); \
+    f_macro_string_dynamic_t_delete_simple(rule.id) \
+    f_macro_string_dynamic_t_delete_simple(rule.name) \
+    f_macro_string_dynamic_t_delete_simple(rule.path) \
+    f_macro_string_dynamic_t_delete_simple(rule.script) \
     f_macro_string_maps_t_delete_simple(rule.define) \
     f_macro_string_maps_t_delete_simple(rule.parameter) \
-    f_string_dynamics_delete(&rule.environment); \
-    f_string_dynamics_delete(&rule.need); \
-    f_string_dynamics_delete(&rule.want); \
-    f_string_dynamics_delete(&rule.wish); \
-    fl_type_int32s_delete(&rule.affinity); \
+    f_macro_string_dynamics_t_delete_simple(rule.environment) \
+    f_macro_string_dynamics_t_delete_simple(rule.need) \
+    f_macro_string_dynamics_t_delete_simple(rule.want) \
+    f_macro_string_dynamics_t_delete_simple(rule.wish) \
+    f_macro_int32s_t_delete_simple(rule.affinity) \
     f_capability_delete(&rule.capability); \
-    fl_control_group_delete(&rule.control_group); \
-    fl_type_int32s_delete(&rule.groups); \
-    f_macro_limit_sets_t_delete_simple(rule.limits); \
+    f_macro_control_group_t_delete_simple(rule.control_group) \
+    f_macro_int32s_t_delete_simple(rule.groups) \
+    f_macro_limit_sets_t_delete_simple(rule.limits) \
     controller_macro_rule_items_t_delete_simple(rule.items)
 #endif // _di_controller_rule_t_
 
@@ -609,7 +609,7 @@ extern "C" {
     }
 
   #define controller_macro_entry_action_t_delete_simple(action) \
-    f_string_dynamics_delete(&action.parameters);
+    f_macro_string_dynamics_t_delete_simple(action.parameters);
 #endif // _di_controller_entry_action_t_
 
 #ifndef _di_controller_entry_actions_t_
@@ -633,7 +633,7 @@ extern "C" {
       actions.used--; \
       controller_macro_entry_action_t_delete_simple(actions.array[actions.used]); \
     } \
-    f_memory_delete((void **) & actions.array, sizeof(controller_entry_action_t), actions.size); \
+    f_memory_resize((void **) & actions.array, sizeof(controller_entry_action_t), actions.size, 0); \
     actions.size = 0;
 #endif // _di_controller_entry_actions_t_
 
@@ -653,7 +653,7 @@ extern "C" {
     }
 
   #define controller_macro_entry_item_t_delete_simple(item) \
-    f_string_dynamic_delete(&item.name); \
+    f_macro_string_dynamic_t_delete_simple(item.name); \
     controller_macro_entry_actions_t_delete_simple(item.actions)
 #endif // _di_controller_entry_item_t_
 
@@ -746,9 +746,9 @@ extern "C" {
     }
 
   #define controller_macro_setting_t_delete_simple(setting) \
-    f_string_dynamic_delete(&setting.path_control); \
-    f_string_dynamic_delete(&setting.path_pid); \
-    f_string_dynamic_delete(&setting.path_setting); \
+    f_macro_string_dynamic_t_delete_simple(setting.path_control) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_pid) \
+    f_macro_string_dynamic_t_delete_simple(setting.path_setting) \
     controller_macro_entry_t_delete_simple(setting.entry) \
     controller_macro_rules_t_delete_simple(setting.rules)
 #endif // _di_controller_setting_t
@@ -809,8 +809,8 @@ extern "C" {
     }
 
   #define controller_macro_cache_t_delete_simple(cache) \
-    fl_type_array_lengths_delete(&cache.ats); \
-    fl_type_array_lengths_delete(&cache.stack); \
+    f_macro_array_lengths_t_delete_simple(cache.ats) \
+    f_macro_array_lengths_t_delete_simple(cache.stack) \
     f_macro_fss_comments_t_delete_simple(cache.comments) \
     f_macro_fss_delimits_t_delete_simple(cache.delimits) \
     f_macro_fss_content_t_delete_simple(cache.content_action) \
@@ -818,13 +818,13 @@ extern "C" {
     f_macro_fss_contents_t_delete_simple(cache.content_items) \
     f_macro_fss_objects_t_delete_simple(cache.object_actions) \
     f_macro_fss_objects_t_delete_simple(cache.object_items) \
-    f_string_dynamic_delete(&cache.buffer_file); \
-    f_string_dynamic_delete(&cache.buffer_item); \
-    f_string_dynamic_delete(&cache.buffer_other); \
-    f_string_dynamic_delete(&cache.buffer_path); \
-    f_string_dynamic_delete(&cache.name_action); \
-    f_string_dynamic_delete(&cache.name_file); \
-    f_string_dynamic_delete(&cache.name_item);
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_other) \
+    f_macro_string_dynamic_t_delete_simple(cache.buffer_path) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_item)
 #endif // _di_controller_cache_t_
 
 #ifdef __cplusplus

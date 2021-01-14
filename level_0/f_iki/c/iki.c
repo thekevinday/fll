@@ -128,7 +128,7 @@ extern "C" {
             status = f_utf_buffer_increment(*buffer, range, 1);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               return status;
             }
 
@@ -143,7 +143,7 @@ extern "C" {
           } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete(status, delimits);
+            f_macro_string_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -157,7 +157,7 @@ extern "C" {
           // this is not a valid vocabulary name so seek until a non-word, non-dash, or non-plus character.
           f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_false);
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete(status, delimits);
+            f_macro_string_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -200,7 +200,7 @@ extern "C" {
             status = f_utf_buffer_increment(*buffer, range, 1);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               return status;
             }
           } // while
@@ -213,7 +213,7 @@ extern "C" {
           status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete(status, delimits);
+            f_macro_string_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -222,15 +222,15 @@ extern "C" {
             f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               return status;
             }
             else if (range->start > range->stop) {
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               return F_data_not_stop;
             }
             else if (range->start >= buffer->used) {
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               return F_data_not_eos;
             }
 
@@ -241,7 +241,7 @@ extern "C" {
         status = f_utf_buffer_increment(*buffer, range, 1);
 
         if (F_status_is_error(status)) {
-          f_macro_string_lengths_t_delete(status, delimits);
+          f_macro_string_lengths_t_delete_simple(delimits);
           return status;
         }
       } // while
@@ -264,7 +264,7 @@ extern "C" {
               f_macro_iki_allocate_delimits_if_necessary(status, delimits);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete(status, delimits);
+                f_macro_string_lengths_t_delete_simple(delimits);
                 return status;
               }
 
@@ -290,7 +290,7 @@ extern "C" {
               }
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete(status, delimits);
+                f_macro_string_lengths_t_delete_simple(delimits);
                 return status;
               }
 
@@ -310,7 +310,7 @@ extern "C" {
                 buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
               } // for
 
-              f_macro_string_lengths_t_delete(status, delimits);
+              f_macro_string_lengths_t_delete_simple(delimits);
               if (F_status_is_error(status)) return status;
 
               range->start++;
@@ -355,7 +355,7 @@ extern "C" {
                   }
 
                   if (F_status_is_error(status)) {
-                    f_macro_string_lengths_t_delete(status, delimits);
+                    f_macro_string_lengths_t_delete_simple(delimits);
                     return status;
                   }
                 }
@@ -375,7 +375,7 @@ extern "C" {
                   status = f_utf_buffer_increment(*buffer, (&content_range), 1);
 
                   if (F_status_is_error(status)) {
-                    f_macro_string_lengths_t_delete(status, delimits);
+                    f_macro_string_lengths_t_delete_simple(delimits);
                     return status;
                   }
                 } // while
@@ -388,7 +388,7 @@ extern "C" {
                     f_macro_iki_allocate_delimits_if_necessary(status, delimits);
 
                     if (F_status_is_error(status)) {
-                      f_macro_string_lengths_t_delete(status, delimits);
+                      f_macro_string_lengths_t_delete_simple(delimits);
                       return status;
                     }
 
@@ -417,7 +417,7 @@ extern "C" {
                     }
 
                     if (F_status_is_error(status)) {
-                      f_macro_string_lengths_t_delete(status, delimits);
+                      f_macro_string_lengths_t_delete_simple(delimits);
                       return status;
                     }
 
@@ -437,7 +437,7 @@ extern "C" {
                       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
                     } // for
 
-                    f_macro_string_lengths_t_delete(status, delimits);
+                    f_macro_string_lengths_t_delete_simple(delimits);
                     if (F_status_is_error(status)) return status;
 
                     range->start++;
@@ -465,7 +465,7 @@ extern "C" {
               status = f_utf_buffer_increment(*buffer, range, 1);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete(status, delimits);
+                f_macro_string_lengths_t_delete_simple(delimits);
                 return status;
               }
             } // while
@@ -474,7 +474,7 @@ extern "C" {
           status = f_utf_buffer_increment(*buffer, range, 1);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete(status, delimits);
+            f_macro_string_lengths_t_delete_simple(delimits);
             return status;
           }
         } // while
@@ -496,7 +496,7 @@ extern "C" {
       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
     } // for
 
-    f_macro_string_lengths_t_delete(status, delimits);
+    f_macro_string_lengths_t_delete_simple(delimits);
     if (F_status_is_error(status)) return status;
 
     if (range->start > range->stop) {

@@ -174,7 +174,7 @@ extern "C" {
       return status;
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_controller_rule_actions_increase_by_
 
@@ -672,7 +672,7 @@ extern "C" {
       if (status == F_child || status == F_signal || F_status_is_error(status) && !simulate) break;
     } // for
 
-    f_string_maps_delete(&environment);
+    f_macro_string_maps_t_delete_simple(environment);
 
     if (status == F_child) {
       return status;
@@ -1107,7 +1107,7 @@ extern "C" {
       return status;
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // _di_controller_rule_items_increase_by_
 
@@ -1310,10 +1310,12 @@ extern "C" {
       return F_status_set_error(F_parameter);
     }
 
-    f_status_t status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->stack);
+    f_status_t status = F_none;
+
+    f_macro_array_lengths_t_increase_by(status, cache->stack, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+      fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       controller_rule_error_print(data->error, *cache, F_true);
 
       return status;
@@ -1441,10 +1443,10 @@ extern "C" {
             // when the status is unknown, then the rule has not been executed, so attempt to execute it.
             if (setting->rules.array[at].status == F_known_not) {
 
-              status = fl_type_array_lengths_increase_by(controller_default_allocation_step, &cache->stack);
+              f_macro_array_lengths_t_increase_by(status, cache->stack, controller_default_allocation_step)
 
               if (F_status_is_error(status)) {
-                fll_error_print(data->error, F_status_set_fine(status), "fl_type_array_lengths_increase_by", F_true);
+                fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
                 controller_rule_error_print(data->error, *cache, F_true);
 
                 // always exit on memory errors, even in simulate mode.
@@ -3145,10 +3147,10 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          status = fl_type_int32s_increase(&rule->groups);
+          f_macro_array_lengths_t_increase_by(status, rule->groups, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fl_type_int32s_increase", F_true);
+            fll_error_print(data.error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;

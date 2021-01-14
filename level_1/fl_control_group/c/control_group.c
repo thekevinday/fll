@@ -60,16 +60,6 @@ extern "C" {
   }
 #endif // _di_fl_control_group_apply_
 
-#ifndef _di_fl_control_group_delete_
-  f_status_t fl_control_group_delete(f_control_group_t *control_group) {
-    f_status_t status = F_none;
-
-    f_macro_control_group_t_delete(status, (*control_group));
-
-    return status;
-  }
-#endif // _di_fl_control_group_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

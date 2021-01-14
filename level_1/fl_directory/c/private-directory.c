@@ -484,7 +484,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(entity[i]->d_name, "..", 3) || !strncmp(entity[i]->d_name, ".", 2)) {
-        f_memory_delete((void **) & entity[i], sizeof(char *), 1);
+        f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
         continue;
       }
 
@@ -525,7 +525,8 @@ extern "C" {
         if (F_status_is_error(status)) break;
       }
 
-      f_macro_string_dynamic_t_new(status, names->array[names->used], size);
+      f_macro_string_dynamic_t_clear(names->array[names->used])
+      f_macro_string_dynamic_t_resize(status, names->array[names->used], size);
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
@@ -550,16 +551,16 @@ extern "C" {
       names->array[names->used].used = size;
       names->used++;
 
-      f_memory_delete((void **) & entity[i], sizeof(char *), 1);
+      f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
     } // for
 
     closedir(parent);
 
     for (; i < length; i++) {
-      f_memory_delete((void **) & entity[i], sizeof(char *), 1);
+      f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
     } // for
 
-    f_memory_delete((void **) & entity, sizeof(struct dirent *), 1);
+    f_memory_resize((void **) & entity, sizeof(struct dirent *), 1, 0);
 
     if (F_status_is_error(status)) return status;
     if (!length) return F_data_not;

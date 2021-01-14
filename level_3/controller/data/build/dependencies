@@ -3,6 +3,7 @@
 f_type
 f_status
 f_memory
+f_type_array
 f_string
 f_utf
 f_account
@@ -30,7 +31,6 @@ fl_environment
 fl_fss
 fl_iki
 fl_string
-fl_type
 fll_control_group
 fll_error
 fll_execute

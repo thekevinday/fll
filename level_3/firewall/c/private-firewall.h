@@ -66,9 +66,9 @@ typedef struct {
   }
 
 #define firewall_macro_delete_fss_buffers(status, buffer, objects, contents) \
-  f_string_dynamic_delete(&buffer); \
-  f_macro_fss_objects_t_delete(status, objects); \
-  f_macro_fss_contents_t_delete(status, contents);
+  f_macro_string_dynamic_t_delete_simple(buffer); \
+  f_macro_fss_objects_t_delete_simple(objects); \
+  f_macro_fss_contents_t_delete_simple(contents);
 
 #define firewall_macro_concat_string(destination, source, length) \
   memcpy((void *)(destination), source, length);

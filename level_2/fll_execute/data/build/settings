@@ -19,8 +19,8 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc -lcap
-build_libraries-individual -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_thread -lf_utf
-build_libraries-individual_threadless -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_utf
+build_libraries-individual -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_thread -lf_type_array -lf_utf
+build_libraries-individual_threadless -lfl_control_group -lfl_environment -lf_account -lf_capability -lf_control_group -lf_environment -lf_file -lf_limit -lf_memory -lf_path -lf_signal -lf_string -lf_type_array -lf_utf
 build_sources_library execute.c private-execute.c
 build_sources_program
 build_sources_headers execute.h

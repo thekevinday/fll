@@ -6,10 +6,17 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-  f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *string) {
-    f_status_t status = F_none;
+  f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic) {
 
-    f_macro_string_dynamic_t_adjust(status, (*string), length);
+    f_status_t status = f_memory_adjust((void **) & dynamic->string, sizeof(f_string_t), dynamic->size, length);
+
+    if (F_status_is_error_not(status)) {
+      dynamic->size = length;
+
+      if (dynamic->used > dynamic->size) {
+        dynamic->used = length;
+      }
+    }
 
     return status;
   }
@@ -17,10 +24,9 @@ extern "C" {
 
 #if !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_)
   f_status_t private_f_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
-    f_status_t status = F_none;
 
     if (destination->used + length > destination->size) {
-      status = private_f_string_dynamic_increase_by(length, destination);
+      const f_status_t status = private_f_string_dynamic_increase_by(length, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -83,130 +89,191 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
 
-#if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
-  f_status_t private_f_string_dynamic_delete(f_string_dynamic_t *string) {
-    f_status_t status = F_none;
-
-    f_macro_string_dynamic_t_delete(status, (*string));
-
-    return status;
-  }
-#endif // !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_delete_)
-
-#if !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_delete_)
-  f_status_t private_f_string_dynamic_destroy(f_string_dynamic_t *string) {
-    f_status_t status = F_none;
-
-    f_macro_string_dynamic_t_destroy(status, (*string));
-
-    return status;
-  }
-#endif // !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamic_delete_)
-
 #if !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
-  f_status_t private_f_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *string) {
+  f_status_t private_f_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *dynamic) {
 
-    if (string->used + amount > string->size) {
-      if (string->used + amount > f_string_length_t_size) {
+    if (dynamic->used + amount > dynamic->size) {
+      if (dynamic->used + amount > f_string_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
-      return private_f_string_dynamic_resize(string->used + amount, string);
+      return private_f_string_dynamic_resize(dynamic->used + amount, dynamic);
     }
 
-    return F_none;
+    return F_data_not;
   }
 #endif // !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
 
 #if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
-  f_status_t private_f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *string) {
-    f_status_t status = F_none;
+  f_status_t private_f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *dynamic) {
 
-    f_macro_string_dynamic_t_resize(status, (*string), length);
+    const f_status_t status = f_memory_resize((void **) & dynamic->string, sizeof(f_string_t), dynamic->size, length);
+
+    if (F_status_is_error_not(status)) {
+      dynamic->size = length;
+
+      if (dynamic->used > dynamic->size) {
+        dynamic->used = length;
+      }
+    }
 
     return status;
   }
 #endif // !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
 
 #if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
-  f_status_t private_f_string_dynamics_adjust(const f_string_length_t length, f_string_dynamics_t *strings) {
+  f_status_t private_f_string_dynamics_adjust(const f_string_length_t length, f_string_dynamics_t *dynamics) {
     f_status_t status = F_none;
 
-    f_macro_string_dynamics_t_adjust(status, (*strings), length);
+    for (f_array_length_t i = length; i < dynamics->size; ++i) {
+      status = private_f_string_dynamic_adjust(0, &dynamics->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & dynamics->array, sizeof(f_string_dynamic_t), dynamics->size, length);
+
+    if (F_status_is_error_not(status)) {
+      dynamics->size = length;
+
+      if (dynamics->used > dynamics->size) {
+        dynamics->used = length;
+      }
+    }
 
     return status;
   }
 #endif // !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
 
-#if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
-  f_status_t private_f_string_dynamics_delete(f_string_dynamics_t *string) {
-    f_status_t status = F_none;
-
-    f_macro_string_dynamics_t_delete(status, (*string));
-
-    return status;
-  }
-#endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_delete_)
-
-#if !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_destroy_)
-  f_status_t private_f_string_dynamics_destroy(f_string_dynamics_t *string) {
-    f_status_t status = F_none;
-
-    f_macro_string_dynamics_t_destroy(status, (*string));
-
-    return status;
-  }
-#endif // !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_dynamics_destroy_)
-
 #if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
-  f_status_t private_f_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *strings) {
+  f_status_t private_f_string_dynamics_resize(const f_string_length_t length, f_string_dynamics_t *dynamics) {
     f_status_t status = F_none;
 
-    f_macro_string_dynamics_t_resize(status, (*strings), length);
+    for (f_array_length_t i = length; i < dynamics->size; ++i) {
+      status = private_f_string_dynamic_resize(0, &dynamics->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & dynamics->array, sizeof(f_string_dynamic_t), dynamics->size, length);
+
+    if (F_status_is_error_not(status)) {
+      dynamics->size = length;
+
+      if (dynamics->used > dynamics->size) {
+        dynamics->used = length;
+      }
+    }
 
     return status;
   }
 #endif // !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_)
 
-#if !defined(_di_f_string_maps_adjust_)
+#if !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
+  f_status_t private_f_string_map_multis_adjust(const f_string_length_t length, f_string_map_multis_t *map_multis) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < map_multis->size; ++i) {
+
+      status = private_f_string_dynamic_adjust(0, &map_multis->array[i].name);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamics_adjust(0, &map_multis->array[i].value);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & map_multis->array, sizeof(f_string_map_multi_t), map_multis->size, length);
+
+    if (F_status_is_error_not(status)) {
+      map_multis->size = length;
+
+      if (map_multis->used > map_multis->size) {
+        map_multis->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_decimate_by_)
+
+#if !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_terminate_) || !defined(_di_f_string_map_multis_terminate_after_)
+  f_status_t private_f_string_map_multis_resize(const f_string_length_t length, f_string_map_multis_t *map_multis) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < map_multis->size; ++i) {
+
+      status = private_f_string_dynamic_resize(0, &map_multis->array[i].name);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamics_resize(0, &map_multis->array[i].value);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & map_multis->array, sizeof(f_string_map_multi_t), map_multis->size, length);
+
+    if (F_status_is_error_not(status)) {
+      map_multis->size = length;
+
+      if (map_multis->used > map_multis->size) {
+        map_multis->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_map_multis_decrease_by_) || !defined(_di_f_string_map_multis_increase_) || !defined(_di_f_string_map_multis_increase_by_) || !defined(_di_f_string_map_multis_terminate_) || !defined(_di_f_string_map_multis_terminate_after_)
+
+#if !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
   f_status_t private_f_string_maps_adjust(const f_string_length_t length, f_string_maps_t *maps) {
     f_status_t status = F_none;
 
-    f_macro_string_maps_t_adjust(status, (*maps), length);
+    for (f_array_length_t i = length; i < maps->size; ++i) {
+
+      status = private_f_string_dynamic_adjust(0, &maps->array[i].name);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_adjust(0, &maps->array[i].value);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & maps->array, sizeof(f_string_map_t), maps->size, length);
+
+    if (F_status_is_error_not(status)) {
+      maps->size = length;
+
+      if (maps->used > maps->size) {
+        maps->used = length;
+      }
+    }
 
     return status;
   }
-#endif // !defined(_di_f_string_maps_adjust_)
+#endif // !defined(_di_f_string_maps_adjust_) || !defined(_di_f_string_maps_decimate_by_)
 
-#if !defined(f_string_maps_decrease) || !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
-  f_status_t private_f_string_maps_delete(f_string_maps_t *maps) {
-    f_status_t status = F_none;
-
-    f_macro_string_maps_t_delete(status, (*maps));
-
-    return status;
-  }
-#endif // !defined(f_string_maps_decrease) || !defined(f_string_maps_decrease_by) || !defined(_di_f_string_maps_delete_)
-
-#if !defined(f_string_maps_decimate) || !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
-  f_status_t private_f_string_maps_destroy(f_string_maps_t *maps) {
-    f_status_t status = F_none;
-
-    f_macro_string_maps_t_destroy(status, (*maps));
-
-    return status;
-  }
-#endif // !defined(f_string_maps_decimate) || !defined(f_string_maps_decimate_by) || !defined(_di_f_string_maps_destroy_)
-
-#if !defined(_di_f_string_maps_decrease_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+#if !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
   f_status_t private_f_string_maps_resize(const f_string_length_t length, f_string_maps_t *maps) {
     f_status_t status = F_none;
 
-    f_macro_string_maps_t_resize(status, (*maps), length);
+    for (f_array_length_t i = length; i < maps->size; ++i) {
+
+      status = private_f_string_dynamic_resize(0, &maps->array[i].name);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_resize(0, &maps->array[i].value);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & maps->array, sizeof(f_string_map_t), maps->size, length);
+
+    if (F_status_is_error_not(status)) {
+      maps->size = length;
+
+      if (maps->used > maps->size) {
+        maps->used = length;
+      }
+    }
 
     return status;
   }
-#endif // !defined(_di_f_string_maps_decrease_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
+#endif // !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
 
 #if !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
   f_status_t private_f_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
@@ -299,121 +366,221 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_dynamic_mish_nulless_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_mish_nulless_) || !defined(_di_f_string_prepend_assure_nulless_) || !defined(_di_f_string_prepend_nulless_)
 
-#if !defined(_di_f_string_quantitys_adjust_)
+#if !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
   f_status_t private_f_string_quantitys_adjust(const f_string_length_t length, f_string_quantitys_t *quantitys) {
-    f_status_t status = F_none;
 
-    f_macro_string_quantitys_t_adjust(status, (*quantitys), length);
+    const f_status_t status = f_memory_adjust((void **) & quantitys->array, sizeof(f_string_quantity_t), quantitys->size, length);
 
-    return status;
-  }
-#endif // !defined(_di_f_string_quantitys_adjust_)
+    if (F_status_is_error_not(status)) {
+      quantitys->size = length;
 
-#if !defined(f_string_quantitys_decrease) || !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
-  f_status_t private_f_string_quantitys_delete(f_string_quantitys_t *quantitys) {
-    f_status_t status = F_none;
-
-    f_macro_string_quantitys_t_delete(status, (*quantitys));
+      if (quantitys->used > quantitys->size) {
+        quantitys->used = length;
+      }
+    }
 
     return status;
   }
-#endif // !defined(f_string_quantitys_decrease) || !defined(f_string_quantitys_decrease_by) || !defined(_di_f_string_quantitys_delete_)
-
-#if !defined(f_string_quantitys_decimate) || !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
-  f_status_t private_f_string_quantitys_destroy(f_string_quantitys_t *quantitys) {
-    f_status_t status = F_none;
-
-    f_macro_string_quantitys_t_destroy(status, (*quantitys));
-
-    return status;
-  }
-#endif // !defined(f_string_quantitys_decimate) || !defined(f_string_quantitys_decimate_by) || !defined(_di_f_string_quantitys_destroy_)
+#endif // !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
 
 #if !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
   f_status_t private_f_string_quantitys_resize(const f_string_length_t length, f_string_quantitys_t *quantitys) {
-    f_status_t status = F_none;
 
-    f_macro_string_quantitys_t_resize(status, (*quantitys), length);
+    const f_status_t status = f_memory_resize((void **) & quantitys->array, sizeof(f_string_quantity_t), quantitys->size, length);
+
+    if (F_status_is_error_not(status)) {
+      quantitys->size = length;
+
+      if (quantitys->used > quantitys->size) {
+        quantitys->used = length;
+      }
+    }
 
     return status;
   }
 #endif // !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
 
-#if !defined(_di_f_string_ranges_adjust_)
+#if !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
+  f_status_t private_f_string_quantityss_adjust(const f_string_length_t length, f_string_quantityss_t *quantityss) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < quantityss->size; ++i) {
+      status = private_f_string_quantitys_adjust(0, &quantityss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & quantityss->array, sizeof(f_string_quantitys_t), quantityss->size, length);
+
+    if (F_status_is_error_not(status)) {
+      quantityss->size = length;
+
+      if (quantityss->used > quantityss->size) {
+        quantityss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_quantityss_adjust_) || !defined(_di_f_string_quantityss_decimate_by_)
+
+#if !defined(_di_f_string_quantityss_decrease_) || !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_) || !defined(_di_f_string_quantityss_terminate_) || !defined(_di_f_string_quantityss_terminate_after_)
+  f_status_t private_f_string_quantityss_resize(const f_string_length_t length, f_string_quantityss_t *quantityss) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < quantityss->size; ++i) {
+      status = private_f_string_quantitys_resize(0, &quantityss->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & quantityss->array, sizeof(f_string_quantitys_t), quantityss->size, length);
+
+    if (F_status_is_error_not(status)) {
+      quantityss->size = length;
+
+      if (quantityss->used > quantityss->size) {
+        quantityss->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_quantityss_decrease_) || !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_) || !defined(_di_f_string_quantityss_terminate_) || !defined(_di_f_string_quantityss_terminate_after_)
+
+#if !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
   f_status_t private_f_string_ranges_adjust(const f_string_length_t length, f_string_ranges_t *ranges) {
-    f_status_t status = F_none;
 
-    f_macro_string_ranges_t_adjust(status, (*ranges), length);
+    const f_status_t status = f_memory_adjust((void **) & ranges->array, sizeof(f_string_range_t), ranges->size, length);
 
-    return status;
-  }
-#endif // !defined(_di_f_string_ranges_adjust_)
+    if (F_status_is_error_not(status)) {
+      ranges->size = length;
 
-#if !defined(f_string_ranges_decrease) || !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
-  f_status_t private_f_string_ranges_delete(f_string_ranges_t *ranges) {
-    f_status_t status = F_none;
-
-    f_macro_string_ranges_t_delete(status, (*ranges));
+      if (ranges->used > ranges->size) {
+        ranges->used = length;
+      }
+    }
 
     return status;
   }
-#endif // !defined(f_string_ranges_decrease) || !defined(f_string_ranges_decrease_by) || !defined(_di_f_string_ranges_delete_)
-
-#if !defined(f_string_ranges_decimate) || !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
-  f_status_t private_f_string_ranges_destroy(f_string_ranges_t *ranges) {
-    f_status_t status = F_none;
-
-    f_macro_string_ranges_t_destroy(status, (*ranges));
-
-    return status;
-  }
-#endif // !defined(f_string_ranges_decimate) || !defined(f_string_ranges_decimate_by) || !defined(_di_f_string_ranges_destroy_)
+#endif // !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
 
 #if !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
   f_status_t private_f_string_ranges_resize(const f_string_length_t length, f_string_ranges_t *ranges) {
-    f_status_t status = F_none;
 
-    f_macro_string_ranges_t_resize(status, (*ranges), length);
+    const f_status_t status = f_memory_resize((void **) & ranges->array, sizeof(f_string_range_t), ranges->size, length);
+
+    if (F_status_is_error_not(status)) {
+      ranges->size = length;
+
+      if (ranges->used > ranges->size) {
+        ranges->used = length;
+      }
+    }
 
     return status;
   }
 #endif // !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
 
-#if !defined(_di_f_string_triples_adjust_)
+#if !defined(_di_f_string_rangess_adjust_) || !defined(_di_f_string_rangess_decimate_by_)
+  f_status_t private_f_string_rangess_adjust(const f_string_length_t length, f_string_rangess_t *rangess) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < rangess->size; ++i) {
+      status = private_f_string_ranges_adjust(0, &rangess->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & rangess->array, sizeof(f_string_ranges_t), rangess->size, length);
+
+    if (F_status_is_error_not(status)) {
+      rangess->size = length;
+
+      if (rangess->used > rangess->size) {
+        rangess->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_rangess_adjust_) || !defined(_di_f_string_rangess_decimate_by_)
+
+#if !defined(_di_f_string_rangess_decrease_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_) || !defined(_di_f_string_rangess_terminate_) || !defined(_di_f_string_rangess_terminate_after_)
+  f_status_t private_f_string_rangess_resize(const f_string_length_t length, f_string_rangess_t *rangess) {
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < rangess->size; ++i) {
+      status = private_f_string_ranges_resize(0, &rangess->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & rangess->array, sizeof(f_string_ranges_t), rangess->size, length);
+
+    if (F_status_is_error_not(status)) {
+      rangess->size = length;
+
+      if (rangess->used > rangess->size) {
+        rangess->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_rangess_decrease_) || !defined(_di_f_string_rangess_decrease_by_) || !defined(_di_f_string_rangess_increase_) || !defined(_di_f_string_rangess_increase_by_) || !defined(_di_f_string_rangess_terminate_) || !defined(_di_f_string_rangess_terminate_after_)
+
+#if !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_triples_adjust(const f_string_length_t length, f_string_triples_t *triples) {
     f_status_t status = F_none;
 
-    f_macro_string_triples_t_adjust(status, (*triples), length);
+    for (f_array_length_t i = length; i < triples->size; ++i) {
+
+      status = private_f_string_dynamic_adjust(0, &triples->array[i].one);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_adjust(0, &triples->array[i].two);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_adjust(0, &triples->array[i].three);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust((void **) & triples->array, sizeof(f_string_triple_t), triples->size, length);
+
+    if (F_status_is_error_not(status)) {
+      triples->size = length;
+
+      if (triples->used > triples->size) {
+        triples->used = length;
+      }
+    }
 
     return status;
   }
-#endif // !defined(_di_f_string_triples_adjust_)
-
-#if !defined(f_string_triples_decrease) || !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
-  f_status_t private_f_string_triples_delete(f_string_triples_t *triples) {
-    f_status_t status = F_none;
-
-    f_macro_string_triples_t_delete(status, (*triples));
-
-    return status;
-  }
-#endif // !defined(f_string_triples_decrease) || !defined(f_string_triples_decrease_by) || !defined(_di_f_string_triples_delete_)
-
-#if !defined(f_string_triples_decimate) || !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
-  f_status_t private_f_string_triples_destroy(f_string_triples_t *triples) {
-    f_status_t status = F_none;
-
-    f_macro_string_triples_t_destroy(status, (*triples));
-
-    return status;
-  }
-#endif // !defined(f_string_triples_decimate) || !defined(f_string_triples_decimate_by) || !defined(_di_f_string_triples_destroy_)
+#endif // !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
 
 #if !defined(_di_f_string_triples_decrease_) || !defined(_di_f_string_triples_decrease_by_) || !defined(_di_f_string_triples_increase_) || !defined(_di_f_string_triples_increase_by_) || !defined(_di_f_string_triples_terminate_) || !defined(_di_f_string_triples_terminate_after_)
   f_status_t private_f_string_triples_resize(const f_string_length_t length, f_string_triples_t *triples) {
     f_status_t status = F_none;
 
-    f_macro_string_triples_t_resize(status, (*triples), length);
+    for (f_array_length_t i = length; i < triples->size; ++i) {
+
+      status = private_f_string_dynamic_resize(0, &triples->array[i].one);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_resize(0, &triples->array[i].two);
+      if (F_status_is_error(status)) return status;
+
+      status = private_f_string_dynamic_resize(0, &triples->array[i].three);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize((void **) & triples->array, sizeof(f_string_triple_t), triples->size, length);
+
+    if (F_status_is_error_not(status)) {
+      triples->size = length;
+
+      if (triples->used > triples->size) {
+        triples->used = length;
+      }
+    }
 
     return status;
   }

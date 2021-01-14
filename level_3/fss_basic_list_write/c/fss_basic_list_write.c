@@ -472,7 +472,7 @@ extern "C" {
         }
       }
 
-      f_string_dynamic_delete(&escaped);
+      f_macro_string_dynamic_t_delete_simple(escaped);
 
       // object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
       object.string = 0;
@@ -497,9 +497,9 @@ extern "C" {
       }
     }
 
-    f_string_dynamic_delete(&buffer);
-    f_string_dynamic_delete(&object);
-    f_string_dynamic_delete(&content);
+    f_macro_string_dynamic_t_delete_simple(buffer);
+    f_macro_string_dynamic_t_delete_simple(object);
+    f_macro_string_dynamic_t_delete_simple(content);
     fss_basic_list_write_delete_data(data);
     return status;
   }

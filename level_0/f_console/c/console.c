@@ -166,7 +166,7 @@ extern "C" {
 
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
-                if (status != F_none) {
+                if (F_status_is_error(status)) {
                   f_macro_string_lengths_t_delete_simple(needs_value);
                   return status;
                 }
@@ -175,7 +175,7 @@ extern "C" {
 
                 status = f_utf_char_to_character((f_string_t) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
-                if (status != F_none) {
+                if (F_status_is_error(status)) {
                   f_macro_string_lengths_t_delete_simple(needs_value);
                   return status;
                 }

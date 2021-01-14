@@ -33,7 +33,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        f_macro_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 
@@ -93,7 +93,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        f_macro_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 
@@ -161,7 +161,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
+        f_macro_utf_string_dynamic_t_resize(status, (*buffer), buffer->size + size_read);
         if (F_status_is_error(status)) return status;
       }
 

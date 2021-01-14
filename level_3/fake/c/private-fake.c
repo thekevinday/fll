@@ -105,12 +105,12 @@ extern "C" {
             size_file = fake_common_initial_buffer_max;
           }
 
-          f_macro_string_dynamic_t_new((status), (*buffer), size_file);
+           f_macro_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
-            f_string_dynamic_delete(&(*buffer));
+            f_macro_string_dynamic_t_delete_simple((*buffer));
             return status;
           }
         }
@@ -143,7 +143,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
-      f_string_dynamic_delete(&(*buffer));
+      f_macro_string_dynamic_t_delete_simple((*buffer));
     }
 
     return status;
@@ -785,10 +785,10 @@ extern "C" {
           }
         }
         else if (parameter_default_lengths[i] > 0) {
-          f_macro_string_dynamic_t_new(status, (*parameters_value[i]), parameter_default_lengths[i]);
+           f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamic_t_new", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(data->error, F_status_set_fine(status), " f_macro_string_dynamic_t_resize", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
               fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
               fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to load default for the parameter '", fll_error_print_error);
               fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);

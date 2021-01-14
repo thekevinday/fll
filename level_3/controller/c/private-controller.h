@@ -250,16 +250,16 @@ extern "C" {
  *   F_recurse (with error bit) on a recursion error.
  *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
  *
+ *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
- *   Errors (with error bit) from: fl_type_array_lengths_increase_by().
  *
  *   This will detect and report all errors, but only the first error is returned.
  *   Memory related errors return immediately.
- *
+
+ * @see f_macro_array_lengths_t_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_terminate_after()
- * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_preprocess_entry_
   extern f_status_t controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
@@ -279,13 +279,13 @@ extern "C" {
  *   F_none on success.
  *   F_critical (with error bit) on any critical error.
  *
+ *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
  *   Errors (with error bit) from: controller_perform_ready().
  *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
- *   Errors (with error bit) from: fl_type_array_lengths_increase_by().
  *
+ * @see f_macro_array_lengths_t_increase_by()
  * @see controller_perform_ready()
  * @see controller_string_dynamic_append_terminated()
- * @see fl_type_array_lengths_increase_by()
  */
 #ifndef _di_controller_process_entry_
   extern f_status_t controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
