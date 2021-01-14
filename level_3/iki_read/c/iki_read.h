@@ -173,50 +173,11 @@ extern "C" {
 
   #define iki_read_macro_substitutions_t_clear(replacements) f_macro_memory_structure_clear(replacements)
 
-  #define iki_read_macro_substitutions_t_delete_simple(replacements) \
-    replacements.used = replacements.size; \
-    while (replacements.used) { \
-      replacements.used--; \
-      f_macro_memory_structure_delete_simple(replacements.array[replacements.used], iki_read_substitution_t) \
-    } \
-    if (!replacements.used) f_macro_memory_structure_delete_simple(replacements, iki_read_substitution_t)
+  #define iki_read_macro_substitutions_t_delete_simple(replacements)  f_macro_memory_structure_delete_simple(replacements, iki_read_substitution_t)
+  #define iki_read_macro_substitutions_t_destroy_simple(replacements) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
 
-  #define iki_read_macro_substitutions_t_destroy_simple(replacements) \
-    replacements.used = replacements.size; \
-    while (replacements.used) { \
-      replacements.used--; \
-      f_macro_memory_structure_delete_simple(replacements.array[replacements.used], iki_read_substitution_t) \
-    } \
-    if (!replacements.used) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
-
-  #define iki_read_macro_substitutions_t_resize(status, replacements, new_length) \
-    status = F_none; \
-    if (new_length < replacements.size) { \
-      f_array_length_t i = replacements.size - new_length; \
-      for (; i < replacements.size; i++) { \
-        f_macro_memory_structure_delete_simple(replacements.array[i], iki_read_substitution_t) \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
-    if (status == F_none) { \
-      replacements.size = new_length; \
-      if (replacements.used > replacements.size) replacements.used = new_length; \
-    }
-
-  // @fixme
-  #define iki_read_macro_substitutions_t_adjust(status, replacements, new_length) \
-    status = F_none; \
-    if (new_length < replacements.size) { \
-      f_array_length_t i = replacements.size - new_length; \
-      for (; i < replacements.size; i++) { \
-        f_macro_memory_structure_delete_simple(replacements.array[i], iki_read_substitution_t) \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust((void **) & replacements.array, sizeof(iki_read_substitution_t), replacements.size, new_length); \
-    if (status == F_none) { \
-      replacements.size = new_length; \
-      if (replacements.used > replacements.size) replacements.used = new_length; \
-    }
+  #define iki_read_macro_substitutions_t_resize(status, replacements, length) f_macro_memory_structure_resize(status, replacements, iki_read_substitution_t, length)
+  #define iki_read_macro_substitutions_t_adjust(status, replacements, length) f_macro_memory_structure_adjust(status, replacements, iki_read_substitution_t, length)
 #endif // _di_iki_read_substitutions_t_
 
 #ifndef _di_iki_read_data_t_
