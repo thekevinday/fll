@@ -33,6 +33,7 @@
 #include <level_0/type.h>
 #include <level_0/status.h>
 #include <level_0/memory.h>
+#include <level_0/type_array.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
 #include <level_0/account.h>
@@ -57,7 +58,6 @@
 #include <level_1/environment.h>
 #include <level_1/fss.h>
 #include <level_1/string.h>
-#include <level_1/type.h>
 
 // fll-2 includes
 #include <level_2/control_group.h>
