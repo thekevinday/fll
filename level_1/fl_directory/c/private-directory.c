@@ -484,7 +484,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(entity[i]->d_name, "..", 3) || !strncmp(entity[i]->d_name, ".", 2)) {
-        f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
+        f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
         continue;
       }
 
@@ -551,16 +551,16 @@ extern "C" {
       names->array[names->used].used = size;
       names->used++;
 
-      f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
+      f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
     } // for
 
     closedir(parent);
 
     for (; i < length; i++) {
-      f_memory_resize((void **) & entity[i], sizeof(char *), 1, 0);
+      f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
     } // for
 
-    f_memory_resize((void **) & entity, sizeof(struct dirent *), 1, 0);
+    f_memory_resize(1, 0, sizeof(struct dirent *), (void **) & entity);
 
     if (F_status_is_error(status)) return status;
     if (!length) return F_data_not;

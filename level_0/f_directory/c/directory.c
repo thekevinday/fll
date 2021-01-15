@@ -146,7 +146,7 @@ extern "C" {
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, "..", 3) || !strncmp(listing[i]->d_name, ".", 2))  {
-        f_memory_delete((void **) & listing[i], sizeof(char *), size);
+        f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
         continue;
       }
 
@@ -162,14 +162,14 @@ extern "C" {
       memcpy(names->array[names->used].string, listing[i]->d_name, size);
       names->array[names->used++].used = size;
 
-      f_memory_delete((void **) & listing[i], sizeof(char *), size);
+      f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
     } // for
 
     for (; i < length; i++) {
-      f_memory_delete((void **) & listing[i], sizeof(char *), size);
+      f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
     } // for
 
-    f_memory_delete((void **) & listing, sizeof(struct dirent *), 1);
+    f_memory_delete(1, sizeof(struct dirent *), (void **) & listing);
 
     if (F_status_is_error(status)) return status;
     if (!length) return F_data_not;

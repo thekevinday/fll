@@ -127,7 +127,7 @@ extern "C" {
         if (F_status_is_error(status)) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_resize((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
+    if (status == F_none) status = f_memory_resize(structures.size, new_length, sizeof(f_directory_status_t), (void **) & structures.array); \
     if (status == F_none) { \
       structures.size = new_length; \
       if (structures.used > structures.size) structures.used = new_length; \
@@ -141,7 +141,7 @@ extern "C" {
         if (F_status_is_error(status)) break; \
       } \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & structures.array, sizeof(f_directory_status_t), structures.size, new_length); \
+    if (status == F_none) status = f_memory_adjust(structures.size, new_length, sizeof(f_directory_status_t), (void **) & structures.array); \
     if (status == F_none) { \
       structures.size = new_length; \
       if (structures.used > structures.size) structures.used = new_length; \
@@ -154,7 +154,7 @@ extern "C" {
       f_macro_directory_status_t_delete_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \
-      if (f_memory_resize((void **) & structures.array, sizeof(f_directory_status_t), structures.size, 0)) { \
+      if (f_memory_resize(structures.size, 0, sizeof(f_directory_status_t), (void **) & structures.array)) { \
         structures.size = 0; \
       } \
     }
@@ -166,7 +166,7 @@ extern "C" {
       f_macro_directory_status_t_destroy_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \
-      if (f_memory_adjust((void **) & structures.array, sizeof(f_directory_status_t), structures.size, 0)) { \
+      if (f_memory_adjust(structures.size, 0, sizeof(f_directory_status_t), (void **) & structures.array)) { \
         structures.size = 0; \
       } \
     }

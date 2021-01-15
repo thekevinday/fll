@@ -76,7 +76,7 @@ extern "C" {
         return F_status_set_error(F_array_too_large);
       }
 
-      const f_status_t status = f_memory_resize((void **) & actions->array, sizeof(controller_entry_action_t), actions->size, actions->used + amount);
+      const f_status_t status = f_memory_resize(actions->size, actions->used + amount, sizeof(controller_entry_action_t), (void **) & actions->array);
 
       if (F_status_is_error_not(status)) {
         actions->size = actions->used + amount;
@@ -579,7 +579,7 @@ extern "C" {
         return F_status_set_error(F_array_too_large);
       }
 
-      const f_status_t status = f_memory_resize((void **) & items->array, sizeof(controller_entry_item_t), items->size, items->used + amount);
+      const f_status_t status = f_memory_resize(items->size, items->used + amount, sizeof(controller_entry_item_t), (void **) & items->array);
 
       if (F_status_is_error_not(status)) {
         items->size = items->used + amount;

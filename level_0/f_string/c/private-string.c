@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
   f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic) {
 
-    f_status_t status = f_memory_adjust((void **) & dynamic->string, sizeof(f_string_t), dynamic->size, length);
+    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
 
     if (F_status_is_error_not(status)) {
       dynamic->size = length;
@@ -107,7 +107,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
   f_status_t private_f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *dynamic) {
 
-    const f_status_t status = f_memory_resize((void **) & dynamic->string, sizeof(f_string_t), dynamic->size, length);
+    const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
 
     if (F_status_is_error_not(status)) {
       dynamic->size = length;
@@ -130,7 +130,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & dynamics->array, sizeof(f_string_dynamic_t), dynamics->size, length);
+    status = f_memory_adjust(dynamics->size, length, sizeof(f_string_dynamic_t), (void **) & dynamics->array);
 
     if (F_status_is_error_not(status)) {
       dynamics->size = length;
@@ -153,7 +153,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & dynamics->array, sizeof(f_string_dynamic_t), dynamics->size, length);
+    status = f_memory_resize(dynamics->size, length, sizeof(f_string_dynamic_t), (void **) & dynamics->array);
 
     if (F_status_is_error_not(status)) {
       dynamics->size = length;
@@ -180,7 +180,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & map_multis->array, sizeof(f_string_map_multi_t), map_multis->size, length);
+    status = f_memory_adjust(map_multis->size, length, sizeof(f_string_map_multi_t), (void **) & map_multis->array);
 
     if (F_status_is_error_not(status)) {
       map_multis->size = length;
@@ -207,7 +207,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & map_multis->array, sizeof(f_string_map_multi_t), map_multis->size, length);
+    status = f_memory_resize(map_multis->size, length, sizeof(f_string_map_multi_t), (void **) & map_multis->array);
 
     if (F_status_is_error_not(status)) {
       map_multis->size = length;
@@ -234,7 +234,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & maps->array, sizeof(f_string_map_t), maps->size, length);
+    status = f_memory_adjust(maps->size, length, sizeof(f_string_map_t), (void **) & maps->array);
 
     if (F_status_is_error_not(status)) {
       maps->size = length;
@@ -261,7 +261,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & maps->array, sizeof(f_string_map_t), maps->size, length);
+    status = f_memory_resize(maps->size, length, sizeof(f_string_map_t), (void **) & maps->array);
 
     if (F_status_is_error_not(status)) {
       maps->size = length;
@@ -369,7 +369,7 @@ extern "C" {
 #if !defined(_di_f_string_quantitys_adjust_) || !defined(_di_f_string_quantitys_decimate_by_)
   f_status_t private_f_string_quantitys_adjust(const f_string_length_t length, f_string_quantitys_t *quantitys) {
 
-    const f_status_t status = f_memory_adjust((void **) & quantitys->array, sizeof(f_string_quantity_t), quantitys->size, length);
+    const f_status_t status = f_memory_adjust(quantitys->size, length, sizeof(f_string_quantity_t), (void **) & quantitys->array);
 
     if (F_status_is_error_not(status)) {
       quantitys->size = length;
@@ -386,7 +386,7 @@ extern "C" {
 #if !defined(_di_f_string_quantitys_decrease_) || !defined(_di_f_string_quantitys_decrease_by_) || !defined(_di_f_string_quantitys_increase_) || !defined(_di_f_string_quantitys_increase_by_) || !defined(_di_f_string_quantitys_terminate_) || !defined(_di_f_string_quantitys_terminate_after_)
   f_status_t private_f_string_quantitys_resize(const f_string_length_t length, f_string_quantitys_t *quantitys) {
 
-    const f_status_t status = f_memory_resize((void **) & quantitys->array, sizeof(f_string_quantity_t), quantitys->size, length);
+    const f_status_t status = f_memory_resize(quantitys->size, length, sizeof(f_string_quantity_t), (void **) & quantitys->array);
 
     if (F_status_is_error_not(status)) {
       quantitys->size = length;
@@ -409,7 +409,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & quantityss->array, sizeof(f_string_quantitys_t), quantityss->size, length);
+    status = f_memory_adjust(quantityss->size, length, sizeof(f_string_quantitys_t), (void **) & quantityss->array);
 
     if (F_status_is_error_not(status)) {
       quantityss->size = length;
@@ -432,7 +432,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & quantityss->array, sizeof(f_string_quantitys_t), quantityss->size, length);
+    status = f_memory_resize(quantityss->size, length, sizeof(f_string_quantitys_t), (void **) & quantityss->array);
 
     if (F_status_is_error_not(status)) {
       quantityss->size = length;
@@ -449,7 +449,7 @@ extern "C" {
 #if !defined(_di_f_string_ranges_adjust_) || !defined(_di_f_string_ranges_decimate_by_)
   f_status_t private_f_string_ranges_adjust(const f_string_length_t length, f_string_ranges_t *ranges) {
 
-    const f_status_t status = f_memory_adjust((void **) & ranges->array, sizeof(f_string_range_t), ranges->size, length);
+    const f_status_t status = f_memory_adjust(ranges->size, length, sizeof(f_string_range_t), (void **) & ranges->array);
 
     if (F_status_is_error_not(status)) {
       ranges->size = length;
@@ -466,7 +466,7 @@ extern "C" {
 #if !defined(_di_f_string_ranges_decrease_) || !defined(_di_f_string_ranges_decrease_by_) || !defined(_di_f_string_ranges_increase_) || !defined(_di_f_string_ranges_increase_by_) || !defined(_di_f_string_ranges_terminate_) || !defined(_di_f_string_ranges_terminate_after_)
   f_status_t private_f_string_ranges_resize(const f_string_length_t length, f_string_ranges_t *ranges) {
 
-    const f_status_t status = f_memory_resize((void **) & ranges->array, sizeof(f_string_range_t), ranges->size, length);
+    const f_status_t status = f_memory_resize(ranges->size, length, sizeof(f_string_range_t), (void **) & ranges->array);
 
     if (F_status_is_error_not(status)) {
       ranges->size = length;
@@ -489,7 +489,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & rangess->array, sizeof(f_string_ranges_t), rangess->size, length);
+    status = f_memory_adjust(rangess->size, length, sizeof(f_string_ranges_t), (void **) & rangess->array);
 
     if (F_status_is_error_not(status)) {
       rangess->size = length;
@@ -512,7 +512,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & rangess->array, sizeof(f_string_ranges_t), rangess->size, length);
+    status = f_memory_resize(rangess->size, length, sizeof(f_string_ranges_t), (void **) & rangess->array);
 
     if (F_status_is_error_not(status)) {
       rangess->size = length;
@@ -542,7 +542,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & triples->array, sizeof(f_string_triple_t), triples->size, length);
+    status = f_memory_adjust(triples->size, length, sizeof(f_string_triple_t), (void **) & triples->array);
 
     if (F_status_is_error_not(status)) {
       triples->size = length;
@@ -572,7 +572,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & triples->array, sizeof(f_string_triple_t), triples->size, length);
+    status = f_memory_resize(triples->size, length, sizeof(f_string_triple_t), (void **) & triples->array);
 
     if (F_status_is_error_not(status)) {
       triples->size = length;

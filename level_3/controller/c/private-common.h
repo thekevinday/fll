@@ -366,7 +366,7 @@ extern "C" {
       actions.used--; \
       controller_macro_rule_action_t_delete_simple(actions.array[actions.used]); \
     } \
-    f_memory_delete((void **) & actions.array, sizeof(controller_rule_action_t), actions.size); \
+    f_memory_delete(actions.size, sizeof(controller_rule_action_t), (void **) & actions.array); \
     actions.size = 0;
 #endif // _di_controller_rule_actions_t_
 
@@ -417,7 +417,7 @@ extern "C" {
       items.used--; \
       controller_macro_rule_item_t_delete_simple(items.array[items.used]); \
     } \
-    f_memory_delete((void **) & items.array, sizeof(controller_rule_item_t), items.size); \
+    f_memory_delete(items.size, sizeof(controller_rule_item_t), (void **) & items.array); \
     items.size = 0;
 #endif // _di_controller_rule_items_t_
 
@@ -564,7 +564,7 @@ extern "C" {
       rules.used--; \
       controller_macro_rule_t_delete_simple(rules.array[rules.used]); \
     } \
-    f_memory_delete((void **) & rules.array, sizeof(controller_rule_t), rules.size); \
+    f_memory_delete(rules.size, sizeof(controller_rule_t), (void **) & rules.array); \
     rules.size = 0;
 #endif // _di_controller_rules_t_
 
@@ -633,7 +633,7 @@ extern "C" {
       actions.used--; \
       controller_macro_entry_action_t_delete_simple(actions.array[actions.used]); \
     } \
-    f_memory_resize((void **) & actions.array, sizeof(controller_entry_action_t), actions.size, 0); \
+    f_memory_resize(actions.size, 0, sizeof(controller_entry_action_t), (void **) & actions.array); \
     actions.size = 0;
 #endif // _di_controller_entry_actions_t_
 
@@ -678,7 +678,7 @@ extern "C" {
       items.used--; \
       controller_macro_entry_item_t_delete_simple(items.array[items.used]); \
     } \
-    f_memory_delete((void **) & items.array, sizeof(controller_entry_item_t), items.size); \
+    f_memory_delete(items.size, sizeof(controller_entry_item_t), (void **) & items.array); \
     items.size = 0;
 #endif // _di_controller_entry_items_t_
 

@@ -36,11 +36,11 @@ extern "C" {
 
   #define f_macro_string_t_clear(string) string = 0;
 
-  #define f_macro_string_t_resize(status, string, length_old, length_new) status = f_memory_resize((void **) & string, sizeof(f_string_t), length_old, length_new);
-  #define f_macro_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust((void **) & string, sizeof(f_string_t), length_old, length_new);
+  #define f_macro_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_string_t), (void **) & string);
+  #define f_macro_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_string_t), (void **) & string);
 
-  #define f_macro_string_t_delete_simple(string, length)  f_memory_resize((void **) & string, sizeof(f_string_t), length, 0);
-  #define f_macro_string_t_destroy_simple(string, length) f_memory_adjust((void **) & string, sizeof(f_string_t), length, 0);
+  #define f_macro_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_string_t), (void **) & string);
+  #define f_macro_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
 #endif // _di_f_string_t_
 
 #ifndef _di_f_string_length_t_

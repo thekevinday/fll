@@ -13,7 +13,7 @@ extern "C" {
       f_macro_fss_item_t_adjust(status, items->array[i], 0)
     } // for
 
-    status = f_memory_adjust((void **) & items->array, sizeof(f_fss_item_t), items->size, length);
+    status = f_memory_adjust(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
 
     if (F_status_is_error_not(status)) {
       items->size = length;
@@ -35,7 +35,7 @@ extern "C" {
       f_macro_fss_item_t_resize(status, items->array[i], 0)
     } // for
 
-    status = f_memory_resize((void **) & items->array, sizeof(f_fss_item_t), items->size, length);
+    status = f_memory_resize(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
 
     if (F_status_is_error_not(status)) {
       items->size = length;
@@ -90,7 +90,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & nameds->array, sizeof(f_fss_named_t), nameds->size, length);
+    status = f_memory_adjust(nameds->size, length, sizeof(f_fss_named_t), (void **) & nameds->array);
 
     if (F_status_is_error_not(status)) {
       nameds->size = length;
@@ -113,7 +113,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & nameds->array, sizeof(f_fss_named_t), nameds->size, length);
+    status = f_memory_resize(nameds->size, length, sizeof(f_fss_named_t), (void **) & nameds->array);
 
     if (F_status_is_error_not(status)) {
       nameds->size = length;
@@ -136,7 +136,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & nest->depth, sizeof(f_fss_items_t), nest->size, length);
+    status = f_memory_adjust(nest->size, length, sizeof(f_fss_items_t), (void **) & nest->depth);
 
     if (F_status_is_error_not(status)) {
       nest->size = length;
@@ -159,7 +159,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & nest->depth, sizeof(f_fss_items_t), nest->size, length);
+    status = f_memory_resize(nest->size, length, sizeof(f_fss_items_t), (void **) & nest->depth);
 
     if (F_status_is_error_not(status)) {
       nest->size = length;
@@ -182,7 +182,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & nests->array, sizeof(f_fss_nest_t), nests->size, length);
+    status = f_memory_adjust(nests->size, length, sizeof(f_fss_nest_t), (void **) & nests->array);
 
     if (F_status_is_error_not(status)) {
       nests->size = length;
@@ -205,7 +205,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & nests->array, sizeof(f_fss_nest_t), nests->size, length);
+    status = f_memory_resize(nests->size, length, sizeof(f_fss_nest_t), (void **) & nests->array);
 
     if (F_status_is_error_not(status)) {
       nests->size = length;
@@ -302,7 +302,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_adjust((void **) & set_quotes->array, sizeof(f_fss_set_quote_t), set_quotes->size, length);
+    status = f_memory_adjust(set_quotes->size, length, sizeof(f_fss_set_quote_t), (void **) & set_quotes->array);
 
     if (F_status_is_error_not(status)) {
       set_quotes->size = length;
@@ -335,7 +335,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & set_quotes->array, sizeof(f_fss_set_quote_t), set_quotes->size, length);
+    status = f_memory_resize(set_quotes->size, length, sizeof(f_fss_set_quote_t), (void **) & set_quotes->array);
 
     if (F_status_is_error_not(status)) {
       set_quotes->size = length;
@@ -362,7 +362,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    f_memory_adjust((void **) & sets->array, sizeof(f_fss_set_t), sets->size, length);
+    f_memory_adjust(sets->size, length, sizeof(f_fss_set_t), (void **) & sets->array);
 
     if (F_status_is_error_not(status)) {
       sets->size = length;
@@ -389,7 +389,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    status = f_memory_resize((void **) & sets->array, sizeof(f_fss_set_t), sets->size, length);
+    status = f_memory_resize(sets->size, length, sizeof(f_fss_set_t), (void **) & sets->array);
 
     if (F_status_is_error_not(status)) {
       sets->size = length;

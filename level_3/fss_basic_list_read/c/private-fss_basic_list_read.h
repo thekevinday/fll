@@ -88,7 +88,7 @@ extern "C" {
         fss_basic_list_read_macro_depth_t_delete_simple(depths.array[i]); \
       } \
     } \
-    if (status == F_none) status = f_memory_resize((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \
+    if (status == F_none) status = f_memory_resize(depths.size, new_length, sizeof(fss_basic_list_read_depth_t), (void **) & depths.array); \
     if (status == F_none) { \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \
@@ -102,7 +102,7 @@ extern "C" {
         fss_basic_list_read_macro_depth_t_delete_simple(depths.array[i]); \
       } \
     } \
-    if (status == F_none) status = f_memory_adjust((void **) & depths.array, sizeof(fss_basic_list_read_depth_t), depths.size, new_length); \
+    if (status == F_none) status = f_memory_adjust(depths.size, new_length, sizeof(fss_basic_list_read_depth_t), (void **) & depths.array); \
     if (status == F_none) { \
       depths.size = new_length; \
       if (depths.used > depths.size) depths.used = new_length; \

@@ -27,8 +27,8 @@ extern "C" {
  * An array of f_fss_delimit_t.
  *
  * array: the array of fss quote.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
  */
 #ifndef _di_f_fss_delimits_t_
   typedef f_string_lengths_t f_fss_delimits_t;
@@ -53,8 +53,8 @@ extern "C" {
  * An array of f_fss_delimits_t.
  *
  * array: the array of fss quotes.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * size:  total amount of allocated space.
+ * used:  total number of allocated spaces used.
  */
 #ifndef _di_f_fss_delimitss_t_
   typedef f_string_lengthss_t f_fss_delimitss_t;

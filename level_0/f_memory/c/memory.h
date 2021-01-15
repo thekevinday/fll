@@ -36,14 +36,14 @@ extern "C" {
  *
  * Will change all data to 0 prior to deallocation.
  *
- * @param pointer
- *   A pointer to the address that will be resized.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
  * @param old_length
  *   The total number of blocks representing the length to be resized from.
  * @param new_length
  *   The total number of blocks representing the length to be resized to.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ * @param pointer
+ *   A pointer to the address that will be resized.
  *
  * @return
  *   F_none on success.
@@ -57,7 +57,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_adjust_
-  extern f_status_t f_memory_adjust(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
+  extern f_status_t f_memory_adjust(const size_t old_length, const size_t new_length, const size_t size, void **pointer);
 #endif // _di_f_memory_adjust_
 
 /**
@@ -67,14 +67,14 @@ extern "C" {
  *
  * Type and length are not normally used by this function but must be provided for the cases when f_memory_delete is swapped with f_memory_destroy (or vice-versa).
  *
- * @param pointer
- *   A pointer to the address that will be freed.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- *   If size is 0 then no delete is performed.
  * @param length
  *   The total number of blocks to be allocated.
  *   If length is 0 then no delete is performed.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
+ * @param pointer
+ *   A pointer to the address that will be freed.
  *
  * @return
  *   F_none on success.
@@ -85,7 +85,7 @@ extern "C" {
  * @see free()
  */
 #ifndef _di_f_memory_delete_
-  extern f_status_t f_memory_delete(void **pointer, const size_t size, const size_t length);
+  extern f_status_t f_memory_delete(const size_t length, const size_t size, void **pointer);
 #endif // _di_f_memory_delete_
 
 /**
@@ -93,14 +93,14 @@ extern "C" {
  *
  * Will change all data to 0 prior to deallocation.
  *
- * @param pointer
- *   A pointer to the address that will be freed.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
- *   If size is 0 then no delete is performed.
  * @param length
  *   The total number of blocks to be allocated.
  *   If length is 0 then no delete is performed.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ *   If size is 0 then no delete is performed.
+ * @param pointer
+ *   A pointer to the address that will be freed.
  *
  * @return
  *   F_none on success.
@@ -112,7 +112,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_destroy_
-  extern f_status_t f_memory_destroy(void **pointer, const size_t size, const size_t length);
+  extern f_status_t f_memory_destroy(const size_t length, const size_t size, void **pointer);
 #endif // _di_f_memory_destroy_
 
 /**
@@ -138,21 +138,21 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_new_
-  extern f_status_t f_memory_new(void **pointer, const size_t size, const size_t length);
+  extern f_status_t f_memory_new(const size_t length, const size_t size, void **pointer);
 #endif // _di_f_memory_new_
 
 /**
  * Create some dynamically allocated array of some length, guaranteeing aligned memory.
  *
- * @param pointer
- *   A pointer that will be updated to the address of the newly allocated memory.
- * @param alignment
- *   The size of the alignment, such as sizeof(void *).
- *   Must be greater than 0.
  * @param length
  *   The total number of blocks to be allocated.
  *   Must be greater than 0.
  *   Must be a multiple of alignment.
+ * @param alignment
+ *   The size of the alignment, such as sizeof(void *).
+ *   Must be greater than 0.
+ * @param pointer
+ *   A pointer that will be updated to the address of the newly allocated memory.
  *
  * @return
  *   F_none on success.
@@ -165,7 +165,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_new_aligned_
-  extern f_status_t f_memory_new_aligned(void **pointer, const size_t alignment, const size_t length);
+  extern f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void **pointer);
 #endif // _di_f_memory_new_aligned_
 
 /**
@@ -173,14 +173,14 @@ extern "C" {
  *
  * Will not change any of the data prior to deallocation.
  *
- * @param pointer
- *   A pointer to the address that will be resized.
- * @param size
- *   The block size, in bytes (size * length = allocated size).
  * @param old_length
  *   The total number of blocks representing the length to be resized from.
  * @param new_length
  *   The total number of blocks representing the length to be resized to.
+ * @param size
+ *   The block size, in bytes (size * length = allocated size).
+ * @param pointer
+ *   A pointer to the address that will be resized.
  *
  * @return
  *   F_none on success.
@@ -194,7 +194,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_resize_
-  extern f_status_t f_memory_resize(void **pointer, const size_t size, const size_t old_length, const size_t new_length);
+  extern f_status_t f_memory_resize(const size_t old_length, const size_t new_length, const size_t size, void **pointer);
 #endif // _di_f_memory_resize_
 
 #ifdef __cplusplus
