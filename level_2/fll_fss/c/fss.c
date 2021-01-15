@@ -335,8 +335,10 @@ extern "C" {
         status = f_string_map_multis_increase(values[j]);
         if (F_status_is_error(status)) return status;
 
-        f_macro_array_lengths_t_increase(status, (*indexs[j]));
-        if (F_status_is_error(status)) return status;
+        if (indexs) {
+          f_macro_array_lengths_t_increase(status, (*indexs[j]));
+          if (F_status_is_error(status)) return status;
+        }
 
         map_multi = &values[j]->array[values[j]->used];
 
@@ -405,8 +407,10 @@ extern "C" {
         status = f_string_maps_increase(values[j]);
         if (F_status_is_error(status)) return status;
 
-        f_macro_array_lengths_t_increase(status, (*indexs[j]));
-        if (F_status_is_error(status)) return status;
+        if (indexs) {
+          f_macro_array_lengths_t_increase(status, (*indexs[j]));
+          if (F_status_is_error(status)) return status;
+        }
 
         map = &values[j]->array[values[j]->used];
 
@@ -505,8 +509,10 @@ extern "C" {
           status = f_string_map_multis_increase(values[j]);
           if (F_status_is_error(status)) return status;
 
-          f_macro_array_lengths_t_increase(status, (*indexs[j]));
-          if (F_status_is_error(status)) return status;
+          if (indexs) {
+            f_macro_array_lengths_t_increase(status, (*indexs[j]));
+            if (F_status_is_error(status)) return status;
+          }
 
           map_multi = &values[j]->array[values[j]->used];
           map_multi->name.string = name.string;
@@ -615,8 +621,10 @@ extern "C" {
           status = f_string_maps_increase(values[j]);
           if (F_status_is_error(status)) return status;
 
-          f_macro_array_lengths_t_increase(status, (*indexs[j]));
-          if (F_status_is_error(status)) return status;
+          if (indexs) {
+            f_macro_array_lengths_t_increase(status, (*indexs[j]));
+            if (F_status_is_error(status)) return status;
+          }
 
           map = &values[j]->array[values[j]->used];
 
@@ -736,8 +744,10 @@ extern "C" {
         status = f_string_dynamics_increase(values[j]);
         if (F_status_is_error(status)) return status;
 
-        f_macro_array_lengths_t_increase(status, (*indexs[j]));
-        if (F_status_is_error(status)) return status;
+        if (indexs) {
+          f_macro_array_lengths_t_increase(status, (*indexs[j]));
+          if (F_status_is_error(status)) return status;
+        }
 
         for (k = 0; k < contents.array[i].used; k++) {
 
