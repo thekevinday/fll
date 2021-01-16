@@ -138,26 +138,6 @@ extern "C" {
   }
 #endif // _di_f_fss_set_quote_decrease_by_
 
-#ifndef _di_f_fss_set_quote_delete_
-  f_status_t f_fss_set_quote_delete(f_fss_set_quote_t *set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_quote_resize(0, set_quote);
-  }
-#endif // _di_f_fss_set_quote_delete_
-
-#ifndef _di_f_fss_set_quote_destroy_
-  f_status_t f_fss_set_quote_destroy(f_fss_set_quote_t *set_quote) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!set_quote) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_fss_set_quote_adjust(0, set_quote);
-  }
-#endif // _di_f_fss_set_quote_destroy_
-
 #ifndef _di_f_fss_set_quote_increase_
   f_status_t f_fss_set_quote_increase(f_fss_set_quote_t *set_quote) {
     #ifndef _di_level_0_parameter_checking_

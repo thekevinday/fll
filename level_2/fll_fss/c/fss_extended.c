@@ -23,34 +23,33 @@ extern "C" {
     f_fss_quotes_t *quoted_content = 0;
 
     do {
+
       if (objects->used == objects->size) {
-        f_macro_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
+        f_macro_fss_objects_t_increase(status2, (*objects));
         if (F_status_is_error(status2)) return status2;
 
-        f_macro_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
+        f_macro_fss_contents_t_increase(status2, (*contents));
         if (F_status_is_error(status2)) return status2;
 
         if (objects_quoted) {
-          f_macro_fss_quotes_t_resize(status2, (*objects_quoted), objects_quoted->used + f_fss_default_allocation_step);
+          f_macro_fss_quotes_t_increase(status2, (*objects_quoted));
           if (F_status_is_error(status2)) return status2;
         }
 
         if (contents_quoted) {
-          f_macro_fss_quotess_t_resize(status2, (*contents_quoted), contents_quoted->used + f_fss_default_allocation_step);
+          f_macro_fss_quotess_t_increase(status2, (*contents_quoted));
           if (F_status_is_error(status2)) return status2;
         }
       }
 
       do {
+
         if (objects_quoted) {
           quoted_object = &objects_quoted->array[objects_quoted->used];
         }
 
         status = fl_fss_extended_object_read(buffer, range, &objects->array[objects->used], quoted_object, objects_delimits);
-
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
@@ -60,14 +59,15 @@ extern "C" {
               objects_quoted->used++;
             }
 
-            if (contents->array[contents->used].used == contents->array[contents->used].size) {
-              f_macro_fss_content_t_increase(status2, contents->array[contents->used])
-              if (F_status_is_error(status2)) return status2;
-            }
+            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+            if (F_status_is_error(status2)) return status2;
 
             contents->used++;
 
             if (contents_quoted) {
+              f_macro_fss_quotes_t_increase(status2, contents_quoted->array[contents_quoted->used])
+              if (F_status_is_error(status2)) return status2;
+
               contents_quoted->used++;
             }
 
@@ -81,19 +81,21 @@ extern "C" {
 
             return F_none_stop;
           }
-          else {
-            if (range->start >= buffer.used) {
-               return F_data_not_eos;
-            }
 
-            return F_data_not_stop;
+          if (range->start >= buffer.used) {
+             return F_data_not_eos;
           }
+
+          return F_data_not_stop;
         }
 
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
           if (contents_quoted) {
+            f_macro_fss_quotes_t_increase(status2, contents_quoted->array[contents_quoted->used])
+            if (F_status_is_error(status2)) return status2;
+
             quoted_content = &contents_quoted->array[contents_quoted->used];
           }
 
@@ -107,12 +109,6 @@ extern "C" {
         }
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
-
-          if (contents->array[contents->used].used == contents->array[contents->used].size) {
-            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
-            if (F_status_is_error(status2)) return status2;
-          }
-
           break;
         }
 

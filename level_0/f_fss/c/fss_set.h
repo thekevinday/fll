@@ -111,8 +111,8 @@ extern "C" {
   #define f_macro_fss_set_quote_t_resize(status, set_quote, length) status = f_fss_set_quote_resize(length, &set_quote);
   #define f_macro_fss_set_quote_t_adjust(status, set_quote, length) status = f_fss_set_quote_adjust(length, &set_quote);
 
-  #define f_macro_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_delete(&set_quote);
-  #define f_macro_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_destroy(&set_quote);
+  #define f_macro_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_resize(0, &set_quote);
+  #define f_macro_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_adjust(0, &set_quote);
 
   #define f_macro_fss_set_quote_t_increase(status, set_quote)            status = f_fss_set_quote_increase(&set_quote);
   #define f_macro_fss_set_quote_t_increase_by(status, set_quote, amount) status = f_fss_set_quote_increase_by(amount, &set_quote);
@@ -337,36 +337,6 @@ extern "C" {
 #ifndef _di_f_fss_set_quote_decrease_by_
   extern f_status_t f_fss_set_quote_decrease_by(const f_array_length_t amount, f_fss_set_quote_t *set_quote);
 #endif // _di_f_fss_set_quote_decrease_by_
-
-/**
- * Delete the array of set_quote.
- *
- * @param ranges
- *   The ranges to delete.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_quote_delete_
-  extern f_status_t f_fss_set_quote_delete(f_fss_set_quote_t *ranges);
-#endif // _di_f_fss_set_quote_delete_
-
-/**
- * Delete the array of set_quote.
- *
- * @param set_quote
- *   The set_quote to destroy.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_fss_set_quote_destroy_
-  extern f_status_t f_fss_set_quote_destroy(f_fss_set_quote_t *set_quote);
-#endif // _di_f_fss_set_quote_destroy_
 
 /**
  * Increase the size of the set_quote array, but only if necessary.

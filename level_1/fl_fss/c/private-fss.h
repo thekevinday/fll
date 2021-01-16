@@ -187,60 +187,6 @@ extern "C" {
   extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_string_range_t *range, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(fl_fss_basic_object_write_string) || !defined(fl_fss_extended_object_write_string) || !defined(_di_fl_fss_extended_content_write_string_)
 
-/**
- * Prepend the given string onto the destination buffer, allocating space as necessary.
- *
- * @param prepend
- *   A string to prepend at the start of each line, such as spaces.
- *   Set the pointer address to 0 to disable.
- * @param destination
- *   The destination buffer to prepend to.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_string_too_large (with error bit) if increased string length is too large to store in the destination.
- *
- * @see fl_fss_basic_list_content_write_string()
- * @see fl_fss_extended_list_content_write_string()
- */
-#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
-  extern f_status_t private_fl_fss_destination_prepend(const f_string_static_t *prepend, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
-
-/**
- * Increase the size of a given nest buffer, but only if necessary.
- *
- * @param nest
- *   The nest buffer to increment.
- *
- * @return
- *   F_none on success.
- *   F_memory_not (with error bit) on out of memory.
- *   F_array_too_large (with error bit) if new length is larger than max array length.
- *
- * @see fl_fss_embedded_list_object_read()
- * @see fl_fss_embedded_list_content_read()
- */
-#if !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  extern f_status_t private_fl_fss_nest_increase(f_fss_nest_t *nest) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-
-/**
- * Private implementation for deleting fss objects.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param objects
- *   The objects to delete.
- *
- * @see f_macro_fss_objects_t_delete_simple()
- * @see fl_fss_embedded_list_content_read()
- */
-#if !defined(_di_fl_fss_embedded_list_content_read_)
-  extern void private_fl_fss_objects_delete(f_fss_objects_t *objects) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_fl_fss_embedded_list_content_read_)
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -36,10 +36,8 @@ extern "C" {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
-            if (contents->array[contents->used].used == contents->array[contents->used].size) {
-              f_macro_fss_delimits_t_increase(status2, contents->array[contents->used])
-              if (F_status_is_error(status2)) return status2;
-            }
+            f_macro_fss_delimits_t_increase(status2, contents->array[contents->used])
+            if (F_status_is_error(status2)) return status2;
 
             contents->used++;
 
@@ -73,10 +71,8 @@ extern "C" {
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
 
-          if (contents->array[contents->used].used == contents->array[contents->used].size) {
-            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
-            if (F_status_is_error(status2)) return status2;
-          }
+          f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+          if (F_status_is_error(status2)) return status2;
 
           break;
         }

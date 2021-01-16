@@ -46,8 +46,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
+ *   F_data_not_eos if source length is 0..
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -72,7 +71,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -97,7 +95,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -121,7 +118,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -194,7 +190,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -214,7 +209,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -236,7 +230,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -258,7 +251,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -331,7 +323,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -359,7 +350,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -385,7 +375,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -413,7 +402,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -436,7 +424,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -461,7 +448,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -488,7 +474,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -513,7 +498,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -595,7 +579,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -626,7 +609,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -655,7 +637,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -686,7 +667,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -711,7 +691,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -738,7 +717,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -765,7 +743,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -790,7 +767,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -813,7 +789,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -838,7 +813,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -863,7 +837,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -886,7 +859,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -912,7 +884,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -940,7 +911,6 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -1190,7 +1160,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1220,7 +1189,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1248,7 +1216,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1278,7 +1245,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1302,7 +1268,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1328,7 +1293,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1355,7 +1319,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1382,7 +1345,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -1407,7 +1369,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1437,7 +1398,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1511,7 +1471,6 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
@@ -1542,7 +1501,6 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_out (with error bit) on out of memory.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.

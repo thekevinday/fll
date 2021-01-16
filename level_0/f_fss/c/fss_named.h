@@ -22,7 +22,7 @@ extern "C" {
  * The objects, contents, and quotess should each be of the same used and size.
  * Any deviation to this would require implementing custom equivelents to the standard management macros.
  *
- * object:   The name representing this set.
+ * name:     The name representing this set.
  * objects:  The array of objects.
  * contents: The array of contents.
  * quotess:  The array of quote for each content.
@@ -39,7 +39,7 @@ extern "C" {
   #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotess_t_initialize }
 
   #define f_macro_fss_named_t_clear(named) \
-    f_macro_fss_object_t_clear(named.object) \
+    f_macro_fss_object_t_clear(named.name) \
     f_macro_fss_objects_t_clear(named.objects) \
     f_macro_fss_contents_t_clear(named.contents) \
     f_macro_fss_quotess_t_clear(named.quotess)

@@ -205,11 +205,9 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_resize_
   #define f_macro_memory_structures_resize(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
-    if (length < structures.size) { \
-      for (register type_length _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
-        status = f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
-        if (F_status_is_error(status)) break; \
-      } \
+    for (register type_length _macro__i = length; _macro__i < structures.size; ++_macro__i) { \
+      status = f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
+      if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_resize(0, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
 #endif // _di_f_macro_memory_structures_resize_
@@ -227,11 +225,9 @@ extern "C" {
 #ifndef _di_f_macro_memory_structures_adjust_
   #define f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
-    if (length < structures.size) { \
-      for (register type_length _macro__i = structures.size - length; _macro__i < structures.size; ++_macro__i) { \
-        status = f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
-        if (F_status_is_error(status)) break; \
-      } \
+    for (register type_length _macro__i = length; _macro__i < structures.size; ++_macro__i) { \
+      status = f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
+      if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_adjust(0, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
 #endif // _di_f_macro_memory_structures_adjust_

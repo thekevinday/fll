@@ -1007,57 +1007,6 @@ extern "C" {
   }
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_) || !defined(_di_fl_fss_extended_content_write_string_)
 
-#if !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
-  f_status_t private_fl_fss_destination_prepend(const f_string_static_t *prepend, f_string_dynamic_t *destination) {
-
-    if (!prepend || !prepend->used) {
-      return F_none;
-    }
-
-    {
-      const f_status_t status = f_string_dynamic_increase_by(prepend->used, destination);
-      if (F_status_is_error(status)) return status;
-    }
-
-    for (f_string_length_t i = 0; i < prepend->used; i++) {
-      destination->string[destination->used++] = prepend->string[i];
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_)
-
-#if !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-  f_status_t private_fl_fss_nest_increase(f_fss_nest_t *nest) {
-
-    if (nest->used + 1 > nest->size) {
-      f_array_length_t size = nest->used + f_fss_default_allocation_step;
-
-      if (size > f_string_length_t_size) {
-        if (nest->used + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = f_array_length_t_size;
-      }
-
-      f_status_t status = F_none;
-
-      f_macro_fss_nest_t_resize(status, (*nest), size);
-
-      return status;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_embedded_list_object_read_) || !defined(_di_fl_fss_embedded_list_content_read_)
-
-#if !defined(_di_fl_fss_embedded_list_content_read_)
-  void private_fl_fss_objects_delete(f_fss_objects_t *objects) {
-    f_macro_fss_objects_t_delete_simple((*objects));
-  }
-#endif // !defined(_di_fl_fss_embedded_list_content_read_)
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

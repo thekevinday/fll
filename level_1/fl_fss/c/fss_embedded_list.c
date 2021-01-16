@@ -266,7 +266,7 @@ extern "C" {
       return status;
     }
 
-    status = private_fl_fss_nest_increase(found);
+    f_macro_fss_nest_t_increase(status, (*found));
     if (F_status_is_error(status)) return status;
 
     f_string_lengths_t positions_start = f_string_lengths_t_initialize;
@@ -646,7 +646,7 @@ extern "C" {
         }
 
         if (buffer.string[range->start] == f_fss_eol) {
-          status = private_fl_fss_nest_increase(found);
+          f_macro_fss_nest_t_increase(status, (*found));
           if (F_status_is_error(status)) break;
 
           if (found->depth[depth].used == found->depth[depth].size) {
@@ -699,7 +699,7 @@ extern "C" {
             private_fl_macro_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop)
 
             f_macro_string_lengths_t_delete_simple(positions_start);
-            private_fl_fss_objects_delete(&objects);
+            f_macro_fss_objects_t_delete_simple(objects);
 
             return FL_fss_found_content;
           }
@@ -798,7 +798,7 @@ extern "C" {
     } // while
 
     f_macro_string_lengths_t_delete_simple(positions_start);
-    private_fl_fss_objects_delete(&objects);
+    f_macro_fss_objects_t_delete_simple(objects);
 
     delimits->used = delimits_used;
     comments->used = comments_used;
@@ -1084,7 +1084,7 @@ extern "C" {
         slash_count = 1;
 
         if (do_prepend) {
-          status = private_fl_fss_destination_prepend(prepend, destination);
+          status = f_string_dynamic_prepend(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
@@ -1159,7 +1159,7 @@ extern "C" {
         start = range->start++;
 
         if (do_prepend) {
-          status = private_fl_fss_destination_prepend(prepend, destination);
+          status = f_string_dynamic_prepend(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
@@ -1234,7 +1234,7 @@ extern "C" {
 
       if (content.string[range->start] != f_fss_delimit_placeholder) {
         if (do_prepend) {
-          status = private_fl_fss_destination_prepend(prepend, destination);
+          status = f_string_dynamic_prepend(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;

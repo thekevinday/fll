@@ -1599,7 +1599,7 @@ extern "C" {
 
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
-           f_macro_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
+          f_macro_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
 
           if (F_status_is_error(*status)) {
             function = " f_macro_string_dynamic_t_resize";
