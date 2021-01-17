@@ -19,8 +19,6 @@ fl_console
 fl_conversion
 fl_fss
 fl_status
-fl_string
-fl_utf
 fll_error
 fll_file
 fll_fss

@@ -287,17 +287,17 @@ extern "C" {
           }
 
           previous = range.start;
-          status = fl_string_dynamic_seek_line(buffer.string, &range);
+          status = f_string_dynamic_seek_line(buffer.string, &range);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fl_string_dynamic_seek_line", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_seek_line", F_true);
             break;
           }
 
           if (status == F_data_not_stop) {
             status = F_status_set_error(F_parameter);
 
-            fll_error_print(data->error, F_parameter, "fl_string_dynamic_seek_line", F_true);
+            fll_error_print(data->error, F_parameter, "f_string_dynamic_seek_line", F_true);
             break;
           }
 

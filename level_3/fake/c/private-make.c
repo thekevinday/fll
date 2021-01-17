@@ -1449,7 +1449,7 @@ extern "C" {
                         *status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
                         if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_terminate_after", F_true);
+                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_terminate_after", F_true);
                           break;
                         }
 
@@ -1507,7 +1507,7 @@ extern "C" {
               *status = f_string_dynamic_terminate_after(&arguments->array[arguments->used - 1]);
 
               if (F_status_is_error(*status)) {
-                fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_terminate_after", F_true);
+                fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_terminate_after", F_true);
                 break;
               }
             }
@@ -1533,7 +1533,7 @@ extern "C" {
         *status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_terminate_after", F_true);
+          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_terminate_after", F_true);
           break;
         }
 

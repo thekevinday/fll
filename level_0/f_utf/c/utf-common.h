@@ -56,6 +56,96 @@ extern "C" {
 #endif // _di_f_utf_byte_
 
 /**
+ * Define the UTF-8 general whitespace codes.
+ *
+ * These are integers representing character codes that represent types of spaces.
+ *
+ * This does not provide whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
+ */
+#ifndef _di_f_utf_space_
+  #define f_utf_space_em_length           3
+  #define f_utf_space_em_quad_length      3
+  #define f_utf_space_em_per_three_length 3
+  #define f_utf_space_em_per_four_length  3
+  #define f_utf_space_em_per_six_length   3
+
+  #define f_utf_space_en_length      3
+  #define f_utf_space_en_quad_length 3
+
+  #define f_utf_space_line_feed_reverse_length 2
+  #define f_utf_space_line_next_length         2
+
+  #define f_utf_space_medium_mathematical_length 3
+
+  #define f_utf_space_no_break_length        2
+  #define f_utf_space_no_break_narrow_length 3
+
+  #define f_utf_space_ogham_length       3
+  #define f_utf_space_figure_length      3
+  #define f_utf_space_punctuation_length 3
+  #define f_utf_space_thin_length        3
+  #define f_utf_space_hair_length        3
+  #define f_utf_space_ideographic_length 3
+
+  #define f_utf_space_separator_line_length      3
+  #define f_utf_space_separator_paragraph_length 3
+
+  extern const int8_t f_utf_space_em_s[];
+  extern const int8_t f_utf_space_em_quad_s[];
+  extern const int8_t f_utf_space_em_per_three_s[];
+  extern const int8_t f_utf_space_em_per_four_s[];
+  extern const int8_t f_utf_space_em_per_six_s[];
+
+  extern const int8_t f_utf_space_en_s[];
+  extern const int8_t f_utf_space_en_quad_s[];
+
+  extern const int8_t f_utf_space_line_feed_reverse_s[];
+  extern const int8_t f_utf_space_line_next_s[];
+
+  extern const int8_t f_utf_space_medium_mathematical_s[];
+
+  extern const int8_t f_utf_space_no_break_s[];
+  extern const int8_t f_utf_space_no_break_narrow_s[];
+
+  extern const int8_t f_utf_space_ogham_s[];
+  extern const int8_t f_utf_space_figure_s[];
+  extern const int8_t f_utf_space_punctuation_s[];
+  extern const int8_t f_utf_space_thin_s[];
+  extern const int8_t f_utf_space_hair_s[];
+  extern const int8_t f_utf_space_ideographic_s[];
+
+  extern const int8_t f_utf_space_separator_line_s[];
+  extern const int8_t f_utf_space_separator_paragraph_s[];
+#endif // _di_f_utf_space_
+
+/**
+ * Define the UTF-8 general substitute whitespace codes.
+ *
+ * These are integers representing character codes that represent types of substitute spaces.
+ *
+ * Substitute codes are not actual codes and are actually prints of the codes so they should not be treated as the actual codes.
+ *
+ * This does not provide substitute whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
+ */
+#ifndef _di_f_utf_substitute_
+  #define f_utf_substitute_symbol_blank_length 3
+  #define f_utf_substitute_symbol_space_length 3
+
+  #define f_utf_substitute_middle_dot_length 2
+
+  #define f_utf_substitute_open_box_length            3
+  #define f_utf_substitute_open_box_shouldered_length 3
+
+  extern const int8_t f_utf_substitute_symbol_blank_s[];
+  extern const int8_t f_utf_substitute_symbol_space_s[];
+
+  extern const int8_t f_utf_substitute_middle_dot_s[];
+
+  extern const int8_t f_utf_substitute_open_box_s[];
+  extern const int8_t f_utf_substitute_open_box_shouldered_s[];
+#endif // _di_f_utf_substitute_
+
+/**
  * Provide a basic UTF-8 character as a single 4-byte variable.
  *
  * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
@@ -112,475 +202,23 @@ extern "C" {
 #endif // _di_f_utf_character_t_codes_
 
 /**
- * Provide a UTF-8 characters set to 4-bits wide as a string.
+ * Define the basic string type.
+ *
+ * Dynamic allocation macros are provided, but it is recommended to utilize the f_utf_string_dynamic_t for dynamic allocation.
  */
 #ifndef _di_f_utf_string_t_
   typedef f_utf_character_t *f_utf_string_t;
 
-  #define f_utf_string_t_size_max f_number_t_size_unsigned
+  #define f_utf_string_t_initialize 0
 
-  #define f_utf_string_t_initialize f_utf_character_t_eos
+  #define f_macro_utf_string_t_clear(string) string = 0;
 
-  #define f_macro_utf_string_t_new(status, string, length)   status = f_memory_new(length, sizeof(f_utf_string_t), (void **) & string);
+  #define f_macro_utf_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
+  #define f_macro_utf_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
 
-  #define f_macro_utf_string_t_resize(status, string, old_length, new_length) status = f_memory_resize(old_length, new_length, sizeof(f_utf_string_t), (void **) & string);
-  #define f_macro_utf_string_t_adjust(status, string, old_length, new_length) status = f_memory_adjust(old_length, new_length, sizeof(f_utf_string_t), (void **) & string);
-
-  #define f_macro_utf_string_t_delete(status, string, size)  status = f_memory_delete(size, sizeof(f_utf_string_t), (void **) & string);
-  #define f_macro_utf_string_t_destroy(status, string, size) status = f_memory_destroy(size, sizeof(f_utf_string_t), (void **) & string);
+  #define f_macro_utf_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_utf_string_t), (void **) & string);
+  #define f_macro_utf_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_utf_string_t), (void **) & string);
 #endif // _di_f_utf_string_t_
-
-/**
- * Provide a type specifically for UTF-8 strings.
- */
-#ifndef _di_f_utf_string_length_t_
-  typedef f_number_unsigned_t f_utf_string_length_t;
-
-  #define f_utf_string_length_t_size     0xfffffffffffffffe
-  #define f_utf_string_length_t_size_max f_number_t_size_max_unsigned
-
-  #define f_macro_utf_string_length_t_new(status, string, length)    status = f_memory_new(length, sizeof(f_utf_string_length_t), (void **) & string);
-
-  #define f_macro_utf_string_length_t_resize(status, length, old_length, new_length) status = f_memory_resize(old_length, new_length, sizeof(f_utf_string_length_t), (void **) & length);
-  #define f_macro_utf_string_length_t_adjust(status, length, old_length, new_length) status = f_memory_adjust(old_length, new_length, sizeof(f_utf_string_length_t), (void **) & length);
-
-  #define f_macro_utf_string_length_t_delete(status, string, length) status = f_memory_delete(length, sizeof(f_utf_string_length_t), (void **) & string);
-  #define f_macro_utf_string_length_t_destroy(status, string, size)  status = f_memory_destroy(size, sizeof(f_utf_string_length_t), (void **) & string);
-#endif // _di_f_utf_string_length_t_
-
-/**
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
- */
-#ifndef _di_f_utf_string_lengths_t_
-  typedef struct {
-    f_utf_string_length_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_lengths_t;
-
-  #define f_utf_string_lengths_t_initialize { 0, 0, 0 }
-
-  #define f_macro_utf_string_lengths_t_clear(lengths) f_macro_memory_structure_clear(lengths);
-
-  #define f_macro_utf_string_lengths_t_new(status, string_lengths, length) f_macro_memory_structure_new(status, string_lengths, f_utf_string_length_t, length);
-
-  #define f_macro_utf_string_lengths_t_resize(status, string_lengths, length) f_macro_memory_structure_resize(status, string_lengths, f_utf_string_length_t, length);
-  #define f_macro_utf_string_lengths_t_adjust(status, string_lengths, length) f_macro_memory_structure_adjust(status, string_lengths, f_utf_string_length_t, length);
-
-  #define f_macro_utf_string_lengths_t_delete(status, string_lengths)  f_macro_memory_structure_delete(status, string_lengths, f_utf_string_length_t);
-  #define f_macro_utf_string_lengths_t_destroy(status, string_lengths) f_macro_memory_structure_destroy(status, string_lengths, f_utf_string_length_t);
-
-  #define f_macro_utf_string_lengths_t_delete_simple(string_lengths)  f_macro_memory_structure_delete_simple(string_lengths, f_utf_string_length_t);
-  #define f_macro_utf_string_lengths_t_destroy_simple(string_lengths) f_macro_memory_structure_destroy_simple(string_lengths, f_utf_string_length_t);
-
-  #define f_macro_utf_string_lengths_t_increase(status, string_lengths)            f_macro_memory_structure_increase(status, string_lengths, f_utf_string_length_t);
-  #define f_macro_utf_string_lengths_t_increase_by(status, string_lengths, amount) f_macro_memory_structure_increase_by(status, string_lengths, f_utf_string_length_t, amount);
-  #define f_macro_utf_string_lengths_t_decrease_by(status, string_lengths, amount) f_macro_memory_structure_decrease_by(status, string_lengths, f_utf_string_length_t, amount);
-  #define f_macro_utf_string_lengths_t_decimate_by(status, string_lengths, amount) f_macro_memory_structure_decimate_by(status, string_lengths, f_utf_string_length_t, amount);
-#endif // _di_f_utf_string_lengths_t_
-
-/**
- * Designates a start and stop position that represents a sub-string inside of some parent string.
- * use this to avoid resizing, restructuring, and reallocating the parent string to separate the sub-string.
- *
- * A special f_macro_utf_string_range_t_initialize() is provided for the special purpose of easily initialize a static string range.
- */
-#ifndef _di_f_utf_string_range_t_
-  typedef struct {
-    f_utf_string_length_t start;
-    f_utf_string_length_t stop;
-  } f_utf_string_range_t;
-
-  #define f_utf_string_range_t_initialize { 1, 0 }
-
-  #define f_macro_utf_string_range_t_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
-
-  #define f_macro_utf_string_range_t_new(status, utf_string_range, length)   status = f_memory_new(length, sizeof(f_utf_string_range_t), (void **) & utf_string_range);
-
-  #define f_macro_utf_string_range_t_resize(status, utf_string_range, old_length, new_length) status = f_memory_resize(old_length, new_length, sizeof(f_utf_string_range_t), (void **) & utf_string_range);
-  #define f_macro_utf_string_range_t_adjust(status, utf_string_range, old_length, new_length) status = f_memory_adjust(old_length, new_length, sizeof(f_utf_string_range_t), (void **) & utf_string_range);
-
-  #define f_macro_utf_string_range_t_delete(status, utf_string_range, size)  status = f_memory_delete(size, sizeof(f_utf_string_range_t), (void **) & utf_string_range);
-  #define f_macro_utf_string_range_t_destroy(status, utf_string_range, size) status = f_memory_destroy(size, sizeof(f_utf_string_range_t), (void **) & utf_string_range);
-#endif // _di_f_utf_string_range_t_
-
-/**
- * An array of string ranges.
- *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
- */
-#ifndef _di_f_utf_string_ranges_t_
-  typedef struct {
-    f_utf_string_range_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_ranges_t;
-
-  #define f_utf_string_ranges_t_initialize { 0, 0, 0 }
-
-  #define f_macro_utf_string_ranges_t_clear(lengths) f_macro_memory_structure_clear(lengths);
-
-  #define f_macro_utf_string_ranges_t_new(status, string_ranges, length) f_macro_memory_structure_new(status, string_ranges, f_utf_string_range_t, length);
-
-  #define f_macro_utf_string_ranges_t_resize(status, string_ranges, length) f_macro_memory_structure_resize(status, string_ranges, f_utf_string_range_t, length);
-  #define f_macro_utf_string_ranges_t_adjust(status, string_ranges, length) f_macro_memory_structure_adjust(status, string_ranges, f_utf_string_range_t, length);
-
-  #define f_macro_utf_string_ranges_t_delete(status, string_ranges)  f_macro_memory_structure_delete(status, string_ranges, f_utf_string_range_t);
-  #define f_macro_utf_string_ranges_t_destroy(status, string_ranges) f_macro_memory_structure_destroy(status, string_ranges, f_utf_string_range_t);
-
-  #define f_macro_utf_string_ranges_t_delete_simple(string_ranges)  f_macro_memory_structure_delete_simple(string_ranges, f_utf_string_range_t);
-  #define f_macro_utf_string_ranges_t_destroy_simple(string_ranges) f_macro_memory_structure_destroy_simple(string_ranges, f_utf_string_range_t);
-
-  #define f_macro_utf_string_ranges_t_increase(status, string_ranges)            f_macro_memory_structure_increase(status, string_ranges, f_utf_string_range_t);
-  #define f_macro_utf_string_ranges_t_increase_by(status, string_ranges, amount) f_macro_memory_structure_increase_by(status, string_ranges, f_utf_string_range_t, amount);
-  #define f_macro_utf_string_ranges_t_decrease_by(status, string_ranges, amount) f_macro_memory_structure_decrease_by(status, string_ranges, f_utf_string_range_t, amount);
-  #define f_macro_utf_string_ranges_t_decimate_by(status, string_ranges, amount) f_macro_memory_structure_decimate_by(status, string_ranges, f_utf_string_range_t, amount);
-#endif // _di_f_utf_string_ranges_t_
-
-/**
- * Store string quantity.
- *
- * Similar to f_utf_string_range_t, except total is relative to start and is not an absolute stop position.
- *
- * Two common uses for when total is 0 is:
- * 1) Exactly that, process a total of 0 strings bytes.
- * 2) Process with no limit, aka infinite.
- *
- * start: The position where the string starts (based on some string/buffer).
- * total: The total number of elements within that string/buffer the quantity represents.
- */
-#ifndef _di_f_utf_string_quantity_t_
-  typedef struct {
-    f_utf_string_length_t start;
-    f_utf_string_length_t total;
-  } f_utf_string_quantity_t;
-
-  #define f_utf_string_quantity_t_initialize { 0, 0 }
-#endif // _di_f_utf_string_quantity_t_
-
-/**
- * An array of string quantities.
- *
- * array: the array of string quantities.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
- */
-#ifndef _di_f_utf_string_quantitys_t_
-  typedef struct {
-    f_utf_string_quantity_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_quantitys_t;
-
-  #define f_utf_string_quantitys_t_initialize {0, 0, 0}
-
-  #define f_macro_utf_string_quantitys_t_clear(lengths) f_macro_memory_structure_clear(lengths);
-
-  #define f_macro_utf_string_quantitys_t_new(status, quantitys, length) f_macro_memory_structure_new(status, quantitys, f_utf_string_quantity_t, length);
-
-  #define f_macro_utf_string_quantitys_t_resize(status, quantitys, length) f_macro_memory_structure_resize(status, quantitys, f_utf_string_quantity_t, length);
-  #define f_macro_utf_string_quantitys_t_adjust(status, quantitys, length) f_macro_memory_structure_adjust(status, quantitys, f_utf_string_quantity_t, length);
-
-  #define f_macro_utf_string_quantitys_t_delete(status, quantitys)  f_macro_memory_structure_delete(status, quantitys, f_utf_string_quantity_t);
-  #define f_macro_utf_string_quantitys_t_destroy(status, quantitys) f_macro_memory_structure_destroy(status, quantitys, f_utf_string_quantity_t);
-
-  #define f_macro_utf_string_quantitys_t_delete_simple(quantitys)  f_macro_memory_structure_delete_simple(quantitys, f_utf_string_quantity_t);
-  #define f_macro_utf_string_quantitys_t_destroy_simple(quantitys) f_macro_memory_structure_destroy_simple(quantitys, f_utf_string_quantity_t);
-
-  #define f_macro_utf_string_quantitys_t_increase(status, quantitys)            f_macro_memory_structure_increase(status, quantitys, f_utf_string_quantity_t);
-  #define f_macro_utf_string_quantitys_t_increase_by(status, quantitys, amount) f_macro_memory_structure_increase_by(status, quantitys, f_utf_string_quantity_t, amount);
-  #define f_macro_utf_string_quantitys_t_decrease_by(status, quantitys, amount) f_macro_memory_structure_decrease_by(status, quantitys, f_utf_string_quantity_t, amount);
-  #define f_macro_utf_string_quantitys_t_decimate_by(status, quantitys, amount) f_macro_memory_structure_decimate_by(status, quantitys, f_utf_string_quantity_t, amount);
-#endif // _di_f_utf_string_quantitys_t_
-
-/**
- * A string that is analogous to f_utf_string_dynamic_t but intended for static-only uses.
- *
- * The f_utf_string_static_t type should never be directly allocated or deallocated.
- *
- * A special f_macro_utf_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
- *
- * string: the string.
- * size: total amount of space available.
- * used: total number of space used.
- */
-#ifndef _di_f_utf_string_static_t_
-  typedef struct {
-    f_utf_string_t string;
-
-    f_utf_string_length_t size;
-    f_utf_string_length_t used;
-  } f_utf_string_static_t;
-
-  #define f_utf_string_static_t_initialize { f_utf_string_t_initialize, 0, 0 }
-
-  #define f_macro_utf_string_static_t_clear(string_static) \
-    string_static.string = 0; \
-    string_static.size = 0; \
-    string_static.used = 0;
-
-  #define f_macro_utf_string_static_t_initialize(string, length) { string, length, length }
-#endif // _di_f_string_static_t_
-
-/**
- * A string that supports contains a size attribute to handle dynamic allocations and deallocations.
- * save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
- *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
- */
-#ifndef _di_f_utf_string_dynamic_t_
-  typedef f_utf_string_static_t f_utf_string_dynamic_t;
-
-  #define f_utf_string_dynamic_t_initialize f_utf_string_static_t_initialize
-
-  #define f_macro_utf_string_dynamic_t_clear(dynamic) f_macro_utf_string_static_t_clear(dynamic)
-
-  #define f_macro_utf_string_dynamic_t_new(status, dynamic, new_length) \
-    f_clear_utf_string_dynamic_t(dynamic) \
-    status = f_memory_new(new_length, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    if (status == F_none) { \
-      dynamic.size = new_length; \
-      dynamic.used = 0; \
-    }
-
-  #define f_macro_utf_string_dynamic_t_resize(status, dynamic, new_length) \
-    status = f_memory_resize(dynamic.size, new_length, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    if (status == F_none) { \
-      dynamic.size = new_length; \
-      if (dynamic.used > dynamic.size) dynamic.used = new_length; \
-    }
-
-  #define f_macro_utf_string_dynamic_t_adjust(status, dynamic, new_length) \
-    status = f_memory_adjust(dynamic.size, new_length, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    if (status == F_none) { \
-      dynamic.size = new_length; \
-      if (dynamic.used > dynamic.size) dynamic.used = new_length; \
-    }
-
-  #define f_macro_utf_string_dynamic_t_delete(status, dynamic) \
-    status = f_memory_delete(dynamic.size, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    if (status == F_none) { \
-      dynamic.size = 0; \
-      dynamic.used = 0; \
-    }
-
-  #define f_macro_utf_string_dynamic_t_destroy(status, dynamic) \
-    status = f_memory_destroy(dynamic.size, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    if (status == F_none) { \
-      dynamic.size = 0; \
-      dynamic.used = 0; \
-    }
-
-  #define f_macro_utf_string_dynamic_t_delete_simple(dynamic) \
-    f_memory_delete(dynamic.size, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    dynamic.size = 0; \
-    dynamic.used = 0;
-
-  #define f_macro_utf_string_dynamic_t_destroy_simple(dynamic) \
-    f_memory_destroy(dynamic.size, sizeof(f_utf_string_t), (void **) & dynamic.string); \
-    dynamic.size = 0; \
-    dynamic.used = 0;
-#endif // _di_f_utf_string_dynamic_t_
-
-/**
- * An array of dynamic utf_strings.
- *
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
- */
-#ifndef _di_f_utf_string_dynamics_t_
-  typedef struct {
-    f_utf_string_dynamic_t *array;
-
-    f_utf_string_length_t size;
-    f_utf_string_length_t used;
-  } f_utf_string_dynamics_t;
-
-  #define f_utf_string_dynamics_t_initialize { 0, 0, 0 }
-
-  #define f_macro_utf_string_dynamics_t_clear(dynamics) \
-    dynamics.array = 0; \
-    dynamics.size = 0; \
-    dynamics.used = 0;
-
-  #define f_macro_utf_string_dynamics_t_new(status, dynamics, length) \
-    dynamics.array = 0; \
-    dynamics.size = 0; \
-    dynamics.used = 0; \
-    status = f_memory_new(length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array); \
-    if (status == F_none) { \
-      dynamics.size = length; \
-      dynamics.used = 0; \
-    }
-
-  #define f_macro_utf_string_dynamics_t_resize(status, dynamics, new_length) \
-    status = F_none; \
-    if (new_length < dynamics.size) { \
-      for (f_utf_string_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; ++_macro__i) { \
-        f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[_macro__i]); \
-        if (F_status_is_error(status)) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize(dynamics.size, new_length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array); \
-    if (status == F_none) { \
-      dynamics.size = new_length; \
-      if (dynamics.used > dynamics.size) dynamics.used = new_length; \
-    }
-
-  #define f_macro_utf_string_dynamics_t_adjust(status, dynamics, new_length) \
-    status = F_none; \
-    if (new_length < dynamics.size) { \
-      for (f_utf_string_length_t _macro__i = dynamics.size - new_length; _macro__i < dynamics.size; ++_macro__i) { \
-        f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[_macro__i], f_utf_string_dynamic_t); \
-        if (F_status_is_error(status)) break; \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust(dynamics.size, new_length, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array); \
-    if (status == F_none) { \
-      dynamics.size = new_length; \
-      if (dynamics.used > dynamics.size) dynamics.used = new_length; \
-    }
-
-  #define f_macro_utf_string_dynamics_t_delete(status, dynamics) \
-    status = F_none; \
-    while (dynamics.size > 0) { \
-      --dynamics.size; \
-      f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[dynamics.size]); \
-      if (F_status_is_error(status)) break; \
-    } \
-    if (status == F_none) status = f_memory_delete(dynamics.size, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array); \
-    if (status == F_none) dynamics.used = 0;
-
-  #define f_macro_utf_string_dynamics_t_destroy(status, dynamics) \
-    status = F_none; \
-    while (dynamics.size > 0) { \
-      --dynamics.size; \
-      f_macro_utf_string_dynamic_t_destroy(status, dynamics.array[dynamics.size]); \
-      if (F_status_is_error(status)) break; \
-    } \
-    if (status == F_none) status = f_memory_destroy(dynamics.size, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array); \
-    if (status == F_none) dynamics.used = 0;
-
-  #define f_macro_utf_string_dynamics_t_delete_simple(dynamics) \
-    dynamics.used = dynamics.size; \
-    while (dynamics.used > 0) { \
-      dynamics.used--; \
-      f_macro_string_dynamic_t_delete_simple(dynamics.array[dynamics.used]); \
-      if (!dynamics.used) { \
-        if (f_memory_delete(dynamics.size, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array)) { \
-          dynamics.size = 0; \
-        } \
-      } \
-    }
-
-  #define f_macro_utf_string_dynamics_t_destroy_simple(dynamics) \
-    dynamics.used = dynamics.size; \
-    while (dynamics.used > 0) { \
-      dynamics.used--; \
-      f_macro_string_dynamic_t_destroy_simple(dynamics.array[dynamics.used]); \
-      if (!dynamics.used) { \
-        if (f_memory_destroy(dynamics.size, sizeof(f_utf_string_dynamic_t), (void **) & dynamics.array)) { \
-          dynamics.size = 0; \
-        } \
-      } \
-    }
-#endif // _di_f_utf_string_dynamic_t_
-
-/**
- * Define the UTF-8 general whitespace codes.
- *
- * These are integers representing character codes that represent types of spaces.
- *
- * This does not provide whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
- */
-#ifndef _di_f_utf_space_
-  #define f_utf_space_em_length           3
-  #define f_utf_space_em_quad_length      3
-  #define f_utf_space_em_per_three_length 3
-  #define f_utf_space_em_per_four_length  3
-  #define f_utf_space_em_per_six_length   3
-
-  #define f_utf_space_en_length      3
-  #define f_utf_space_en_quad_length 3
-
-  #define f_utf_space_line_feed_reverse_length 2
-  #define f_utf_space_line_next_length         2
-
-  #define f_utf_space_medium_mathematical_length 3
-
-  #define f_utf_space_no_break_length        2
-  #define f_utf_space_no_break_narrow_length 3
-
-  #define f_utf_space_ogham_length       3
-  #define f_utf_space_figure_length      3
-  #define f_utf_space_punctuation_length 3
-  #define f_utf_space_thin_length        3
-  #define f_utf_space_hair_length        3
-  #define f_utf_space_ideographic_length 3
-
-  #define f_utf_space_separator_line_length      3
-  #define f_utf_space_separator_paragraph_length 3
-
-  const static int8_t f_utf_space_em[f_utf_space_em_length]                     = { 0xe2, 0x80, 0x83 };
-  const static int8_t f_utf_space_em_quad[f_utf_space_em_quad_length]           = { 0xe2, 0x80, 0x81 };
-  const static int8_t f_utf_space_em_per_three[f_utf_space_em_per_three_length] = { 0xe2, 0x80, 0x84 };
-  const static int8_t f_utf_space_em_per_four[f_utf_space_em_per_four_length]   = { 0xe2, 0x80, 0x85 };
-  const static int8_t f_utf_space_em_per_six[f_utf_space_em_per_six_length]     = { 0xe2, 0x80, 0x86 };
-
-  const static int8_t f_utf_space_en[f_utf_space_en_length]           = { 0xe2, 0x80, 0x82 };
-  const static int8_t f_utf_space_en_quad[f_utf_space_en_quad_length] = { 0xe2, 0x80, 0x80 };
-
-  const static int8_t f_utf_space_line_feed_reverse[f_utf_space_line_feed_reverse_length] = { 0xc2, 0x8d };
-  const static int8_t f_utf_space_line_next[f_utf_space_line_next_length]                 = { 0xc2, 0x85 };
-
-  const static int8_t f_utf_space_medium_mathematical[f_utf_space_medium_mathematical_length] = { 0xe2, 0x81, 0x9f };
-
-  const static int8_t f_utf_space_no_break[f_utf_space_no_break_length]               = { 0xc2, 0xa0 };
-  const static int8_t f_utf_space_no_break_narrow[f_utf_space_no_break_narrow_length] = { 0xe2, 0x80, 0xaf };
-
-  const static int8_t f_utf_space_ogham[f_utf_space_ogham_length]             = { 0xe1, 0x9a, 0x80 };
-  const static int8_t f_utf_space_figure[f_utf_space_figure_length]           = { 0xe2, 0x80, 0x87 };
-  const static int8_t f_utf_space_punctuation[f_utf_space_punctuation_length] = { 0xe2, 0x80, 0x88 };
-  const static int8_t f_utf_space_thin[f_utf_space_thin_length]               = { 0xe2, 0x80, 0x89 };
-  const static int8_t f_utf_space_hair[f_utf_space_hair_length]               = { 0xe2, 0x80, 0x8a };
-  const static int8_t f_utf_space_ideographic[f_utf_space_ideographic_length] = { 0xe3, 0x80, 0x80 };
-
-  const static int8_t f_utf_space_separator_line[f_utf_space_separator_line_length]           = { 0xe2, 0x80, 0xa8 };
-  const static int8_t f_utf_space_separator_paragraph[f_utf_space_separator_paragraph_length] = { 0xe2, 0x80, 0xa8 };
-#endif // _di_f_utf_space_
-
-/**
- * Define the UTF-8 general substitute whitespace codes.
- *
- * These are integers representing character codes that represent types of substitute spaces.
- *
- * Substitute codes are not actual codes and are actually prints of the codes so they should not be treated as the actual codes.
- *
- * This does not provide substitute whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
- */
-#ifndef _di_f_utf_substitute_
-  #define f_utf_substitute_symbol_blank_length 3
-  #define f_utf_substitute_symbol_space_length 3
-
-  #define f_utf_substitute_middle_dot_length 2
-
-  #define f_utf_substitute_open_box_length            3
-  #define f_utf_substitute_open_box_shouldered_length 3
-
-  const static int8_t f_utf_substitute_symbol_blank[f_utf_substitute_symbol_blank_length] = { 0xe2, 0x90, 0xa2 };
-  const static int8_t f_utf_substitute_symbol_space[f_utf_substitute_symbol_space_length] = { 0xe2, 0x90, 0xa0 };
-
-  const static int8_t f_utf_substitute_middle_dot[f_utf_substitute_middle_dot_length] = { 0xc2, 0xb7 };
-
-  const static int8_t f_utf_substitute_open_box[f_utf_substitute_open_box_length]                       = { 0xe2, 0x90, 0xa3 };
-  const static int8_t f_utf_substitute_open_box_shouldered[f_utf_substitute_open_box_shouldered_length] = { 0xe2, 0x8d, 0xbd };
-#endif // _di_f_utf_substitute_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -713,6 +713,73 @@ extern "C" {
 #endif // _di_f_string_dynamic_prepend_nulless_
 
 /**
+ * Seek the buffer location forward until EOL is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_seek_line_
+  extern f_status_t f_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
+#endif // _di_f_string_dynamic_seek_line_
+
+/**
+ * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_eol on success, but stopped at EOL.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_seek_line_to_
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+#endif // _di_f_string_dynamic_seek_line_to_
+
+/**
+ * Seek the buffer location forward until the character (1-byte wide) is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param seek_to_this
+ *   A single-width character representing a character to seek to.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_stop on success, but the range.start > range.stop.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_dynamic_seek_to_
+  extern f_status_t f_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+#endif // _di_f_string_dynamic_seek_to_
+
+/**
  * Guarantee that an end of string (NULL) exists at the end of the string.
  *
  * This is intended to be used for anything requiring NULL terminated strings.
@@ -967,6 +1034,51 @@ extern "C" {
 #ifndef _di_f_string_prepend_nulless_
   extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_prepend_nulless_
+
+/**
+ * Seek the string location forward until the character (1-byte wide) or EOL is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param seek_to
+ *   A single-width character representing a character to seek to.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_eol on success, but stopped at EOL.
+ *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_seek_line_to_
+  extern f_status_t f_string_seek_line_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+#endif // _di_f_string_seek_line_to_
+
+/**
+ * Seek the string location forward until the character (1-byte wide) is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param seek_to
+ *   A single-width character representing a character to seek to.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success, but stopped stop location.
+ *   F_data_not_stop if range.start > range.stop.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_string_seek_to_
+  extern f_status_t f_string_seek_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+#endif // _di_f_string_seek_to_
 
 #ifdef __cplusplus
 } // extern "C"

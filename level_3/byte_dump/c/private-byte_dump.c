@@ -27,7 +27,7 @@ extern "C" {
     // Store the current character data until it can be printed.
     f_utf_string_dynamic_t characters = f_utf_string_dynamic_t_initialize;
     f_utf_character_t character_array[data.width];
-    f_utf_string_length_t character_current = 0;
+    f_string_length_t character_current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
     if (data.first > 0) {
@@ -240,7 +240,7 @@ extern "C" {
 
     bool reset = F_false;
 
-    f_utf_string_length_t character_current = characters.used - 1;
+    f_string_length_t character_current = characters.used - 1;
 
     if (byte_current == 1) {
       byte = f_macro_utf_character_t_to_char_1(characters.string[character_current]);

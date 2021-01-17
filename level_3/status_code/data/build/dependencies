@@ -15,8 +15,6 @@ fl_color
 fl_console
 fl_conversion
 fl_status
-fl_string
-fl_utf
 fll_error
 fll_program
 fll_status

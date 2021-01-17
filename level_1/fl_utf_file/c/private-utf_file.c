@@ -70,13 +70,13 @@ extern "C" {
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
-  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_utf_string_length_t total, f_utf_string_length_t *written) {
+  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_string_length_t total, f_string_length_t *written) {
     *written = 0;
 
     f_status_t status = F_none;
-    f_utf_string_length_t write_size = file.size_write > 4 ? file.size_write : 4;
-    f_utf_string_length_t write_max = total;
-    f_utf_string_length_t i = 0;
+    f_string_length_t write_size = file.size_write > 4 ? file.size_write : 4;
+    f_string_length_t write_max = total;
+    f_string_length_t i = 0;
 
     if (write_size > write_max) {
       write_size = write_max;

@@ -16,29 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation for resizing.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param length
- *   The new size to use.
- * @param string
- *   The string to adjust.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_memory_adjust().
- *
- * @see f_memory_adjust()
- * @see f_string_dynamic_adjust()
- * @see f_string_dynamic_decimate_by()
- */
-#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-  extern f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-
-/**
  * Private implementation of f_string_append().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -105,6 +82,29 @@ extern "C" {
 #if !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
   extern f_status_t private_f_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param string
+ *   The string to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_string_dynamic_adjust()
+ * @see f_string_dynamic_decimate_by()
+ */
+#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
+  extern f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
 
 /**
  * Private implementation of f_string_dynamic_increase_by().

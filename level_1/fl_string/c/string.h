@@ -413,6 +413,28 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_
 
 /**
+ * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_dynamic_
+  extern f_status_t fl_string_dynamic_partial_compare_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
+#endif // _di_fl_string_dynamic_partial_compare_dynamic_
+
+/**
  * Compare two strings, similar to strncmp(), but restricted to the given ranges.
  *
  * This does not stop on NULL.
@@ -506,6 +528,42 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_string_
 
 /**
+ * Compare two strings, similar to strncmp(), but restricted to the given ranges.
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ * All 1-byte characters in except1 and except2 are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param range1
+ *   A range within the string1 to restrict the comparison to.
+ * @param range2
+ *   A range within the string2 to restrict the comparison to.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_dynamic_partial_compare_except_trim_
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+#endif // _di_fl_string_dynamic_partial_compare_except_trim_
+
+/**
  * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
  *
  * This does not stop on NULL.
@@ -576,64 +634,6 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_string_
   extern f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_string_
-
-/**
- * Compare two strings, similar to strncmp(), but restricted to the given ranges.
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
- * All 1-byte characters in except1 and except2 are ignored.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param range1
- *   A range within the string1 to restrict the comparison to.
- * @param range2
- *   A range within the string2 to restrict the comparison to.
- * @param except1
- *   A set of locations within string1 to ignore.
- *   This assumes/requires that the locations be in linear order.
- * @param except2
- *   A set of locations within string2 to ignore.
- *   This assumes/requires that the locations be in linear order.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_is_whitespace().
- *
- * @see f_utf_is_whitespace()
- */
-#ifndef _di_fl_string_dynamic_partial_compare_except_trim_
-  extern f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
-#endif // _di_fl_string_dynamic_partial_compare_except_trim_
-
-/**
- * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param range2
- *   A range within the string2 to restrict the comparison to.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_dynamic_partial_compare_dynamic_
-  extern f_status_t fl_string_dynamic_partial_compare_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2);
-#endif // _di_fl_string_dynamic_partial_compare_dynamic_
 
 /**
  * Compare two strings, similar to strncmp(), but restricted to the given range for the second string.
@@ -720,35 +720,6 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_trim_string_
 
 /**
- * Compare two strings, similar to strncmp(), but restricted to the given ranges.
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param range1
- *   A range within the string1 to restrict the comparison to.
- * @param range2
- *   A range within the string2 to restrict the comparison to.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_is_whitespace().
- *
- * @see f_utf_is_whitespace()
- */
-#ifndef _di_fl_string_dynamic_partial_compare_trim_
-  extern f_status_t fl_string_dynamic_partial_compare_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
-#endif // _di_fl_string_dynamic_partial_compare_trim_
-
-/**
  * Allocate a new string from the provided range in the buffer.
  *
  * Ignores leading and trailing whitespace.
@@ -800,107 +771,6 @@ extern "C" {
 #ifndef _di_fl_string_dynamic_rip_nulless_
   extern f_status_t fl_string_dynamic_rip_nulless(const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_fl_string_dynamic_rip_nulless_
-
-/**
- * Allocate a new string from the provided range in the string.
- *
- * Ignores leading and trailing whitespace.
- * Ignores leading and trailing NULL characters.
- * As a result, resulting size may be smaller than requested length.
- *
- * @param source
- *   The string to rip from.
- * @param length
- *   The length of source to append.
- * @param destination
- *   The new string, which will be allocated or reallocated as necessary.
- *
- * @return
- *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_is_whitespace().
- *
- * @see f_utf_is_whitespace()
- */
-#ifndef _di_fl_string_rip_
-  extern f_status_t fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
-#endif // _di_fl_string_rip_
-
-/**
- * Allocate a new string from the provided range in the string.
- *
- * Ignores leading and trailing whitespace.
- * Ignores leading and trailing NULL characters.
- * As a result, resulting size may be smaller than requested length.
- *
- * Skips over NULL characters from source when ripping.
- *
- * @param source
- *   The string to rip from.
- * @param length
- *   The length of source to append.
- * @param destination
- *   The new string, which will be allocated or reallocated as necessary.
- *
- * @return
- *   F_none on success.
- *   F_data_not_eos if source length is 0.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_is_whitespace().
- *
- * @see f_utf_is_whitespace()
- */
-#ifndef _di_fl_string_rip_nulless_
-  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
-#endif // _di_fl_string_rip_nulless_
-
-/**
- * Seek the buffer location forward until EOL is reached.
- *
- * @param string
- *   The string to traverse.
- * @param range
- *   A range within the buffer representing the start and stop locations.
- *   The start location will be incremented by seek.
- *
- * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
- *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_dynamic_seek_line_
-  extern f_status_t fl_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
-#endif // _di_fl_string_dynamic_seek_line_
-
-/**
- * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
- *
- * @param string
- *   The string to traverse.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
- * @param range
- *   A range within the buffer representing the start and stop locations.
- *   The start location will be incremented by seek.
- *
- * @return
- *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
- *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_dynamic_seek_line_to_
-  extern f_status_t fl_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
-#endif // _di_fl_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (up to 4-byte wide) or EOL is reached.
@@ -986,33 +856,9 @@ extern "C" {
  *
  * @see f_utf_is_graph()
  */
-#ifndef _di_fl_string_dynamic_seek_line_until_non_graph_
-  extern f_status_t fl_string_dynamic_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
-#endif // _di_fl_string_dynamic_seek_line_until_non_graph_
-
-/**
- * Seek the buffer location forward until the character (1-byte wide) is reached.
- *
- * @param string
- *   The string to traverse.
- * @param seek_to_this
- *   A single-width character representing a character to seek to.
- * @param range
- *   A range within the buffer representing the start and stop locations.
- *   The start location will be incremented by seek.
- *
- * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
- *   F_data_not_stop on success, but the range.start > range.stop.
- *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_dynamic_seek_to_
-  extern f_status_t fl_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
-#endif // _di_fl_string_dynamic_seek_to_
+#ifndef _di_fl_string_dynamic_seek_line_until_graph_non_
+  extern f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+#endif // _di_fl_string_dynamic_seek_line_until_graph_non_
 
 /**
  * Seek the buffer location forward until the UTF-8 character (up to 4-byte wide) is reached.
@@ -1044,26 +890,62 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
- * Seek the string location forward until the character (1-byte wide) or EOL is reached.
+ * Allocate a new string from the provided range in the string.
  *
- * @param string
- *   The string to traverse.
- * @param seek_to
- *   A single-width character representing a character to seek to.
- * @param range
- *   A range within the buffer representing the start and stop locations.
- *   The start location will be incremented by seek.
+ * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
+ * As a result, resulting size may be smaller than requested length.
+ *
+ * @param source
+ *   The string to rip from.
+ * @param length
+ *   The length of source to append.
+ * @param destination
+ *   The new string, which will be allocated or reallocated as necessary.
  *
  * @return
  *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_stop if range.start > range.stop.
+ *   F_data_not_eos if source length is 0.
+ *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
  */
-#ifndef _di_fl_string_seek_line_to_
-  extern f_status_t fl_string_seek_line_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
-#endif // _di_fl_string_seek_line_to_
+#ifndef _di_fl_string_rip_
+  extern f_status_t fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+#endif // _di_fl_string_rip_
+
+/**
+ * Allocate a new string from the provided range in the string.
+ *
+ * Ignores leading and trailing whitespace.
+ * Ignores leading and trailing NULL characters.
+ * As a result, resulting size may be smaller than requested length.
+ *
+ * Skips over NULL characters from source when ripping.
+ *
+ * @param source
+ *   The string to rip from.
+ * @param length
+ *   The length of source to append.
+ * @param destination
+ *   The new string, which will be allocated or reallocated as necessary.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not_eos if source length is 0.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_fl_string_rip_nulless_
+  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+#endif // _di_fl_string_rip_nulless_
 
 /**
  * Seek the string location forward until the character (up to 4-byte wide) or EOL is reached.
@@ -1146,32 +1028,9 @@ extern "C" {
  *
  * @see f_utf_is_whitespace()
  */
-#ifndef _di_fl_string_seek_line_until_non_graph_
-  extern f_status_t fl_string_seek_line_until_non_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
-#endif // _di_fl_string_seek_line_until_non_graph_
-
-/**
- * Seek the string location forward until the character (1-byte wide) is reached.
- *
- * @param string
- *   The string to traverse.
- * @param seek_to
- *   A single-width character representing a character to seek to.
- * @param range
- *   A range within the buffer representing the start and stop locations.
- *   The start location will be incremented by seek.
- *
- * @return
- *   F_none on success.
- *   F_none_stop on success, but stopped stop location.
- *   F_data_not_stop if range.start > range.stop.
- *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_string_seek_to_
-  extern f_status_t fl_string_seek_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
-#endif // _di_fl_string_seek_to_
+#ifndef _di_fl_string_seek_line_until_graph_non_
+  extern f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+#endif // _di_fl_string_seek_line_until_graph_non_
 
 /**
  * Seek the string location forward until the UTF-8 character (up to 4-byte wide) is reached.

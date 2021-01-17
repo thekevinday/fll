@@ -5,23 +5,6 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-  f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic) {
-
-    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
-
-    if (F_status_is_error_not(status)) {
-      dynamic->size = length;
-
-      if (dynamic->used > dynamic->size) {
-        dynamic->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-
 #if !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_)
   f_status_t private_f_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
 
@@ -88,6 +71,23 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
+
+#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
+  f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic) {
+
+    f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
+
+    if (F_status_is_error_not(status)) {
+      dynamic->size = length;
+
+      if (dynamic->used > dynamic->size) {
+        dynamic->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
 
 #if !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
   f_status_t private_f_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *dynamic) {

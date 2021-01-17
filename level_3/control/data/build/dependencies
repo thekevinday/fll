@@ -12,7 +12,5 @@ f_pipe
 f_print
 fl_color
 fl_console
-fl_string
 fll_error
 fll_program
-fll_status
