@@ -91,6 +91,7 @@ extern "C" {
 
     f_file_t output;
     fll_error_print_t error;
+    fll_error_print_t warning;
 
     f_color_context_t context;
   } control_data_t;
@@ -102,6 +103,7 @@ extern "C" {
       F_false, \
       f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      fll_macro_error_print_t_initialize_warning(), \
       f_color_context_t_initialize, \
     }
 #endif // _di_control_data_t_
