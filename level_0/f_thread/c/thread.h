@@ -650,14 +650,16 @@ extern "C" {
  * Get the user account by the user id.
  *
  * @param attribute
- *   The thread attributes.
+ *   (optional) The thread attributes.
+ *   Set to NULL to use default attributes.
  * @param id
  *   The thread ID.
  *   This gets populated with the created thread ID (aka: the "child" thread).
  * @param routine
  *   The function to execute.
  * @param argument
- *   The structure containing all arguments to pass to the routine.
+ *   (optional) The structure containing all arguments to pass to the routine.
+ *   Set to NULL to not pass an argument.
  *
  * @return
  *   F_none on success.

@@ -555,10 +555,8 @@ extern "C" {
 #ifndef _di_f_thread_create_
   f_status_t f_thread_create(const f_thread_attribute_t *attribute, f_thread_id_t *id, void *(*routine) (void *), void *argument) {
     #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
       if (!id) return F_status_set_error(F_parameter);
       if (!routine) return F_status_set_error(F_parameter);
-      if (!argument) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     const int error = pthread_create(id, attribute, routine, argument);
