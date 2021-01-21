@@ -2,6 +2,7 @@
 #include "private-common.h"
 #include "private-controller.h"
 #include "private-entry.h"
+#include "private-thread.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -152,8 +153,8 @@ extern "C" {
 
     for (; i < cache->object_actions.used; ++i) {
 
-      cache->line_action = 0;
-      cache->name_action.used = 0;
+      cache->action.line_action = 0;
+      cache->action.name_action.used = 0;
 
       action = &actions->array[actions->used];
       action->type = 0;
@@ -163,49 +164,49 @@ extern "C" {
       action->status = F_known_not;
       action->parameters.used = 0;
 
-      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->line_action);
+      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
         break;
       }
 
-      action->line = ++cache->line_action;
+      action->line = ++cache->action.line_action;
 
-      status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->name_action);
+      status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
         fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
         break;
       }
 
-      if (fl_string_dynamic_compare_string(controller_string_consider_s, cache->name_action, controller_string_consider_length) == F_equal_to) {
+      if (fl_string_dynamic_compare_string(controller_string_consider_s, cache->action.name_action, controller_string_consider_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_consider;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_failsafe_s, cache->name_action, controller_string_failsafe_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_failsafe_s, cache->action.name_action, controller_string_failsafe_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_failsafe;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_item_s, cache->name_action, controller_string_item_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_item_s, cache->action.name_action, controller_string_item_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_item;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_ready_s, cache->name_action, controller_string_ready_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_ready_s, cache->action.name_action, controller_string_ready_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_ready;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_rule_s, cache->name_action, controller_string_rule_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_rule_s, cache->action.name_action, controller_string_rule_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_rule;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_timeout_s, cache->name_action, controller_string_timeout_length) == F_equal_to) {
+      else if (fl_string_dynamic_compare_string(controller_string_timeout_s, cache->action.name_action, controller_string_timeout_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_timeout;
       }
       else {
         if (data.warning.verbosity == f_console_verbosity_debug) {
           fprintf(data.warning.to.stream, "%s%sUnknown entry item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
           fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
-          f_print_dynamic(data.warning.to.stream, cache->name_action);
+          f_print_dynamic(data.warning.to.stream, cache->action.name_action);
           fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
           fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
-          controller_entry_error_print(data.warning, *cache);
+          controller_entry_error_print(data.warning, cache->action);
         }
 
         continue;
@@ -239,11 +240,11 @@ extern "C" {
         if (data.error.verbosity != f_console_verbosity_quiet) {
           fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data.error.to.stream, "%s%sThe entry item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-          fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->name_action.string, data.error.notable.after->string);
+          fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, cache->action.name_action.string, data.error.notable.after->string);
           fprintf(data.error.to.stream, "%s' requires ", data.error.context.before->string);
 
           if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
-            fprintf(data.error.to.stream, "%s%s%llu%s", data.error.context.after->string, data.error.notable.before->string, cache->line_action, data.error.notable.after->string);
+            fprintf(data.error.to.stream, "%s%s%llu%s", data.error.context.after->string, data.error.notable.before->string, cache->action.line_action, data.error.notable.after->string);
             fprintf(data.error.to.stream, "%s or more parameters.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
           }
           else {
@@ -540,7 +541,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_read_
 
 #ifndef _di_controller_entry_error_print_
-  void controller_entry_error_print(const fll_error_print_t output, const controller_cache_t cache) {
+  void controller_entry_error_print(const fll_error_print_t output, const controller_cache_action_t cache) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       fprintf(output.to.stream, "%c", f_string_eol_s[0]);
@@ -599,8 +600,8 @@ extern "C" {
     entry->status = F_known_not;
     entry->items.used = 0;
 
-    cache->line_action = 0;
-    cache->line_item = 0;
+    cache->action.line_action = 0;
+    cache->action.line_item = 0;
 
     f_macro_time_spec_t_clear(cache->timestamp);
 
@@ -630,9 +631,9 @@ extern "C" {
     cache->buffer_file.used = 0;
     cache->buffer_path.used = 0;
 
-    cache->name_file.used = 0;
-    cache->name_action.used = 0;
-    cache->name_item.used = 0;
+    cache->action.name_file.used = 0;
+    cache->action.name_action.used = 0;
+    cache->action.name_item.used = 0;
 
     status = controller_file_load(data, setting, controller_string_entries_s, entry_name, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, cache);
 
@@ -682,6 +683,10 @@ extern "C" {
 
         for (; i < cache->object_items.used; ++i) {
 
+          if (setting.signal) {
+            return F_signal;
+          }
+
           if (code & 0x2) {
             code -= 0x2;
           }
@@ -689,8 +694,8 @@ extern "C" {
           at = 0;
           range = 0;
 
-          cache->line_action = 0;
-          cache->line_item = 0;
+          cache->action.line_action = 0;
+          cache->action.line_item = 0;
 
           cache->comments.used = 0;
           cache->delimits.used = 0;
@@ -702,8 +707,8 @@ extern "C" {
 
           cache->buffer_path.used = 0;
 
-          cache->name_action.used = 0;
-          cache->name_item.used = 0;
+          cache->action.name_action.used = 0;
+          cache->action.name_item.used = 0;
 
           status = controller_entry_items_increase_by(controller_default_allocation_step, &entry->items);
 
@@ -712,32 +717,32 @@ extern "C" {
             break;
           }
 
-          status = controller_string_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->name_item);
+          status = controller_string_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true);
             break;
           }
 
-          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->line_item);
+          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
             break;
           }
 
-          cache->line_item++;
+          cache->action.line_item++;
 
           for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
-            if (fl_string_dynamic_compare(entry->items.array[j].name, cache->name_item) == F_equal_to) {
+            if (fl_string_dynamic_compare(entry->items.array[j].name, cache->action.name_item) == F_equal_to) {
               if (data.warning.verbosity == f_console_verbosity_debug) {
                 fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(data.warning.to.stream, "%s%sIgnoring duplicate entry item '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-                fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->name_file.string, data.warning.notable.after->string);
+                fprintf(data.warning.to.stream, "%s%s%s%s", data.warning.context.after->string, data.warning.notable.before->string, cache->action.name_file.string, data.warning.notable.after->string);
                 fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
 
-                controller_entry_error_print(data.warning, *cache);
+                controller_entry_error_print(data.warning, cache->action);
               }
 
               code |= 0x2;
@@ -749,7 +754,7 @@ extern "C" {
 
           range = &cache->content_items.array[i].array[0];
 
-          if (fl_string_dynamic_compare_string(controller_string_main_s, cache->name_item, controller_string_main_length) == F_equal_to) {
+          if (fl_string_dynamic_compare_string(controller_string_main_s, cache->action.name_item, controller_string_main_length) == F_equal_to) {
             code |= 0x1;
 
             at = 0;
@@ -770,9 +775,9 @@ extern "C" {
             entry->items.used = 2;
           }
 
-          entry->items.array[at].line = cache->line_item;
+          entry->items.array[at].line = cache->action.line_item;
 
-          status = controller_string_dynamic_append_terminated(cache->name_item, &entry->items.array[at].name);
+          status = controller_string_dynamic_append_terminated(cache->action.name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
             fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
@@ -782,7 +787,7 @@ extern "C" {
           status = controller_entry_actions_read(data, setting, *range, cache, &entry->items.array[at].actions);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(data.error, *cache);
+            controller_entry_error_print(data.error, cache->action);
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -791,8 +796,8 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(status)) {
-          cache->name_action.used = 0;
-          cache->name_item.used = 0;
+          cache->action.name_action.used = 0;
+          cache->action.name_item.used = 0;
 
           if (!(code & 0x1)) {
             if (data.error.verbosity != f_console_verbosity_quiet) {
@@ -817,6 +822,10 @@ extern "C" {
 
               for (j = 0; j < entry->items.array[i].actions.used; ++j) {
 
+                if (setting.signal) {
+                  return F_signal;
+                }
+
                 action = &entry->items.array[i].actions.array[j];
 
                 // only process actions that don't already have an error.
@@ -839,10 +848,10 @@ extern "C" {
                   if (missing & 0x1) {
                     missing |= 0x2;
 
-                    cache->line_action = action->line;
-                    cache->line_item = entry->items.array[i].line;
+                    cache->action.line_action = action->line;
+                    cache->action.line_item = entry->items.array[i].line;
 
-                    status = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->name_item);
+                    status = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
 
                     if (F_status_is_error(status)) {
                       fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
@@ -855,7 +864,7 @@ extern "C" {
                       fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, action->parameters.array[0].string, data.error.notable.after->string);
                       fprintf(data.error.to.stream, "%s' does not exist.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
 
-                      controller_entry_error_print(data.error, *cache);
+                      controller_entry_error_print(data.error, cache->action);
                     }
 
                     action->number = 0;
@@ -864,8 +873,8 @@ extern "C" {
                     // @fixme review how entry->status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
                     //entry->status = controller_status_simplify(F_found_not);
 
-                    cache->name_action.used = 0;
-                    cache->name_item.used = 0;
+                    cache->action.name_action.used = 0;
+                    cache->action.name_item.used = 0;
                   }
                   else {
                     action->number = k;
@@ -885,7 +894,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(data.error, *cache);
+      controller_entry_error_print(data.error, cache->action);
 
       entry->status = controller_status_simplify(F_status_set_fine(status));
     }

@@ -238,12 +238,10 @@ extern "C" {
 /**
  * Pre-process all items for the loaded entry.
  *
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
  * @param cache
- *   The cache.
+ *   The main/global cache to use.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -262,18 +260,16 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_preprocess_entry_
-  extern f_status_t controller_preprocess_entry(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_preprocess_entry(controller_cache_t *cache, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_preprocess_entry_
 
 /**
  * Process (execute) all items for the loaded entry.
  *
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
  * @param cache
- *   The cache.
+ *   The main/global cache to use.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -288,7 +284,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(controller_cache_t *cache, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**

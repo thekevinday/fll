@@ -149,7 +149,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_
-  extern void controller_rule_error_print(const fll_error_print_t output, const controller_cache_t cache, const bool item) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_
 
 /**
@@ -205,8 +205,6 @@ extern "C" {
 /**
  * Perform an execution of the given rule.
  *
- * @param cache
- *   A structure for containing and caching relevant data.
  * @param index
  *   The position in the setting.rules array representing the rule to execute.
  * @param type
@@ -223,10 +221,8 @@ extern "C" {
  * @param simulate
  *   If TRUE, then run a simulated action (outputing result and executing an empty script).
  *   If FALSE, perform the real execution.
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -238,7 +234,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const controller_cache_t cache, const f_array_length_t index, const uint8_t type, const bool simulate, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const bool simulate, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -496,7 +492,7 @@ extern "C" {
 #endif // _di_controller_rule_path_
 
 /**
- * Process and execute the given rule by the rule id.
+ * Synchronously process and execute the given rule by the rule id.
  *
  * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
  * All dependent rules must be already loaded, this function will not load any rules.
@@ -519,14 +515,8 @@ extern "C" {
  *   If no bits set, then operate normally in a synchronous manner.
  *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  *   If bit controller_rule_option_asynchronous, then run asynchronously.
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
- * @param cache
- *   A structure for containing and caching relevant data.
- *   This utilizes cache.stack for recursive executions, no function called by this may therefore safely use cache.stack for any other purpose.
- *   This utilizes line_action, line_item, name_action, and name_item from cache, but they are backed up before starting and then restored after finishing.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -534,8 +524,47 @@ extern "C" {
  *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_data_t *data, controller_setting_t *setting, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
+
+/**
+ * Asynchronously process and execute the given rule by the rule id.
+ *
+ * Any dependent rules are loaded and executed as per "need", "want", and "wish" rule settings.
+ * All dependent rules must be already loaded, this function will not load any rules.
+ *
+ * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
+ *
+ * @param index
+ *   Position in the rules array representing the rule to execute
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
+ * @param options
+ *   A number using bits to represent specific boolean options.
+ *   If no bits set, then operate normally in a synchronous manner.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_rule_option_asynchronous, then run asynchronously.
+ * @param thread
+ *   The thread data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_signal on (exit) signal received.
+ *
+ *   Errors (with error bit) from: controller_asynchronouss_increase().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_thread_create().
+ */
+#ifndef _di_controller_rule_process_asynchronous_
+  extern f_status_t controller_rule_process_asynchronous(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_process_asynchronous_
 
 /**
  * Read the rule file, extracting all valid items.
@@ -548,6 +577,8 @@ extern "C" {
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
  *   "/etc/controller/rules/example/my.rule" would have a rule id of "example/my".
+ * @param thread
+ *   The thread data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param rule
@@ -570,7 +601,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_status_t controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t rule_id, controller_thread_t *thread, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
 
 /**
@@ -619,12 +650,8 @@ extern "C" {
  *
  * This automatically sets the rule's status to F_complete.
  *
- * @param data
- *   The program data.
  * @param index
  *   The position in the setting.rules array representing the rule to simulate.
- * @param cache
- *   A structure for containing and caching relevant data.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -639,30 +666,34 @@ extern "C" {
  *   If no bits set, then operate normally in a synchronous manner.
  *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  *   If bit controller_rule_option_asynchronous, then run asynchronously.
- * @param setting
- *   The controller settings data.
+ * @param thread
+ *   The thread data.
  */
 #ifndef _di_controller_rule_simulate_
-  extern void controller_rule_simulate(const controller_data_t data, const f_array_length_t index, const uint8_t action, const uint8_t options, controller_cache_t *cache, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_simulate(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_simulate_
 
 /**
- * Increase the size of the rules array, but only if necessary.
+ * Wait until all currently running asynchronous execution threads are complete.
  *
- * @param rules
- *   The rules to resize.
- *
- * @return
- *   F_none on success.
- *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
- *
- *   Errors (with error bit) from: f_memory_resize().
- *
- * @see f_memory_resize()
+ * @param thread
+ *   The thread data.
  */
-#ifndef _di_controller_rules_increase_
-  extern f_status_t controller_rules_increase(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_increase_
+#ifndef _di_controller_rule_wait_all_
+  extern void controller_rule_wait_all(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_wait_all_
+
+/**
+ * Wait until the specific rule is done running, if running asynchronously.
+ *
+ * @param index
+ *   The index of the rule to wait for.
+ * @param thread
+ *   The thread data.
+ */
+#ifndef _di_controller_rule_wait_for_
+  extern void controller_rule_wait_for(const f_array_length_t index, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_wait_for_
 
 #ifdef __cplusplus
 } // extern "C"

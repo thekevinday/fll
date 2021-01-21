@@ -113,7 +113,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const fll_error_print_t output, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print(const fll_error_print_t output, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_
 
 /**

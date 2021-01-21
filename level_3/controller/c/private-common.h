@@ -295,6 +295,29 @@ extern "C" {
   };
 #endif // _di_controller_resource_limit_t_
 
+#ifndef _di_controller_mutex_t_
+  typedef struct {
+    f_thread_mutex_t asynchronous;
+    f_thread_mutex_t cache;
+    f_thread_mutex_t print;
+    f_thread_mutex_t rule;
+  } controller_mutex_t;
+
+  #define controller_mutex_t_initialize \
+    { \
+      f_thread_mutex_t_initialize, \
+      f_thread_mutex_t_initialize, \
+      f_thread_mutex_t_initialize, \
+      f_thread_mutex_t_initialize, \
+    }
+
+  #define controller_macro_mutex_t_delete_simple(mutex) \
+    f_thread_mutex_delete(&mutex.asynchronous); \
+    f_thread_mutex_delete(&mutex.cache); \
+    f_thread_mutex_delete(&mutex.print); \
+    f_thread_mutex_delete(&mutex.rule);
+#endif // _di_controller_mutex_t_
+
 #ifndef _di_controller_rule_action_t_
   #define controller_rule_action_method_string_extended      "FSS-0001 (Extended)"
   #define controller_rule_action_method_string_extended_list "FSS-0003 (Extended List)"
@@ -457,7 +480,8 @@ extern "C" {
 
   typedef struct {
     f_status_t status;
-    f_number_signed_t process; // @todo: for background/threaded support (ideally should hold the process id, but remove if this ends up not being the strategy) (this can also be used by the parent/main process to check to see if the child no longer a child of this process).
+
+    f_thread_mutex_t lock;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -491,13 +515,14 @@ extern "C" {
     f_execute_scheduler_t scheduler;
 
     controller_rule_items_t items;
+
+    void *asynchronous;
   } controller_rule_t;
 
   #define controller_rule_t_initialize \
     { \
       F_known_not, \
-      0, \
-      0, \
+      f_thread_mutex_t_initialize, \
       0, \
       0, \
       0, \
@@ -522,9 +547,11 @@ extern "C" {
       f_limit_sets_t_initialize, \
       f_execute_scheduler_t_initialize, \
       controller_rule_items_initialize, \
+      0, \
     }
 
   #define controller_macro_rule_t_delete_simple(rule) \
+    f_macro_thread_mutex_t_delete_simple(rule.lock) \
     f_macro_string_dynamic_t_delete_simple(rule.id) \
     f_macro_string_dynamic_t_delete_simple(rule.name) \
     f_macro_string_dynamic_t_delete_simple(rule.path) \
@@ -710,8 +737,8 @@ extern "C" {
 
   typedef struct {
     bool interruptable;
-    bool lock; // @todo: this is intended for mutex write locking of this setting for thread safety, remove this if another approach is used.
     uint8_t ready;
+    int signal;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -731,7 +758,7 @@ extern "C" {
   #define controller_setting_t_initialize \
     { \
       F_false, \
-      F_false, \
+      0, \
       0, \
       3, \
       3, \
@@ -753,11 +780,45 @@ extern "C" {
     controller_macro_rules_t_delete_simple(setting.rules)
 #endif // _di_controller_setting_t
 
-#ifndef _di_controller_cache_t_
+#ifndef _di_controller_cache_action_t_
   typedef struct {
     f_string_length_t line_action;
     f_string_length_t line_item;
 
+    f_string_dynamic_t name_action;
+    f_string_dynamic_t name_file;
+    f_string_dynamic_t name_item;
+
+    f_string_dynamic_t generic;
+  } controller_cache_action_t;
+
+  #define controller_cache_action_t_initialize \
+    { \
+      0, \
+      0, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+    }
+
+  #define controller_macro_cache_action_t_clear(cache) \
+    cache.line_action = 0; \
+    cache.line_item = 0; \
+    cache.name_action.used = 0; \
+    cache.name_file.used = 0; \
+    cache.name_item.used = 0; \
+    cache.generic.used = 0;
+
+  #define controller_macro_cache_action_t_delete_simple(cache) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
+    f_macro_string_dynamic_t_delete_simple(cache.name_item) \
+    f_macro_string_dynamic_t_delete_simple(cache.generic)
+#endif // _di_controller_cache_action_t_
+
+#ifndef _di_controller_cache_t_
+  typedef struct {
     f_time_spec_t timestamp;
 
     f_string_range_t range_action;
@@ -776,18 +837,13 @@ extern "C" {
 
     f_string_dynamic_t buffer_file;
     f_string_dynamic_t buffer_item;
-    f_string_dynamic_t buffer_other;
     f_string_dynamic_t buffer_path;
 
-    f_string_dynamic_t name_action;
-    f_string_dynamic_t name_file;
-    f_string_dynamic_t name_item;
+    controller_cache_action_t action;
   } controller_cache_t;
 
   #define controller_cache_t_initialize \
     { \
-      0, \
-      0, \
       f_time_spec_t_initialize, \
       f_string_range_t_initialize, \
       f_array_lengths_t_initialize, \
@@ -802,10 +858,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
+      controller_cache_action_t_initialize, \
     }
 
   #define controller_macro_cache_t_delete_simple(cache) \
@@ -820,12 +873,182 @@ extern "C" {
     f_macro_fss_objects_t_delete_simple(cache.object_items) \
     f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
     f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_other) \
     f_macro_string_dynamic_t_delete_simple(cache.buffer_path) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_item)
+    controller_macro_cache_action_t_delete_simple(cache.action)
 #endif // _di_controller_cache_t_
+
+#ifndef _di_controller_asynchronous_t_
+  enum {
+    controller_asynchronous_state_active = 1,
+    controller_asynchronous_state_done,
+    controller_asynchronous_state_joined,
+  };
+
+  typedef struct {
+    f_thread_id_t id;
+    f_array_length_t index;
+
+    uint8_t state;
+    uint8_t action;
+    uint8_t options;
+
+    void *thread;
+    f_array_lengths_t stack;
+    controller_cache_action_t cache;
+  } controller_asynchronous_t;
+
+  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
+
+  #define controller_macro_asynchronous_t_clear(asynchronous) \
+    f_macro_thread_id_t_clear(asynchronous.id) \
+    asynchronous.index = 0; \
+    asynchronous.state = 0; \
+    asynchronous.action = 0; \
+    asynchronous.options = 0; \
+    asynchronous.thread = 0; \
+    f_macro_array_lengths_t_clear(asynchronous.stack) \
+    controller_macro_cache_action_t_clear(asynchronous.cache)
+
+  #define controller_macro_asynchronous_t_delete_simple(asynchronous) \
+    controller_macro_cache_action_t_delete_simple(asynchronous.cache) \
+    f_macro_array_lengths_t_delete_simple(asynchronous.stack)
+#endif // _di_controller_asynchronous_t_
+
+#ifndef _di_controller_asynchronouss_t_
+  typedef struct {
+    controller_asynchronous_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_asynchronouss_t;
+
+  #define controller_asynchronouss_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define controller_macro_asynchronouss_t_delete_simple(asynchronouss) \
+    asynchronouss.used = asynchronouss.size; \
+    while (asynchronouss.used) { \
+      asynchronouss.used--; \
+      controller_macro_asynchronous_t_delete_simple(asynchronouss.array[asynchronouss.used]) \
+    } \
+    f_memory_delete(asynchronouss.size, sizeof(controller_asynchronous_t), (void **) & asynchronouss.array); \
+    asynchronouss.size = 0;
+#endif // _di_controller_asynchronouss_t_
+
+#ifndef _di_controller_thread_t_
+  #define controller_thread_cache_cleanup_interval_long  3600  // 1 hour in seconds.
+  #define controller_thread_cache_cleanup_interval_short 180   // 3 minutes in seconds.
+  #define controller_thread_asynchronous_allocation_step 16    // Total number of asynchronous threads increase by.
+  #define controller_thread_asynchronous_total           65535 // Total number of asynchronous threads allowed at any one time.
+
+  typedef struct {
+    controller_cache_t *cache_main;
+    controller_cache_action_t *cache_action;
+    controller_data_t *data;
+    controller_mutex_t *mutex;
+    controller_setting_t *setting;
+    f_array_lengths_t *stack;
+    controller_asynchronouss_t asynchronouss;
+  } controller_thread_t;
+
+  #define controller_thread_t_initialize { 0, 0, 0, 0, 0, 0, controller_asynchronouss_t_initialize }
+
+  #define controller_macro_thread_t_initialize(cache_main, cache_action, data, mutex, setting, stack) { cache_main, cache_action, data, mutex, setting, stack, controller_asynchronouss_t_initialize }
+
+  #define controller_macro_thread_t_clear(thread) \
+    thread.cache_main = 0; \
+    thread.cache_action = 0; \
+    thread.data = 0; \
+    thread.mutex = 0; \
+    thread.setting = 0; \
+    thread.stack = 0; \
+    thread.asynchronouss.used = 0;
+
+  #define controller_macro_thread_t_delete_simple(thread) \
+    controller_asynchronouss_resize(0, &thread.asynchronouss);
+#endif // _di_controller_thread_t_
+
+/**
+ * Resize the asynchronouss array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param asynchronouss
+ *   The asynchronous array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+
+/**
+ * Increase the size of the asynchronouss array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param asynchronouss
+ *   The asynchronous array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + controller_thread_asynchronous_allocation_step <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_controller_asynchronouss_increase_
+  extern f_status_t controller_asynchronouss_increase(controller_asynchronouss_t *asynchronouss);
+#endif // _di_controller_asynchronouss_increase_
+
+/**
+ * Resize the string asynchronouss array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param asynchronouss
+ *   The asynchronous array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_controller_asynchronouss_resize_
+  extern f_status_t controller_asynchronouss_resize(const f_array_length_t length, controller_asynchronouss_t *asynchronouss);
+#endif // _di_controller_asynchronouss_resize_
+
+/**
+ * Increase the size of the rules array, but only if necessary.
+ *
+ * @param rules
+ *   The rules to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_rules_increase_
+  extern f_status_t controller_rules_increase(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_
 
 #ifdef __cplusplus
 } // extern "C"

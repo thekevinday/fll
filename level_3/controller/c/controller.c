@@ -3,6 +3,7 @@
 #include "private-control.h"
 #include "private-entry.h"
 #include "private-rule.h"
+#include "private-thread.h"
 #include "private-controller.h"
 
 #ifdef __cplusplus
@@ -145,6 +146,8 @@ extern "C" {
 
     controller_setting_t setting = controller_setting_t_initialize;
     controller_cache_t cache = controller_cache_t_initialize;
+    controller_mutex_t mutex = controller_mutex_t_initialize;
+    controller_thread_t thread = controller_macro_thread_t_initialize(&cache, &cache.action, data, &mutex, &setting, &cache.stack);
 
     f_string_static_t entry_name = f_string_static_t_initialize;
 
@@ -273,19 +276,7 @@ extern "C" {
       }
     }
 
-    // a control file path is required.
-    if (!setting.path_control.used) {
-      status = f_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
-
-      if (F_status_is_error(status)) {
-        if (data->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
-        }
-      }
-    }
-
     if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
-
       if (data->parameters[controller_parameter_validate].result == f_console_result_found) {
         if (data->error.verbosity != f_console_verbosity_quiet) {
           fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
@@ -298,71 +289,37 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
+    }
+
+    if (F_status_is_error_not(status)) {
+      f_signal_set_fill(&data->signal.set);
+
+      status = f_thread_signal_mask(SIG_BLOCK, &data->signal.set, 0);
 
       if (F_status_is_error_not(status)) {
-        setting.ready = controller_setting_ready_done;
+        status = f_signal_open(&data->signal);
+      }
 
-        if (f_file_exists(setting.path_pid.string) == F_true) {
+      // if there is an error opening a signal descriptor, then do not handle signals.
+      if (F_status_is_error(status)) {
+        f_signal_mask(SIG_UNBLOCK, &data->signal.set, 0);
+        f_signal_close(&data->signal);
+      }
+
+      // a control file path is required.
+      if (!setting.path_control.used) {
+        status = f_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
+
+        if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-            fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting.path_pid.string, data->error.notable.after->string);
-            fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
           }
-
-          status = F_status_set_error(F_available_not);
-          setting.ready = controller_setting_ready_abort;
         }
-
-        // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
-        // @todo clear cache periodically while waiting.
-        // controller_macro_cache_t_delete_simple(cache);
       }
     }
-    else {
 
-      if (F_status_is_error_not(status)) {
-        status = controller_entry_read(*data, setting, entry_name, &cache, &setting.entry);
-      }
-
-      if (F_status_is_error(status)) {
-        setting.ready = controller_setting_ready_fail;
-      }
-      else {
-        status = controller_preprocess_entry(*data, &setting, &cache);
-
-        if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
-
-          if (f_file_exists(setting.path_pid.string) == F_true) {
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-              fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting.path_pid.string, data->error.notable.after->string);
-              fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
-            }
-
-            status = F_status_set_error(F_available_not);
-            setting.ready = controller_setting_ready_abort;
-          }
-
-          if (F_status_is_error_not(status)) {
-            status = controller_process_entry(data, &setting, &cache);
-          }
-
-          if (!(status == F_child || status == F_signal)) {
-            if (F_status_is_error(status)) {
-              setting.ready = controller_setting_ready_fail;
-            }
-            else {
-              setting.ready = controller_setting_ready_done;
-
-              // @todo wait here until told to quit, listening for "control" commands (and listening for signals).
-              // @todo clear cache periodically while waiting.
-              // controller_macro_cache_t_delete_simple(cache);
-            }
-          }
-        }
-      }
+    if (F_status_is_error_not(status)) {
+      status = controller_thread_main(entry_name, &cache, &thread);
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
@@ -372,10 +329,14 @@ extern "C" {
       }
     }
 
+    f_signal_close(&data->signal);
+
     controller_file_pid_delete(*data, setting.path_pid);
 
-    controller_macro_setting_t_delete_simple(setting);
-    controller_macro_cache_t_delete_simple(cache);
+    controller_macro_setting_t_delete_simple(setting)
+    controller_macro_cache_t_delete_simple(cache)
+    controller_macro_mutex_t_delete_simple(mutex)
+    controller_macro_thread_t_delete_simple(thread)
 
     controller_delete_data(data);
 
