@@ -565,7 +565,6 @@ extern "C" {
       if (error == EAGAIN) return F_status_set_error(F_resource_not);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == EPERM) return F_status_set_error(F_prohibited);
-      if (error == ETIMEDOUT) return F_time;
 
       return F_status_set_error(F_failure);
     }

@@ -26,6 +26,10 @@ extern "C" {
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define f_macro_thread_attribute_t_clear(attribute) attribute.__align = 0
+
+  #define f_macro_thread_attribute_t_delete(status, attribute) status = f_thread_attribute_delete(&attribute);
+
+  #define f_macro_thread_attribute_t_delete_simple(attribute) f_thread_attribute_delete(&attribute);
 #endif // _di_f_thread_attribute_t_
 
 /**
@@ -48,6 +52,7 @@ extern "C" {
   #define f_macro_thread_attributes_t_resize(status, attributes, length) f_macro_memory_structure_resize(status, attributes, f_thread_attribute_t, length)
   #define f_macro_thread_attributes_t_adjust(status, attributes, length) f_macro_memory_structure_adjust(status, attributes, f_thread_attribute_t, length)
 
+  // @todo implement custom delete functions to call f_thread_attribute_delete() as appropriate.
   #define f_macro_thread_attributes_t_delete(status, attributes)  f_macro_memory_structure_delete(status, attributes, f_thread_attribute_t)
   #define f_macro_thread_attributes_t_destroy(status, attributes) f_macro_memory_structure_destroy(status, attributes, f_thread_attribute_t)
 
@@ -111,7 +116,7 @@ extern "C" {
 
   #define f_thread_id_t_initialize 0
 
-  #define f_macro_thread_id_t_clear(id) id = 0
+  #define f_macro_thread_id_t_clear(id) id = 0;
 #endif // _di_f_thread_id_t_
 
 /**
@@ -238,9 +243,13 @@ extern "C" {
 #ifndef _di_f_thread_mutex_t_
   typedef pthread_mutex_t f_thread_mutex_t;
 
-  #define f_thread_mutex_t_initialize 0
+  #define f_thread_mutex_t_initialize PTHREAD_MUTEX_INITIALIZER
 
   #define f_macro_thread_mutex_t_clear(mutex) mutex = 0
+
+  #define f_macro_thread_mutex_t_delete(status, mutex) status = f_thread_mutex_delete(&mutex);
+
+  #define f_macro_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
 #endif // _di_f_thread_mutex_t_
 
 /**
@@ -263,6 +272,7 @@ extern "C" {
   #define f_macro_thread_mutexs_t_resize(status, mutexs, length) f_macro_memory_structure_resize(status, mutexs, f_thread_mutex_t, length)
   #define f_macro_thread_mutexs_t_adjust(status, mutexs, length) f_macro_memory_structure_adjust(status, mutexs, f_thread_mutex_t, length)
 
+  // @todo implement custom delete functions to call f_thread_mutex_delete() as appropriate.
   #define f_macro_thread_mutexs_t_delete(status, mutexs)  f_macro_memory_structure_delete(status, mutexs, f_thread_mutex_t)
   #define f_macro_thread_mutexs_t_destroy(status, mutexs) f_macro_memory_structure_destroy(status, mutexs, f_thread_mutex_t)
 
@@ -380,6 +390,10 @@ extern "C" {
   #define f_macro_thread_set_t_clear(thread) \
     f_macro_thread_attribute_t_clear(thread.attributes) \
     f_macro_thread_id_t_clear(thread.id)
+
+  #define f_macro_thread_set_t_delete(status, set) f_macro_thread_attribute_t_delete(status, set.attribute)
+
+  #define f_macro_thread_set_t_delete_simple(set) f_macro_thread_attribute_t_delete_simple(set.attribute)
 #endif // _di_f_thread_set_t_
 
 /**
@@ -402,6 +416,7 @@ extern "C" {
   #define f_macro_thread_sets_t_resize(status, sets, length) f_macro_memory_structure_resize(status, sets, f_thread_set_t, length)
   #define f_macro_thread_sets_t_adjust(status, sets, length) f_macro_memory_structure_adjust(status, sets, f_thread_set_t, length)
 
+  // @todo implement custom delete functions to call f_macro_thread_set_t_delete() as appropriate.
   #define f_macro_thread_sets_t_delete(status, sets)  f_macro_memory_structure_delete(status, sets, f_thread_set_t)
   #define f_macro_thread_sets_t_destroy(status, sets) f_macro_memory_structure_destroy(status, sets, f_thread_set_t)
 
