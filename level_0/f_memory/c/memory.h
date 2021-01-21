@@ -118,13 +118,13 @@ extern "C" {
 /**
  * Create some dynamically allocated array of some length.
  *
+ * @param length
+ *   The total number of blocks to be allocated.
+ *   Must be greater than 0.
  * @param pointer
  *   A pointer that will be updated to the address of the newly allocated memory.
  * @param size
  *   The block size, in bytes (size * length = allocated size).
- *   Must be greater than 0.
- * @param length
- *   The total number of blocks to be allocated.
  *   Must be greater than 0.
  *
  * @return
