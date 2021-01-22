@@ -142,7 +142,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-        fll_error_print(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true);
+        controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
       }
     }
     else {
@@ -151,10 +151,14 @@ extern "C" {
 
         if (f_file_exists(thread->setting->path_pid.string) == F_true) {
           if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&thread->mutex->print);
+
             fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
             fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, thread->setting->path_pid.string, thread->data->error.notable.after->string);
             fprintf(thread->data->error.to.stream, "%s' must not already exist.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&thread->mutex->print);
           }
 
           thread->setting->ready = controller_setting_ready_abort;
@@ -178,10 +182,14 @@ extern "C" {
 
             if (f_file_exists(thread->setting->path_pid.string) == F_true) {
               if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&thread->mutex->print);
+
                 fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
                 fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, thread->setting->path_pid.string, thread->data->error.notable.after->string);
                 fprintf(thread->data->error.to.stream, "%s' must not already exist.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&thread->mutex->print);
               }
 
               thread->setting->ready = controller_setting_ready_fail;
@@ -224,7 +232,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true);
+          controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
         }
       }
     }

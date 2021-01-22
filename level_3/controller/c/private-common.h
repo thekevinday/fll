@@ -972,6 +972,21 @@ extern "C" {
     controller_asynchronouss_resize(0, &thread.asynchronouss);
 #endif // _di_controller_thread_t_
 
+#ifndef _di_controller_execute_set_t_
+  typedef struct {
+    fl_execute_parameter_t parameter;
+    fl_execute_as_t as;
+  } controller_execute_set_t;
+
+  #define controller_execute_set_t_initialize { fl_execute_parameter_t_initialize, fl_execute_as_t_initialize }
+
+  #define controller_macro_execute_set_t_initialize(option, environment, signals, data, as) { fl_macro_execute_parameter_t_initialize(option, environment, signals, data), as }
+
+  #define controller_macro_execute_set_t_clear(set) \
+    fl_macro_execute_parameter_t_clear(set.parameter) \
+    fl_macro_execute_as_t_clear(set.as)
+#endif // _di_controller_execute_set_t_
+
 /**
  * Resize the asynchronouss array to a larger size.
  *
@@ -1011,7 +1026,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_controller_asynchronouss_increase_
-  extern f_status_t controller_asynchronouss_increase(controller_asynchronouss_t *asynchronouss);
+  extern f_status_t controller_asynchronouss_increase(controller_asynchronouss_t *asynchronouss) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_asynchronouss_increase_
 
 /**
@@ -1029,8 +1044,30 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_controller_asynchronouss_resize_
-  extern f_status_t controller_asynchronouss_resize(const f_array_length_t length, controller_asynchronouss_t *asynchronouss);
+  extern f_status_t controller_asynchronouss_resize(const f_array_length_t length, controller_asynchronouss_t *asynchronouss) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_asynchronouss_resize_
+
+/**
+ * Print the error, locking the print mutex during the print.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param status
+ *   The status code to process.
+ *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+ * @param function
+ *   The name of the function where the error happened.
+ *   Set to 0 to disable.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ * @param thread
+ *   The thread data.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_controller_error_print_locked_
+  extern void controller_error_print_locked(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_error_print_locked_
 
 /**
  * Increase the size of the rules array, but only if necessary.

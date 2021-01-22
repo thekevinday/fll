@@ -433,6 +433,19 @@ extern "C" {
   }
 #endif // _di_controller_rule_error_print_
 
+#ifndef _di_controller_rule_error_print_
+  void controller_rule_error_print_locked(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) {
+
+    if (output.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
+      controller_rule_error_print(output, cache, item);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
+    }
+  }
+#endif // _di_controller_rule_error_print_
+
 #ifndef _di_controller_rule_error_print_execute_
   void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status) {
 
@@ -497,7 +510,7 @@ extern "C" {
 #endif // _di_controller_rule_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_execute_
-  f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const bool simulate, controller_thread_t *thread) {
+  f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread) {
     f_status_t status = F_none;
     f_status_t success = F_false;
 
@@ -517,26 +530,26 @@ extern "C" {
     f_string_maps_t environment = f_string_maps_t_initialize;
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
-    fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_threadsafe, &environment, &signals, 0);
-    fl_execute_as_t as = fl_execute_as_t_initialize;
+
+    controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     if (rule->affinity.used) {
-      as.affinity = &rule->affinity;
+      execute_set.as.affinity = &rule->affinity;
     }
 
     if (rule->capability) {
-      as.capability = rule->capability;
+      execute_set.as.capability = rule->capability;
     }
 
     if (rule->has & controller_rule_has_control_group) {
-      as.control_group = &rule->control_group;
+      execute_set.as.control_group = &rule->control_group;
 
       // make sure all required cgroup directories exist.
       if (rule->status == F_known_not) {
         status = fll_control_group_prepare(rule->control_group);
 
         if (F_status_is_error(status)) {
-          fll_error_print(thread->data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true);
+          controller_error_print_locked(thread->data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, thread);
 
           rule->status = F_status_set_error(F_failure);
           return status;
@@ -545,33 +558,33 @@ extern "C" {
     }
 
     if (rule->has & controller_rule_has_group) {
-      as.id_group = &rule->group;
+      execute_set.as.id_group = &rule->group;
 
       if (rule->groups.used) {
-        as.id_groups = &rule->groups;
+        execute_set.as.id_groups = &rule->groups;
       }
     }
 
     if (rule->limits.used) {
-      as.limits = &rule->limits;
+      execute_set.as.limits = &rule->limits;
     }
 
     if (rule->has & controller_rule_has_scheduler) {
-      as.scheduler = &rule->scheduler;
+      execute_set.as.scheduler = &rule->scheduler;
     }
 
     if (rule->has & controller_rule_has_nice) {
-      as.nice = &rule->nice;
+      execute_set.as.nice = &rule->nice;
     }
 
     if (rule->has & controller_rule_has_user) {
-      as.id_user = &rule->user;
+      execute_set.as.id_user = &rule->user;
     }
 
     status = fl_environment_load_names(rule->environment, &environment);
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread->data->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
+      controller_error_print_locked(thread->data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, thread);
 
       rule->status = F_status_set_error(F_failure);
       return status;
@@ -599,16 +612,16 @@ extern "C" {
 
         action = &item->actions.array[j];
 
-        parameter.data = 0;
-        parameter.option = 0;
+        execute_set.parameter.data = 0;
+        execute_set.parameter.option = fl_execute_parameter_option_threadsafe;
 
         if (item->type == controller_rule_item_type_command) {
 
           if (strchr(action->parameters.array[0].string, f_path_separator_s[0])) {
-            parameter.option |= fl_execute_parameter_option_path;
+            execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, simulate, 0, action->parameters, 0, &parameter, &as, thread->data);
+          status = controller_rule_execute_foreground(index, item->type, *action, 0, action->parameters, options, &execute_set, thread);
 
           if (status == F_child) {
             break;
@@ -617,19 +630,19 @@ extern "C" {
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
 
-            if (!simulate) break;
+            if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
         }
         else if (item->type == controller_rule_item_type_script) {
-          parameter.data = &action->parameters.array[0];
+          execute_set.parameter.data = &action->parameters.array[0];
 
           if (rule->script.used && strchr(rule->script.string, f_path_separator_s[0])) {
-            parameter.option |= fl_execute_parameter_option_path;
+            execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(item->type, *action, simulate, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, 0, &parameter, &as, thread->data);
+          status = controller_rule_execute_foreground(index, item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, options, &execute_set, thread);
 
           if (status == F_child) {
             break;
@@ -638,7 +651,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
 
-            if (!simulate) break;
+            if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
@@ -646,15 +659,15 @@ extern "C" {
         else if (item->type == controller_rule_item_type_service) {
 
           if (strchr(action->parameters.array[0].string, f_path_separator_s[0])) {
-            parameter.option |= fl_execute_parameter_option_path;
+            execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(item->type, *action, simulate, 0, action->parameters, 0, &parameter, &as, thread->data);
+          status = controller_rule_execute_pid_with(index, item->type, *action, 0, action->parameters, options, &execute_set, thread);
 
           if (F_status_is_error(status)) {
             action->status = F_status_set_error(F_failure);
 
-            if (!simulate) break;
+            if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
@@ -662,10 +675,14 @@ extern "C" {
         else {
 
           if (thread->data->warning.verbosity == f_console_verbosity_debug) {
+            f_thread_mutex_lock(&thread->mutex->print);
+
             fprintf(thread->data->warning.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread->data->warning.to.stream, "%s%sAction type is unknown, ignoring.%s%c", thread->data->warning.context.before->string, thread->data->warning.prefix ? thread->data->warning.prefix : f_string_empty_s, thread->data->warning.context.after->string, f_string_eol_s[0]);
 
             controller_rule_error_print(thread->data->warning, *thread->cache_action, F_true);
+
+            f_thread_mutex_unlock(&thread->mutex->print);
           }
 
           action->status = F_ignore;
@@ -680,7 +697,7 @@ extern "C" {
         if (status == F_child || status == F_signal) break;
       } // for
 
-      if (status == F_child || status == F_signal || F_status_is_error(status) && !simulate) break;
+      if (status == F_child || status == F_signal || F_status_is_error(status) && !(options & controller_rule_option_simulate)) break;
     } // for
 
     f_macro_string_maps_t_delete_simple(environment);
@@ -704,7 +721,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) {
 
     f_status_t status = F_none;
     int result = 0;
@@ -716,19 +733,25 @@ extern "C" {
     //       otherwise this needs to call an asynchronous execute process.
     //       until then, this controller_rule_execute_pid_with() function is not correct and only represents a process that forks to the background.
 
-    if (simulate) {
+    if (options & controller_rule_option_simulate) {
 
-      if (data->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-        fprintf(data->output.stream, "Simulating execution of '");
-        fprintf(data->output.stream, "%s%s%s", data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, data->context.reset.string);
-        fprintf(data->output.stream, "' with the arguments: '%s", data->context.title.string);
+      if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread->mutex->print);
+
+        fprintf(thread->data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(thread->data->output.stream, "Simulating execution of '");
+        fprintf(thread->data->output.stream, "%s%s%s", thread->data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "' with the arguments: '%s", thread->data->context.important.string);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
-          fprintf(data->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
+          fprintf(thread->data->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
         } // for
 
-        fprintf(data->output.stream, "%s'.%c", data->context.reset.string, f_string_eol_s[0]);
+        fprintf(thread->data->output.stream, "%s' from '", thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "%s%s%s", thread->data->context.notable.string, thread->setting->rules.array[index].name.used ? thread->setting->rules.array[index].name.string : f_string_empty_s, thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "%s'.%c", thread->data->context.reset.string, f_string_eol_s[0]);
+
+        f_thread_mutex_unlock(&thread->mutex->print);
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
@@ -736,12 +759,12 @@ extern "C" {
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(parameter->option, parameter->environment, parameter->signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, as, &result);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, &result);
     }
     else {
-      status = fll_execute_program(program, arguments, parameter, as, &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
     }
 
     if (F_status_is_error(status)) {
@@ -756,7 +779,7 @@ extern "C" {
     }
 
     if (status == F_child) {
-      data->child = result;
+      thread->data->child = result;
 
       return F_child;
     }
@@ -768,48 +791,58 @@ extern "C" {
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
+      f_thread_mutex_lock(&thread->mutex->print);
+
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
+        controller_rule_error_print_execute(thread->data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
       }
       else if (status == F_file_found_not) {
-        controller_rule_error_print_execute_not_found(data->error, F_false, program);
+        controller_rule_error_print_execute_not_found(thread->data->error, F_false, program);
       }
       else {
-        fll_error_print(data->error, status, "fll_execute_program", F_true);
+        fll_error_print(thread->data->error, status, "fll_execute_program", F_true);
       }
 
-      data->child = 0;
+      f_thread_mutex_unlock(&thread->mutex->print);
+
+      thread->data->child = 0;
 
       return F_status_set_error(status);
     }
 
     // @todo wait for pid file or timeout.
 
-    data->child = 0;
+    thread->data->child = 0;
 
     return status;
   }
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) {
+  f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) {
 
     f_status_t status = F_none;
     int result = 0;
 
-    if (simulate) {
+    if (options & controller_rule_option_simulate) {
 
-      if (data->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-        fprintf(data->output.stream, "Simulating execution of '");
-        fprintf(data->output.stream, "%s%s%s", data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, data->context.reset.string);
-        fprintf(data->output.stream, "' with the arguments: '%s", data->context.title.string);
+      if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread->mutex->print);
+
+        fprintf(thread->data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(thread->data->output.stream, "Simulating execution of '");
+        fprintf(thread->data->output.stream, "%s%s%s", thread->data->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "' with the arguments: '%s", thread->data->context.important.string);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
-          fprintf(data->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
+          fprintf(thread->data->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
         } // for
 
-        fprintf(data->output.stream, "%s'.%c", data->context.reset.string, f_string_eol_s[0]);
+        fprintf(thread->data->output.stream, "%s' from '", thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "%s%s%s", thread->data->context.notable.string, thread->setting->rules.array[index].name.used ? thread->setting->rules.array[index].name.string : f_string_empty_s, thread->data->context.reset.string);
+        fprintf(thread->data->output.stream, "%s'.%c", thread->data->context.reset.string, f_string_eol_s[0]);
+
+        f_thread_mutex_unlock(&thread->mutex->print);
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
@@ -817,12 +850,12 @@ extern "C" {
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(parameter->option, parameter->environment, parameter->signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, as, &result);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, &result);
     }
     else {
-      status = fll_execute_program(program, arguments, parameter, as, &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
     }
 
     if (F_status_is_error(status)) {
@@ -837,7 +870,7 @@ extern "C" {
     }
 
     if (status == F_child) {
-      data->child = result;
+      thread->data->child = result;
 
       return F_child;
     }
@@ -849,20 +882,24 @@ extern "C" {
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
+      f_thread_mutex_lock(&thread->mutex->print);
+
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_error_print_execute(data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
+        controller_rule_error_print_execute(thread->data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
       }
       else if (status == F_file_found_not) {
-        controller_rule_error_print_execute_not_found(data->error, F_false, program);
+        controller_rule_error_print_execute_not_found(thread->data->error, F_false, program);
       }
       else {
-        fll_error_print(data->error, status, "fll_execute_program", F_true);
+        fll_error_print(thread->data->error, status, "fll_execute_program", F_true);
       }
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       status = F_status_set_error(status);
     }
 
-    data->child = 0;
+    thread->data->child = 0;
 
     return status;
   }
@@ -1303,20 +1340,28 @@ extern "C" {
       default:
 
         if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&thread->mutex->print);
+
           fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(thread->data->error.to.stream, "%s%sUnsupported action type '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
           fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, controller_rule_action_type_name(action), thread->data->error.notable.after->string);
           fprintf(thread->data->error.to.stream, "%s' while attempting to execute rule.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
 
           controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+          f_thread_mutex_unlock(&thread->mutex->print);
         }
 
         return F_status_set_error(F_parameter);
     }
 
     if (index >= thread->setting->rules.used) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_parameter, "controller_rule_process", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return F_status_set_error(F_parameter);
     }
@@ -1326,8 +1371,12 @@ extern "C" {
     f_macro_array_lengths_t_increase_by(status, (*thread->stack), controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return status;
     }
@@ -1584,7 +1633,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(index, action, options & controller_rule_option_simulate, thread);
+        status = controller_rule_execute(index, action, options, thread);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);

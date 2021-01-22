@@ -153,6 +153,27 @@ extern "C" {
 #endif // _di_controller_rule_error_print_
 
 /**
+ * Print additional error/warning information in addition to existing error.
+ *
+ * This is explicitly intended to be used in addition to the error message.
+ *
+ * @param output
+ *   The error or warning output structure.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param item
+ *   If TRUE, then this error is associated with an item.
+ *   If FALSE, then this error is associated with a rule setting.
+ * @param thread
+ *   The thread data.
+ *
+ * @see controller_rule_error_print()
+ */
+#ifndef _di_controller_rule_error_print_
+  extern void controller_rule_error_print_locked(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_
+
+/**
  * Print an error or warning message related to the failed execution of some program or script.
  *
  * @param output
@@ -218,9 +239,9 @@ extern "C" {
  *   - controller_rule_action_type_resume
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
- * @param simulate
- *   If TRUE, then run a simulated action (outputing result and executing an empty script).
- *   If FALSE, perform the real execution.
+ * @param options
+ *   A number using bits to represent specific boolean options.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param thread
  *   The thread data.
  *
@@ -234,7 +255,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const bool simulate, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -243,6 +264,8 @@ extern "C" {
  * When this is synchronous, this will wait for the PID file to be generated before continuing.
  * When this is asynchronous, this will continue on adding the rule id and action to the asynchronous list.
  *
+ * @param index
+ *   The index location in the rules running this action.
  * @param type
  *   The item type code.
  * @param action
@@ -254,23 +277,17 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
- * @param simulate
- *   If TRUE, then run a simulated action (outputing result and executing an empty script).
- *   If FALSE, perform the real execution.
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
  *   The arguments to pass to the program.
  * @param options
- *   The controller execute options (and not fl_execute_parameter_t.option).
- *   This is for designating asynchronous and other controller specific execution options.
- *   @todo this is not yet implemented.
- * @param parameter
- *   The execute parameter settings.
- * @param as
- *   The execute as settings.
- * @param data
- *   The program data.
+ *   A number using bits to represent specific boolean options.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ * @param execute_set
+ *   The execute parameter and as settings.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -283,12 +300,14 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
  * Perform an execution of the given rule in the foreground.
  *
+ * @param index
+ *   The index location in the rules running this action.
  * @param type
  *   The item type code.
  * @param action
@@ -300,23 +319,17 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
- * @param simulate
- *   If TRUE, then run a simulated action (outputing result and executing an empty script).
- *   If FALSE, perform the real execution.
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
  *   The arguments to pass to the program.
  * @param options
- *   The controller execute options (and not fl_execute_parameter_t.option).
- *   This is for designating asynchronous and other controller specific execution options.
- *   @todo this is not yet implemented.
- * @param parameter
- *   The execute parameter settings.
- * @param as
- *   The execute as settings.
- * @param data
- *   The program data.
+ *   A number using bits to represent specific boolean options.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ * @param execute_set
+ *   The execute parameter and as settings.
+ * @param thread
+ *   The thread data.
  *
  * @return
  *   F_none on success.
@@ -328,7 +341,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const bool simulate, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, controller_data_t *data) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**

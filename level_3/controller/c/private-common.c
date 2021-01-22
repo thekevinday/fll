@@ -76,6 +76,19 @@ extern "C" {
   }
 #endif // _di_controller_rules_increase_
 
+#ifndef _di_controller_error_print_locked_
+  void controller_error_print_locked(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
+
+    if (error.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
+      fll_error_print(error, status, function, fallback);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
+    }
+  }
+#endif // _di_controller_error_print_locked_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

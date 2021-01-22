@@ -877,11 +877,7 @@ extern "C" {
             memcpy(cache_name_item, thread->cache_action->name_item.string, thread->cache_action->name_item.used);
             memcpy(cache_name_file, thread->cache_action->name_file.string, thread->cache_action->name_file.used);
 
-            f_thread_mutex_lock(&thread->mutex->rule);
-
             status = controller_rule_read(*data, *setting, rule_id, thread, cache, &setting->rules.array[setting->rules.used]);
-
-            f_thread_mutex_unlock(&thread->mutex->rule);
 
             // restore cache.
             memcpy(thread->cache_action->name_action.string, cache_name_action, cache_name_action_used);
