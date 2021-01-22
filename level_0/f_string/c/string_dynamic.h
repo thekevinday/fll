@@ -144,7 +144,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_dynamic_adjust_
-  extern f_status_t f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic);
 #endif // _di_f_string_dynamic_adjust_
 
 /**
@@ -233,7 +233,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_dynamic_resize_
-  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *dynamic);
 #endif // _di_f_string_dynamic_resize_
 
 /**

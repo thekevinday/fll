@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_ranges_adjust_
-  f_status_t f_string_ranges_adjust(const f_string_length_t length, f_string_ranges_t *ranges) {
+  f_status_t f_string_ranges_adjust(const f_array_length_t length, f_string_ranges_t *ranges) {
     #ifndef _di_level_0_parameter_checking_
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_string_ranges_increase_by_
 
 #ifndef _di_f_string_ranges_resize_
-  f_status_t f_string_ranges_resize(const f_string_length_t length, f_string_ranges_t *ranges) {
+  f_status_t f_string_ranges_resize(const f_array_length_t length, f_string_ranges_t *ranges) {
     #ifndef _di_level_0_parameter_checking_
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_f_string_ranges_resize_
 
 #ifndef _di_f_string_rangess_adjust_
-  f_status_t f_string_rangess_adjust(const f_string_length_t length, f_string_rangess_t *rangess) {
+  f_status_t f_string_rangess_adjust(const f_array_length_t length, f_string_rangess_t *rangess) {
     #ifndef _di_level_0_parameter_checking_
       if (!rangess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_string_rangess_increase_by_
 
 #ifndef _di_f_string_rangess_resize_
-  f_status_t f_string_rangess_resize(const f_string_length_t length, f_string_rangess_t *rangess) {
+  f_status_t f_string_rangess_resize(const f_array_length_t length, f_string_rangess_t *rangess) {
     #ifndef _di_level_0_parameter_checking_
       if (!rangess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

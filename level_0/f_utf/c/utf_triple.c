@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_triples_adjust_
-  f_status_t f_utf_string_triples_adjust(const f_string_length_t length, f_utf_string_triples_t *triples) {
+  f_status_t f_utf_string_triples_adjust(const f_array_length_t length, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_utf_string_triples_increase_by_
 
 #ifndef _di_f_utf_string_triples_resize_
-  f_status_t f_utf_string_triples_resize(const f_string_length_t length, f_utf_string_triples_t *triples) {
+  f_status_t f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

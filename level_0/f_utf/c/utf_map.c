@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_map_multis_adjust_
-  f_status_t f_utf_string_map_multis_adjust(const f_string_length_t length, f_utf_string_map_multis_t *map_multis) {
+  f_status_t f_utf_string_map_multis_adjust(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
     #ifndef _di_level_0_parameter_checking_
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_utf_string_map_multis_increase_by_
 
 #ifndef _di_f_utf_string_map_multis_resize_
-  f_status_t f_utf_string_map_multis_resize(const f_string_length_t length, f_utf_string_map_multis_t *map_multis) {
+  f_status_t f_utf_string_map_multis_resize(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) {
     #ifndef _di_level_0_parameter_checking_
       if (!map_multis) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_f_utf_string_map_multis_resize_
 
 #ifndef _di_f_utf_string_maps_adjust_
-  f_status_t f_utf_string_maps_adjust(const f_string_length_t length, f_utf_string_maps_t *maps) {
+  f_status_t f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t *maps) {
     #ifndef _di_level_0_parameter_checking_
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_utf_string_maps_increase_by_
 
 #ifndef _di_f_utf_string_maps_resize_
-  f_status_t f_utf_string_maps_resize(const f_string_length_t length, f_utf_string_maps_t *maps) {
+  f_status_t f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t *maps) {
     #ifndef _di_level_0_parameter_checking_
       if (!maps) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
