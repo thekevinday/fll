@@ -44,6 +44,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
  *   F_failure (with error bit) on any other error.
@@ -66,6 +67,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -87,6 +89,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
@@ -105,6 +108,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
  *   F_failure (with error bit) on any other error.
@@ -123,6 +127,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -140,6 +145,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
@@ -155,11 +161,15 @@ extern "C" {
  *
  * On successfully delete, the pointer address is set to 0.
  *
+ * The pthread_attr_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
+ *
  * @param attribute
  *   The thread attributes to delete.
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -179,6 +189,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -198,6 +209,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -217,6 +229,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -236,6 +249,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -255,6 +269,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -274,6 +289,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -293,6 +309,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -312,6 +329,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -331,6 +349,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -350,6 +369,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -369,6 +389,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -388,6 +409,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_supported_not (with error bit) if the scope is not supported by the current OS (such as Linux not supporting PTHREAD_SCOPE_PROCESS).
  *   F_failure (with error bit) on any other error.
@@ -410,6 +432,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
@@ -432,6 +455,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
@@ -441,6 +465,131 @@ extern "C" {
 #ifndef _di_f_thread_attribute_stack_set_
   extern f_status_t f_thread_attribute_stack_set(const size_t stack_size, void * const stack, f_thread_attribute_t *attribute);
 #endif // _di_f_thread_attribute_stack_set_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_attributes_adjust_
+  extern f_status_t f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_adjust_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_attributes_decimate_by_
+  extern f_status_t f_thread_attributes_decimate_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_decimate_by_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_attributes_decrease_by_
+  extern f_status_t f_thread_attributes_decrease_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_decrease_by_
+
+/**
+ * Increase the size of the string attributes array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_attributes_increase_
+  extern f_status_t f_thread_attributes_increase(f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_increase_
+
+/**
+ * Resize the string attributes array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_attributes_increase_by_
+  extern f_status_t f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_increase_by_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_attributes_resize_
+  extern f_status_t f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t *attributes);
+#endif // _di_f_thread_attributes_resize_
 
 /**
  * Get the ID of the calling thread.
@@ -462,6 +611,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_failure (with error bit) on any other error.
  *
@@ -483,6 +633,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -519,6 +670,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -538,6 +690,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_supported_not (with error bit) if per-CPU clocks are not supported by the OS.
  *   F_failure (with error bit) on any other error.
@@ -572,6 +725,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -589,6 +743,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -610,6 +765,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
@@ -636,6 +792,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_time on success, and wait timeout was reached before condition was triggered.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
  *   F_failure (with error bit) on any other error.
@@ -663,6 +820,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
  *   F_resource_not (with error bit) if there are not enough resources to create another thread.
@@ -688,6 +846,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -708,6 +867,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see pthread_exit()
@@ -730,6 +890,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -757,6 +918,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_busy on success, but thread could not be joined because it has not yet exited.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -789,6 +951,7 @@ extern "C" {
  *   F_none on success.
  *   F_busy on success, but thread could not be joined because it has not yet exited.
  *   F_time on success, but thread could not be joined because it has not yet exited and the wait timeout was reached.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -811,6 +974,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
@@ -832,6 +996,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see pthread_getspecific()
@@ -850,6 +1015,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see pthread_setspecific()
@@ -866,6 +1032,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max read/write locks is reached.
@@ -885,6 +1052,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_busy on success, but the read/write lock is already locked.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max read/write locks is reached.
  *
@@ -905,6 +1073,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -919,13 +1088,17 @@ extern "C" {
 #endif // _di_f_thread_mutex_create_
 
 /**
- * Create a thread mutex.
+ * Delete a thread mutex.
+ *
+ * The pthread_mutex_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
  *
  * @param mutex
  *   The mutex to delete.
  *
  * @return
  *   F_none on success.
+ *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
@@ -946,6 +1119,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max mutex locks is reached.
@@ -969,6 +1143,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_busy on success, but the mutex is already locked.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max mutex locks is reached.
  *
@@ -986,6 +1161,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
  *   F_resource_not (with error bit) if max mutex locks is reached.
@@ -997,6 +1173,131 @@ extern "C" {
 #endif // _di_f_thread_mutex_unlock_
 
 /**
+ * Resize the string mutexs array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param mutexs
+ *   The string mutexs array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutexs_adjust_
+  extern f_status_t f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_adjust_
+
+/**
+ * Resize the string mutexs array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param mutexs
+ *   The string mutexs array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutexs_decimate_by_
+  extern f_status_t f_thread_mutexs_decimate_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_decimate_by_
+
+/**
+ * Resize the string mutexs array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param mutexs
+ *   The string mutexs array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutexs_decrease_by_
+  extern f_status_t f_thread_mutexs_decrease_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_decrease_by_
+
+/**
+ * Increase the size of the string mutexs array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param mutexs
+ *   The string mutexs array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutexs_increase_
+  extern f_status_t f_thread_mutexs_increase(f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_increase_
+
+/**
+ * Resize the string mutexs array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param mutexs
+ *   The string mutexs array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_mutexs_increase_by_
+  extern f_status_t f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_increase_by_
+
+/**
+ * Resize the string mutexs array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param mutexs
+ *   The string mutexs array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutexs_resize_
+  extern f_status_t f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t *mutexs);
+#endif // _di_f_thread_mutexs_resize_
+
+/**
  * Call the given routine only one time and never again.
  *
  * Subsequent calls will not call the given routine.
@@ -1006,6 +1307,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see pthread_once()
@@ -1013,6 +1315,131 @@ extern "C" {
 #ifndef _di_f_thread_once_
   extern f_status_t f_thread_once(void (*routine) (void), f_thread_once_t *once);
 #endif // _di_f_thread_once_
+
+/**
+ * Resize the string sets array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param sets
+ *   The string sets array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_sets_adjust_
+  extern f_status_t f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_adjust_
+
+/**
+ * Resize the string sets array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param sets
+ *   The string sets array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_sets_decimate_by_
+  extern f_status_t f_thread_sets_decimate_by(const f_array_length_t amount, f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_decimate_by_
+
+/**
+ * Resize the string sets array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param sets
+ *   The string sets array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_sets_decrease_by_
+  extern f_status_t f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_decrease_by_
+
+/**
+ * Increase the size of the string sets array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param sets
+ *   The string sets array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_sets_increase_
+  extern f_status_t f_thread_sets_increase(f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_increase_
+
+/**
+ * Resize the string sets array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param sets
+ *   The string sets array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_sets_increase_by_
+  extern f_status_t f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_increase_by_
+
+/**
+ * Resize the string sets array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param sets
+ *   The string sets array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_sets_resize_
+  extern f_status_t f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t *sets);
+#endif // _di_f_thread_sets_resize_
 
 /**
  * Send a signal to the given thread.
@@ -1026,6 +1453,7 @@ extern "C" {
  * @return
  *   F_none on success and signal is not 0.
  *   F_found on success, signal is 0, and the thread by the given ID does exist.
+ *
  *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
  *   F_found_not (with error bit) if no thread by the given ID was found (and signal is not 0).
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1053,6 +1481,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -1074,6 +1503,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
