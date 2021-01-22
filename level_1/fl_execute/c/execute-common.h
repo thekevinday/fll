@@ -48,7 +48,7 @@ extern "C" {
 
   #define fl_macro_execute_parameter_t_initialize(option, environment, signals, data) { option, environment, signals, data }
 
-  #define fl_execute_parameter_t_clear(set) \
+  #define fl_macro_execute_parameter_t_clear(set) \
     set.option = 0; \
     set.environment = 0; \
     set.signals = 0; \
@@ -91,7 +91,7 @@ extern "C" {
 
   #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler) { nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler }
 
-  #define fl_execute_as_t_clear(as) \
+  #define fl_macro_execute_as_t_clear(as) \
     as.nice = 0; \
     as.id_user = 0; \
     as.id_group = 0; \
