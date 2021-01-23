@@ -67,9 +67,11 @@ extern "C" {
 #ifndef _di_f_thread_condition_t_
   typedef pthread_cond_t f_thread_condition_t;
 
-  #define f_thread_condition_t_initialize 0
+  #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER;
 
   #define f_macro_thread_condition_t_clear(condition) condition = 0
+
+  #define f_macro_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
 #endif // _di_f_thread_condition_t_
 
 /**
@@ -89,17 +91,63 @@ extern "C" {
 
   #define f_thread_conditions_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_conditions_t_resize(status, conditions, length) f_macro_memory_structure_resize(status, conditions, f_thread_condition_t, length)
-  #define f_macro_thread_conditions_t_adjust(status, conditions, length) f_macro_memory_structure_adjust(status, conditions, f_thread_condition_t, length)
+  #define f_macro_thread_conditions_t_clear(conditions) f_macro_memory_structure_clear(conditions)
 
-  #define f_macro_thread_conditions_t_delete_simple(conditions)  f_macro_memory_structure_delete_simple(conditions, f_thread_condition_t)
-  #define f_macro_thread_conditions_t_destroy_simple(conditions) f_macro_memory_structure_destroy_simple(conditions, f_thread_condition_t)
+  #define f_macro_thread_conditions_t_resize(status, conditions, length) status = f_thread_conditions_resize(length, &conditions);
+  #define f_macro_thread_conditions_t_adjust(status, conditions, length) status = f_thread_conditions_adjust(length, &conditions);
 
-  #define f_macro_thread_conditions_t_increase(status, conditions)            f_macro_memory_structure_increase(status, conditions, f_thread_condition_t)
-  #define f_macro_thread_conditions_t_increase_by(status, conditions, amount) f_macro_memory_structure_increase_by(status, conditions, f_thread_condition_t, amount)
-  #define f_macro_thread_conditions_t_decrease_by(status, conditions, amount) f_macro_memory_structure_decrease_by(status, conditions, f_thread_condition_t, amount)
-  #define f_macro_thread_conditions_t_decimate_by(status, conditions, amount) f_macro_memory_structure_decimate_by(status, conditions, f_thread_condition_t, amount)
+  #define f_macro_thread_conditions_t_delete_simple(conditions)  f_thread_conditions_resize(0, &conditions);
+  #define f_macro_thread_conditions_t_destroy_simple(conditions) f_thread_conditions_adjust(0, &conditions);
+
+  #define f_macro_thread_conditions_t_increase(status, conditions)            status = f_thread_conditions_increase(conditions);
+  #define f_macro_thread_conditions_t_increase_by(status, conditions, amount) status = f_thread_conditions_increase_by(amount, conditions);
+  #define f_macro_thread_conditions_t_decrease_by(status, conditions, amount) status = f_thread_conditions_decrease_by(amount, conditions);
+  #define f_macro_thread_conditions_t_decimate_by(status, conditions, amount) status = f_thread_conditions_decimate_by(amount, conditions);
 #endif // _di_f_thread_conditions_t_
+
+/**
+ * A typedef representing pthread_cond_t.
+ */
+#ifndef _di_f_thread_condition_attribute_t_
+  typedef pthread_condattr_t f_thread_condition_attribute_t;
+
+  #define f_thread_condition_attribute_t_initialize 0;
+
+  #define f_macro_thread_condition_attribute_t_clear(attribute) attribute = 0
+
+  #define f_macro_thread_condition_attribute_t_delete_simple(attribute) f_thread_condition_attribute_delete(&attribute);
+#endif // _di_f_thread_condition_attribute_t_
+
+/**
+ * An array of thread condition attributes.
+ *
+ * array: the array of f_thread_condition_attribute_t.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_thread_condition_attributes_t_
+  typedef struct {
+    f_thread_condition_attribute_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_thread_condition_attributes_t;
+
+  #define f_thread_condition_attributes_t_initialize { 0, 0, 0 }
+
+  #define f_macro_thread_condition_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
+
+  #define f_macro_thread_condition_attributes_t_resize(status, attributes, length) status = f_thread_condition_attributes_resize(length, &attributes);
+  #define f_macro_thread_condition_attributes_t_adjust(status, attributes, length) status = f_thread_condition_attributes_adjust(length, &attributes);
+
+  #define f_macro_thread_condition_attributes_t_delete_simple(attributes)  f_thread_condition_attributes_resize(0, &condition_attributes);
+  #define f_macro_thread_condition_attributes_t_destroy_simple(attributes) f_thread_condition_attributes_adjust(0, &condition_attributes);
+
+  #define f_macro_thread_condition_attributes_t_increase(status, attributes)            status = f_thread_condition_attributes_increase(attributes);
+  #define f_macro_thread_condition_attributes_t_increase_by(status, attributes, amount) status = f_thread_condition_attributes_increase_by(amount, attributes);
+  #define f_macro_thread_condition_attributes_t_decrease_by(status, attributes, amount) status = f_thread_condition_attributes_decrease_by(amount, attributes);
+  #define f_macro_thread_condition_attributes_t_decimate_by(status, attributes, amount) status = f_thread_condition_attributes_decimate_by(amount, attributes);
+#endif // _di_f_thread_condition_attributes_t_
 
 /**
  * A typedef representing pthread_t.

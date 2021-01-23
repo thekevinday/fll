@@ -30,6 +30,8 @@ extern "C" {
  *
  *   F_failure (with error bit) on error.
  *
+ * @see pthread_attr_destroy()
+ *
  * @see f_thread_attributes_adjust()
  * @see f_thread_attributes_decimate_by()
  * @see f_thread_attributes_decrease()
@@ -103,6 +105,158 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
+ * @param attribute
+ *   The attribute to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on error.
+ *
+ * @see pthread_condattr_destroy()
+ *
+ * @see f_thread_condition_attributes_adjust()
+ * @see f_thread_condition_attributes_decimate_by()
+ * @see f_thread_condition_attributes_decrease()
+ * @see f_thread_condition_attributes_decrease_by()
+ * @see f_thread_condition_attributes_increase()
+ * @see f_thread_condition_attributes_increase_by()
+ * @see f_thread_condition_attributes_resize()
+ */
+#if !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_) || !defined(_di_f_thread_condition_attributes_decrease_) || !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_) || !defined(_di_f_thread_condition_attributes_resize_)
+  extern f_status_t private_f_thread_condition_attribute_delete(f_thread_condition_attribute_t *attribute) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_) || !defined(_di_f_thread_condition_attributes_decrease_) || !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_) || !defined(_di_f_thread_condition_attributes_resize_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The attributes to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_thread_condition_attributes_adjust()
+ * @see f_thread_condition_attributes_decimate_by()
+ */
+#if !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
+  extern f_status_t private_f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t *attributes) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The attributes to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_thread_condition_attributes_decrease_by()
+ * @see f_thread_condition_attributes_increase()
+ * @see f_thread_condition_attributes_increase_by()
+ */
+#if !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
+  extern f_status_t private_f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t *attributes) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
+
+/**
+ * Private implementation for deleting (and destroying).
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param conditions
+ *   The conditions to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on error.
+ *
+ * @see pthread_cond_destroy()
+ *
+ * @see f_thread_conditions_adjust()
+ * @see f_thread_conditions_decimate_by()
+ * @see f_thread_conditions_decrease()
+ * @see f_thread_conditions_decrease_by()
+ * @see f_thread_conditions_increase()
+ * @see f_thread_conditions_increase_by()
+ * @see f_thread_conditions_resize()
+ */
+#if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_) || !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_) || !defined(_di_f_thread_conditions_resize_)
+  extern f_status_t private_f_thread_condition_delete(f_thread_condition_t *condition) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_) || !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_) || !defined(_di_f_thread_conditions_resize_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param conditions
+ *   The conditions to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_thread_conditions_adjust()
+ * @see f_thread_conditions_decimate_by()
+ */
+#if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
+  extern f_status_t private_f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t *conditions) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param conditions
+ *   The conditions to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_thread_conditions_decrease_by()
+ * @see f_thread_conditions_increase()
+ * @see f_thread_conditions_increase_by()
+ */
+#if !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
+  extern f_status_t private_f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t *conditions) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
+
+/**
+ * Private implementation for deleting (and destroying).
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
  * @param mutexs
  *   The mutexs to adjust.
  *
@@ -110,6 +264,8 @@ extern "C" {
  *   F_none on success.
  *
  *   F_failure (with error bit) on error.
+ *
+ * @see pthread_mutex_destroy()
  *
  * @see f_thread_mutexs_adjust()
  * @see f_thread_mutexs_decimate_by()

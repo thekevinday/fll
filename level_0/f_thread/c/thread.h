@@ -104,7 +104,8 @@ extern "C" {
  * Create (initialize) a thread attribute structure.
  *
  * @param attribute
- *   The thread attributes to create.
+ *   (optional) The attribute to set.
+ *   Set to NULL to not use (in which case the default attribute is used).
  *
  * @return
  *   F_none on success.
@@ -718,6 +719,215 @@ extern "C" {
 #endif // _di_f_thread_compare_
 
 /**
+ * Initialize a attribute.
+ *
+ * @param attribute
+ *   The attribute to set.
+ *   This assigns the default to the attribute.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_condattr_init()
+ */
+#ifndef _di_f_thread_condition_attribute_create_
+  extern f_status_t f_thread_condition_attribute_create(f_thread_condition_attribute_t *attribute);
+#endif // _di_f_thread_condition_attribute_create_
+
+/**
+ * Delete a thread attribute.
+ *
+ * The pthread_condattr_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
+ *
+ * @param attribute
+ *   The attribute to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_busy (with error bit) if the attribute is busy.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_cond_destroy()
+ */
+#ifndef _di_f_thread_condition_attribute_delete_
+  extern f_status_t f_thread_condition_attribute_delete(f_thread_condition_attribute_t *attribute);
+#endif // _di_f_thread_condition_attribute_delete_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_condition_attributes_adjust_
+  extern f_status_t f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_adjust_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_condition_attributes_decimate_by_
+  extern f_status_t f_thread_condition_attributes_decimate_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_decimate_by_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_condition_attributes_decrease_by_
+  extern f_status_t f_thread_condition_attributes_decrease_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_decrease_by_
+
+/**
+ * Increase the size of the string attributes array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_condition_attributes_increase_
+  extern f_status_t f_thread_condition_attributes_increase(f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_increase_
+
+/**
+ * Resize the string attributes array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_condition_attributes_increase_by_
+  extern f_status_t f_thread_condition_attributes_increase_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_increase_by_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_condition_attributes_resize_
+  extern f_status_t f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t *attributes);
+#endif // _di_f_thread_condition_attributes_resize_
+
+/**
+ * Initialize a condition.
+ *
+ * @param attribute
+ *   (optional) The attribute to set.
+ *   Set to NULL to not use (in which case the default attribute is used).
+ * @param condition
+ *   The condition to wait on.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_cond_init()
+ */
+#ifndef _di_f_thread_condition_create_
+  extern f_status_t f_thread_condition_create(const f_thread_condition_attribute_t *attribute, f_thread_condition_t *condition);
+#endif // _di_f_thread_condition_create_
+
+/**
+ * Delete a thread condition.
+ *
+ * The pthread_cond_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
+ *
+ * @param condition
+ *   The condition to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_busy (with error bit) if the condition is busy.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_cond_destroy()
+ */
+#ifndef _di_f_thread_condition_delete_
+  extern f_status_t f_thread_condition_delete(f_thread_condition_t *condition);
+#endif // _di_f_thread_condition_delete_
+
+/**
  * Unblock all threads waiting on a condition.
  *
  * @param condition
@@ -804,7 +1014,132 @@ extern "C" {
 #endif // _di_f_thread_condition_wait_timed_
 
 /**
- * Get the user account by the user id.
+ * Resize the string conditions array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param conditions
+ *   The string conditions array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_conditions_adjust_
+  extern f_status_t f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_adjust_
+
+/**
+ * Resize the string conditions array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param conditions
+ *   The string conditions array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_conditions_decimate_by_
+  extern f_status_t f_thread_conditions_decimate_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_decimate_by_
+
+/**
+ * Resize the string conditions array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param conditions
+ *   The string conditions array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_conditions_decrease_by_
+  extern f_status_t f_thread_conditions_decrease_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_decrease_by_
+
+/**
+ * Increase the size of the string conditions array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param conditions
+ *   The string conditions array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_conditions_increase_
+  extern f_status_t f_thread_conditions_increase(f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_increase_
+
+/**
+ * Resize the string conditions array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param conditions
+ *   The string conditions array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_conditions_increase_by_
+  extern f_status_t f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_increase_by_
+
+/**
+ * Resize the string conditions array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param conditions
+ *   The string conditions array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_conditions_resize_
+  extern f_status_t f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t *conditions);
+#endif // _di_f_thread_conditions_resize_
+
+/**
+ * Create a thread.
  *
  * @param attribute
  *   (optional) The thread attributes.
