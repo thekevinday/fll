@@ -18,6 +18,10 @@ extern "C" {
     {
       controller_thread_t *thread_main = (controller_thread_t *) asynchronous->thread;
 
+      if (!thread_main->asynchronouss.enabled) {
+        return 0;
+      }
+
       f_thread_mutex_lock(&thread_main->setting->rules.array[asynchronous->index].lock);
 
       thread.cache_main = thread_main->cache_main;
@@ -30,6 +34,8 @@ extern "C" {
 
     controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread);
 
+    asynchronous->state = controller_asynchronous_state_done;
+
     f_thread_mutex_unlock(&thread.setting->rules.array[asynchronous->index].lock);
 
     return 0;
@@ -39,13 +45,21 @@ extern "C" {
 #ifndef _di_controller_thread_asynchronous_cancel_
   void controller_thread_asynchronous_cancel(controller_thread_t *thread) {
 
+    thread->asynchronouss.enabled = F_false;
+
     f_thread_mutex_lock(&thread->mutex->asynchronous);
 
-    for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
+    f_array_length_t i = 0;
+
+    for (; i < thread->asynchronouss.used; ++i) {
 
       if (!thread->asynchronouss.array[i].state) continue;
 
-      f_thread_cancel(thread->asynchronouss.array[i].id);
+      if (thread->asynchronouss.array[i].child > 0) {
+        f_signal_send(F_signal_termination, thread->asynchronouss.array[i].child);
+      }
+
+      // @todo perhaps a timed join here where if it takes to long, try sending a kill signal to the child process.
       f_thread_join(thread->asynchronouss.array[i].id, 0);
 
       thread->asynchronouss.array[i].state = 0;
@@ -55,6 +69,14 @@ extern "C" {
 
     thread->asynchronouss.used = 0;
 
+    for (i = 0; i < thread->setting->rules.used; ++i) {
+      f_thread_mutex_unlock(&thread->setting->rules.array[i].lock);
+      f_thread_mutex_unlock(&thread->setting->rules.array[i].wait);
+    } // for
+
+    f_thread_mutex_unlock(&thread->mutex->print);
+    f_thread_mutex_unlock(&thread->mutex->cache);
+    f_thread_mutex_unlock(&thread->mutex->rule);
     f_thread_mutex_unlock(&thread->mutex->asynchronous);
   }
 #endif // _di_controller_thread_asynchronous_cancel_
@@ -63,14 +85,11 @@ extern "C" {
   void * controller_thread_cache(void *arguments) {
 
     controller_thread_t *thread = (controller_thread_t *) arguments;
+    controller_rule_t *rule = 0;
+
     f_array_length_t i = 0;
 
     for (;;) {
-
-      // @todo depend on a posix mutex condition that will designate when to sleep and perform actions.
-      //       when the condition is on/off, then the program will either sleep until condition is toggled or sleep a given interval.
-      //       when sleeping a given interval, then after each interval expiration, perform process cleanups until there are no asynchronous processes to cleanup.
-      //       once all asynchronous processes are cleaned up, toggle the condition again and wait indefinitely.
       sleep(controller_thread_cache_cleanup_interval_long);
 
       if (f_thread_mutex_lock_try(&thread->mutex->cache) == F_none) {
@@ -79,26 +98,34 @@ extern "C" {
 
         if (f_thread_mutex_lock_try(&thread->mutex->asynchronous) == F_none) {
 
-          for (i = 0; i < thread->asynchronouss.size; ++i) {
+          if (thread->asynchronouss.used) {
+            for (i = 0; i < thread->asynchronouss.used; ++i) {
 
-            if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
-              f_thread_join(thread->asynchronouss.array[i].id, 0);
-              thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
-            }
+              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
+                f_thread_join(thread->asynchronouss.array[i].id, 0);
+                thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
+              }
 
-            if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
-              controller_macro_cache_action_t_clear(thread->asynchronouss.array[i].cache);
-              thread->asynchronouss.array[i].state = 0;
-            }
-          } // for
+              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
+                controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
 
-          for (i = thread->asynchronouss.size; i; --i) {
-            if (thread->asynchronouss.array[i - 1].state) break;
+                thread->asynchronouss.array[i].state = 0;
+              }
 
-            controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i])
-          } // for
+              if (thread->asynchronouss.array[i].state) break;
+            } // for
 
-          thread->asynchronouss.used = i;
+            for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
+
+              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
+                controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
+
+                thread->asynchronouss.array[i].state = 0;
+              }
+
+              if (thread->asynchronouss.array[i].state) break;
+            } // for
+          }
 
           if (thread->asynchronouss.used < thread->asynchronouss.size) {
             controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
@@ -151,7 +178,7 @@ extern "C" {
 
         if (f_file_exists(thread->setting->path_pid.string) == F_true) {
           if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-            f_thread_mutex_lock(&thread->mutex->print);
+            if (thread->asynchronouss.enabled) f_thread_mutex_lock(&thread->mutex->print);
 
             fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
@@ -222,22 +249,28 @@ extern "C" {
     // only make the rule and control threads available once any/all pre-processing and is completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
 
-      controller_rule_wait_all(thread);
+      if (thread->data->parameters[controller_parameter_validate].result == f_console_result_none) {
+        controller_rule_wait_all(thread);
 
-      status = f_thread_create(0, &thread_rule, &controller_thread_rule, (void *) thread);
+        status = f_thread_create(0, &thread_rule, &controller_thread_rule, (void *) thread);
 
-      if (F_status_is_error_not(status)) {
-        status = f_thread_create(0, &thread_control, &controller_thread_control, (void *) thread);
-      }
+        if (F_status_is_error_not(status)) {
+          status = f_thread_create(0, &thread_control, &controller_thread_control, (void *) thread);
+        }
 
-      if (F_status_is_error(status)) {
-        if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-          controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
+        if (F_status_is_error(status)) {
+          if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+            controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
+          }
         }
       }
     }
 
-    if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
+    if (status == F_child) {
+      return F_child;
+    }
+
+    if (F_status_is_error_not(status) && status != F_signal && (thread->data->parameters[controller_parameter_validate].result == f_console_result_none || thread->data->parameters[controller_parameter_test].result == f_console_result_found)) {
 
       // wait until signal thread exits, which happens on any termination signal.
       f_thread_join(thread_signal, 0);

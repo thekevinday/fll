@@ -368,6 +368,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) on execution failure.
  *
  * @see execv()
@@ -426,13 +427,17 @@ extern "C" {
  *     A pointer to a string to pipe as standard input to the child process.
  *     The parent will block until the standard input is fully read or the child process exits.
  * @param as
- *   (optional) This and most of its fields are optional and are disabled when set to 0.
+ *   (optional) This and most of its fields are optional and are disabled when set to NULL.
  * @param result
- *   The code returned after finishing execution of program.
+ *   (optional) The code returned after finishing execution of program.
+ *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
- *   F_child on success but this is the child thread.
+ *   F_child on success and this is the child thread.
+ *   F_parent on success and this is the parent thread (only happens when fl_execute_parameter_option_return is passed).
+ *
  *   F_capability (with error bit) on failure to set capabilities in the child (only the child process returns this).
  *   F_control_group (with error bit) on failure to set control group in the child (only the parent process returns this).
  *   F_child (with error bit) on any failure without an explicit failure code (like F_group) before calling execute but this is the child thread.

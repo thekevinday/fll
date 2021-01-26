@@ -309,6 +309,15 @@ extern "C" {
         }
       }
 
+      if (parameter && parameter->option & fl_execute_parameter_option_return) {
+
+        if (result != 0) {
+          *result = id_process;
+        }
+
+        return F_parent;
+      }
+
       // have the parent wait for the child process to finish.
       waitpid(id_process, result, WUNTRACED | WCONTINUED);
 
@@ -467,6 +476,15 @@ extern "C" {
         if (F_status_is_error(status)) {
           return status;
         }
+      }
+
+      if (parameter && parameter->option & fl_execute_parameter_option_return) {
+
+        if (result != 0) {
+          *result = id_process;
+        }
+
+        return F_parent;
       }
 
       // have the parent wait for the child process to finish.

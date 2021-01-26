@@ -23,6 +23,7 @@ extern "C" {
  *   fl_execute_parameter_option_exit:       used to desginate to exit after calling child otherwise child process will return.
  *   fl_execute_parameter_option_path:       used to designate that this is a path to a program (such as '/bin/bash').
  *   fl_execute_parameter_option_threadsafe: used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
+ *   fl_execute_parameter_option_return:     used to designate that the parent process will immediately return instead of waiting for the child process to complete.
  *
  * If thread support is disabled in the library, then fl_execute_parameter_option_threadsafe will fallback to non-threadsafe.
  *
@@ -35,6 +36,7 @@ extern "C" {
   #define fl_execute_parameter_option_exit       0x1
   #define fl_execute_parameter_option_path       0x2
   #define fl_execute_parameter_option_threadsafe 0x4
+  #define fl_execute_parameter_option_return     0x8
 
   typedef struct {
     uint8_t option;

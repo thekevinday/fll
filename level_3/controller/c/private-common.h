@@ -482,6 +482,7 @@ extern "C" {
     f_status_t status;
 
     f_thread_mutex_t lock;
+    f_thread_mutex_t wait;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -523,6 +524,7 @@ extern "C" {
     { \
       F_known_not, \
       f_thread_mutex_t_initialize, \
+      f_thread_mutex_t_initialize, \
       0, \
       0, \
       0, \
@@ -552,6 +554,7 @@ extern "C" {
 
   #define controller_macro_rule_t_delete_simple(rule) \
     f_macro_thread_mutex_t_delete_simple(rule.lock) \
+    f_macro_thread_mutex_t_delete_simple(rule.wait) \
     f_macro_string_dynamic_t_delete_simple(rule.id) \
     f_macro_string_dynamic_t_delete_simple(rule.name) \
     f_macro_string_dynamic_t_delete_simple(rule.path) \
@@ -891,13 +894,14 @@ extern "C" {
     uint8_t state;
     uint8_t action;
     uint8_t options;
+    pid_t child;
 
     void *thread;
     f_array_lengths_t stack;
     controller_cache_action_t cache;
   } controller_asynchronous_t;
 
-  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
+  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, 0, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
 
   #define controller_macro_asynchronous_t_clear(asynchronous) \
     f_macro_thread_id_t_clear(asynchronous.id) \
@@ -905,6 +909,7 @@ extern "C" {
     asynchronous.state = 0; \
     asynchronous.action = 0; \
     asynchronous.options = 0; \
+    asynchronous.child = 0; \
     asynchronous.thread = 0; \
     f_macro_array_lengths_t_clear(asynchronous.stack) \
     controller_macro_cache_action_t_clear(asynchronous.cache)
@@ -916,6 +921,8 @@ extern "C" {
 
 #ifndef _di_controller_asynchronouss_t_
   typedef struct {
+    bool enabled;
+
     controller_asynchronous_t *array;
 
     f_array_length_t size;
@@ -924,6 +931,7 @@ extern "C" {
 
   #define controller_asynchronouss_t_initialize \
     { \
+      F_true, \
       0, \
       0, \
       0, \

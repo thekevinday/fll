@@ -613,7 +613,7 @@ extern "C" {
         action = &item->actions.array[j];
 
         execute_set.parameter.data = 0;
-        execute_set.parameter.option = fl_execute_parameter_option_threadsafe;
+        execute_set.parameter.option = fl_execute_parameter_option_threadsafe & fl_execute_parameter_option_return;
 
         if (item->type == controller_rule_item_type_command) {
 
@@ -767,6 +767,24 @@ extern "C" {
       status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
     }
 
+    if (status == F_parent) {
+      controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) thread->setting->rules.array[index].asynchronous;
+
+      // assign the child process id to the asynchronous thread to allow for the cancel process to send appropriate termination signals to the child process.
+      asynchronous->child = result;
+
+      // have the parent wait for the child process to finish. (@todo see comments above about forking into the background, this code block will need to change.)
+      waitpid(asynchronous->child, &result, WUNTRACED | WCONTINUED);
+
+      // remove the pid now that waidpid() has returned.
+      asynchronous->child = 0;
+
+      // this must explicitly check for 0 (as opposed to checking (!result)).
+      if (!WIFEXITED(result)) {
+        status = F_status_set_error(F_failure);
+      }
+    }
+
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
@@ -856,6 +874,24 @@ extern "C" {
     }
     else {
       status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
+    }
+
+    if (status == F_parent) {
+      controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) thread->setting->rules.array[index].asynchronous;
+
+      // assign the child process id to the asynchronous thread to allow for the cancel process to send appropriate termination signals to the child process.
+      asynchronous->child = result;
+
+      // have the parent wait for the child process to finish. (@todo see comments above about forking into the background, this code block will need to change.)
+      waitpid(asynchronous->child, &result, WUNTRACED | WCONTINUED);
+
+      // remove the pid now that waidpid() has returned.
+      asynchronous->child = 0;
+
+      // this must explicitly check for 0 (as opposed to checking (!result)).
+      if (!WIFEXITED(result)) {
+        status = F_status_set_error(F_failure);
+      }
     }
 
     if (F_status_is_error(status)) {
@@ -1660,6 +1696,12 @@ extern "C" {
   f_status_t controller_rule_process_asynchronous(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) {
 
     f_thread_mutex_lock(&thread->mutex->asynchronous);
+
+    if (!thread->asynchronouss.enabled) {
+      f_thread_mutex_unlock(&thread->mutex->asynchronous);
+
+      return F_signal;
+    }
 
     f_status_t status = controller_asynchronouss_increase(&thread->asynchronouss);
 
@@ -3917,29 +3959,11 @@ extern "C" {
 #ifndef _di_controller_rule_wait_all_
   void controller_rule_wait_all(controller_thread_t *thread) {
 
-    f_array_length_t i = 0;
-
-    for (; i < thread->asynchronouss.used; ++i) {
+    for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
 
       if (!thread->asynchronouss.array[i].state) continue;
 
-      if (thread->asynchronouss.array[i].state != controller_asynchronous_state_joined) {
-        f_thread_join(thread->asynchronouss.array[i].id, 0);
-      }
-
-      f_thread_mutex_lock(&thread->mutex->asynchronous);
-
-      if (thread->asynchronouss.array[i].state) {
-        thread->asynchronouss.array[i].state = 0;
-
-        controller_macro_cache_action_t_clear(thread->asynchronouss.array[i].cache);
-      }
-
-      if (i == thread->asynchronouss.used - 1) {
-        thread->asynchronouss.used = 0;
-      }
-
-      f_thread_mutex_unlock(&thread->mutex->asynchronous);
+      controller_rule_wait_for(i, thread);
     } // for
   }
 #endif // _di_controller_rule_wait_all_
@@ -3957,21 +3981,36 @@ extern "C" {
       return;
     }
 
-    controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) rule->asynchronous;
+    if (f_thread_mutex_lock_try(&rule->wait) == F_none) {
+      controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) rule->asynchronous;
 
-    if (asynchronous->state != controller_asynchronous_state_joined) {
-      f_thread_join(asynchronous->id, 0);
+      if (asynchronous->state == controller_asynchronous_state_done) {
+        f_thread_join(asynchronous->id, 0);
+      }
+
+      if (thread->asynchronouss.enabled) {
+        f_thread_mutex_lock(&thread->mutex->asynchronous);
+
+        if (asynchronous->state) {
+          if (asynchronous->state == controller_asynchronous_state_done) {
+            asynchronous->state = controller_asynchronous_state_joined;
+          }
+
+          controller_macro_cache_action_t_clear(asynchronous->cache);
+        }
+
+        f_thread_mutex_unlock(&thread->mutex->asynchronous);
+      }
+
+      f_thread_mutex_unlock(&rule->wait);
     }
+    else {
 
-    f_thread_mutex_lock(&thread->mutex->asynchronous);
-
-    if (asynchronous->state) {
-      asynchronous->state = 0;
-
-      controller_macro_cache_action_t_clear(asynchronous->cache);
+      // a wait lock is already in place, which will also be responsible for thread joining.
+      // this can therefore immediately unlock and return.
+      f_thread_mutex_lock(&rule->wait);
+      f_thread_mutex_unlock(&rule->wait);
     }
-
-    f_thread_mutex_unlock(&thread->mutex->asynchronous);
   }
 #endif // _di_controller_rule_wait_for_
 

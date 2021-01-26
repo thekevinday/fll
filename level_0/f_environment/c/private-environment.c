@@ -15,10 +15,7 @@ extern "C" {
 
     const f_string_length_t size = strnlen(result, f_environment_max_length);
 
-    if (!size) {
-      value->used = 0;
-    }
-    else {
+    if (size) {
       if (value->used + size > f_environment_max_length) {
         return F_status_set_error(F_string_too_large);
       }
@@ -32,6 +29,9 @@ extern "C" {
 
       memcpy(value->string + value->used, result, value->used + size);
       value->used = size;
+    }
+    else {
+      value->used = 0;
     }
 
     return F_none;

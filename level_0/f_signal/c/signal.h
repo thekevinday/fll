@@ -86,6 +86,7 @@ extern "C" {
  *   F_none on success but no signal found.
  *   F_data_not on success, but no descriptor was provided to read.
  *   F_signal on success and signal found.
+ *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_descriptor (with error bit) if the signal descriptor is invalid.
@@ -104,6 +105,29 @@ extern "C" {
 #endif // _di_f_signal_read_
 
 /**
+ * Send a signal to a process.
+ *
+ * @param signal
+ *   The signal to send
+ * @param process_id
+ *   The process id (PID) that will receive the signal.
+ *   This may also be a process group id.
+ *
+ * @return
+ *   F_none on success but no signal found.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to send signals to the given process.
+ *   F_found_not (with error bit) if the given process was not found.
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see kill()
+ */
+#ifndef _di_f_signal_send_
+  extern f_status_t f_signal_send(const int signal, const pid_t process_id);
+#endif // _di_f_signal_send_
+
+/**
  * Add a signal to the given set of signals.
  *
  * @param signal
@@ -113,6 +137,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -132,6 +157,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -149,6 +175,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -166,6 +193,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -192,6 +220,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *
@@ -213,6 +242,7 @@ extern "C" {
  *
  * @return
  *   F_none on success but no signal found.
+ *
  *   F_found_not (with error bit) if the given PID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
@@ -236,6 +266,7 @@ extern "C" {
  * @return
  *   F_true if signal is found.
  *   F_false if signal is not found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) for any other error.
  *

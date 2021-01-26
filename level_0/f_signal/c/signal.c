@@ -99,6 +99,21 @@ extern "C" {
   }
 #endif // _di_f_signal_read_
 
+#ifndef _di_f_signal_send_
+  f_status_t f_signal_send(const int signal, const pid_t process_id) {
+
+    if (kill(process_id, signal) < 0) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_signal_send_
+
 #ifndef _di_f_signal_set_add_
   f_status_t f_signal_set_add(const int signal, sigset_t *set) {
     #ifndef _di_level_0_parameter_checking_
@@ -106,9 +121,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigaddset(set, signal) < 0) {
-      if (errno == EINVAL) {
-        return F_status_set_error(F_parameter);
-      }
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }
@@ -124,9 +137,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigdelset(set, signal) < 0) {
-      if (errno == EINVAL) {
-        return F_status_set_error(F_parameter);
-      }
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }
@@ -142,9 +153,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (sigemptyset(set) < 0) {
-      if (errno == EINVAL) {
-        return F_status_set_error(F_parameter);
-      }
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }
