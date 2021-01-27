@@ -13,28 +13,35 @@ extern "C" {
   void * controller_thread_asynchronous(void *arguments) {
 
     controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) arguments;
-    controller_thread_t thread = controller_thread_t_initialize;
+    controller_thread_t *thread_main = (controller_thread_t *) asynchronous->thread;
 
-    {
-      controller_thread_t *thread_main = (controller_thread_t *) asynchronous->thread;
-
-      if (!thread_main->asynchronouss.enabled) {
-        return 0;
-      }
-
-      f_thread_mutex_lock(&thread_main->setting->rules.array[asynchronous->index].lock);
-
-      thread.cache_main = thread_main->cache_main;
-      thread.cache_action = &asynchronous->cache;
-      thread.data = thread_main->data;
-      thread.mutex = thread_main->mutex;
-      thread.setting = thread_main->setting;
-      thread.stack = &asynchronous->stack;
+    if (!thread_main->asynchronouss.enabled) {
+      return 0;
     }
 
-    controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread);
+    controller_thread_t thread = controller_thread_t_initialize;
 
-    asynchronous->state = controller_asynchronous_state_done;
+    f_thread_mutex_lock(&thread_main->setting->rules.array[asynchronous->index].lock);
+
+    thread.cache_main = thread_main->cache_main;
+    thread.cache_action = &asynchronous->cache;
+    thread.data = thread_main->data;
+    thread.mutex = thread_main->mutex;
+    thread.setting = thread_main->setting;
+    thread.stack = &asynchronous->stack;
+
+    if (controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread) == F_child) {
+      // @todo consider returning 1 to designate that this is a child process exiting.
+      return 0;
+    }
+
+    if (thread.asynchronouss.enabled) {
+      //f_thread_mutex_lock(&thread_main->mutex->asynchronous);
+
+      asynchronous->state = controller_asynchronous_state_done;
+
+      //f_thread_mutex_unlock(&thread_main->mutex->asynchronous);
+    }
 
     f_thread_mutex_unlock(&thread.setting->rules.array[asynchronous->index].lock);
 
@@ -47,20 +54,26 @@ extern "C" {
 
     thread->asynchronouss.enabled = F_false;
 
-    f_thread_mutex_lock(&thread->mutex->asynchronous);
-
     f_array_length_t i = 0;
+
+    f_thread_mutex_lock(&thread->mutex->asynchronous);
 
     for (; i < thread->asynchronouss.used; ++i) {
 
       if (!thread->asynchronouss.array[i].state) continue;
 
-      if (thread->asynchronouss.array[i].child > 0) {
-        f_signal_send(F_signal_termination, thread->asynchronouss.array[i].child);
+      if (thread->asynchronouss.array[i].state == controller_asynchronous_state_active) {
+        if (thread->asynchronouss.array[i].child > 0) {
+          f_signal_send(F_signal_termination, thread->asynchronouss.array[i].child);
+        }
+
+        thread->asynchronouss.array[i].state = controller_asynchronous_state_done;
       }
 
-      // @todo perhaps a timed join here where if it takes to long, try sending a kill signal to the child process.
-      f_thread_join(thread->asynchronouss.array[i].id, 0);
+      if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
+        // @todo perhaps a timed join here where if it takes to long, try sending a kill signal to the child process.
+        f_thread_join(thread->asynchronouss.array[i].id, 0);
+      }
 
       thread->asynchronouss.array[i].state = 0;
 
@@ -68,11 +81,6 @@ extern "C" {
     } // for
 
     thread->asynchronouss.used = 0;
-
-    for (i = 0; i < thread->setting->rules.used; ++i) {
-      f_thread_mutex_unlock(&thread->setting->rules.array[i].lock);
-      f_thread_mutex_unlock(&thread->setting->rules.array[i].wait);
-    } // for
 
     f_thread_mutex_unlock(&thread->mutex->print);
     f_thread_mutex_unlock(&thread->mutex->cache);
@@ -85,12 +93,13 @@ extern "C" {
   void * controller_thread_cache(void *arguments) {
 
     controller_thread_t *thread = (controller_thread_t *) arguments;
-    controller_rule_t *rule = 0;
+
+    const unsigned int interval = thread->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
 
     f_array_length_t i = 0;
 
     for (;;) {
-      sleep(controller_thread_cache_cleanup_interval_long);
+      sleep(interval);
 
       if (f_thread_mutex_lock_try(&thread->mutex->cache) == F_none) {
         controller_macro_cache_t_delete_simple((*thread->cache_main));
@@ -101,18 +110,23 @@ extern "C" {
           if (thread->asynchronouss.used) {
             for (i = 0; i < thread->asynchronouss.used; ++i) {
 
-              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
-                f_thread_join(thread->asynchronouss.array[i].id, 0);
-                thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
+              if (!thread->asynchronouss.array[i].state) continue;
+
+              if (f_thread_mutex_lock_try(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
+
+                if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
+                  f_thread_join(thread->asynchronouss.array[i].id, 0);
+                  thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
+                }
+
+                if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
+                  controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
+
+                  thread->asynchronouss.array[i].state = 0;
+                }
+
+                f_thread_mutex_unlock(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
               }
-
-              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
-                controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
-
-                thread->asynchronouss.array[i].state = 0;
-              }
-
-              if (thread->asynchronouss.array[i].state) break;
             } // for
 
             for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
@@ -122,8 +136,9 @@ extern "C" {
 
                 thread->asynchronouss.array[i].state = 0;
               }
-
-              if (thread->asynchronouss.array[i].state) break;
+              else if (thread->asynchronouss.array[i].state) {
+                break;
+              }
             } // for
           }
 
@@ -178,7 +193,7 @@ extern "C" {
 
         if (f_file_exists(thread->setting->path_pid.string) == F_true) {
           if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-            if (thread->asynchronouss.enabled) f_thread_mutex_lock(&thread->mutex->print);
+            f_thread_mutex_lock(&thread->mutex->print);
 
             fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
@@ -236,6 +251,10 @@ extern "C" {
               }
             }
           }
+        }
+
+        if (status == F_child) {
+          return F_child;
         }
 
         f_thread_mutex_unlock(&thread->mutex->cache);

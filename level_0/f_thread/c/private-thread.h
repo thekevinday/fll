@@ -255,10 +255,82 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param attribute
+ *   The attribute to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on error.
+ *
+ * @see pthread_mutexattr_destroy()
+ *
+ * @see f_thread_mutex_attributes_adjust()
+ * @see f_thread_mutex_attributes_decimate_by()
+ * @see f_thread_mutex_attributes_decrease()
+ * @see f_thread_mutex_attributes_decrease_by()
+ * @see f_thread_mutex_attributes_increase()
+ * @see f_thread_mutex_attributes_increase_by()
+ * @see f_thread_mutex_attributes_resize()
+ */
+#if !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_) || !defined(_di_f_thread_mutex_attributes_decrease_) || !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_) || !defined(_di_f_thread_mutex_attributes_resize_)
+  extern f_status_t private_f_thread_mutex_attribute_delete(f_thread_mutex_attribute_t *attribute) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_) || !defined(_di_f_thread_mutex_attributes_decrease_) || !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_) || !defined(_di_f_thread_mutex_attributes_resize_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
  * @param length
  *   The new size to use.
- * @param mutexs
- *   The mutexs to adjust.
+ * @param attributes
+ *   The attributes to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_memory_adjust()
+ * @see f_thread_mutex_attributes_adjust()
+ * @see f_thread_mutex_attributes_decimate_by()
+ */
+#if !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
+  extern f_status_t private_f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t *attributes) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
+
+/**
+ * Private implementation for resizing.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The attributes to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_memory_resize()
+ * @see f_thread_mutex_attributes_decrease_by()
+ * @see f_thread_mutex_attributes_increase()
+ * @see f_thread_mutex_attributes_increase_by()
+ */
+#if !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
+  extern f_status_t private_f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t *attributes) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
+
+/**
+ * Private implementation for deleting (and destroying).
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param mutex
+ *   The mutexs to delete.
  *
  * @return
  *   F_none on success.

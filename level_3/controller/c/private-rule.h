@@ -259,6 +259,47 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 /**
+ * Perform an execution of the given rule in the foreground.
+ *
+ * @param index
+ *   The index location in the rules running this action.
+ * @param type
+ *   The item type code.
+ * @param action
+ *   The action to perform based on the action type codes.
+ *
+ *   Only subset of the action type codes are supported:
+ *   - controller_rule_action_type_kill
+ *   - controller_rule_action_type_reload
+ *   - controller_rule_action_type_restart
+ *   - controller_rule_action_type_start
+ *   - controller_rule_action_type_stop
+ * @param program
+ *   The program to use (such as "bash").
+ * @param arguments
+ *   The arguments to pass to the program.
+ * @param options
+ *   A number using bits to represent specific boolean options.
+ *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ * @param execute_set
+ *   The execute parameter and as settings.
+ * @param thread
+ *   The thread data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_child on child process exiting.
+ *   F_signal on (exit) signal received.
+ *
+ *   Errors (with error bit) from: fll_execute_program().
+ *
+ * @see fll_execute_program()
+ */
+#ifndef _di_controller_rule_execute_foreground_
+  extern f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_foreground_
+
+/**
  * Perform an execution of the given rule in the foreground or background and creating a PID file.
  *
  * When this is synchronous, this will wait for the PID file to be generated before continuing.
@@ -302,47 +343,6 @@ extern "C" {
 #ifndef _di_controller_rule_execute_pid_with_
   extern f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
-
-/**
- * Perform an execution of the given rule in the foreground.
- *
- * @param index
- *   The index location in the rules running this action.
- * @param type
- *   The item type code.
- * @param action
- *   The action to perform based on the action type codes.
- *
- *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
- * @param program
- *   The program to use (such as "bash").
- * @param arguments
- *   The arguments to pass to the program.
- * @param options
- *   A number using bits to represent specific boolean options.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
- * @param execute_set
- *   The execute parameter and as settings.
- * @param thread
- *   The thread data.
- *
- * @return
- *   F_none on success.
- *   F_child on child process exiting.
- *   F_signal on (exit) signal received.
- *
- *   Errors (with error bit) from: fll_execute_program().
- *
- * @see fll_execute_program()
- */
-#ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_execute_foreground_
 
 /**
  * Search the already loaded rules to see if one is found.

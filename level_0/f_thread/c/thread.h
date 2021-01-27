@@ -10,6 +10,47 @@
 #ifndef _F_thread_h
 #define _F_thread_h
 
+// @todo pthread_attr_getstackaddr()
+// @todo pthread_attr_getstacksize()
+// @todo pthread_attr_setstackaddr()
+// @todo pthread_attr_setstacksize()
+// @todo pthread_barrier_destroy
+// @todo pthread_barrier_init
+// @todo pthread_barrier_wait
+// @todo pthread_barrierattr_destroy
+// @todo pthread_barrierattr_getpshared
+// @todo pthread_barrierattr_init
+// @todo pthread_barrierattr_setpshared
+// @todo pthread_condattr_getclock
+// @todo pthread_condattr_getpshared
+// @todo pthread_condattr_setclock
+// @todo pthread_condattr_setpshared
+// @todo pthread_getconcurrency
+// @todo pthread_getschedparam
+// @todo pthread_key_delete
+// @todo pthread_mutex_getprioceiling
+// @todo pthread_mutex_setprioceiling
+// @todo pthread_mutex_timedlock
+// @todo pthread_mutexattr_getprioceiling
+// @todo pthread_mutexattr_getprotocol
+// @todo pthread_mutexattr_getpshared
+// @todo pthread_mutexattr_gettype
+// @todo pthread_mutexattr_setprioceiling
+// @todo pthread_mutexattr_setprotocol
+// @todo pthread_mutexattr_setpshared
+// @todo pthread_mutexattr_settype
+// @todo pthread_rwlock_destroy
+// @todo pthread_rwlock_init
+// @todo pthread_rwlock_timedrdlock
+// @todo pthread_rwlock_timedwrlock
+// @todo pthread_rwlock_trywrlock
+// @todo pthread_rwlock_unlock
+// @todo pthread_rwlock_wrlock
+// @todo pthread_rwlockattr_destroy
+// @todo pthread_rwlockattr_getpshared
+// @todo pthread_rwlockattr_init
+// @todo pthread_rwlockattr_setpshared
+
 // include pre-requirements
 #define _GNU_SOURCE
 
@@ -696,7 +737,7 @@ extern "C" {
  *   F_supported_not (with error bit) if per-CPU clocks are not supported by the OS.
  *   F_failure (with error bit) on any other error.
  *
- * @see pthread_equal()
+ * @see pthread_getcpuclockid()
  */
 #ifndef _di_f_thread_clock_get_id_
   extern f_status_t f_thread_clock_get_id(const f_thread_id_t id_thread, clockid_t *id_clock);
@@ -753,7 +794,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_failure (with error bit) on any other error.
  *
- * @see pthread_cond_destroy()
+ * @see pthread_condattr_destroy()
  */
 #ifndef _di_f_thread_condition_attribute_delete_
   extern f_status_t f_thread_condition_attribute_delete(f_thread_condition_attribute_t *attribute);
@@ -1263,7 +1304,7 @@ extern "C" {
  * @see pthread_tryjoin_np()
  */
 #ifndef _di_f_thread_join_try_
-  extern f_status_t f_thread_try(const f_thread_id_t id, void **result);
+  extern f_status_t f_thread_join_try(const f_thread_id_t id, void **result);
 #endif // _di_f_thread_join_try_
 
 /**
@@ -1296,7 +1337,7 @@ extern "C" {
  * @see pthread_timedjoin_np()
  */
 #ifndef _di_f_thread_join_timed_
-  extern f_status_t f_thread_timed(const f_thread_id_t id, const struct timespec wait, void **result);
+  extern f_status_t f_thread_join_timed(const f_thread_id_t id, const struct timespec wait, void **result);
 #endif // _di_f_thread_join_timed_
 
 /**
@@ -1396,6 +1437,176 @@ extern "C" {
 #ifndef _di_f_thread_lock_try_
   extern f_status_t f_thread_lock_try(f_thread_lock_t *lock);
 #endif // _di_f_thread_lock_try_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutex_attributes_adjust_
+  extern f_status_t f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_adjust_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutex_attributes_decimate_by_
+  extern f_status_t f_thread_mutex_attributes_decimate_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_decimate_by_
+
+/**
+ * Resize the string attributes array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutex_attributes_decrease_by_
+  extern f_status_t f_thread_mutex_attributes_decrease_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_decrease_by_
+
+/**
+ * Create a thread mutex attribute.
+ *
+ * @param attribute
+ *   The mutex attributes to create.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_busy (with error bit) if the mutex is busy.
+ *   F_memory_not (with error bit) if out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *   F_resource_not (with error bit) if max mutexes is reached.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutexattr_init()
+ */
+#ifndef _di_f_thread_mutex_attribute_create_
+  extern f_status_t f_thread_mutex_attribute_create(f_thread_mutex_attribute_t *attribute);
+#endif // _di_f_thread_mutex_attribute_create_
+
+/**
+ * Delete a thread mutex attribute.
+ *
+ * The pthread_mutexattr_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
+ *
+ * @param attribute
+ *   The attribute to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_busy (with error bit) if the mutex is busy.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutexattr_destroy()
+ */
+#ifndef _di_f_thread_mutex_attribute_delete_
+  extern f_status_t f_thread_mutex_attribute_delete(f_thread_mutex_attribute_t *attribute);
+#endif // _di_f_thread_mutex_attribute_delete_
+
+/**
+ * Increase the size of the string attributes array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutex_attributes_increase_
+  extern f_status_t f_thread_mutex_attributes_increase(f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_increase_
+
+/**
+ * Resize the string attributes array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param attributes
+ *   The string attributes array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ */
+#ifndef _di_f_thread_mutex_attributes_increase_by_
+  extern f_status_t f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_increase_by_
+
+/**
+ * Resize the string attributes array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param attributes
+ *   The string attributes array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_mutex_attributes_resize_
+  extern f_status_t f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t *attributes);
+#endif // _di_f_thread_mutex_attributes_resize_
+
 
 /**
  * Create a thread mutex.

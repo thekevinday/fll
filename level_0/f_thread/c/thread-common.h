@@ -341,16 +341,18 @@ extern "C" {
 
   #define f_thread_mutex_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_mutex_attributes_t_resize(status, mutex_attributes, length) f_macro_memory_structure_resize(status, mutex_attributes, f_thread_mutex_attribute_t, length)
-  #define f_macro_thread_mutex_attributes_t_adjust(status, mutex_attributes, length) f_macro_memory_structure_adjust(status, mutex_attributes, f_thread_mutex_attribute_t, length)
+  #define f_macro_thread_mutex_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
 
-  #define f_macro_thread_mutex_attributes_t_delete_simple(mutex_attributes)  f_macro_memory_structure_delete_simple(mutex_attributes, f_thread_mutex_attribute_t)
-  #define f_macro_thread_mutex_attributes_t_destroy_simple(mutex_attributes) f_macro_memory_structure_destroy_simple(mutex_attributes, f_thread_mutex_attribute_t)
+  #define f_macro_thread_mutex_attributes_t_resize(status, attributes, length) status = f_thread_mutex_attributes_resize(length, &attributes);
+  #define f_macro_thread_mutex_attributes_t_adjust(status, attributes, length) status = f_thread_mutex_attributes_adjust(length, &attributes);
 
-  #define f_macro_thread_mutex_attributes_t_increase(status, mutex_attributes)            f_macro_memory_structure_increase(status, mutex_attributes, f_thread_mutex_attribute_t)
-  #define f_macro_thread_mutex_attributes_t_increase_by(status, mutex_attributes, amount) f_macro_memory_structure_increase_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount)
-  #define f_macro_thread_mutex_attributes_t_decrease_by(status, mutex_attributes, amount) f_macro_memory_structure_decrease_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount)
-  #define f_macro_thread_mutex_attributes_t_decimate_by(status, mutex_attributes, amount) f_macro_memory_structure_decimate_by(status, mutex_attributes, f_thread_mutex_attribute_t, amount)
+  #define f_macro_thread_mutex_attributes_t_delete_simple(attributes)  f_thread_mutex_attributes_resize(0, &attributes);
+  #define f_macro_thread_mutex_attributes_t_destroy_simple(attributes) f_thread_mutex_attributes_adjust(0, &attributes);
+
+  #define f_macro_thread_mutex_attributes_t_increase(status, attributes)            status = f_thread_mutex_attributes_increase(attributes);
+  #define f_macro_thread_mutex_attributes_t_increase_by(status, attributes, amount) status = f_thread_mutex_attributes_increase_by(amount, attributes);
+  #define f_macro_thread_mutex_attributes_t_decrease_by(status, attributes, amount) status = f_thread_mutex_attributes_decrease_by(amount, attributes);
+  #define f_macro_thread_mutex_attributes_t_decimate_by(status, attributes, amount) status = f_thread_mutex_attributes_decimate_by(amount, attributes);
 #endif // _di_f_thread_mutex_attributes_t_
 
 /**
