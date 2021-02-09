@@ -524,6 +524,12 @@ extern "C" {
         case F_ready_not:
           *string = FL_status_string_ready_not;
           break;
+        case F_recover:
+          *string = FL_status_string_recover;
+          break;
+        case F_recover_not:
+          *string = FL_status_string_recover_not;
+          break;
         case F_recurse:
           *string = FL_status_string_recurse;
           break;

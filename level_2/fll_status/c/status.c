@@ -886,6 +886,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_recover, length, FL_status_string_recover_length) == F_equal_to) {
+        *code = F_recover;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_recover_not, length, FL_status_string_recover_not_length) == F_equal_to) {
+        *code = F_recover_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_recurse, length, FL_status_string_recurse_length) == F_equal_to) {
         *code = F_recurse;
         return F_none;

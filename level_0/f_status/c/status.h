@@ -249,6 +249,8 @@ extern "C" {
       F_read_only,
       F_ready,
       F_ready_not,
+      F_recover,
+      F_recover_not,
       F_recurse,
       F_recurse_not,
       F_relative,

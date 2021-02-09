@@ -269,6 +269,8 @@ extern "C" {
     #define FL_status_string_read_only         "F_read_only"
     #define FL_status_string_ready             "F_ready"
     #define FL_status_string_ready_not         "F_ready_not"
+    #define FL_status_string_recover           "F_recover"
+    #define FL_status_string_recover_not       "F_recover_not"
     #define FL_status_string_recurse           "F_recurse"
     #define FL_status_string_recurse_not       "F_recurse_not"
     #define FL_status_string_relative          "F_relative"
@@ -422,6 +424,8 @@ extern "C" {
     #define FL_status_string_read_only_length         11
     #define FL_status_string_ready_length             7
     #define FL_status_string_ready_not_length         11
+    #define FL_status_string_recover_length           9
+    #define FL_status_string_recover_not_length       13
     #define FL_status_string_recurse_length           9
     #define FL_status_string_recurse_not_length       13
     #define FL_status_string_relative_length          10
