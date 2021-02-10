@@ -287,18 +287,16 @@ extern "C" {
 
           const f_file_t file = f_macro_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
 
-          f_string_static_t result = f_string_static_t_initialize;
+          f_string_static_t buffer = f_string_static_t_initialize;
 
-          result.string = string_result;
-          result.used = 1;
-          result.size = 2;
+          buffer.string = string_result;
+          buffer.used = 1;
+          buffer.size = 2;
 
           const f_status_t status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
           // inform the child that it can now safely begin (or exit).
-          if (F_status_is_error(f_file_write(file, result, 0))) {
-            string_result[0] = '1';
-          }
+          f_file_write(file, buffer, 0);
 
           // close the write pipe for the parent when finished writing.
           close(descriptors[1]);
@@ -451,16 +449,16 @@ extern "C" {
 
         // have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         if (as) {
-          f_string_static_t result = f_string_static_t_initialize;
+          f_string_static_t buffer = f_string_static_t_initialize;
 
-          result.string = string_result;
-          result.used = 1;
-          result.size = 2;
+          buffer.string = string_result;
+          buffer.used = 1;
+          buffer.size = 2;
 
           status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
           // inform the child that it can now safely begin (or exit).
-          if (F_status_is_error(f_file_write(file, result, 0))) {
+          if (F_status_is_error(f_file_write(file, buffer, 0))) {
             string_result[0] = '1';
           }
         }

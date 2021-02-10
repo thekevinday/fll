@@ -487,11 +487,11 @@ extern "C" {
  * @see f_file_exists()
  * @see f_limit_process()
  * @see f_signal_mask()
+ * @see f_string_append()
+ * @see f_string_dynamic_terminate()
  * @see f_thread_signal_mask()
  * @see fl_control_group_apply()
  * @see fl_environment_path_explode_dynamic()
- * @see f_string_append()
- * @see f_string_dynamic_terminate()
  */
 #ifndef _di_fll_execute_program_
   extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);
