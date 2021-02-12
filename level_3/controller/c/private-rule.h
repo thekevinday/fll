@@ -244,6 +244,9 @@ extern "C" {
  *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param thread
  *   The thread data.
+ * @param asynchronous
+ *   Holds the current asynchronous thread information if this is being run from within one.
+ *   Set to NULL when this is not being called from within an asynchronous thread.
  *
  * @return
  *   F_none on success.
@@ -255,7 +258,7 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread, controller_asynchronous_t *asynchronous) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
@@ -285,6 +288,9 @@ extern "C" {
  *   The execute parameter and as settings.
  * @param thread
  *   The thread data.
+ * @param asynchronous
+ *   Holds the current asynchronous thread information if this is being run from within one.
+ *   Set to NULL when this is not being called from within an asynchronous thread.
  *
  * @return
  *   F_none on success.
@@ -296,7 +302,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread, controller_asynchronous_t *asynchronous) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -329,6 +335,9 @@ extern "C" {
  *   The execute parameter and as settings.
  * @param thread
  *   The thread data.
+ * @param asynchronous
+ *   Holds the current asynchronous thread information if this is being run from within one.
+ *   Set to NULL when this is not being called from within an asynchronous thread.
  *
  * @return
  *   F_none on success.
@@ -341,7 +350,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread, controller_asynchronous_t *asynchronous) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
@@ -530,6 +539,9 @@ extern "C" {
  *   If bit controller_rule_option_asynchronous, then run asynchronously.
  * @param thread
  *   The thread data.
+ * @param asynchronous
+ *   Holds the current asynchronous thread information if this is being run from within one.
+ *   Set to NULL when this is not being called from within an asynchronous thread.
  *
  * @return
  *   F_none on success.
@@ -537,7 +549,7 @@ extern "C" {
  *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread, controller_asynchronous_t *asynchronous) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**
@@ -695,18 +707,6 @@ extern "C" {
 #ifndef _di_controller_rule_wait_all_
   extern void controller_rule_wait_all(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_wait_all_
-
-/**
- * Wait until the specific rule is done running, if running asynchronously.
- *
- * @param index
- *   The index of the rule to wait for.
- * @param thread
- *   The thread data.
- */
-#ifndef _di_controller_rule_wait_for_
-  extern void controller_rule_wait_for(const f_array_length_t index, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_wait_for_
 
 #ifdef __cplusplus
 } // extern "C"

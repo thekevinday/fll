@@ -937,16 +937,21 @@ extern "C" {
                 rule_options |= controller_rule_option_wait;
               }
 
+              f_thread_mutex_lock(&thread->setting->rules.array[at].lock);
+
               if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_asynchronous) {
                 rule_options |= controller_rule_option_asynchronous;
 
                 status = controller_rule_process_asynchronous(at, controller_rule_action_type_start, rule_options, thread);
               }
               else {
-                status = controller_rule_process(at, controller_rule_action_type_start, rule_options, thread);
+                status = controller_rule_process(at, controller_rule_action_type_start, rule_options, thread, 0);
               }
 
               if (status == F_child || status == F_signal) break;
+
+              f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+              f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
             }
 
             // restore cache.

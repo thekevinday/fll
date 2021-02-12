@@ -22,6 +22,7 @@ extern "C" {
     controller_thread_t thread = controller_thread_t_initialize;
 
     f_thread_mutex_lock(&thread_main->setting->rules.array[asynchronous->index].lock);
+    f_thread_mutex_lock(&asynchronous->lock);
 
     thread.cache_main = thread_main->cache_main;
     thread.cache_action = &asynchronous->cache;
@@ -30,20 +31,14 @@ extern "C" {
     thread.setting = thread_main->setting;
     thread.stack = &asynchronous->stack;
 
-    if (controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread) == F_child) {
-      // @todo consider returning 1 to designate that this is a child process exiting.
-      return 0;
-    }
-
-    if (thread.asynchronouss.enabled) {
-      //f_thread_mutex_lock(&thread_main->mutex->asynchronous);
-
+    if (controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread, asynchronous) != F_child) {
       asynchronous->state = controller_asynchronous_state_done;
-
-      //f_thread_mutex_unlock(&thread_main->mutex->asynchronous);
     }
 
-    f_thread_mutex_unlock(&thread.setting->rules.array[asynchronous->index].lock);
+    f_thread_mutex_unlock(&asynchronous->lock);
+
+    f_thread_condition_signal(&thread_main->setting->rules.array[asynchronous->index].wait);
+    f_thread_mutex_unlock(&thread_main->setting->rules.array[asynchronous->index].lock);
 
     return 0;
   }
@@ -54,37 +49,32 @@ extern "C" {
 
     thread->asynchronouss.enabled = F_false;
 
-    f_array_length_t i = 0;
-
     f_thread_mutex_lock(&thread->mutex->asynchronous);
 
-    for (; i < thread->asynchronouss.used; ++i) {
+    for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
 
       if (!thread->asynchronouss.array[i].state) continue;
 
-      if (thread->asynchronouss.array[i].state == controller_asynchronous_state_active) {
+      if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) == F_none) {
+        f_thread_cancel(thread->asynchronouss.array[i].id);
+        f_thread_detach(thread->asynchronouss.array[i].id);
+        f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
+      }
+      else {
         if (thread->asynchronouss.array[i].child > 0) {
           f_signal_send(F_signal_termination, thread->asynchronouss.array[i].child);
         }
+        else {
+          f_thread_cancel(thread->asynchronouss.array[i].id);
+        }
 
-        thread->asynchronouss.array[i].state = controller_asynchronous_state_done;
+        // the cancel make take time so detach the process to allow it to exit on its own.
+        f_thread_detach(thread->asynchronouss.array[i].id);
       }
-
-      if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
-        // @todo perhaps a timed join here where if it takes to long, try sending a kill signal to the child process.
-        f_thread_join(thread->asynchronouss.array[i].id, 0);
-      }
-
-      thread->asynchronouss.array[i].state = 0;
-
-      controller_macro_cache_action_t_clear(thread->asynchronouss.array[i].cache);
     } // for
 
     thread->asynchronouss.used = 0;
 
-    f_thread_mutex_unlock(&thread->mutex->print);
-    f_thread_mutex_unlock(&thread->mutex->cache);
-    f_thread_mutex_unlock(&thread->mutex->rule);
     f_thread_mutex_unlock(&thread->mutex->asynchronous);
   }
 #endif // _di_controller_thread_asynchronous_cancel_
@@ -98,7 +88,7 @@ extern "C" {
 
     f_array_length_t i = 0;
 
-    for (;;) {
+    for (; thread->asynchronouss.enabled; ) {
       sleep(interval);
 
       if (f_thread_mutex_lock_try(&thread->mutex->cache) == F_none) {
@@ -110,7 +100,10 @@ extern "C" {
           if (thread->asynchronouss.used) {
             for (i = 0; i < thread->asynchronouss.used; ++i) {
 
+              if (!thread->asynchronouss.enabled) break;
               if (!thread->asynchronouss.array[i].state) continue;
+
+              if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
 
               if (f_thread_mutex_lock_try(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
 
@@ -125,11 +118,18 @@ extern "C" {
                   thread->asynchronouss.array[i].state = 0;
                 }
 
+                f_thread_condition_signal(&thread->setting->rules.array[thread->asynchronouss.array[i].index].wait);
                 f_thread_mutex_unlock(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
               }
+
+              f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
             } // for
 
             for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
+
+              if (!thread->asynchronouss.enabled) break;
+
+              if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) break;
 
               if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
                 controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
@@ -137,12 +137,15 @@ extern "C" {
                 thread->asynchronouss.array[i].state = 0;
               }
               else if (thread->asynchronouss.array[i].state) {
+                f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
                 break;
               }
+
+              f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
             } // for
           }
 
-          if (thread->asynchronouss.used < thread->asynchronouss.size) {
+          if (thread->asynchronouss.enabled && thread->asynchronouss.used < thread->asynchronouss.size) {
             controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
           }
 
@@ -299,7 +302,9 @@ extern "C" {
       f_thread_join(thread_signal, 0);
     }
 
-    controller_thread_asynchronous_cancel(thread);
+    if (thread->asynchronouss.enabled) {
+      controller_thread_asynchronous_cancel(thread);
+    }
 
     f_thread_cancel(thread_cache);
     f_thread_cancel(thread_control);
@@ -339,13 +344,15 @@ extern "C" {
 
     controller_thread_t *thread = (controller_thread_t *) arguments;
 
-    for (int signal = 0; ; ) {
+    for (int signal = 0; thread->asynchronouss.enabled; ) {
 
       sigwait(&thread->data->signal.set, &signal);
 
       if (thread->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
           thread->setting->signal = signal;
+
+          controller_thread_asynchronous_cancel(thread);
           break;
         }
       }

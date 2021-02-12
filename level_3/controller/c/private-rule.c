@@ -510,7 +510,7 @@ extern "C" {
 #endif // _di_controller_rule_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_execute_
-  f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread) {
+  f_status_t controller_rule_execute(const f_array_length_t index, const uint8_t type, const uint8_t options, controller_thread_t *thread, controller_asynchronous_t *asynchronous) {
     f_status_t status = F_none;
     f_status_t success = F_false;
 
@@ -613,7 +613,11 @@ extern "C" {
         action = &item->actions.array[j];
 
         execute_set.parameter.data = 0;
-        execute_set.parameter.option = fl_execute_parameter_option_threadsafe & fl_execute_parameter_option_return;
+        execute_set.parameter.option = fl_execute_parameter_option_threadsafe;
+
+        if (options & controller_rule_option_asynchronous) {
+          execute_set.parameter.option |= fl_execute_parameter_option_return;
+        }
 
         if (item->type == controller_rule_item_type_command) {
 
@@ -621,7 +625,7 @@ extern "C" {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(index, item->type, *action, 0, action->parameters, options, &execute_set, thread);
+          status = controller_rule_execute_foreground(index, item->type, *action, 0, action->parameters, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
@@ -640,7 +644,7 @@ extern "C" {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(index, item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, options, &execute_set, thread);
+          status = controller_rule_execute_foreground(index, item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
@@ -658,7 +662,7 @@ extern "C" {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(index, item->type, *action, 0, action->parameters, options, &execute_set, thread);
+          status = controller_rule_execute_pid_with(index, item->type, *action, 0, action->parameters, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
@@ -719,10 +723,11 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) {
+  f_status_t controller_rule_execute_foreground(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread, controller_asynchronous_t *asynchronous) {
 
     f_status_t status = F_none;
     int result = 0;
+    pid_t id_process = 0;
 
     if (options & controller_rule_option_simulate) {
 
@@ -752,35 +757,23 @@ extern "C" {
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
       fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, &result);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
 
     if (status == F_parent) {
-      controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) thread->setting->rules.array[index].asynchronous;
+      result = 0;
 
       // assign the child process id to the asynchronous thread to allow for the cancel process to send appropriate termination signals to the child process.
-      if (thread->asynchronouss.enabled) {
-        f_thread_mutex_lock(&thread->mutex->asynchronous);
-
-        asynchronous->child = result;
-
-        f_thread_mutex_unlock(&thread->mutex->asynchronous);
-      }
+      asynchronous->child = id_process;
 
       // have the parent wait for the child process to finish.
-      waitpid(asynchronous->child, &result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, &result, WUNTRACED | WCONTINUED);
 
       // remove the pid now that waidpid() has returned.
-      if (thread->asynchronouss.enabled) {
-        f_thread_mutex_lock(&thread->mutex->asynchronous);
-
-        asynchronous->child = 0;
-
-        f_thread_mutex_unlock(&thread->mutex->asynchronous);
-      }
+      asynchronous->child = 0;
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (!WIFEXITED(result)) {
@@ -800,8 +793,6 @@ extern "C" {
     }
 
     if (status == F_child) {
-      //thread->data->child = result; // @fixme cant do this!
-
       return F_child;
     }
 
@@ -829,17 +820,16 @@ extern "C" {
       status = F_status_set_error(status);
     }
 
-    // thread->data->child = 0; // @fixme cant do this!
-
     return status;
   }
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread) {
+  f_status_t controller_rule_execute_pid_with(const f_array_length_t index, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_thread_t *thread, controller_asynchronous_t *asynchronous) {
 
     f_status_t status = F_none;
     int result = 0;
+    pid_t id_process = 0;
 
     // @todo check to see if pid file exists.
 
@@ -876,37 +866,23 @@ extern "C" {
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
       fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, &result);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, &result);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
 
     if (status == F_parent) {
-      controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) thread->setting->rules.array[index].asynchronous;
-
       result = 0;
 
       // assign the child process id to the asynchronous thread to allow for the cancel process to send appropriate termination signals to the child process.
-      if (thread->asynchronouss.enabled) {
-        f_thread_mutex_lock(&thread->mutex->asynchronous);
+      asynchronous->child = id_process;
 
-        asynchronous->child = result;
-
-        f_thread_mutex_unlock(&thread->mutex->asynchronous);
-
-        // have the parent wait for the child process to finish. (@todo see comments above about forking into the background, this code block will need to change, maybe pass WNOHANG?.)
-        waitpid(asynchronous->child, &result, WUNTRACED | WCONTINUED);
-      }
+      // have the parent wait for the child process to finish.
+      waitpid(id_process, &result, WUNTRACED | WCONTINUED);
 
       // remove the pid now that waidpid() has returned.
-      if (thread->asynchronouss.enabled) {
-        f_thread_mutex_lock(&thread->mutex->asynchronous);
-
-        asynchronous->child = 0;
-
-        f_thread_mutex_unlock(&thread->mutex->asynchronous);
-      }
+      asynchronous->child = 0;
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (!WIFEXITED(result)) {
@@ -926,8 +902,6 @@ extern "C" {
     }
 
     if (status == F_child) {
-      //thread->data->child = result; // @fixme cant do this!
-
       return F_child;
     }
 
@@ -952,14 +926,10 @@ extern "C" {
 
       f_thread_mutex_unlock(&thread->mutex->print);
 
-      //thread->data->child = 0; // @fixme cant do this!
-
       return F_status_set_error(status);
     }
 
     // @todo wait for pid file or timeout.
-
-    //thread->data->child = 0; // @fixme cant do this!
 
     return status;
   }
@@ -1383,7 +1353,7 @@ extern "C" {
 #endif // _di_controller_rule_path_
 
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread) {
+  f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_t *thread, controller_asynchronous_t *asynchronous) {
 
     switch (action) {
       case controller_rule_action_type_freeze:
@@ -1447,12 +1417,16 @@ extern "C" {
 
       if (thread->stack->array[i] == index) {
         if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&thread->mutex->print);
+
           fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(thread->data->error.to.stream, "%s%sThe rule '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
           fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, thread->setting->rules.array[i].name.string, thread->data->error.notable.after->string);
           fprintf(thread->data->error.to.stream, "%s' is already on the execution stack, this recursion is prohibited.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
 
           controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+          f_thread_mutex_unlock(&thread->mutex->print);
         }
 
         // never continue on recursion errors even in simulate mode.
@@ -1471,8 +1445,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return status;
     }
@@ -1480,8 +1458,12 @@ extern "C" {
     status = f_string_dynamic_append(thread->setting->rules.array[index].id, &thread->cache_action->name_file);
 
     if (F_status_is_error(status)) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return status;
     }
@@ -1493,8 +1475,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return status;
     }
@@ -1502,8 +1488,12 @@ extern "C" {
     status = f_string_dynamic_terminate_after(&thread->cache_action->name_file);
 
     if (F_status_is_error(status)) {
+      f_thread_mutex_lock(&thread->mutex->print);
+
       fll_error_print(thread->data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+      f_thread_mutex_unlock(&thread->mutex->print);
 
       return status;
     }
@@ -1540,24 +1530,44 @@ extern "C" {
 
           if (at == thread->setting->rules.used) {
             if (i == 0) {
+              f_thread_mutex_lock(&thread->mutex->print);
+
               controller_rule_error_print_need_want_wish(thread->data->error, strings[i], dynamics[i]->array[j].string, "was not found");
 
               status = F_status_set_error(F_found_not);
               controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
 
+              f_thread_mutex_unlock(&thread->mutex->print);
+
               if (!(options & controller_rule_option_simulate)) break;
             }
             else {
               if (thread->data->warning.verbosity == f_console_verbosity_debug) {
+                f_thread_mutex_lock(&thread->mutex->print);
+
                 controller_rule_error_print_need_want_wish(thread->data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
                 controller_rule_error_print(thread->data->warning, *thread->cache_action, F_true);
+
+                f_thread_mutex_unlock(&thread->mutex->print);
               }
             }
           }
 
           if (F_status_is_error_not(status) && at < thread->setting->rules.used) {
 
-            controller_rule_wait_for(at, thread);
+            f_thread_mutex_lock(&thread->setting->rules.array[at].lock);
+
+            while (thread->asynchronouss.enabled && thread->setting->rules.array[at].status == F_known_not) {
+              f_thread_condition_wait(&thread->setting->rules.array[at].wait, &thread->setting->rules.array[at].lock);
+            } // while
+
+            if (!thread->asynchronouss.enabled) {
+              f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+              f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
+
+              status = F_signal;
+              break;
+            }
 
             // when the status is unknown, then the rule has not been executed, so attempt to execute it.
             if (thread->setting->rules.array[at].status == F_known_not) {
@@ -1565,8 +1575,15 @@ extern "C" {
               f_macro_array_lengths_t_increase_by(status, (*thread->stack), controller_default_allocation_step)
 
               if (F_status_is_error(status)) {
+                f_thread_mutex_lock(&thread->mutex->print);
+
                 fll_error_print(thread->data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
                 controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+                f_thread_mutex_unlock(&thread->mutex->print);
+
+                f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+                f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
 
                 // always exit on memory errors, even in simulate mode.
                 break;
@@ -1589,9 +1606,14 @@ extern "C" {
               memcpy(cache_name_file, thread->cache_action->name_file.string, thread->cache_action->name_file.used);
 
               // recursive rule processing is to always be synchronous.
-              status = controller_rule_process(at, action, options, thread);
+              status = controller_rule_process(at, action, options & controller_rule_option_asynchronous ? options - controller_rule_option_asynchronous : options, thread, 0);
 
-              if (status == F_child || status == F_signal) break;
+              if (status == F_child || status == F_signal) {
+                f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+                f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
+
+                break;
+              }
 
               // restore cache.
               memcpy(thread->cache_action->name_action.string, cache_name_action, cache_name_action_used);
@@ -1611,35 +1633,58 @@ extern "C" {
               if (F_status_is_error(status)) {
                 if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
 
+                  f_thread_mutex_lock(&thread->mutex->print);
+
                   controller_rule_error_print_need_want_wish(thread->data->error, strings[i], dynamics[i]->array[j].string, "failed during execution");
                   controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
 
+                  f_thread_mutex_unlock(&thread->mutex->print);
+
                   if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
+                    f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+                    f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
+
                     break;
                   }
                 }
                 else {
                   if (thread->data->warning.verbosity == f_console_verbosity_debug) {
+                    f_thread_mutex_lock(&thread->mutex->print);
+
                     controller_rule_error_print_need_want_wish(thread->data->warning, strings[i], dynamics[i]->array[j].string, "failed during execution");
                     controller_rule_error_print(thread->data->warning, *thread->cache_action, F_true);
+
+                    f_thread_mutex_unlock(&thread->mutex->print);
                   }
                 }
               }
             }
-            else if (F_status_is_error(thread->setting->rules.array[at].status)) {
+
+            f_thread_condition_signal(&thread->setting->rules.array[at].wait);
+            f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
+
+            if (F_status_is_error(thread->setting->rules.array[at].status)) {
 
               if (i == 0 || i == 1) {
+                f_thread_mutex_lock(&thread->mutex->print);
+
                 controller_rule_error_print_need_want_wish(thread->data->error, strings[i], dynamics[i]->array[j].string, "is in a failed state");
 
                 status = F_status_set_error(F_found_not);
                 controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
 
+                f_thread_mutex_unlock(&thread->mutex->print);
+
                 if (!(options & controller_rule_option_simulate)) break;
               }
               else {
                 if (thread->data->warning.verbosity == f_console_verbosity_debug) {
+                  f_thread_mutex_lock(&thread->mutex->print);
+
                   controller_rule_error_print_need_want_wish(thread->data->warning, strings[i], dynamics[i]->array[j].string, "is in a failed state");
                   controller_rule_error_print(thread->data->warning, *thread->cache_action, F_true);
+
+                  f_thread_mutex_unlock(&thread->mutex->print);
                 }
               }
             }
@@ -1656,8 +1701,17 @@ extern "C" {
       return status;
     }
 
+    if (!thread->asynchronouss.enabled) {
+      return F_signal;
+    }
+
+    // @fixme changing design, "wait" will be a distinct thing not associated with individual rules. this will be in its own process function.
     if (!(options & controller_rule_option_wait) && F_status_is_error_not(status)) {
       controller_rule_wait_all(thread);
+
+      if (!thread->asynchronouss.enabled) {
+        return F_signal;
+      }
     }
 
     if (!(options & controller_rule_option_validate) && F_status_is_error_not(status)) {
@@ -1682,6 +1736,8 @@ extern "C" {
         if (missing) {
 
           if (thread->data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&thread->mutex->print);
+
             fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread->data->error.to.stream, "%s%sThe rule '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
             fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, rule->name.used ? rule->name.string : f_string_empty_s, thread->data->error.notable.after->string);
@@ -1690,6 +1746,8 @@ extern "C" {
             fprintf(thread->data->error.to.stream, "%s' action to execute.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
 
             controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+
+            f_thread_mutex_unlock(&thread->mutex->print);
           }
 
           status = F_status_set_error(F_parameter);
@@ -1697,14 +1755,18 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(index, action, options, thread);
+        status = controller_rule_execute(index, action, options, thread, asynchronous);
 
         if (status == F_child) {
           return F_child;
         }
 
+        if (!thread->asynchronouss.enabled) {
+          return F_signal;
+        }
+
         if (F_status_is_error(status)) {
-          controller_rule_error_print(thread->data->error, *thread->cache_action, F_true);
+          controller_rule_error_print_locked(thread->data->error, *thread->cache_action, F_true, thread);
         }
       }
     }
@@ -1788,7 +1850,6 @@ extern "C" {
     bool for_item = F_true;
 
     rule->status = F_known_not;
-    rule->asynchronous = 0;
 
     // @todo: timeouts may be passed from entry, consider to or not to initialize in a more consistent manner.
     //rule->timeout_kill = 2;
@@ -3988,67 +4049,46 @@ extern "C" {
 #ifndef _di_controller_rule_wait_all_
   void controller_rule_wait_all(controller_thread_t *thread) {
 
-    for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
+    for (f_array_length_t i = 0; i < thread->asynchronouss.used && thread->asynchronouss.enabled; ++i) {
 
-      if (!thread->asynchronouss.array[i].state) continue;
+      // do not need to wait when state is 0 or joined.
+      if (!thread->asynchronouss.array[i].state || thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
+        continue;
+      }
 
-      controller_rule_wait_for(i, thread);
+      if (thread->asynchronouss.array[i].index >= thread->setting->rules.used) {
+        continue;
+      }
+
+      f_thread_mutex_lock(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
+
+      while (thread->asynchronouss.enabled && thread->setting->rules.array[thread->asynchronouss.array[i].index].status == F_known_not) {
+        f_thread_condition_wait(&thread->setting->rules.array[thread->asynchronouss.array[i].index].wait, &thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
+      } // while
+
+      f_thread_mutex_unlock(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
+
+      if (!thread->asynchronouss.enabled) break;
+
+      if (f_thread_mutex_lock_try(&thread->mutex->asynchronous) == F_none) {
+
+        if (thread->asynchronouss.array[i].state != controller_asynchronous_state_joined) {
+          f_thread_join(thread->asynchronouss.array[i].id, 0);
+        }
+
+        if (thread->asynchronouss.enabled && thread->asynchronouss.array[i].state) {
+          if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
+            thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
+          }
+
+          controller_macro_cache_action_t_clear(thread->asynchronouss.array[i].cache);
+        }
+
+        f_thread_mutex_unlock(&thread->mutex->asynchronous);
+      }
     } // for
   }
 #endif // _di_controller_rule_wait_all_
-
-#ifndef _di_controller_rule_wait_for_
-  void controller_rule_wait_for(const f_array_length_t index, controller_thread_t *thread) {
-
-    if (index >= thread->setting->rules.used) {
-      return;
-    }
-
-    controller_rule_t *rule = &thread->setting->rules.array[index];
-    controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) rule->asynchronous;
-
-    if (!rule->asynchronous) {
-      return;
-    }
-
-    // do not need to wait when state is 0.
-    if (!asynchronous->state) {
-      return;
-    }
-
-    if (f_thread_mutex_lock_try(&rule->wait) == F_none) {
-
-      if (asynchronous->state != controller_asynchronous_state_joined) {
-        f_thread_join(asynchronous->id, 0);
-      }
-
-      if (thread->asynchronouss.enabled) {
-        if (f_thread_mutex_lock_try(&thread->mutex->asynchronous) == F_none) {
-          if (asynchronous->state) {
-            if (asynchronous->state == controller_asynchronous_state_done) {
-              asynchronous->state = controller_asynchronous_state_joined;
-            }
-
-            controller_macro_cache_action_t_clear(asynchronous->cache);
-          }
-
-          f_thread_mutex_unlock(&thread->mutex->asynchronous);
-        }
-      }
-
-      f_thread_mutex_unlock(&rule->wait);
-    }
-    else {
-
-      // a wait lock is already in place, which will also be responsible for thread joining.
-      // this can therefore immediately unlock and return.
-      f_thread_mutex_lock(&rule->wait);
-
-      f_thread_mutex_unlock(&rule->wait);
-    }
-
-  }
-#endif // _di_controller_rule_wait_for_
 
 #ifdef __cplusplus
 } // extern "C"

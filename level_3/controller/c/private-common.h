@@ -482,7 +482,7 @@ extern "C" {
     f_status_t status;
 
     f_thread_mutex_t lock;
-    f_thread_mutex_t wait;
+    f_thread_condition_t wait;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -516,15 +516,13 @@ extern "C" {
     f_execute_scheduler_t scheduler;
 
     controller_rule_items_t items;
-
-    void *asynchronous;
   } controller_rule_t;
 
   #define controller_rule_t_initialize \
     { \
       F_known_not, \
       f_thread_mutex_t_initialize, \
-      f_thread_mutex_t_initialize, \
+      f_thread_condition_t_initialize, \
       0, \
       0, \
       0, \
@@ -549,12 +547,11 @@ extern "C" {
       f_limit_sets_t_initialize, \
       f_execute_scheduler_t_initialize, \
       controller_rule_items_initialize, \
-      0, \
     }
 
   #define controller_macro_rule_t_delete_simple(rule) \
     f_macro_thread_mutex_t_delete_simple(rule.lock) \
-    f_macro_thread_mutex_t_delete_simple(rule.wait) \
+    f_macro_thread_condition_t_delete_simple(rule.wait) \
     f_macro_string_dynamic_t_delete_simple(rule.id) \
     f_macro_string_dynamic_t_delete_simple(rule.name) \
     f_macro_string_dynamic_t_delete_simple(rule.path) \
@@ -889,6 +886,7 @@ extern "C" {
 
   typedef struct {
     f_thread_id_t id;
+    f_thread_mutex_t lock;
     f_array_length_t index;
 
     uint8_t state;
@@ -901,7 +899,7 @@ extern "C" {
     controller_cache_action_t cache;
   } controller_asynchronous_t;
 
-  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, 0, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
+  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, f_thread_mutex_t_initialize, 0, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
 
   #define controller_macro_asynchronous_t_clear(asynchronous) \
     f_macro_thread_id_t_clear(asynchronous.id) \
