@@ -25,7 +25,7 @@ extern "C" {
   #define f_thread_attribute_t_initialize { 0 }
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_attribute_t_clear(attribute) attribute.__align = 0
+  #define f_macro_thread_attribute_t_clear(attribute) attribute.__align = 0;
 
   #define f_macro_thread_attribute_t_delete_simple(attribute) f_thread_attribute_delete(&attribute);
 #endif // _di_f_thread_attribute_t_
@@ -69,7 +69,7 @@ extern "C" {
 
   #define f_thread_barrier_t_initialize { 0 }
 
-  #define f_macro_thread_barrier_t_clear(barrier) barrier = 0
+  #define f_macro_thread_barrier_t_clear(barrier) barrier = 0;
 
   #define f_macro_thread_barrier_t_delete_simple(barrier) f_thread_barrier_delete(&barrier);
 #endif // _di_f_thread_barrier_t_
@@ -113,7 +113,7 @@ extern "C" {
 
   #define f_thread_barrier_attribute_t_initialize { 0 }
 
-  #define f_macro_thread_barrier_attribute_t_clear(barrier_attribute) barrier_attribute = 0
+  #define f_macro_thread_barrier_attribute_t_clear(barrier_attribute) barrier_attribute = 0;
 
   #define f_macro_thread_barrier_attribute_t_delete_simple(barrier_attribute) f_thread_barrier_attribute_delete(&barrier_attribute);
 #endif // _di_f_thread_barrier_attribute_t_
@@ -157,7 +157,7 @@ extern "C" {
 
   #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER;
 
-  #define f_macro_thread_condition_t_clear(condition) condition = 0
+  #define f_macro_thread_condition_t_clear(condition) condition = 0;
 
   #define f_macro_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
 #endif // _di_f_thread_condition_t_
@@ -201,7 +201,7 @@ extern "C" {
 
   #define f_thread_condition_attribute_t_initialize 0;
 
-  #define f_macro_thread_condition_attribute_t_clear(attribute) attribute = 0
+  #define f_macro_thread_condition_attribute_t_clear(attribute) attribute = 0;
 
   #define f_macro_thread_condition_attribute_t_delete_simple(attribute) f_thread_condition_attribute_delete(&attribute);
 #endif // _di_f_thread_condition_attribute_t_
@@ -285,7 +285,7 @@ extern "C" {
 
   #define f_thread_key_t_initialize 0
 
-  #define f_macro_thread_key_t_clear(key) key = 0
+  #define f_macro_thread_key_t_clear(key) key = 0;
 
   #define f_macro_thread_key_t_delete_simple(key) f_thread_key_delete(&key);
 #endif // _di_f_thread_key_t_
@@ -329,7 +329,7 @@ extern "C" {
 
   #define f_thread_lock_t_initialize 0
 
-  #define f_macro_thread_lock_t_clear(lock) lock = 0
+  #define f_macro_thread_lock_t_clear(lock) lock = 0;
 #endif // _di_f_thread_lock_t_
 
 /**
@@ -369,7 +369,7 @@ extern "C" {
 
   #define f_thread_lock_attribute_t_initialize 0
 
-  #define f_macro_thread_lock_attribute_t_clear(attribute) attribute = 0
+  #define f_macro_thread_lock_attribute_t_clear(attribute) attribute = 0;
 #endif // _di_f_thread_lock_attribute_t_
 
 /**
@@ -405,13 +405,13 @@ extern "C" {
 
 /**
  * A typedef representing pthread_mutex_t.
+ *
+ * This variable cannot be cleared by setting value to 0, so there is no clear macro provided.
  */
 #ifndef _di_f_thread_mutex_t_
   typedef pthread_mutex_t f_thread_mutex_t;
 
   #define f_thread_mutex_t_initialize PTHREAD_MUTEX_INITIALIZER
-
-  #define f_macro_thread_mutex_t_clear(mutex) mutex = 0
 
   #define f_macro_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
 #endif // _di_f_thread_mutex_t_
@@ -455,7 +455,7 @@ extern "C" {
 
   #define f_thread_mutex_attribute_t_initialize 0
 
-  #define f_macro_thread_mutex_attribute_t_clear(mutex_attribute) mutex_attribute = 0
+  #define f_macro_thread_mutex_attribute_t_clear(mutex_attribute) mutex_attribute = 0;
 #endif // _di_f_thread_mutex_attribute_t_
 
 /**
@@ -497,7 +497,7 @@ extern "C" {
 
   #define f_thread_once_t_initialize 0
 
-  #define f_macro_thread_once_t_clear(once) once = 0
+  #define f_macro_thread_once_t_clear(once) once = 0;
 #endif // _di_f_thread_once_t_
 
 /**
@@ -591,7 +591,7 @@ extern "C" {
 
   #define f_thread_spin_t_initialize PTHREAD_MUTEX_INITIALIZER
 
-  #define f_macro_thread_spin_t_clear(spin) spin = 0
+  #define f_macro_thread_spin_t_clear(spin) spin = 0;
 
   #define f_macro_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
 #endif // _di_f_thread_spin_t_

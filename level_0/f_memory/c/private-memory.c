@@ -13,8 +13,6 @@ extern "C" {
     }
 
     if (*pointer) {
-      void *new_pointer = 0;
-
       if (length_old) {
         if (length_new < length_old) {
 
@@ -25,26 +23,28 @@ extern "C" {
       }
 
       if (length_new) {
-        new_pointer = realloc(*pointer, type_size * length_new);
+        void *new_pointer = realloc(*pointer, type_size * length_new);
+
+        if (new_pointer) {
+          if (length_new > length_old) {
+
+            // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+            // this is done to avoid problems with (void *) having arithmetic issues.
+            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
+          }
+
+          if (pointer != new_pointer) {
+            *pointer = new_pointer;
+          }
+
+          return F_none;
+        }
       }
       else {
         free(*pointer);
 
         // assure that the pointer is always 0 after deallocation.
         *pointer = 0;
-
-        return F_none;
-      }
-
-      if (new_pointer) {
-        if (length_new > length_old) {
-
-          // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-          // this is done to avoid problems with (void *) having arithmetic issues.
-          memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
-        }
-
-        *pointer = new_pointer;
 
         return F_none;
       }
@@ -74,29 +74,29 @@ extern "C" {
     }
 
     if (*pointer) {
-      void *new_pointer = 0;
-
       if (length_new) {
-        new_pointer = realloc(*pointer, type_size * length_new);
+        void *new_pointer = realloc(*pointer, type_size * length_new);
+
+        if (new_pointer) {
+          if (length_new > length_old) {
+
+            // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
+            // this is done to avoid problems with (void *) having arithmetic issues.
+            memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
+          }
+
+          if (pointer != new_pointer) {
+            *pointer = new_pointer;
+          }
+
+          return F_none;
+        }
       }
       else {
         free(*pointer);
 
         // assure that the pointer is always 0 after deallocation.
         *pointer = 0;
-
-        return F_none;
-      }
-
-      if (new_pointer) {
-        if (length_new > length_old) {
-
-          // uint8_t * is of a data size size of 1, casting it to bool should result in a single-length increment.
-          // this is done to avoid problems with (void *) having arithmetic issues.
-          memset(((uint8_t *) new_pointer) + (type_size * length_old), 0, type_size * (length_new - length_old));
-        }
-
-        *pointer = new_pointer;
 
         return F_none;
       }

@@ -752,7 +752,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fprintf(f_type_debug, "\n");
                     }
 
-                    status = fll_execute_program((f_string_t) current_tool, arguments, 0, 0, &return_code);
+                    status = fll_execute_program((f_string_t) current_tool, arguments, 0, 0, (void *) &return_code);
 
                     // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
                     if (status == F_child) {
@@ -826,7 +826,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             fprintf(f_type_debug, "\n");
           }
 
-          status = fll_execute_program(current_tool, arguments, 0, 0, &return_code);
+          status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -1067,7 +1067,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         }
 
         tool = firewall_program_iptables;
-        status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, 0, &return_code);
+        status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, 0, (void *) &return_code);
 
         // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
         if (status == F_child) {
@@ -1088,7 +1088,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
           }
 
           tool = firewall_program_ip6tables;
-          status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, 0, 0, &return_code);
+          status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, 0, 0, (void *) &return_code);
 
           // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
           if (status == F_child) {
@@ -1176,7 +1176,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
       fprintf(f_type_debug, "\n");
     }
 
-    status = fll_execute_program(tools[i], arguments, 0, 0, &return_code);
+    status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
     // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
     if (status == F_child) {
@@ -1236,7 +1236,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
       fprintf(f_type_debug, "\n");
     }
 
-    status = fll_execute_program(tools[i], arguments, 0, 0, &return_code);
+    status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
     // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
     if (status == F_child) {
@@ -1318,7 +1318,7 @@ f_status_t firewall_default_lock(const firewall_data_t data) {
         fprintf(f_type_debug, "\n");
       }
 
-      status = fll_execute_program(tools[j], arguments, 0, 0, &return_code);
+      status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
       // immediately exit child process, @todo this may require additional memory deallocation and relating changes.
       if (status == F_child) {

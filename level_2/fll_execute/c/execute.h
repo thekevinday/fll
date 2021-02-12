@@ -360,7 +360,7 @@ extern "C" {
  * @param arguments
  *   An array of strings representing the arguments.
  * @param option
- *   A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *   A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
  *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
  *   If fl_execute_parameter_option_path: this is a program path (such as "/bin/bash"), otherwise this is a program (such as "bash").
  * @param result
@@ -431,6 +431,7 @@ extern "C" {
  * @param result
  *   (optional) The code returned after finishing execution of program.
  *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
@@ -494,7 +495,7 @@ extern "C" {
  * @see fl_environment_path_explode_dynamic()
  */
 #ifndef _di_fll_execute_program_
-  extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result);
+  extern f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result);
 #endif // _di_fll_execute_program_
 
 #ifdef __cplusplus

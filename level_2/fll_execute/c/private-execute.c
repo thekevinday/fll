@@ -253,7 +253,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
+  f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -310,18 +310,19 @@ extern "C" {
       if (parameter && parameter->option & fl_execute_parameter_option_return) {
 
         if (result != 0) {
-          *result = id_process;
+          pid_t *r = (pid_t *) result;
+          *r = id_process;
         }
 
         return F_parent;
       }
 
       // have the parent wait for the child process to finish.
-      waitpid(id_process, result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, (int *) result, WUNTRACED | WCONTINUED);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*result)) {
+        if (WIFEXITED(*((int *) result))) {
           return F_none;
         }
 
@@ -352,7 +353,8 @@ extern "C" {
         close(descriptors[0]);
 
         if (result) {
-          *result = -1;
+          int *r = (int *) result;
+          *r = -1;
         }
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
@@ -396,7 +398,7 @@ extern "C" {
       // close the write pipe for the child when done.
       close(descriptors[0]);
 
-      const f_status_t status = private_fll_execute_as_child(*as, parameter, result);
+      const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
 
       if (F_status_is_error(status)) {
         return status;
@@ -406,7 +408,8 @@ extern "C" {
     const int code = parameter && (parameter->option & fl_execute_parameter_option_path) ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
     if (result) {
-      *result = code;
+      int *r = (int *) result;
+      *r = code;
     }
 
     if (parameter && parameter->option & fl_execute_parameter_option_exit) {
@@ -418,7 +421,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
+  f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -479,18 +482,19 @@ extern "C" {
       if (parameter && parameter->option & fl_execute_parameter_option_return) {
 
         if (result != 0) {
-          *result = id_process;
+          pid_t *r = (pid_t *) result;
+          *r = id_process;
         }
 
         return F_parent;
       }
 
       // have the parent wait for the child process to finish.
-      waitpid(id_process, result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, (int *) result, WUNTRACED | WCONTINUED);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*result)) {
+        if (WIFEXITED(*((int *) result))) {
           return F_none;
         }
 
@@ -521,7 +525,8 @@ extern "C" {
         close(descriptors[0]);
 
         if (result) {
-          *result = -1;
+          int *r = (int *) result;
+          *r = -1;
         }
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
@@ -563,7 +568,7 @@ extern "C" {
     dup2(descriptors[0], f_type_descriptor_input);
 
     if (as) {
-      const f_status_t status = private_fll_execute_as_child(*as, parameter, result);
+      const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
 
       if (F_status_is_error(status)) {
         return status;
@@ -576,7 +581,8 @@ extern "C" {
     close(descriptors[0]);
 
     if (result) {
-      *result = code;
+      int *r = (int *) result;
+      *r = code;
     }
 
     if (parameter && parameter->option & fl_execute_parameter_option_exit) {

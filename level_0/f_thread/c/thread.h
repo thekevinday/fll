@@ -1487,7 +1487,7 @@ extern "C" {
 #endif // _di_f_thread_condition_delete_
 
 /**
- * Unblock all threads waiting on a condition.
+ * Signal all threads waiting on a condition.
  *
  * @param condition
  *   The condition to broadcast the unblock signal to.
@@ -1500,12 +1500,14 @@ extern "C" {
  *
  * @see pthread_cond_broadcast()
  */
-#ifndef _di_f_thread_condition_unblock_all_
-  extern f_status_t f_thread_condition_unblock_all(f_thread_condition_t *condition);
-#endif // _di_f_thread_condition_unblock_all_
+#ifndef _di_f_thread_condition_signal_all_
+  extern f_status_t f_thread_condition_signal_all(f_thread_condition_t *condition);
+#endif // _di_f_thread_condition_signal_all_
 
 /**
- * Unblock all threads waiting on a condition.
+ * Signal a thread waiting on a condition.
+ *
+ * Only a single thread waiting on this condition is signaled.
  *
  * @param condition
  *   The condition to broadcast the unblock signal to.
@@ -1518,9 +1520,9 @@ extern "C" {
  *
  * @see pthread_cond_signal()
  */
-#ifndef _di_f_thread_condition_unblock_any_
-  extern f_status_t f_thread_condition_unblock_any(f_thread_condition_t *condition);
-#endif // _di_f_thread_condition_unblock_any_
+#ifndef _di_f_thread_condition_signal_
+  extern f_status_t f_thread_condition_signal(f_thread_condition_t *condition);
+#endif // _di_f_thread_condition_signal_
 
 /**
  * Wait until condition is triggered.
@@ -1741,10 +1743,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thr
  *
  *
  * @see pthread_detach()
@@ -1788,7 +1788,7 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thr
+ *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
  *
  * @see pthread_join()

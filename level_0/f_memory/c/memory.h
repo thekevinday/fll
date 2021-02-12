@@ -36,6 +36,8 @@ extern "C" {
  *
  * Will change all data to 0 prior to deallocation.
  *
+ * The pointer address might be changed by realloc().
+ *
  * @param old_length
  *   The total number of blocks representing the length to be resized from.
  * @param new_length
@@ -172,6 +174,8 @@ extern "C" {
  * Resize dynamically allocated data.
  *
  * Will not change any of the data prior to deallocation.
+ *
+ * The pointer address might be changed by realloc().
  *
  * @param old_length
  *   The total number of blocks representing the length to be resized from.

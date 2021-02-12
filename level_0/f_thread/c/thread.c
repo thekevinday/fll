@@ -1126,8 +1126,8 @@ extern "C" {
   }
 #endif // _di_f_thread_condition_delete_
 
-#ifndef _di_f_thread_condition_unblock_all_
-  f_status_t f_thread_condition_unblock_all(f_thread_condition_t *condition) {
+#ifndef _di_f_thread_condition_signal_all_
+  f_status_t f_thread_condition_signal_all(f_thread_condition_t *condition) {
     #ifndef _di_level_0_parameter_checking_
       if (!condition) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1142,10 +1142,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_condition_unblock_all_
+#endif // _di_f_thread_condition_signal_all_
 
-#ifndef _di_f_thread_condition_unblock_any_
-  f_status_t f_thread_condition_unblock_any(f_thread_condition_t *condition) {
+#ifndef _di_f_thread_condition_signal_
+  f_status_t f_thread_condition_signal(f_thread_condition_t *condition) {
     #ifndef _di_level_0_parameter_checking_
       if (!condition) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1160,7 +1160,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_condition_unblock_any_
+#endif // _di_f_thread_condition_signal_
 
 #ifndef _di_f_thread_condition_wait_
   f_status_t f_thread_condition_wait(f_thread_condition_t *condition, f_thread_mutex_t *mutex) {
@@ -1315,6 +1315,22 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_create_
+
+#ifndef _di_f_thread_detach_
+  f_status_t f_thread_detach(const f_thread_id_t id) {
+
+    const int error = pthread_detach(id);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_detach_
 
 #ifndef _di_f_thread_exit_
   f_status_t f_thread_exit(int *result) {

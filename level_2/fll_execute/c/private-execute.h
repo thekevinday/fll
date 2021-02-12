@@ -202,6 +202,7 @@ extern "C" {
  * @param result
  *   (optional) The code returned after finishing execution of program.
  *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
@@ -239,7 +240,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -274,6 +275,7 @@ extern "C" {
  * @param result
  *   (optional) The code returned after finishing execution of program.
  *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
+ *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
  *   Set to NULL to not use.
  *
  * @return
@@ -310,7 +312,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**

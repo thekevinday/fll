@@ -168,7 +168,7 @@ extern "C" {
 #endif // _di_fll_execute_into_
 
 #ifndef _di_fll_execute_program_
-  f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, int *result) {
+  f_status_t fll_execute_program(const f_string_t program, const f_string_statics_t arguments, fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!program && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
