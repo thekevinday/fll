@@ -518,10 +518,6 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t k = 0;
 
-    controller_rule_t *rule = &thread->setting->rules.array[index];
-    controller_rule_item_t *item = 0;
-    controller_rule_action_t *action = 0;
-
     // child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
     f_signal_set_empty(&signals.block);
@@ -533,84 +529,100 @@ extern "C" {
 
     controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
-    if (rule->affinity.used) {
-      execute_set.as.affinity = &rule->affinity;
+    // when using pointers in threads and calling the exec functions, invalid reads and writes may occure.
+    // make local copies and have the pointers reference these to avoid invalid reads and writes.
+    int local_nice;
+    uid_t local_id_user;
+    gid_t local_id_group;
+
+    f_int32s_t local_affinity;
+    f_control_group_t local_control_group;
+    f_int32s_t local_id_groups;
+    f_limit_sets_t local_limits;
+    f_execute_scheduler_t local_scheduler;
+
+    if (thread->setting->rules.array[index].affinity.used) {
+      local_affinity = thread->setting->rules.array[index].affinity;
+      execute_set.as.affinity = &local_affinity;
     }
 
-    if (rule->capability) {
-      execute_set.as.capability = rule->capability;
+    if (thread->setting->rules.array[index].capability) {
+      execute_set.as.capability = thread->setting->rules.array[index].capability;
     }
 
-    if (rule->has & controller_rule_has_control_group) {
-      execute_set.as.control_group = &rule->control_group;
+    if (thread->setting->rules.array[index].has & controller_rule_has_control_group) {
+      local_control_group = thread->setting->rules.array[index].control_group;
+      execute_set.as.control_group = &local_control_group;
 
       // make sure all required cgroup directories exist.
-      if (rule->status == F_known_not) {
-        status = fll_control_group_prepare(rule->control_group);
+      if (thread->setting->rules.array[index].status == F_known_not) {
+        status = fll_control_group_prepare(thread->setting->rules.array[index].control_group);
 
         if (F_status_is_error(status)) {
           controller_error_print_locked(thread->data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, thread);
 
-          rule->status = F_status_set_error(F_failure);
+          thread->setting->rules.array[index].status = F_status_set_error(F_failure);
           return status;
         }
       }
     }
 
-    if (rule->has & controller_rule_has_group) {
-      execute_set.as.id_group = &rule->group;
+    if (thread->setting->rules.array[index].has & controller_rule_has_group) {
+      local_id_group = thread->setting->rules.array[index].group;
+      execute_set.as.id_group = &local_id_group;
 
-      if (rule->groups.used) {
-        execute_set.as.id_groups = &rule->groups;
+      if (thread->setting->rules.array[index].groups.used) {
+        local_id_groups = thread->setting->rules.array[index].groups;
+        execute_set.as.id_groups = &local_id_groups;
       }
     }
 
-    if (rule->limits.used) {
-      execute_set.as.limits = &rule->limits;
+    if (thread->setting->rules.array[index].limits.used) {
+      local_limits = thread->setting->rules.array[index].limits;
+      execute_set.as.limits = &local_limits;
     }
 
-    if (rule->has & controller_rule_has_scheduler) {
-      execute_set.as.scheduler = &rule->scheduler;
+    if (thread->setting->rules.array[index].has & controller_rule_has_scheduler) {
+      local_scheduler = thread->setting->rules.array[index].scheduler;
+      execute_set.as.scheduler = &local_scheduler;
     }
 
-    if (rule->has & controller_rule_has_nice) {
-      execute_set.as.nice = &rule->nice;
+    if (thread->setting->rules.array[index].has & controller_rule_has_nice) {
+      local_nice = thread->setting->rules.array[index].nice;
+      execute_set.as.nice = &local_nice;
     }
 
-    if (rule->has & controller_rule_has_user) {
-      execute_set.as.id_user = &rule->user;
+    if (thread->setting->rules.array[index].has & controller_rule_has_user) {
+      local_id_user = thread->setting->rules.array[index].user;
+      execute_set.as.id_user = &local_id_user;
     }
 
-    status = fl_environment_load_names(rule->environment, &environment);
+    status = fl_environment_load_names(thread->setting->rules.array[index].environment, &environment);
 
     if (F_status_is_error(status)) {
       controller_error_print_locked(thread->data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, thread);
 
-      rule->status = F_status_set_error(F_failure);
+      thread->setting->rules.array[index].status = F_status_set_error(F_failure);
       return status;
     }
 
-    for (i = 0; i < rule->items.used; ++i) {
+    for (i = 0; i < thread->setting->rules.array[index].items.used; ++i) {
 
       if (thread->setting->signal) {
         status = F_signal;
         break;
       }
 
-      if (rule->items.array[i].type == controller_rule_item_type_setting) continue;
+      if (thread->setting->rules.array[index].items.array[i].type == controller_rule_item_type_setting) continue;
 
-      item = &rule->items.array[i];
-
-      for (j = 0; j < item->actions.used; ++j) {
+      for (j = 0; j < thread->setting->rules.array[index].items.array[i].actions.used; ++j) {
 
         if (thread->setting->signal) {
           status = F_signal;
           break;
         }
 
-        if (item->actions.array[j].type != type) continue;
-
-        action = &item->actions.array[j];
+        if (thread->setting->rules.array[index].items.array[i].actions.array[j].type != type) continue;
 
         execute_set.parameter.data = 0;
         execute_set.parameter.option = fl_execute_parameter_option_threadsafe;
@@ -619,55 +631,55 @@ extern "C" {
           execute_set.parameter.option |= fl_execute_parameter_option_return;
         }
 
-        if (item->type == controller_rule_item_type_command) {
+        if (thread->setting->rules.array[index].items.array[i].type == controller_rule_item_type_command) {
 
-          if (strchr(action->parameters.array[0].string, f_path_separator_s[0])) {
+          if (strchr(thread->setting->rules.array[index].items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(index, item->type, *action, 0, action->parameters, options, &execute_set, thread, asynchronous);
+          status = controller_rule_execute_foreground(index, thread->setting->rules.array[index].items.array[i].type, thread->setting->rules.array[index].items.array[i].actions.array[j], 0, thread->setting->rules.array[index].items.array[i].actions.array[j].parameters, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            action->status = F_status_set_error(F_failure);
+            thread->setting->rules.array[index].items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
         }
-        else if (item->type == controller_rule_item_type_script) {
-          execute_set.parameter.data = &action->parameters.array[0];
+        else if (thread->setting->rules.array[index].items.array[i].type == controller_rule_item_type_script) {
+          execute_set.parameter.data = &thread->setting->rules.array[index].items.array[i].actions.array[j].parameters.array[0];
 
-          if (rule->script.used && strchr(rule->script.string, f_path_separator_s[0])) {
+          if (thread->setting->rules.array[index].script.used && strchr(thread->setting->rules.array[index].script.string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(index, item->type, *action, rule->script.used ? rule->script.string : controller_default_program_script, arguments_none, options, &execute_set, thread, asynchronous);
+          status = controller_rule_execute_foreground(index, thread->setting->rules.array[index].items.array[i].type, thread->setting->rules.array[index].items.array[i].actions.array[j], thread->setting->rules.array[index].script.used ? thread->setting->rules.array[index].script.string : controller_default_program_script, arguments_none, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            action->status = F_status_set_error(F_failure);
+            thread->setting->rules.array[index].items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
         }
-        else if (item->type == controller_rule_item_type_service) {
+        else if (thread->setting->rules.array[index].items.array[i].type == controller_rule_item_type_service) {
 
-          if (strchr(action->parameters.array[0].string, f_path_separator_s[0])) {
+          if (strchr(thread->setting->rules.array[index].items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(index, item->type, *action, 0, action->parameters, options, &execute_set, thread, asynchronous);
+          status = controller_rule_execute_pid_with(index, thread->setting->rules.array[index].items.array[i].type, thread->setting->rules.array[index].items.array[i].actions.array[j], 0, thread->setting->rules.array[index].items.array[i].actions.array[j].parameters, options, &execute_set, thread, asynchronous);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            action->status = F_status_set_error(F_failure);
+            thread->setting->rules.array[index].items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
@@ -687,7 +699,7 @@ extern "C" {
             f_thread_mutex_unlock(&thread->mutex->print);
           }
 
-          action->status = F_ignore;
+          thread->setting->rules.array[index].items.array[i].actions.array[j].status = F_ignore;
 
           if (success != F_true) {
             success = F_ignore;
@@ -709,16 +721,16 @@ extern "C" {
     }
 
     if (F_status_is_error(status) || success == F_false) {
-      rule->status = F_status_set_error(F_failure);
+      thread->setting->rules.array[index].status = F_status_set_error(F_failure);
     }
     else if (success == F_ignore || success == F_busy) {
-      rule->status = success;
+      thread->setting->rules.array[index].status = success;
     }
     else {
-      rule->status = F_none;
+      thread->setting->rules.array[index].status = F_none;
     }
 
-    return rule->status;
+    return thread->setting->rules.array[index].status;
   }
 #endif // _di_controller_rule_execute_
 
