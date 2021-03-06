@@ -124,7 +124,7 @@ extern "C" {
  * @see fl_directory_clone()
  */
 #ifndef _di_fll_file_move_
-  extern f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse);
+  extern f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const fl_directory_recurse_t recurse);
 #endif // _di_fll_file_move_
 
 /**

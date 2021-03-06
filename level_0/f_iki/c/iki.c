@@ -79,7 +79,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_length_t width_max = 0;
+    f_array_length_t width_max = 0;
 
     if (width_max > buffer->used - range->start) {
       width_max = buffer->used - range->start;
@@ -99,11 +99,11 @@ extern "C" {
     }
 
     f_string_range_t found_vocabulary = f_string_range_t_initialize;
-    f_string_length_t found_content = 0;
+    f_array_length_t found_content = 0;
 
     found_vocabulary.start = range->start;
 
-    f_string_length_t vocabulary_slash_first = range->start;
+    f_array_length_t vocabulary_slash_first = range->start;
 
     uint8_t quote = 0;
 
@@ -111,7 +111,7 @@ extern "C" {
     bool find_next = F_false;
 
     // delimits must only be applied once a valid object is found.
-    f_string_lengths_t delimits = f_string_lengths_t_initialize;
+    f_array_lengths_t delimits = f_array_lengths_t_initialize;
 
     do {
 
@@ -128,7 +128,7 @@ extern "C" {
             status = f_utf_buffer_increment(*buffer, range, 1);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               return status;
             }
 
@@ -143,7 +143,7 @@ extern "C" {
           } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(delimits);
+            f_macro_array_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -157,7 +157,7 @@ extern "C" {
           // this is not a valid vocabulary name so seek until a non-word, non-dash, or non-plus character.
           f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_false);
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(delimits);
+            f_macro_array_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -200,7 +200,7 @@ extern "C" {
             status = f_utf_buffer_increment(*buffer, range, 1);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               return status;
             }
           } // while
@@ -213,7 +213,7 @@ extern "C" {
           status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(delimits);
+            f_macro_array_lengths_t_delete_simple(delimits);
             return status;
           }
 
@@ -222,15 +222,15 @@ extern "C" {
             f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               return status;
             }
             else if (range->start > range->stop) {
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               return F_data_not_stop;
             }
             else if (range->start >= buffer->used) {
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               return F_data_not_eos;
             }
 
@@ -241,7 +241,7 @@ extern "C" {
         status = f_utf_buffer_increment(*buffer, range, 1);
 
         if (F_status_is_error(status)) {
-          f_macro_string_lengths_t_delete_simple(delimits);
+          f_macro_array_lengths_t_delete_simple(delimits);
           return status;
         }
       } // while
@@ -264,7 +264,7 @@ extern "C" {
               f_macro_iki_allocate_delimits_if_necessary(status, delimits);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(delimits);
+                f_macro_array_lengths_t_delete_simple(delimits);
                 return status;
               }
 
@@ -290,7 +290,7 @@ extern "C" {
               }
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(delimits);
+                f_macro_array_lengths_t_delete_simple(delimits);
                 return status;
               }
 
@@ -310,7 +310,7 @@ extern "C" {
                 buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
               } // for
 
-              f_macro_string_lengths_t_delete_simple(delimits);
+              f_macro_array_lengths_t_delete_simple(delimits);
               if (F_status_is_error(status)) return status;
 
               range->start++;
@@ -327,7 +327,7 @@ extern "C" {
             }
           }
           else if (buffer->string[range->start] == f_iki_syntax_slash) {
-            f_string_length_t content_slash_first = range->start;
+            f_array_length_t content_slash_first = range->start;
             f_array_length_t content_slash_total = 0;
 
             while (range->start <= range->stop && range->start < buffer->used) {
@@ -347,15 +347,15 @@ extern "C" {
                 }
 
                 if (delimits.used + content_slash_delimits > delimits.size) {
-                  if (delimits.used + content_slash_delimits > f_string_length_t_size) {
+                  if (delimits.used + content_slash_delimits > f_array_length_t_size) {
                     status = F_status_set_error(F_string_too_large);
                   }
                   else {
-                    f_macro_string_lengths_t_resize(status, delimits, delimits.used + content_slash_delimits);
+                    f_macro_array_lengths_t_resize(status, delimits, delimits.used + content_slash_delimits);
                   }
 
                   if (F_status_is_error(status)) {
-                    f_macro_string_lengths_t_delete_simple(delimits);
+                    f_macro_array_lengths_t_delete_simple(delimits);
                     return status;
                   }
                 }
@@ -375,7 +375,7 @@ extern "C" {
                   status = f_utf_buffer_increment(*buffer, (&content_range), 1);
 
                   if (F_status_is_error(status)) {
-                    f_macro_string_lengths_t_delete_simple(delimits);
+                    f_macro_array_lengths_t_delete_simple(delimits);
                     return status;
                   }
                 } // while
@@ -388,7 +388,7 @@ extern "C" {
                     f_macro_iki_allocate_delimits_if_necessary(status, delimits);
 
                     if (F_status_is_error(status)) {
-                      f_macro_string_lengths_t_delete_simple(delimits);
+                      f_macro_array_lengths_t_delete_simple(delimits);
                       return status;
                     }
 
@@ -417,7 +417,7 @@ extern "C" {
                     }
 
                     if (F_status_is_error(status)) {
-                      f_macro_string_lengths_t_delete_simple(delimits);
+                      f_macro_array_lengths_t_delete_simple(delimits);
                       return status;
                     }
 
@@ -437,7 +437,7 @@ extern "C" {
                       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
                     } // for
 
-                    f_macro_string_lengths_t_delete_simple(delimits);
+                    f_macro_array_lengths_t_delete_simple(delimits);
                     if (F_status_is_error(status)) return status;
 
                     range->start++;
@@ -465,7 +465,7 @@ extern "C" {
               status = f_utf_buffer_increment(*buffer, range, 1);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(delimits);
+                f_macro_array_lengths_t_delete_simple(delimits);
                 return status;
               }
             } // while
@@ -474,7 +474,7 @@ extern "C" {
           status = f_utf_buffer_increment(*buffer, range, 1);
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(delimits);
+            f_macro_array_lengths_t_delete_simple(delimits);
             return status;
           }
         } // while
@@ -496,7 +496,7 @@ extern "C" {
       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
     } // for
 
-    f_macro_string_lengths_t_delete_simple(delimits);
+    f_macro_array_lengths_t_delete_simple(delimits);
     if (F_status_is_error(status)) return status;
 
     if (range->start > range->stop) {

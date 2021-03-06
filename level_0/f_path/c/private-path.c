@@ -22,7 +22,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    const f_string_length_t length = strnlen(buffer, f_path_length_max);
+    const f_array_length_t length = strnlen(buffer, f_path_length_max);
 
     if (length + 1 > real->size) {
       f_status_t status = F_none;

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_fss_items_adjust_
-  f_status_t f_fss_items_adjust(const f_string_length_t length, f_fss_items_t *items) {
+  f_status_t f_fss_items_adjust(const f_array_length_t length, f_fss_items_t *items) {
     #ifndef _di_level_0_parameter_checking_
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_fss_items_increase_by_
 
 #ifndef _di_f_fss_items_resize_
-  f_status_t f_fss_items_resize(const f_string_length_t length, f_fss_items_t *items) {
+  f_status_t f_fss_items_resize(const f_array_length_t length, f_fss_items_t *items) {
     #ifndef _di_level_0_parameter_checking_
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_f_fss_items_resize_
 
 #ifndef _di_f_fss_nest_adjust_
-  f_status_t f_fss_nest_adjust(const f_string_length_t length, f_fss_nest_t *nest) {
+  f_status_t f_fss_nest_adjust(const f_array_length_t length, f_fss_nest_t *nest) {
     #ifndef _di_level_0_parameter_checking_
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_fss_nest_increase_by_
 
 #ifndef _di_f_fss_nest_resize_
-  f_status_t f_fss_nest_resize(const f_string_length_t length, f_fss_nest_t *nest) {
+  f_status_t f_fss_nest_resize(const f_array_length_t length, f_fss_nest_t *nest) {
     #ifndef _di_level_0_parameter_checking_
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_f_fss_nest_resize_
 
 #ifndef _di_f_fss_nests_adjust_
-  f_status_t f_fss_nests_adjust(const f_string_length_t length, f_fss_nests_t *nests) {
+  f_status_t f_fss_nests_adjust(const f_array_length_t length, f_fss_nests_t *nests) {
     #ifndef _di_level_0_parameter_checking_
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -275,7 +275,7 @@ extern "C" {
 #endif // _di_f_fss_nests_increase_by_
 
 #ifndef _di_f_fss_nests_resize_
-  f_status_t f_fss_nests_resize(const f_string_length_t length, f_fss_nests_t *nests) {
+  f_status_t f_fss_nests_resize(const f_array_length_t length, f_fss_nests_t *nests) {
     #ifndef _di_level_0_parameter_checking_
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -15,9 +15,9 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
-    f_string_length_t delimits = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t delimits = 0;
 
     for (; i < content.used; i++) {
 
@@ -79,11 +79,11 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
-    f_string_length_t delimits = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t delimits = 0;
 
-    const f_string_length_t used = unescaped->used;
+    const f_array_length_t used = unescaped->used;
 
     for (; i < content.used; i++) {
 

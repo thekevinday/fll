@@ -84,7 +84,7 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_string_length_t destination_used = destination->used;
+    const f_array_length_t destination_used = destination->used;
 
     f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 
@@ -167,7 +167,7 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 1, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t destination_used = destination->used;
+    const f_array_length_t destination_used = destination->used;
 
     for (; range->start <= range->stop && range->start < content.used; range->start++) {
 

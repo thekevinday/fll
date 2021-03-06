@@ -668,7 +668,7 @@ extern "C" {
           fake_make_setting_parameter,
         };
 
-        const f_string_length_t settings_length[] = {
+        const f_array_length_t settings_length[] = {
           fake_make_setting_define_length,
           fake_make_setting_parameter_length,
         };
@@ -1062,7 +1062,7 @@ extern "C" {
     f_status_t status = F_none;
     f_mode_t mode = f_mode_t_initialize;
 
-    f_string_lengths_t section_stack = f_string_lengths_t_initialize;
+    f_array_lengths_t section_stack = f_array_lengths_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
     status = f_string_dynamics_increase(&data_make.path.stack);
@@ -1160,7 +1160,7 @@ extern "C" {
 
     f_file_stream_close(F_true, &data_make.path.top);
 
-    f_macro_string_lengths_t_delete_simple(section_stack);
+    f_macro_array_lengths_t_delete_simple(section_stack);
     fake_macro_make_data_t_delete_simple(data_make);
 
     // signal is set with error code only to prevent further execution above, return without the error bit set.
@@ -1211,7 +1211,7 @@ extern "C" {
 
     f_array_length_t used_arguments = 0;
 
-    f_string_length_t previous = 0;
+    f_array_length_t previous = 0;
 
     const f_string_t reserved_name[] = {
       fake_make_parameter_variable_build,
@@ -1227,7 +1227,7 @@ extern "C" {
       fake_make_parameter_variable_work,
     };
 
-    const f_string_length_t reserved_length[] = {
+    const f_array_length_t reserved_length[] = {
       fake_make_parameter_variable_build_length,
       fake_make_parameter_variable_color_length,
       fake_make_parameter_variable_data_length,
@@ -1564,7 +1564,7 @@ extern "C" {
         fake_build_setting_name_version_target,
       };
 
-      const f_string_length_t uint8_length[] = {
+      const f_array_length_t uint8_length[] = {
         fake_build_setting_name_build_language_length,
         fake_build_setting_name_version_target_length,
       };
@@ -1598,7 +1598,7 @@ extern "C" {
         fake_build_setting_name_search_static,
       };
 
-      const f_string_length_t bool_length[] = {
+      const f_array_length_t bool_length[] = {
         fake_build_setting_name_build_script_length,
         fake_build_setting_name_build_shared_length,
         fake_build_setting_name_build_static_length,
@@ -1658,7 +1658,7 @@ extern "C" {
         fake_build_setting_name_version_minor,
       };
 
-      const f_string_length_t dynamic_length[] = {
+      const f_array_length_t dynamic_length[] = {
         fake_build_setting_name_build_compiler_length,
         fake_build_setting_name_build_indexer_length,
         fake_build_setting_name_path_headers_length,
@@ -1732,7 +1732,7 @@ extern "C" {
         fake_build_setting_name_modes_default,
       };
 
-      const f_string_length_t dynamics_length[] = {
+      const f_array_length_t dynamics_length[] = {
         fake_build_setting_name_build_libraries_length,
         fake_build_setting_name_build_sources_headers_length,
         fake_build_setting_name_build_sources_library_length,
@@ -1889,7 +1889,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
     if (F_status_is_error(*status) || *status == F_child) return data->child;
 
     if (fake_signal_received(*data)) {
@@ -1906,14 +1906,13 @@ extern "C" {
 
     // add the operation id to the operation stack.
     if (section_stack->used + 1 > section_stack->size) {
-      f_macro_string_lengths_t_increase_by((*status), (*section_stack), f_memory_default_allocation_step);
+      f_macro_array_lengths_t_increase_by((*status), (*section_stack), f_memory_default_allocation_step);
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data_make->error, F_status_set_fine(*status), "f_macro_string_lengths_t_increase_by", F_true);
+        fll_error_print(data_make->error, F_status_set_fine(*status), "f_macro_array_lengths_t_increase_by", F_true);
         return 0;
       }
     }
-
 
     section_stack->array[section_stack->used] = id_section;
     section_stack->used++;
@@ -2278,7 +2277,7 @@ extern "C" {
 #endif // _di_fake_make_operate_section_
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+  int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
     if (*status == F_child) return data->child;
 
     if (operation == fake_make_operation_type_index) {
@@ -2362,7 +2361,7 @@ extern "C" {
 
       fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-      f_string_length_t destination_length = 0;
+      f_array_length_t destination_length = 0;
 
       if (data->error.verbosity == f_console_verbosity_verbose) {
         recurse.output = data->output;
@@ -2462,7 +2461,7 @@ extern "C" {
 
       fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-      f_string_length_t destination_length = 0;
+      f_array_length_t destination_length = 0;
 
       f_mode_t mode = f_mode_t_initialize;
 
@@ -3078,7 +3077,7 @@ extern "C" {
           }
 
           f_array_length_t i = 2;
-          f_string_length_t j = 0;
+          f_array_length_t j = 0;
           bool missed = F_true;
 
           *operation_if = fake_make_operation_if_type_true_next;
@@ -3148,7 +3147,7 @@ extern "C" {
         bool is_negative_left = F_false;
         bool is_negative_right = F_false;
 
-        f_string_length_t i = 1;
+        f_array_length_t i = 1;
 
         const uint8_t type_if = *operation_if;
 
@@ -3401,7 +3400,7 @@ extern "C" {
 
       fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
-      f_string_length_t destination_length = 0;
+      f_array_length_t destination_length = 0;
 
       if (data->error.verbosity == f_console_verbosity_verbose) {
         recurse.output = data->output;
@@ -3963,7 +3962,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_run_
 
 #ifndef _di_fake_make_operate_validate_
-  void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) {
+  void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_index || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
@@ -4540,7 +4539,7 @@ extern "C" {
           fake_make_operation_argument_if_success,
         };
 
-        const f_string_length_t if_type_lengths[] = {
+        const f_array_length_t if_type_lengths[] = {
           fake_make_operation_argument_if_defined_length,
           fake_make_operation_argument_if_equal_length,
           fake_make_operation_argument_if_equal_not_length,
@@ -4591,7 +4590,7 @@ extern "C" {
           1,
         };
 
-        f_string_length_t i = 0;
+        f_array_length_t i = 0;
 
         for (; i < 14; i++) {
 
@@ -5178,7 +5177,7 @@ extern "C" {
       return F_false;
     }
 
-    for (f_string_length_t i = 0; i < name.used; i++) {
+    for (f_array_length_t i = 0; i < name.used; i++) {
 
       if (!(isalnum(name.string[i]) || name.string[i] == '_')) {
         return F_false;

@@ -135,13 +135,13 @@ extern "C" {
 #ifndef _di_control_delete_data_
   f_status_t control_delete_data(control_data_t *data) {
 
-    for (f_string_length_t i = 0; i < control_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < control_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
 
     f_macro_color_context_t_delete_simple(data->context);
 

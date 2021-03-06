@@ -23,7 +23,7 @@ extern "C" {
 
     f_file_t file = f_macro_file_t_initialize2(0, -1, f_file_flag_write_only);
     f_status_t status = F_none;
-    f_string_length_t length = 0;
+    f_array_length_t length = 0;
 
     for (f_array_length_t i = 0; i < control_group.groups.used; ++i) {
 

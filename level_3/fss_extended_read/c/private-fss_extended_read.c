@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_extended_read_is_delimited_at_depth_
-  f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_string_length_t depth) {
+  f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_array_length_t depth) {
 
     if (data.delimit_mode == fss_extended_read_delimit_mode_none) {
       return F_false;
@@ -132,7 +132,7 @@ extern "C" {
             if (status_code == F_memory_not) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
             }
-            else if (status_code == f_string_length_t_size) {
+            else if (status_code == f_array_length_t_size) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to process '", fll_error_print_error);
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_trim);
               fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
@@ -200,7 +200,7 @@ extern "C" {
   f_status_t fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_data_t *data, const f_string_t filename, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
     f_status_t status = F_none;
 
-    const f_string_lengths_t except_none = f_string_lengths_t_initialize;
+    const f_array_lengths_t except_none = f_array_lengths_t_initialize;
     bool object_delimited = F_true;
     bool content_delimited = F_true;
 
@@ -333,7 +333,7 @@ extern "C" {
         return F_none;
       }
 
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;

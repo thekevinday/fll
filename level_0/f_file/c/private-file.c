@@ -384,7 +384,7 @@ extern "C" {
   f_status_t private_f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > f_string_length_t_size) {
+      if (link_stat.st_size + 1 > f_array_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -420,7 +420,7 @@ extern "C" {
   f_status_t private_f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
-      if (link_stat.st_size + 1 > f_string_length_t_size) {
+      if (link_stat.st_size + 1 > f_array_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -751,13 +751,13 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) {
+  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) {
     *written = 0;
 
     f_status_t status = F_none;
-    f_string_length_t write_amount = amount;
-    f_string_length_t write_size = file.size_write;
-    f_string_length_t write_max = total;
+    f_array_length_t write_amount = amount;
+    f_array_length_t write_size = file.size_write;
+    f_array_length_t write_max = total;
 
     ssize_t size_write = 0;
 
@@ -800,12 +800,12 @@ extern "C" {
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
-  f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) {
+  f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) {
     *written = 0;
 
     f_status_t status = F_none;
-    f_string_length_t write_size = file.size_write;
-    f_string_length_t write_max = total;
+    f_array_length_t write_size = file.size_write;
+    f_array_length_t write_max = total;
 
     ssize_t size_write = 0;
 

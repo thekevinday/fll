@@ -161,7 +161,7 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (data.parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
-            status = fl_string_rip(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_length_size), &depths->array[depths->used].value_name);
+            status = fl_string_rip(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_parameter_size), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(data.error, F_status_set_fine(status), "fl_string_rip", F_true);
@@ -169,7 +169,7 @@ extern "C" {
             }
           }
           else {
-            status = f_string_append(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_length_size), &depths->array[depths->used].value_name);
+            status = f_string_append(arguments.argv[values_order[i]], strnlen(arguments.argv[values_order[i]], f_console_parameter_size), &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
               fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
@@ -276,7 +276,7 @@ extern "C" {
       f_number_unsigned_t select = 0;
 
       if (data->parameters[fss_embedded_list_read_parameter_select].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[fss_embedded_list_read_parameter_select].values.array[data->parameters[fss_embedded_list_read_parameter_select].values.used - 1];
+        const f_array_length_t index = data->parameters[fss_embedded_list_read_parameter_select].values.array[data->parameters[fss_embedded_list_read_parameter_select].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
@@ -335,7 +335,7 @@ extern "C" {
     }
 
     if (depths.array[depths_index].index_name || depths.array[depths_index].index_at) {
-      const f_string_lengths_t except_none = f_string_lengths_t_initialize;
+      const f_array_lengths_t except_none = f_array_lengths_t_initialize;
 
       f_array_length_t i = 0;
       f_array_length_t j = 0;
@@ -483,7 +483,7 @@ extern "C" {
         return F_none;
       }
 
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;
@@ -710,14 +710,14 @@ extern "C" {
       }
     }
 
-    const f_string_length_t original_objects_used = objects_delimits->used;
-    const f_string_length_t original_contents_used = contents_delimits->used;
+    const f_array_length_t original_objects_used = objects_delimits->used;
+    const f_array_length_t original_contents_used = contents_delimits->used;
 
-    f_string_length_t original_objects_delimits[original_objects_used];
-    f_string_length_t original_contents_delimits[original_contents_used];
+    f_array_length_t original_objects_delimits[original_objects_used];
+    f_array_length_t original_contents_delimits[original_contents_used];
 
-    memcpy(&original_objects_delimits, objects_delimits->array, original_objects_used * sizeof(f_string_length_t));
-    memcpy(&original_contents_delimits, contents_delimits->array, original_contents_used * sizeof(f_string_length_t));
+    memcpy(&original_objects_delimits, objects_delimits->array, original_objects_used * sizeof(f_array_length_t));
+    memcpy(&original_contents_delimits, contents_delimits->array, original_contents_used * sizeof(f_array_length_t));
 
     objects_delimits->used = 0;
     contents_delimits->used = 0;
@@ -760,7 +760,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) {
 
     if (!original_used) return;
 
@@ -813,7 +813,7 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) {
+  void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) {
 
     if (!original_used) return;
 
@@ -862,16 +862,16 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) {
+  f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t location) {
 
     if (depth + 1 >= data.nest.used) return F_false;
 
     f_fss_items_t *items = 0;
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
-    for (f_string_length_t d = depth + 1; d < data.nest.used; ++d) {
+    for (f_array_length_t d = depth + 1; d < data.nest.used; ++d) {
       items = &data.nest.depth[d];
 
       for (i = 0; i < items->used; ++i) {

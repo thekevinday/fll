@@ -25,7 +25,7 @@ extern "C" {
  */
 #ifndef _di_fss_embedded_list_read_depth_t_
   typedef struct {
-    f_string_length_t depth;
+    f_array_length_t depth;
 
     f_array_length_t index_at;
     f_array_length_t index_name;
@@ -297,7 +297,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_contents_
-  extern void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern void fss_embedded_list_read_process_delimits_contents(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_process_delimits_contents_
 
 /**
@@ -317,7 +317,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_objects_
-  extern void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t original_delimits[], const f_string_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern void fss_embedded_list_read_process_delimits_objects(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t original_delimits[], const f_array_length_t original_used, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_process_delimits_objects_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  * @see fss_embedded_list_read_process_delimits_contents()
  */
 #ifndef _di_fss_embedded_list_read_process_delimits_within_greater_
-  extern f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_string_length_t depth, const f_string_length_t location) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_read_process_delimits_within_greater(const fss_embedded_list_read_data_t data, const f_array_length_t depth, const f_array_length_t location) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_read_process_delimits_within_greater_
 
 #ifdef __cplusplus

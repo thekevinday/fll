@@ -42,7 +42,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare()
  */
 #if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
-  extern f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
 
 /**
@@ -78,7 +78,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_except()
  */
 #if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
-  extern f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_except_trim()
  */
 #if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
-  extern f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2, const f_string_lengths_t except1, const f_string_lengths_t except2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
 
 /**
@@ -152,7 +152,7 @@ extern "C" {
  * @see fl_string_dynamic_partial_compare_trim()
  */
 #if !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
-  extern f_status_t private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
 /**
@@ -183,7 +183,7 @@ extern "C" {
  * @see fl_string_dynamic_rip_nulless()
  */
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
-  extern f_status_t private_fl_string_rip_find_range(const f_string_t source, f_string_length_t *start, f_string_length_t *stop) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_string_rip_find_range(const f_string_t source, f_array_length_t *start, f_array_length_t *stop) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
 
 #ifdef __cplusplus

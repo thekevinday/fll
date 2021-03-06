@@ -95,7 +95,7 @@ extern "C" {
 
     if (status == F_true) {
       {
-        f_string_length_t size_file = 0;
+        f_array_length_t size_file = 0;
 
         name_function = "f_file_size";
         status = f_file_size(path_file, F_true, &size_file);
@@ -225,7 +225,7 @@ extern "C" {
         fake_path_part_script,
       };
 
-      const f_string_length_t parameters_length[] = {
+      const f_array_length_t parameters_length[] = {
         fake_path_part_documents_length,
         fake_path_part_includes_length,
         fake_path_part_libraries_length,
@@ -350,7 +350,7 @@ extern "C" {
         fake_file_readme,
       };
 
-      const f_string_length_t parameters_length[] = {
+      const f_array_length_t parameters_length[] = {
         fake_path_part_script_length,
         fake_path_part_shared_length,
         fake_path_part_static_length,
@@ -413,7 +413,7 @@ extern "C" {
           fake_path_part_programs,
         };
 
-        const f_string_length_t parameters_length[] = {
+        const f_array_length_t parameters_length[] = {
           fake_path_part_includes_length,
           fake_path_part_libraries_length,
           fake_path_part_programs_length,
@@ -483,7 +483,7 @@ extern "C" {
           fake_path_part_static,
         };
 
-        const f_string_length_t parameters_length[] = {
+        const f_array_length_t parameters_length[] = {
           fake_path_part_script_length,
           fake_path_part_shared_length,
           fake_path_part_static_length,
@@ -604,7 +604,7 @@ extern "C" {
         fake_default_settings,
       };
 
-      const f_string_length_t parameter_default_lengths[] = {
+      const f_array_length_t parameter_default_lengths[] = {
         fake_default_fakefile_length,
         fake_default_process_length,
         fake_default_settings_length,
@@ -634,13 +634,13 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
 
-          f_string_length_t location = data->parameters[parameters_id[i]].values.array[0];
-          f_string_length_t length = strnlen(arguments.argv[location], f_console_length_size);
+          f_array_length_t location = data->parameters[parameters_id[i]].values.array[0];
+          f_array_length_t length = strnlen(arguments.argv[location], f_console_parameter_size);
 
           if (length > 0) {
             if (parameters_validate_word[i]) {
-              f_string_length_t j = 0;
-              f_string_length_t width_max = 0;
+              f_array_length_t j = 0;
+              f_array_length_t width_max = 0;
 
               for (j = 0; j < length; j++) {
                 width_max = length - j;
@@ -745,7 +745,7 @@ extern "C" {
         fake_default_path_work,
       };
 
-      const f_string_length_t parameter_default_lengths[] = {
+      const f_array_length_t parameter_default_lengths[] = {
         fake_default_path_build_length,
         fake_default_path_data_length,
         fake_default_path_sources_length,
@@ -819,8 +819,8 @@ extern "C" {
       }
 
       f_array_length_t i = 0;
-      f_string_length_t j = 0;
-      f_string_length_t width_max = 0;
+      f_array_length_t j = 0;
+      f_array_length_t width_max = 0;
 
       for (; i < data->define.used; i++) {
 
@@ -876,8 +876,8 @@ extern "C" {
       }
 
       f_array_length_t i = 0;
-      f_string_length_t j = 0;
-      f_string_length_t width_max = 0;
+      f_array_length_t j = 0;
+      f_array_length_t width_max = 0;
 
       for (; i < data->mode.used; i++) {
 
@@ -974,7 +974,7 @@ extern "C" {
       fake_default_path_work,
     };
 
-    const f_string_length_t parameter_default_lengths[] = {
+    const f_array_length_t parameter_default_lengths[] = {
       fake_default_path_build_length,
       fake_default_path_data_length,
       fake_default_path_work_length,

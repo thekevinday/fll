@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_utf_string_compare_
-  f_status_t fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t length1, const f_string_length_t length2) {
+  f_status_t fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
     return private_fl_utf_string_compare(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_utf_string_compare_
 
 #ifndef _di_fl_utf_string_compare_trim_
-  f_status_t fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t length1, const f_string_length_t length2) {
+  f_status_t fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
     return private_fl_utf_string_compare_trim(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_utf_string_compare_trim_
@@ -223,15 +223,15 @@ extern "C" {
 #endif // _di_fl_utf_string_dynamic_seek_to_char_
 
 #ifndef _di_fl_utf_string_rip_
-  f_status_t fl_utf_string_rip(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination) {
+  f_status_t fl_utf_string_rip(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_string_length_t begin = 0;
-    f_string_length_t end = length - 1;
+    f_array_length_t begin = 0;
+    f_array_length_t end = length - 1;
 
     f_status_t status = private_fl_utf_string_rip_find_range(source, &begin, &end);
 
@@ -243,15 +243,15 @@ extern "C" {
 #endif // _di_fl_utf_string_rip_
 
 #ifndef _di_fl_utf_string_rip_nulless_
-  f_status_t fl_utf_string_rip_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination) {
+  f_status_t fl_utf_string_rip_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_string_length_t begin = 0;
-    f_string_length_t end = length - 1;
+    f_array_length_t begin = 0;
+    f_array_length_t end = length - 1;
 
     f_status_t status = private_fl_utf_string_rip_find_range(source, &begin, &end);
 

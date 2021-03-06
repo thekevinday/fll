@@ -13,7 +13,7 @@ extern "C" {
       return F_exist_not;
     }
 
-    const f_string_length_t size = strnlen(result, f_environment_max_length);
+    const f_array_length_t size = strnlen(result, f_environment_max_length);
 
     if (size) {
       if (value->used + size > f_environment_max_length) {

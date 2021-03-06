@@ -16,7 +16,7 @@ extern "C" {
 #endif // _di_fll_file_mode_set_all_
 
 #ifndef _di_fll_file_move_
-  f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const fl_directory_recurse_t recurse) {
+  f_status_t fll_file_move(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_2_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);

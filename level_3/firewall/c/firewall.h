@@ -268,7 +268,7 @@ extern "C" {
   typedef struct {
     f_console_parameter_t parameters[firewall_total_parameters];
 
-    f_string_lengths_t remaining;
+    f_array_lengths_t remaining;
     bool process_pipe;
 
     f_file_t output;
@@ -283,7 +283,7 @@ extern "C" {
   #define firewall_data_t_initialize \
     { \
       firewall_console_parameter_t_initialize, \
-      f_string_lengths_t_initialize, \
+      f_array_lengths_t_initialize, \
       F_false, \
       f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \

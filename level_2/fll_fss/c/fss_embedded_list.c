@@ -15,7 +15,7 @@ extern "C" {
 
     f_status_t status = F_none;
     f_status_t status2 = F_none;
-    f_string_length_t initial_used = 0;
+    f_array_length_t initial_used = 0;
 
     bool found_data = F_false;
 
@@ -107,7 +107,7 @@ extern "C" {
 
         return F_none_stop;
       }
-    } while (range->start < f_string_length_t_size);
+    } while (range->start < f_array_length_t_size);
 
     return F_status_is_error(F_number_overflow);
   }

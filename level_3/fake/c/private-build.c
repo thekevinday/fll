@@ -12,7 +12,7 @@ extern "C" {
   void fake_build_arguments_standard_add(const fake_data_t data, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return;
 
-    f_string_length_t build_libraries_length = fake_build_parameter_library_link_path_length + data.path_build_libraries_shared.used;
+    f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_length + data.path_build_libraries_shared.used;
 
     char build_libraries[build_libraries_length + 1];
 
@@ -27,7 +27,7 @@ extern "C" {
 
     build_libraries[build_libraries_length] = 0;
 
-    f_string_length_t build_includes_length = fake_build_parameter_library_include_length + data.path_build_includes.used;
+    f_array_length_t build_includes_length = fake_build_parameter_library_include_length + data.path_build_includes.used;
 
     char build_includes[build_includes_length + 1];
 
@@ -39,7 +39,7 @@ extern "C" {
       build_includes,
     };
 
-    const f_string_length_t lengths[] = {
+    const f_array_length_t lengths[] = {
       build_libraries_length,
       build_includes_length,
     };
@@ -50,7 +50,7 @@ extern "C" {
     } // for
 
     if (data.path_work.used > 0) {
-      f_string_length_t length = 0;
+      f_array_length_t length = 0;
 
       if (F_status_is_error_not(*status)) {
         length = fake_build_parameter_library_include_length + data.path_work_includes.used;
@@ -128,7 +128,7 @@ extern "C" {
     }
 
     if (data.define.used) {
-      f_string_length_t length = 0;
+      f_array_length_t length = 0;
       f_array_length_t i = 0;
 
       for (; i < data.define.used && F_status_is_error_not(*status); i++) {
@@ -138,7 +138,7 @@ extern "C" {
       } // for
     }
     else {
-      f_string_length_t length = 0;
+      f_array_length_t length = 0;
       f_array_length_t i = 0;
 
       for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); i++) {
@@ -166,7 +166,7 @@ extern "C" {
 #endif // _di_fake_build_arguments_standard_add_
 
 #ifndef _di_fake_build_copy_
-  void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_string_length_t preserve, f_status_t *status) {
+  void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
 
     if (fake_signal_received(data)) {
@@ -264,7 +264,7 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           if (data.error.verbosity == f_console_verbosity_verbose) {
-            for (f_string_length_t j = 0; j < failures.used; j++) {
+            for (f_array_length_t j = 0; j < failures.used; j++) {
               fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
             } // for
 
@@ -389,7 +389,7 @@ extern "C" {
     }
 
     f_string_static_t path_headers = f_string_static_t_initialize;
-    f_string_length_t directory_headers_length = data.path_build_includes.used + data_build.setting.path_headers.used;
+    f_array_length_t directory_headers_length = data.path_build_includes.used + data_build.setting.path_headers.used;
 
     char directory_headers[directory_headers_length + 1];
 
@@ -562,7 +562,7 @@ extern "C" {
         f_console_symbol_short_enable_s,
       };
 
-      const f_string_length_t parameters_prefix_length[] = {
+      const f_array_length_t parameters_prefix_length[] = {
          f_console_symbol_short_enable_length,
          f_console_symbol_short_enable_length,
          f_console_symbol_short_enable_length,
@@ -582,7 +582,7 @@ extern "C" {
         fake_short_path_work,
       };
 
-      const f_string_length_t parameters_name_length[] = {
+      const f_array_length_t parameters_name_length[] = {
          fake_short_define_length,
          fake_short_process_length,
          fake_short_settings_length,
@@ -602,7 +602,7 @@ extern "C" {
         data.path_work.string,
       };
 
-      const f_string_length_t parameters_value_length[] = {
+      const f_array_length_t parameters_value_length[] = {
         defines.used,
         data.process.used,
         data.settings.used,
@@ -715,7 +715,7 @@ extern "C" {
       return status;
     }
 
-    f_string_length_t i = name->used;
+    f_array_length_t i = name->used;
 
     for (; i > 0; i--) {
       if (name->string[i] == f_path_extension_separator[0]) {
@@ -774,7 +774,7 @@ extern "C" {
         path_sources = &data_build.setting.path_sources;
       }
 
-      f_string_length_t source_length = 0;
+      f_array_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
 
@@ -798,10 +798,10 @@ extern "C" {
       }
     }
 
-    f_string_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_length;
-    f_string_length_t parameter_file_name_major_length = fake_build_parameter_library_name_prefix_length;
-    f_string_length_t parameter_file_name_minor_length = fake_build_parameter_library_name_prefix_length;
-    f_string_length_t parameter_file_name_micro_length = fake_build_parameter_library_name_prefix_length;
+    f_array_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_length;
+    f_array_length_t parameter_file_name_major_length = fake_build_parameter_library_name_prefix_length;
+    f_array_length_t parameter_file_name_minor_length = fake_build_parameter_library_name_prefix_length;
+    f_array_length_t parameter_file_name_micro_length = fake_build_parameter_library_name_prefix_length;
 
     parameter_file_name_micro_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_length;
     parameter_file_name_length = parameter_file_name_micro_length;
@@ -871,7 +871,7 @@ extern "C" {
     parameter_file_name_micro[parameter_file_name_micro_length] = 0;
 
     {
-      f_string_length_t parameter_file_path_length = data.path_build_libraries_shared.used + parameter_file_name_micro_length;
+      f_array_length_t parameter_file_path_length = data.path_build_libraries_shared.used + parameter_file_name_micro_length;
 
       char parameter_file_path[parameter_file_path_length + 1];
 
@@ -880,7 +880,7 @@ extern "C" {
 
       parameter_file_path[parameter_file_path_length] = 0;
 
-      f_string_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
+      f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
         parameter_linker_length += parameter_file_name_major_length;
@@ -915,7 +915,7 @@ extern "C" {
         parameter_file_path,
       };
 
-      const f_string_length_t lengths[] = {
+      const f_array_length_t lengths[] = {
         fake_build_parameter_library_shared_length,
         parameter_linker_length,
         fake_build_parameter_library_output_length,
@@ -952,7 +952,7 @@ extern "C" {
     }
 
     if (data_build.setting.version_target != fake_build_version_type_micro) {
-      f_string_length_t parameter_file_path_length = data.path_build_libraries_shared.used;
+      f_array_length_t parameter_file_path_length = data.path_build_libraries_shared.used;
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
         parameter_file_path_length += parameter_file_name_major_length;
@@ -997,7 +997,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_string_length_t parameter_file_path_length = data.path_build_libraries_shared.used + parameter_file_name_length;
+      f_array_length_t parameter_file_path_length = data.path_build_libraries_shared.used + parameter_file_name_length;
 
       char parameter_file_path[parameter_file_path_length + 1];
 
@@ -1082,7 +1082,7 @@ extern "C" {
     *status = fll_execute_arguments_add(fake_build_parameter_object_link_arguments, fake_build_parameter_object_link_arguments_length, &arguments);
 
     if (F_status_is_error_not(*status)) {
-      f_string_length_t destination_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length;
+      f_array_length_t destination_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length;
       destination_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
 
       char destination[destination_length + 1];
@@ -1107,7 +1107,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_string_length_t source_length = 0;
+      f_array_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
         source_path.used = 0;
@@ -1220,7 +1220,7 @@ extern "C" {
         f_path_present_working_s
       };
 
-      const f_string_length_t variables_length[] = {
+      const f_array_length_t variables_length[] = {
         f_path_environment_length,
         f_path_present_working_length
       };
@@ -1420,7 +1420,7 @@ extern "C" {
       fake_build_setting_name_version_target,
     };
 
-    const f_string_length_t settings_length[] = {
+    const f_array_length_t settings_length[] = {
       fake_build_setting_name_build_compiler_length,
       fake_build_setting_name_build_indexer_length,
       fake_build_setting_name_build_language_length,
@@ -1551,7 +1551,7 @@ extern "C" {
 
       f_string_dynamic_t settings_mode_name_dynamic[fake_build_setting_total];
       f_string_t settings_mode_names[fake_build_setting_total];
-      f_string_length_t setting_mode_lengths[fake_build_setting_total];
+      f_array_length_t setting_mode_lengths[fake_build_setting_total];
 
       const f_string_dynamics_t *modes = &setting->modes_default;
       bool found = F_false;
@@ -1593,7 +1593,7 @@ extern "C" {
 
         memset(&settings_mode_name_dynamic, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total);
         memset(&settings_mode_names, 0, sizeof(f_string_t) * fake_build_setting_total);
-        memset(&setting_mode_lengths, 0, sizeof(f_string_length_t) * fake_build_setting_total);
+        memset(&setting_mode_lengths, 0, sizeof(f_array_length_t) * fake_build_setting_total);
 
         for (j = 0; j < fake_build_setting_total; j++) {
 
@@ -2031,7 +2031,7 @@ extern "C" {
         fake_build_setting_default_version,
       };
 
-      const f_string_length_t lengths[] = {
+      const f_array_length_t lengths[] = {
         fake_build_setting_default_version_length,
         fake_build_setting_default_version_length,
         fake_build_setting_default_version_length,
@@ -2200,7 +2200,7 @@ extern "C" {
       fake_build_stage_sources_settings,
     };
 
-    const f_string_length_t lengths[] = {
+    const f_array_length_t lengths[] = {
       fake_build_stage_libraries_script_length,
       fake_build_stage_libraries_shared_length,
       fake_build_stage_libraries_static_length,
@@ -2327,8 +2327,8 @@ extern "C" {
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_path = f_string_dynamic_t_initialize;
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
-    f_string_length_t source_length = 0;
-    f_string_length_t destination_length = 0;
+    f_array_length_t source_length = 0;
+    f_array_length_t destination_length = 0;
 
     const f_string_static_t *path_sources = &data.path_sources;
 
@@ -2473,7 +2473,7 @@ extern "C" {
         destination,
       };
 
-      const f_string_length_t lengths[] = {
+      const f_array_length_t lengths[] = {
         source_length,
         fake_build_parameter_object_compile_length,
         fake_build_parameter_object_static_length,
@@ -2580,10 +2580,10 @@ extern "C" {
           path_sources = &data_build.setting.path_sources;
         }
 
-        const f_string_length_t path_sources_base_length = path_sources->used;
+        const f_array_length_t path_sources_base_length = path_sources->used;
 
         f_string_static_t path_headers = f_string_static_t_initialize;
-        f_string_length_t directory_headers_length = data->path_build_includes.used + data_build.setting.path_headers.used;
+        f_array_length_t directory_headers_length = data->path_build_includes.used + data_build.setting.path_headers.used;
 
         char directory_headers[directory_headers_length + 1];
 
@@ -2682,7 +2682,7 @@ extern "C" {
         path_sources = &data_build.setting.path_sources;
       }
 
-      f_string_length_t source_length = 0;
+      f_array_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; i++) {
         source_length = path_sources->used + data_build.setting.build_sources_program.array[i].used;
@@ -2699,7 +2699,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_string_length_t parameter_file_name_path_length = data.path_build_programs_shared.used + data_build.setting.project_name.used;
+      f_array_length_t parameter_file_name_path_length = data.path_build_programs_shared.used + data_build.setting.project_name.used;
 
       char parameter_file_name_path[parameter_file_name_path_length + 1];
 
@@ -2712,7 +2712,7 @@ extern "C" {
         parameter_file_name_path,
       };
 
-      const f_string_length_t lengths[] = {
+      const f_array_length_t lengths[] = {
         fake_build_parameter_library_output_length,
         parameter_file_name_path_length,
       };
@@ -2725,7 +2725,7 @@ extern "C" {
 
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
     if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used > 0) {
-      f_string_length_t link_project_library_length = fake_build_parameter_library_link_file_length + data_build.setting.project_name.used;
+      f_array_length_t link_project_library_length = fake_build_parameter_library_link_file_length + data_build.setting.project_name.used;
 
       char link_project_library[link_project_library_length + 1];
 
@@ -2784,7 +2784,7 @@ extern "C" {
         path_sources = &data_build.setting.path_sources;
       }
 
-      f_string_length_t source_length = 0;
+      f_array_length_t source_length = 0;
 
       for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; i++) {
         if (!data_build.setting.build_sources_program.array[i].used) continue;
@@ -2803,7 +2803,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      f_string_length_t source_library_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
+      f_array_length_t source_library_length = data.path_build_libraries_static.used + fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_static_length;
 
       char source_library[source_library_length + 1];
 
@@ -2826,7 +2826,7 @@ extern "C" {
 
       source_library[source_library_length] = 0;
 
-      f_string_length_t parameter_file_name_path_length = data.path_build_programs_static.used + data_build.setting.project_name.used;
+      f_array_length_t parameter_file_name_path_length = data.path_build_programs_static.used + data_build.setting.project_name.used;
 
       char parameter_file_name_path[parameter_file_name_path_length + 1];
 
@@ -2841,7 +2841,7 @@ extern "C" {
         parameter_file_name_path,
       };
 
-      const f_string_length_t lengths[] = {
+      const f_array_length_t lengths[] = {
         source_library_length,
         fake_build_parameter_library_static_length,
         fake_build_parameter_library_output_length,

@@ -25,7 +25,7 @@ extern "C" {
  */
 #ifndef _di_fss_basic_list_read_depth_t_
   typedef struct {
-    f_string_length_t depth;
+    f_array_length_t depth;
 
     f_array_length_t index_at;
     f_array_length_t index_name;

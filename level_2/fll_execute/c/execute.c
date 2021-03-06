@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_execute_arguments_add_
-  f_status_t fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -19,7 +19,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_
 
 #ifndef _di_fll_execute_arguments_add_parameter_
-  f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -32,7 +32,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_
 
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_array_length_t prefix_length[], const f_string_t name[], const f_array_length_t name_length[], const f_string_t value[], const f_array_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 #ifndef _di_fll_execute_arguments_add_set_
-  f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
+  f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_array_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments) {
     #ifndef _di_level_2_parameter_checking_
       if (!arguments) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -140,7 +140,7 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
     char program_name[name_size + 1];
 
@@ -178,7 +178,7 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_string_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
     char program_name[name_size + 1];
 

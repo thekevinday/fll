@@ -8,12 +8,12 @@ extern "C" {
 f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_data_t data) {
   f_status_t status = F_none;
 
-  f_string_length_t i = 0;
+  f_array_length_t i = 0;
   f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
   f_string_dynamic_t argument = f_string_dynamic_t_initialize;
 
   int return_code = 0;
-  f_string_length_t length = 0;
+  f_array_length_t length = 0;
   bool invalid = F_false;
   bool is_ip_list = F_false;
   f_string_dynamic_t ip_list = f_string_dynamic_t_initialize;
@@ -29,11 +29,11 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
   f_array_length_t r = 0;
 
   f_string_t current_tool = firewall_tool_iptables;
-  f_string_length_t current_tool_length = firewall_tool_iptables_length;
+  f_array_length_t current_tool_length = firewall_tool_iptables_length;
 
-  f_string_length_t direction = firewall_direction_none_id;
+  f_array_length_t direction = firewall_direction_none_id;
   f_string_dynamic_t device = f_string_dynamic_t_initialize;
-  f_string_length_t action = firewall_action_append_id;
+  f_array_length_t action = firewall_action_append_id;
   f_string_dynamic_t protocol = f_string_dynamic_t_initialize;
 
   if (local.is_global) {
@@ -506,7 +506,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
 
       // last up is the "rule"
       if ((!is_ip_list && local.rule_contents.array[i].used > 0) || (is_ip_list && local.rule_contents.array[i].used > 1)) {
-        f_string_length_t subcounter = 0;
+        f_array_length_t subcounter = 0;
 
         if (is_ip_list) {
           // skip past the chain
@@ -682,8 +682,8 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
               }
 
               if (F_status_is_error_not(status)) {
-                f_string_length_t buffer_counter = 0;
-                f_string_length_t ip_length = 0;
+                f_array_length_t buffer_counter = 0;
+                f_array_length_t ip_length = 0;
                 f_string_dynamic_t ip_list_action = f_string_dynamic_t_initialize;
 
                 if (ip_list_direction) {
@@ -744,7 +744,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fl_color_print_code(f_type_debug, data.context.warning);
                       fprintf(f_type_debug, "%s ", current_tool);
 
-                      for (f_string_length_t i = 0; i < arguments.used; i++) {
+                      for (f_array_length_t i = 0; i < arguments.used; i++) {
                         fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
                       } // for
 
@@ -766,7 +766,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fl_color_print_code(f_type_error, data.context.error);
 
                       fprintf(f_type_error, "%s ", current_tool);
-                      for (f_string_length_t i = 0; i < arguments.used; i++) {
+                      for (f_array_length_t i = 0; i < arguments.used; i++) {
                         fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
                       } // for
 
@@ -818,7 +818,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             fl_color_print_code(f_type_debug, data.context.warning);
             fprintf(f_type_debug, "%s ", current_tool);
 
-            for (f_string_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; i++) {
               fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -839,7 +839,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             fl_color_print_code(f_type_error, data.context.error);
 
             fprintf(f_type_error, "%s ", current_tool);
-            for (f_string_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; i++) {
               fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -877,7 +877,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
   f_array_length_t i = 0;
   f_array_length_t j = 0;
 
-  f_string_length_t length = 0;
+  f_array_length_t length = 0;
   f_string_range_t range = f_string_range_t_initialize;
   f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
@@ -1058,7 +1058,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
           fl_color_print_code(f_type_debug, data->context.warning);
           fprintf(f_type_debug, "%s ", firewall_tool_iptables);
 
-          for (f_string_length_t i = 0; i < arguments.used; i++) {
+          for (f_array_length_t i = 0; i < arguments.used; i++) {
             fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
           } // for
 
@@ -1079,7 +1079,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
             fl_color_print_code(f_type_debug, data->context.warning);
             fprintf(f_type_debug, "%s ", firewall_tool_ip6tables);
 
-            for (f_string_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; i++) {
               fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -1117,7 +1117,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
               fprintf(f_type_error, "%s ", firewall_tool_ip6tables);
             }
 
-            for (f_string_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; i++) {
               fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -1151,7 +1151,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
   const f_string_t tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
   f_status_t status = F_none;
 
-  for (f_string_length_t i = 0; i < 2; i++) {
+  for (f_array_length_t i = 0; i < 2; i++) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
     int return_code = 0;
@@ -1168,7 +1168,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
       fl_color_print_code(f_type_debug, data.context.warning);
       fprintf(f_type_debug, "%s ", tools[i]);
 
-      for (f_string_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; i++) {
         fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
       } // for
 
@@ -1193,7 +1193,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
         fl_color_print_code(f_type_error, data.context.error);
 
         fprintf(f_type_error, "%s ", tools[i]);
-        for (f_string_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; i++) {
           fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
         } // for
 
@@ -1211,7 +1211,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
     }
   } // for
 
-  for (f_string_length_t i = 0; i < 2; i++) {
+  for (f_array_length_t i = 0; i < 2; i++) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
     int return_code = 0;
@@ -1228,7 +1228,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
       fl_color_print_code(f_type_debug, data.context.warning);
       fprintf(f_type_debug, "%s ", tools[i]);
 
-      for (f_string_length_t j = 0; j < arguments.used; j++) {
+      for (f_array_length_t j = 0; j < arguments.used; j++) {
         fprintf(f_type_debug, "%.*s ", arguments.array[j].used, arguments.array[j].string);
       } // for
 
@@ -1253,7 +1253,7 @@ f_status_t firewall_delete_chains(const firewall_data_t data) {
         fl_color_print_code(f_type_error, data.context.error);
 
         fprintf(f_type_error, "%s ", tools[i]);
-        for (f_string_length_t j = 0; j < arguments.used; j++) {
+        for (f_array_length_t j = 0; j < arguments.used; j++) {
           fprintf(f_type_error, "%.*s ", arguments.array[j].used, arguments.array[j].string);
         } // for
 
@@ -1278,11 +1278,11 @@ f_status_t firewall_default_lock(const firewall_data_t data) {
   const f_string_t chains[3] = { firewall_chain_input, firewall_chain_output, firewall_chain_forward };
   const f_string_t tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
 
-  const f_string_length_t lengths[3] = { firewall_chain_input_length, firewall_chain_output_length, firewall_chain_forward_length };
+  const f_array_length_t lengths[3] = { firewall_chain_input_length, firewall_chain_output_length, firewall_chain_forward_length };
 
   f_status_t status = F_none;
 
-  for (f_string_length_t i = 0; i < 3; i++) {
+  for (f_array_length_t i = 0; i < 3; i++) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[3];
 
@@ -1302,7 +1302,7 @@ f_status_t firewall_default_lock(const firewall_data_t data) {
     arguments.array[1].size = arguments.array[1].used;
     arguments.array[2].size = arguments.array[2].used;
 
-    for (f_string_length_t j = 0; j < 2; j++) {
+    for (f_array_length_t j = 0; j < 2; j++) {
       int return_code = 0;
 
       // print command when debugging.
@@ -1310,7 +1310,7 @@ f_status_t firewall_default_lock(const firewall_data_t data) {
         fl_color_print_code(f_type_debug, data.context.warning);
         fprintf(f_type_debug, "%s ", tools[j]);
 
-        for (f_string_length_t k = 0; k < arguments.used; k++) {
+        for (f_array_length_t k = 0; k < arguments.used; k++) {
           fprintf(f_type_debug, "%.*s ", arguments.array[k].used, arguments.array[k].string);
         } // for
 
@@ -1335,7 +1335,7 @@ f_status_t firewall_default_lock(const firewall_data_t data) {
           fl_color_print_code(f_type_error, data.context.error);
 
           fprintf(f_type_error, "%s ", tools[j]);
-          for (f_string_length_t k = 0; k < arguments.used; k++) {
+          for (f_array_length_t k = 0; k < arguments.used; k++) {
             fprintf(f_type_error, "%.*s ", arguments.array[k].used, arguments.array[k].string);
           } // for
 

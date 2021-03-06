@@ -35,7 +35,7 @@ extern "C" {
  * @see fl_fss_extended_object_write_string()
  */
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
-  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
 
 /**
@@ -79,7 +79,7 @@ extern "C" {
  * @see fl_fss_extended_list_object_write_string()
  */
 #if !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
-  extern f_status_t private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
 
 /**

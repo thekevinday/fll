@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
   void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) {
     f_utf_character_t character = 0;
-    f_string_length_t i = 0;
+    f_array_length_t i = 0;
     uint8_t increment_by = 0;
 
     for (; i < size_read; i += increment_by) {
@@ -70,20 +70,20 @@ extern "C" {
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
-  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_string_length_t total, f_string_length_t *written) {
+  f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t *written) {
     *written = 0;
 
     f_status_t status = F_none;
-    f_string_length_t write_size = file.size_write > 4 ? file.size_write : 4;
-    f_string_length_t write_max = total;
-    f_string_length_t i = 0;
+    f_array_length_t write_size = file.size_write > 4 ? file.size_write : 4;
+    f_array_length_t write_max = total;
+    f_array_length_t i = 0;
 
     if (write_size > write_max) {
       write_size = write_max;
     }
 
-    f_string_length_t last = 0;
-    f_string_length_t used = 0;
+    f_array_length_t last = 0;
+    f_array_length_t used = 0;
 
     ssize_t size_write = 0;
     uint8_t buffer_write[write_size];

@@ -130,8 +130,8 @@ extern "C" {
     input.id = f_type_descriptor_input;
     input.size_read = 2048;
 
-    f_string_length_t total = 0;
-    f_string_length_t previous = 0;
+    f_array_length_t total = 0;
+    f_array_length_t previous = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     f_string_dynamic_t block = f_string_dynamic_t_initialize;

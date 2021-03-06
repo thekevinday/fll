@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_append_
-  f_status_t f_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -18,7 +18,7 @@ extern "C" {
 #endif // _di_f_string_append_
 
 #ifndef _di_f_string_append_assure_
-  f_status_t f_string_append_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -26,8 +26,8 @@ extern "C" {
     if (!length) return F_data_not_eos;
     if (destination->used < length) return private_f_string_append(source, length, destination);
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
       if (!source[length - i]) {
@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_f_string_append_assure_
 
 #ifndef _di_f_string_append_assure_nulless_
-  f_status_t f_string_append_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -64,8 +64,8 @@ extern "C" {
       return private_f_string_append_nulless(source, length, destination);
     }
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
       if (!source[length - i]) {
@@ -91,7 +91,7 @@ extern "C" {
 #endif // _di_f_string_append_assure_nulless_
 
 #ifndef _di_f_string_append_nulless_
-  f_status_t f_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -126,8 +126,8 @@ extern "C" {
       return private_f_string_append(source.string, source.used, destination);
     }
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
       if (!source.string[source.used - i]) {
@@ -164,8 +164,8 @@ extern "C" {
       return private_f_string_append_nulless(source.string, source.used, destination);
     }
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
       if (!source.string[source.used - i]) {
@@ -203,7 +203,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_append_nulless_
 
 #ifndef _di_f_string_dynamic_mash_
-  f_status_t f_string_dynamic_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -220,7 +220,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_mash_
 
 #ifndef _di_f_string_dynamic_mash_nulless_
-  f_status_t f_string_dynamic_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -237,7 +237,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_mash_nulless_
 
 #ifndef _di_f_string_dynamic_mish_
-  f_status_t f_string_dynamic_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -254,7 +254,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_mish_
 
 #ifndef _di_f_string_dynamic_mish_nulless_
-  f_status_t f_string_dynamic_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -294,14 +294,14 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    const f_string_length_t length = (range.stop - range.start) + 1;
+    const f_array_length_t length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_string_append(source.string + range.start, length, destination);
     }
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
       if (!source.string[range.stop - i]) {
@@ -334,14 +334,14 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    const f_string_length_t length = (range.stop - range.start) + 1;
+    const f_array_length_t length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_string_append_nulless(source.string + range.start, length, destination);
     }
 
-    f_string_length_t i = 1;
-    f_string_length_t j = 1;
+    f_array_length_t i = 1;
+    f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
       if (!source.string[range.stop - i]) {
@@ -379,7 +379,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_append_nulless_
 
 #ifndef _di_f_string_dynamic_partial_mash_
-  f_status_t f_string_dynamic_partial_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_partial_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -398,7 +398,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_mash_
 
 #ifndef _di_f_string_dynamic_partial_mash_nulless_
-  f_status_t f_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -417,7 +417,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_mash_nulless_
 
 #ifndef _di_f_string_dynamic_partial_mish_
-  f_status_t f_string_partial_dynamic_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t f_string_partial_dynamic_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -436,7 +436,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_partial_mish_
 
 #ifndef _di_f_string_dynamic_partial_mish_nulless_
-  f_status_t f_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
+  f_status_t f_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (source.used <= range.stop) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -478,14 +478,14 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    const f_string_length_t length = (range.stop - range.start) + 1;
+    const f_array_length_t length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_string_prepend(source.string + range.start, length, destination);
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
       if (!source.string[i + range.start]) {
@@ -520,14 +520,14 @@ extern "C" {
     if (!source.used) return F_data_not_eos;
     if (range.start > range.stop) return F_data_not_stop;
 
-    const f_string_length_t length = (range.stop - range.start) + 1;
+    const f_array_length_t length = (range.stop - range.start) + 1;
 
     if (destination->used < length) {
       return private_f_string_prepend_nulless(source.string + range.start, length, destination);
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
       if (!source.string[i + range.start]) {
@@ -590,8 +590,8 @@ extern "C" {
       return private_f_string_prepend(source.string, source.used, destination);
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
       if (!source.string[i]) {
@@ -628,8 +628,8 @@ extern "C" {
       return private_f_string_prepend_nulless(source.string, source.used, destination);
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
       if (!source.string[i]) {
@@ -737,11 +737,11 @@ extern "C" {
       return F_none;
     }
 
-    if (destination->used == f_string_length_t_size) {
+    if (destination->used == f_array_length_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
-    const f_string_length_t total = destination->used + 1;
+    const f_array_length_t total = destination->used + 1;
 
     if (total > destination->size) {
       const f_status_t status = private_f_string_dynamic_resize(total, destination);
@@ -769,11 +769,11 @@ extern "C" {
       } // for
     }
 
-    if (destination->used == f_string_length_t_size) {
+    if (destination->used == f_array_length_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
-    const f_string_length_t total = destination->used + 1;
+    const f_array_length_t total = destination->used + 1;
 
     if (total > destination->size) {
       const f_status_t status = private_f_string_dynamic_resize(total, destination);
@@ -788,7 +788,7 @@ extern "C" {
 #endif // _di_f_string_dynamic_terminate_after_
 
 #ifndef _di_f_string_mash_
-  f_status_t f_string_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -805,7 +805,7 @@ extern "C" {
 #endif // _di_f_string_mash_
 
 #ifndef _di_f_string_mash_nulless_
-  f_status_t f_string_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -822,7 +822,7 @@ extern "C" {
 #endif // _di_f_string_mash_nulless_
 
 #ifndef _di_f_string_mish_
-  f_status_t f_string_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -839,7 +839,7 @@ extern "C" {
 #endif // _di_f_string_mish_
 
 #ifndef _di_f_string_mish_nulless_
-  f_status_t f_string_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -856,7 +856,7 @@ extern "C" {
 #endif // _di_f_string_mish_nulless_
 
 #ifndef _di_f_string_prepend_
-  f_status_t f_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -868,7 +868,7 @@ extern "C" {
 #endif // _di_f_string_prepend_
 
 #ifndef _di_f_string_prepend_assure_
-  f_status_t f_string_prepend_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -876,8 +876,8 @@ extern "C" {
     if (!length) return F_data_not_eos;
     if (destination->used < length) return private_f_string_prepend(source, length, destination);
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
       if (!source[i]) {
@@ -901,7 +901,7 @@ extern "C" {
 #endif // _di_f_string_prepend_assure_
 
 #ifndef _di_f_string_prepend_assure_nulless_
-  f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -909,8 +909,8 @@ extern "C" {
     if (!length) return F_data_not_eos;
     if (destination->used < length) return private_f_string_prepend_nulless(source, length, destination);
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
       if (!source[i]) {
@@ -934,7 +934,7 @@ extern "C" {
 #endif // _di_f_string_prepend_assure_nulless_
 
 #ifndef _di_f_string_prepend_nulless_
-  f_status_t f_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

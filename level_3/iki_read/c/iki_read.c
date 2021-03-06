@@ -189,7 +189,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[iki_read_parameter_at].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[iki_read_parameter_at].values.array[data->parameters[iki_read_parameter_at].values.used - 1];
+        const f_array_length_t index = data->parameters[iki_read_parameter_at].values.array[data->parameters[iki_read_parameter_at].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -229,7 +229,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[iki_read_parameter_line].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[iki_read_parameter_line].values.array[data->parameters[iki_read_parameter_line].values.used - 1];
+        const f_array_length_t index = data->parameters[iki_read_parameter_line].values.array[data->parameters[iki_read_parameter_line].values.used - 1];
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
@@ -404,8 +404,8 @@ extern "C" {
       }
 
       if (F_status_is_fine(status) && data->remaining.used > 0) {
-        f_string_length_t i = 0;
-        f_string_length_t total = 0;
+        f_array_length_t i = 0;
+        f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
         for (; i < data->remaining.used; i++) {
@@ -475,13 +475,13 @@ extern "C" {
 #ifndef _di_iki_read_delete_data_
   f_status_t iki_read_delete_data(iki_read_data_t *data) {
 
-    for (f_string_length_t i = 0; i < iki_read_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < iki_read_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
 
     f_macro_color_context_t_delete_simple(data->context);

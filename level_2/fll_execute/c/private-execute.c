@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
-  f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments) {
+  f_status_t private_fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments) {
 
     f_status_t status = f_string_dynamics_increase(arguments);
     if (F_status_is_error(status)) return status;
@@ -39,7 +39,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_arguments_add_) || !defined(_di_fll_execute_arguments_add_set_) || !defined(_di_fll_execute_arguments_dynamic_add_) || !defined(_di_fll_execute_arguments_dynamic_add_set_)
 
 #if !defined(_di_fll_execute_arguments_add_parameter_) || !defined(_di_fll_execute_arguments_add_parameter_set_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_) || !defined(_di_fll_execute_arguments_dynamic_add_parameter_set_)
-  f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments) {
+  f_status_t private_fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments) {
 
     f_status_t status = f_string_dynamics_increase(arguments);
     if (F_status_is_error(status)) return status;
@@ -594,7 +594,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const bool fixated_is, const f_string_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
+  void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) {
 
     memcpy(program_name, program_path, name_size);
     program_name[name_size] = 0;
@@ -606,7 +606,7 @@ extern "C" {
       fixed_arguments[0] = 0;
     }
 
-    f_string_length_t i = 0;
+    f_array_length_t i = 0;
 
     if (fixated_is) {
       for (i = 1; i < arguments.used; ++i) {

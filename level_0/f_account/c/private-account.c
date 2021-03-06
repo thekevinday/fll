@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_account_by_name_) || !defined(_di_f_account_by_id_)
-  f_status_t private_f_account_from_passwd(const struct passwd password, const f_string_length_t password_length, f_account_t *account) {
+  f_status_t private_f_account_from_passwd(const struct passwd password, const f_array_length_t password_length, f_account_t *account) {
     f_status_t status = F_none;
 
 
@@ -16,7 +16,7 @@ extern "C" {
 
 
     // account home directory.
-    f_string_length_t string_length = strnlen(password.pw_dir, password_length);
+    f_array_length_t string_length = strnlen(password.pw_dir, password_length);
 
     f_macro_string_dynamic_t_resize(status, account->home, string_length + 1);
     if (F_status_is_error(status)) return status;

@@ -17,7 +17,7 @@ extern "C" {
       }
     }
 
-    f_string_length_t length = 0;
+    f_array_length_t length = 0;
 
     for (f_array_length_t i = 0; i < control_group.groups.used; ++i) {
 

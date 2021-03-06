@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_)
-  f_status_t private_f_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > destination->size) {
       const f_status_t status = private_f_string_dynamic_increase_by(length, destination);
@@ -21,17 +21,17 @@ extern "C" {
 #endif // !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_)
 
 #if !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
-  f_status_t private_f_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_length_t_size) {
+    if (destination->used + length > f_array_length_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
     f_status_t status = F_none;
 
-    f_string_length_t i = 0;
-    f_string_length_t first = 0;
-    f_string_length_t size = 0;
+    f_array_length_t i = 0;
+    f_array_length_t first = 0;
+    f_array_length_t size = 0;
 
     for (; i < length; i++) {
 
@@ -73,7 +73,7 @@ extern "C" {
 #endif // !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
 
 #if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
-  f_status_t private_f_string_dynamic_adjust(const f_string_length_t length, f_string_dynamic_t *dynamic) {
+  f_status_t private_f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *dynamic) {
 
     f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
 
@@ -90,10 +90,10 @@ extern "C" {
 #endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
 
 #if !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
-  f_status_t private_f_string_dynamic_increase_by(const f_string_length_t amount, f_string_dynamic_t *dynamic) {
+  f_status_t private_f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
 
     if (dynamic->used + amount > dynamic->size) {
-      if (dynamic->used + amount > f_string_length_t_size) {
+      if (dynamic->used + amount > f_array_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -105,7 +105,7 @@ extern "C" {
 #endif // !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
 
 #if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
-  f_status_t private_f_string_dynamic_resize(const f_string_length_t length, f_string_dynamic_t *dynamic) {
+  f_status_t private_f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *dynamic) {
 
     const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
 
@@ -276,9 +276,9 @@ extern "C" {
 #endif // !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_)
 
 #if !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
-  f_status_t private_f_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_length_t_size) {
+    if (destination->used + length > f_array_length_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -301,20 +301,20 @@ extern "C" {
 #endif // !defined(_di_f_string_dynamic_mish_) || !defined(_di_f_string_dynamic_partial_mish_) || !defined(_di_f_string_dynamic_partial_prepend_assure_) || !defined(_di_f_string_dynamic_partial_prepend_) || !defined(_di_f_string_dynamic_prepend_assure_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_mish_) || !defined(_di_f_string_prepend_assure_) || !defined(_di_f_string_prepend_)
 
 #if !defined(_di_f_string_dynamic_mish_nulless_) || !defined(_di_f_string_dynamic_partial_mish_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_mish_nulless_) || !defined(_di_f_string_prepend_assure_nulless_) || !defined(_di_f_string_prepend_nulless_)
-  f_status_t private_f_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
-    if (destination->used + length > f_string_length_t_size) {
+    if (destination->used + length > f_array_length_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
     f_status_t status = F_none;
 
-    f_string_length_t first = 0;
-    f_string_length_t offset = 0;
+    f_array_length_t first = 0;
+    f_array_length_t offset = 0;
 
-    f_string_length_t size = 0;
+    f_array_length_t size = 0;
 
-    for (f_string_length_t i = 0; i <= length; i++) {
+    for (f_array_length_t i = 0; i <= length; i++) {
 
       if (i == length) {
         if (i > first) {

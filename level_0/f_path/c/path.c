@@ -73,7 +73,7 @@ extern "C" {
       return private_f_path_real(buffer, path);
     }
 
-    const f_string_length_t length = strnlen(buffer, f_path_length_max);
+    const f_array_length_t length = strnlen(buffer, f_path_length_max);
 
     if (length + 1 > path->size) {
       f_status_t status = F_none;
@@ -93,12 +93,12 @@ extern "C" {
 #endif // _di_f_path_current_
 
 #ifndef _di_f_path_is_
-  f_status_t f_path_is(const f_string_t path, const f_string_length_t length) {
+  f_status_t f_path_is(const f_string_t path, const f_array_length_t length) {
     if (!path || !length) {
       return F_false;
     }
 
-    for (f_string_length_t i = 0; i < length; i++) {
+    for (f_array_length_t i = 0; i < length; i++) {
 
       if (path[i] == f_path_separator_s[0]) {
         return F_true;

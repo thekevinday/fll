@@ -54,7 +54,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_
-  extern f_status_t fl_print_trim_except(FILE *output, const f_string_t string, const f_string_length_t length, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except(FILE *output, const f_string_t string, const f_array_length_t length, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_dynamic_
-  extern f_status_t fl_print_trim_except_dynamic(FILE *output, const f_string_static_t buffer, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except_dynamic(FILE *output, const f_string_static_t buffer, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_dynamic_
 
 /**
@@ -120,7 +120,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_dynamic_partial_
-  extern f_status_t fl_print_trim_except_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
 /**
@@ -153,7 +153,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_utf_
-  extern f_status_t fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_string_length_t length, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_utf_
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_utf_dynamic_
-  extern f_status_t fl_print_trim_except_utf_dynamic(FILE *output, const f_utf_string_static_t buffer, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except_utf_dynamic(FILE *output, const f_utf_string_static_t buffer, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_utf_dynamic_
 
 /**
@@ -219,7 +219,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_utf_dynamic_partial_
-  extern f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range, const f_string_lengths_t except);
+  extern f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_utf_dynamic_partial_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace().
  */
 #ifndef _di_fl_print_trim_
-  extern f_status_t fl_print_trim(FILE *output, const f_string_t string, const f_string_length_t length);
+  extern f_status_t fl_print_trim(FILE *output, const f_string_t string, const f_array_length_t length);
 #endif // _di_fl_print_trim_
 
 /**
@@ -335,7 +335,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_utf_
-  extern f_status_t fl_print_trim_utf(FILE *output, const f_utf_string_t string, const f_string_length_t length);
+  extern f_status_t fl_print_trim_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length);
 #endif // _di_fl_print_trim_utf_
 
 /**

@@ -155,7 +155,7 @@ extern "C" {
 #ifndef _di_f_thread_condition_t_
   typedef pthread_cond_t f_thread_condition_t;
 
-  #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER;
+  #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER
 
   #define f_macro_thread_condition_t_clear(condition) condition = 0;
 

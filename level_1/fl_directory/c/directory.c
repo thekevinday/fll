@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_directory_create_
-  f_status_t fl_directory_create(const f_string_t path, const f_string_length_t length, const mode_t mode) {
+  f_status_t fl_directory_create(const f_string_t path, const f_array_length_t length, const mode_t mode) {
     #ifndef _di_level_1_parameter_checking_
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -21,8 +21,8 @@ extern "C" {
     if (status == F_true) return F_directory_found;
 
     {
-      f_string_length_t at_tree = 0;
-      f_string_length_t at_path = 0;
+      f_array_length_t at_tree = 0;
+      f_array_length_t at_path = 0;
 
       char tree[length];
 
@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_fl_directory_create_
 
 #ifndef _di_fl_directory_clone_
-  f_status_t fl_directory_clone(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
+  f_status_t fl_directory_clone(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -94,7 +94,7 @@ extern "C" {
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length_t i = source_length;
+      f_array_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
 
@@ -128,7 +128,7 @@ extern "C" {
 #endif // _di_fl_directory_clone_
 
 #ifndef _di_fl_directory_clone_content_
-  f_status_t fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
+  f_status_t fl_directory_clone_content(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const bool role, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -148,7 +148,7 @@ extern "C" {
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length_t i = source_length;
+      f_array_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
 
@@ -184,7 +184,7 @@ extern "C" {
 #endif // _di_fl_directory_clone_content_
 
 #ifndef _di_fl_directory_copy_
-  f_status_t fl_directory_copy(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
+  f_status_t fl_directory_copy(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -216,7 +216,7 @@ extern "C" {
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length_t i = source_length;
+      f_array_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
 
@@ -250,7 +250,7 @@ extern "C" {
 #endif // _di_fl_directory_copy_
 
 #ifndef _di_fl_directory_copy_content_
-  f_status_t fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_string_length_t source_length, const f_string_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
+  f_status_t fl_directory_copy_content(const f_string_t source, const f_string_t destination, const f_array_length_t source_length, const f_array_length_t destination_length, const f_mode_t mode, const fl_directory_recurse_t recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -270,7 +270,7 @@ extern "C" {
 
     // do not allow null termination or trailing path separators in the string's length calculation.
     {
-      f_string_length_t i = source_length;
+      f_array_length_t i = source_length;
 
       for (; i > 0; i--, static_source.used--) {
 
@@ -327,8 +327,8 @@ extern "C" {
     const bool null_terminated = path->string[path->used] == 0;
     bool first_nulless = F_false;
 
-    f_string_length_t i = path->used - 1;
-    f_string_length_t j = 0;
+    f_array_length_t i = path->used - 1;
+    f_array_length_t j = 0;
 
     f_status_t status = F_none;
 
@@ -387,7 +387,7 @@ extern "C" {
 #endif // _di_fl_directory_path_pop_
 
 #ifndef _di_fl_directory_path_push_
-  f_status_t fl_directory_path_push(const f_string_t source, f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t fl_directory_path_push(const f_string_t source, f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!source) return F_status_set_error(F_parameter);
       if (destination->used > destination->size) return F_status_set_error(F_parameter);

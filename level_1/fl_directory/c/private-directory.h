@@ -202,7 +202,7 @@ extern "C" {
  * @see fl_directory_path_push_dynamic()
  */
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  extern f_status_t private_fl_directory_path_push(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
 
 #ifdef __cplusplus

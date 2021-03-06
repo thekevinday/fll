@@ -6,25 +6,25 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_string_compare_
-  f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2) {
+  f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
     return private_fl_string_compare(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_string_compare_
 
 #ifndef _di_fl_string_compare_except_
-  f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except(string1, string2, 0, 0, length1, length2, except1, except2);
   }
 #endif // _di_fl_string_compare_except_
 
 #ifndef _di_fl_string_compare_except_trim_
-  f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except_trim(string1, string2, 0, 0, length1, length2, except1, except2);
   }
 #endif // _di_fl_string_compare_except_trim_
 
 #ifndef _di_fl_string_compare_trim_
-  f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2) {
+  f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
     return private_fl_string_compare_trim(string1, string2, 0, 0, length1, length2);
   }
 #endif // _di_fl_string_compare_trim_
@@ -36,31 +36,31 @@ extern "C" {
 #endif // _di_fl_string_dynamic_compare_
 
 #ifndef _di_fl_string_dynamic_compare_except_
-  f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except(string1.string, string2.string, 0, 0, string1.used, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_
 
 #ifndef _di_fl_string_dynamic_compare_except_string_
-  f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except(string1, string2.string, 0, 0, length1, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_string_
 
 #ifndef _di_fl_string_dynamic_compare_except_trim_
-  f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except_trim(string1.string, string2.string, 0, 0, string1.used, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_trim_
 
 #ifndef _di_fl_string_dynamic_compare_except_trim_string_
-  f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     return private_fl_string_compare_except_trim(string1, string2.string, 0, 0, length1, string2.used, except1, except2);
   }
 #endif // _di_fl_string_dynamic_compare_except_trim_string_
 
 #ifndef _di_fl_string_dynamic_compare_string_
-  f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1) {
+  f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1) {
     return private_fl_string_compare(string1, string2.string, 0, 0, length1, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_string_
@@ -72,7 +72,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_compare_trim_
 
 #ifndef _di_fl_string_dynamic_compare_trim_string_
-  f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1) {
+  f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1) {
     return private_fl_string_compare_trim(string1, string2.string, 0, 0, length1, string2.used);
   }
 #endif // _di_fl_string_dynamic_compare_trim_string_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_dynamic_
 
 #ifndef _di_fl_string_dynamic_partial_compare_string_
-  f_status_t fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2) {
+  f_status_t fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_string_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_
-  f_status_t fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= range1.stop) return F_status_set_error(F_parameter);
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
@@ -120,7 +120,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_dynamic_
-  f_status_t fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_dynamic_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_string_
-  f_status_t fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -140,7 +140,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_string_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_
-  f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string1.used <= range1.stop) return F_status_set_error(F_parameter);
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
@@ -151,7 +151,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
-  f_status_t fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -161,7 +161,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
 
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_string_
-  f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2) {
+  f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_partial_compare_trim_dynamic_
 
 #ifndef _di_fl_string_dynamic_partial_compare_trim_string_
-  f_status_t fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2) {
+  f_status_t fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2) {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -212,8 +212,8 @@ extern "C" {
 
     if (!source.used) return F_data_not_eos;
 
-    f_string_length_t begin = range.start;
-    f_string_length_t end = range.stop;
+    f_array_length_t begin = range.start;
+    f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
 
@@ -238,8 +238,8 @@ extern "C" {
 
     if (!source.used) return F_data_not_eos;
 
-    f_string_length_t begin = range.start;
-    f_string_length_t end = range.stop;
+    f_array_length_t begin = range.start;
+    f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
 
@@ -268,7 +268,7 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length_t width_max = 0;
+    f_array_length_t width_max = 0;
 
     while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
@@ -321,7 +321,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
@@ -366,7 +366,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
@@ -413,7 +413,7 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length_t width_max = 0;
+    f_array_length_t width_max = 0;
 
     while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
@@ -452,15 +452,15 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 #ifndef _di_fl_string_rip_
-  f_status_t fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t fl_string_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_string_length_t begin = 0;
-    f_string_length_t end = length - 1;
+    f_array_length_t begin = 0;
+    f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
@@ -472,15 +472,15 @@ extern "C" {
 #endif // _di_fl_string_rip_
 
 #ifndef _di_fl_string_rip_nulless_
-  f_status_t fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t fl_string_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
     if (!length) return F_data_not_eos;
 
-    f_string_length_t begin = 0;
-    f_string_length_t end = length - 1;
+    f_array_length_t begin = 0;
+    f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
@@ -505,7 +505,7 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     for (; range->start <= range->stop; range->start += width) {
       width_max = (range->stop - range->start) + 1;
@@ -553,7 +553,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) return status;
@@ -596,7 +596,7 @@ extern "C" {
     f_status_t status = F_none;
     unsigned short width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
       if (F_status_is_error(status)) {
@@ -645,7 +645,7 @@ extern "C" {
 
     unsigned short width = 0;
 
-    f_string_length_t width_max = 0;
+    f_array_length_t width_max = 0;
 
     for (; range->start <= range->stop; range->start += width) {
       width_max = (range->stop - range->start) + 1;

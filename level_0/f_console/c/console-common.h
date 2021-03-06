@@ -167,10 +167,10 @@ extern "C" {
 #endif // _di_f_console_standard_s_
 
 /**
- * The maximum size for a single parameter.
+ * The maximum size for a single parameter (the length of the string representing the parameter).
  */
 #ifndef _di_f_console_length_size_
-  #define f_console_length_size f_string_length_t_size
+  #define f_console_parameter_size f_array_length_t_size
 #endif // _di_f_console_length_size_
 
 /**
@@ -247,7 +247,7 @@ extern "C" {
 
     f_array_length_t result;
     f_array_length_t location;
-    f_string_length_t location_sub;
+    f_array_length_t location_sub;
     f_array_lengths_t locations;
     f_array_lengths_t locations_sub;
     f_array_lengths_t values;

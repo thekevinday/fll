@@ -915,7 +915,7 @@ extern "C" {
  * @see f_file_stream_write_until()
  */
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) f_gcc_attribute_visibility_internal;
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 /**
@@ -952,7 +952,7 @@ extern "C" {
  * @see f_file_write_until()
  */
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
-  extern f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_string_length_t total, f_string_length_t *written) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) f_gcc_attribute_visibility_internal;
 #endif // !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
 
 #ifdef __cplusplus

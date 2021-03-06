@@ -114,7 +114,7 @@ Consider the "*.device" files such that they are also use IKI.
         init_string_verbosity,
       };
 
-      const f_string_length_t parameter_length[] = {
+      const f_array_length_t parameter_length[] = {
         init_string_color_length,
         init_string_failsafe_length,
         init_string_mode_length,
@@ -217,8 +217,8 @@ Consider the "*.device" files such that they are also use IKI.
       }
 
       {
-        f_string_length_t i = 0;
-        f_string_length_t j = 0;
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
 
         for (; i < variable.used; ++i) {
 

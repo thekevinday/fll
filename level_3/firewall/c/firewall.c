@@ -212,7 +212,7 @@ extern "C" {
           show_mangle = F_false;
           show_ports = F_false;
 
-          f_string_length_t counter = 0;
+          f_array_length_t counter = 0;
 
           for (; counter < data->remaining.used; counter++) {
 
@@ -349,7 +349,7 @@ extern "C" {
             fl_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol_s[0]);
             fprintf(f_type_error, "  ");
 
-            f_string_length_t i = 0;
+            f_array_length_t i = 0;
 
             fl_color_print_code(f_type_error, data->context.error);
 
@@ -409,7 +409,7 @@ extern "C" {
 
       // remove "lo" (loopback) from the device listing
       {
-        f_string_length_t i = 0;
+        f_array_length_t i = 0;
 
         for (; i < data->devices.used; i++) {
           if (fl_string_compare((f_string_t) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == F_equal_to) {
@@ -437,7 +437,7 @@ extern "C" {
 
         {
           f_array_length_t i = 0;
-          f_string_length_t length = 0;
+          f_array_length_t length = 0;
 
           for (; i < local.chain_objects.used; i++) {
             length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
@@ -726,14 +726,14 @@ extern "C" {
 #ifndef _di_firewall_delete_data_
   f_status_t firewall_delete_data(firewall_data_t *data) {
 
-    for (f_string_length_t i = 0; i < firewall_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < firewall_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_string_dynamics_t_delete_simple(data->chains);
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
     f_macro_string_dynamics_t_delete_simple(data->devices);
 
     f_macro_color_context_t_delete_simple(data->context);

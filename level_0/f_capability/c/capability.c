@@ -417,12 +417,12 @@ extern "C" {
       char *result = cap_to_name(code);
 
       if (result) {
-        const f_string_length_t length = strlen(result);
+        const f_array_length_t length = strlen(result);
 
         f_status_t status = F_none;
 
         if (name->used + length + 1 > name->size) {
-          if (name->used + length + 1 > f_string_length_t_size) {
+          if (name->used + length + 1 > f_array_length_t_size) {
             return F_status_set_error(F_string_too_large);
           }
 
@@ -457,7 +457,7 @@ extern "C" {
         if (!text) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      f_string_length_t length = 0;
+      f_array_length_t length = 0;
 
       char *result = cap_to_text(capability, &length);
 
@@ -465,7 +465,7 @@ extern "C" {
         f_status_t status = F_none;
 
         if (text->used + length + 1> text->size) {
-          if (text->used + length + 1 > f_string_length_t_size) {
+          if (text->used + length + 1 > f_array_length_t_size) {
             return F_status_set_error(F_string_too_large);
           }
 

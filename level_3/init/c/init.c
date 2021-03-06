@@ -106,13 +106,13 @@ extern "C" {
 #ifndef _di_init_delete_data_
   f_status_t init_delete_data(init_data_t *data) {
 
-    for (f_string_length_t i = 0; i < init_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < init_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
 
     f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root);
     f_macro_string_dynamic_t_delete_simple(data->setting_kernel.root_group);

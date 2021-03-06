@@ -191,7 +191,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_string_length_t location = data->parameters[fss_embedded_list_write_parameter_file].values.array[0];
+          const f_array_length_t location = data->parameters[fss_embedded_list_write_parameter_file].values.array[0];
 
           output.id = -1;
           output.stream = 0;
@@ -320,8 +320,8 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else if (data->parameters[fss_embedded_list_write_parameter_prepend].result == f_console_result_additional) {
-        const f_string_length_t index = data->parameters[fss_embedded_list_write_parameter_prepend].values.array[data->parameters[fss_embedded_list_write_parameter_prepend].values.used - 1];
-        const f_string_length_t length = strnlen(arguments.argv[index], f_console_length_size);
+        const f_array_length_t index = data->parameters[fss_embedded_list_write_parameter_prepend].values.array[data->parameters[fss_embedded_list_write_parameter_prepend].values.used - 1];
+        const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
 
         if (length) {
           f_string_range_t range = f_macro_string_range_t_initialize(length);
@@ -432,7 +432,7 @@ extern "C" {
             for (f_array_length_t i = 0; i < data->parameters[fss_embedded_list_write_parameter_object].values.used; i++) {
 
               object.string = arguments.argv[data->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
-              object.used = strnlen(object.string, f_console_length_size);
+              object.used = strnlen(object.string, f_console_parameter_size);
               object.size = object.used;
 
               status = fss_embedded_list_write_process(*data, output, quote, &object, 0, 0, &buffer);
@@ -446,7 +446,7 @@ extern "C" {
               if (F_status_is_error(status)) break;
 
               content.string = arguments.argv[data->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
-              content.used = strnlen(content.string, f_console_length_size);
+              content.used = strnlen(content.string, f_console_parameter_size);
               content.size = content.used;
 
               status = fss_embedded_list_write_process(*data, output, quote, 0, &content, &ignore, &buffer);
@@ -461,11 +461,11 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             object.string = arguments.argv[data->parameters[fss_embedded_list_write_parameter_object].values.array[i]];
-            object.used = strnlen(object.string, f_console_length_size);
+            object.used = strnlen(object.string, f_console_parameter_size);
             object.size = object.used;
 
             content.string = arguments.argv[data->parameters[fss_embedded_list_write_parameter_content].values.array[i]];
-            content.used = strnlen(content.string, f_console_length_size);
+            content.used = strnlen(content.string, f_console_parameter_size);
             content.size = content.used;
 
             status = fss_embedded_list_write_process(*data, output, quote, &object, &content, &ignore, &buffer);
@@ -525,13 +525,13 @@ extern "C" {
 #ifndef _di_fss_embedded_list_write_delete_data_
   f_status_t fss_embedded_list_write_delete_data(fss_embedded_list_write_data_t *data) {
 
-    for (f_string_length_t i = 0; i < fss_embedded_list_write_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < fss_embedded_list_write_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
 
     f_macro_color_context_t_delete_simple(data->context);
 

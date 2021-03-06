@@ -302,7 +302,7 @@ extern "C" {
   void fake_print_message_section_operation_failed(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
     if (data.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
 
-    f_string_length_t line = 1;
+    f_array_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -369,7 +369,7 @@ extern "C" {
   void fake_print_message_section_operation_stack_max(const fake_data_t data, fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
     if (data.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
 
-    f_string_length_t line = 1;
+    f_array_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 
@@ -398,7 +398,7 @@ extern "C" {
   void fake_print_message_section_operation_unknown(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
     if (data.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
 
-    f_string_length_t line = 1;
+    f_array_length_t line = 1;
 
     f_fss_count_lines(buffer, operation_name.start, &line);
 

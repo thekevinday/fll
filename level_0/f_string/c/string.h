@@ -7,8 +7,8 @@
  *
  * Provides string capabilities.
  *
- * It is highly recommended that all string arrays are set to a max size of f_string_length_t_size.
- * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is f_string_length_t_size + 1 without integer overflow.
+ * It is highly recommended that all string arrays are set to a max size of f_array_length_t_size.
+ * Any calculations against the length (aka: string.used) can always perform (A < B) operators such that the B is f_array_length_t_size + 1 without integer overflow.
  */
 #ifndef _F_string_h
 #define _F_string_h
@@ -51,7 +51,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_append_
-  extern f_status_t f_string_append(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_append_
 
 /**
@@ -74,7 +74,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_append_assure_
-  extern f_status_t f_string_append_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_append_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_append_assure_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_append_assure_nulless_
-  extern f_status_t f_string_append_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_append_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_append_assure_nulless_
 
 /**
@@ -121,7 +121,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_append_nulless_
-  extern f_status_t f_string_append_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_append_nulless_
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_mash_
-  extern f_status_t f_string_dynamic_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_mash_
 
 /**
@@ -253,7 +253,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_mash_nulless_
-  extern f_status_t f_string_dynamic_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_mash_nulless_
 
 /**
@@ -278,7 +278,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_mish_
-  extern f_status_t f_string_dynamic_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_mish_
 
 /**
@@ -305,7 +305,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_mish_nulless_
-  extern f_status_t f_string_dynamic_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_mish_nulless_
 
 /**
@@ -429,7 +429,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_partial_mash_
-  extern f_status_t f_string_dynamic_partial_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_partial_mash_
 
 /**
@@ -459,7 +459,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_partial_mash_nulless_
-  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_partial_mash_nulless_
 
 /**
@@ -487,7 +487,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_partial_mish_
-  extern f_status_t f_string_dynamic_partial_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_partial_mish_
 
 /**
@@ -517,7 +517,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_dynamic_partial_mish_nulless_
-  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
+  extern f_status_t f_string_dynamic_partial_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_static_t source, const f_string_range_t range, f_string_dynamic_t *destination);
 #endif // _di_f_string_dynamic_partial_mish_nulless_
 
 /**
@@ -847,7 +847,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_mash_
-  extern f_status_t f_string_mash(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_mash(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_mash_
 
 /**
@@ -876,7 +876,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_mash_nulless_
-  extern f_status_t f_string_mash_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_mash_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_mash_nulless_
 
 /**
@@ -903,7 +903,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_mish_
-  extern f_status_t f_string_mish(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_mish(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_mish_
 
 /**
@@ -932,7 +932,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_mish_nulless_
-  extern f_status_t f_string_mish_nulless(const f_string_t glue, const f_string_length_t glue_length, const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_mish_nulless(const f_string_t glue, const f_array_length_t glue_length, const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_mish_nulless_
 
 /**
@@ -955,7 +955,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_prepend_
-  extern f_status_t f_string_prepend(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_prepend(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_prepend_
 
 /**
@@ -980,7 +980,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_prepend_assure_
-  extern f_status_t f_string_prepend_assure(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_prepend_assure(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_prepend_assure_
 
 /**
@@ -1006,7 +1006,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_prepend_assure_nulless_
-  extern f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_prepend_assure_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_prepend_assure_nulless_
 
 /**
@@ -1032,7 +1032,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_string_prepend_nulless_
-  extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t f_string_prepend_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_f_string_prepend_nulless_
 
 /**

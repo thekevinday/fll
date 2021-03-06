@@ -127,7 +127,7 @@ extern "C" {
  *   F_false if this string is not a path string.
  */
 #ifndef _di_f_path_is_
-  extern f_status_t f_path_is(const f_string_t path, const f_string_length_t length);
+  extern f_status_t f_path_is(const f_string_t path, const f_array_length_t length);
 #endif // _di_f_path_is_
 
 /**

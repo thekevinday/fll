@@ -130,8 +130,8 @@ extern "C" {
     input.id = f_type_descriptor_input;
     input.size_read = 2048;
 
-    f_string_length_t total = 0;
-    f_string_length_t previous = 0;
+    f_array_length_t total = 0;
+    f_array_length_t previous = 0;
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_range_t range_ignore = f_string_range_t_initialize;
@@ -364,7 +364,7 @@ extern "C" {
       index = data.parameters[fss_embedded_list_write_parameter_ignore].values.array[i * 2];
 
       range.start = 0;
-      range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;
+      range.stop = strnlen(arguments.argv[index], f_console_parameter_size) - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && arguments.argv[index][0] == '+') {
@@ -383,7 +383,7 @@ extern "C" {
       index = data.parameters[fss_embedded_list_write_parameter_ignore].values.array[(i * 2) + 1];
 
       range.start = 0;
-      range.stop = strnlen(arguments.argv[index], f_console_length_size) - 1;
+      range.stop = strnlen(arguments.argv[index], f_console_parameter_size) - 1;
 
       // allow and ignore the positive sign.
       if (range.stop > 0 && arguments.argv[index][0] == '+') {

@@ -6,8 +6,8 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
-  f_status_t private_f_print(FILE *output, const f_string_t string, const f_string_length_t length) {
-    for (register f_string_length_t i = 0; i < length; ++i) {
+  f_status_t private_f_print(FILE *output, const f_string_t string, const f_array_length_t length) {
+    for (register f_array_length_t i = 0; i < length; ++i) {
 
       if (string[i]) {
         if (!fputc(string[i], output)) {
@@ -21,10 +21,10 @@ extern "C" {
 #endif // !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
 
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
-  f_status_t private_f_print_except(FILE *output, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) {
-    f_string_length_t j = 0;
+  f_status_t private_f_print_except(FILE *output, const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except) {
+    f_array_length_t j = 0;
 
-    for (register f_string_length_t i = offset; i < stop; ++i) {
+    for (register f_array_length_t i = offset; i < stop; ++i) {
 
       for (; j < except.used && except.array[j] < i; ++j) {
         // do nothing.
@@ -44,11 +44,11 @@ extern "C" {
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 #if !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
-  f_status_t private_f_print_to(const int id, const f_string_t string, const f_string_length_t length) {
-    register f_string_length_t i = 0;
+  f_status_t private_f_print_to(const int id, const f_string_t string, const f_array_length_t length) {
+    register f_array_length_t i = 0;
 
-    f_string_length_t start = 0;
-    f_string_length_t total = 0;
+    f_array_length_t start = 0;
+    f_array_length_t total = 0;
 
     for (; i < length; ++i) {
 
@@ -94,12 +94,12 @@ extern "C" {
 #endif // !defined(_di_f_print_to_) || !defined(_di_f_print_dynamic_to_) || !defined(_di_f_print_dynamic_partial_to_)
 
 #if !defined(_di_f_print_to_except_) || !defined(_di_f_print_to_except_dynamic_) || !defined(_di_f_print_to_except_dynamic_partial_)
-  f_status_t private_f_print_to_except(const int id, const f_string_t string, const f_string_length_t offset, const f_string_length_t stop, const f_string_lengths_t except) {
-    register f_string_length_t i = offset;
+  f_status_t private_f_print_to_except(const int id, const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except) {
+    register f_array_length_t i = offset;
 
-    f_string_length_t j = 0;
-    f_string_length_t start = offset;
-    f_string_length_t total = 0;
+    f_array_length_t j = 0;
+    f_array_length_t start = offset;
+    f_array_length_t total = 0;
 
     for (; i < stop; ++i) {
 

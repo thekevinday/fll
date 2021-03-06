@@ -10,7 +10,7 @@ extern "C" {
       if (!result) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
-    const f_string_length_t length = strnlen(input, 3);
+    const f_array_length_t length = strnlen(input, 3);
 
     if (!length) {
       *result = f_console_none;
@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_f_console_identify_
 
 #ifndef _di_f_console_parameter_process_
-  f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining) {
+  f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_array_lengths_t *remaining) {
     #ifndef _di_level_0_parameter_checking_
       if (!remaining) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -59,9 +59,9 @@ extern "C" {
 
     unsigned long location = 1; // Parameter 0 represents the program name so skip it.
 
-    f_string_length_t sub_location = 0;
-    f_string_length_t increment_by = 0;
-    f_string_length_t argument_length = 0;
+    f_array_length_t sub_location = 0;
+    f_array_length_t increment_by = 0;
+    f_array_length_t argument_length = 0;
 
     f_array_length_t i = 0;
     f_array_length_t values = 0;
@@ -70,7 +70,7 @@ extern "C" {
     uint8_t console_long = f_console_none;
     uint8_t console_type = f_console_type_normal;
 
-    f_string_lengths_t needs_value = f_string_lengths_t_initialize;
+    f_array_lengths_t needs_value = f_array_lengths_t_initialize;
 
     uint8_t width = 0;
 
@@ -84,7 +84,7 @@ extern "C" {
         f_macro_array_lengths_t_increase(status, parameters.parameter[i].values)
 
         if (F_status_is_error(status)) {
-          f_macro_string_lengths_t_delete_simple(needs_value);
+          f_macro_array_lengths_t_delete_simple(needs_value);
           return status;
         }
 
@@ -94,7 +94,7 @@ extern "C" {
         needs_value.used--;
 
         // Pop the matched parameter off of the top of the needs_value array.
-        for (f_string_length_t i = 0; i < needs_value.used; ++i) {
+        for (f_array_length_t i = 0; i < needs_value.used; ++i) {
           needs_value.array[i] = needs_value.array[i + 1];
         } // for
 
@@ -104,7 +104,7 @@ extern "C" {
 
       f_console_identify(arguments.argv[location], &result);
 
-      argument_length = strnlen(arguments.argv[location], f_console_length_size);
+      argument_length = strnlen(arguments.argv[location], f_console_parameter_size);
 
       // process the current parameter.
       if (result == f_console_short_enable || result == f_console_short_disable) {
@@ -165,7 +165,7 @@ extern "C" {
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
                 if (F_status_is_error(status)) {
-                  f_macro_string_lengths_t_delete_simple(needs_value);
+                  f_macro_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -174,7 +174,7 @@ extern "C" {
                 status = f_utf_char_to_character((f_string_t) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
                 if (F_status_is_error(status)) {
-                  f_macro_string_lengths_t_delete_simple(needs_value);
+                  f_macro_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -196,17 +196,17 @@ extern "C" {
               continue;
             }
 
-            f_macro_string_lengths_t_increase(status, parameters.parameter[i].locations)
+            f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations)
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_value);
+              f_macro_array_lengths_t_delete_simple(needs_value);
               return status;
             }
 
-            f_macro_string_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+            f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
 
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_value);
+              f_macro_array_lengths_t_delete_simple(needs_value);
               return status;
             }
 
@@ -226,10 +226,10 @@ extern "C" {
 
             if (parameters.parameter[i].has_values) {
               if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
-                f_macro_string_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
+                f_macro_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
                 if (F_status_is_error(status)) {
-                  f_macro_string_lengths_t_delete_simple(needs_value);
+                  f_macro_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
               }
@@ -256,17 +256,17 @@ extern "C" {
 
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, argument_length + 1) != 0) continue;
 
-          f_macro_string_lengths_t_increase(status, parameters.parameter[i].locations)
+          f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations)
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(needs_value);
+            f_macro_array_lengths_t_delete_simple(needs_value);
             return status;
           }
 
-          f_macro_string_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+          f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
 
           if (F_status_is_error(status)) {
-            f_macro_string_lengths_t_delete_simple(needs_value);
+            f_macro_array_lengths_t_delete_simple(needs_value);
             return status;
           }
 
@@ -279,10 +279,10 @@ extern "C" {
 
           if (parameters.parameter[i].has_values) {
             if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
-              f_macro_string_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
+              f_macro_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
               if (F_status_is_error(status)) {
-                f_macro_string_lengths_t_delete_simple(needs_value);
+                f_macro_array_lengths_t_delete_simple(needs_value);
                 return status;
               }
             }
@@ -300,9 +300,9 @@ extern "C" {
 
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
-            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_memory_default_allocation_step, f_macro_string_lengths_t_resize, F_array_too_large);
+            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_memory_default_allocation_step, f_macro_array_lengths_t_resize, F_array_too_large);
             if (F_status_is_error(status)) {
-              f_macro_string_lengths_t_delete_simple(needs_value);
+              f_macro_array_lengths_t_delete_simple(needs_value);
               return status;
             }
           }
@@ -321,7 +321,7 @@ extern "C" {
       status = F_none;
     }
 
-    f_macro_string_lengths_t_delete_simple(needs_value);
+    f_macro_array_lengths_t_delete_simple(needs_value);
 
     return status;
   }

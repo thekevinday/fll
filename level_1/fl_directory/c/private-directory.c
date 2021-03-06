@@ -20,7 +20,7 @@ extern "C" {
     status = F_none;
 
     int directory_fd = 0;
-    f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
+    f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {
       f_string_dynamics_t * const list[] = {
@@ -162,7 +162,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
-      f_string_length_t size = 0;
+      f_array_length_t size = 0;
 
       // identify if failure was because of source or destination.
       struct stat source_stat;
@@ -172,7 +172,7 @@ extern "C" {
       status = f_file_stat(source.string, F_false, &source_stat);
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_t_size - 1;
+          size = f_array_length_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -186,7 +186,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_t_size - 1;
+          size = f_array_length_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -231,7 +231,7 @@ extern "C" {
     status = F_none;
 
     int directory_fd = 0;
-    f_string_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
+    f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {
       f_string_dynamics_t * const list[] = {
@@ -358,7 +358,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
-      f_string_length_t size = 0;
+      f_array_length_t size = 0;
 
       // identify if failure was because of source or destination.
       struct stat source_stat;
@@ -369,7 +369,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_t_size - 1;
+          size = f_array_length_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -383,7 +383,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_string_length_t_size - 1;
+          size = f_array_length_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -417,7 +417,7 @@ extern "C" {
   f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
     struct dirent **entity = 0;
 
-    f_string_length_t size = 0;
+    f_array_length_t size = 0;
     f_status_t status = F_none;
 
     DIR *parent = opendir(path);
@@ -473,7 +473,7 @@ extern "C" {
     }
 
     f_string_dynamics_t *names = 0;
-    f_string_length_t total = 0;
+    f_array_length_t total = 0;
     struct stat file_stat;
     int mode = 0;
     size_t i = 0;
@@ -530,7 +530,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
-        if (names->array[names->used].used == f_string_length_t_size) {
+        if (names->array[names->used].used == f_array_length_t_size) {
           status = F_status_set_error(F_string_too_large);
           break;
         }
@@ -570,19 +570,19 @@ extern "C" {
 #endif // !defined(_di_fl_directory_list_)
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
-  f_status_t private_fl_directory_path_push(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination) {
+  f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     bool terminated_null = F_false;
     bool separator_prepend = F_false;
     bool separator_append = F_false;
 
-    f_string_length_t total = 0;
-    f_string_length_t start = 0;
-    f_string_length_t length_truncated = length;
+    f_array_length_t total = 0;
+    f_array_length_t start = 0;
+    f_array_length_t length_truncated = length;
     f_status_t status = F_none;
 
     {
-      f_string_length_t i = 0;
-      f_string_length_t j = 0;
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
 
       if (destination->used > 0) {
         if (!destination->string[destination->used - 1]) {
@@ -739,7 +739,7 @@ extern "C" {
       total += length_truncated - start;
 
       if (destination->used + total > destination->size) {
-        if (destination->used + total > f_string_length_t_size) {
+        if (destination->used + total > f_array_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 

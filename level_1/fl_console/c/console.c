@@ -11,7 +11,7 @@ extern "C" {
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
-    f_string_length_t length = strlen(argument);
+    f_array_length_t length = strlen(argument);
 
     if (!length) {
       directory->used = 0;
@@ -24,7 +24,7 @@ extern "C" {
       } // while
 
       if (argument[0] == f_path_separator_s[0]) {
-        f_string_length_t begin = 1;
+        f_array_length_t begin = 1;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;
@@ -57,7 +57,7 @@ extern "C" {
         }
       }
       else if (length > 3 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_current_s[0] && argument[2] == f_path_separator_s[0]) {
-        f_string_length_t begin = 3;
+        f_array_length_t begin = 3;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;
@@ -94,7 +94,7 @@ extern "C" {
         }
       }
       else if (length > 2 && argument[0] == f_path_separator_current_s[0] && argument[1] == f_path_separator_s[0]) {
-        f_string_length_t begin = 2;
+        f_array_length_t begin = 2;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
           begin++;

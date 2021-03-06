@@ -146,7 +146,7 @@ f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, c
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t used_start = destination->used;
 
     f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
 

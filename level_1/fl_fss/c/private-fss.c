@@ -7,10 +7,10 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_fss_basic_object_write_string_) || !defined(_di_fl_fss_extended_object_write_string_)
-  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_string_length_t used_start, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
     f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
-    f_string_length_t i = 0;
+    f_array_length_t i = 0;
 
     uint8_t width = 0;
 
@@ -20,7 +20,7 @@ extern "C" {
     } // for
 
     if (destination->string[destination_range.start] == quote) {
-      const f_string_length_t front = destination_range.start;
+      const f_array_length_t front = destination_range.start;
 
       for (destination_range.start++; destination_range.start < destination->used; destination_range.start++) {
 
@@ -52,7 +52,7 @@ extern "C" {
         }
       } // for
 
-      const f_string_length_t rear = destination_range.start + 1;
+      const f_array_length_t rear = destination_range.start + 1;
 
       for (; destination_range.start > front; destination_range.start--) {
 
@@ -122,10 +122,10 @@ extern "C" {
 #endif // !defined(_di_fl_fss_basic_list_content_write_string_) || !defined(_di_fl_fss_extended_list_content_write_string_) || !defined(_di_fl_fss_embedded_list_content_write_string_)
 
 #if !defined(_di_fl_fss_basic_list_object_write_string_) || !defined(_di_fl_fss_extended_list_object_write_string_)
-  f_status_t private_fl_fss_basic_list_write_object_trim(const f_string_length_t used_start, f_string_dynamic_t *destination) {
+  f_status_t private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_string_dynamic_t *destination) {
     f_status_t status = F_none;
     f_string_range_t destination_range = f_macro_string_range_t_initialize(destination->used);
-    f_string_length_t i = 0;
+    f_array_length_t i = 0;
 
     uint8_t width = 0;
 
@@ -240,7 +240,7 @@ extern "C" {
 
     // identify where the object begins.
     if (buffer.string[range->start] == f_fss_delimit_slash) {
-      f_string_length_t first_slash = range->start;
+      f_array_length_t first_slash = range->start;
 
       found->start = range->start;
 
@@ -348,9 +348,9 @@ extern "C" {
       return FL_fss_found_object;
     }
     else {
-      f_string_length_t first_slash = 0;
-      f_string_length_t slash_count = 0;
-      f_string_length_t location = 0;
+      f_array_length_t first_slash = 0;
+      f_array_length_t slash_count = 0;
+      f_array_length_t location = 0;
 
       while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -680,16 +680,16 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 4, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t input_start = range->start;
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t input_start = range->start;
+    const f_array_length_t used_start = destination->used;
 
     bool quoted = F_false;
     bool commented = F_false;
 
-    f_string_length_t item_first = 0;
-    f_string_length_t item_total = 0;
-    f_string_length_t quote_start = 0;
-    f_string_length_t i = 0;
+    f_array_length_t item_first = 0;
+    f_array_length_t item_total = 0;
+    f_array_length_t quote_start = 0;
+    f_array_length_t i = 0;
 
     // use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().
     destination->string[destination->used++] = f_fss_delimit_placeholder;

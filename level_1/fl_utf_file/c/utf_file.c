@@ -29,7 +29,7 @@ extern "C" {
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
 
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_string_length_t_size) {
+        if (buffer->size + size_read > f_array_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -89,7 +89,7 @@ extern "C" {
 
     if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_string_length_t_size) {
+        if (buffer->size + size_read > f_array_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -127,7 +127,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_block_
 
 #ifndef _di_fl_utf_file_read_until_
-  f_status_t fl_utf_file_read_until(const f_file_t file, const f_string_length_t total, f_utf_string_dynamic_t *buffer) {
+  f_status_t fl_utf_file_read_until(const f_file_t file, const f_array_length_t total, f_utf_string_dynamic_t *buffer) {
     #ifndef _di_level_1_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
@@ -142,8 +142,8 @@ extern "C" {
     uint8_t width = 0;
     int8_t width_last = -1;
 
-    f_string_length_t buffer_size = file.size_read;
-    f_string_length_t buffer_count = 0;
+    f_array_length_t buffer_size = file.size_read;
+    f_array_length_t buffer_count = 0;
 
     if (total < buffer_size) {
       buffer_size = total;
@@ -157,7 +157,7 @@ extern "C" {
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
 
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_string_length_t_size) {
+        if (buffer->size + size_read > f_array_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -195,7 +195,7 @@ extern "C" {
 #endif // _di_fl_utf_file_read_until_
 
 #ifndef _di_fl_utf_file_write_
-  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_string_length_t *written) {
+  f_status_t fl_utf_file_write(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -219,7 +219,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_
 
 #ifndef _di_fl_utf_file_write_block_
-  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_string_length_t *written) {
+  f_status_t fl_utf_file_write_block(const f_file_t file, const f_utf_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -233,7 +233,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_string_length_t write_max = file.size_write;
+    f_array_length_t write_max = file.size_write;
 
     if (write_max > buffer.used) {
       write_max = buffer.used;
@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_block_
 
 #ifndef _di_fl_utf_file_write_until_
-  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_string_length_t total, f_string_length_t *written) {
+  f_status_t fl_utf_file_write_until(const f_file_t file, const f_utf_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -263,7 +263,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_string_length_t write_max = file.size_write;
+    f_array_length_t write_max = file.size_write;
 
     if (write_max > buffer.used) {
       write_max = buffer.used;
@@ -279,7 +279,7 @@ extern "C" {
 #endif // _di_fl_utf_file_write_until_
 
 #ifndef _di_fl_utf_file_write_range_
-  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_string_length_t *written) {
+  f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
@@ -295,8 +295,8 @@ extern "C" {
       return F_data_not;
     }
 
-    const f_string_length_t total = (range.stop - range.start) + 1;
-    f_string_length_t write_max = total;
+    const f_array_length_t total = (range.stop - range.start) + 1;
+    f_array_length_t write_max = total;
 
     if (write_max > buffer.used) {
       write_max = buffer.used;

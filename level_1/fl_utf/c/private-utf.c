@@ -6,9 +6,9 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
-  f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
-    f_string_length_t i1 = offset1;
-    f_string_length_t i2 = offset2;
+  f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+    f_array_length_t i1 = offset1;
+    f_array_length_t i2 = offset2;
 
     for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
 
@@ -37,9 +37,9 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
 
 #if !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
-  f_status_t private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t offset1, const f_string_length_t offset2, const f_string_length_t stop1, const f_string_length_t stop2) {
-    f_string_length_t i1 = offset1;
-    f_string_length_t i2 = offset2;
+  f_status_t private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+    f_array_length_t i1 = offset1;
+    f_array_length_t i2 = offset2;
 
     f_status_t status = F_none;
 
@@ -81,16 +81,16 @@ extern "C" {
       if (status == F_false) break;
     } // for
 
-    f_string_length_t last1 = i1;
-    f_string_length_t last2 = i2;
+    f_array_length_t last1 = i1;
+    f_array_length_t last2 = i2;
 
     {
       // size1 and size2 are to represent to total number of characters after trim.
-      f_string_length_t size1 = 0;
-      f_string_length_t size2 = 0;
+      f_array_length_t size1 = 0;
+      f_array_length_t size2 = 0;
 
       // determine where the last non-whitespace is in string1.
-      for (f_string_length_t j = i1; j < stop1; j++) {
+      for (f_array_length_t j = i1; j < stop1; j++) {
 
         // skip past NULL in string1.
         while (j < stop1 && !string1[j]) j++;
@@ -112,7 +112,7 @@ extern "C" {
       } // for
 
       // determine where the last non-whitespace is in string2.
-      for (f_string_length_t j = i2; j < stop2; j++) {
+      for (f_array_length_t j = i2; j < stop2; j++) {
 
         // skip past NULL in string2.
         while (j < stop2 && !string2[j]) j++;
@@ -163,7 +163,7 @@ extern "C" {
 #endif // !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
 
 #if !defined(_di_fl_utf_string_rip_) || !defined(_di_fl_utf_string_dynamic_rip_) || !defined(_di_fl_utf_string_rip_nulless_) || !defined(_di_fl_utf_string_dynamic_rip_nulless_)
-  f_status_t private_fl_utf_string_rip_find_range(const f_utf_string_t source, f_string_length_t *start, f_string_length_t *stop) {
+  f_status_t private_fl_utf_string_rip_find_range(const f_utf_string_t source, f_array_length_t *start, f_array_length_t *stop) {
 
     f_status_t status = F_none;
 

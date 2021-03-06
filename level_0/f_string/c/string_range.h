@@ -30,8 +30,8 @@ extern "C" {
  */
 #ifndef _di_f_string_range_t_
   typedef struct {
-    f_string_length_t start;
-    f_string_length_t stop;
+    f_array_length_t start;
+    f_array_length_t stop;
   } f_string_range_t;
 
   #define f_string_range_t_initialize { 1, 0 }

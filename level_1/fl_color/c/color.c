@@ -60,7 +60,7 @@ extern "C" {
       if (!color4 && color5 != 0)                                 return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_string_length_t string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
+    f_array_length_t string_size = strnlen(format.begin, f_color_max_size) + strnlen(format.end, f_color_max_size) + 1;
 
     if      (!color2) string_size += strnlen(color1, f_color_max_size);
     else if (!color3) string_size += strnlen(color1, f_color_max_size) + strnlen(color2, f_color_max_size);

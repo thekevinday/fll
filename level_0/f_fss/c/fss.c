@@ -53,7 +53,7 @@ extern "C" {
 #endif // _di_fl_fss_apply_delimit_between_
 
 #ifndef _di_f_fss_count_lines_
-  f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_string_length_t before, f_string_length_t *line) {
+  f_status_t f_fss_count_lines(const f_string_static_t buffer, const f_array_length_t before, f_array_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -62,7 +62,7 @@ extern "C" {
       return F_none;
     }
 
-    for (f_string_length_t i = before; i > 0; i--) {
+    for (f_array_length_t i = before; i > 0; i--) {
       if (buffer.string[i] == f_fss_eol) {
         (*line)++;
       }
@@ -77,7 +77,7 @@ extern "C" {
 #endif // _di_f_fss_count_lines_
 
 #ifndef _di_f_fss_count_lines_range_
-  f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_string_length_t before, f_string_length_t *line) {
+  f_status_t f_fss_count_lines_range(const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t *line) {
     #ifndef _di_level_0_parameter_checking_
       if (!line) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -86,7 +86,7 @@ extern "C" {
       return F_none;
     }
 
-    for (f_string_length_t i = before; i > range.start; i--) {
+    for (f_array_length_t i = before; i > range.start; i--) {
       if (buffer.string[i] == f_fss_eol) {
         (*line)++;
       }
@@ -107,7 +107,7 @@ extern "C" {
       return F_false;
     }
 
-    f_string_length_t width_max = (range.stop - range.start) + 1;
+    f_array_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -124,7 +124,7 @@ extern "C" {
       return F_false;
     }
 
-    f_string_length_t width_max = (range.stop - range.start) + 1;
+    f_array_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -157,7 +157,7 @@ extern "C" {
       return F_false;
     }
 
-    f_string_length_t width_max = (range.stop - range.start) + 1;
+    f_array_length_t width_max = (range.stop - range.start) + 1;
 
     if (width_max > buffer.used - range.start) {
       width_max = buffer.used - range.start;
@@ -193,8 +193,8 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t position = 0;
-    f_string_length_t distance = 0;
+    f_array_length_t position = 0;
+    f_array_length_t distance = 0;
 
     uint8_t utf_width = 0;
     uint8_t i = 0;
@@ -286,7 +286,7 @@ extern "C" {
     f_status_t status = F_none;
     uint8_t width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;
@@ -382,9 +382,9 @@ extern "C" {
     f_status_t status = F_none;
     uint8_t width = 0;
 
-    f_string_length_t width_max = (range->stop - range->start) + 1;
-    f_string_length_t next = 0;
-    f_string_length_t next_width_max = 0;
+    f_array_length_t width_max = (range->stop - range->start) + 1;
+    f_array_length_t next = 0;
+    f_array_length_t next_width_max = 0;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;

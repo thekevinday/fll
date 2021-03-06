@@ -47,7 +47,7 @@ extern "C" {
  * @see fl_print_trim_except_dynamic_partial()
  */
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_except(FILE *output, const f_string_t string, const f_string_length_t start, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_except(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
 
 /**
@@ -82,7 +82,7 @@ extern "C" {
  * @see fl_print_trim_except_utf_dynamic_partial()
  */
 #if !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_string_length_t start, const f_string_length_t stop, const f_string_lengths_t except) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  * @see fl_print_trim_dynamic_partial()
  */
 #if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
-  extern f_status_t private_fl_print_trim(FILE *output, const f_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim(FILE *output, const f_string_t string, const f_array_length_t length) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  * @see fl_print_trim_utf_dynamic_partial()
  */
 #if !defined(_di_fl_print_trim_utf_) || !defined(_di_fl_print_trim_utf_dynamic_) || !defined(_di_fl_print_trim_utf_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_utf(FILE *output, const f_utf_string_t string, const f_string_length_t length) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_utf_) || !defined(_di_fl_print_trim_utf_dynamic_) || !defined(_di_fl_print_trim_utf_dynamic_partial_)
 
 #ifdef __cplusplus

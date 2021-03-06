@@ -159,7 +159,7 @@ extern "C" {
   typedef struct {
     f_fss_id_t type;
 
-    f_string_length_t length;
+    f_array_length_t length;
   } f_fss_header_t;
 
   #define f_fss_header_initialize { 0, 0 }
@@ -176,8 +176,8 @@ extern "C" {
   typedef struct {
     f_fss_header_t *array;
 
-    f_string_length_t size;
-    f_string_length_t used;
+    f_array_length_t size;
+    f_array_length_t used;
   } f_fss_headers_t;
 
   #define f_fss_headers_t_initialize { 0, 0, 0 }

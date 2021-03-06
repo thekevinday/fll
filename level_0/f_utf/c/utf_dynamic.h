@@ -31,8 +31,8 @@ extern "C" {
   typedef struct {
     f_utf_string_t string;
 
-    f_string_length_t size;
-    f_string_length_t used;
+    f_array_length_t size;
+    f_array_length_t used;
   } f_utf_string_static_t;
 
   #define f_utf_string_static_t_initialize { 0, 0, 0 }
@@ -167,14 +167,14 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_string_dynamic_decrease_by_
-  extern f_status_t f_utf_string_dynamic_decrease_by(const f_string_length_t amount, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic);
 #endif // _di_f_utf_string_dynamic_decrease_by_
 
 /**
  * Resize the dynamic string to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -198,7 +198,7 @@ extern "C" {
  * Resize the dynamic string to a larger size.
  *
  * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_string_length_t_size).
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
@@ -215,7 +215,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_increase_by_
-  extern f_status_t f_utf_string_dynamic_increase_by(const f_string_length_t amount, f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic);
 #endif // _di_f_utf_string_dynamic_increase_by_
 
 /**
@@ -242,7 +242,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -264,7 +264,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -287,7 +287,7 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -307,7 +307,7 @@ extern "C" {
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -324,14 +324,14 @@ extern "C" {
 /**
  * Resize the dynamic string array to a larger size.
  *
- * This will resize making the string larger based on the given length.
+ * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.
@@ -351,7 +351,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param dynamics
- *   The string array to resize.
+ *   The array to resize.
  *
  * @return
  *   F_none on success.

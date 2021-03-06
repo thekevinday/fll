@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_fss_set_adjust_
-  f_status_t f_fss_set_adjust(const f_string_length_t length, f_fss_set_t *set) {
+  f_status_t f_fss_set_adjust(const f_array_length_t length, f_fss_set_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -89,7 +89,7 @@ extern "C" {
 #endif // _di_f_fss_set_increase_by_
 
 #ifndef _di_f_fss_set_resize_
-  f_status_t f_fss_set_resize(const f_string_length_t length, f_fss_set_t *set) {
+  f_status_t f_fss_set_resize(const f_array_length_t length, f_fss_set_t *set) {
     #ifndef _di_level_0_parameter_checking_
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -99,7 +99,7 @@ extern "C" {
 #endif // _di_f_fss_set_resize_
 
 #ifndef _di_f_fss_set_quote_adjust_
-  f_status_t f_fss_set_quote_adjust(const f_string_length_t length, f_fss_set_quote_t *set_quote) {
+  f_status_t f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t *set_quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,7 +182,7 @@ extern "C" {
 #endif // _di_f_fss_set_quote_increase_by_
 
 #ifndef _di_f_fss_set_quote_resize_
-  f_status_t f_fss_set_quote_resize(const f_string_length_t length, f_fss_set_quote_t *set_quote) {
+  f_status_t f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t *set_quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_f_fss_set_quote_resize_
 
 #ifndef _di_f_fss_set_quotes_adjust_
-  f_status_t f_fss_set_quotes_adjust(const f_string_length_t length, f_fss_set_quotes_t *set_quotes) {
+  f_status_t f_fss_set_quotes_adjust(const f_array_length_t length, f_fss_set_quotes_t *set_quotes) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -275,7 +275,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_increase_by_
 
 #ifndef _di_f_fss_set_quotes_resize_
-  f_status_t f_fss_set_quotes_resize(const f_string_length_t length, f_fss_set_quotes_t *set_quotes) {
+  f_status_t f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t *set_quotes) {
     #ifndef _di_level_0_parameter_checking_
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -285,7 +285,7 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_resize_
 
 #ifndef _di_f_fss_sets_adjust_
-  f_status_t f_fss_sets_adjust(const f_string_length_t length, f_fss_sets_t *sets) {
+  f_status_t f_fss_sets_adjust(const f_array_length_t length, f_fss_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -368,7 +368,7 @@ extern "C" {
 #endif // _di_f_fss_sets_increase_by_
 
 #ifndef _di_f_fss_sets_resize_
-  f_status_t f_fss_sets_resize(const f_string_length_t length, f_fss_sets_t *sets) {
+  f_status_t f_fss_sets_resize(const f_array_length_t length, f_fss_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

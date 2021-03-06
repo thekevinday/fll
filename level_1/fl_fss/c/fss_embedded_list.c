@@ -70,10 +70,10 @@ extern "C" {
       return FL_fss_found_object_not;
     }
 
-    f_string_length_t start = 0;
-    f_string_length_t stop = 0;
-    f_string_length_t slash_first = 0;
-    f_string_length_t slash_count = 0;
+    f_array_length_t start = 0;
+    f_array_length_t stop = 0;
+    f_array_length_t slash_first = 0;
+    f_array_length_t slash_count = 0;
 
     bool graph_first = F_true;
 
@@ -269,10 +269,10 @@ extern "C" {
     f_macro_fss_nest_t_increase(status, (*found));
     if (F_status_is_error(status)) return status;
 
-    f_string_lengths_t positions_start = f_string_lengths_t_initialize;
+    f_array_lengths_t positions_start = f_array_lengths_t_initialize;
 
-    f_macro_string_lengths_t_clear(positions_start)
-    f_macro_string_lengths_t_resize(status, positions_start, f_fss_default_allocation_step)
+    f_macro_array_lengths_t_clear(positions_start)
+    f_macro_array_lengths_t_resize(status, positions_start, f_fss_default_allocation_step)
     if (F_status_is_error(status)) return status;
 
     f_fss_objects_t objects = f_fss_objects_t_initialize;
@@ -281,7 +281,7 @@ extern "C" {
     f_macro_fss_objects_t_resize(status, objects, f_fss_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      f_macro_string_lengths_t_delete_simple(positions_start);
+      f_macro_array_lengths_t_delete_simple(positions_start);
 
       return status;
     }
@@ -292,16 +292,16 @@ extern "C" {
     f_array_length_t depth = 0;
     f_array_length_t position = 0;
 
-    f_string_length_t position_previous = range->start;
-    f_string_length_t line_start = range->start;
-    f_string_length_t newline_last = range->start;
-    f_string_length_t comment_delimit = 0;
+    f_array_length_t position_previous = range->start;
+    f_array_length_t line_start = range->start;
+    f_array_length_t newline_last = range->start;
+    f_array_length_t comment_delimit = 0;
 
-    f_string_length_t slash_first = 0;
-    f_string_length_t slash_last = 0;
-    f_string_length_t slash_count = 0;
+    f_array_length_t slash_first = 0;
+    f_array_length_t slash_last = 0;
+    f_array_length_t slash_count = 0;
 
-    f_string_length_t before_list_open = position_previous;
+    f_array_length_t before_list_open = position_previous;
 
     bool is_open = F_false;
 
@@ -474,7 +474,7 @@ extern "C" {
                 depth++;
 
                 if (depth > positions_start.size) {
-                  f_macro_string_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
+                  f_macro_array_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
                   if (F_status_is_error(status)) break;
                 }
 
@@ -544,7 +544,7 @@ extern "C" {
           depth++;
 
           if (depth >= positions_start.size) {
-            f_macro_string_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
+            f_macro_array_lengths_t_resize(status, positions_start, positions_start.size + f_fss_default_allocation_step);
             if (F_status_is_error(status)) break;
 
             f_macro_fss_objects_t_resize(status, objects, objects.size + f_fss_default_allocation_step);
@@ -698,7 +698,7 @@ extern "C" {
 
             private_fl_macro_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop)
 
-            f_macro_string_lengths_t_delete_simple(positions_start);
+            f_macro_array_lengths_t_delete_simple(positions_start);
             f_macro_fss_objects_t_delete_simple(objects);
 
             return FL_fss_found_content;
@@ -797,7 +797,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
     } // while
 
-    f_macro_string_lengths_t_delete_simple(positions_start);
+    f_macro_array_lengths_t_delete_simple(positions_start);
     f_macro_fss_objects_t_delete_simple(objects);
 
     delimits->used = delimits_used;
@@ -858,11 +858,11 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t input_start = range->start;
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t input_start = range->start;
+    const f_array_length_t used_start = destination->used;
 
-    f_string_length_t i = 0;
-    f_string_length_t slash_count = 0;
+    f_array_length_t i = 0;
+    f_array_length_t slash_count = 0;
 
     f_string_range_t range_next = f_string_range_t_initialize;
 
@@ -1062,17 +1062,17 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t input_start = range->start;
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t input_start = range->start;
+    const f_array_length_t used_start = destination->used;
 
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
     bool has_graph = F_false;
     bool do_prepend = F_true;
 
-    f_string_length_t i = 0;
-    f_string_length_t slash_count = 0;
-    f_string_length_t start = 0;
+    f_array_length_t i = 0;
+    f_array_length_t slash_count = 0;
+    f_array_length_t start = 0;
 
     f_array_length_t r = 0;
 

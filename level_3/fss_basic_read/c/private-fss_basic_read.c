@@ -105,7 +105,7 @@ extern "C" {
             if (status_code == F_memory_not) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
             }
-            else if (status_code == f_string_length_t_size) {
+            else if (status_code == f_array_length_t_size) {
               fl_color_print(data.error.to.stream, data.context.set.error, "%sUnable to process '", fll_error_print_error);
               fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_trim);
               fl_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
@@ -173,7 +173,7 @@ extern "C" {
   f_status_t fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t filename, const fss_basic_read_depths_t depths, f_fss_delimits_t *delimits) {
     f_status_t status = F_none;
 
-    const f_string_lengths_t except_none = f_string_lengths_t_initialize;
+    const f_array_lengths_t except_none = f_array_lengths_t_initialize;
     bool delimited = F_true;
 
     // for this standard, delimits would always be applied, except for when delimit_depth is greater than 0.
@@ -217,7 +217,7 @@ extern "C" {
     f_number_unsigned_t select = 0;
 
     if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
-      const f_string_length_t index = data->parameters[fss_basic_read_parameter_select].values.array[data->parameters[fss_basic_read_parameter_select].values.used - 1];
+      const f_array_length_t index = data->parameters[fss_basic_read_parameter_select].values.array[data->parameters[fss_basic_read_parameter_select].values.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
@@ -309,7 +309,7 @@ extern "C" {
         return F_none;
       }
 
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_string_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
 
       if (data->parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;
@@ -419,7 +419,7 @@ extern "C" {
     }
 
     if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-      f_string_length_t total = 0;
+      f_array_length_t total = 0;
 
       for (i = 0; i < data->objects.used; i++) {
         if (!names[i]) continue;

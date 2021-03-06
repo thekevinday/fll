@@ -232,7 +232,7 @@ extern "C" {
       negative = F_true;
     }
 
-    f_string_length_t total = 0;
+    f_array_length_t total = 0;
 
     for (register f_number_signed_t work = current; work; total++) {
       work /= base;
@@ -345,7 +345,7 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t total = 0;
+    f_array_length_t total = 0;
 
     for (register f_number_unsigned_t work = number; work; total++) {
       work /= base;

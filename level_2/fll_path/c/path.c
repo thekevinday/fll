@@ -11,13 +11,13 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-    f_string_length_t at = 0;
+    f_array_length_t at = 0;
 
     uint8_t previous_1 = f_path_separator_s[0];
     uint8_t previous_2 = 0;
 
-    f_string_length_t size_chunk = 0;
-    f_string_length_t position = 0;
+    f_array_length_t size_chunk = 0;
+    f_array_length_t position = 0;
 
     canonical->used = 0;
 

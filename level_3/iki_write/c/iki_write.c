@@ -155,7 +155,7 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_string_length_t location = data->parameters[iki_write_parameter_file].values.array[0];
+          const f_array_length_t location = data->parameters[iki_write_parameter_file].values.array[0];
 
           output.id = -1;
           output.stream = 0;
@@ -257,7 +257,7 @@ extern "C" {
 
         bool object_ended = F_false;
 
-        f_string_length_t previous = 0;
+        f_array_length_t previous = 0;
         f_string_range_t range = f_string_range_t_initialize;
 
         range.start = 0;
@@ -378,11 +378,11 @@ extern "C" {
         for (f_array_length_t i = 0; i < data->parameters[iki_write_parameter_object].values.used; i++) {
 
           object.string = arguments.argv[data->parameters[iki_write_parameter_object].values.array[i]];
-          object.used = strnlen(object.string, f_console_length_size);
+          object.used = strnlen(object.string, f_console_parameter_size);
           object.size = object.used;
 
           content.string = arguments.argv[data->parameters[iki_write_parameter_content].values.array[i]];
-          content.used = strnlen(content.string, f_console_length_size);
+          content.used = strnlen(content.string, f_console_parameter_size);
           content.size = content.used;
 
           status = iki_write_process(*data, output, object, content, quote, &escaped);
@@ -421,13 +421,13 @@ extern "C" {
 #ifndef _di_iki_write_delete_data_
   f_status_t iki_write_delete_data(iki_write_data_t *data) {
 
-    for (f_string_length_t i = 0; i < iki_write_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < iki_write_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
 
     f_macro_color_context_t_delete_simple(data->context);

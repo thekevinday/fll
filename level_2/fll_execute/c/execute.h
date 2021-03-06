@@ -84,7 +84,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_
-  extern f_status_t fll_execute_arguments_add(const f_string_t source, const f_string_length_t length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add(const f_string_t source, const f_array_length_t length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_
-  extern f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_string_length_t prefix_length, const f_string_t name, const f_string_length_t name_length, const f_string_t value, const f_string_length_t value_length, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter(const f_string_t prefix, const f_array_length_t prefix_length, const f_string_t name, const f_array_length_t name_length, const f_string_t value, const f_array_length_t value_length, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_parameter_set_
-  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_string_length_t prefix_length[], const f_string_t name[], const f_string_length_t name_length[], const f_string_t value[], const f_string_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_parameter_set(const f_string_t prefix[], const f_array_length_t prefix_length[], const f_string_t name[], const f_array_length_t name_length[], const f_string_t value[], const f_array_length_t value_length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_parameter_set_
 
 /**
@@ -206,7 +206,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fll_execute_arguments_add_set_
-  extern f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_string_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
+  extern f_status_t fll_execute_arguments_add_set(const f_string_t source[], const f_array_length_t length[], const f_array_length_t size, f_string_dynamics_t *arguments);
 #endif // _di_fll_execute_arguments_add_set_
 
 /**

@@ -25,7 +25,7 @@ extern "C" {
  */
 #ifndef _di_fss_extended_read_depth_t_
   typedef struct {
-    f_string_length_t depth;
+    f_array_length_t depth;
 
     f_array_length_t index_at;
     f_array_length_t index_name;
@@ -122,7 +122,7 @@ extern "C" {
  *   F_false if not delimited.
  */
 #ifndef _di_fss_extended_read_is_delimited_at_depth_
-  extern f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_string_length_t depth) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_data_t data, const f_array_length_t depth) f_gcc_attribute_visibility_internal;
 #endif // _di_fss_extended_read_is_delimited_at_depth_
 
 /**

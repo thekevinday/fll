@@ -86,7 +86,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_buffer_decrement_
-  extern f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_string_length_t step);
+  extern f_status_t f_utf_buffer_decrement(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step);
 #endif // _di_f_utf_buffer_decrement_
 
 /**
@@ -118,7 +118,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_buffer_increment_
-  extern f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_string_length_t step);
+  extern f_status_t f_utf_buffer_increment(const f_string_static_t buffer, f_string_range_t *range, const f_array_length_t step);
 #endif // _di_f_utf_buffer_increment_
 
 /**
@@ -668,7 +668,7 @@ extern "C" {
  *   F_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
-  extern f_status_t f_utf_character_to_char(const f_utf_character_t utf_character, f_string_t *character, f_string_length_t *width_max);
+  extern f_status_t f_utf_character_to_char(const f_utf_character_t utf_character, f_string_t *character, f_array_length_t *width_max);
 #endif // _di_f_utf_character_to_char_
 
 /**
@@ -703,7 +703,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_
-  extern f_status_t f_utf_is(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_
 
 /**
@@ -724,7 +724,7 @@ extern "C" {
  * @see isalpha()
  */
 #ifndef _di_f_utf_is_alpha_
-  extern f_status_t f_utf_is_alpha(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_alpha(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_alpha_
 
 /**
@@ -749,7 +749,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_alpha_digit_
-  extern f_status_t f_utf_is_alpha_digit(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_alpha_digit(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_alpha_digit_
 
 /**
@@ -772,7 +772,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_alpha_numeric_
-  extern f_status_t f_utf_is_alpha_numeric(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_alpha_numeric(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_alpha_numeric_
 
 /**
@@ -791,7 +791,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_ascii_
-  extern f_status_t f_utf_is_ascii(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_ascii(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_ascii_
 
 /**
@@ -810,7 +810,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_combining_
-  extern f_status_t f_utf_is_combining(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_combining(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_combining_
 
 /**
@@ -831,7 +831,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_is_control_
-  extern f_status_t f_utf_is_control(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_control(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_control_
 
 /**
@@ -852,7 +852,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_control_picture_
-  extern f_status_t f_utf_is_control_picture(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_control_picture(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_control_picture_
 
 /**
@@ -873,7 +873,7 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_is_digit_
-  extern f_status_t f_utf_is_digit(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_digit(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_digit_
 
 /**
@@ -894,7 +894,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_emoji_
-  extern f_status_t f_utf_is_emoji(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_emoji(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_emoji_
 
 /**
@@ -928,7 +928,7 @@ extern "C" {
  *   F_false if not a UTF-8 character.
  */
 #ifndef _di_f_utf_is_fragment_
-  extern f_status_t f_utf_is_fragment(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_fragment(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_fragment_
 
 /**
@@ -951,7 +951,7 @@ extern "C" {
  * @see isgraph()
  */
 #ifndef _di_f_utf_is_graph_
-  extern f_status_t f_utf_is_graph(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_graph(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_graph_
 
 /**
@@ -974,7 +974,7 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_is_numeric_
-  extern f_status_t f_utf_is_numeric(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_numeric(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_numeric_
 
 /**
@@ -993,7 +993,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_phonetic_
-  extern f_status_t f_utf_is_phonetic(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_phonetic(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_phonetic_
 
 /**
@@ -1012,7 +1012,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_private_
-  extern f_status_t f_utf_is_private(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_private(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_private_
 
 /**
@@ -1033,7 +1033,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_punctuation_
-  extern f_status_t f_utf_is_punctuation(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_punctuation(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_punctuation_
 
 /**
@@ -1054,7 +1054,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  */
 #ifndef _di_f_utf_is_symbol_
-  extern f_status_t f_utf_is_symbol(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_symbol(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_symbol_
 
 /**
@@ -1076,7 +1076,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is inunassigned.
  */
 #ifndef _di_f_utf_is_unassigned_
-  extern f_status_t f_utf_is_unassigned(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_unassigned(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_unassigned_
 
 /**
@@ -1101,7 +1101,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_valid_
-  extern f_status_t f_utf_is_valid(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_valid(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_valid_
 
 /**
@@ -1132,7 +1132,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_status_t f_utf_is_whitespace(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_whitespace(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -1158,7 +1158,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_modifier_
-  extern f_status_t f_utf_is_whitespace_modifier(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_whitespace_modifier(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_whitespace_modifier_
 
 /**
@@ -1181,7 +1181,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_whitespace_other_
-  extern f_status_t f_utf_is_whitespace_other(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_whitespace_other(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_whitespace_other_
 
 /**
@@ -1210,7 +1210,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_
-  extern f_status_t f_utf_is_word(const f_string_t character, const f_string_length_t width_max, const bool strict);
+  extern f_status_t f_utf_is_word(const f_string_t character, const f_array_length_t width_max, const bool strict);
 #endif // _di_f_utf_is_word_
 
 /**
@@ -1244,7 +1244,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_
-  extern f_status_t f_utf_is_word_dash(const f_string_t character, const f_string_length_t width_max, const bool strict);
+  extern f_status_t f_utf_is_word_dash(const f_string_t character, const f_array_length_t width_max, const bool strict);
 #endif // _di_f_utf_is_word_dash_
 
 /**
@@ -1278,7 +1278,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_is_word_dash_plus_
-  extern f_status_t f_utf_is_word_dash_plus(const f_string_t character, const f_string_length_t width_max, const bool strict);
+  extern f_status_t f_utf_is_word_dash_plus(const f_string_t character, const f_array_length_t width_max, const bool strict);
 #endif // _di_f_utf_is_word_dash_plus_
 
 /**
@@ -1301,7 +1301,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_utf_is_zero_width_
-  extern f_status_t f_utf_is_zero_width(const f_string_t character, const f_string_length_t width_max);
+  extern f_status_t f_utf_is_zero_width(const f_string_t character, const f_array_length_t width_max);
 #endif // _di_f_utf_is_zero_width_
 
 /**
@@ -1324,7 +1324,7 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
  */
 #ifndef _di_f_utf_char_to_character_
-  extern f_status_t f_utf_char_to_character(const f_string_t character, const f_string_length_t width_max, f_utf_character_t *character_utf);
+  extern f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf);
 #endif // _di_f_utf_char_to_character_
 
 /**
@@ -1345,7 +1345,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_append_
-  extern f_status_t f_utf_string_append(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_append(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_append_
 
 /**
@@ -1368,7 +1368,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_append_assure_
-  extern f_status_t f_utf_string_append_assure(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_append_assure(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_append_assure_
 
 /**
@@ -1392,7 +1392,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_append_assure_nulless_
-  extern f_status_t f_utf_string_append_assure_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_append_assure_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_append_assure_nulless_
 
 /**
@@ -1415,7 +1415,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_append_nulless_
-  extern f_status_t f_utf_string_append_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_append_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_append_nulless_
 
 /**
@@ -1520,7 +1520,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_mash_
-  extern f_status_t f_utf_string_dynamic_mash(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_mash_
 
 /**
@@ -1547,7 +1547,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_mash_nulless_
-  extern f_status_t f_utf_string_dynamic_mash_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_mash_nulless_
 
 /**
@@ -1572,7 +1572,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_mish_
-  extern f_status_t f_utf_string_dynamic_mish(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_mish_
 
 /**
@@ -1599,7 +1599,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_mish_nulless_
-  extern f_status_t f_utf_string_dynamic_mish_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_mish_nulless_
 
 /**
@@ -1723,7 +1723,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_partial_mash_
-  extern f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_partial_mash_
 
 /**
@@ -1753,7 +1753,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_partial_mash_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_partial_mash_nulless_
 
 /**
@@ -1781,7 +1781,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_partial_mish_
-  extern f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_partial_mish_
 
 /**
@@ -1811,7 +1811,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_dynamic_partial_mish_nulless_
-  extern f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_dynamic_partial_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_dynamic_partial_mish_nulless_
 
 /**
@@ -2123,7 +2123,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_mash_
-  extern f_status_t f_utf_string_mash(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_mash(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_mash_
 
 /**
@@ -2152,7 +2152,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_mash_nulless_
-  extern f_status_t f_utf_string_mash_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_mash_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_mash_nulless_
 
 /**
@@ -2179,7 +2179,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_mish_
-  extern f_status_t f_utf_string_mish(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_mish(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_mish_
 
 /**
@@ -2208,7 +2208,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_mish_nulless_
-  extern f_status_t f_utf_string_mish_nulless(const f_utf_string_t glue, const f_string_length_t glue_length, const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_mish_nulless(const f_utf_string_t glue, const f_array_length_t glue_length, const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_mish_nulless_
 
 /**
@@ -2231,7 +2231,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_prepend_
-  extern f_status_t f_utf_string_prepend(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_prepend(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_prepend_
 
 /**
@@ -2256,7 +2256,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_prepend_assure_
-  extern f_status_t f_utf_string_prepend_assure(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_prepend_assure(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_prepend_assure_
 
 /**
@@ -2282,7 +2282,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_prepend_assure_nulless_
-  extern f_status_t f_utf_string_prepend_assure_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_prepend_assure_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_prepend_assure_nulless_
 
 /**
@@ -2308,7 +2308,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_f_utf_string_prepend_nulless_
-  extern f_status_t f_utf_string_prepend_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t f_utf_string_prepend_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_f_utf_string_prepend_nulless_
 
 /**

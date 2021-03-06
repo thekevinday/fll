@@ -58,7 +58,7 @@ extern "C" {
           strings->used++;
         }
         else {
-          f_string_length_t total;
+          f_array_length_t total;
 
           if (i + 1 >= serialize.used) {
             total = (i - start) + 1;
@@ -180,7 +180,7 @@ extern "C" {
       return status;
     }
 
-    f_string_length_t total = (range.stop - range.start) + 1;
+    f_array_length_t total = (range.stop - range.start) + 1;
 
     if (total >= dynamic->size) {
       f_status_t status_allocation = F_none;

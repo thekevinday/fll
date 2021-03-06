@@ -55,7 +55,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_
-  extern f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
 #endif // _di_fl_string_compare_
 
 /**
@@ -86,7 +86,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_except_
-  extern f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_compare_except_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_except_trim_
-  extern f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_compare_except_trim_
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_trim_
-  extern f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
 #endif // _di_fl_string_compare_trim_
 
 /**
@@ -198,7 +198,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_compare_except_
-  extern f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_
 
 /**
@@ -234,7 +234,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_string_
-  extern f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_string_
 
 /**
@@ -266,7 +266,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_
-  extern f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_trim_
 
 /**
@@ -302,7 +302,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_string_
-  extern f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_compare_except_trim_string_
 
 /**
@@ -331,7 +331,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_string_
-  extern f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
+  extern f_status_t fl_string_dynamic_compare_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1);
 #endif // _di_fl_string_dynamic_compare_string_
 
 /**
@@ -385,7 +385,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_string_
-  extern f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1);
+  extern f_status_t fl_string_dynamic_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1);
 #endif // _di_fl_string_dynamic_compare_trim_string_
 
 /**
@@ -462,7 +462,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_
-  extern f_status_t fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_
 
 /**
@@ -491,7 +491,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_dynamic_
-  extern f_status_t fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_dynamic_
 
 /**
@@ -524,7 +524,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_string_
-  extern f_status_t fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_string_
 
 /**
@@ -560,7 +560,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_
-  extern f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_
 
 /**
@@ -594,7 +594,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
-  extern f_status_t fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim_dynamic(const f_string_static_t string1, const f_string_static_t string2, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
 
 /**
@@ -632,7 +632,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_string_
-  extern f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2, const f_string_lengths_t except1, const f_string_lengths_t except2);
+  extern f_status_t fl_string_dynamic_partial_compare_except_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_string_
 
 /**
@@ -658,7 +658,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_string_
-  extern f_status_t fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_string_
 
 /**
@@ -716,7 +716,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_string_
-  extern f_status_t fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_string_length_t length1, const f_string_range_t range2);
+  extern f_status_t fl_string_dynamic_partial_compare_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2);
 #endif // _di_fl_string_dynamic_partial_compare_trim_string_
 
 /**
@@ -914,7 +914,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_
-  extern f_status_t fl_string_rip(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_rip_
 
 /**
@@ -944,7 +944,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_nulless_
-  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_string_length_t length, f_string_dynamic_t *destination);
+  extern f_status_t fl_string_rip_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination);
 #endif // _di_fl_string_rip_nulless_
 
 /**

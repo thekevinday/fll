@@ -70,10 +70,10 @@ extern "C" {
       return FL_fss_found_object_not;
     }
 
-    f_string_length_t start = 0;
-    f_string_length_t stop = 0;
-    f_string_length_t slash_first = 0;
-    f_string_length_t slash_count = 0;
+    f_array_length_t start = 0;
+    f_array_length_t stop = 0;
+    f_array_length_t slash_first = 0;
+    f_array_length_t slash_count = 0;
 
     bool graph_first = F_true;
 
@@ -270,10 +270,10 @@ extern "C" {
 
     found->array[found->used].start = range->start;
 
-    f_string_length_t newline_last = range->start;
-    f_string_length_t slash_first = 0;
-    f_string_length_t slash_count = 0;
-    f_string_length_t start = 0;
+    f_array_length_t newline_last = range->start;
+    f_array_length_t slash_first = 0;
+    f_array_length_t slash_count = 0;
+    f_array_length_t start = 0;
 
     // identify where the content ends.
     while (range->start <= range->stop && range->start < buffer.used) {
@@ -448,11 +448,11 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t input_start = range->start;
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t input_start = range->start;
+    const f_array_length_t used_start = destination->used;
 
-    f_string_length_t i = 0;
-    f_string_length_t slash_count = 0;
+    f_array_length_t i = 0;
+    f_array_length_t slash_count = 0;
 
     f_string_range_t range_next = f_string_range_t_initialize;
 
@@ -652,17 +652,17 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_string_length_t input_start = range->start;
-    const f_string_length_t used_start = destination->used;
+    const f_array_length_t input_start = range->start;
+    const f_array_length_t used_start = destination->used;
 
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
     bool has_graph = F_false;
     bool do_prepend = F_true;
 
-    f_string_length_t i = 0;
-    f_string_length_t slash_count = 0;
-    f_string_length_t start = 0;
+    f_array_length_t i = 0;
+    f_array_length_t slash_count = 0;
+    f_array_length_t start = 0;
 
     f_array_length_t r = 0;
 

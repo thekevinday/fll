@@ -10,7 +10,7 @@ extern "C" {
 #endif // _di_f_utf_string_static_empty_s_
 
 #ifndef _di_f_utf_string_dynamic_adjust_
-  f_status_t f_utf_string_dynamic_adjust(const f_string_length_t length, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -20,7 +20,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_adjust_
 
 #ifndef _di_f_utf_string_dynamic_decimate_by_
-  f_status_t f_utf_string_dynamic_decimate_by(const f_string_length_t amount, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_decimate_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -35,7 +35,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_decimate_by_
 
 #ifndef _di_f_utf_string_dynamic_decrease_by_
-  f_status_t f_utf_string_dynamic_decrease_by(const f_string_length_t amount, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_decrease_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!amount) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
@@ -58,12 +58,12 @@ extern "C" {
     if (dynamic->used + 1 > dynamic->size) {
       f_array_length_t size = dynamic->used + f_memory_default_allocation_step;
 
-      if (size > f_string_length_t_size) {
-        if (dynamic->used + 1 > f_string_length_t_size) {
+      if (size > f_array_length_t_size) {
+        if (dynamic->used + 1 > f_array_length_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
-        size = f_string_length_t_size;
+        size = f_array_length_t_size;
       }
 
       return private_f_utf_string_dynamic_resize(size, dynamic);
@@ -74,7 +74,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_increase_
 
 #ifndef _di_f_utf_string_dynamic_increase_by_
-  f_status_t f_utf_string_dynamic_increase_by(const f_string_length_t amount, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -84,7 +84,7 @@ extern "C" {
 #endif // _di_f_utf_string_dynamic_increase_by_
 
 #ifndef _di_f_utf_string_dynamic_resize_
-  f_status_t f_utf_string_dynamic_resize(const f_string_length_t length, f_utf_string_dynamic_t *dynamic) {
+  f_status_t f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -87,14 +87,14 @@ extern "C" {
     if (range.start >= buffer.used) { \
       delimits.used = delimits_used; \
       comments.used = comments_used; \
-      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_array_lengths_t_delete_simple(positions); \
       f_macro_fss_objects_t_delete_simple(objects); \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
       delimits.used = delimits_used; \
       comments.used = comments_used; \
-      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_array_lengths_t_delete_simple(positions); \
       f_macro_fss_objects_t_delete_simple(objects); \
       return stop_status; \
     }
@@ -103,12 +103,12 @@ extern "C" {
 #ifndef _di_fl_macro_fss_nest_return_on_overflow_delimited_
   #define private_fl_macro_fss_nest_return_on_overflow_delimited(buffer, range, found, positions, objects, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
-      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_array_lengths_t_delete_simple(positions); \
       f_macro_fss_objects_t_delete_simple(objects); \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
-      f_macro_string_lengths_t_delete_simple(positions); \
+      f_macro_array_lengths_t_delete_simple(positions); \
       f_macro_fss_objects_t_delete_simple(objects); \
       return stop_status; \
     }

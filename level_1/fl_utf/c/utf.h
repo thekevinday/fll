@@ -55,7 +55,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_utf_string_compare_
-  extern f_status_t fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
 #endif // _di_fl_utf_string_compare_
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_fl_utf_string_compare_trim_
-  extern f_status_t fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_string_length_t length1, const f_string_length_t length2);
+  extern f_status_t fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
 #endif // _di_fl_utf_string_compare_trim_
 
 /**
@@ -365,7 +365,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_fl_utf_string_rip_
-  extern f_status_t fl_utf_string_rip(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t fl_utf_string_rip(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_fl_utf_string_rip_
 
 /**
@@ -394,7 +394,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_fl_utf_string_rip_nulless_
-  extern f_status_t fl_utf_string_rip_nulless(const f_utf_string_t source, const f_string_length_t length, f_utf_string_dynamic_t *destination);
+  extern f_status_t fl_utf_string_rip_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination);
 #endif // _di_fl_utf_string_rip_nulless_
 
 /**

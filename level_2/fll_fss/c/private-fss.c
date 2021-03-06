@@ -7,7 +7,7 @@ extern "C" {
 
 #if !defined(_di_fll_fss_identify_) || !defined(_di_fll_fss_identify_file_)
   f_status_t private_fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
-    register f_string_length_t i = 0;
+    register f_array_length_t i = 0;
 
     if (buffer.used < 10) {
       // "# fss-0000" is always at least 10 characters.

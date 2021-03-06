@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_environment_load_name_
-  f_status_t fl_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment) {
+  f_status_t fl_environment_load_name(const f_string_t name, const f_array_length_t length, f_string_maps_t *environment) {
     #ifndef _di_level_2_parameter_checking_
       if (!name) return F_status_set_error(F_parameter);
       if (!environment) return F_status_set_error(F_parameter);
@@ -92,7 +92,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    const f_string_length_t length = strnlen(path, PATH_MAX);
+    const f_array_length_t length = strnlen(path, PATH_MAX);
 
     if (!length) {
 
@@ -107,9 +107,9 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t i = length;
-    f_string_length_t first = 0;
-    f_string_length_t total = 0;
+    f_array_length_t i = length;
+    f_array_length_t first = 0;
+    f_array_length_t total = 0;
 
     for (i = 0; i <= length; i++) {
 
@@ -183,10 +183,10 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t i = 0;
-    f_string_length_t j = 0;
-    f_string_length_t first = 0;
-    f_string_length_t total = 0;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t first = 0;
+    f_array_length_t total = 0;
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
@@ -247,7 +247,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
-    const f_string_length_t length = strnlen(path, PATH_MAX);
+    const f_array_length_t length = strnlen(path, PATH_MAX);
 
     if (!length) {
 
@@ -263,10 +263,10 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t i = length;
-    f_string_length_t j = length;
-    f_string_length_t last = length;
-    f_string_length_t total = 0;
+    f_array_length_t i = length;
+    f_array_length_t j = length;
+    f_array_length_t last = length;
+    f_array_length_t total = 0;
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
@@ -358,11 +358,11 @@ extern "C" {
       return F_none;
     }
 
-    f_string_length_t i = path.used;
-    f_string_length_t j = path.used;
-    f_string_length_t k = 0;
-    f_string_length_t last = path.used;
-    f_string_length_t total = 0;
+    f_array_length_t i = path.used;
+    f_array_length_t j = path.used;
+    f_array_length_t k = 0;
+    f_array_length_t last = path.used;
+    f_array_length_t total = 0;
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 

@@ -84,7 +84,7 @@ extern "C" {
  *   F_utf (with error bit) if character is an invalid UTF-8 character, when processing arguments.
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_string_lengths_t *remaining);
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, f_array_lengths_t *remaining);
 #endif // _di_f_console_parameter_process_
 
 /**

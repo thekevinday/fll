@@ -9,7 +9,7 @@ extern "C" {
   f_status_t iki_read_process_at(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_data_t *data, f_string_range_t *range) {
     if (data->parameters[iki_read_parameter_line].result != f_console_result_additional) return F_false;
 
-    f_string_length_t line = 0;
+    f_array_length_t line = 0;
 
     range->start = 0;
     if (data->line > 0) {
@@ -185,7 +185,7 @@ extern "C" {
     }
     else if (ranges->used) {
       f_array_length_t i = 0;
-      f_string_length_t j = 0;
+      f_array_length_t j = 0;
 
       for (; i < ranges->used; i++) {
 
@@ -261,12 +261,12 @@ extern "C" {
     if (data->parameters[iki_read_parameter_name].result == f_console_result_additional) {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
-      f_string_length_t length_argument = 0;
+      f_array_length_t length_argument = 0;
 
       for (f_array_length_t index = 0; i < data->parameters[iki_read_parameter_name].values.used; i++) {
 
         index = data->parameters[iki_read_parameter_name].values.array[i];
-        length_argument = strnlen(arguments.argv[index], f_console_length_size);
+        length_argument = strnlen(arguments.argv[index], f_console_parameter_size);
 
         for (j = 0, name_missed = F_true; j < names.used; j++) {
 
@@ -308,7 +308,7 @@ extern "C" {
     }
 
     {
-      f_string_length_t i = buffer_range.start;
+      f_array_length_t i = buffer_range.start;
       f_array_length_t j = 0;
       f_array_length_t k = 0;
 
@@ -474,14 +474,14 @@ extern "C" {
     f_array_length_t index = 0;
     f_array_length_t index_2 = 0;
 
-    f_string_length_t length = 0;
+    f_array_length_t length = 0;
 
     f_console_parameter_t *parameter = &data->parameters[iki_read_parameter_substitute];
 
     for (; i < parameter->values.used; i += 3) {
 
       index = parameter->values.array[i];
-      length = strnlen(arguments.argv[index], f_console_length_size);
+      length = strnlen(arguments.argv[index], f_console_parameter_size);
 
       for (j = 0; j < vocabulary->used; j++) {
 
@@ -494,12 +494,12 @@ extern "C" {
           index = parameter->values.array[i + 1];
           index_2 = substitutionss[j].used;
           substitutionss[j].array[index_2].replace.string = arguments.argv[index];
-          substitutionss[j].array[index_2].replace.used = strnlen(arguments.argv[index], f_console_length_size);
+          substitutionss[j].array[index_2].replace.used = strnlen(arguments.argv[index], f_console_parameter_size);
           substitutionss[j].array[index_2].replace.size = substitutionss[j].array[index_2].replace.used;
 
           index = parameter->values.array[i + 2];
           substitutionss[j].array[index_2].with.string = arguments.argv[index];
-          substitutionss[j].array[index_2].with.used = strnlen(arguments.argv[index], f_console_length_size);
+          substitutionss[j].array[index_2].with.used = strnlen(arguments.argv[index], f_console_parameter_size);
           substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;
 
           substitutionss[j].used++;
@@ -512,10 +512,10 @@ extern "C" {
 #endif // _di_iki_read_substitutions_identify_
 
 #ifndef _di_iki_read_substitutions_print_
-  void iki_read_substitutions_print(const iki_read_data_t data, const f_iki_variable_t variable, const f_iki_content_t content, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_string_length_t index, const bool content_only) {
+  void iki_read_substitutions_print(const iki_read_data_t data, const f_iki_variable_t variable, const f_iki_content_t content, const f_string_ranges_t ranges, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) {
     f_status_t status = F_none;
 
-    f_string_length_t i = 0;
+    f_array_length_t i = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     range.start = 0;

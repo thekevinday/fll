@@ -377,7 +377,7 @@ extern "C" {
           return F_exist_not;
         }
 
-        const f_string_length_t name_length = strnlen(password.pw_name, length);
+        const f_array_length_t name_length = strnlen(password.pw_name, length);
 
         f_macro_string_dynamic_t_resize(status, (*name), name_length + 1);
         if (F_status_is_error(status)) return status;
@@ -412,7 +412,7 @@ extern "C" {
       return F_exist_not;
     }
 
-    const f_string_length_t name_length = strnlen(password.pw_name, length);
+    const f_array_length_t name_length = strnlen(password.pw_name, length);
 
     f_macro_string_dynamic_t_resize(status, (*name), name_length + 1);
     if (F_status_is_error(status)) return status;

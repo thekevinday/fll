@@ -642,7 +642,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
+  int fake_make_operate_section(const f_array_length_t id_section, fake_data_t *data, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_section_
 
 /**
@@ -676,7 +676,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_data_t *data, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -767,7 +767,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_string_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
+  extern void fake_make_operate_validate(const fake_data_t data, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) f_gcc_attribute_visibility_internal;
 #endif // _di_fake_make_operate_validate_
 
 /**

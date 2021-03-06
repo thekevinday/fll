@@ -1166,7 +1166,7 @@ extern "C" {
  * @see basename()
  */
 #ifndef _di_f_file_name_base_
-  extern f_status_t f_file_name_base(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_base);
+  extern f_status_t f_file_name_base(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_base);
 #endif // _di_f_file_name_base_
 
 /**
@@ -1190,7 +1190,7 @@ extern "C" {
  * @see dirname()
  */
 #ifndef _di_f_file_name_directory_
-  extern f_status_t f_file_name_directory(const f_string_t path, const f_string_length_t length, f_string_dynamic_t *name_directory);
+  extern f_status_t f_file_name_directory(const f_string_t path, const f_array_length_t length, f_string_dynamic_t *name_directory);
 #endif // _di_f_file_name_directory_
 
 /**
@@ -1381,7 +1381,7 @@ extern "C" {
  * @see read()
  */
 #ifndef _di_f_file_read_until_
-  extern f_status_t f_file_read_until(const f_file_t file, const f_string_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_read_until_
 
 /**
@@ -1643,7 +1643,7 @@ extern "C" {
  * @see lseek
  */
 #ifndef _di_f_file_seek_
-  extern f_status_t f_file_seek(const int id, const int whence, const f_string_length_t offset, f_string_length_t *seeked);
+  extern f_status_t f_file_seek(const int id, const int whence, const f_array_length_t offset, f_array_length_t *seeked);
 #endif // _di_f_file_seek_
 
 /**
@@ -1671,7 +1671,7 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_f_file_size_
-  extern f_status_t f_file_size(const f_string_t path, const bool dereference, f_string_length_t *size);
+  extern f_status_t f_file_size(const f_string_t path, const bool dereference, f_array_length_t *size);
 #endif // _di_f_file_size_
 
 /**
@@ -1701,7 +1701,7 @@ extern "C" {
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_status_t f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_string_length_t *size);
+  extern f_status_t f_file_size_at(const int at_id, const f_string_t path, const bool dereference, f_array_length_t *size);
 #endif // _di_f_file_size_at_
 
 /**
@@ -1726,7 +1726,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #ifndef _di_f_file_size_by_id_
-  extern f_status_t f_file_size_by_id(const int id, f_string_length_t *size);
+  extern f_status_t f_file_size_by_id(const int id, f_array_length_t *size);
 #endif // _di_f_file_size_by_id_
 
 /**
@@ -1951,7 +1951,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_
-  extern f_status_t f_file_stream_read(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_
 
 /**
@@ -1984,7 +1984,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_block_
-  extern f_status_t f_file_stream_read_block(const f_file_t file, const f_string_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_block(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_block_
 
 /**
@@ -2023,7 +2023,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_until_
-  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_string_length_t amount, const f_string_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t amount, const f_array_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_until_
 
 /**
@@ -2102,7 +2102,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_
-  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written);
 #endif // _di_f_file_stream_write_
 
 /**
@@ -2137,7 +2137,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_block_
-  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written);
 #endif // _di_f_file_stream_write_block_
 
 /**
@@ -2173,7 +2173,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_until_
-  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_length_t total, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written);
 #endif // _di_f_file_stream_write_until_
 
 /**
@@ -2208,7 +2208,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_range_
-  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_length_t amount, const f_string_range_t range, f_string_length_t *written);
+  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_string_range_t range, f_array_length_t *written);
 #endif // _di_f_file_stream_write_range_
 
 
@@ -2379,7 +2379,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_
-  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
+  extern f_status_t f_file_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
 #endif // _di_f_file_write_
 
 /**
@@ -2411,7 +2411,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_block_
-  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_string_length_t *written);
+  extern f_status_t f_file_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
 #endif // _di_f_file_write_block_
 
 /**
@@ -2444,7 +2444,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_until_
-  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_string_length_t total, f_string_length_t *written);
+  extern f_status_t f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written);
 #endif // _di_f_file_write_until_
 
 /**
@@ -2476,7 +2476,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_file_write_range_
-  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_string_length_t *written);
+  extern f_status_t f_file_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
 #endif // _di_f_file_write_range_
 
 #ifdef __cplusplus

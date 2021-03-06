@@ -182,9 +182,9 @@ extern "C" {
     {
       f_array_length_t locations[operations_length];
       f_array_length_t locations_length = 0;
-      f_string_length_t i = 0;
-      f_string_length_t j = 0;
-      f_string_length_t k = 0;
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+      f_array_length_t k = 0;
 
       for (; i < data->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
 
@@ -379,13 +379,13 @@ extern "C" {
 #ifndef _di_fake_delete_data_
   f_status_t fake_delete_data(fake_data_t *data) {
 
-    for (f_string_length_t i = 0; i < fake_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < fake_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
 
     f_macro_string_dynamics_t_delete_simple(data->define);
     f_macro_string_dynamic_t_delete_simple(data->fakefile);

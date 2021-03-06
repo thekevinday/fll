@@ -54,7 +54,7 @@ extern "C" {
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_fl_environment_load_name_
-  extern f_status_t fl_environment_load_name(const f_string_t name, const f_string_length_t length, f_string_maps_t *environment);
+  extern f_status_t fl_environment_load_name(const f_string_t name, const f_array_length_t length, f_string_maps_t *environment);
 #endif // _di_fl_environment_load_name_
 
 /**

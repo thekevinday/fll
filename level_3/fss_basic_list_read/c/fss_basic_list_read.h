@@ -169,7 +169,7 @@ extern "C" {
   typedef struct {
     f_console_parameter_t parameters[fss_basic_list_read_total_parameters];
 
-    f_string_lengths_t remaining;
+    f_array_lengths_t remaining;
     bool process_pipe;
 
     f_file_t output;
@@ -181,7 +181,7 @@ extern "C" {
     f_string_quantity_t quantity;
 
     uint8_t delimit_mode;
-    f_string_length_t delimit_depth;
+    f_array_length_t delimit_depth;
 
     f_color_context_t context;
   } fss_basic_list_read_data_t;
@@ -189,7 +189,7 @@ extern "C" {
   #define fss_basic_list_read_data_t_initialize \
     { \
       fss_basic_list_read_console_parameter_t_initialize, \
-      f_string_lengths_t_initialize, \
+      f_array_lengths_t_initialize, \
       F_false, \
       f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \

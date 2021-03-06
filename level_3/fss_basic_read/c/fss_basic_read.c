@@ -349,8 +349,8 @@ extern "C" {
           status = F_status_set_error(F_parameter);
         }
         else if (data->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
-          const f_string_length_t location = data->parameters[fss_basic_read_parameter_delimit].values.array[0];
-          f_string_length_t length = strnlen(arguments.argv[location], f_console_length_size);
+          const f_array_length_t location = data->parameters[fss_basic_read_parameter_delimit].values.array[0];
+          f_array_length_t length = strnlen(arguments.argv[location], f_console_parameter_size);
 
           if (length == 0) {
             fl_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
@@ -401,7 +401,7 @@ extern "C" {
 
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-      f_string_length_t original_size = data->quantity.total;
+      f_array_length_t original_size = data->quantity.total;
 
       if (F_status_is_error_not(status)) {
         status = fss_basic_read_main_preprocess_depth(arguments, *data, &depths);
@@ -536,16 +536,16 @@ extern "C" {
 #ifndef _di_fss_basic_read_delete_data_
   f_status_t fss_basic_read_delete_data(fss_basic_read_data_t *data) {
 
-    for (f_string_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
     f_macro_fss_contents_t_delete_simple(data->contents);
     f_macro_fss_objects_t_delete_simple(data->objects);
     f_macro_string_dynamic_t_delete_simple(data->buffer);
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
 
     f_macro_color_context_t_delete_simple(data->context);
 
