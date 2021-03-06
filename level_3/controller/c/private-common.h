@@ -295,27 +295,49 @@ extern "C" {
   };
 #endif // _di_controller_resource_limit_t_
 
+#ifndef _di_controller_execute_set_t_
+  typedef struct {
+    fl_execute_parameter_t parameter;
+    fl_execute_as_t as;
+  } controller_execute_set_t;
+
+  #define controller_execute_set_t_initialize { \
+    fl_execute_parameter_t_initialize, \
+    fl_execute_as_t_initialize \
+  }
+
+  #define controller_macro_execute_set_t_initialize(option, environment, signals, data, as) { \
+    fl_macro_execute_parameter_t_initialize(option, environment, signals, data), \
+    as \
+  }
+
+  #define controller_macro_execute_set_t_clear(set) \
+    fl_macro_execute_parameter_t_clear(set.parameter) \
+    fl_macro_execute_as_t_clear(set.as)
+#endif // _di_controller_execute_set_t_
+
+/**
+ * A structure for sharing mutexes globally between different threads.
+ *
+ * The asynchronous lock is intended to lock any activity on the asynchronouss structure.
+ * The print lock is intended to lock any activity printing to stdout/stderr.
+ * The process lock is intended to lock any activity on the processs structure.
+ * The rule lock is intended to lock any activity on the rules structure.
+ */
 #ifndef _di_controller_mutex_t_
   typedef struct {
     f_thread_mutex_t asynchronous;
-    f_thread_mutex_t cache;
     f_thread_mutex_t print;
+    f_thread_mutex_t process;
     f_thread_mutex_t rule;
   } controller_mutex_t;
 
-  #define controller_mutex_t_initialize \
-    { \
-      f_thread_mutex_t_initialize, \
-      f_thread_mutex_t_initialize, \
-      f_thread_mutex_t_initialize, \
-      f_thread_mutex_t_initialize, \
-    }
-
-  #define controller_macro_mutex_t_delete_simple(mutex) \
-    f_thread_mutex_delete(&mutex.asynchronous); \
-    f_thread_mutex_delete(&mutex.cache); \
-    f_thread_mutex_delete(&mutex.print); \
-    f_thread_mutex_delete(&mutex.rule);
+  #define controller_mutex_t_initialize { \
+    f_thread_mutex_t_initialize, \
+    f_thread_mutex_t_initialize, \
+    f_thread_mutex_t_initialize, \
+    f_thread_mutex_t_initialize \
+  }
 #endif // _di_controller_mutex_t_
 
 #ifndef _di_controller_rule_action_t_
@@ -348,24 +370,24 @@ extern "C" {
 
   typedef struct {
     uint8_t type;
-
-    f_string_length_t line;
-
+    f_array_length_t line;
     f_status_t status;
 
     f_string_dynamics_t parameters;
   } controller_rule_action_t;
 
-  #define controller_rule_action_t_initialize \
-    { \
-      0, \
-      0, \
-      F_known_not, \
-      f_string_dynamics_t_initialize, \
-    }
+  #define controller_rule_action_t_initialize { \
+    0, \
+    0, \
+    F_known_not, \
+    f_string_dynamics_t_initialize, \
+  }
 
-  #define controller_macro_rule_action_t_delete_simple(action) \
-    f_macro_string_dynamics_t_delete_simple(action.parameters);
+  #define controller_macro_rule_action_t_clear(rule) \
+    type = 0; \
+    line = 0; \
+    status = F_known_not; \
+    f_macro_string_dynamics_t_clear(rule.parameters)
 #endif // _di_controller_rule_action_t_
 
 #ifndef _di_controller_rule_actions_t_
@@ -376,21 +398,16 @@ extern "C" {
     f_array_length_t used;
   } controller_rule_actions_t;
 
-  #define controller_rule_actions_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_rule_actions_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_rule_actions_t_delete_simple(actions) \
-    actions.used = actions.size; \
-    while (actions.used) { \
-      actions.used--; \
-      controller_macro_rule_action_t_delete_simple(actions.array[actions.used]); \
-    } \
-    f_memory_delete(actions.size, sizeof(controller_rule_action_t), (void **) & actions.array); \
-    actions.size = 0;
+  #define controller_macro_rule_actions_t_clear(actions) \
+    actions.array = 0; \
+    actions.size = 0; \
+    actions.used = 0;
 #endif // _di_controller_rule_actions_t_
 
 #ifndef _di_controller_rule_item_t_
@@ -403,7 +420,7 @@ extern "C" {
 
   typedef struct {
     uint8_t type;
-    f_string_length_t line;
+    f_array_length_t line;
 
     controller_rule_actions_t actions;
   } controller_rule_item_t;
@@ -415,8 +432,10 @@ extern "C" {
       controller_rule_actions_t_initialize, \
     }
 
-  #define controller_macro_rule_item_t_delete_simple(item) \
-    controller_macro_rule_actions_t_delete_simple(item.actions)
+  #define controller_macro_rule_item_t_clear(item) \
+    item.type = 0; \
+    item.line = 0; \
+    controller_macro_rule_actions_t_clear(item.actions);
 #endif // _di_controller_rule_item_t_
 
 #ifndef _di_controller_rule_items_t_
@@ -427,21 +446,16 @@ extern "C" {
     f_array_length_t used;
   } controller_rule_items_t;
 
-  #define controller_rule_items_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_rule_items_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_rule_items_t_delete_simple(items) \
-    items.used = items.size; \
-    while (items.used) { \
-      items.used--; \
-      controller_macro_rule_item_t_delete_simple(items.array[items.used]); \
-    } \
-    f_memory_delete(items.size, sizeof(controller_rule_item_t), (void **) & items.array); \
-    items.size = 0;
+  #define controller_macro_rule_items_t_clear(items) \
+    items.array = 0; \
+    items.size = 0; \
+    items.used = 0;
 #endif // _di_controller_rule_items_t_
 
 #ifndef _di_controller_rule_t_
@@ -479,11 +493,6 @@ extern "C" {
   #define controller_rule_has_user          0x10
 
   typedef struct {
-    f_status_t status;
-
-    f_thread_mutex_t lock;
-    f_thread_condition_t wait;
-
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
     f_number_unsigned_t timeout_stop;
@@ -518,56 +527,60 @@ extern "C" {
     controller_rule_items_t items;
   } controller_rule_t;
 
-  #define controller_rule_t_initialize \
-    { \
-      F_known_not, \
-      f_thread_mutex_t_initialize, \
-      f_thread_condition_t_initialize, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      0, \
-      f_time_spec_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_maps_t_initialize, \
-      f_string_maps_t_initialize, \
-      f_string_dynamics_t_initialize, \
-      f_string_dynamics_t_initialize, \
-      f_string_dynamics_t_initialize, \
-      f_string_dynamics_t_initialize, \
-      f_int32s_t_initialize, \
-      f_capability_t_initialize, \
-      f_control_group_t_initialize, \
-      f_int32s_t_initialize, \
-      f_limit_sets_t_initialize, \
-      f_execute_scheduler_t_initialize, \
-      controller_rule_items_initialize, \
-    }
+  #define controller_rule_t_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    f_time_spec_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_maps_t_initialize, \
+    f_string_maps_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_int32s_t_initialize, \
+    f_capability_t_initialize, \
+    f_control_group_t_initialize, \
+    f_int32s_t_initialize, \
+    f_limit_sets_t_initialize, \
+    f_execute_scheduler_t_initialize, \
+    controller_rule_items_initialize, \
+  }
 
-  #define controller_macro_rule_t_delete_simple(rule) \
-    f_macro_thread_mutex_t_delete_simple(rule.lock) \
-    f_macro_thread_condition_t_delete_simple(rule.wait) \
-    f_macro_string_dynamic_t_delete_simple(rule.id) \
-    f_macro_string_dynamic_t_delete_simple(rule.name) \
-    f_macro_string_dynamic_t_delete_simple(rule.path) \
-    f_macro_string_dynamic_t_delete_simple(rule.script) \
-    f_macro_string_maps_t_delete_simple(rule.define) \
-    f_macro_string_maps_t_delete_simple(rule.parameter) \
-    f_macro_string_dynamics_t_delete_simple(rule.environment) \
-    f_macro_string_dynamics_t_delete_simple(rule.need) \
-    f_macro_string_dynamics_t_delete_simple(rule.want) \
-    f_macro_string_dynamics_t_delete_simple(rule.wish) \
-    f_macro_int32s_t_delete_simple(rule.affinity) \
-    f_capability_delete(&rule.capability); \
-    f_macro_control_group_t_delete_simple(rule.control_group) \
-    f_macro_int32s_t_delete_simple(rule.groups) \
-    f_macro_limit_sets_t_delete_simple(rule.limits) \
-    controller_macro_rule_items_t_delete_simple(rule.items)
+  #define controller_macro_rule_t_clear(rule) \
+    rule.timeout_kill = 0; \
+    rule.timeout_start = 0; \
+    rule.timeout_stop = 0; \
+    rule.has = 0; \
+    rule.nice = 0; \
+    rule.user = 0; \
+    rule.group = 0; \
+    f_macro_time_spec_t_clear(rule.timestamp) \
+    f_macro_string_dynamic_t_clear(rule.id) \
+    f_macro_string_dynamic_t_clear(rule.name) \
+    f_macro_string_dynamic_t_clear(rule.path) \
+    f_macro_string_dynamic_t_clear(rule.script) \
+    f_macro_string_maps_t_clear(rule.define) \
+    f_macro_string_maps_t_clear(rule.parameter) \
+    f_macro_string_dynamics_t_clear(rule.environment) \
+    f_macro_string_dynamics_t_clear(rule.need) \
+    f_macro_string_dynamics_t_clear(rule.want) \
+    f_macro_string_dynamics_t_clear(rule.wish) \
+    f_macro_int32s_t_clear(rule.affinity) \
+    f_macro_capability_t_clear(rule.capability) \
+    f_macro_control_group_t_clear(rule.control_group) \
+    f_macro_int32s_t_clear(rule.groups) \
+    f_macro_limit_sets_t_clear(rule.limits) \
+    f_macro_execute_scheduler_t_clear(rule.scheduler) \
+    controller_macro_rule_items_t_clear(rule.items)
 #endif // _di_controller_rule_t_
 
 #ifndef _di_controller_rules_t_
@@ -578,22 +591,66 @@ extern "C" {
     f_array_length_t used;
   } controller_rules_t;
 
-  #define controller_rules_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_rules_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_rules_t_delete_simple(rules) \
-    rules.used = rules.size; \
-    while (rules.used) { \
-      rules.used--; \
-      controller_macro_rule_t_delete_simple(rules.array[rules.used]); \
-    } \
-    f_memory_delete(rules.size, sizeof(controller_rule_t), (void **) & rules.array); \
-    rules.size = 0;
+  #define controller_macro_rules_t_clear(rules) \
+    rules.array = 0; \
+    rules.size = 0; \
+    rules.used = 0;
 #endif // _di_controller_rules_t_
+
+/**
+ * Store controller process information for some rule.
+ *
+ * This refers to "process" as in the processing of a rule and does not refer to "process" as in a CPU process.
+ *
+ * This holds the success/failure rate and any associated locks.
+ * This operates based on the rule id string (such as "network/ntpdate").
+ */
+#ifndef _di_controller_process_t_
+  typedef struct {
+    f_status_t status;
+    f_string_dynamic_t id;
+
+    f_thread_mutex_t lock;
+    f_thread_condition_t wait;
+  } controller_process_t;
+
+  #define controller_process_t_initialize { \
+    F_known_not, \
+    f_string_dynamic_t_initialize \
+    f_thread_mutex_t_initialize, \
+    f_thread_condition_t_initialize, \
+  }
+
+  #define controller_macro_process_t_clear(process) \
+    process.status = F_known_not; \
+    f_macro_string_dynamic_t_clear(process.id)
+#endif // _di_controller_process_t_
+
+#ifndef _di_controller_processs_t_
+  typedef struct {
+    controller_process_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_processs_t;
+
+  #define controller_processs_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
+
+  #define controller_macro_processs_t_clear(process) \
+    process.array = 0; \
+    process.size = 0; \
+    process.used = 0;
+#endif // _di_controller_processs_t_
 
 #ifndef _di_controller_entry_action_t_
   enum {
@@ -617,7 +674,7 @@ extern "C" {
     uint8_t type;
     uint8_t code;
 
-    f_string_length_t line;
+    f_array_length_t line;
     f_number_unsigned_t number;
 
     f_status_t status;
@@ -625,18 +682,22 @@ extern "C" {
     f_string_dynamics_t parameters;
   } controller_entry_action_t;
 
-  #define controller_entry_action_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-      0, \
-      F_known_not, \
-      f_string_dynamics_t_initialize, \
-    }
+  #define controller_entry_action_t_initialize { \
+    0, \
+    0, \
+    0, \
+    0, \
+    F_known_not, \
+    f_string_dynamics_t_initialize, \
+  }
 
-  #define controller_macro_entry_action_t_delete_simple(action) \
-    f_macro_string_dynamics_t_delete_simple(action.parameters);
+  #define controller_macro_entry_action_t_clear(action) \
+    action.type = 0; \
+    action.code = 0; \
+    action.line = 0; \
+    action.number = 0; \
+    action.status = F_known_not; \
+    f_macro_string_dynamics_t_clear(action.parameters)
 #endif // _di_controller_entry_action_t_
 
 #ifndef _di_controller_entry_actions_t_
@@ -647,28 +708,23 @@ extern "C" {
     f_array_length_t used;
   } controller_entry_actions_t;
 
-  #define controller_entry_actions_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_entry_actions_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_entry_actions_t_delete_simple(actions) \
-    actions.used = actions.size; \
-    while (actions.used) { \
-      actions.used--; \
-      controller_macro_entry_action_t_delete_simple(actions.array[actions.used]); \
-    } \
-    f_memory_resize(actions.size, 0, sizeof(controller_entry_action_t), (void **) & actions.array); \
-    actions.size = 0;
+  #define controller_macro_entry_actions_t_clear(actions) \
+    actions.array = 0; \
+    actions.size = 0; \
+    actions.used = 0;
 #endif // _di_controller_entry_actions_t_
 
 #ifndef _di_controller_entry_item_t_
   typedef struct {
-    f_string_length_t line;
-
+    f_array_length_t line;
     f_string_dynamic_t name;
+
     controller_entry_actions_t actions;
   } controller_entry_item_t;
 
@@ -679,9 +735,10 @@ extern "C" {
       controller_entry_actions_t_initialize, \
     }
 
-  #define controller_macro_entry_item_t_delete_simple(item) \
-    f_macro_string_dynamic_t_delete_simple(item.name); \
-    controller_macro_entry_actions_t_delete_simple(item.actions)
+  #define controller_macro_entry_item_t_clear(item) \
+    item.line = 0; \
+    f_macro_string_dynamic_t_clear(item.name) \
+    controller_macro_entry_actions_t_clear(item.actions)
 #endif // _di_controller_entry_item_t_
 
 #ifndef _di_controller_entry_items_t_
@@ -692,37 +749,33 @@ extern "C" {
     f_array_length_t used;
   } controller_entry_items_t;
 
-  #define controller_entry_items_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_entry_items_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_entry_items_t_delete_simple(items) \
-    items.used = items.size; \
-    while (items.used) { \
-      items.used--; \
-      controller_macro_entry_item_t_delete_simple(items.array[items.used]); \
-    } \
-    f_memory_delete(items.size, sizeof(controller_entry_item_t), (void **) & items.array); \
-    items.size = 0;
+  #define controller_macro_entry_items_t_clear(items) \
+    items.array = 0; \
+    items.size = 0; \
+    items.used = 0;
 #endif // _di_controller_entry_items_t_
 
 #ifndef _di_controller_entry_t_
   typedef struct {
     f_status_t status;
+
     controller_entry_items_t items;
   } controller_entry_t;
 
-  #define controller_entry_t_initialize \
-    { \
-      F_known_not, \
-      controller_entry_items_t_initialize, \
-    }
+  #define controller_entry_t_initialize { \
+    F_known_not, \
+    controller_entry_items_t_initialize, \
+  }
 
-  #define controller_macro_entry_t_delete_simple(entry) \
-    controller_macro_entry_items_t_delete_simple(entry.items)
+  #define controller_macro_entry_t_clear(entry) \
+    entry.status = F_known_not; \
+    controller_macro_entry_items_t_clear(entry.items)
 #endif // _di_controller_entry_t_
 
 #ifndef _di_controller_setting_t
@@ -755,35 +808,42 @@ extern "C" {
     controller_rules_t rules;
   } controller_setting_t;
 
-  #define controller_setting_t_initialize \
-    { \
-      F_false, \
-      0, \
-      0, \
-      3, \
-      3, \
-      3, \
-      F_false, \
-      0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      controller_entry_t_initialize, \
-      controller_rules_t_initialize, \
-    }
+  #define controller_setting_t_initialize { \
+    F_false, \
+    0, \
+    0, \
+    3, \
+    3, \
+    3, \
+    F_false, \
+    0, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    controller_entry_t_initialize, \
+    controller_rules_t_initialize, \
+  }
 
-  #define controller_macro_setting_t_delete_simple(setting) \
-    f_macro_string_dynamic_t_delete_simple(setting.path_control) \
-    f_macro_string_dynamic_t_delete_simple(setting.path_pid) \
-    f_macro_string_dynamic_t_delete_simple(setting.path_setting) \
-    controller_macro_entry_t_delete_simple(setting.entry) \
-    controller_macro_rules_t_delete_simple(setting.rules)
+  #define controller_macro_setting_t_clear(setting) \
+    setting.interruptable = F_false; \
+    setting.ready = 0; \
+    setting.signal = 0; \
+    setting.timeout_kill = 3; \
+    setting.timeout_start = 3; \
+    setting.timeout_stop = 3; \
+    setting.failsafe_enabled = F_false; \
+    setting.failsafe_rule_id = 0; \
+    f_macro_string_dynamic_t_clear(entry.path_control) \
+    f_macro_string_dynamic_t_clear(entry.path_pid) \
+    f_macro_string_dynamic_t_clear(entry.path_setting) \
+    controller_macro_entry_t_clear(entry.entry) \
+    controller_macro_rules_t_clear(entry.setting)
 #endif // _di_controller_setting_t
 
 #ifndef _di_controller_cache_action_t_
   typedef struct {
-    f_string_length_t line_action;
-    f_string_length_t line_item;
+    f_array_length_t line_action;
+    f_array_length_t line_item;
 
     f_string_dynamic_t name_action;
     f_string_dynamic_t name_file;
@@ -792,29 +852,22 @@ extern "C" {
     f_string_dynamic_t generic;
   } controller_cache_action_t;
 
-  #define controller_cache_action_t_initialize \
-    { \
-      0, \
-      0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-    }
+  #define controller_cache_action_t_initialize { \
+    0, \
+    0, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+  }
 
   #define controller_macro_cache_action_t_clear(cache) \
     cache.line_action = 0; \
     cache.line_item = 0; \
-    cache.name_action.used = 0; \
-    cache.name_file.used = 0; \
-    cache.name_item.used = 0; \
-    cache.generic.used = 0;
-
-  #define controller_macro_cache_action_t_delete_simple(cache) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_action) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.name_item) \
-    f_macro_string_dynamic_t_delete_simple(cache.generic)
+    f_macro_string_dynamic_t_clear(cache.name_action) \
+    f_macro_string_dynamic_t_clear(cache.name_file) \
+    f_macro_string_dynamic_t_clear(cache.name_item) \
+    f_macro_string_dynamic_t_clear(cache.generic)
 #endif // _di_controller_cache_action_t_
 
 #ifndef _di_controller_cache_t_
@@ -842,39 +895,41 @@ extern "C" {
     controller_cache_action_t action;
   } controller_cache_t;
 
-  #define controller_cache_t_initialize \
-    { \
-      f_time_spec_t_initialize, \
-      f_string_range_t_initialize, \
-      f_array_lengths_t_initialize, \
-      f_array_lengths_t_initialize, \
-      f_fss_comments_t_initialize, \
-      f_fss_delimits_t_initialize, \
-      f_fss_content_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      controller_cache_action_t_initialize, \
-    }
+  #define controller_cache_t_initialize { \
+    f_time_spec_t_initialize, \
+    f_string_range_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_fss_comments_t_initialize, \
+    f_fss_delimits_t_initialize, \
+    f_fss_content_t_initialize, \
+    f_fss_contents_t_initialize, \
+    f_fss_contents_t_initialize, \
+    f_fss_objects_t_initialize, \
+    f_fss_objects_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    controller_cache_action_t_initialize, \
+  }
 
-  #define controller_macro_cache_t_delete_simple(cache) \
-    f_macro_array_lengths_t_delete_simple(cache.ats) \
-    f_macro_array_lengths_t_delete_simple(cache.stack) \
-    f_macro_fss_comments_t_delete_simple(cache.comments) \
-    f_macro_fss_delimits_t_delete_simple(cache.delimits) \
-    f_macro_fss_content_t_delete_simple(cache.content_action) \
-    f_macro_fss_contents_t_delete_simple(cache.content_actions) \
-    f_macro_fss_contents_t_delete_simple(cache.content_items) \
-    f_macro_fss_objects_t_delete_simple(cache.object_actions) \
-    f_macro_fss_objects_t_delete_simple(cache.object_items) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_file) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_item) \
-    f_macro_string_dynamic_t_delete_simple(cache.buffer_path) \
-    controller_macro_cache_action_t_delete_simple(cache.action)
+  #define controller_macro_cache_t_clear(cache) \
+    f_macro_time_spec_t_clear(cache.timestamp) \
+    f_macro_string_range_t_clear(cache.range_action) \
+    cache.ats = 0; \
+    cache.stack = 0; \
+    f_macro_time_spec_t_clear(cache.timestamp) \
+    f_macro_fss_comments_t_clear(cache.comments) \
+    f_macro_fss_delimits_t_clear(cache.delimits) \
+    f_macro_fss_content_t_clear(cache.content_action) \
+    f_macro_fss_contents_t_clear(cache.content_actions) \
+    f_macro_fss_contents_t_clear(cache.content_items) \
+    f_macro_fss_objects_t_clear(cache.object_actions) \
+    f_macro_fss_objects_t_clear(cache.object_items) \
+    f_macro_string_dynamic_t_clear(cache.buffer_file) \
+    f_macro_string_dynamic_t_clear(cache.buffer_item) \
+    f_macro_string_dynamic_t_clear(cache.buffer_path) \
+    controller_macro_cache_action_t_clear(cache.action)
 #endif // _di_controller_cache_t_
 
 #ifndef _di_controller_asynchronous_t_
@@ -894,12 +949,23 @@ extern "C" {
     uint8_t options;
     pid_t child;
 
-    void *thread;
     f_array_lengths_t stack;
-    controller_cache_action_t cache;
+    controller_cache_t cache;
+    controller_rule_t rule;
   } controller_asynchronous_t;
 
-  #define controller_asynchronous_t_initialize { f_thread_id_t_initialize, f_thread_mutex_t_initialize, 0, 0, 0, 0, 0, 0, f_array_lengths_t_initialize, controller_cache_action_t_initialize }
+  #define controller_asynchronous_t_initialize { \
+    f_thread_id_t_initialize, \
+    f_thread_mutex_t_initialize, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    controller_cache_t_initialize, \
+    controller_rule_t_initialize \
+  }
 
   #define controller_macro_asynchronous_t_clear(asynchronous) \
     f_macro_thread_id_t_clear(asynchronous.id) \
@@ -908,114 +974,127 @@ extern "C" {
     asynchronous.action = 0; \
     asynchronous.options = 0; \
     asynchronous.child = 0; \
-    asynchronous.thread = 0; \
     f_macro_array_lengths_t_clear(asynchronous.stack) \
-    controller_macro_cache_action_t_clear(asynchronous.cache)
-
-  #define controller_macro_asynchronous_t_delete_simple(asynchronous) \
-    controller_macro_cache_action_t_delete_simple(asynchronous.cache) \
-    f_macro_array_lengths_t_delete_simple(asynchronous.stack)
+    controller_macro_cache_t_clear(asynchronous.cache) \
+    controller_macro_rule_t_clear(asynchronous.rule)
 #endif // _di_controller_asynchronous_t_
 
 #ifndef _di_controller_asynchronouss_t_
   typedef struct {
-    bool enabled;
-
     controller_asynchronous_t *array;
 
     f_array_length_t size;
     f_array_length_t used;
   } controller_asynchronouss_t;
 
-  #define controller_asynchronouss_t_initialize \
-    { \
-      F_true, \
-      0, \
-      0, \
-      0, \
-    }
+  #define controller_asynchronouss_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
 
-  #define controller_macro_asynchronouss_t_delete_simple(asynchronouss) \
-    asynchronouss.used = asynchronouss.size; \
-    while (asynchronouss.used) { \
-      asynchronouss.used--; \
-      controller_macro_asynchronous_t_delete_simple(asynchronouss.array[asynchronouss.used]) \
-    } \
-    f_memory_delete(asynchronouss.size, sizeof(controller_asynchronous_t), (void **) & asynchronouss.array); \
-    asynchronouss.size = 0;
+  #define controller_macro_asynchronouss_t_clear(asynchronouss) \
+    asynchronouss.array = 0; \
+    asynchronouss.size = 0; \
+    asynchronouss.used = 0;
 #endif // _di_controller_asynchronouss_t_
 
 #ifndef _di_controller_thread_t_
-  #define controller_thread_cache_cleanup_interval_long  3600  // 1 hour in seconds.
-  #define controller_thread_cache_cleanup_interval_short 180   // 3 minutes in seconds.
-  #define controller_thread_asynchronous_allocation_step 16    // Total number of asynchronous threads increase by.
-  #define controller_thread_asynchronous_total           65535 // Total number of asynchronous threads allowed at any one time.
-
   typedef struct {
-    controller_cache_t *cache_main;
-    controller_cache_action_t *cache_action;
-    controller_data_t *data;
-    controller_mutex_t *mutex;
-    controller_setting_t *setting;
-    f_array_lengths_t *stack;
+    bool enabled;
+
+    f_thread_id_t id_cleanup;
+    f_thread_id_t id_control;
+    f_thread_id_t id_rule;
+    f_thread_id_t id_signal;
+
+    controller_mutex_t mutex;
     controller_asynchronouss_t asynchronouss;
   } controller_thread_t;
 
-  #define controller_thread_t_initialize { 0, 0, 0, 0, 0, 0, controller_asynchronouss_t_initialize }
+  #define controller_thread_t_initialize { \
+    F_true, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
+    controller_mutex_t_initialize, \
+    controller_asynchronouss_t_initialize \
+  }
 
-  #define controller_macro_thread_t_initialize(cache_main, cache_action, data, mutex, setting, stack) { cache_main, cache_action, data, mutex, setting, stack, controller_asynchronouss_t_initialize }
+  #define controller_macro_thread_t_initialize(mutex, asynchronouss) { \
+    F_true, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize. \
+    mutex, \
+    asynchronouss \
+  }
 
   #define controller_macro_thread_t_clear(thread) \
-    thread.cache_main = 0; \
-    thread.cache_action = 0; \
-    thread.data = 0; \
-    thread.mutex = 0; \
-    thread.setting = 0; \
-    thread.stack = 0; \
-    thread.asynchronouss.used = 0;
+    thread.enabled = F_true; \
+    f_macro_thread_id_t_clear(thread.id_cleanup); \
+    f_macro_thread_id_t_clear(thread.id_control); \
+    f_macro_thread_id_t_clear(thread.id_rule); \
+    f_macro_thread_id_t_clear(thread.id_signal); \
+    controller_macro_mutex_t_clear(thread.mutex), \
+    controller_macro_asynchronouss_t_clear(thread.asynchronouss)
+#endif // _di_controller_data_common_t_
 
-  #define controller_macro_thread_t_delete_simple(thread) \
-    controller_asynchronouss_resize(0, &thread.asynchronouss);
-#endif // _di_controller_thread_t_
+#ifndef _di_controller_thread_data_t_
+  // @todo relocate these under a different ifdef block.
+  #define controller_thread_cache_cleanup_interval_long  3600  // 1 hour in seconds.
+  #define controller_thread_cache_cleanup_interval_short 180   // 3 minutes in seconds.
 
-#ifndef _di_controller_execute_set_t_
+  // @fixme these aren't used? consider removing or updating.
+  #define controller_thread_asynchronous_allocation_step 16    // Total number of asynchronous threads increase by.
+  #define controller_thread_asynchronous_max             65535 // Total number of asynchronous threads allowed at any one time.
+
   typedef struct {
-    fl_execute_parameter_t parameter;
-    fl_execute_as_t as;
-  } controller_execute_set_t;
+    f_array_length_t id;
 
-  #define controller_execute_set_t_initialize { fl_execute_parameter_t_initialize, fl_execute_as_t_initialize }
+    controller_data_t *data;
+    controller_setting_t *setting;
+    controller_processs_t *processs;
+    controller_thread_t *thread;
+  } controller_thread_data_t;
 
-  #define controller_macro_execute_set_t_initialize(option, environment, signals, data, as) { fl_macro_execute_parameter_t_initialize(option, environment, signals, data), as }
+  #define controller_thread_data_t_initialize { 0, 0, 0, 0, 0 }
 
-  #define controller_macro_execute_set_t_clear(set) \
-    fl_macro_execute_parameter_t_clear(set.parameter) \
-    fl_macro_execute_as_t_clear(set.as)
-#endif // _di_controller_execute_set_t_
+  #define controller_macro_thread_data_t_initialize(id, data, setting, processs, thread) { \
+    id, \
+    data, \
+    setting, \
+    processs, \
+    thread \
+  }
+
+  #define controller_macro_thread_data_t_clear(thread_data) \
+    thread_data.id = 0; \
+    thread_data.data = 0; \
+    thread_data.setting = 0; \
+    thread_data.processs = 0; \
+    thread_data.thread = 0;
+#endif // _di_controller_thread_data_t_
 
 /**
- * Resize the asynchronouss array to a larger size.
+ * Fully deallocate all memory for the given asynchronous without caring about return status.
  *
- * This will resize making the string larger based on the given length.
- * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
- * If already set to the maximum buffer size, then the resize will fail.
+ * @param asynchronous
+ *   The asynchronous to deallocate.
  *
- * @param amount
- *   A positive number representing how much to increase the size by.
- * @param asynchronouss
- *   The asynchronous array to resize.
+ * @see f_macro_array_lengths_t_delete_simple()
  *
- * @return
- *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
+ * @see controller_cache_delete_simple()
+ * @see controller_rule_delete_simple()
  */
+#ifndef _di_controller_asynchronous_delete_simple_
+  extern void controller_asynchronous_delete_simple(controller_asynchronous_t *asynchronous) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_asynchronous_delete_simple_
 
 /**
- * Increase the size of the asynchronouss array, but only if necessary.
+ * Increase the size of the asynchronous array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
@@ -1025,18 +1104,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_thread_asynchronous_allocation_step <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see controller_asynchronouss_resize()
  */
 #ifndef _di_controller_asynchronouss_increase_
   extern f_status_t controller_asynchronouss_increase(controller_asynchronouss_t *asynchronouss) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_asynchronouss_increase_
 
 /**
- * Resize the string asynchronouss array.
+ * Resize the string asynchronous array.
  *
  * @param length
  *   The new size to use.
@@ -1048,10 +1129,92 @@ extern "C" {
  *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_memory_resize()
  */
 #ifndef _di_controller_asynchronouss_resize_
   extern f_status_t controller_asynchronouss_resize(const f_array_length_t length, controller_asynchronouss_t *asynchronouss) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_asynchronouss_resize_
+
+/**
+ * Fully deallocate all memory for the given cache without caring about return status.
+ *
+ * @param cache
+ *   The cache to deallocate.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_cache_action_delete_simple_
+  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_cache_action_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given cache without caring about return status.
+ *
+ * @param cache
+ *   The cache to deallocate.
+ *
+ * @see f_macro_array_lengths_t_delete_simple()
+ * @see f_macro_fss_delimits_t_delete_simple()
+ *
+ * @see controller_cache_action_delete_simple()
+ * @see f_string_dynamic_resize()
+ * @see f_string_ranges_resize()
+ * @see f_string_rangess_resize()
+ */
+#ifndef _di_controller_cache_delete_simple_
+  extern void controller_cache_delete_simple(controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_cache_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given entry action without caring about return status.
+ *
+ * @param action
+ *   The action to deallocate.
+ *
+ * @see f_string_dynamics_resize()
+ */
+#ifndef _di_controller_entry_action_delete_simple_
+  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given entry actions without caring about return status.
+ *
+ * @param actions
+ *   The entry_actions to deallocate.
+ *
+ * @see controller_entry_action_delete_simple()
+ * @see f_memory_delete()
+ */
+#ifndef _di_controller_entry_actions_delete_simple_
+  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_actions_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given entry item without caring about return status.
+ *
+ * @param item
+ *   The item to deallocate.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_entry_item_delete_simple_
+  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_item_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given entry items without caring about return status.
+ *
+ * @param items
+ *   The entry_items to deallocate.
+ *
+ * @see controller_entry_item_delete_simple()
+ * @see f_memory_delete()
+ */
+#ifndef _di_controller_entry_items_delete_simple_
+  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_items_delete_simple_
 
 /**
  * Print the error, locking the print mutex during the print.
@@ -1076,22 +1239,227 @@ extern "C" {
 #endif // _di_controller_error_print_locked_
 
 /**
- * Increase the size of the rules array, but only if necessary.
+ * Fully deallocate all memory for the given process without caring about return status.
  *
- * @param rules
- *   The rules to resize.
+ * @param process
+ *   The process to deallocate.
+ *
+ * @see f_string_dynamic_resize()
+ * @see f_thread_condition_delete()
+ * @see f_thread_mutex_delete()
+ */
+#ifndef _di_controller_process_delete_simple_
+  extern void controller_process_delete_simple(controller_process_t *process) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_process_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given processs without caring about return status.
+ *
+ * @param processs
+ *   The process array to deallocate.
+ *
+ * @see controller_processs_resize()
+ */
+#ifndef _di_controller_processs_delete_simple_
+  extern void controller_processs_delete_simple(controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_processs_delete_simple_
+
+/**
+ * Increase the size of the rule array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param processs
+ *   The process array to resize.
  *
  * @return
  *   F_none on success.
- *   F_array_too_large (with error bit) if the resulting new size is bigger than the max array length.
+ *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
  *
- *   Errors (with error bit) from: f_memory_resize().
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see controller_processs_resize()
+ */
+#ifndef _di_controller_processs_increase_
+  extern f_status_t controller_processs_increase(controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_
+
+/**
+ * Resize the rule array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param processs
+ *   The process array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_memory_resize()
+ */
+#ifndef _di_controller_processs_resize_
+  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_processs_resize_
+
+/**
+ * Fully deallocate all memory for the given rule action without caring about return status.
+ *
+ * @param action
+ *   The action to deallocate.
+ *
+ * @see f_string_dynamics_resize()
+ */
+#ifndef _di_controller_rule_action_delete_simple_
+  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule actions without caring about return status.
+ *
+ * @param actions
+ *   The rule_actions to deallocate.
+ *
+ * @see controller_rule_action_delete_simple()
+ * @see f_memory_delete()
+ */
+#ifndef _di_controller_rule_actions_delete_simple_
+  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_actions_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule without caring about return status.
+ *
+ * @param rule
+ *   The rule to deallocate.
+ *
+ * @see f_macro_control_group_t_delete_simple()
+ * @see f_macro_int32s_t_delete_simple()
+ * @see f_macro_limit_sets_t_delete_simple()
+ * @see f_macro_string_dynamics_t_delete_simple()
+ * @see f_macro_string_maps_t_delete_simple()
+ * @see f_macro_thread_condition_t_delete_simple()
+ * @see f_macro_thread_mutex_t_delete_simple()
+ *
+ * @see controller_rule_items_delete_simple()
+ * @see f_capability_delete()
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_rule_delete_simple_
+  extern void controller_rule_delete_simple(controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule item without caring about return status.
+ *
+ * @param item
+ *   The item to deallocate.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_rule_item_delete_simple_
+  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule items without caring about return status.
+ *
+ * @param items
+ *   The rule_items to deallocate.
+ *
+ * @see controller_rule_item_delete_simple()
+ * @see f_memory_delete()
+ */
+#ifndef _di_controller_rule_items_delete_simple_
+  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_items_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rules without caring about return status.
+ *
+ * @param rules
+ *   The rules to deallocate.
+ *
+ * @see controller_rules_resize()
+ */
+#ifndef _di_controller_rules_delete_simple_
+  extern void controller_rules_delete_simple(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rules_delete_simple_
+
+/**
+ * Increase the size of the rule array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param rules
+ *   The rule array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_increase_
   extern f_status_t controller_rules_increase(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_increase_
+
+/**
+ * Resize the rule array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param rules
+ *   The rule array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_rules_resize_
+  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rules_resize_
+
+/**
+ * Fully deallocate all memory for the given setting without caring about return status.
+ *
+ * @param setting
+ *   The setting to deallocate.
+ *
+ * @see controller_entry_delete_simple()
+ * @see controller_rules_delete_simple()
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_setting_delete_simple_
+  extern void controller_setting_delete_simple(controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_setting_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given setting without caring about return status.
+ *
+ * @param thread
+ *   The thread to deallocate.
+ *
+ * @see controller_asynchronouss_resize()
+ * @see f_thread_mutex_unlock()
+ */
+#ifndef _di_controller_thread_delete_simple_
+  extern void controller_thread_delete_simple(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_delete_simple_
 
 #ifdef __cplusplus
 } // extern "C"

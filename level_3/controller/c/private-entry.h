@@ -63,12 +63,10 @@ extern "C" {
 /**
  * Read the entry list, extracting all items and values.
  *
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
  * @param content_range
  *   The range in the list buffer representing the content.
+ * @param thread_data
+ *   The thread data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param actions
@@ -96,7 +94,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const controller_data_t data, const controller_setting_t setting, const f_string_range_t content_range, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_read(const f_string_range_t content_range, controller_thread_data_t thread_data, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -141,18 +139,15 @@ extern "C" {
 /**
  * Read the entry, extracting all lists.
  *
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
  * @param entry_name
  *   The string identifying the entry.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
  *   "/etc/controller/entries/example/my.entry" would have a rule id of "example/my".
+ * @param thread_data
+ *   The thread data.
  * @param cache
- *   A structure for containing and caching relevant data.
- * @param entry
- *   The processed entry.
+ *   The cache for the specific thread.
+ *   This should be the cache thread_data.thread->asynchronouss.array[thread_data.id].cache.
  *
  * @return
  *   F_none on success.
@@ -184,7 +179,7 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_status_t controller_entry_read(const controller_data_t data, const controller_setting_t setting, const f_string_static_t entry_name, controller_cache_t *cache, controller_entry_t *entry) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_read(const f_string_static_t entry_name, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
 #ifdef __cplusplus

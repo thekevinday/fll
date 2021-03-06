@@ -37,25 +37,25 @@ extern "C" {
 #endif // _di_controller_thread_asynchronous_cancel_
 
 /**
- * Thread for periodically clearing cache if cache is not busy.
+ * Thread for periodically cleanup data when not busy.
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_t.
+ *   Must be of type controller_thread_data_t.
  *
  * @return
  *   0, always.
  */
-#ifndef _di_controller_thread_cache_
-  extern void * controller_thread_cache(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_cache_
+#ifndef _di_controller_thread_cleanup_
+  extern void * controller_thread_cleanup(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_cleanup_
 
 /**
  * Thread for handling control requests and responses.
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_t.
+ *   Must be of type controller_thread_data_t.
  *
  * @return
  *   0, always.
@@ -69,10 +69,10 @@ extern "C" {
  *
  * @param entry_name
  *   The entry name string.
- * @param cache
- *   The main/global cache to use.
- * @param thread
- *   The thread data.
+ * @param data
+ *   The controller data.
+ * @param setting
+ *   The controller settings data.
  *
  * @return
  *   F_none on success.
@@ -81,7 +81,7 @@ extern "C" {
  *   F_failure (with error bit) on any failure.
  */
 #ifndef _di_controller_thread_main_
-  extern f_status_t controller_thread_main(const f_string_static_t entry_name, controller_cache_t *cache, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_thread_main(const f_string_static_t entry_name, controller_data_t *data, controller_setting_t *setting) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_thread_main_
 
 /**
@@ -89,7 +89,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_t.
+ *   Must be of type controller_thread_data_t.
  *
  * @return
  *   0, always.
@@ -105,7 +105,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_t.
+ *   Must be of type controller_thread_data_t.
  *
  * @return
  *   0, always.

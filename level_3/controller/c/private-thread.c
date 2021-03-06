@@ -15,7 +15,7 @@ extern "C" {
     controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) arguments;
     controller_thread_t *thread_main = (controller_thread_t *) asynchronous->thread;
 
-    if (!thread_main->asynchronouss.enabled) {
+    if (!thread_main->enabled) {
       return 0;
     }
 
@@ -47,9 +47,9 @@ extern "C" {
 #ifndef _di_controller_thread_asynchronous_cancel_
   void controller_thread_asynchronous_cancel(controller_thread_t *thread) {
 
-    thread->asynchronouss.enabled = F_false;
+    thread->enabled = F_false;
 
-    f_thread_mutex_lock(&thread->mutex->asynchronous);
+    f_thread_mutex_lock(&thread->mutex.asynchronous);
 
     for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
 
@@ -75,95 +75,89 @@ extern "C" {
 
     thread->asynchronouss.used = 0;
 
-    f_thread_mutex_unlock(&thread->mutex->asynchronous);
+    f_thread_mutex_unlock(&thread->mutex.asynchronous);
   }
 #endif // _di_controller_thread_asynchronous_cancel_
 
-#ifndef _di_controller_thread_cache_
-  void * controller_thread_cache(void *arguments) {
+#ifndef _di_controller_thread_cleanup_
+  void * controller_thread_cleanup(void *arguments) {
 
-    controller_thread_t *thread = (controller_thread_t *) arguments;
+    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
 
-    const unsigned int interval = thread->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
+    const unsigned int interval = thread_data->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
 
     f_array_length_t i = 0;
 
-    for (; thread->asynchronouss.enabled; ) {
+    for (; thread_data->thread->enabled; ) {
       sleep(interval);
 
-      if (f_thread_mutex_lock_try(&thread->mutex->cache) == F_none) {
-        controller_macro_cache_t_delete_simple((*thread->cache_main));
-        controller_macro_cache_action_t_delete_simple((*thread->cache_action));
+      if (f_thread_mutex_lock_try(&thread_data->thread->mutex.asynchronous) == F_none) {
+        controller_thread_t *thread = &thread_data->thread;
 
-        if (f_thread_mutex_lock_try(&thread->mutex->asynchronous) == F_none) {
+        if (thread->asynchronouss.used) {
+          for (i = 0; i < thread->asynchronouss.used; ++i) {
 
-          if (thread->asynchronouss.used) {
-            for (i = 0; i < thread->asynchronouss.used; ++i) {
+            if (!thread->enabled) break;
+            if (!thread->asynchronouss.array[i].state) continue;
 
-              if (!thread->asynchronouss.enabled) break;
-              if (!thread->asynchronouss.array[i].state) continue;
+            if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
 
-              if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
+            if (f_thread_mutex_lock_try(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
 
-              if (f_thread_mutex_lock_try(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
-
-                if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
-                  f_thread_join(thread->asynchronouss.array[i].id, 0);
-                  thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
-                }
-
-                if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
-                  controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
-
-                  thread->asynchronouss.array[i].state = 0;
-                }
-
-                f_thread_condition_signal(&thread->setting->rules.array[thread->asynchronouss.array[i].index].wait);
-                f_thread_mutex_unlock(&thread->setting->rules.array[thread->asynchronouss.array[i].index].lock);
+              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
+                f_thread_join(thread->asynchronouss.array[i].id, 0);
+                thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
               }
-
-              f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
-            } // for
-
-            for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
-
-              if (!thread->asynchronouss.enabled) break;
-
-              if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) break;
 
               if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
                 controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
 
                 thread->asynchronouss.array[i].state = 0;
               }
-              else if (thread->asynchronouss.array[i].state) {
-                f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
-                break;
-              }
 
+              f_thread_condition_signal(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].wait);
+              f_thread_mutex_unlock(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock);
+            }
+
+            f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
+          } // for
+
+          for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
+
+            if (!thread->enabled) break;
+
+            if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) break;
+
+            if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
+              controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
+
+              thread->asynchronouss.array[i].state = 0;
+            }
+            else if (thread->asynchronouss.array[i].state) {
               f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
-            } // for
-          }
+              break;
+            }
 
-          if (thread->asynchronouss.enabled && thread->asynchronouss.used < thread->asynchronouss.size) {
-            controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
-          }
-
-          f_thread_mutex_unlock(&thread->mutex->asynchronous);
+            f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
+          } // for
         }
 
-        f_thread_mutex_unlock(&thread->mutex->cache);
+        if (thread->enabled && thread->asynchronouss.used < thread->asynchronouss.size) {
+          controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
+        }
+
+        f_thread_mutex_unlock(&thread->mutex.asynchronous);
       }
     } // for
 
     return 0;
   }
-#endif // _di_controller_thread_cache_
+#endif // _di_controller_thread_cleanup_
 
 #ifndef _di_controller_thread_control_
   void * controller_thread_control(void *arguments) {
 
-    controller_thread_t *thread = (controller_thread_t *) arguments;
+    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
 
     // @todo
 
@@ -172,147 +166,158 @@ extern "C" {
 #endif // _di_controller_thread_control_
 
 #ifndef _di_controller_thread_main_
-  f_status_t controller_thread_main(const f_string_static_t entry_name, controller_cache_t *cache, controller_thread_t *thread) {
+  f_status_t controller_thread_main(const f_string_static_t entry_name, controller_data_t *data, controller_setting_t *setting) {
 
-    f_thread_id_t thread_cache = 0;
-    f_thread_id_t thread_control = 0;
-    f_thread_id_t thread_rule = 0;
-    f_thread_id_t thread_signal = 0;
+    f_status_t status = F_none;
 
-    f_status_t status = f_thread_create(0, &thread_signal, &controller_thread_signal, (void *) thread);
+    controller_thread_t thread = controller_thread_t_initialize;
+    controller_processs_t processs = controller_processs_t_initialize;
+    controller_thread_data_t data_main = controller_macro_thread_data_t_initialize(0, data, setting, &processs, &thread);
+
+    status = controller_asynchronouss_increase(&thread.asynchronouss);
 
     if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &thread_cache, &controller_thread_cache, (void *) thread);
+      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &data_main);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &data_main);
     }
 
     if (F_status_is_error(status)) {
-      if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-        controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        controller_error_print_locked(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
       }
     }
     else {
-      if (thread->data->parameters[controller_parameter_daemon].result == f_console_result_found) {
-        thread->setting->ready = controller_setting_ready_done;
+      if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
+        setting->ready = controller_setting_ready_done;
 
-        if (f_file_exists(thread->setting->path_pid.string) == F_true) {
-          if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-            f_thread_mutex_lock(&thread->mutex->print);
+        if (f_file_exists(setting->path_pid.string) == F_true) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&thread.mutex.print);
 
-            fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
-            fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, thread->setting->path_pid.string, thread->data->error.notable.after->string);
-            fprintf(thread->data->error.to.stream, "%s' must not already exist.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+            fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
+            fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-            f_thread_mutex_unlock(&thread->mutex->print);
+            f_thread_mutex_unlock(&thread.mutex.print);
           }
 
-          thread->setting->ready = controller_setting_ready_abort;
+          setting->ready = controller_setting_ready_abort;
           status = F_status_set_error(F_available_not);
         }
       }
       else {
-        f_thread_mutex_lock(&thread->mutex->cache);
 
-        status = controller_entry_read(*thread->data, *thread->setting, entry_name, cache, &thread->setting->entry);
+        status = controller_entry_read(entry_name, data_main, &thread.asynchronouss.array[0].cache);
 
         if (F_status_is_error(status)) {
-          thread->setting->ready = controller_setting_ready_fail;
+          setting->ready = controller_setting_ready_fail;
         }
         else if (status != F_signal && status != F_child) {
-          status = controller_preprocess_entry(cache, thread);
+          status = controller_preprocess_entry(data_main, &thread.asynchronouss.array[0].cache);
         }
 
         if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
-          if (thread->data->parameters[controller_parameter_validate].result == f_console_result_none || thread->data->parameters[controller_parameter_test].result == f_console_result_found) {
+          if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
 
-            if (f_file_exists(thread->setting->path_pid.string) == F_true) {
-              if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&thread->mutex->print);
+            if (f_file_exists(setting->path_pid.string) == F_true) {
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&thread.mutex.print);
 
-                fprintf(thread->data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(thread->data->error.to.stream, "%s%sThe pid file '", thread->data->error.context.before->string, thread->data->error.prefix ? thread->data->error.prefix : f_string_empty_s);
-                fprintf(thread->data->error.to.stream, "%s%s%s%s", thread->data->error.context.after->string, thread->data->error.notable.before->string, thread->setting->path_pid.string, thread->data->error.notable.after->string);
-                fprintf(thread->data->error.to.stream, "%s' must not already exist.%s%c", thread->data->error.context.before->string, thread->data->error.context.after->string, f_string_eol_s[0]);
+                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+                fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
+                fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&thread->mutex->print);
+                f_thread_mutex_unlock(&thread.mutex.print);
               }
 
-              thread->setting->ready = controller_setting_ready_fail;
+              setting->ready = controller_setting_ready_fail;
               status = F_status_set_error(F_available_not);
             }
             else {
-              status = controller_process_entry(cache, thread);
+              status = controller_process_entry(data_main, &thread.asynchronouss.array[0].cache);
 
               if (F_status_is_error(status)) {
-                thread->setting->ready = controller_setting_ready_fail;
+                setting->ready = controller_setting_ready_fail;
               }
               else if (status == F_signal || status == F_child) {
-                thread->setting->ready = controller_setting_ready_abort;
+                setting->ready = controller_setting_ready_abort;
               }
               else {
-                thread->setting->ready = controller_setting_ready_done;
+                setting->ready = controller_setting_ready_done;
               }
             }
           }
         }
 
         if (status == F_child) {
+          controller_thread_delete_simple(&thread);
+
           return F_child;
         }
-
-        f_thread_mutex_unlock(&thread->mutex->cache);
       }
     }
 
-    if (status != F_signal && thread->setting->signal) {
+    if (status != F_signal && setting->signal) {
       status = F_signal;
     }
 
     // only make the rule and control threads available once any/all pre-processing and is completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
 
-      if (thread->data->parameters[controller_parameter_validate].result == f_console_result_none) {
-        controller_rule_wait_all(thread);
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
+        controller_rule_wait_all(&thread);
 
-        status = f_thread_create(0, &thread_rule, &controller_thread_rule, (void *) thread);
+        status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &data_main);
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_create(0, &thread_control, &controller_thread_control, (void *) thread);
+          status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &data_main);
         }
 
         if (F_status_is_error(status)) {
-          if (thread->data->error.verbosity != f_console_verbosity_quiet) {
-            controller_error_print_locked(thread->data->error, F_status_set_fine(status), "f_thread_create", F_true, thread);
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            controller_error_print_locked(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
           }
         }
       }
     }
 
     if (status == F_child) {
+      controller_thread_delete_simple(&thread);
+
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_signal && (thread->data->parameters[controller_parameter_validate].result == f_console_result_none || thread->data->parameters[controller_parameter_test].result == f_console_result_found)) {
+    // @todo consider f_thread_detach() over f_thread_join() when exiting.
+    if (F_status_is_error_not(status) && status != F_signal && (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
 
       // wait until signal thread exits, which happens on any termination signal.
-      f_thread_join(thread_signal, 0);
+      f_thread_join(thread.id_signal, 0);
     }
     else {
-      f_thread_cancel(thread_signal);
-      f_thread_join(thread_signal, 0);
+      f_thread_cancel(thread.id_signal);
+      f_thread_join(thread.id_signal, 0);
     }
 
-    if (thread->asynchronouss.enabled) {
-      controller_thread_asynchronous_cancel(thread);
+    if (thread.enabled) {
+      controller_thread_asynchronous_cancel(&thread);
     }
 
-    f_thread_cancel(thread_cache);
-    f_thread_cancel(thread_control);
-    f_thread_cancel(thread_rule);
+    // @todo when cancelling, make sure that whatever has a lock, no longer has any lock.
+    f_thread_cancel(thread.id_cleanup);
+    f_thread_cancel(thread.id_control);
+    f_thread_cancel(thread.id_rule);
 
-    f_thread_join(thread_cache, 0);
-    f_thread_join(thread_control, 0);
-    f_thread_join(thread_rule, 0);
+    f_thread_join(thread.id_cleanup, 0);
+    f_thread_join(thread.id_control, 0);
+    f_thread_join(thread.id_rule, 0);
+
+    controller_processs_delete_simple(&processs);
+    controller_thread_delete_simple(&thread);
 
     if (F_status_is_error(status)) {
       return F_status_set_error(F_failure);
@@ -329,11 +334,11 @@ extern "C" {
 #ifndef _di_controller_thread_rule_
   void * controller_thread_rule(void *arguments) {
 
-    controller_thread_t *thread = (controller_thread_t *) arguments;
+    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
 
     // @todo
-    // f_thread_mutex_lock(&thread->mutex->rule);
-    // f_thread_mutex_unlock(&thread->mutex->rule);
+    // f_thread_mutex_lock(&thread_data->mutex.rule);
+    // f_thread_mutex_unlock(&thread_data->mutex.rule);
 
     return 0;
   }
@@ -342,17 +347,17 @@ extern "C" {
 #ifndef _di_controller_thread_signal_
   void * controller_thread_signal(void *arguments) {
 
-    controller_thread_t *thread = (controller_thread_t *) arguments;
+    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
 
-    for (int signal = 0; thread->asynchronouss.enabled; ) {
+    for (int signal = 0; thread_data->thread->enabled; ) {
 
-      sigwait(&thread->data->signal.set, &signal);
+      sigwait(&thread_data->data->signal.set, &signal);
 
-      if (thread->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
+      if (thread_data->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
-          thread->setting->signal = signal;
+          thread_data->setting->signal = signal;
 
-          controller_thread_asynchronous_cancel(thread);
+          controller_thread_asynchronous_cancel(thread_data->thread);
           break;
         }
       }

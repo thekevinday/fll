@@ -41,7 +41,7 @@ extern "C" {
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
 #ifndef _di_controller_file_load_
-  f_status_t controller_file_load(const controller_data_t data, const controller_setting_t setting, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_string_length_t path_prefix_length, const f_string_length_t path_suffix_length, controller_cache_t *cache) {
+  f_status_t controller_file_load(const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_thread_data_t thread_data, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_file_t file = f_file_t_initialize;
 
@@ -69,25 +69,25 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_append", F_true);
       return status;
     }
 
     status = f_string_dynamic_terminate_after(&cache->action.name_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       return status;
     }
 
-    const f_string_length_t path_length = setting.path_setting.used ? setting.path_setting.used + f_path_separator_length + cache->action.name_file.used : cache->action.name_file.used;
+    const f_array_length_t path_length = thread_data.setting->path_setting.used ? thread_data.setting->path_setting.used + f_path_separator_length + cache->action.name_file.used : cache->action.name_file.used;
     char path[path_length + 1];
 
-    if (setting.path_setting.used) {
-      memcpy(path, setting.path_setting.string, setting.path_setting.used);
-      memcpy(path + setting.path_setting.used + f_path_separator_length, cache->action.name_file.string, cache->action.name_file.used);
+    if (thread_data.setting->path_setting.used) {
+      memcpy(path, thread_data.setting->path_setting.string, thread_data.setting->path_setting.used);
+      memcpy(path + thread_data.setting->path_setting.used + f_path_separator_length, cache->action.name_file.string, cache->action.name_file.used);
 
-      path[setting.path_setting.used] = f_path_separator_s[0];
+      path[thread_data.setting->path_setting.used] = f_path_separator_s[0];
     }
 
     path[path_length] = 0;
@@ -95,13 +95,13 @@ extern "C" {
     status = f_file_stream_open(path, 0, &file);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
+      fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
     }
     else {
       status = f_file_stream_read(file, 1, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
+        fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
       }
     }
 
@@ -113,7 +113,7 @@ extern "C" {
       status = f_file_stat(path, F_true, &stat_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
+        fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
       }
       else {
         cache->timestamp.seconds = stat_file.st_ctim.tv_sec;
@@ -304,29 +304,29 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 #ifndef _di_controller_perform_ready_
-  f_status_t controller_perform_ready(const controller_data_t data, controller_setting_t *setting, controller_cache_t *cache) {
+  f_status_t controller_perform_ready(controller_thread_data_t thread_data, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
-    if (data.parameters[controller_parameter_validate].result == f_console_result_none) {
+    if (thread_data.data->parameters[controller_parameter_validate].result == f_console_result_none) {
 
-      status = controller_file_pid_create(data, setting->path_pid);
+      status = controller_file_pid_create(*thread_data.data, thread_data.setting->path_pid);
 
       // report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
       if (F_status_is_error(status)) {
 
         // always return immediately on memory errors.
         if (F_status_set_fine(status) == F_memory_not) {
-          fll_error_file_print(data.error, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
+          fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
 
-          controller_entry_error_print(data.error, cache->action);
+          controller_entry_error_print(thread_data.data->error, cache->action);
 
           return status;
         }
 
-        fll_error_file_print(data.warning, F_status_set_fine(status), "controller_file_pid_create", F_true, setting->path_pid.string, "create", fll_error_file_type_file);
+        fll_error_file_print(thread_data.data->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
 
-        controller_entry_error_print(data.warning, cache->action);
+        controller_entry_error_print(thread_data.data->warning, cache->action);
 
         status = F_none;
       }
@@ -337,7 +337,7 @@ extern "C" {
 #endif // _di_controller_perform_ready_
 
 #ifndef _di_controller_preprocess_entry_
-  f_status_t controller_preprocess_entry(controller_cache_t *cache, controller_thread_t *thread) {
+  f_status_t controller_preprocess_entry(controller_thread_data_t thread_data, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_status_t status2 = F_none;
 
@@ -347,25 +347,23 @@ extern "C" {
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
-    controller_data_t *data = thread->data;
-    controller_setting_t *setting = thread->setting;
     controller_entry_actions_t *actions = 0;
 
     uint8_t error_has = F_false;
 
-    setting->ready = controller_setting_ready_no;
+    thread_data.setting->ready = controller_setting_ready_no;
 
     cache->ats.used = 0;
 
-    thread->cache_action->line_action = 0;
-    thread->cache_action->line_item = 0;
-    thread->cache_action->name_action.used = 0;
-    thread->cache_action->name_item.used = 0;
+    cache->action.line_action = 0;
+    cache->action.line_item = 0;
+    cache->action.name_action.used = 0;
+    cache->action.name_item.used = 0;
 
     f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       return status;
     }
 
@@ -374,55 +372,55 @@ extern "C" {
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
 
-    thread->cache_action->line_item = setting->entry.items.array[0].line;
-    thread->cache_action->name_item.used = 0;
+    cache->action.line_item = thread_data.setting->entry.items.array[0].line;
+    cache->action.name_item.used = 0;
 
-    status = controller_string_dynamic_append_terminated(setting->entry.items.array[0].name, &thread->cache_action->name_item);
+    status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-      controller_entry_error_print(data->error, *thread->cache_action);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+      controller_entry_error_print(thread_data.data->error, cache->action);
 
       return status;
     }
 
     for (;;) {
 
-      actions = &setting->entry.items.array[cache->ats.array[at_i]].actions;
+      actions = &thread_data.setting->entry.items.array[cache->ats.array[at_i]].actions;
 
       for (; cache->ats.array[at_j] < actions->used; ++cache->ats.array[at_j]) {
 
-        if (setting->signal) {
+        if (thread_data.setting->signal) {
           return F_signal;
         }
 
-        thread->cache_action->line_action = actions->array[cache->ats.array[at_j]].line;
-        thread->cache_action->name_action.used = 0;
+        cache->action.line_action = actions->array[cache->ats.array[at_j]].line;
+        cache->action.name_action.used = 0;
 
-        status2 = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &thread->cache_action->name_action);
+        status2 = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
 
         if (F_status_is_error(status2)) {
-          fll_error_print(data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(data->error, *thread->cache_action);
+          fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
+          controller_entry_error_print(thread_data.data->error, cache->action);
 
           return status2;
         }
 
         if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready) {
 
-          if (setting->ready == controller_setting_ready_wait) {
-            if (data->warning.verbosity == f_console_verbosity_debug) {
-              fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->warning.to.stream, "%s%sMultiple '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
-              fprintf(data->warning.to.stream, "%s%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, controller_string_ready_s, data->warning.notable.after->string);
-              fprintf(data->warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
+          if (thread_data.setting->ready == controller_setting_ready_wait) {
+            if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->warning.to.stream, "%s%sMultiple '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
+              fprintf(thread_data.data->warning.to.stream, "%s%s%s%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, controller_string_ready_s, thread_data.data->warning.notable.after->string);
+              fprintf(thread_data.data->warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(data->warning, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->warning, cache->action);
             }
           }
 
           // the pre-process currently only looks for "ready", so once found, pre-process is complete.
-          setting->ready = controller_setting_ready_wait;
+          thread_data.setting->ready = controller_setting_ready_wait;
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
           error_has = F_false;
@@ -432,22 +430,22 @@ extern "C" {
           }
 
           // walk though each items and check to see if the item actually exists (skipping main).
-          for (i = 1; i < setting->entry.items.used; ++i) {
+          for (i = 1; i < thread_data.setting->entry.items.used; ++i) {
 
-            if (fl_string_dynamic_compare(setting->entry.items.array[i].name, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
+            if (fl_string_dynamic_compare(thread_data.setting->entry.items.array[i].name, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
 
               // check to see if "i" is already in the stack (to prevent recursion) (skipping main).
               for (j = 2; j < cache->ats.used; j += 2) {
 
                 if (cache->ats.array[j] == i) {
-                  if (data->error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                    fprintf(data->error.to.stream, "%s%sThe entry item named '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-                    fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->entry.items.array[i].name.string, data->error.notable.after->string);
-                    fprintf(data->error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+                  if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
+                    fprintf(thread_data.data->error.to.stream, "%s%sThe entry item named '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
+                    fprintf(thread_data.data->error.to.stream, "%s%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, thread_data.setting->entry.items.array[i].name.string, thread_data.data->error.notable.after->string);
+                    fprintf(thread_data.data->error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
                   }
 
-                  controller_entry_error_print(data->error, *thread->cache_action);
+                  controller_entry_error_print(thread_data.data->error, cache->action);
 
                   if (F_status_is_error_not(status)) {
                     status = F_status_set_error(F_recurse);
@@ -463,8 +461,8 @@ extern "C" {
               f_macro_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
 
               if (F_status_is_error(status2)) {
-                fll_error_print(data->error, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true);
-                controller_entry_error_print(data->error, *thread->cache_action);
+                fll_error_print(thread_data.data->error, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true);
+                controller_entry_error_print(thread_data.data->error, cache->action);
 
                 return status2;
               }
@@ -480,17 +478,17 @@ extern "C" {
               cache->ats.array[at_j] = 0;
               cache->ats.used += 2;
 
-              thread->cache_action->name_action.used = 0;
-              thread->cache_action->line_action = 0;
+              cache->action.name_action.used = 0;
+              cache->action.line_action = 0;
 
-              thread->cache_action->name_item.used = 0;
-              thread->cache_action->line_item = setting->entry.items.array[i].line;
+              cache->action.name_item.used = 0;
+              cache->action.line_item = thread_data.setting->entry.items.array[i].line;
 
-              status2 = controller_string_dynamic_append_terminated(setting->entry.items.array[i].name, &thread->cache_action->name_item);
+              status2 = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[i].name, &cache->action.name_item);
 
               if (F_status_is_error(status2)) {
-                fll_error_print(data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-                controller_entry_error_print(data->error, *thread->cache_action);
+                fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
+                controller_entry_error_print(thread_data.data->error, cache->action);
 
                 return status2;
               }
@@ -499,16 +497,16 @@ extern "C" {
             }
           } // for
 
-          if (error_has || i >= setting->entry.items.used) {
-            if (i >= setting->entry.items.used) {
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data->error.to.stream, "%s%sThe entry item named '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-                fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, actions->array[cache->ats.array[at_j]].parameters.array[0].string, data->error.notable.after->string);
-                fprintf(data->error.to.stream, "%s' does not exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+          if (error_has || i >= thread_data.setting->entry.items.used) {
+            if (i >= thread_data.setting->entry.items.used) {
+              if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(thread_data.data->error.to.stream, "%s%sThe entry item named '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
+                fprintf(thread_data.data->error.to.stream, "%s%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].parameters.array[0].string, thread_data.data->error.notable.after->string);
+                fprintf(thread_data.data->error.to.stream, "%s' does not exist.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
               }
 
-              controller_entry_error_print(data->error, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->error, cache->action);
 
               if (F_status_is_error_not(status)) {
                 status = F_status_set_error(F_valid_not);
@@ -521,8 +519,8 @@ extern "C" {
         }
       } // for
 
-      thread->cache_action->line_action = 0;
-      thread->cache_action->name_action.used = 0;
+      cache->action.line_action = 0;
+      cache->action.name_action.used = 0;
 
       // end of actions found, so drop to previous loop in stack.
       if (cache->ats.array[at_j] == actions->used) {
@@ -536,14 +534,14 @@ extern "C" {
         cache->ats.used -= 2;
         cache->ats.array[at_j]++;
 
-        thread->cache_action->line_item = setting->entry.items.array[cache->ats.array[at_i]].line;
-        thread->cache_action->name_item.used = 0;
+        cache->action.line_item = thread_data.setting->entry.items.array[cache->ats.array[at_i]].line;
+        cache->action.name_item.used = 0;
 
-        status2 = controller_string_dynamic_append_terminated(setting->entry.items.array[cache->ats.array[at_i]].name, &thread->cache_action->name_item);
+        status2 = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status2)) {
-          fll_error_print(data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(data->error, *thread->cache_action);
+          fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
+          controller_entry_error_print(thread_data.data->error, cache->action);
 
           return status2;
         }
@@ -551,8 +549,8 @@ extern "C" {
     } // for
 
     // if ready was never found in the entry, then default to always ready.
-    if (setting->ready == controller_setting_ready_no) {
-      setting->ready = controller_setting_ready_yes;
+    if (thread_data.setting->ready == controller_setting_ready_no) {
+      thread_data.setting->ready = controller_setting_ready_yes;
     }
 
     return status;
@@ -560,7 +558,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_status_t controller_process_entry(controller_cache_t *cache, controller_thread_t *thread) {
+  f_status_t controller_process_entry(controller_thread_data_t thread_data, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     f_array_length_t i = 0;
@@ -572,30 +570,28 @@ extern "C" {
 
     uint8_t rule_options = 0;
 
-    controller_data_t *data = thread->data;
-    controller_setting_t *setting = thread->setting;
     controller_entry_actions_t *actions = 0;
 
-    const bool simulate = data->parameters[controller_parameter_test].result == f_console_result_found;
+    const bool simulate = thread_data.data->parameters[controller_parameter_test].result == f_console_result_found;
 
     cache->ats.used = 0;
     cache->stack.used = 0;
 
-    thread->cache_action->line_action = 0;
-    thread->cache_action->line_item = 0;
-    thread->cache_action->name_action.used = 0;
-    thread->cache_action->name_item.used = 0;
+    cache->action.line_action = 0;
+    cache->action.line_item = 0;
+    cache->action.name_action.used = 0;
+    cache->action.name_item.used = 0;
 
-    if (setting->ready == controller_setting_ready_yes) {
-      status = controller_perform_ready(*data, setting, cache);
+    if (thread_data.setting->ready == controller_setting_ready_yes) {
+      status = controller_perform_ready(thread_data, cache);
       if (F_status_is_error(status)) return status;
     }
 
     f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
-      controller_entry_error_print(data->error, *thread->cache_action);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
+      controller_entry_error_print(thread_data.data->error, cache->action);
 
       return status;
     }
@@ -605,44 +601,44 @@ extern "C" {
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
 
-    thread->cache_action->line_item = setting->entry.items.array[0].line;
-    thread->cache_action->name_item.used = 0;
+    cache->action.line_item = thread_data.setting->entry.items.array[0].line;
+    cache->action.name_item.used = 0;
 
-    status = controller_string_dynamic_append_terminated(setting->entry.items.array[0].name, &thread->cache_action->name_item);
+    status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-      controller_entry_error_print(data->error, *thread->cache_action);
+      fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+      controller_entry_error_print(thread_data.data->error, cache->action);
 
       return status;
     }
 
     if (simulate) {
-      fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-      fprintf(data->output.stream, "Processing entry item rule '");
-      fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_main_s, data->context.set.title.after->string);
-      fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
+      fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+      fprintf(thread_data.data->output.stream, "Processing entry item rule '");
+      fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_main_s, thread_data.data->context.set.title.after->string);
+      fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
     }
 
     for (;;) {
 
-      actions = &setting->entry.items.array[cache->ats.array[at_i]].actions;
+      actions = &thread_data.setting->entry.items.array[cache->ats.array[at_i]].actions;
 
       for (; cache->ats.array[at_j] < actions->used; ++cache->ats.array[at_j]) {
 
-        if (setting->signal) {
+        if (thread_data.setting->signal) {
           status = F_signal;
           break;
         }
 
-        thread->cache_action->line_action = actions->array[cache->ats.array[at_j]].line;
-        thread->cache_action->name_action.used = 0;
+        cache->action.line_action = actions->array[cache->ats.array[at_j]].line;
+        cache->action.name_action.used = 0;
 
-        status = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &thread->cache_action->name_action);
+        status = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(data->error, *thread->cache_action);
+          fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+          controller_entry_error_print(thread_data.data->error, cache->action);
 
           return status;
         }
@@ -652,91 +648,91 @@ extern "C" {
           if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
             if (simulate) {
-              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->output.stream, "The entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, thread->cache_action->name_action.string, data->context.set.title.after->string);
+              fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "The entry item action '");
+              fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_action.string, thread_data.data->context.set.title.after->string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->output.stream, f_string_space_s);
-                fprintf(data->output.stream, "%s", data->context.set.notable.before->string);
-                controller_entry_action_parameters_print(data->output.stream, actions->array[cache->ats.array[at_j]]);
-                fprintf(data->output.stream, "%s", data->context.set.notable.after->string);
+                fprintf(thread_data.data->output.stream, f_string_space_s);
+                fprintf(thread_data.data->output.stream, "%s", thread_data.data->context.set.notable.before->string);
+                controller_entry_action_parameters_print(thread_data.data->output.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(thread_data.data->output.stream, "%s", thread_data.data->context.set.notable.after->string);
               }
 
-              fprintf(data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require ? "required" : "optional", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require ? "required" : "optional", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
             }
             else if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require) {
 
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data->error.to.stream, "%s%sThe entry item action '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-                fprintf(data->error.to.stream, "%s%s%s", data->error.context.after->string, data->error.notable.before->string, thread->cache_action->name_action.string);
+              if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(thread_data.data->error.to.stream, "%s%sThe entry item action '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
+                fprintf(thread_data.data->error.to.stream, "%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, cache->action.name_action.string);
 
                 if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                  fprintf(data->error.to.stream, f_string_space_s);
-                  controller_entry_action_parameters_print(data->error.to.stream, actions->array[cache->ats.array[at_j]]);
+                  fprintf(thread_data.data->error.to.stream, f_string_space_s);
+                  controller_entry_action_parameters_print(thread_data.data->error.to.stream, actions->array[cache->ats.array[at_j]]);
                 }
 
-                fprintf(data->error.to.stream, "%s%s' is ", data->error.notable.after->string, data->error.context.before->string);
-                fprintf(data->error.to.stream, "%s%srequired%s", data->error.context.after->string, data->error.notable.before->string, data->error.notable.after->string);
-                fprintf(data->error.to.stream, "%s and is in a ", data->error.context.before->string);
-                fprintf(data->error.to.stream, "%s%sfailed%s", data->error.context.after->string, data->error.notable.before->string, data->error.notable.after->string);
-                fprintf(data->error.to.stream, "%s state, skipping execution.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+                fprintf(thread_data.data->error.to.stream, "%s%s' is ", thread_data.data->error.notable.after->string, thread_data.data->error.context.before->string);
+                fprintf(thread_data.data->error.to.stream, "%s%srequired%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, thread_data.data->error.notable.after->string);
+                fprintf(thread_data.data->error.to.stream, "%s and is in a ", thread_data.data->error.context.before->string);
+                fprintf(thread_data.data->error.to.stream, "%s%sfailed%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, thread_data.data->error.notable.after->string);
+                fprintf(thread_data.data->error.to.stream, "%s state, skipping execution.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
               }
 
-              controller_entry_error_print(data->error, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->error, cache->action);
 
               return F_status_is_error(F_require);
             }
-            else if (data->warning.verbosity == f_console_verbosity_debug) {
-              fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->warning.to.stream, "%s%sThe entry item action '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
-              fprintf(data->warning.to.stream, "%s%s%s", data->warning.context.after->string, data->warning.notable.before->string, thread->cache_action->name_action.string);
+            else if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->warning.to.stream, "%s%sThe entry item action '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
+              fprintf(thread_data.data->warning.to.stream, "%s%s%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, cache->action.name_action.string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->warning.to.stream, f_string_space_s);
-                controller_entry_action_parameters_print(data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(thread_data.data->warning.to.stream, f_string_space_s);
+                controller_entry_action_parameters_print(thread_data.data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
               }
 
-              fprintf(data->warning.to.stream, "%s%s' is ", data->warning.notable.after->string, data->warning.context.before->string);
-              fprintf(data->warning.to.stream, "%s%srequired%s", data->warning.context.after->string, data->warning.notable.before->string, data->warning.notable.after->string);
-              fprintf(data->warning.to.stream, "%s and is in a ", data->warning.context.before->string);
-              fprintf(data->warning.to.stream, "%s%sfailed%s", data->warning.context.after->string, data->warning.notable.before->string, data->warning.notable.after->string);
-              fprintf(data->warning.to.stream, "%s state, skipping execution.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
+              fprintf(thread_data.data->warning.to.stream, "%s%s' is ", thread_data.data->warning.notable.after->string, thread_data.data->warning.context.before->string);
+              fprintf(thread_data.data->warning.to.stream, "%s%srequired%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, thread_data.data->warning.notable.after->string);
+              fprintf(thread_data.data->warning.to.stream, "%s and is in a ", thread_data.data->warning.context.before->string);
+              fprintf(thread_data.data->warning.to.stream, "%s%sfailed%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, thread_data.data->warning.notable.after->string);
+              fprintf(thread_data.data->warning.to.stream, "%s state, skipping execution.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(data->warning, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->warning, cache->action);
             }
           }
           else {
             if (simulate) {
-              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->output.stream, "The entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, thread->cache_action->name_action.string, data->context.set.title.after->string);
+              fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "The entry item action '");
+              fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_action.string, thread_data.data->context.set.title.after->string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->output.stream, f_string_space_s);
-                fprintf(data->output.stream, "%s", data->context.set.notable.before->string);
-                controller_entry_action_parameters_print(data->output.stream, actions->array[cache->ats.array[at_j]]);
-                fprintf(data->output.stream, "%s", data->context.set.notable.after->string);
+                fprintf(thread_data.data->output.stream, f_string_space_s);
+                fprintf(thread_data.data->output.stream, "%s", thread_data.data->context.set.notable.before->string);
+                controller_entry_action_parameters_print(thread_data.data->output.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(thread_data.data->output.stream, "%s", thread_data.data->context.set.notable.after->string);
               }
 
-              fprintf(data->output.stream, "' is in a %sfailed%s state, skipping.%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "' is in a %sfailed%s state, skipping.%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
             }
-            else if (data->warning.verbosity == f_console_verbosity_debug) {
-              fprintf(data->warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->warning.to.stream, "%s%sThe entry item action '", data->warning.context.before->string, data->warning.prefix ? data->warning.prefix : f_string_empty_s);
-              fprintf(data->warning.to.stream, "%s%s", data->warning.notable.before->string, thread->cache_action->name_action.string);
+            else if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->warning.to.stream, "%s%sThe entry item action '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
+              fprintf(thread_data.data->warning.to.stream, "%s%s", thread_data.data->warning.notable.before->string, cache->action.name_action.string);
 
               if (actions->array[cache->ats.array[at_j]].parameters.used) {
-                fprintf(data->warning.to.stream, f_string_space_s);
-                controller_entry_action_parameters_print(data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
+                fprintf(thread_data.data->warning.to.stream, f_string_space_s);
+                controller_entry_action_parameters_print(thread_data.data->warning.to.stream, actions->array[cache->ats.array[at_j]]);
               }
 
-              fprintf(data->warning.to.stream, "%s' is in a ", data->warning.notable.after->string);
-              fprintf(data->warning.to.stream, "%s%sfailed%s", data->warning.context.after->string, data->warning.notable.before->string, data->warning.notable.after->string);
-              fprintf(data->warning.to.stream, "%s state, skipping.%s%c", data->warning.context.before->string, data->warning.context.after->string, f_string_eol_s[0]);
+              fprintf(thread_data.data->warning.to.stream, "%s' is in a ", thread_data.data->warning.notable.after->string);
+              fprintf(thread_data.data->warning.to.stream, "%s%sfailed%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, thread_data.data->warning.notable.after->string);
+              fprintf(thread_data.data->warning.to.stream, "%s state, skipping.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(data->warning, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->warning, cache->action);
             }
           }
 
@@ -745,41 +741,41 @@ extern "C" {
 
         if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_ready) {
 
-          if (setting->ready == controller_setting_ready_wait) {
+          if (thread_data.setting->ready == controller_setting_ready_wait) {
 
             if (simulate) {
-              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->output.stream, "Processing entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready_s, data->context.set.title.after->string);
-              fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "Processing entry item action '");
+              fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_ready_s, thread_data.data->context.set.title.after->string);
+              fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
             }
             else {
-              controller_perform_ready(*data, setting, cache);
+              controller_perform_ready(thread_data, cache);
               if (F_status_is_error(status)) return status;
             }
 
-            setting->ready = controller_setting_ready_yes;
+            thread_data.setting->ready = controller_setting_ready_yes;
           }
           else if (simulate) {
-            fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->output.stream, "Ignoring entry item action '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_ready_s, data->context.set.title.after->string);
-            fprintf(data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "Ignoring entry item action '");
+            fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_ready_s, thread_data.data->context.set.title.after->string);
+            fprintf(thread_data.data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
 
-          if (actions->array[cache->ats.array[at_j]].number == 0 || actions->array[cache->ats.array[at_j]].number >= setting->entry.items.used) {
+          if (actions->array[cache->ats.array[at_j]].number == 0 || actions->array[cache->ats.array[at_j]].number >= thread_data.setting->entry.items.used) {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->error.to.stream, "%s%sInvalid entry item index ", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-              fprintf(data->error.to.stream, "%s%s%llu%s", data->error.context.after->string, data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, data->error.notable.after->string);
-              fprintf(data->error.to.stream, "%s detected.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+            if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->error.to.stream, "%s%sInvalid entry item index ", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
+              fprintf(thread_data.data->error.to.stream, "%s%s%llu%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->error.notable.after->string);
+              fprintf(thread_data.data->error.to.stream, "%s detected.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
             }
 
-            controller_entry_error_print(data->error, *thread->cache_action);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             return F_status_is_error(F_critical);
           }
@@ -787,8 +783,8 @@ extern "C" {
           f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
-            controller_entry_error_print(data->error, *thread->cache_action);
+            fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             return status;
           }
@@ -802,26 +798,26 @@ extern "C" {
 
           cache->ats.used += 2;
 
-          thread->cache_action->name_action.used = 0;
-          thread->cache_action->line_action = 0;
+          cache->action.name_action.used = 0;
+          cache->action.line_action = 0;
 
-          thread->cache_action->name_item.used = 0;
-          thread->cache_action->line_item = setting->entry.items.array[cache->ats.array[at_i]].line;
+          cache->action.name_item.used = 0;
+          cache->action.line_item = thread_data.setting->entry.items.array[cache->ats.array[at_i]].line;
 
-          status = controller_string_dynamic_append_terminated(setting->entry.items.array[cache->ats.array[at_i]].name, &thread->cache_action->name_item);
+          status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-            controller_entry_error_print(data->error, *thread->cache_action);
+            fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             return status;
           }
 
           if (simulate) {
-            fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->output.stream, "Processing entry item '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, thread->cache_action->name_item.string, data->context.set.title.after->string);
-            fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "Processing entry item '");
+            fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_item.string, thread_data.data->context.set.title.after->string);
+            fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
           }
 
           // exit inner loop to force restarting and start processing the requested item.
@@ -829,16 +825,16 @@ extern "C" {
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_consider || actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
-          status = controller_rules_increase(&setting->rules);
+          status = controller_rules_increase(&thread_data.setting->rules);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "controller_rules_increase", F_true);
-            controller_entry_error_print(data->error, *thread->cache_action);
+            fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_rules_increase", F_true);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             return status;
           }
 
-          const f_string_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
+          const f_array_length_t rule_id_length = actions->array[cache->ats.array[at_j]].parameters.array[0].used + actions->array[cache->ats.array[at_j]].parameters.array[1].used + 1;
           char rule_id_name[rule_id_length + 1];
           const f_string_static_t rule_id = f_macro_string_static_t_initialize(rule_id_name, rule_id_length);
 
@@ -848,79 +844,91 @@ extern "C" {
           rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator_s[0];
           rule_id_name[rule_id_length] = 0;
 
-          at = controller_rule_find_loaded(*data, *setting, rule_id);
+          f_thread_mutex_lock(&thread_data.thread->mutex.rule);
+
+          at = controller_rule_find_loaded(rule_id, thread_data);
+
+          if (at < thread_data.setting->rules.used) {
+            f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
+          }
 
           if (simulate) {
-            fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->output.stream, "%s entry item rule '", actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule ? "Processing" : "Considering");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, rule_id.string, data->context.set.title.after->string);
-            fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "%s entry item rule '", actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule ? "Processing" : "Considering");
+            fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, rule_id.string, thread_data.data->context.set.title.after->string);
+            fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
           }
 
           // the rule is not yet loaded, ensure that it is loaded.
-          if (at == setting->rules.used) {
+          if (at == thread_data.setting->rules.used) {
 
             // rule execution will re-use the existing cache, so save the current cache.
-            const f_array_length_t cache_line_action = thread->cache_action->line_action;
-            const f_array_length_t cache_line_item = thread->cache_action->line_item;
+            const f_array_length_t cache_line_action = cache->action.line_action;
+            const f_array_length_t cache_line_item = cache->action.line_item;
 
-            const f_string_length_t cache_name_action_used = thread->cache_action->name_action.used;
-            const f_string_length_t cache_name_item_used = thread->cache_action->name_item.used;
-            const f_string_length_t cache_name_file_used = thread->cache_action->name_file.used;
+            const f_array_length_t cache_name_action_used = cache->action.name_action.used;
+            const f_array_length_t cache_name_item_used = cache->action.name_item.used;
+            const f_array_length_t cache_name_file_used = cache->action.name_file.used;
 
             char cache_name_action[cache_name_action_used];
             char cache_name_item[cache_name_item_used];
             char cache_name_file[cache_name_file_used];
 
-            memcpy(cache_name_action, thread->cache_action->name_action.string, thread->cache_action->name_action.used);
-            memcpy(cache_name_item, thread->cache_action->name_item.string, thread->cache_action->name_item.used);
-            memcpy(cache_name_file, thread->cache_action->name_file.string, thread->cache_action->name_file.used);
+            memcpy(cache_name_action, cache->action.name_action.string, cache->action.name_action.used);
+            memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
+            memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            status = controller_rule_read(*data, *setting, rule_id, thread, cache, &setting->rules.array[setting->rules.used]);
+            status = controller_rule_read(rule_id, thread_data, cache, &thread_data.setting->rules.array[thread_data.setting->rules.used]);
 
             // restore cache.
-            memcpy(thread->cache_action->name_action.string, cache_name_action, cache_name_action_used);
-            memcpy(thread->cache_action->name_item.string, cache_name_item, cache_name_item_used);
-            memcpy(thread->cache_action->name_file.string, cache_name_file, cache_name_file_used);
+            memcpy(cache->action.name_action.string, cache_name_action, cache_name_action_used);
+            memcpy(cache->action.name_item.string, cache_name_item, cache_name_item_used);
+            memcpy(cache->action.name_file.string, cache_name_file, cache_name_file_used);
 
-            thread->cache_action->name_action.string[cache_name_action_used] = 0;
-            thread->cache_action->name_item.string[cache_name_item_used] = 0;
-            thread->cache_action->name_file.string[cache_name_file_used] = 0;
+            cache->action.name_action.string[cache_name_action_used] = 0;
+            cache->action.name_item.string[cache_name_item_used] = 0;
+            cache->action.name_file.string[cache_name_file_used] = 0;
 
-            thread->cache_action->name_action.used = cache_name_action_used;
-            thread->cache_action->name_item.used = cache_name_item_used;
-            thread->cache_action->name_file.used = cache_name_file_used;
+            cache->action.name_action.used = cache_name_action_used;
+            cache->action.name_item.used = cache_name_item_used;
+            cache->action.name_file.used = cache_name_file_used;
 
-            thread->cache_action->line_action = cache_line_action;
-            thread->cache_action->line_item = cache_line_item;
+            cache->action.line_action = cache_line_action;
+            cache->action.line_item = cache_line_item;
 
             if (F_status_is_error(status)) {
-              controller_entry_error_print(data->error, *thread->cache_action);
+              controller_entry_error_print(thread_data.data->error, cache->action);
 
-              if (!simulate) break;
+              if (!simulate) {
+                f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
+
+                break;
+              }
             }
             else {
-              setting->rules.used++;
+              thread_data.setting->rules.used++;
             }
+
+            f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
           }
 
           if (F_status_is_error_not(status)) {
 
             // rule execution will re-use the existing cache, so save the current cache.
-            const f_array_length_t cache_line_action = thread->cache_action->line_action;
-            const f_array_length_t cache_line_item = thread->cache_action->line_item;
+            const f_array_length_t cache_line_action = cache->action.line_action;
+            const f_array_length_t cache_line_item = cache->action.line_item;
 
-            const f_string_length_t cache_name_action_used = thread->cache_action->name_action.used;
-            const f_string_length_t cache_name_item_used = thread->cache_action->name_item.used;
-            const f_string_length_t cache_name_file_used = thread->cache_action->name_file.used;
+            const f_array_length_t cache_name_action_used = cache->action.name_action.used;
+            const f_array_length_t cache_name_item_used = cache->action.name_item.used;
+            const f_array_length_t cache_name_file_used = cache->action.name_file.used;
 
             char cache_name_action[cache_name_action_used];
             char cache_name_item[cache_name_item_used];
             char cache_name_file[cache_name_file_used];
 
-            memcpy(cache_name_action, thread->cache_action->name_action.string, thread->cache_action->name_action.used);
-            memcpy(cache_name_item, thread->cache_action->name_item.string, thread->cache_action->name_item.used);
-            memcpy(cache_name_file, thread->cache_action->name_file.string, thread->cache_action->name_file.used);
+            memcpy(cache_name_action, cache->action.name_action.string, cache->action.name_action.used);
+            memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
+            memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
             if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
               rule_options = 0;
@@ -937,42 +945,45 @@ extern "C" {
                 rule_options |= controller_rule_option_wait;
               }
 
-              f_thread_mutex_lock(&thread->setting->rules.array[at].lock);
+              // @fixme this logic needs to change.
+              //        determine how to pass rule ids.
+              //        each thread has a main rule, but child threads need to be copied over and passed somehow.
+              f_thread_mutex_lock(&thread_data.setting->rules.array[at].lock);
 
               if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_asynchronous) {
                 rule_options |= controller_rule_option_asynchronous;
 
-                status = controller_rule_process_asynchronous(at, controller_rule_action_type_start, rule_options, thread);
+                status = controller_rule_process_asynchronous(at, controller_rule_action_type_start, rule_options, thread_data, cache);
               }
               else {
-                status = controller_rule_process(at, controller_rule_action_type_start, rule_options, thread, 0);
+                status = controller_rule_process(at, controller_rule_action_type_start, rule_options, thread_data, cache);
               }
 
               if (status == F_child || status == F_signal) break;
 
-              f_thread_condition_signal(&thread->setting->rules.array[at].wait);
-              f_thread_mutex_unlock(&thread->setting->rules.array[at].lock);
+              f_thread_condition_signal(&thread_data.setting->rules.array[at].wait);
+              f_thread_mutex_unlock(&thread_data.setting->rules.array[at].lock);
             }
 
             // restore cache.
-            memcpy(thread->cache_action->name_action.string, cache_name_action, cache_name_action_used);
-            memcpy(thread->cache_action->name_item.string, cache_name_item, cache_name_item_used);
-            memcpy(thread->cache_action->name_file.string, cache_name_file, cache_name_file_used);
+            memcpy(cache->action.name_action.string, cache_name_action, cache_name_action_used);
+            memcpy(cache->action.name_item.string, cache_name_item, cache_name_item_used);
+            memcpy(cache->action.name_file.string, cache_name_file, cache_name_file_used);
 
-            thread->cache_action->name_action.string[cache_name_action_used] = 0;
-            thread->cache_action->name_item.string[cache_name_item_used] = 0;
-            thread->cache_action->name_file.string[cache_name_file_used] = 0;
+            cache->action.name_action.string[cache_name_action_used] = 0;
+            cache->action.name_item.string[cache_name_item_used] = 0;
+            cache->action.name_file.string[cache_name_file_used] = 0;
 
-            thread->cache_action->name_action.used = cache_name_action_used;
-            thread->cache_action->name_item.used = cache_name_item_used;
-            thread->cache_action->name_file.used = cache_name_file_used;
+            cache->action.name_action.used = cache_name_action_used;
+            cache->action.name_item.used = cache_name_item_used;
+            cache->action.name_file.used = cache_name_file_used;
 
-            thread->cache_action->line_action = cache_line_action;
-            thread->cache_action->line_item = cache_line_item;
+            cache->action.line_action = cache_line_action;
+            cache->action.line_item = cache_line_item;
           }
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(data->error, *thread->cache_action);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             if (!simulate || F_status_set_fine(status) == F_memory_not) {
               break;
@@ -994,66 +1005,66 @@ extern "C" {
               code = controller_string_stop_s;
             }
 
-            fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-            fprintf(data->output.stream, "Processing entry item action '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_timeout_s, data->context.set.title.after->string);
-            fprintf(data->output.stream, "' setting '");
-            fprintf(data->output.stream, "%s%s%s", data->context.set.important.before->string, code, data->context.set.important.after->string);
-            fprintf(data->output.stream, "' to '");
-            fprintf(data->output.stream, "%s%llu%s", data->context.set.important.before->string, actions->array[cache->ats.array[at_j]].number, data->context.set.important.after->string);
-            fprintf(data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+            fprintf(thread_data.data->output.stream, "Processing entry item action '");
+            fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_timeout_s, thread_data.data->context.set.title.after->string);
+            fprintf(thread_data.data->output.stream, "' setting '");
+            fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.important.before->string, code, thread_data.data->context.set.important.after->string);
+            fprintf(thread_data.data->output.stream, "' to '");
+            fprintf(thread_data.data->output.stream, "%s%llu%s", thread_data.data->context.set.important.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->context.set.important.after->string);
+            fprintf(thread_data.data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
           }
 
           if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_kill) {
-            setting->timeout_kill = actions->array[cache->ats.array[at_j]].number;
+            thread_data.setting->timeout_kill = actions->array[cache->ats.array[at_j]].number;
           }
           else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_start) {
-            setting->timeout_start = actions->array[cache->ats.array[at_j]].number;
+            thread_data.setting->timeout_start = actions->array[cache->ats.array[at_j]].number;
           }
           else if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_stop) {
-            setting->timeout_stop = actions->array[cache->ats.array[at_j]].number;
+            thread_data.setting->timeout_stop = actions->array[cache->ats.array[at_j]].number;
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_failsafe) {
 
-          if (actions->array[cache->ats.array[at_j]].number == 0 || actions->array[cache->ats.array[at_j]].number >= setting->entry.items.used) {
+          if (actions->array[cache->ats.array[at_j]].number == 0 || actions->array[cache->ats.array[at_j]].number >= thread_data.setting->entry.items.used) {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->error.to.stream, "%s%sInvalid entry item index ", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-              fprintf(data->error.to.stream, "%s%s%llu%s", data->error.context.after->string, data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, data->error.notable.after->string);
-              fprintf(data->error.to.stream, "%s detected.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+            if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->error.to.stream, "%s%sInvalid entry item index ", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
+              fprintf(thread_data.data->error.to.stream, "%s%s%llu%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->error.notable.after->string);
+              fprintf(thread_data.data->error.to.stream, "%s detected.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
             }
 
-            controller_entry_error_print(data->error, *thread->cache_action);
+            controller_entry_error_print(thread_data.data->error, cache->action);
 
             return F_status_is_error(F_critical);
           }
           else {
-            setting->failsafe_enabled = F_true;
-            setting->failsafe_rule_id = actions->array[cache->ats.array[at_j]].number;
+            thread_data.setting->failsafe_enabled = F_true;
+            thread_data.setting->failsafe_rule_id = actions->array[cache->ats.array[at_j]].number;
 
             if (simulate) {
-              fprintf(data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(data->output.stream, "Processing entry item action '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.title.before->string, controller_string_failsafe_s, data->context.set.title.after->string);
-              fprintf(data->output.stream, "' setting value to '");
-              fprintf(data->output.stream, "%s%s%s", data->context.set.important.before->string, setting->entry.items.array[setting->failsafe_rule_id].name.string, data->context.set.important.after->string);
-              fprintf(data->output.stream, "'.%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(thread_data.data->output.stream, "Processing entry item action '");
+              fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_failsafe_s, thread_data.data->context.set.title.after->string);
+              fprintf(thread_data.data->output.stream, "' setting value to '");
+              fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.important.before->string, thread_data.setting->entry.items.array[thread_data.setting->failsafe_rule_id].name.string, thread_data.data->context.set.important.after->string);
+              fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
             }
           }
         }
       } // for
 
-      if (setting->signal) {
+      if (thread_data.setting->signal) {
         status = F_signal;
       }
 
       if (status == F_child || status == F_signal) break;
 
-      thread->cache_action->line_action = 0;
-      thread->cache_action->name_action.used = 0;
+      cache->action.line_action = 0;
+      cache->action.name_action.used = 0;
 
       if (F_status_is_error(status)) {
         if (!simulate || F_status_set_fine(status) == F_memory_not) {
@@ -1073,14 +1084,14 @@ extern "C" {
         cache->ats.used -= 2;
         cache->ats.array[at_j]++;
 
-        thread->cache_action->line_item = setting->entry.items.array[cache->ats.array[at_i]].line;
-        thread->cache_action->name_item.used = 0;
+        cache->action.line_item = thread_data.setting->entry.items.array[cache->ats.array[at_i]].line;
+        cache->action.name_item.used = 0;
 
-        status = controller_string_dynamic_append_terminated(setting->entry.items.array[cache->ats.array[at_i]].name, &thread->cache_action->name_item);
+        status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(data->error, *thread->cache_action);
+          fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+          controller_entry_error_print(thread_data.data->error, cache->action);
 
           break;
         }
@@ -1092,7 +1103,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && simulate) {
-      fprintf(data->output.stream, "%c", f_string_eol_s[0]);
+      fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
     }
 
     return status;
@@ -1144,7 +1155,7 @@ extern "C" {
       if (status == F_false) return F_false;
     }
 
-    for (f_string_length_t i = f_macro_utf_byte_width(name.string[0]); i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
+    for (f_array_length_t i = f_macro_utf_byte_width(name.string[0]); i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
 
       if (name.string[i] == '_') continue;
 
@@ -1165,7 +1176,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_string_length_t i = 0; i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
+    for (f_array_length_t i = 0; i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
 
       status = f_utf_is_graph(name.string, name.used);
 

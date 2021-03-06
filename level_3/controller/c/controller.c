@@ -145,15 +145,12 @@ extern "C" {
     }
 
     controller_setting_t setting = controller_setting_t_initialize;
-    controller_cache_t cache = controller_cache_t_initialize;
-    controller_mutex_t mutex = controller_mutex_t_initialize;
-    controller_thread_t thread = controller_macro_thread_t_initialize(&cache, &cache.action, data, &mutex, &setting, &cache.stack);
 
     f_string_static_t entry_name = f_string_static_t_initialize;
 
     if (data->remaining.used) {
       entry_name.string = arguments.argv[data->remaining.array[0]];
-      entry_name.used = strnlen(entry_name.string, f_console_length_size);
+      entry_name.used = strnlen(entry_name.string, f_console_parameter_size);
       entry_name.size = entry_name.used;
     }
     else {
@@ -206,7 +203,7 @@ extern "C" {
     else if (data->parameters[controller_parameter_pid].locations.used) {
       const f_array_length_t location = data->parameters[controller_parameter_pid].values.array[data->parameters[controller_parameter_pid].values.used - 1];
 
-      if (strnlen(arguments.argv[location], f_console_length_size)) {
+      if (strnlen(arguments.argv[location], f_console_parameter_size)) {
         status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
 
         if (F_status_is_error(status)) {
@@ -257,7 +254,7 @@ extern "C" {
     else if (data->parameters[controller_parameter_control].locations.used) {
       const f_array_length_t location = data->parameters[controller_parameter_control].values.array[data->parameters[controller_parameter_control].values.used - 1];
 
-      if (strnlen(arguments.argv[location], f_console_length_size)) {
+      if (strnlen(arguments.argv[location], f_console_parameter_size)) {
         status = fll_path_canonical(arguments.argv[location], &setting.path_control);
 
         if (F_status_is_error(status)) {
@@ -319,7 +316,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = controller_thread_main(entry_name, &cache, &thread);
+      status = controller_thread_main(entry_name, data, &setting);
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
@@ -332,12 +329,7 @@ extern "C" {
     f_signal_close(&data->signal);
 
     controller_file_pid_delete(*data, setting.path_pid);
-
-    controller_macro_setting_t_delete_simple(setting)
-    controller_macro_cache_t_delete_simple(cache)
-    controller_macro_mutex_t_delete_simple(mutex)
-    controller_macro_thread_t_delete_simple(thread)
-
+    controller_setting_delete_simple(&setting);
     controller_delete_data(data);
 
     if (status == F_child || status == F_signal) {
@@ -355,13 +347,13 @@ extern "C" {
 #ifndef _di_controller_delete_data_
   f_status_t controller_delete_data(controller_data_t *data) {
 
-    for (f_string_length_t i = 0; i < controller_total_parameters; i++) {
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_string_lengths_t_delete_simple(data->parameters[i].values);
+    for (f_array_length_t i = 0; i < controller_total_parameters; i++) {
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
     } // for
 
-    f_macro_string_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(data->remaining);
     f_macro_color_context_t_delete_simple(data->context);
 
     return F_none;
