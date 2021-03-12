@@ -308,11 +308,23 @@ extern "C" {
         case F_device_not:
           *string = FL_status_string_device_not;
           break;
+        case F_done:
+          *string = FL_status_string_done;
+          break;
+        case F_done_not:
+          *string = FL_status_string_done_not;
+          break;
         case F_dummy:
           *string = FL_status_string_dummy;
           break;
         case F_dummy_not:
           *string = FL_status_string_dummy_not;
+          break;
+        case F_empty:
+          *string = FL_status_string_empty;
+          break;
+        case F_empty_not:
+          *string = FL_status_string_empty_not;
           break;
         case F_encoding:
           *string = FL_status_string_encoding;
@@ -361,6 +373,12 @@ extern "C" {
           break;
         case F_found_not:
           *string = FL_status_string_found_not;
+          break;
+        case F_full:
+          *string = FL_status_string_full;
+          break;
+        case F_full_not:
+          *string = FL_status_string_full_not;
           break;
         case F_group:
           *string = FL_status_string_group;

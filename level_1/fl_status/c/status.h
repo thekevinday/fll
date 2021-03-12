@@ -195,8 +195,12 @@ extern "C" {
     #define FL_status_string_descriptor_not    "F_descriptor_not"
     #define FL_status_string_device            "F_device"
     #define FL_status_string_device_not        "F_device_not"
+    #define FL_status_string_done              "F_done"
+    #define FL_status_string_done_not          "F_done_not"
     #define FL_status_string_dummy             "F_dummy"
     #define FL_status_string_dummy_not         "F_dummy_not"
+    #define FL_status_string_empty             "F_empty"
+    #define FL_status_string_empty_not         "F_empty_not"
     #define FL_status_string_encoding          "F_encoding"
     #define FL_status_string_encoding_not      "F_encoding_not"
     #define FL_status_string_eof               "F_eof"
@@ -213,6 +217,8 @@ extern "C" {
     #define FL_status_string_fork_not          "F_fork_not"
     #define FL_status_string_found             "F_found"
     #define FL_status_string_found_not         "F_found_not"
+    #define FL_status_string_full              "F_full"
+    #define FL_status_string_full_not          "F_full_not"
     #define FL_status_string_group             "F_group"
     #define FL_status_string_group_not         "F_group_not"
     #define FL_status_string_ignore            "F_ignore"
@@ -350,8 +356,12 @@ extern "C" {
     #define FL_status_string_descriptor_not_length    16
     #define FL_status_string_device_length            8
     #define FL_status_string_device_not_length        12
+    #define FL_status_string_done_length              6
+    #define FL_status_string_done_not_length          10
     #define FL_status_string_dummy_length             7
     #define FL_status_string_dummy_not_length         11
+    #define FL_status_string_empty_length             7
+    #define FL_status_string_empty_not_length         11
     #define FL_status_string_encoding_length          10
     #define FL_status_string_encoding_not_length      14
     #define FL_status_string_eof_length               5
@@ -368,6 +378,8 @@ extern "C" {
     #define FL_status_string_fork_not_length          10
     #define FL_status_string_found_length             7
     #define FL_status_string_found_not_length         11
+    #define FL_status_string_full_length              6
+    #define FL_status_string_full_not_length          10
     #define FL_status_string_group_length             7
     #define FL_status_string_group_not_length         11
     #define FL_status_string_ignore_length            8
