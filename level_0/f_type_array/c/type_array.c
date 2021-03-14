@@ -20,6 +20,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_cells_append(source, destination);
   }
 #endif // _di_f_type_cells_append_
@@ -122,6 +124,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -238,6 +242,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_array_lengths_append(source, destination);
   }
 #endif // _di_f_type_array_lengths_append_
@@ -340,6 +346,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -456,6 +464,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_int8s_append(source, destination);
   }
 #endif // _di_f_type_int8s_append_
@@ -558,6 +568,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -674,6 +686,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_uint8s_append(source, destination);
   }
 #endif // _di_f_type_uint8s_append_
@@ -776,6 +790,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -892,6 +908,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_int16s_append(source, destination);
   }
 #endif // _di_f_type_int16s_append_
@@ -994,6 +1012,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -1110,6 +1130,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_uint16s_append(source, destination);
   }
 #endif // _di_f_type_uint16s_append_
@@ -1212,6 +1234,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -1328,6 +1352,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_int32s_append(source, destination);
   }
 #endif // _di_f_type_int32s_append_
@@ -1430,6 +1456,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -1546,6 +1574,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_uint32s_append(source, destination);
   }
 #endif // _di_f_type_uint32s_append_
@@ -1648,6 +1678,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -1764,6 +1796,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_int64s_append(source, destination);
   }
 #endif // _di_f_type_int64s_append_
@@ -1866,6 +1900,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -1982,6 +2018,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_uint64s_append(source, destination);
   }
 #endif // _di_f_type_uint64s_append_
@@ -2084,6 +2122,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -2200,6 +2240,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_int128s_append(source, destination);
   }
 #endif // _di_f_type_int128s_append_
@@ -2302,6 +2344,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 
@@ -2418,6 +2462,8 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    if (!source.used) return F_data_not;
+
     return private_f_type_uint128s_append(source, destination);
   }
 #endif // _di_f_type_uint128s_append_
@@ -2520,6 +2566,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
 

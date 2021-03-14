@@ -15,6 +15,31 @@ extern "C" {
   }
 #endif // _di_f_string_quantitys_adjust_
 
+#ifndef _di_f_string_quantitys_append_
+  f_status_t f_string_quantitys_append(const f_string_quantitys_t source, f_string_quantitys_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_string_quantitys_adjust(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+
+      destination->array[destination->used].start = source.array[i].start;
+      destination->array[destination->used].total = source.array[i].total;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_string_quantitys_append_
+
 #ifndef _di_f_string_quantitys_decimate_by_
   f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys) {
     #ifndef _di_level_0_parameter_checking_

@@ -133,25 +133,47 @@ extern "C" {
 #endif // _di_f_string_map_multis_t_
 
 /**
- * Resize the string map_multis array.
+ * Resize the map_multis array.
  *
  * @param length
  *   The new size to use.
  * @param map_multis
- *   The string map_multis array to resize.
+ *   The map_multis array to resize.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_adjust_
   extern f_status_t f_string_map_multis_adjust(const f_array_length_t length, f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_adjust_
 
 /**
- * Resize the string map_multis array to a smaller size.
+ * Append the source map_multis onto the destination.
+ *
+ * @param source
+ *   The source maps to append.
+ * @param destination
+ *   The destination maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_map_multis_append_
+  f_status_t f_string_map_multis_append(const f_string_map_multis_t source, f_string_map_multis_t *destination);
+#endif // _di_f_string_map_multis_append_
+
+/**
+ * Resize the map_multis array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -160,20 +182,21 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decimate the size by.
  * @param map_multis
- *   The string map_multis array to resize.
+ *   The map_multis array to resize.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_decimate_by_
   extern f_status_t f_string_map_multis_decimate_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_decimate_by_
 
 /**
- * Resize the string map_multis array to a smaller size.
+ * Resize the map_multis array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
  * If the given length is too small, then the resize will fail.
@@ -182,41 +205,43 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to decrease the size by.
  * @param map_multis
- *   The string map_multis array to resize.
+ *   The map_multis array to resize.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_decrease_by_
   extern f_status_t f_string_map_multis_decrease_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_decrease_by_
 
 /**
- * Increase the size of the string map_multis array, but only if necessary.
+ * Increase the size of the map_multis array, but only if necessary.
  *
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
  * @param map_multis
- *   The string map_multis array to resize.
+ *   The map_multis array to resize.
  *
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_increase_
   extern f_status_t f_string_map_multis_increase(f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_increase_
 
 /**
- * Resize the string map_multis array to a larger size.
+ * Resize the map_multis array to a larger size.
  *
  * This will resize making the string larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
@@ -225,33 +250,35 @@ extern "C" {
  * @param amount
  *   A positive number representing how much to increase the size by.
  * @param map_multis
- *   The string map_multis array to resize.
+ *   The map_multis array to resize.
  *
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_increase_by_
   extern f_status_t f_string_map_multis_increase_by(const f_array_length_t amount, f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_increase_by_
 
 /**
- * Resize the string map_multis array.
+ * Resize the map_multis array.
  *
  * @param length
  *   The new size to use.
  * @param map_multis
- *   The string map_multis array to adjust.
+ *   The map_multis array to adjust.
  *
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_resize_
   extern f_status_t f_string_map_multis_resize(const f_array_length_t length, f_string_map_multis_t *map_multis);
@@ -268,12 +295,34 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_adjust_
   extern f_status_t f_string_maps_adjust(const f_array_length_t length, f_string_maps_t *maps);
 #endif // _di_f_string_maps_adjust_
+
+/**
+ * Append the source maps onto the destination.
+ *
+ * @param source
+ *   The source maps to append.
+ * @param destination
+ *   The destination maps the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_maps_append_
+  extern f_status_t f_string_maps_append(const f_string_maps_t source, f_string_maps_t *destination);
+#endif // _di_f_string_maps_append_
 
 /**
  * Resize the string maps array to a smaller size.
@@ -290,8 +339,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_decimate_by_
   extern f_status_t f_string_maps_decimate_by(const f_array_length_t amount, f_string_maps_t *maps);
@@ -312,8 +362,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_decrease_by_
   extern f_status_t f_string_maps_decrease_by(const f_array_length_t amount, f_string_maps_t *maps);
@@ -333,8 +384,9 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_increase_
   extern f_status_t f_string_maps_increase(f_string_maps_t *maps);
@@ -356,9 +408,10 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_increase_by_
   extern f_status_t f_string_maps_increase_by(const f_array_length_t amount, f_string_maps_t *maps);
@@ -375,8 +428,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_resize_
   extern f_status_t f_string_maps_resize(const f_array_length_t length, f_string_maps_t *maps);

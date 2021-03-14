@@ -104,6 +104,27 @@ extern "C" {
 #endif // _di_f_string_triples_adjust_
 
 /**
+ * Append the source triples onto the destination.
+ *
+ * @param source
+ *   The source triples to append.
+ * @param destination
+ *   The destination triples the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_triples_append_
+  extern f_status_t f_string_triples_append(const f_string_triples_t source, f_string_triples_t *destination);
+#endif // _di_f_string_triples_append_
+
+/**
  * Resize the string triples array to a smaller size.
  *
  * This will resize making the array smaller based on (size - given length).
@@ -118,8 +139,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_decimate_by_
   extern f_status_t f_string_triples_decimate_by(const f_array_length_t amount, f_string_triples_t *triples);
@@ -140,8 +162,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_decrease_by_
   extern f_status_t f_string_triples_decrease_by(const f_array_length_t amount, f_string_triples_t *triples);
@@ -161,8 +184,9 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_increase_
   extern f_status_t f_string_triples_increase(f_string_triples_t *triples);
@@ -184,9 +208,10 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_increase_by_
   extern f_status_t f_string_triples_increase_by(const f_array_length_t amount, f_string_triples_t *triples);
@@ -203,8 +228,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_triples_resize_
   extern f_status_t f_string_triples_resize(const f_array_length_t length, f_string_triples_t *triples);

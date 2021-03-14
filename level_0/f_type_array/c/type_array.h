@@ -53,6 +53,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -77,7 +78,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -101,7 +101,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -124,7 +123,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -149,9 +147,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -170,7 +167,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -190,7 +186,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -210,8 +205,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -231,7 +226,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -256,7 +250,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -281,7 +274,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -305,7 +297,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -330,9 +321,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -351,7 +341,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -390,6 +379,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -414,7 +404,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -438,7 +427,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -461,7 +449,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -486,9 +473,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -507,7 +493,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -527,7 +512,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -547,8 +531,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -568,7 +552,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -593,7 +576,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -618,7 +600,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -642,7 +623,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -667,9 +647,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -688,7 +667,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -727,6 +705,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -751,7 +730,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -775,7 +753,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -798,7 +775,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -823,9 +799,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -844,7 +819,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -864,7 +838,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -884,8 +857,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -905,7 +878,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -930,7 +902,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -955,7 +926,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -979,7 +949,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1004,9 +973,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1025,7 +993,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1064,6 +1031,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1088,7 +1056,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1112,7 +1079,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1135,7 +1101,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1160,9 +1125,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1181,7 +1145,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1201,7 +1164,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1221,8 +1183,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1242,7 +1204,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1267,7 +1228,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1292,7 +1252,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1316,7 +1275,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1341,9 +1299,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1362,7 +1319,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1401,6 +1357,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1425,7 +1382,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1449,7 +1405,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1472,7 +1427,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1497,9 +1451,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1518,7 +1471,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1538,7 +1490,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1558,8 +1509,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1579,7 +1530,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1604,7 +1554,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1629,7 +1578,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1653,7 +1601,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1678,9 +1625,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1699,7 +1645,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1738,6 +1683,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -1762,7 +1708,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1786,7 +1731,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1809,7 +1753,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1834,9 +1777,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -1855,7 +1797,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1875,7 +1816,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1895,8 +1835,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -1916,7 +1856,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1941,7 +1880,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -1966,7 +1904,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -1990,7 +1927,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2015,9 +1951,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2036,7 +1971,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -2075,6 +2009,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2099,7 +2034,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2123,7 +2057,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2146,7 +2079,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2171,9 +2103,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2192,7 +2123,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2212,7 +2142,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2232,8 +2161,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2253,7 +2182,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2278,7 +2206,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2303,7 +2230,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -2327,7 +2253,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2352,9 +2277,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2373,7 +2297,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -2412,6 +2335,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2436,7 +2360,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2460,7 +2383,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2483,7 +2405,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2508,9 +2429,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2529,7 +2449,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2549,7 +2468,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2569,8 +2487,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2590,7 +2508,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2615,7 +2532,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2640,7 +2556,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -2664,7 +2579,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2689,9 +2603,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2710,7 +2623,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -2749,6 +2661,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -2773,7 +2686,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2797,7 +2709,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2820,7 +2731,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2845,9 +2755,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -2866,7 +2775,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2886,7 +2794,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2906,8 +2813,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -2927,7 +2834,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2952,7 +2858,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -2977,7 +2882,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3001,7 +2905,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3026,9 +2929,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3047,7 +2949,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3086,6 +2987,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -3110,7 +3012,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3134,7 +3035,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3157,7 +3057,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3182,9 +3081,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3203,7 +3101,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3223,7 +3120,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3243,8 +3139,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3264,7 +3160,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3289,7 +3184,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3314,7 +3208,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3338,7 +3231,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3363,9 +3255,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3384,7 +3275,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3423,6 +3313,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -3447,7 +3338,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3471,7 +3361,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3494,7 +3383,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3519,9 +3407,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3540,7 +3427,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3560,7 +3446,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3580,8 +3465,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3601,7 +3486,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3626,7 +3510,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3651,7 +3534,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3675,7 +3557,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3700,9 +3581,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3721,7 +3601,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -3760,6 +3639,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -3784,7 +3664,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3808,7 +3687,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3831,7 +3709,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3856,9 +3733,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -3877,7 +3753,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3897,7 +3772,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3917,8 +3791,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -3938,7 +3812,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3963,7 +3836,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_adjust().
@@ -3988,7 +3860,6 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_delete().
@@ -4012,7 +3883,6 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
@@ -4037,9 +3907,8 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */

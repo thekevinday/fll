@@ -125,48 +125,6 @@ extern "C" {
   extern f_status_t fll_fss_status_to_string(const f_status_t code, f_string_t *string);
 #endif // _di_fll_status_to_string_
 
-/**
- * Returns true or false depending on whether the given status code has the error bit set.
- *
- * @param code
- *   The code to process.
- *
- * @return
- *   F_true if status has the error bit set.
- *   F_false otherwise.
- */
-#ifndef _di_fll_fss_status_is_error_
-  extern f_status_t fll_fss_status_is_error(const f_status_t code);
-#endif // _di_fll_fss_status_is_error_
-
-/**
- * Returns true or false depending on whether the given status code has the warning bit set.
- *
- * @param code
- *   The code to process.
- *
- * @return
- *   F_true if status has the warning bit set.
- *   F_false otherwise.
- */
-#ifndef _di_fll_fss_status_is_warning_
-  extern f_status_t fll_fss_status_is_warning(const f_status_t code);
-#endif // _di_fll_fss_status_is_warning_
-
-/**
- * Returns true or false depending on whether the given status code has neither the error bit nor the warning bit set.
- *
- * @param code
- *   The code to process.
- *
- * @return
- *   F_true if status does not have the error bit nor warning bit set.
- *   F_false otherwise.
- */
-#ifndef _di_fll_fss_status_is_fine_
-  extern f_status_t fll_fss_status_is_fine(const f_status_t code);
-#endif // _di_fll_fss_status_is_fine_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

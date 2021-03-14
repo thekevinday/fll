@@ -332,6 +332,12 @@ extern "C" {
         case F_encoding_not:
           *string = FL_status_string_encoding_not;
           break;
+        case F_eoa:
+          *string = FL_status_string_eoa;
+          break;
+        case F_eoa_not:
+          *string = FL_status_string_eoa_not;
+          break;
         case F_eof:
           *string = FL_status_string_eof;
           break;
@@ -842,6 +848,9 @@ extern "C" {
         case F_complete_not_utf_block:
           *string = FL_status_string_complete_not_utf_block;
           break;
+        case F_complete_not_utf_eoa:
+          *string = FL_status_string_complete_not_utf_eoa;
+          break;
         case F_complete_not_utf_eof:
           *string = FL_status_string_complete_not_utf_eof;
           break;
@@ -856,6 +865,9 @@ extern "C" {
           break;
         case F_none_block:
           *string = FL_status_string_none_block;
+          break;
+        case F_none_eoa:
+          *string = FL_status_string_none_eoa;
           break;
         case F_none_eof:
           *string = FL_status_string_none_eof;
@@ -878,6 +890,9 @@ extern "C" {
         case F_data_not_block:
           *string = FL_status_string_data_not_block;
           break;
+        case F_data_not_eoa:
+          *string = FL_status_string_data_not_eoa;
+          break;
         case F_data_not_eof:
           *string = FL_status_string_data_not_eof;
           break;
@@ -899,6 +914,9 @@ extern "C" {
         case F_terminated_not_block:
           *string = FL_status_string_terminated_not_block;
           break;
+        case F_terminated_not_eoa:
+          *string = FL_status_string_terminated_not_eoa;
+          break;
         case F_terminated_not_eof:
           *string = FL_status_string_terminated_not_eof;
           break;
@@ -913,6 +931,9 @@ extern "C" {
           break;
         case F_terminated_not_group_block:
           *string = FL_status_string_terminated_not_group_block;
+          break;
+        case F_terminated_not_group_eoa:
+          *string = FL_status_string_terminated_not_group_eoa;
           break;
         case F_terminated_not_group_eof:
           *string = FL_status_string_terminated_not_group_eof;
@@ -931,6 +952,9 @@ extern "C" {
           break;
         case F_terminated_not_nest_block:
           *string = FL_status_string_terminated_not_nest_block;
+          break;
+        case F_terminated_not_nest_eoa:
+          *string = FL_status_string_terminated_not_nest_eoa;
           break;
         case F_terminated_not_nest_eof:
           *string = FL_status_string_terminated_not_nest_eof;

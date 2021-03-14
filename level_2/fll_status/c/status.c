@@ -556,6 +556,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_eoa, length, FL_status_string_eoa_length) == F_equal_to) {
+        *code = F_eoa;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_eoa_not, length, FL_status_string_eoa_not_length) == F_equal_to) {
+        *code = F_eoa_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_eof, length, FL_status_string_eof_length) == F_equal_to) {
         *code = F_eof;
         return F_none;
@@ -1396,6 +1406,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_complete_not_utf_eoa, length, FL_status_string_complete_not_utf_eoa_length) == F_equal_to) {
+        *code = F_complete_not_utf_eoa;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_complete_not_utf_eof, length, FL_status_string_complete_not_utf_eof_length) == F_equal_to) {
         *code = F_complete_not_utf_eof;
         return F_none;
@@ -1418,6 +1433,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_none_block, length, FL_status_string_none_block_length) == F_equal_to) {
         *code = F_none_block;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_none_eoa, length, FL_status_string_none_eoa_length) == F_equal_to) {
+        *code = F_none_eoa;
         return F_none;
       }
 
@@ -1456,6 +1476,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_data_not_eoa, length, FL_status_string_data_not_eoa_length) == F_equal_to) {
+        *code = F_data_not_eoa;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_data_not_eof, length, FL_status_string_data_not_eof_length) == F_equal_to) {
         *code = F_data_not_eof;
         return F_none;
@@ -1491,6 +1516,11 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_terminated_not_eoa, length, FL_status_string_terminated_not_eoa_length) == F_equal_to) {
+        *code = F_terminated_not_eoa;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_terminated_not_eof, length, FL_status_string_terminated_not_eof_length) == F_equal_to) {
         *code = F_terminated_not_eof;
         return F_none;
@@ -1513,6 +1543,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_terminated_not_group_block, length, FL_status_string_terminated_not_group_block_length) == F_equal_to) {
         *code = F_terminated_not_group_block;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminated_not_group_eoa, length, FL_status_string_terminated_not_group_eoa_length) == F_equal_to) {
+        *code = F_terminated_not_group_eoa;
         return F_none;
       }
 
@@ -1543,6 +1578,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_terminated_not_nest_block, length, FL_status_string_terminated_not_nest_block_length) == F_equal_to) {
         *code = F_terminated_not_nest_block;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_terminated_not_nest_eoa, length, FL_status_string_terminated_not_nest_eoa_length) == F_equal_to) {
+        *code = F_terminated_not_nest_eoa;
         return F_none;
       }
 

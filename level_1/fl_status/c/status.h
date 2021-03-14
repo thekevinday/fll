@@ -203,6 +203,8 @@ extern "C" {
     #define FL_status_string_empty_not         "F_empty_not"
     #define FL_status_string_encoding          "F_encoding"
     #define FL_status_string_encoding_not      "F_encoding_not"
+    #define FL_status_string_eoa               "F_eoa"
+    #define FL_status_string_eoa_not           "F_eoa_not"
     #define FL_status_string_eof               "F_eof"
     #define FL_status_string_eof_not           "F_eof_not"
     #define FL_status_string_eol               "F_eol"
@@ -364,6 +366,8 @@ extern "C" {
     #define FL_status_string_empty_not_length         11
     #define FL_status_string_encoding_length          10
     #define FL_status_string_encoding_not_length      14
+    #define FL_status_string_eoa_length               5
+    #define FL_status_string_eoa_not_length           9
     #define FL_status_string_eof_length               5
     #define FL_status_string_eof_not_length           9
     #define FL_status_string_eol_length               5
@@ -588,11 +592,13 @@ extern "C" {
     #define FL_status_string_buffer_too_small           "F_buffer_too_small"
     #define FL_status_string_complete_not_utf           "F_complete_not_utf"
     #define FL_status_string_complete_not_utf_block     "F_complete_not_utf_block"
+    #define FL_status_string_complete_not_utf_eoa       "F_complete_not_utf_eoa"
     #define FL_status_string_complete_not_utf_eof       "F_complete_not_utf_eof"
     #define FL_status_string_complete_not_utf_eol       "F_complete_not_utf_eol"
     #define FL_status_string_complete_not_utf_eos       "F_complete_not_utf_eos"
     #define FL_status_string_complete_not_utf_stop      "F_complete_not_utf_stop"
     #define FL_status_string_none_block                 "F_none_block"
+    #define FL_status_string_none_eoa                   "F_none_eoa"
     #define FL_status_string_none_eof                   "F_none_eof"
     #define FL_status_string_none_eol                   "F_none_eol"
     #define FL_status_string_none_eos                   "F_none_eos"
@@ -601,6 +607,7 @@ extern "C" {
     #define FL_status_string_data                       "F_data"
     #define FL_status_string_data_not                   "F_data_not"
     #define FL_status_string_data_not_block             "F_data_not_block"
+    #define FL_status_string_data_not_eoa               "F_data_not_eoa"
     #define FL_status_string_data_not_eof               "F_data_not_eof"
     #define FL_status_string_data_not_eol               "F_data_not_eol"
     #define FL_status_string_data_not_eos               "F_data_not_eos"
@@ -608,18 +615,21 @@ extern "C" {
     #define FL_status_string_terminated                 "F_terminated"
     #define FL_status_string_terminated_not             "F_terminated_not"
     #define FL_status_string_terminated_not_block       "F_terminated_not_block"
+    #define FL_status_string_terminated_not_eoa         "F_terminated_not_eoa"
     #define FL_status_string_terminated_not_eof         "F_terminated_not_eof"
     #define FL_status_string_terminated_not_eol         "F_terminated_not_eol"
     #define FL_status_string_terminated_not_eos         "F_terminated_not_eos"
     #define FL_status_string_terminated_not_stop        "F_terminated_not_stop"
     #define FL_status_string_terminated_not_group       "F_terminated_not_group"
     #define FL_status_string_terminated_not_group_block "F_terminated_not_group_block"
+    #define FL_status_string_terminated_not_group_eoa   "F_terminated_not_group_eoa"
     #define FL_status_string_terminated_not_group_eof   "F_terminated_not_group_eof"
     #define FL_status_string_terminated_not_group_eol   "F_terminated_not_group_eol"
     #define FL_status_string_terminated_not_group_eos   "F_terminated_not_group_eos"
     #define FL_status_string_terminated_not_group_stop  "F_terminated_not_group_stop"
     #define FL_status_string_terminated_not_nest        "F_terminated_not_nest"
     #define FL_status_string_terminated_not_nest_block  "F_terminated_not_nest_block"
+    #define FL_status_string_terminated_not_nest_eoa    "F_terminated_not_nest_eoa"
     #define FL_status_string_terminated_not_nest_eof    "F_terminated_not_nest_eof"
     #define FL_status_string_terminated_not_nest_eol    "F_terminated_not_nest_eol"
     #define FL_status_string_terminated_not_nest_eos    "F_terminated_not_nest_eos"
@@ -631,11 +641,13 @@ extern "C" {
     #define FL_status_string_buffer_too_small_length           18
     #define FL_status_string_complete_not_utf_length           18
     #define FL_status_string_complete_not_utf_block_length     24
+    #define FL_status_string_complete_not_utf_eoa_length       22
     #define FL_status_string_complete_not_utf_eof_length       22
     #define FL_status_string_complete_not_utf_eol_length       22
     #define FL_status_string_complete_not_utf_eos_length       22
     #define FL_status_string_complete_not_utf_stop_length      23
     #define FL_status_string_none_block_length                 12
+    #define FL_status_string_none_eoa_length                   10
     #define FL_status_string_none_eof_length                   10
     #define FL_status_string_none_eol_length                   10
     #define FL_status_string_none_eos_length                   10
@@ -643,6 +655,7 @@ extern "C" {
     #define FL_status_string_data_length                       6
     #define FL_status_string_data_not_length                   10
     #define FL_status_string_data_not_block_length             16
+    #define FL_status_string_data_not_eoa_length               14
     #define FL_status_string_data_not_eof_length               14
     #define FL_status_string_data_not_eol_length               14
     #define FL_status_string_data_not_eos_length               14
@@ -650,18 +663,21 @@ extern "C" {
     #define FL_status_string_terminated_length                 12
     #define FL_status_string_terminated_not_length             16
     #define FL_status_string_terminated_not_block_length       22
+    #define FL_status_string_terminated_not_eoa_length         20
     #define FL_status_string_terminated_not_eof_length         20
     #define FL_status_string_terminated_not_eol_length         20
     #define FL_status_string_terminated_not_eos_length         20
     #define FL_status_string_terminated_not_stop_length        21
     #define FL_status_string_terminated_not_group_length       22
     #define FL_status_string_terminated_not_group_block_length 28
+    #define FL_status_string_terminated_not_group_eoa_length   25
     #define FL_status_string_terminated_not_group_eof_length   25
     #define FL_status_string_terminated_not_group_eol_length   25
     #define FL_status_string_terminated_not_group_eos_length   25
     #define FL_status_string_terminated_not_group_stop_length  26
     #define FL_status_string_terminated_not_nest_length        21
     #define FL_status_string_terminated_not_nest_block_length  26
+    #define FL_status_string_terminated_not_nest_eoa_length    25
     #define FL_status_string_terminated_not_nest_eof_length    25
     #define FL_status_string_terminated_not_nest_eol_length    25
     #define FL_status_string_terminated_not_nest_eos_length    25
