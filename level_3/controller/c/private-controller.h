@@ -157,6 +157,30 @@ extern "C" {
 #endif // _di_controller_file_pid_delete_
 
 /**
+ * Find an existing process.
+ *
+ * Do not confuse this with a process in the context of a PID.
+ * This is a stucture for the current processing of some rule.
+ *
+ * This does not do any locking or unlocking for the processs data, be sure to lock appropriately before and after calling this.
+ *
+ * @param id
+ *   The (rule) id to find.
+ * @param processs
+ *   The array of processes to.
+ * @param at
+ *   The location within processs the id was found.
+ *
+ * @return
+ *   F_none if not given a valid id to search.
+ *   F_false if there is no process found.
+ *   F_true if there is a process found (address is stored in "at").
+ */
+#ifndef _di_controller_find_process_
+  f_status_t controller_find_process(const f_string_static_t id, const controller_processs_t processs, f_array_length_t *at) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_find_process_
+
+/**
  * Convert the string from a string representation of an ID or a user name into the numeric representation of that ID or user name.
  *
  * @param buffer
@@ -214,6 +238,8 @@ extern "C" {
  * Perform all activities requiring the state to be "ready".
  *
  * This prints messages on errors.
+ *
+ * This does not do any locking or unlocking for the setting data, be sure to lock appropriately before and after calling this.
  *
  * @param thread_data
  *   The thread data.

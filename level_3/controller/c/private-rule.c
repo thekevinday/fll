@@ -399,15 +399,118 @@ extern "C" {
 #endif // _di_controller_rule_action_read_
 
 #ifndef _di_controller_rule_copy_
-  f_status_t controller_rule_copy(controller_rule_t *source, controller_rule_t *destination) {
+  f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) {
     f_status_t status = F_none;
 
-    f_thread_condition_wait(&source->wait, &destination->lock);
+    destination->timeout_kill = source.timeout_kill;
+    destination->timeout_start = source.timeout_start;
+    destination->timeout_stop = source.timeout_stop;
 
-    // @todo
+    destination->has = source.has;
+    destination->nice = source.nice;
+    destination->user = source.user;
+    destination->group = source.group;
 
-    f_thread_condition_signal(&source->wait);
-    f_thread_mutex_unlock(&destination->lock);
+    destination->timestamp.seconds = source.seconds;
+    destination->timestamp.nanoseconds = source.nanoseconds;
+
+    destination->path_control.used = 0;
+    destination->name.used = 0;
+    destination->path.used = 0;
+    destination->script.used = 0;
+
+    destination->define.used = 0;
+    destination->parameter.used = 0;
+
+    destination->environment.used = 0;
+    destination->need.used = 0;
+    destination->want.used = 0;
+    destination->wish.used = 0;
+
+    destination->affinity.used = 0;
+    destination->capability.used = 0;
+    destination->control_group.used = 0;
+    destination->groups.used = 0;
+    destination->limits.used = 0;
+    destination->scheduler.used = 0;
+
+    destination->items.used = 0;
+
+    if (source.id.used) {
+
+      status = f_string_dynamic_append(source.id, &dynamic->id);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.name.used) {
+
+      status = f_string_dynamic_append(source.name, &dynamic->name);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.path.used) {
+
+      status = f_string_dynamic_append(source.path, &dynamic->path);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.script.used) {
+
+      status = f_string_dynamic_append(source.script, &dynamic->script);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (source.define.used) {
+      status = f_string_maps_append(source.define, &destination->define);
+    }
+
+    if (source.parameter.used) {
+      status = f_string_maps_append(source.parameter, &destination->parameter);
+    }
+
+    if (source.environment.used) {
+      status = f_string_dynamics_append(source.environment, &destination->environment);
+    }
+
+    if (source.need.used) {
+      status = f_string_dynamics_append(source.need, &destination->need);
+    }
+
+    if (source.want.used) {
+      status = f_string_dynamics_append(source.want, &destination->want);
+    }
+
+    if (source.wish.used) {
+      status = f_string_dynamics_append(source.wish, &destination->wish);
+    }
+
+    if (source.affinity.used) {
+      status = f_int32s_append(source.affinity, &destination->affinity);
+    }
+
+    if (source.capability.used) {
+      // @todo copy capability
+    }
+
+    if (source.control_group.used) {
+      // @todo copy control_group
+    }
+
+    if (source.groups.used) {
+      status = f_int32s_append(source.groups, &destination->groups);
+    }
+
+    if (source.limits.used) {
+      status = f_limit_sets_append(source.limits, &destination->limits);
+    }
+
+    if (source.scheduler.used) {
+      // @todo copy scheduler
+    }
+
+    if (source.items.used) {
+      // @todo copy items
+    }
 
     return status;
   }
@@ -452,11 +555,11 @@ extern "C" {
   void controller_rule_error_print_locked(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
-      f_thread_mutex_lock(&thread->mutex.print);
+      f_thread_mutex_lock(&thread->lock.print);
 
       controller_rule_error_print(output, cache, item);
 
-      f_thread_mutex_unlock(&thread->mutex.print);
+      f_thread_mutex_unlock(&thread->lock.print);
     }
   }
 #endif // _di_controller_rule_error_print_
@@ -705,14 +808,14 @@ extern "C" {
         else {
 
           if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
-            f_thread_mutex_lock(&thread_data.thread->mutex.print);
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
 
             fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->warning.to.stream, "%s%sAction type is unknown, ignoring.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
             controller_rule_error_print(thread_data.data->warning, cache->action, F_true);
 
-            f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
 
           rule->items.array[i].actions.array[j].status = F_ignore;
@@ -760,7 +863,7 @@ extern "C" {
     if (options & controller_rule_option_simulate) {
 
       if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&thread_data.thread->mutex.print);
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
 
         fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
         fprintf(thread_data.data->output.stream, "Simulating execution of '");
@@ -775,7 +878,7 @@ extern "C" {
         fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.notable.string, rule->name.used ? rule->name.string : f_string_empty_s, thread_data.data->context.reset.string);
         fprintf(thread_data.data->output.stream, "%s'.%c", thread_data.data->context.reset.string, f_string_eol_s[0]);
 
-        f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
@@ -831,7 +934,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
         controller_rule_error_print_execute(thread_data.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
@@ -843,7 +946,7 @@ extern "C" {
         fll_error_print(thread_data.data->error, status, "fll_execute_program", F_true);
       }
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       status = F_status_set_error(status);
     }
@@ -869,7 +972,7 @@ extern "C" {
     if (options & controller_rule_option_simulate) {
 
       if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&thread_data.thread->mutex.print);
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
 
         fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
         fprintf(thread_data.data->output.stream, "Simulating execution of '");
@@ -884,7 +987,7 @@ extern "C" {
         fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.notable.string, rule->name.used ? rule->name.string : f_string_empty_s, thread_data.data->context.reset.string);
         fprintf(thread_data.data->output.stream, "%s'.%c", thread_data.data->context.reset.string, f_string_eol_s[0]);
 
-        f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
@@ -940,7 +1043,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
         controller_rule_error_print_execute(thread_data.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
@@ -952,7 +1055,7 @@ extern "C" {
         fll_error_print(thread_data.data->error, status, "fll_execute_program", F_true);
       }
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return F_status_set_error(status);
     }
@@ -1381,7 +1484,9 @@ extern "C" {
 #endif // _di_controller_rule_path_
 
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
+  f_status_t controller_rule_process(const controller_rule_t rule, const f_array_length_t at_process, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
+
+    // @todo need to update accordingly with new parameters "rule" and "at_process".
 
     switch (action) {
       case controller_rule_action_type_freeze:
@@ -1398,7 +1503,7 @@ extern "C" {
       default:
 
         if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-          f_thread_mutex_lock(&thread_data.thread->mutex.print);
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
 
           fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(thread_data.data->error.to.stream, "%s%sUnsupported action type '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
@@ -1407,19 +1512,19 @@ extern "C" {
 
           controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-          f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
         }
 
         return F_status_set_error(F_parameter);
     }
 
     if (index >= thread_data.setting->rules.used) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_parameter, "controller_rule_process", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return F_status_set_error(F_parameter);
     }
@@ -1429,12 +1534,12 @@ extern "C" {
     f_macro_array_lengths_t_increase_by(status, thread_data.thread->asynchronouss.array[thread_data.id].stack, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return status;
     }
@@ -1445,7 +1550,7 @@ extern "C" {
 
       if (thread_data.thread->asynchronouss.array[thread_data.id].stack.array[i] == index) {
         if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-          f_thread_mutex_lock(&thread_data.thread->mutex.print);
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
 
           fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(thread_data.data->error.to.stream, "%s%sThe rule '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
@@ -1454,7 +1559,7 @@ extern "C" {
 
           controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-          f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
         }
 
         // never continue on recursion errors even in simulate mode.
@@ -1473,12 +1578,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return status;
     }
@@ -1486,12 +1591,12 @@ extern "C" {
     status = f_string_dynamic_append(thread_data.setting->rules.array[index].id, &cache->action.name_file);
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return status;
     }
@@ -1503,12 +1608,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_append", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return status;
     }
@@ -1516,12 +1621,12 @@ extern "C" {
     status = f_string_dynamic_terminate_after(&cache->action.name_file);
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&thread_data.thread->mutex.print);
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
       fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
       controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-      f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
       return status;
     }
@@ -1571,25 +1676,25 @@ extern "C" {
 
           if (at == thread_data.setting->rules.used) {
             if (i == 0) {
-              f_thread_mutex_lock(&thread_data.thread->mutex.print);
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
 
               controller_rule_error_print_need_want_wish(thread_data.data->error, strings[i], dynamics[i]->array[j].string, "was not found");
 
               status = F_status_set_error(F_found_not);
               controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-              f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
               if (!(options & controller_rule_option_simulate)) break;
             }
             else {
               if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
-                f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                 controller_rule_error_print_need_want_wish(thread_data.data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
                 controller_rule_error_print(thread_data.data->warning, cache->action, F_true);
 
-                f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
               }
             }
           }
@@ -1616,12 +1721,12 @@ extern "C" {
               f_macro_array_lengths_t_increase_by(status, thread_data.thread->asynchronouss.array[thread_data.id].stack, controller_default_allocation_step)
 
               if (F_status_is_error(status)) {
-                f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                 fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
                 controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-                f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
                 f_thread_condition_signal(&thread_data.setting->rules.array[at].wait);
                 f_thread_mutex_unlock(&thread_data.setting->rules.array[at].lock);
@@ -1676,12 +1781,12 @@ extern "C" {
               if (F_status_is_error(status)) {
                 if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
 
-                  f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                  f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                   controller_rule_error_print_need_want_wish(thread_data.data->error, strings[i], dynamics[i]->array[j].string, "failed during execution");
                   controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-                  f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                  f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
                   if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                     f_thread_condition_signal(&thread_data.setting->rules.array[at].wait);
@@ -1692,12 +1797,12 @@ extern "C" {
                 }
                 else {
                   if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
-                    f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                    f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                     controller_rule_error_print_need_want_wish(thread_data.data->warning, strings[i], dynamics[i]->array[j].string, "failed during execution");
                     controller_rule_error_print(thread_data.data->warning, cache->action, F_true);
 
-                    f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                    f_thread_mutex_unlock(&thread_data.thread->lock.print);
                   }
                 }
               }
@@ -1709,25 +1814,25 @@ extern "C" {
             if (F_status_is_error(thread_data.setting->rules.array[at].status)) {
 
               if (i == 0 || i == 1) {
-                f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                 controller_rule_error_print_need_want_wish(thread_data.data->error, strings[i], dynamics[i]->array[j].string, "is in a failed state");
 
                 status = F_status_set_error(F_found_not);
                 controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-                f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
                 if (!(options & controller_rule_option_simulate)) break;
               }
               else {
                 if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
-                  f_thread_mutex_lock(&thread_data.thread->mutex.print);
+                  f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                   controller_rule_error_print_need_want_wish(thread_data.data->warning, strings[i], dynamics[i]->array[j].string, "is in a failed state");
                   controller_rule_error_print(thread_data.data->warning, cache->action, F_true);
 
-                  f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+                  f_thread_mutex_unlock(&thread_data.thread->lock.print);
                 }
               }
             }
@@ -1779,7 +1884,7 @@ extern "C" {
         if (missing) {
 
           if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-            f_thread_mutex_lock(&thread_data.thread->mutex.print);
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
 
             fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->error.to.stream, "%s%sThe rule '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
@@ -1790,7 +1895,7 @@ extern "C" {
 
             controller_rule_error_print(thread_data.data->error, cache->action, F_true);
 
-            f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
 
           status = F_status_set_error(F_parameter);
@@ -1840,10 +1945,10 @@ extern "C" {
 #ifndef _di_controller_rule_process_asynchronous_
   f_status_t controller_rule_process_asynchronous(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
 
-    f_thread_mutex_lock(&thread_data->mutex.asynchronous);
+    f_thread_mutex_lock(&thread_data->lock.asynchronous);
 
     if (!thread_data.thread->enabled) {
-      f_thread_mutex_unlock(&thread_data.thread->mutex.asynchronous);
+      f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
 
       return F_signal;
     }
@@ -1851,7 +1956,7 @@ extern "C" {
     f_status_t status = controller_asynchronouss_increase(&thread_data.thread->asynchronouss);
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_unlock(&thread_data.thread->mutex.asynchronous);
+      f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
 
       return status;
     }
@@ -1888,7 +1993,7 @@ extern "C" {
       thread_data.thread->asynchronouss.used--;
     }
 
-    f_thread_mutex_unlock(&thread_data.thread->mutex.asynchronous);
+    f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
 
     if (F_status_is_error(status)) {
       return status;
@@ -3800,7 +3905,7 @@ extern "C" {
     controller_data_t *data = thread_data.thread->data;
     controller_setting_t *setting = thread_data.thread->setting;
 
-    f_thread_mutex_lock(&thread_data.thread->mutex.print);
+    f_thread_mutex_lock(&thread_data.thread->lock.print);
 
     switch (action) {
       case controller_rule_action_type_kill:
@@ -3821,7 +3926,7 @@ extern "C" {
           controller_rule_error_print(data->error, cache->action, F_true);
         }
 
-        f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
         return;
     }
@@ -4097,7 +4202,7 @@ extern "C" {
 
     setting->rules.array[index].status = F_complete;
 
-    f_thread_mutex_unlock(&thread_data.thread->mutex.print);
+    f_thread_mutex_unlock(&thread_data.thread->lock.print);
   }
 #endif // _di_controller_rule_simulate_
 
@@ -4125,7 +4230,7 @@ extern "C" {
 
       if (!thread->enabled) break;
 
-      if (f_thread_mutex_lock_try(&thread->mutex.asynchronous) == F_none) {
+      if (f_thread_mutex_lock_try(&thread->lock.asynchronous) == F_none) {
 
         if (thread->asynchronouss.array[i].state != controller_asynchronous_state_joined) {
           f_thread_join(thread->asynchronouss.array[i].id, 0);
@@ -4139,7 +4244,7 @@ extern "C" {
           controller_macro_cache_action_t_clear(thread->asynchronouss.array[i].cache);
         }
 
-        f_thread_mutex_unlock(&thread->mutex.asynchronous);
+        f_thread_mutex_unlock(&thread->lock.asynchronous);
       }
     } // for
   }

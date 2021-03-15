@@ -69,14 +69,28 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_append", F_true);
+      if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+        fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_append", F_true);
+
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
+      }
+
       return status;
     }
 
     status = f_string_dynamic_terminate_after(&cache->action.name_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+      if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+        fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
+      }
+
       return status;
     }
 
@@ -95,13 +109,25 @@ extern "C" {
     status = f_file_stream_open(path, 0, &file);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
+      if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+        fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
+
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
+      }
     }
     else {
       status = f_file_stream_read(file, 1, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
+        if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+          fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
+
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
+        }
       }
     }
 
@@ -113,7 +139,13 @@ extern "C" {
       status = f_file_stat(path, F_true, &stat_file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
+        if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+          fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
+
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
+        }
       }
       else {
         cache->timestamp.seconds = stat_file.st_ctim.tv_sec;
@@ -219,6 +251,24 @@ extern "C" {
   }
 #endif // _di_controller_file_pid_delete_
 
+#ifndef _di_controller_find_process_
+  f_status_t controller_find_process(const f_string_static_t id, const controller_processs_t processs, f_array_length_t *at) {
+
+    if (!id.used) return F_none;
+    if (!processs.used) return F_false;
+
+    for (f_array_length_t i = 0; i < processs.used; ++i) {
+
+      if (fl_string_dynamic_compare(id, processs.array[i].id) == F_equal_to) {
+        *at = i;
+        return F_true;
+      }
+    } // for
+
+    return F_false;
+  }
+#endif // _di_controller_find_process_
+
 #ifndef _di_controller_get_id_user_
   f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
     f_number_unsigned_t number = 0;
@@ -317,16 +367,28 @@ extern "C" {
 
         // always return immediately on memory errors.
         if (F_status_set_fine(status) == F_memory_not) {
-          fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
+          if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
 
-          controller_entry_error_print(thread_data.data->error, cache->action);
+            fll_error_file_print(thread_data.data->error, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
+
+            controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
+          }
 
           return status;
         }
 
-        fll_error_file_print(thread_data.data->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
+        if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
 
-        controller_entry_error_print(thread_data.data->warning, cache->action);
+          fll_error_file_print(thread_data.data->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, thread_data.setting->path_pid.string, "create", fll_error_file_type_file);
+
+          controller_entry_error_print_cache(thread_data.data->warning, cache->action);
+
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
+        }
 
         status = F_none;
       }
@@ -363,7 +425,7 @@ extern "C" {
     f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
+      controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, thread_data.thread);
       return status;
     }
 
@@ -378,8 +440,7 @@ extern "C" {
     status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-      controller_entry_error_print(thread_data.data->error, cache->action);
+      controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
       return status;
     }
@@ -400,8 +461,7 @@ extern "C" {
         status2 = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
 
         if (F_status_is_error(status2)) {
-          fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(thread_data.data->error, cache->action);
+          controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
           return status2;
         }
@@ -410,12 +470,16 @@ extern "C" {
 
           if (thread_data.setting->ready == controller_setting_ready_wait) {
             if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->warning.to.stream, "%s%sMultiple '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
               fprintf(thread_data.data->warning.to.stream, "%s%s%s%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, controller_string_ready_s, thread_data.data->warning.notable.after->string);
               fprintf(thread_data.data->warning.to.stream, "%s' entry item actions detected; only the first will be used.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(thread_data.data->warning, cache->action);
+              controller_entry_error_print_cache(thread_data.data->warning, cache->action);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
           }
 
@@ -439,13 +503,17 @@ extern "C" {
 
                 if (cache->ats.array[j] == i) {
                   if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                    f_thread_mutex_lock(&thread_data.thread->lock.print);
+
                     fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
                     fprintf(thread_data.data->error.to.stream, "%s%sThe entry item named '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
                     fprintf(thread_data.data->error.to.stream, "%s%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, thread_data.setting->entry.items.array[i].name.string, thread_data.data->error.notable.after->string);
                     fprintf(thread_data.data->error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
-                  }
 
-                  controller_entry_error_print(thread_data.data->error, cache->action);
+                    controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+                    f_thread_mutex_unlock(&thread_data.thread->lock.print);
+                  }
 
                   if (F_status_is_error_not(status)) {
                     status = F_status_set_error(F_recurse);
@@ -461,8 +529,7 @@ extern "C" {
               f_macro_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
 
               if (F_status_is_error(status2)) {
-                fll_error_print(thread_data.data->error, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true);
-                controller_entry_error_print(thread_data.data->error, cache->action);
+                controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true, thread_data.thread);
 
                 return status2;
               }
@@ -487,8 +554,7 @@ extern "C" {
               status2 = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[i].name, &cache->action.name_item);
 
               if (F_status_is_error(status2)) {
-                fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-                controller_entry_error_print(thread_data.data->error, cache->action);
+                controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
                 return status2;
               }
@@ -500,13 +566,17 @@ extern "C" {
           if (error_has || i >= thread_data.setting->entry.items.used) {
             if (i >= thread_data.setting->entry.items.used) {
               if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
+
                 fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(thread_data.data->error.to.stream, "%s%sThe entry item named '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
                 fprintf(thread_data.data->error.to.stream, "%s%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].parameters.array[0].string, thread_data.data->error.notable.after->string);
                 fprintf(thread_data.data->error.to.stream, "%s' does not exist.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
-              }
 
-              controller_entry_error_print(thread_data.data->error, cache->action);
+                controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
+              }
 
               if (F_status_is_error_not(status)) {
                 status = F_status_set_error(F_valid_not);
@@ -540,8 +610,7 @@ extern "C" {
         status2 = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status2)) {
-          fll_error_print(thread_data.data->error, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(thread_data.data->error, cache->action);
+          controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
           return status2;
         }
@@ -572,6 +641,8 @@ extern "C" {
 
     controller_entry_actions_t *actions = 0;
 
+    controller_process_t *process = 0;
+
     const bool simulate = thread_data.data->parameters[controller_parameter_test].result == f_console_result_found;
 
     cache->ats.used = 0;
@@ -590,8 +661,7 @@ extern "C" {
     f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
-      controller_entry_error_print(thread_data.data->error, cache->action);
+      controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, thread_data.thread);
 
       return status;
     }
@@ -607,19 +677,24 @@ extern "C" {
     status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-      controller_entry_error_print(thread_data.data->error, cache->action);
+      controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
       return status;
     }
 
     if (simulate) {
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
+
       fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
       fprintf(thread_data.data->output.stream, "Processing entry item rule '");
       fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_main_s, thread_data.data->context.set.title.after->string);
       fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
     }
 
+    // @todo this function should maintain a read lock on "thread_data.thread->lock.rule", but it must immediately release the read lock before it can do a write lock (which is unfortunate).
+    //       I would much rather gain the write lock and then release the read lock, but that is likely not possible.
     for (;;) {
 
       actions = &thread_data.setting->entry.items.array[cache->ats.array[at_i]].actions;
@@ -637,8 +712,7 @@ extern "C" {
         status = controller_string_dynamic_append_terminated(controller_entry_action_type_name(actions->array[cache->ats.array[at_j]].type), &cache->action.name_action);
 
         if (F_status_is_error(status)) {
-          fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(thread_data.data->error, cache->action);
+          controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
           return status;
         }
@@ -648,6 +722,8 @@ extern "C" {
           if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
             if (simulate) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->output.stream, "The entry item action '");
               fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_action.string, thread_data.data->context.set.title.after->string);
@@ -660,10 +736,14 @@ extern "C" {
               }
 
               fprintf(thread_data.data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require ? "required" : "optional", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
             else if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require) {
 
               if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
+
                 fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(thread_data.data->error.to.stream, "%s%sThe entry item action '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
                 fprintf(thread_data.data->error.to.stream, "%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, cache->action.name_action.string);
@@ -678,13 +758,17 @@ extern "C" {
                 fprintf(thread_data.data->error.to.stream, "%s and is in a ", thread_data.data->error.context.before->string);
                 fprintf(thread_data.data->error.to.stream, "%s%sfailed%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, thread_data.data->error.notable.after->string);
                 fprintf(thread_data.data->error.to.stream, "%s state, skipping execution.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
-              }
 
-              controller_entry_error_print(thread_data.data->error, cache->action);
+                controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
+              }
 
               return F_status_is_error(F_require);
             }
             else if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->warning.to.stream, "%s%sThe entry item action '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
               fprintf(thread_data.data->warning.to.stream, "%s%s%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, cache->action.name_action.string);
@@ -700,11 +784,15 @@ extern "C" {
               fprintf(thread_data.data->warning.to.stream, "%s%sfailed%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, thread_data.data->warning.notable.after->string);
               fprintf(thread_data.data->warning.to.stream, "%s state, skipping execution.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(thread_data.data->warning, cache->action);
+              controller_entry_error_print_cache(thread_data.data->warning, cache->action);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
           }
           else {
             if (simulate) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->output.stream, "The entry item action '");
               fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_action.string, thread_data.data->context.set.title.after->string);
@@ -717,8 +805,12 @@ extern "C" {
               }
 
               fprintf(thread_data.data->output.stream, "' is in a %sfailed%s state, skipping.%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
             else if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->warning.to.stream, "%s%sThe entry item action '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
               fprintf(thread_data.data->warning.to.stream, "%s%s", thread_data.data->warning.notable.before->string, cache->action.name_action.string);
@@ -732,7 +824,9 @@ extern "C" {
               fprintf(thread_data.data->warning.to.stream, "%s%sfailed%s", thread_data.data->warning.context.after->string, thread_data.data->warning.notable.before->string, thread_data.data->warning.notable.after->string);
               fprintf(thread_data.data->warning.to.stream, "%s state, skipping.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print(thread_data.data->warning, cache->action);
+              controller_entry_error_print_cache(thread_data.data->warning, cache->action);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
           }
 
@@ -744,10 +838,14 @@ extern "C" {
           if (thread_data.setting->ready == controller_setting_ready_wait) {
 
             if (simulate) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->output.stream, "Processing entry item action '");
               fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_ready_s, thread_data.data->context.set.title.after->string);
               fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
             else {
               controller_perform_ready(thread_data, cache);
@@ -757,10 +855,14 @@ extern "C" {
             thread_data.setting->ready = controller_setting_ready_yes;
           }
           else if (simulate) {
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
+
             fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->output.stream, "Ignoring entry item action '");
             fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_ready_s, thread_data.data->context.set.title.after->string);
             fprintf(thread_data.data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
@@ -769,13 +871,17 @@ extern "C" {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
             if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->error.to.stream, "%s%sInvalid entry item index ", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
               fprintf(thread_data.data->error.to.stream, "%s%s%llu%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->error.notable.after->string);
               fprintf(thread_data.data->error.to.stream, "%s detected.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
-            }
 
-            controller_entry_error_print(thread_data.data->error, cache->action);
+              controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
+            }
 
             return F_status_is_error(F_critical);
           }
@@ -783,8 +889,7 @@ extern "C" {
           f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            fll_error_print(thread_data.data->error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
-            controller_entry_error_print(thread_data.data->error, cache->action);
+            controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, thread_data.thread);
 
             return status;
           }
@@ -807,17 +912,20 @@ extern "C" {
           status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-            controller_entry_error_print(thread_data.data->error, cache->action);
+            controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
             return status;
           }
 
           if (simulate) {
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
+
             fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->output.stream, "Processing entry item '");
             fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, cache->action.name_item.string, thread_data.data->context.set.title.after->string);
             fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
 
           // exit inner loop to force restarting and start processing the requested item.
@@ -828,8 +936,7 @@ extern "C" {
           status = controller_rules_increase(&thread_data.setting->rules);
 
           if (F_status_is_error(status)) {
-            fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_rules_increase", F_true);
-            controller_entry_error_print(thread_data.data->error, cache->action);
+            controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_rules_increase", F_true, thread_data.thread);
 
             return status;
           }
@@ -844,23 +951,27 @@ extern "C" {
           rule_id_name[actions->array[cache->ats.array[at_j]].parameters.array[0].used] = f_path_separator_s[0];
           rule_id_name[rule_id_length] = 0;
 
-          f_thread_mutex_lock(&thread_data.thread->mutex.rule);
+          f_thread_lock_read(&thread_data.thread->lock.rule);
 
           at = controller_rule_find_loaded(rule_id, thread_data);
 
-          if (at < thread_data.setting->rules.used) {
-            f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
-          }
+          const f_array_length_t used = thread_data.setting->rules.used;
+
+          f_thread_unlock(&thread_data.thread->lock.rule);
 
           if (simulate) {
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
+
             fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->output.stream, "%s entry item rule '", actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule ? "Processing" : "Considering");
             fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, rule_id.string, thread_data.data->context.set.title.after->string);
             fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
 
           // the rule is not yet loaded, ensure that it is loaded.
-          if (at == thread_data.setting->rules.used) {
+          if (at == used) {
 
             // rule execution will re-use the existing cache, so save the current cache.
             const f_array_length_t cache_line_action = cache->action.line_action;
@@ -877,6 +988,8 @@ extern "C" {
             memcpy(cache_name_action, cache->action.name_action.string, cache->action.name_action.used);
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
+
+            f_thread_lock_write(&thread_data.thread->lock.rule);
 
             status = controller_rule_read(rule_id, thread_data, cache, &thread_data.setting->rules.array[thread_data.setting->rules.used]);
 
@@ -897,10 +1010,17 @@ extern "C" {
             cache->action.line_item = cache_line_item;
 
             if (F_status_is_error(status)) {
-              controller_entry_error_print(thread_data.data->error, cache->action);
+
+              if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+                controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
+              }
 
               if (!simulate) {
-                f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
+                f_thread_unlock(&thread_data.thread->lock.rule);
 
                 break;
               }
@@ -909,10 +1029,10 @@ extern "C" {
               thread_data.setting->rules.used++;
             }
 
-            f_thread_mutex_unlock(&thread_data.thread->mutex.rule);
+            f_thread_unlock(&thread_data.thread->lock.rule);
           }
 
-          if (F_status_is_error_not(status)) {
+          if (F_status_is_error_not(status) && actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
 
             // rule execution will re-use the existing cache, so save the current cache.
             const f_array_length_t cache_line_action = cache->action.line_action;
@@ -930,39 +1050,62 @@ extern "C" {
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_rule) {
-              rule_options = 0;
+            rule_options = 0;
 
-              if (simulate) {
-                rule_options |= controller_rule_option_simulate;
+            if (simulate) {
+              rule_options |= controller_rule_option_simulate;
+            }
+
+            if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require) {
+              rule_options |= controller_rule_option_require;
+            }
+
+            if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_wait) {
+              rule_options |= controller_rule_option_wait;
+            }
+
+            if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_asynchronous) {
+              rule_options |= controller_rule_option_asynchronous;
+
+              // @todo this function will need to do the same process prep work as is done right before controller_rule_process().
+              status = controller_rule_process_asynchronous(at, controller_rule_action_type_start, rule_options, thread_data, cache);
+            }
+            else {
+
+              f_array_length_t at_process = 0;
+
+              f_thread_lock_read(&thread_data.thread->lock.process);
+
+              if (controller_find_process(rule_id, *thread_data.processs, &at_process) == F_false) {
+                f_thread_unlock(&thread_data.thread->lock.process);
+                f_thread_lock_write(&thread_data.thread->lock.process);
+
+                status = controller_processs_increase(thread_data.processs);
+
+                if (F_status_is_error(status)) {
+                  controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, thread_data.thread);
+                }
+                else {
+                  at_process = thread_data.processs->used;
+                }
               }
 
-              if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_require) {
-                rule_options |= controller_rule_option_require;
+              f_thread_unlock(&thread_data.thread->lock.process);
+
+              if (F_status_is_error_not(status)) {
+                f_thread_lock_write(&thread_data.processs->array[at_process].lock);
+
+                controller_rule_t rule = controller_rule_t_initialize;
+
+                status = controller_rule_copy(thread_data.setting->rules.array[at], &rule);
+
+                f_thread_condition_signal(&thread_data.processs->array[at_process].wait);
+                f_thread_unlock(&thread_data.processs->array[at_process].lock);
+
+                status = controller_rule_process(rule, at_process, controller_rule_action_type_start, rule_options, thread_data, cache);
+
+                controller_rule_delete_simple(&rule);
               }
-
-              if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_wait) {
-                rule_options |= controller_rule_option_wait;
-              }
-
-              // @fixme this logic needs to change.
-              //        determine how to pass rule ids.
-              //        each thread has a main rule, but child threads need to be copied over and passed somehow.
-              f_thread_mutex_lock(&thread_data.setting->rules.array[at].lock);
-
-              if (actions->array[cache->ats.array[at_j]].code & controller_entry_rule_code_asynchronous) {
-                rule_options |= controller_rule_option_asynchronous;
-
-                status = controller_rule_process_asynchronous(at, controller_rule_action_type_start, rule_options, thread_data, cache);
-              }
-              else {
-                status = controller_rule_process(at, controller_rule_action_type_start, rule_options, thread_data, cache);
-              }
-
-              if (status == F_child || status == F_signal) break;
-
-              f_thread_condition_signal(&thread_data.setting->rules.array[at].wait);
-              f_thread_mutex_unlock(&thread_data.setting->rules.array[at].lock);
             }
 
             // restore cache.
@@ -980,10 +1123,17 @@ extern "C" {
 
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
+
+            if (status == F_child || status == F_signal) break;
           }
 
+          // @todo this may need to be relocated (currently it may result in multiple error messages due to other messages being printed above.)
           if (F_status_is_error(status)) {
-            controller_entry_error_print(thread_data.data->error, cache->action);
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+            controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
             if (!simulate || F_status_set_fine(status) == F_memory_not) {
               break;
@@ -1005,6 +1155,8 @@ extern "C" {
               code = controller_string_stop_s;
             }
 
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
+
             fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
             fprintf(thread_data.data->output.stream, "Processing entry item action '");
             fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_timeout_s, thread_data.data->context.set.title.after->string);
@@ -1013,6 +1165,8 @@ extern "C" {
             fprintf(thread_data.data->output.stream, "' to '");
             fprintf(thread_data.data->output.stream, "%s%llu%s", thread_data.data->context.set.important.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->context.set.important.after->string);
             fprintf(thread_data.data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
           }
 
           if (actions->array[cache->ats.array[at_j]].code == controller_entry_timeout_code_kill) {
@@ -1031,13 +1185,17 @@ extern "C" {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
             if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->error.to.stream, "%s%sInvalid entry item index ", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
               fprintf(thread_data.data->error.to.stream, "%s%s%llu%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, actions->array[cache->ats.array[at_j]].number, thread_data.data->error.notable.after->string);
               fprintf(thread_data.data->error.to.stream, "%s detected.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
-            }
 
-            controller_entry_error_print(thread_data.data->error, cache->action);
+              controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
+            }
 
             return F_status_is_error(F_critical);
           }
@@ -1046,12 +1204,16 @@ extern "C" {
             thread_data.setting->failsafe_rule_id = actions->array[cache->ats.array[at_j]].number;
 
             if (simulate) {
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
+
               fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->output.stream, "Processing entry item action '");
               fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, controller_string_failsafe_s, thread_data.data->context.set.title.after->string);
               fprintf(thread_data.data->output.stream, "' setting value to '");
               fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.important.before->string, thread_data.setting->entry.items.array[thread_data.setting->failsafe_rule_id].name.string, thread_data.data->context.set.important.after->string);
               fprintf(thread_data.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
           }
         }
@@ -1090,8 +1252,7 @@ extern "C" {
         status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
-          controller_entry_error_print(thread_data.data->error, cache->action);
+          controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
 
           break;
         }
@@ -1103,7 +1264,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && simulate) {
+      f_thread_mutex_lock(&thread_data.thread->lock.print);
+
       fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+
+      f_thread_mutex_unlock(&thread_data.thread->lock.print);
     }
 
     return status;
@@ -1187,6 +1352,8 @@ extern "C" {
     return F_false;
   }
 #endif // _di_controller_validate_has_graph_
+
+controller_processs_t
 
 #ifdef __cplusplus
 } // extern "C"

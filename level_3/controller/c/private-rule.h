@@ -132,6 +132,10 @@ extern "C" {
 /**
  * Copy a rule, allocating new space as necessary.
  *
+ * This does not do any locking or unlocking for the rule data, be sure to lock appropriately before and after calling this.
+ *
+ * @todo finish writing this.
+ *
  * @param source
  *   The source rule to copy from.
  * @param destination
@@ -370,6 +374,8 @@ extern "C" {
  * Looks up the rules starting from the end so that the latest loaded version of any given rule is found and used first.
  * The rule thread should be locked before calling this to ensure the rule is not loaded after this search.
  *
+ * This does not do any locking or unlocking, be sure to lock appropriately before and after calling this.
+ *
  * @param rule_id
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
@@ -533,6 +539,10 @@ extern "C" {
  *
  * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
  *
+ * @param rule
+ *   The rule information at the time the rule process started.
+ * @param at_process
+ *   The position within the processs array representing this rule process.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -558,7 +568,7 @@ extern "C" {
  *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const controller_rule_t rule, const f_array_length_t at_process, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**

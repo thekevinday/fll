@@ -11,7 +11,6 @@ extern "C" {
     f_macro_array_lengths_t_delete_simple(asynchronous->stack)
 
     controller_cache_delete_simple(&asynchronous->cache);
-    controller_rule_delete_simple(&asynchronous->rule);
   }
 #endif // _di_controller_asynchronous_delete_simple_
 
@@ -135,24 +134,26 @@ extern "C" {
   }
 #endif // _di_controller_entry_items_delete_simple_
 
-#ifndef _di_controller_error_print_locked_
-  void controller_error_print_locked(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
+#ifndef _di_controller_error_print_
+  void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (error.verbosity != f_console_verbosity_quiet) {
-      f_thread_mutex_lock(&thread->mutex.print);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->lock.print);
 
-      fll_error_print(error, status, function, fallback);
+      fll_error_print(print, status, function, fallback);
 
-      f_thread_mutex_unlock(&thread->mutex.print);
+      f_thread_mutex_unlock(&thread->lock.print);
     }
   }
-#endif // _di_controller_error_print_locked_
+#endif // _di_controller_error_print_
 
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
     f_string_dynamic_resize(0, &process->id);
-    f_thread_mutex_delete(&process->lock);
+
+    f_thread_lock_delete(&process->lock);
+    f_thread_lock_attribute_delete(&process->attribute);
     f_thread_condition_delete(&process->wait);
   }
 #endif // _di_controller_process_delete_simple_
@@ -232,23 +233,23 @@ extern "C" {
 #ifndef _di_controller_rule_delete_simple_
   void controller_rule_delete_simple(controller_rule_t *rule) {
 
-    f_macro_thread_mutex_t_delete_simple(rule->lock)
-    f_macro_thread_condition_t_delete_simple(rule->wait)
-    f_macro_string_maps_t_delete_simple(rule->define)
-    f_macro_string_maps_t_delete_simple(rule->parameter)
-    f_macro_string_dynamics_t_delete_simple(rule->environment)
-    f_macro_string_dynamics_t_delete_simple(rule->need)
-    f_macro_string_dynamics_t_delete_simple(rule->want)
-    f_macro_string_dynamics_t_delete_simple(rule->wish)
-    f_macro_int32s_t_delete_simple(rule->affinity)
-    f_macro_control_group_t_delete_simple(rule->control_group)
-    f_macro_int32s_t_delete_simple(rule->groups)
-    f_macro_limit_sets_t_delete_simple(rule->limits)
-
     f_string_dynamic_resize(0, &rule->id);
     f_string_dynamic_resize(0, &rule->name);
     f_string_dynamic_resize(0, &rule->path);
     f_string_dynamic_resize(0, &rule->script);
+
+    f_string_maps_resize(0, &rule->define);
+    f_string_maps_resize(0, &rule->parameter);
+
+    f_string_dynamics_resize(0, &rule->environment);
+    f_string_dynamics_resize(0, &rule->need);
+    f_string_dynamics_resize(0, &rule->want);
+    f_string_dynamics_resize(0, &rule->wish);
+
+    f_macro_int32s_t_delete_simple(rule->affinity)
+    f_macro_control_group_t_delete_simple(rule->control_group)
+    f_macro_int32s_t_delete_simple(rule->groups)
+    f_macro_limit_sets_t_delete_simple(rule->limits)
 
     f_capability_delete(&rule->capability);
 
@@ -259,7 +260,7 @@ extern "C" {
 #ifndef _di_controller_rule_item_delete_simple_
   void controller_rule_item_delete_simple(controller_rule_item_t *item) {
 
-    f_string_dynamic_resize(0, item->actions);
+    controller_rule_actions_delete_simple(&item->actions);
   }
 #endif // _di_controller_rule_item_delete_simple_
 
@@ -343,10 +344,16 @@ extern "C" {
 #ifndef _di_controller_thread_delete_simple_
   void controller_thread_delete_simple(controller_thread_t *thread) {
 
-    f_thread_mutex_unlock(&thread->mutex.asynchronous);
-    f_thread_mutex_unlock(&thread->mutex.print);
-    f_thread_mutex_unlock(&thread->mutex.process);
-    f_thread_mutex_unlock(&thread->mutex.rule);
+    f_thread_mutex_delete(&thread->lock.print);
+
+    f_thread_lock_delete(&thread->lock.asynchronous);
+    f_thread_lock_attribute_delete(&thread->lock.asynchronous_attribute);
+
+    f_thread_lock_delete(&thread->lock.process);
+    f_thread_lock_attribute_delete(&thread->lock.process_attribute);
+
+    f_thread_lock_delete(&thread->lock.rule);
+    f_thread_lock_attribute_delete(&thread->lock.rule_attribute);
 
     controller_asynchronouss_resize(0, &thread->asynchronouss);
   }

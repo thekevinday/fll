@@ -324,19 +324,28 @@ extern "C" {
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
  */
-#ifndef _di_controller_mutex_t_
+#ifndef _di_controller_lock_t_
   typedef struct {
-    f_thread_mutex_t asynchronous;
     f_thread_mutex_t print;
-    f_thread_mutex_t process;
-    f_thread_mutex_t rule;
-  } controller_mutex_t;
 
-  #define controller_mutex_t_initialize { \
+    f_thread_lock_t asynchronous;
+    f_thread_lock_attribute_t asynchronous_attribute;
+
+    f_thread_lock_t process;
+    f_thread_lock_attribute_t process_attribute;
+
+    f_thread_lock_t rule;
+    f_thread_lock_attribute_t rule_attribute;
+  } controller_lock_t;
+
+  #define controller_lock_t_initialize { \
     f_thread_mutex_t_initialize, \
-    f_thread_mutex_t_initialize, \
-    f_thread_mutex_t_initialize, \
-    f_thread_mutex_t_initialize \
+    f_thread_lock_t_initialize, \
+    f_thread_lock_attribute_t_initialize, \
+    f_thread_lock_t_initialize, \
+    f_thread_lock_attribute_t_initialize, \
+    f_thread_lock_t_initialize, \
+    f_thread_lock_attribute_t_initialize \
   }
 #endif // _di_controller_mutex_t_
 
@@ -613,17 +622,20 @@ extern "C" {
  */
 #ifndef _di_controller_process_t_
   typedef struct {
-    f_status_t status;
     f_string_dynamic_t id;
 
-    f_thread_mutex_t lock;
+    f_status_t status;
+
+    f_thread_lock_t lock;
+    f_thread_lock_attribute_t attribute;
     f_thread_condition_t wait;
   } controller_process_t;
 
   #define controller_process_t_initialize { \
-    F_known_not, \
     f_string_dynamic_t_initialize \
-    f_thread_mutex_t_initialize, \
+    F_known_not, \
+    f_thread_lock_t_initialize, \
+    f_thread_lock_attribute_t_initialize, \
     f_thread_condition_t_initialize, \
   }
 
@@ -941,9 +953,10 @@ extern "C" {
 
   typedef struct {
     f_thread_id_t id;
-    f_thread_mutex_t lock;
-    f_array_length_t index;
+    f_thread_lock_t lock;
+    f_thread_lock_attribute_t attribute;
 
+    f_array_length_t index;
     uint8_t state;
     uint8_t action;
     uint8_t options;
@@ -951,22 +964,22 @@ extern "C" {
 
     f_array_lengths_t stack;
     controller_cache_t cache;
-    controller_rule_t rule;
   } controller_asynchronous_t;
 
   #define controller_asynchronous_t_initialize { \
     f_thread_id_t_initialize, \
-    f_thread_mutex_t_initialize, \
+    f_thread_lock_t_initialize, \
+    f_thread_lock_attribute_t_initialize, \
     0, \
     0, \
     0, \
     0, \
     0, \
     f_array_lengths_t_initialize, \
-    controller_cache_t_initialize, \
-    controller_rule_t_initialize \
+    controller_cache_t_initialize \
   }
 
+  // @fixme remove the clear() macros..clear isn't safe when mixing in mutexes and whatnot that cannot be cleared.
   #define controller_macro_asynchronous_t_clear(asynchronous) \
     f_macro_thread_id_t_clear(asynchronous.id) \
     asynchronous.index = 0; \
@@ -975,8 +988,7 @@ extern "C" {
     asynchronous.options = 0; \
     asynchronous.child = 0; \
     f_macro_array_lengths_t_clear(asynchronous.stack) \
-    controller_macro_cache_t_clear(asynchronous.cache) \
-    controller_macro_rule_t_clear(asynchronous.rule)
+    controller_macro_cache_t_clear(asynchronous.cache)
 #endif // _di_controller_asynchronous_t_
 
 #ifndef _di_controller_asynchronouss_t_
@@ -1008,7 +1020,7 @@ extern "C" {
     f_thread_id_t id_rule;
     f_thread_id_t id_signal;
 
-    controller_mutex_t mutex;
+    controller_lock_t lock;
     controller_asynchronouss_t asynchronouss;
   } controller_thread_t;
 
@@ -1018,17 +1030,17 @@ extern "C" {
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
-    controller_mutex_t_initialize, \
+    controller_lock_t_initialize, \
     controller_asynchronouss_t_initialize \
   }
 
-  #define controller_macro_thread_t_initialize(mutex, asynchronouss) { \
+  #define controller_macro_thread_t_initialize(lock, asynchronouss) { \
     F_true, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize. \
-    mutex, \
+    lock, \
     asynchronouss \
   }
 
@@ -1038,7 +1050,6 @@ extern "C" {
     f_macro_thread_id_t_clear(thread.id_control); \
     f_macro_thread_id_t_clear(thread.id_rule); \
     f_macro_thread_id_t_clear(thread.id_signal); \
-    controller_macro_mutex_t_clear(thread.mutex), \
     controller_macro_asynchronouss_t_clear(thread.asynchronouss)
 #endif // _di_controller_data_common_t_
 
@@ -1234,9 +1245,9 @@ extern "C" {
  *
  * @see fll_error_print()
  */
-#ifndef _di_controller_error_print_locked_
-  extern void controller_error_print_locked(const fll_error_print_t error, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_error_print_locked_
+#ifndef _di_controller_error_print_
+  extern void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_error_print_
 
 /**
  * Fully deallocate all memory for the given process without caring about return status.

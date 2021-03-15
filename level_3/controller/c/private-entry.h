@@ -98,21 +98,48 @@ extern "C" {
 #endif // _di_controller_entry_actions_read_
 
 /**
- * Print additional error/warning information in addition to existing error.
+ * Print the entry related error, locking the print mutex during the print.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param cache
+ *   The action cache.
+ * @param status
+ *   The status code to process.
+ *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+ * @param function
+ *   The name of the function where the error happened.
+ *   Set to 0 to disable.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ * @param thread
+ *   The thread data.
+ *
+ * @see fll_error_print()
+ * @see controller_entry_error_print_cache()
+ */
+#ifndef _di_controller_entry_error_print_
+  extern void controller_entry_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_error_print_
+
+/**
+ * Print additional error/warning information in addition to existing error that is found within the cache.
  *
  * This is explicitly intended to be used in addition to the error message.
  *
- * @param output
- *   The error or warning output structure.
+ * This neither locks the thread nor does it check to see if output is enabled or disabled.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
  * @param cache
- *   A structure for containing and caching relevant data.
+ *   The action cache.
  *
  * @see controller_entry_actions_read()
  * @see controller_entry_read()
  */
-#ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const fll_error_print_t output, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_entry_error_print_
+#ifndef _di_controller_entry_error_print_cache_
+  extern void controller_entry_error_print_cache(const fll_error_print_t print, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_error_print_cache_
 
 /**
  * Increase the size of the entry items array by the specified amount, but only if necessary.

@@ -27,7 +27,7 @@ extern "C" {
     thread.cache_main = thread_main->cache_main;
     thread.cache_action = &asynchronous->cache;
     thread.data = thread_main->data;
-    thread.mutex = thread_main->mutex;
+    thread.lock = thread_main->lock;
     thread.setting = thread_main->setting;
     thread.stack = &asynchronous->stack;
 
@@ -49,7 +49,7 @@ extern "C" {
 
     thread->enabled = F_false;
 
-    f_thread_mutex_lock(&thread->mutex.asynchronous);
+    f_thread_mutex_lock(&thread->lock.asynchronous);
 
     for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
 
@@ -75,7 +75,7 @@ extern "C" {
 
     thread->asynchronouss.used = 0;
 
-    f_thread_mutex_unlock(&thread->mutex.asynchronous);
+    f_thread_mutex_unlock(&thread->lock.asynchronous);
   }
 #endif // _di_controller_thread_asynchronous_cancel_
 
@@ -91,7 +91,7 @@ extern "C" {
     for (; thread_data->thread->enabled; ) {
       sleep(interval);
 
-      if (f_thread_mutex_lock_try(&thread_data->thread->mutex.asynchronous) == F_none) {
+      if (f_thread_mutex_lock_try(&thread_data->thread->lock.asynchronous) == F_none) {
         controller_thread_t *thread = &thread_data->thread;
 
         if (thread->asynchronouss.used) {
@@ -146,7 +146,7 @@ extern "C" {
           controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
         }
 
-        f_thread_mutex_unlock(&thread->mutex.asynchronous);
+        f_thread_mutex_unlock(&thread->lock.asynchronous);
       }
     } // for
 
@@ -180,29 +180,26 @@ extern "C" {
       status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &data_main);
     }
 
-    if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &data_main);
-    }
-
     if (F_status_is_error(status)) {
       if (data->error.verbosity != f_console_verbosity_quiet) {
-        controller_error_print_locked(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+        controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
       }
     }
     else {
       if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
+
         setting->ready = controller_setting_ready_done;
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            f_thread_mutex_lock(&thread.mutex.print);
+            f_thread_mutex_lock(&thread.lock.print);
 
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
             fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
             fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-            f_thread_mutex_unlock(&thread.mutex.print);
+            f_thread_mutex_unlock(&thread.lock.print);
           }
 
           setting->ready = controller_setting_ready_abort;
@@ -225,14 +222,14 @@ extern "C" {
 
             if (f_file_exists(setting->path_pid.string) == F_true) {
               if (data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&thread.mutex.print);
+                f_thread_mutex_lock(&thread.lock.print);
 
                 fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
                 fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
                 fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&thread.mutex.print);
+                f_thread_mutex_unlock(&thread.lock.print);
               }
 
               setting->ready = controller_setting_ready_fail;
@@ -276,6 +273,10 @@ extern "C" {
 
         if (F_status_is_error_not(status)) {
           status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &data_main);
+        }
+
+        if (F_status_is_error_not(status)) {
+          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &data_main);
         }
 
         if (F_status_is_error(status)) {
@@ -337,8 +338,8 @@ extern "C" {
     controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
 
     // @todo
-    // f_thread_mutex_lock(&thread_data->mutex.rule);
-    // f_thread_mutex_unlock(&thread_data->mutex.rule);
+    // f_thread_mutex_lock(&thread_data->lock.rule);
+    // f_thread_mutex_unlock(&thread_data->lock.rule);
 
     return 0;
   }
