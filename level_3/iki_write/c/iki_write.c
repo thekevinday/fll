@@ -287,7 +287,7 @@ extern "C" {
           }
 
           previous = range.start;
-          status = f_string_dynamic_seek_line(buffer.string, &range);
+          status = f_string_dynamic_seek_line(buffer, &range);
 
           if (F_status_is_error(status)) {
             fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_seek_line", F_true);

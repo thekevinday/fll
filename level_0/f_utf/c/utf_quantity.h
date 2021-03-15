@@ -110,12 +110,33 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_adjust_
   extern f_status_t f_utf_string_quantitys_adjust(const f_array_length_t length, f_utf_string_quantitys_t *quantitys);
 #endif // _di_f_utf_string_quantitys_adjust_
+
+/**
+ * Append the source quantitys onto the destination.
+ *
+ * @param source
+ *   The source quantitys to append.
+ * @param destination
+ *   The destination quantitys the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_utf_string_quantitys_append_
+  extern f_status_t f_utf_string_quantitys_append(const f_utf_string_quantitys_t source, f_utf_string_quantitys_t *destination);
+#endif // _di_f_utf_string_quantitys_append_
 
 /**
  * Resize the string quantitys array to a smaller size.
@@ -132,8 +153,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_decimate_by_
   extern f_status_t f_utf_string_quantitys_decimate_by(const f_array_length_t amount, f_utf_string_quantitys_t *quantitys);
@@ -154,8 +176,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_decrease_by_
   extern f_status_t f_utf_string_quantitys_decrease_by(const f_array_length_t amount, f_utf_string_quantitys_t *quantitys);
@@ -172,10 +195,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_array_too_large (with error bit) if the new array length is too large.
  *
- *   F_memory_not (with error bit) on out of memory.
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_increase_
   extern f_status_t f_utf_string_quantitys_increase(f_utf_string_quantitys_t *quantitys);
@@ -196,9 +220,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_increase_by_
   extern f_status_t f_utf_string_quantitys_increase_by(const f_array_length_t amount, f_utf_string_quantitys_t *quantitys);
@@ -215,8 +240,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_resize_
   extern f_status_t f_utf_string_quantitys_resize(const f_array_length_t length, f_utf_string_quantitys_t *quantitys);
@@ -233,8 +259,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_adjust_
   extern f_status_t f_utf_string_quantityss_adjust(const f_array_length_t length, f_utf_string_quantityss_t *quantityss);
@@ -255,8 +282,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_decimate_by_
   extern f_status_t f_utf_string_quantityss_decimate_by(const f_array_length_t amount, f_utf_string_quantityss_t *quantityss);
@@ -277,8 +305,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_decrease_by_
   extern f_status_t f_utf_string_quantityss_decrease_by(const f_array_length_t amount, f_utf_string_quantityss_t *quantityss);
@@ -298,8 +327,9 @@ extern "C" {
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_increase_
   extern f_status_t f_utf_string_quantityss_increase(f_utf_string_quantityss_t *quantityss);
@@ -321,9 +351,10 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_increase_by_
   extern f_status_t f_utf_string_quantityss_increase_by(const f_array_length_t amount, f_utf_string_quantityss_t *quantityss);
@@ -340,8 +371,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_resize_
   extern f_status_t f_utf_string_quantityss_resize(const f_array_length_t length, f_utf_string_quantityss_t *quantityss);

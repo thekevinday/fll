@@ -361,6 +361,28 @@ extern "C" {
 #endif // _di_f_string_prepend_nulless_
 
 /**
+ * Seek the string location forward until EOL is reached.
+ *
+ * @param string
+ *   The string to traverse.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The start location will be incremented by seek.
+ *
+ * @return
+ *   F_none on success.
+ *   F_none_stop on success, but stopped at end of range.
+ *   F_data_not_stop on success, but the range.start > range.stop.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_seek_line_
+  extern f_status_t f_string_seek_line(const f_string_t string, f_string_range_t *range);
+#endif // _di_f_string_seek_line_
+
+/**
  * Seek the string location forward until the character (1-byte wide) or EOL is reached.
  *
  * @param string

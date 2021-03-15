@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_) || !defined(f_string_map_multis_append) || !defined(f_string_maps_append)
+#if !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_mash_) || !defined(f_string_dynamic_partial_append) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_triples_append_)
   f_status_t private_f_string_append(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > destination->size) {
@@ -18,9 +18,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_mash_) || !defined(f_string_map_multis_append) || !defined(f_string_maps_append)
+#endif // !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_mash_) || !defined(f_string_dynamic_partial_append) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_triples_append_)
 
-#if !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
+#if !defined(_di_f_string_append_assure_nulless_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_assure_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_string_dynamic_partial_append_nulless_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
   f_status_t private_f_string_append_nulless(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
 
     if (destination->used + length > f_array_length_t_size) {
@@ -70,9 +70,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
+#endif // !defined(_di_f_string_append_assure_nulless_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_assure_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_string_dynamic_partial_append_nulless_) || !defined(_di_f_string_dynamic_partial_mash_nulless_) || !defined(_di_f_string_mash_nulless_)
 
-#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
+#if !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
   f_status_t private_f_string_dynamic_adjust(const f_array_length_t length, f_string_dynamic_t *dynamic) {
 
     f_status_t status = f_memory_adjust(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
@@ -87,9 +87,9 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_)
+#endif // !defined(_di_f_string_dynamic_adjust_) || !defined(_di_f_string_dynamic_decimate_by_) || !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_triples_adjust_) || !defined(_di_f_string_triples_decimate_by_)
 
-#if !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
+#if !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_triples_append_)
   f_status_t private_f_string_dynamic_increase_by(const f_array_length_t amount, f_string_dynamic_t *dynamic) {
 
     if (dynamic->used + amount > dynamic->size) {
@@ -102,9 +102,9 @@ extern "C" {
 
     return F_data_not;
   }
-#endif // !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_append_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_dynamic_prepend_nulless_)
+#endif // !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(_di_f_string_dynamic_partial_append_) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_triples_append_)
 
-#if !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
+#if !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(f_string_dynamic_partial_append) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_triples_append_)
   f_status_t private_f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *dynamic) {
 
     const f_status_t status = f_memory_resize(dynamic->size, length, sizeof(f_string_t), (void **) & dynamic->string);
@@ -119,9 +119,9 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_)
+#endif // !defined(_di_f_string_append_) || !defined(_di_f_string_append_assure_) || !defined(_di_f_string_append_mash_) || !defined(_di_f_string_append_nulless_) || !defined(_di_f_string_dynamic_append_) || !defined(_di_f_string_dynamic_append_assure_) || !defined(_di_f_string_dynamic_append_nulless_) || !defined(_di_f_string_dynamic_decrease_by_) || !defined(_di_f_string_dynamic_increase_) || !defined(_di_f_string_dynamic_increase_by_) || !defined(_di_f_string_dynamic_mash_) || !defined(_di_f_string_dynamic_mash_nulless_) || !defined(f_string_dynamic_partial_append) || !defined(_di_f_string_dynamic_partial_append_assure_) || !defined(_di_f_string_dynamic_partial_mash_) || !defined(_di_f_string_dynamic_prepend_) || !defined(_di_f_string_dynamic_prepend_nulless_) || !defined(_di_f_string_dynamic_terminate_) || !defined(_di_f_string_dynamic_terminate_after_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_) || !defined(_di_f_string_mash_nulless_) || !defined(_di_f_string_mash_) || !defined(_di_f_string_maps_append_) || !defined(_di_f_string_prepend_) || !defined(_di_f_string_prepend_nulless_) || !defined(_di_f_string_triples_append_)
 
-#if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
+#if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t *dynamics) {
 
     if (dynamics->used + length > f_array_length_t_size) {
@@ -147,7 +147,7 @@ extern "C" {
 
     return status;
   }
-#endif // !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_decimate_by_)
+#endif // !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
 
 #if !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamics_append(const f_string_dynamics_t source, f_string_dynamics_t *destination) {

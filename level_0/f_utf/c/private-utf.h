@@ -549,28 +549,30 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not if source length is 0.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: private_f_utf_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_resize().
  *
  * @see memcpy()
  *
  * @see f_utf_string_append()
+ * @see f_utf_string_append_assure()
  * @see f_utf_string_dynamic_append()
+ * @see f_utf_string_dynamic_append_assure()
  * @see f_utf_string_dynamic_mash()
+ * @see f_utf_string_dynamic_partial_append)
+ * @see f_utf_string_dynamic_partial_append_assure()
+ * @see f_utf_string_dynamic_partial_mash()
+ * @see f_utf_string_dynamics_append()
+ * @see f_utf_string_map_multis_append()
  * @see f_utf_string_mash()
- *
- * @see private_f_utf_string_dynamic_increase_by()
+ * @see f_utf_string_maps_append()
+ * @see f_utf_string_triples_append()
  */
-#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_mash_)
+#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
   extern f_status_t private_f_utf_string_append(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_mash_)
+#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
 
 /**
  * Private implementation of f_utf_string_append_nulless().
@@ -587,21 +589,23 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: private_f_utf_string_dynamic_increase_by().
+ *   F_string_too_large (with error bit) if the combined string is too large.
  *
  * @see memcpy()
  *
- * @see f_macro_utf_string_dynamic_t_resize()
+ * @see f_utf_string_append_assure_nulless()
  * @see f_utf_string_append_nulless()
+ * @see f_utf_string_dynamic_append_assure_nulless()
  * @see f_utf_string_dynamic_append_nulless()
  * @see f_utf_string_dynamic_mash_nulless()
+ * @see f_utf_string_dynamic_partial_append_assure_nulless()
+ * @see f_utf_string_dynamic_partial_append_nulless()
+ * @see f_utf_string_dynamic_partial_mash_nulless()
  * @see f_utf_string_mash_nulless()
- *
- * @see private_f_utf_string_dynamic_increase_by()
  */
-#if !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
+#if !defined(_di_f_utf_string_append_assure_nulless_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
   extern f_status_t private_f_utf_string_append_nulless(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
+#endif // !defined(_di_f_utf_string_append_assure_nulless_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mash_nulless_) || !defined(_di_f_utf_string_mash_nulless_)
 
 /**
  * Private implementation for resizing.
@@ -621,10 +625,17 @@ extern "C" {
  * @see f_memory_adjust()
  * @see f_utf_string_dynamic_adjust()
  * @see f_utf_string_dynamic_decimate_by()
+ * @see f_utf_string_dynamics_adjust()
+ * @see f_utf_string_dynamics_append()
+ * @see f_utf_string_dynamics_decimate_by()
+ * @see f_utf_string_map_multis_adjust()
+ * @see f_utf_string_map_multis_append()
+ * @see f_utf_string_triples_adjust()
+ * @see f_utf_string_triples_decimate_by()
  */
-#if !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_)
+#if !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
   extern f_status_t private_f_utf_string_dynamic_adjust(const f_array_length_t length, f_utf_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_)
+#endif // !defined(_di_f_utf_string_dynamic_adjust_) || !defined(_di_f_utf_string_dynamic_decimate_by_) || !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
 
 /**
  * Private implementation of f_utf_string_dynamic_increase_by().
@@ -639,29 +650,40 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: private_f_utf_string_dynamic_resize().
+ *   Errors (with error bit) from: f_memory_resize().
  *
  * @see memcpy()
  *
  * @see f_utf_string_append()
+ * @see f_utf_string_append_assure()
  * @see f_utf_string_append_mash()
  * @see f_utf_string_append_nulless()
  * @see f_utf_string_dynamic_append()
+ * @see f_utf_string_dynamic_append_assure()
  * @see f_utf_string_dynamic_append_nulless()
  * @see f_utf_string_dynamic_increase_by()
  * @see f_utf_string_dynamic_mash()
  * @see f_utf_string_dynamic_mash_nulless()
+ * @see f_utf_string_dynamic_partial_append)
+ * @see f_utf_string_dynamic_partial_append_assure()
+ * @see f_utf_string_dynamic_partial_mash()
  * @see f_utf_string_dynamic_prepend()
  * @see f_utf_string_dynamic_prepend_nulless()
+ * @see f_utf_string_dynamics_append()
+ * @see f_utf_string_map_multis_append()
+ * @see f_utf_string_mash()
  * @see f_utf_string_mash_nulless()
+ * @see f_utf_string_maps_append()
  * @see f_utf_string_prepend()
  * @see f_utf_string_prepend_nulless()
+ * @see f_utf_string_triples_append()
  */
-#if !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_)
+#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
   extern f_status_t private_f_utf_string_dynamic_increase_by(const f_array_length_t amount, f_utf_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_)
+#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
 
 /**
  * Private implementation for resizing.
@@ -679,15 +701,37 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ * @see f_utf_string_append()
+ * @see f_utf_string_append_assure()
+ * @see f_utf_string_append_mash()
+ * @see f_utf_string_append_nulless()
+ * @see f_utf_string_dynamic_append()
+ * @see f_utf_string_dynamic_append_assure()
+ * @see f_utf_string_dynamic_append_nulless()
  * @see f_utf_string_dynamic_decrease_by()
  * @see f_utf_string_dynamic_increase()
  * @see f_utf_string_dynamic_increase_by()
+ * @see f_utf_string_dynamic_mash()
+ * @see f_utf_string_dynamic_mash_nulless()
+ * @see f_utf_string_dynamic_partial_append)
+ * @see f_utf_string_dynamic_partial_append_assure()
+ * @see f_utf_string_dynamic_partial_mash()
+ * @see f_utf_string_dynamic_prepend()
+ * @see f_utf_string_dynamic_prepend_nulless()
  * @see f_utf_string_dynamic_terminate()
  * @see f_utf_string_dynamic_terminate_after()
+ * @see f_utf_string_dynamics_append()
+ * @see f_utf_string_map_multis_append()
+ * @see f_utf_string_mash_nulless()
+ * @see f_utf_string_mash()
+ * @see f_utf_string_maps_append()
+ * @see f_utf_string_prepend()
+ * @see f_utf_string_prepend_nulless()
+ * @see f_utf_string_triples_append()
  */
-#if !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_)
+#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
   extern f_status_t private_f_utf_string_dynamic_resize(const f_array_length_t length, f_utf_string_dynamic_t *string) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_)
+#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_append_mash_) || !defined(_di_f_utf_string_append_nulless_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_append_nulless_) || !defined(_di_f_utf_string_dynamic_decrease_by_) || !defined(_di_f_utf_string_dynamic_increase_) || !defined(_di_f_utf_string_dynamic_increase_by_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_mash_nulless_) || !defined(f_utf_string_dynamic_partial_append) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_terminate_) || !defined(_di_f_utf_string_dynamic_terminate_after_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_nulless_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_prepend_) || !defined(_di_f_utf_string_prepend_nulless_) || !defined(_di_f_utf_string_triples_append_)
 
 /**
  * Private implementation for resizing.
@@ -702,18 +746,44 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_dynamics_adjust()
+ * @see f_utf_string_dynamics_append()
  * @see f_utf_string_dynamics_decimate_by()
- *
- * @see private_f_utf_string_dynamic_adjust()
+ * @see f_utf_string_map_multis_adjust()
+ * @see f_utf_string_map_multis_append()
  */
-#if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_decimate_by_)
+#if !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
   extern f_status_t private_f_utf_string_dynamics_adjust(const f_array_length_t length, f_utf_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
-#endif // !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_decimate_by_)
+#endif // !defined(_di_f_utf_string_dynamics_adjust_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_dynamics_decimate_by_) || !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_append_)
+
+/**
+ * Private implementation for appending.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source strings to append.
+ * @param destination
+ *   The destination strings the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_utf_string_dynamics_append()
+ * @see f_utf_string_map_multis_append()
+ */
+#if !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_)
+  extern f_status_t private_f_utf_string_dynamics_append(const f_utf_string_dynamics_t source, f_utf_string_dynamics_t *destination) f_gcc_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_)
 
 /**
  * Private implementation for resizing.
@@ -728,15 +798,14 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_resize().
  *
  * @see f_memory_resize()
  * @see f_utf_string_dynamics_decrease_by()
  * @see f_utf_string_dynamics_increase()
  * @see f_utf_string_dynamics_increase_by()
- *
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_)
   extern f_status_t private_f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t *strings) f_gcc_attribute_visibility_internal;
@@ -755,13 +824,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_map_multis_adjust()
- *
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_map_multis_adjust_) || !defined(_di_f_utf_string_map_multis_decimate_by_)
   extern f_status_t private_f_utf_string_map_multis_adjust(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) f_gcc_attribute_visibility_internal;
@@ -780,8 +848,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_resize().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_map_multis_decrease_by()
@@ -789,8 +858,6 @@ extern "C" {
  * @see f_utf_string_map_multis_increase_by()
  * @see f_utf_string_map_multis_terminate()
  * @see f_utf_string_map_multis_terminate_after()
- *
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
   extern f_status_t private_f_utf_string_map_multis_resize(const f_array_length_t length, f_utf_string_map_multis_t *map_multis) f_gcc_attribute_visibility_internal;
@@ -809,13 +876,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_maps_adjust()
- *
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_maps_adjust_) || !defined(_di_f_utf_string_maps_decimate_by_)
   extern f_status_t private_f_utf_string_maps_adjust(const f_array_length_t length, f_utf_string_maps_t *maps) f_gcc_attribute_visibility_internal;
@@ -834,8 +900,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_resize().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_maps_decrease_by()
@@ -843,8 +910,6 @@ extern "C" {
  * @see f_utf_string_maps_increase_by()
  * @see f_utf_string_maps_terminate()
  * @see f_utf_string_maps_terminate_after()
- *
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_maps_decrease_by_) || !defined(_di_f_utf_string_maps_increase_) || !defined(_di_f_utf_string_maps_increase_by_) || !defined(_di_f_utf_string_maps_terminate_) || !defined(_di_f_utf_string_maps_terminate_after_)
   extern f_status_t private_f_utf_string_maps_resize(const f_array_length_t length, f_utf_string_maps_t *maps) f_gcc_attribute_visibility_internal;
@@ -864,9 +929,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: private_f_utf_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_resize().
  *
  * @see memcopy()
  * @see memmove()
@@ -880,8 +946,6 @@ extern "C" {
  * @see f_utf_string_mish()
  * @see f_utf_string_prepend_assure()
  * @see f_utf_string_prepend()
- *
- * @see private_f_utf_string_dynamic_increase_by()
  */
 #if !defined(_di_f_utf_string_dynamic_mish_) || !defined(_di_f_utf_string_dynamic_partial_mish_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_) || !defined(_di_f_utf_string_dynamic_partial_prepend_) || !defined(_di_f_utf_string_dynamic_prepend_assure_) || !defined(_di_f_utf_string_dynamic_prepend_) || !defined(_di_f_utf_string_mish_) || !defined(_di_f_utf_string_prepend_assure_) || !defined(_di_f_utf_string_prepend_)
   extern f_status_t private_f_utf_string_prepend(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
@@ -901,9 +965,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
- *   Errors (with error bit) from: private_f_utf_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_memory_resize().
  *
  * @see memcopy()
  * @see memmove()
@@ -917,8 +982,6 @@ extern "C" {
  * @see f_utf_string_mish_nulless()
  * @see f_utf_string_prepend_assure_nulless()
  * @see f_utf_string_prepend_nulless()
- *
- * @see private_f_utf_string_dynamic_increase_by()
  */
 #if !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
   extern f_status_t private_f_utf_string_prepend_nulless(const f_utf_string_t source, f_array_length_t length, f_utf_string_dynamic_t *destination) f_gcc_attribute_visibility_internal;
@@ -937,13 +1000,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_quantitys_adjust()
  * @see f_utf_string_quantitys_decimate_by()
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_quantitys_adjust_) || !defined(_di_f_utf_string_quantitys_decimate_by_)
   extern f_status_t private_f_utf_string_quantitys_adjust(const f_array_length_t length, f_utf_string_quantitys_t *quantitys) f_gcc_attribute_visibility_internal;
@@ -962,8 +1025,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_resize()
  * @see f_utf_string_quantitys_decrease_by()
@@ -971,7 +1035,6 @@ extern "C" {
  * @see f_utf_string_quantitys_increase_by()
  * @see f_utf_string_quantitys_terminate()
  * @see f_utf_string_quantitys_terminate_after()
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_quantitys_decrease_by_) || !defined(_di_f_utf_string_quantitys_increase_) || !defined(_di_f_utf_string_quantitys_increase_by_) || !defined(_di_f_utf_string_quantitys_terminate_) || !defined(_di_f_utf_string_quantitys_terminate_after_)
   extern f_status_t private_f_utf_string_quantitys_resize(const f_array_length_t length, f_utf_string_quantitys_t *quantitys) f_gcc_attribute_visibility_internal;
@@ -990,13 +1053,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_quantityss_adjust()
  * @see f_utf_string_quantityss_decimate_by()
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_quantityss_adjust_) || !defined(_di_f_utf_string_quantityss_decimate_by_)
   extern f_status_t private_f_utf_string_quantityss_adjust(const f_array_length_t length, f_utf_string_quantityss_t *quantityss) f_gcc_attribute_visibility_internal;
@@ -1015,8 +1078,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_resize()
  * @see f_utf_string_quantityss_decrease_by()
@@ -1024,7 +1088,6 @@ extern "C" {
  * @see f_utf_string_quantityss_increase_by()
  * @see f_utf_string_quantityss_terminate()
  * @see f_utf_string_quantityss_terminate_after()
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_quantityss_decrease_by_) || !defined(_di_f_utf_string_quantityss_increase_) || !defined(_di_f_utf_string_quantityss_increase_by_) || !defined(_di_f_utf_string_quantityss_terminate_) || !defined(_di_f_utf_string_quantityss_terminate_after_)
   extern f_status_t private_f_utf_string_quantityss_resize(const f_array_length_t length, f_utf_string_quantityss_t *quantityss) f_gcc_attribute_visibility_internal;
@@ -1043,13 +1106,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_ranges_adjust()
  * @see f_utf_string_ranges_decimate_by()
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_ranges_adjust_) || !defined(_di_f_utf_string_ranges_decimate_by_)
   extern f_status_t private_f_utf_string_ranges_adjust(const f_array_length_t length, f_utf_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
@@ -1068,8 +1131,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_resize()
  * @see f_utf_string_ranges_decrease_by()
@@ -1077,7 +1141,6 @@ extern "C" {
  * @see f_utf_string_ranges_increase_by()
  * @see f_utf_string_ranges_terminate()
  * @see f_utf_string_ranges_terminate_after()
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_ranges_decrease_by_) || !defined(_di_f_utf_string_ranges_increase_) || !defined(_di_f_utf_string_ranges_increase_by_) || !defined(_di_f_utf_string_ranges_terminate_) || !defined(_di_f_utf_string_ranges_terminate_after_)
   extern f_status_t private_f_utf_string_ranges_resize(const f_array_length_t length, f_utf_string_ranges_t *ranges) f_gcc_attribute_visibility_internal;
@@ -1096,13 +1159,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_rangess_adjust()
  * @see f_utf_string_rangess_decimate_by()
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_rangess_adjust_) || !defined(_di_f_utf_string_rangess_decimate_by_)
   extern f_status_t private_f_utf_string_rangess_adjust(const f_array_length_t length, f_utf_string_rangess_t *rangess) f_gcc_attribute_visibility_internal;
@@ -1121,8 +1184,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_resize()
  * @see f_utf_string_rangess_decrease_by()
@@ -1130,7 +1194,6 @@ extern "C" {
  * @see f_utf_string_rangess_increase_by()
  * @see f_utf_string_rangess_terminate()
  * @see f_utf_string_rangess_terminate_after()
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_rangess_decrease_by_) || !defined(_di_f_utf_string_rangess_increase_) || !defined(_di_f_utf_string_rangess_increase_by_) || !defined(_di_f_utf_string_rangess_terminate_) || !defined(_di_f_utf_string_rangess_terminate_after_)
   extern f_status_t private_f_utf_string_rangess_resize(const f_array_length_t length, f_utf_string_rangess_t *rangess) f_gcc_attribute_visibility_internal;
@@ -1149,13 +1212,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_adjust().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_adjust()
  * @see f_utf_string_triples_adjust()
  * @see f_utf_string_triples_decimate_by()
- * @see private_f_utf_string_dynamic_adjust()
  */
 #if !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
   extern f_status_t private_f_utf_string_triples_adjust(const f_array_length_t length, f_utf_string_triples_t *triples) f_gcc_attribute_visibility_internal;
@@ -1174,8 +1237,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_array_too_large (with error bit) if the combined array is too large.
+ *
  *   Errors (with error bit) from: f_memory_resize().
- *   Errors (with error bit) from: private_f_utf_string_dynamic_adjust().
  *
  * @see f_memory_resize()
  * @see f_utf_string_triples_decrease_by()
@@ -1183,7 +1247,6 @@ extern "C" {
  * @see f_utf_string_triples_increase_by()
  * @see f_utf_string_triples_terminate()
  * @see f_utf_string_triples_terminate_after()
- * @see private_f_utf_string_dynamic_resize()
  */
 #if !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
   extern f_status_t private_f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t *triples) f_gcc_attribute_visibility_internal;

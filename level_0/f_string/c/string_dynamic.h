@@ -865,7 +865,7 @@ extern "C" {
  *
  * @param length
  *   The new size to use.
- * @param dynamic
+ * @param buffer
  *   The string to resize.
  *
  * @return
@@ -876,22 +876,23 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_resize_
-  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *dynamic);
+  extern f_status_t f_string_dynamic_resize(const f_array_length_t length, f_string_dynamic_t *buffer);
 #endif // _di_f_string_dynamic_resize_
 
 /**
  * Seek the buffer location forward until EOL is reached.
  *
- * @param string
- *   The string to traverse.
+ * @param buffer
+ *   The buffer to traverse.
  * @param range
  *   A range within the buffer representing the start and stop locations.
  *   The start location will be incremented by seek.
  *
  * @return
  *   F_none on success.
+ *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_eos on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -899,14 +900,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_
-  extern f_status_t f_string_dynamic_seek_line(const f_string_t string, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_line(const f_string_static_t buffer, f_string_range_t *range);
 #endif // _di_f_string_dynamic_seek_line_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) or EOL is reached.
  *
- * @param string
- *   The string to traverse.
+ * @param buffer
+ *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
  * @param range
@@ -915,9 +916,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_eol on success, but stopped at EOL.
+ *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_eos on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -925,14 +926,14 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_line_to_
-  extern f_status_t f_string_dynamic_seek_line_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_line_to(const f_string_static_t buffer, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_f_string_dynamic_seek_line_to_
 
 /**
  * Seek the buffer location forward until the character (1-byte wide) is reached.
  *
- * @param string
- *   The string to traverse.
+ * @param buffer
+ *   The buffer to traverse.
  * @param seek_to_this
  *   A single-width character representing a character to seek to.
  * @param range
@@ -941,18 +942,17 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_none_eos on success, but stopped at end of string.
  *   F_none_stop on success, but stopped at end of range.
- *   F_data_not on success, but there was no string data to seek.
+ *   F_data_not_eos on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
- *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_dynamic_seek_to_
-  extern f_status_t f_string_dynamic_seek_to(const f_string_t string, const int8_t seek_to_this, f_string_range_t *range);
+  extern f_status_t f_string_dynamic_seek_to(const f_string_static_t buffer, const int8_t seek_to_this, f_string_range_t *range);
 #endif // _di_f_string_dynamic_seek_to_
 
 /**
