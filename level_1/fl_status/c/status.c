@@ -398,6 +398,12 @@ extern "C" {
         case F_ignore_not:
           *string = FL_status_string_ignore_not;
           break;
+        case F_implemented:
+          *string = FL_status_string_implemented;
+          break;
+        case F_implemented_not:
+          *string = FL_status_string_implemented_not;
+          break;
         case F_input:
           *string = FL_status_string_input;
           break;
@@ -1175,8 +1181,8 @@ extern "C" {
         case F_directory_synchronize:
           *string = FL_status_string_directory_synchronize;
           break;
-        case F_directory_unsupported:
-          *string = FL_status_string_directory_unsupported;
+        case F_directory_supported_not:
+          *string = FL_status_string_directory_supported_not;
           break;
         case F_directory_utf:
           *string = FL_status_string_directory_utf;

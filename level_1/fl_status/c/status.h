@@ -225,6 +225,8 @@ extern "C" {
     #define FL_status_string_group_not         "F_group_not"
     #define FL_status_string_ignore            "F_ignore"
     #define FL_status_string_ignore_not        "F_ignore_not"
+    #define FL_status_string_implemented       "F_implemented"
+    #define FL_status_string_implemented_not   "F_implemented_not"
     #define FL_status_string_input             "F_input"
     #define FL_status_string_input_not         "F_input_not"
     #define FL_status_string_input_output      "F_input_output"
@@ -388,6 +390,8 @@ extern "C" {
     #define FL_status_string_group_not_length         11
     #define FL_status_string_ignore_length            8
     #define FL_status_string_ignore_not_length        12
+    #define FL_status_string_implemented_length       13
+    #define FL_status_string_implemented_not_length   17
     #define FL_status_string_input_length             7
     #define FL_status_string_input_not_length         11
     #define FL_status_string_input_output_length      14
@@ -795,47 +799,47 @@ extern "C" {
   #endif // _di_F_status_filesystem_
 
   #ifndef _di_F_status_directory_
-    #define FL_status_string_directory             "F_directory"
-    #define FL_status_string_directory_close       "F_directory_close"
-    #define FL_status_string_directory_closed      "F_directory_closed"
-    #define FL_status_string_directory_descriptor  "F_directory_descriptor"
-    #define FL_status_string_directory_empty       "F_directory_empty"
-    #define FL_status_string_directory_empty_not   "F_directory_empty_not"
-    #define FL_status_string_directory_found       "F_directory_found"
-    #define FL_status_string_directory_found_not   "F_directory_found_not"
-    #define FL_status_string_directory_flush       "F_directory_flush"
-    #define FL_status_string_directory_link_max    "F_directory_link_max"
-    #define FL_status_string_directory_not         "F_directory_not"
-    #define FL_status_string_directory_open        "F_directory_open"
-    #define FL_status_string_directory_purge       "F_directory_purge"
-    #define FL_status_string_directory_read        "F_directory_read"
-    #define FL_status_string_directory_stream      "F_directory_stream"
-    #define FL_status_string_directory_synchronize "F_directory_synchronize"
-    #define FL_status_string_directory_unsupported "F_directory_unsupported"
-    #define FL_status_string_directory_utf         "F_directory_utf"
-    #define FL_status_string_directory_utf_not     "F_directory_utf_not"
-    #define FL_status_string_directory_write       "F_directory_write"
+    #define FL_status_string_directory               "F_directory"
+    #define FL_status_string_directory_close         "F_directory_close"
+    #define FL_status_string_directory_closed        "F_directory_closed"
+    #define FL_status_string_directory_descriptor    "F_directory_descriptor"
+    #define FL_status_string_directory_empty         "F_directory_empty"
+    #define FL_status_string_directory_empty_not     "F_directory_empty_not"
+    #define FL_status_string_directory_found         "F_directory_found"
+    #define FL_status_string_directory_found_not     "F_directory_found_not"
+    #define FL_status_string_directory_flush         "F_directory_flush"
+    #define FL_status_string_directory_link_max      "F_directory_link_max"
+    #define FL_status_string_directory_not           "F_directory_not"
+    #define FL_status_string_directory_open          "F_directory_open"
+    #define FL_status_string_directory_purge         "F_directory_purge"
+    #define FL_status_string_directory_read          "F_directory_read"
+    #define FL_status_string_directory_stream        "F_directory_stream"
+    #define FL_status_string_directory_supported_not "F_directory_supported_not"
+    #define FL_status_string_directory_synchronize   "F_directory_synchronize"
+    #define FL_status_string_directory_utf           "F_directory_utf"
+    #define FL_status_string_directory_utf_not       "F_directory_utf_not"
+    #define FL_status_string_directory_write         "F_directory_write"
 
-    #define FL_status_string_directory_length             11
-    #define FL_status_string_directory_close_length       17
-    #define FL_status_string_directory_closed_length      18
-    #define FL_status_string_directory_descriptor_length  22
-    #define FL_status_string_directory_empty_length       17
-    #define FL_status_string_directory_empty_not_length   21
-    #define FL_status_string_directory_found_length       17
-    #define FL_status_string_directory_found_not_length   21
-    #define FL_status_string_directory_flush_length       17
-    #define FL_status_string_directory_link_max_length    20
-    #define FL_status_string_directory_not_length         15
-    #define FL_status_string_directory_open_length        16
-    #define FL_status_string_directory_purge_length       17
-    #define FL_status_string_directory_read_length        16
-    #define FL_status_string_directory_stream_length      18
-    #define FL_status_string_directory_synchronize_length 23
-    #define FL_status_string_directory_unsupported_length 23
-    #define FL_status_string_directory_utf_length         15
-    #define FL_status_string_directory_utf_not_length     19
-    #define FL_status_string_directory_write_length       17
+    #define FL_status_string_directory_length               11
+    #define FL_status_string_directory_close_length         17
+    #define FL_status_string_directory_closed_length        18
+    #define FL_status_string_directory_descriptor_length    22
+    #define FL_status_string_directory_empty_length         17
+    #define FL_status_string_directory_empty_not_length     21
+    #define FL_status_string_directory_found_length         17
+    #define FL_status_string_directory_found_not_length     21
+    #define FL_status_string_directory_flush_length         17
+    #define FL_status_string_directory_link_max_length      20
+    #define FL_status_string_directory_not_length           15
+    #define FL_status_string_directory_open_length          16
+    #define FL_status_string_directory_purge_length         17
+    #define FL_status_string_directory_read_length          16
+    #define FL_status_string_directory_stream_length        18
+    #define FL_status_string_directory_supported_not_length 25
+    #define FL_status_string_directory_synchronize_length   23
+    #define FL_status_string_directory_utf_length           15
+    #define FL_status_string_directory_utf_not_length       19
+    #define FL_status_string_directory_write_length         17
   #endif // _di_F_status_directory_
 
   #ifndef _di_F_status_socket_

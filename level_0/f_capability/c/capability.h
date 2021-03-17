@@ -47,10 +47,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to duplicate.
- *   F_memory_not (with error bit) if a out of memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_clear()
  */
@@ -68,10 +69,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to duplicate.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_clear_flag()
  */
@@ -93,15 +96,71 @@ extern "C" {
  * @return
  *   F_equal_to on match.
  *   F_equal_to_not on miss.
- *   F_failure (with error bit) on failure to duplicate.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_compare()
  */
 #ifndef _di_f_capability_compare_
   extern f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags);
 #endif // _di_f_capability_compare_
+
+/**
+ * Copy an internally represented capability into an externally represented capability.
+ *
+ * @param capability
+ *   The (internal) capability the (external) capability is copied from.
+ * @param max
+ *   The the maximum buffer length (in bytes) allowed in the (external) capability.
+ *   Use f_capability_size() to determine the maximum size required to hold capability.
+ * @param external
+ *   The (external) capability the (internal) capability is copied to.
+ * @param size
+ *   (optional) The size (in bytes) copied into the (external) capability.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_range_not (with error bit) on out of range when processing (external) capability.
+ *
+ *   F_failure (with error bit) on failure to get size.
+ *
+ * @see cap_copy_ext()
+ */
+#ifndef _di_f_capability_copy_external_
+  extern f_status_t f_capability_copy_external(const f_capability_t capability, const ssize_t max, void *external, ssize_t *size);
+#endif // _di_f_capability_copy_external_
+
+/**
+ * Copy an externally represented capability into an internally represented capability.
+ *
+ * @param external
+ *   A pointer to user allocated memory representing the (external) capability.
+ *   This must have been popilated by cap_copy_ext() or f_capability_copy_external().
+ * @param capability
+ *   The (internal) capability the (external) capability is copied into.
+ *   This must be freed via f_capability_delete() when finished with.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_range_not (with error bit) on out of range when processing (external) capability.
+ *
+ *   F_failure (with error bit) on failure to get size.
+ *
+ * @see cap_copy_int()
+ */
+#ifndef _di_f_capability_copy_internal_
+  extern f_status_t f_capability_copy_internal(const void *external, f_capability_t *capability);
+#endif // _di_f_capability_copy_internal_
 
 /**
  * Free the capability structure.
@@ -111,9 +170,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to free memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory (which doesn't make sense here but man page includes this).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_free()
  */
@@ -124,19 +186,20 @@ extern "C" {
 /**
  * Duplicate (copy) the capability structure.
  *
- * Be sure to call f_capability_delete() when finished.
- *
  * @param source
  *   The capability to duplicate.
  * @param destination
  *   The capability to copy to.
+ *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to duplicate.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_dup()
  */
@@ -159,9 +222,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to free memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_get_flag()
  */
@@ -184,9 +249,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to free memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_set_flag()
  */
@@ -204,11 +271,13 @@ extern "C" {
  *   Set to NULL to not use.
  *
  * @return
- *   F_none on success and name is known.
- *   F_known_not on success and name is unknown (and no code is provided).
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on any other failure.
  *
  * @see cap_from_name()
  */
@@ -223,12 +292,15 @@ extern "C" {
  *   The human-readable NULL terminated string representing the capabilities (such as "cap_chown+ep").
  * @param capability
  *   The determined capabilities.
- *   This must be freed via f_capability_delete() when finished with it.
+ *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
  *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other failure.
  *
  * @see cap_from_text()
@@ -238,19 +310,82 @@ extern "C" {
 #endif // _di_f_capability_from_text_
 
 /**
- * Initialize the capability structure.
+ * Get the capability of a file represented by a file path.
  *
- * Be sure to call f_capability_delete() when finished.
- *
+ * @param path
+ *   The file path.
  * @param capability
- *   The capability to initialize.
+ *   The retrieved capability.
+ *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) on failure to initialize.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_descriptor_not (with error bit) if the file descriptor is invalid.
+ *   F_directory_not (with error bit) if a directory containing the file does not exist.
+ *   F_file_found_not (with error bit) if file was not found.
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
+ *   F_name_not (with error bit) if the file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *   F_supported_not (with error bit) if the filesystem does not support this operation.
+ *
+ *   F_failure (with error bit) on any other failure.
+ *
+ * @see cap_get_file()
+ */
+#ifndef _di_f_capability_get_file_
+  extern f_status_t f_capability_get_file(const f_string_t path, f_capability_t *capability);
+#endif // _di_f_capability_get_file_
+
+/**
+ * Get the capability of a file represented by a file descriptor.
+ *
+ * @param descriptor
+ *   The file descriptor.
+ * @param capability
+ *   The retrieved capability.
+ *   This must be freed via f_capability_delete() when finished with.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_descriptor_not (with error bit) if the file descriptor is invalid.
+ *   F_directory_not (with error bit) if a directory containing the file does not exist.
+ *   F_file_found_not (with error bit) if file was not found.
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
+ *   F_name_not (with error bit) if the file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *   F_supported_not (with error bit) if the filesystem does not support this operation.
+ *
+ *   F_failure (with error bit) on any other failure.
+ *
+ * @see cap_get_fd()
+ */
+#ifndef _di_f_capability_get_file_descriptor_
+  extern f_status_t f_capability_get_file_descriptor(const int descriptor, f_capability_t *capability);
+#endif // _di_f_capability_get_file_descriptor_
+
+/**
+ * Initialize the capability structure.
+ *
+ * @param capability
+ *   The capability to initialize.
+ *   This must be freed via f_capability_delete() when finished with.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
+ *   F_failure (with error bit) on failure to initialize.
  *
  * @see cap_init()
  */
@@ -270,11 +405,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_supported_not if the given code is not supported by the current system.
- *   F_known_not (with error bit) if the code is unknown.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see cap_drop_bound()
@@ -293,11 +429,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_supported_not if the given code is not supported by the current system.
- *   F_known_not (with error bit) if the code is unknown.
- *   F_memory_not (with error bit) if a out of memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_known_not (with error bit) if the code is unknown to the current system.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see cap_get_bound()
@@ -309,16 +445,16 @@ extern "C" {
 /**
  * Get the capability for the current process.
  *
- * Be sure to call f_capability_delete() when finished.
- *
  * @param capability
  *   The determined capability.
+ *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
  *   F_none on success.
- *   F_memory_not (with error bit) if a out of memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see cap_get_proc()
@@ -330,18 +466,19 @@ extern "C" {
 /**
  * Get the capability for the process represented by the given PID.
  *
- * Be sure to call f_capability_delete() when finished.
- *
  * @param id
  *   The process ID (pid) to get capabilities of.
+ *   If set to 0, then get the capabilities of the calling process (similar to f_capability_process_get()).
  * @param capability
  *   The determined capability.
+ *   This must be freed via f_capability_delete() when finished with.
  *
  * @return
  *   F_none on success.
- *   F_memory_not (with error bit) if a out of memory.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see cap_get_pid()
@@ -358,10 +495,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if system does not support a capability code specified.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see cap_set_proc()
@@ -369,6 +508,90 @@ extern "C" {
 #ifndef _di_f_capability_process_set_
   extern f_status_t f_capability_process_set(const f_capability_t capability);
 #endif // _di_f_capability_process_set_
+
+/**
+ * Set the capability of a file represented by a file path.
+ *
+ * @param path
+ *   The file path.
+ * @param capability
+ *   The capability to set.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_descriptor_not (with error bit) if the file descriptor is invalid.
+ *   F_directory_not (with error bit) if a directory containing the file does not exist.
+ *   F_file_found_not (with error bit) if file was not found.
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
+ *   F_name_not (with error bit) if the file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *   F_supported_not (with error bit) if the filesystem does not support this operation.
+ *
+ *   F_failure (with error bit) on any other failure.
+ *
+ * @see cap_set_file()
+ */
+#ifndef _di_f_capability_set_file_
+  extern f_status_t f_capability_set_file(const f_string_t path, const f_capability_t capability);
+#endif // _di_f_capability_set_file_
+
+/**
+ * Set the capability of a file represented by a file descriptor.
+ *
+ * @param descriptor
+ *   The file descriptor.
+ * @param capability
+ *   The capability to set.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_descriptor_not (with error bit) if the file descriptor is invalid.
+ *   F_directory_not (with error bit) if a directory containing the file does not exist.
+ *   F_file_found_not (with error bit) if file was not found.
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
+ *   F_name_not (with error bit) if the file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if the filesystem does not permit this operation.
+ *   F_supported_not (with error bit) if the filesystem does not support this operation.
+ *
+ *   F_failure (with error bit) on any other failure.
+ *
+ * @see cap_set_fd()
+ */
+#ifndef _di_f_capability_set_file_descriptor_
+  extern f_status_t f_capability_set_file_descriptor(const int descriptor, const f_capability_t capability);
+#endif // _di_f_capability_set_file_descriptor_
+
+/**
+ * Get the total length (in bytes) the capability would take up when converted to external representation.
+ *
+ * @param capability
+ *   The capability to get size of.
+ * @param size
+ *   The size of the external representation of capability.
+ *   Size may be set to -1 on error.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_range_not (with error bit) on out of range when processing size.
+ *
+ *   F_failure (with error bit) on failure to get size.
+ *
+ * @see cap_size()
+ */
+#ifndef _di_f_capability_size_
+  extern f_status_t f_capability_size(const f_capability_t capability, ssize_t *size);
+#endif // _di_f_capability_size_
 
 /**
  * Check if capabilities are supported.
@@ -382,7 +605,7 @@ extern "C" {
 #endif // _di_f_capability_supported_
 
 /**
- * Check if capabilities are supported.
+ * Check if the capabilitiy code is supported, using special libcap function/macro.
  *
  * @param code
  *   The capability code.
@@ -398,6 +621,22 @@ extern "C" {
 #endif // _di_f_capability_supported_code_
 
 /**
+ * Check if capabilities support ambient, using special libcap function/macro.
+ *
+ * @param code
+ *   The capability code.
+ *
+ * @return
+ *   TRUE if ambient is supported.
+ *   FALSE otherwise.
+ *
+ * @see CAP_AMBIENT_SUPPORTED()
+ */
+#ifndef _di_f_capability_supported_ambient_
+  extern bool f_capability_supported_ambient();
+#endif // _di_f_capability_supported_ambient_
+
+/**
  * Convert the capability code to a name (string).
  *
  * @param code
@@ -409,13 +648,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other failure.
+ *
+ *   Errors (with error bit) from f_string_dynamic_resize().
  *
  * @see cap_free()
  * @see cap_to_name()
+ *
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_capability_to_name_
   extern f_status_t f_capability_to_name(const f_capability_value_t code, f_string_dynamic_t *name);
@@ -424,6 +670,8 @@ extern "C" {
 /**
  * Convert the capability to a human-readable NULL terminated string.
  *
+ * This will append the string to text.
+ *
  * @param capability
  *   The capability code.
  * @param text
@@ -431,13 +679,20 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
- *   F_supported_not (with error bit) if this function is not available (due to not having libcap support compiled in).
+ *
  *   F_failure (with error bit) on any other failure.
+ *
+ *   Errors (with error bit) from f_string_dynamic_resize().
  *
  * @see cap_free()
  * @see cap_to_text()
+ *
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_capability_to_text_
   extern f_status_t f_capability_to_text(const f_capability_t capability, f_string_dynamic_t *text);

@@ -13,17 +13,13 @@ Implicit Return Types for f_status_t:
     This is always potentially returned for any function whose parameter requires a validity checked.
     Much of this functionality can be optionally disabled, but the client using the API need not be aware.
 
-  F_supported_not\:
+  F_implemented_not\:
     This is used to designate that the function or some part of the function is not supported.
     This is primarily used by individuals altering the project but maintaing API compatibility.
-    Any function must therefore support returning F_suppoted_not.
+    Any function must therefore support returning F_implemented_not.
 
     There are some projects that can be enabled/disabled such as f_capability and f_threads.
-    These may explicitly document returning F_supported_not.
-
-    The F_suppoted_not may be used for other purposes as well.
-    @todo Consider replacing this with F_function_unsupported as a special case to allow for F_suppoted_not to be usable for normal purposes.
-          Using F_suppoted_not is currently ambiguous between the function being unsupported and some functionality provided by the function being unsupported.
+    These may explicitly document returning F_implemented_not.
 
 Common Return Types for f_status_t:
   There are some f_status_t return types that are not required to be returned but are used quite often that they might seem required.

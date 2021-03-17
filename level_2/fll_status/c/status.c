@@ -666,6 +666,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_implemented, length, FL_status_string_implemented_length) == F_equal_to) {
+        *code = F_implemented;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_implemented_not, length, FL_status_string_implemented_not_length) == F_equal_to) {
+        *code = F_implemented_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_input, length, FL_status_string_input_length) == F_equal_to) {
         *code = F_input;
         return F_none;
@@ -1934,13 +1944,13 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_directory_synchronize, length, FL_status_string_directory_synchronize_length) == F_equal_to) {
-        *code = F_directory_synchronize;
+      if (fl_string_compare(string, FL_status_string_directory_supported_not, length, FL_status_string_directory_supported_not_length) == F_equal_to) {
+        *code = F_directory_supported_not;
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_directory_unsupported, length, FL_status_string_directory_unsupported_length) == F_equal_to) {
-        *code = F_directory_unsupported;
+      if (fl_string_compare(string, FL_status_string_directory_synchronize, length, FL_status_string_directory_synchronize_length) == F_equal_to) {
+        *code = F_directory_synchronize;
         return F_none;
       }
 

@@ -457,7 +457,7 @@ extern "C" {
         return F_status_set_error(F_directory_stream);
       }
       else if (errno == ENOTSUP) {
-        return F_status_set_error(F_directory_unsupported);
+        return F_status_set_error(F_directory_supported_not);
       }
 
       return F_status_set_error(F_directory_descriptor);
