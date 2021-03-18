@@ -1,2 +1,2 @@
 # fss-0000
-
+_di_pthread_support_ disables thread support, which is intended to disable this entire f_thread project. This is not directly used by this library, but is instead used by other libraries to not include f_thread (such as special compilations like monolithic). Future versions may potentially support this, providing stubs.
