@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifdef _di_libcap_
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_ambient_get_
     f_status_t f_capability_ambient_get(const f_capability_value_t value, int *ambient) {
@@ -28,11 +28,9 @@ extern "C" {
     }
   #endif // _di_f_capability_ambient_set_
 
-  #ifndef _di_f_capability_groups_set_
-    f_status_t f_capability_groups_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
-      return F_status_set_error(F_implemented_not);
-    }
-  #endif // _di_f_capability_groups_set_
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#ifdef _di_libcap_
 
   #ifndef _di_f_capability_clear_
     f_status_t f_capability_clear(f_capability_t *capability) {
@@ -177,11 +175,19 @@ extern "C" {
     }
   #endif // _di_f_capability_from_text_
 
-  #ifndef f_capability_groups_id_set
-    f_status_t f_capability_groups_id_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
+#endif // _di_libcap_
+
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+  #ifndef _di_f_capability_groups_set_
+    f_status_t f_capability_groups_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
       return F_status_set_error(F_implemented_not);
     }
-  #endif // f_capability_groups_id_set
+  #endif // _di_f_capability_groups_set_
+
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#ifdef _di_libcap_
 
   #ifndef _di_f_capability_initialize_
     f_status_t f_capability_initialize(f_capability_t *capability) {
@@ -192,6 +198,10 @@ extern "C" {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_initialize_
+
+#endif // _di_libcap_
+
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_mode_get_
     f_status_t f_capability_mode_get(f_capability_mode_t *mode) {
@@ -234,6 +244,10 @@ extern "C" {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_owner_set_
+
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#ifdef _di_libcap_
 
   #ifndef _di_f_capability_process_bound_drop_
     f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound) {
@@ -281,6 +295,10 @@ extern "C" {
     }
   #endif // _di_f_capability_process_set_
 
+#endif // _di_libcap_
+
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
   #ifndef _di_f_capability_security_bits_get_
     f_status_t f_capability_security_bits_get(f_capability_bits_t *bits) {
       #ifndef _di_level_0_parameter_checking_
@@ -296,6 +314,10 @@ extern "C" {
       return F_status_set_error(F_implemented_not);
     }
   #endif // _di_f_capability_security_bits_set_
+
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#ifdef _di_libcap_
 
   #ifndef _di_f_capability_size_
     f_status_t f_capability_size(const f_capability_t capability, ssize_t *size) {
@@ -313,11 +335,19 @@ extern "C" {
     }
   #endif // _di_f_capability_supported_
 
+#endif // _di_libcap_
+
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
   #ifndef _di_f_capability_supported_ambient_
     bool f_capability_supported_ambient() {
       return F_false;
     }
   #endif // _di_f_capability_supported_ambient_
+
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#ifdef _di_libcap_
 
   #ifndef _di_f_capability_supported_code_
     bool f_capability_supported_code(const f_capability_value_t code) {
@@ -345,13 +375,19 @@ extern "C" {
     }
   #endif // _di_f_capability_to_text_
 
-  #ifndef f_capability_user_id_set
-    f_status_t f_capability_user_id_set(const uid_t id_user) {
+#endif // _di_libcap_
+
+#if defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+  #ifndef f_capability_user_set
+    f_status_t f_capability_user_set(const uid_t id_user) {
       return F_status_set_error(F_implemented_not);
     }
-  #endif // f_capability_user_id_set
+  #endif // f_capability_user_set
 
-#else // _di_libcap_
+#endif // defined(_di_libcap_) || defined(_libcap_legacy_only_)
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_ambient_get_
     f_status_t f_capability_ambient_get(const f_capability_value_t value, int *ambient) {
@@ -403,20 +439,9 @@ extern "C" {
     }
   #endif // _di_f_capability_ambient_set_
 
-  #ifndef _di_f_capability_groups_set_
-    f_status_t f_capability_groups_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
-      if (cap_setgroups(id_group, total, id_groups) == -1) {
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-        if (errno == ERANGE) return F_status_set_error(F_range_not);
-
-        return F_status_set_error(F_failure);
-      }
-
-      return F_none;
-    }
-  #endif // _di_f_capability_groups_set_
+#ifndef _di_libcap_
 
   #ifndef _di_f_capability_clear_
     f_status_t f_capability_clear(f_capability_t *capability) {
@@ -721,20 +746,28 @@ extern "C" {
     }
   #endif // _di_f_capability_from_text_
 
-  #ifndef f_capability_groups_id_set
-    f_status_t f_capability_groups_id_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
+#endif // _di_libcap_
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+  #ifndef _di_f_capability_groups_set_
+    f_status_t f_capability_groups_set(const gid_t id_group, const size_t total, const gid_t id_groups[]) {
 
       if (cap_setgroups(id_group, total, id_groups) == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-        if (errno == EPERM) return F_status_set_error(F_prohibited);
+        if (errno == ERANGE) return F_status_set_error(F_range_not);
 
         return F_status_set_error(F_failure);
       }
 
       return F_none;
     }
-  #endif // f_capability_groups_id_set
+  #endif // _di_f_capability_groups_set_
+
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+#ifndef _di_libcap_
 
   #ifndef _di_f_capability_initialize_
     f_status_t f_capability_initialize(f_capability_t *capability) {
@@ -754,6 +787,10 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
   #endif // _di_f_capability_initialize_
+
+#endif // _di_libcap_
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
   #ifndef _di_f_capability_mode_get_
     f_status_t f_capability_mode_get(f_capability_mode_t *mode) {
@@ -826,6 +863,10 @@ extern "C" {
       return F_none;
     }
   #endif // _di_f_capability_owner_set_
+
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+#ifndef _di_libcap_
 
   #ifndef _di_f_capability_process_bound_drop_
     f_status_t f_capability_process_bound_drop(f_capability_value_t code, int *bound) {
@@ -913,6 +954,10 @@ extern "C" {
     }
   #endif // _di_f_capability_process_set_
 
+#endif // _di_libcap_
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
   #ifndef _di_f_capability_security_bits_get_
     f_status_t f_capability_security_bits_get(f_capability_bits_t *bits) {
       #ifndef _di_level_0_parameter_checking_
@@ -940,6 +985,10 @@ extern "C" {
     }
   #endif // _di_f_capability_security_bits_set_
 
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+#ifndef _di_libcap_
+
   #ifndef _di_f_capability_size_
     f_status_t f_capability_size(const f_capability_t capability, ssize_t *size) {
       #ifndef _di_level_0_parameter_checking_
@@ -966,11 +1015,19 @@ extern "C" {
     }
   #endif // _di_f_capability_supported_
 
+#endif // _di_libcap_
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
   #ifndef _di_f_capability_supported_ambient_
     bool f_capability_supported_ambient() {
       return CAP_AMBIENT_SUPPORTED();
     }
   #endif // _di_f_capability_supported_ambient_
+
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+#ifndef _di_libcap_
 
   #ifndef _di_f_capability_supported_code_
     bool f_capability_supported_code(const f_capability_value_t code) {
@@ -1060,8 +1117,12 @@ extern "C" {
     }
   #endif // _di_f_capability_to_text_
 
-  #ifndef _di_f_capability_user_id_set_
-    f_status_t f_capability_user_id_set(const uid_t id_user) {
+#endif // _di_libcap_
+
+#if !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
+
+  #ifndef _di_f_capability_user_set_
+    f_status_t f_capability_user_set(const uid_t id_user) {
 
       if (cap_setuid(id_user) == -1) {
         if (errno == EINVAL) return F_status_set_error(F_parameter);
@@ -1073,9 +1134,9 @@ extern "C" {
 
       return F_none;
     }
-  #endif // _di_f_capability_user_id_set_
+  #endif // _di_f_capability_user_set_
 
-#endif // _di_libcap_
+#endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -990,9 +990,9 @@ extern "C" {
  * @see cap_setuid()
  * @see setuid()
  */
-#ifndef _di_f_capability_user_id_set_
-  extern f_status_t f_capability_user_id_set(const uid_t id_user);
-#endif // _di_f_capability_user_id_set_
+#ifndef _di_f_capability_user_set_
+  extern f_status_t f_capability_user_set(const uid_t id_user);
+#endif // _di_f_capability_user_set_
 
 #ifdef __cplusplus
 } // extern "C"
