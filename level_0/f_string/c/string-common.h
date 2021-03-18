@@ -44,6 +44,27 @@ extern "C" {
 #endif // _di_f_string_t_
 
 /**
+ * Define the constant string type.
+ *
+ * This is needed when passing a constant string as a function argument.
+ * This cannot be allocated or deallocated.
+ * This is provided for compatibility with some projects that return "const char *".
+ *
+ * GCC errors such as: "warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]" can be avoided using this.
+ *
+ * Do not confuse this with "const f_string_t".
+ * When "const f_string_t * xxx" is passed to a function, then "xxx" cannot be changed.
+ * When "f_string_constant_t * xxx" is passed to a function, then "xxx" can be changed.
+ */
+#ifndef _di_f_string_constant_t_
+  typedef const char *f_string_constant_t;
+
+  #define f_string_constant_t_initialize 0
+
+  #define f_macro_string_constant_t_clear(string) string = 0;
+#endif // _di_f_string_t_
+
+/**
  * Define the end of line character.
  * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
  */
