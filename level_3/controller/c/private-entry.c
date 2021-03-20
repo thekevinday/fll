@@ -206,7 +206,7 @@ extern "C" {
           fprintf(thread_data.data->warning.to.stream, "%s", thread_data.data->warning.notable.after->string);
           fprintf(thread_data.data->warning.to.stream, "%s'.%s%c", thread_data.data->warning.context.before->string, thread_data.data->warning.context.after->string, f_string_eol_s[0]);
 
-          controller_entry_error_print(thread_data.data->warning, cache->action);
+          controller_entry_error_print_cache(thread_data.data->warning, cache->action);
         }
 
         continue;
@@ -659,24 +659,24 @@ extern "C" {
         status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
-          controller_error_print(thread_data.data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, thread_data);
+          controller_error_print(thread_data.data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, thread_data.thread);
         }
         else {
           status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            controller_error_print(thread_data.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, thread_data);
+            controller_error_print(thread_data.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, thread_data.thread);
           }
         }
       }
       else {
         if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-          f_thread_lock(&thread_data.thread->lock.print);
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
 
           fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(thread_data.data->error.to.stream, "%s%sThe entry file is empty.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s, thread_data.data->error.context.after->string, f_string_eol_s[0]);
 
-          f_thread_unlock(&thread_data.thread->lock.print);
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
         }
 
         status = F_status_set_error(F_data_not);
@@ -756,7 +756,7 @@ extern "C" {
 
             if (fl_string_dynamic_compare(thread_data.setting->entry.items.array[j].name, cache->action.name_item) == F_equal_to) {
               if (thread_data.data->warning.verbosity == f_console_verbosity_debug) {
-                f_thread_lock(&thread_data.thread->lock.print);
+                f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                 fprintf(thread_data.data->warning.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(thread_data.data->warning.to.stream, "%s%sIgnoring duplicate entry item '", thread_data.data->warning.context.before->string, thread_data.data->warning.prefix ? thread_data.data->warning.prefix : f_string_empty_s);
@@ -765,7 +765,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(thread_data.data->warning, cache->action);
 
-                f_thread_unlock(&thread_data.thread->lock.print);
+                f_thread_mutex_unlock(&thread_data.thread->lock.print);
               }
 
               code |= 0x2;
@@ -803,18 +803,18 @@ extern "C" {
           status = controller_string_dynamic_append_terminated(cache->action.name_item, &thread_data.setting->entry.items.array[at].name);
 
           if (F_status_is_error(status)) {
-            controller_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data);
+            controller_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
             break;
           }
 
           status = controller_entry_actions_read(*range, thread_data, cache, &thread_data.setting->entry.items.array[at].actions);
 
           if (F_status_is_error(status)) {
-            f_thread_lock(&thread_data.thread->lock.print);
+            f_thread_mutex_lock(&thread_data.thread->lock.print);
 
             controller_entry_error_print_cache(thread_data.data->error, cache->action);
 
-            f_thread_unlock(&thread_data.thread->lock.print);
+            f_thread_mutex_unlock(&thread_data.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -828,14 +828,14 @@ extern "C" {
 
           if (!(code & 0x1)) {
             if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_lock(&thread_data.thread->lock.print);
+              f_thread_mutex_lock(&thread_data.thread->lock.print);
 
               fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(thread_data.data->error.to.stream, "%s%sThe required entry item '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
               fprintf(thread_data.data->error.to.stream, "%s%s%s%s", thread_data.data->error.context.after->string, thread_data.data->error.notable.before->string, controller_string_main_s, thread_data.data->error.notable.after->string);
               fprintf(thread_data.data->error.to.stream, "%s' was not found.%s%c", thread_data.data->error.context.before->string, thread_data.data->error.context.after->string, f_string_eol_s[0]);
 
-              f_thread_unlock(&thread_data.thread->lock.print);
+              f_thread_mutex_unlock(&thread_data.thread->lock.print);
             }
 
             status = F_status_set_error(F_found_not);
@@ -885,12 +885,12 @@ extern "C" {
                     status = controller_string_dynamic_append_terminated(thread_data.setting->entry.items.array[i].name, &cache->action.name_item);
 
                     if (F_status_is_error(status)) {
-                      controller_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data);
+                      controller_error_print(thread_data.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, thread_data.thread);
                       break;
                     }
 
                     if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
-                      f_thread_lock(&thread_data.thread->lock.print);
+                      f_thread_mutex_lock(&thread_data.thread->lock.print);
 
                       fprintf(thread_data.data->error.to.stream, "%c", f_string_eol_s[0]);
                       fprintf(thread_data.data->error.to.stream, "%s%sThe required entry item '", thread_data.data->error.context.before->string, thread_data.data->error.prefix ? thread_data.data->error.prefix : f_string_empty_s);
@@ -899,7 +899,7 @@ extern "C" {
 
                       controller_entry_error_print_cache(thread_data.data->error, cache->action);
 
-                      f_thread_unlock(&thread_data.thread->lock.print);
+                      f_thread_mutex_unlock(&thread_data.thread->lock.print);
                     }
 
                     action->number = 0;
@@ -929,7 +929,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(thread_data.data->error, cache->action);
+      controller_entry_error_print_cache(thread_data.data->error, cache->action);
 
       thread_data.setting->entry.status = controller_status_simplify(F_status_set_fine(status));
     }

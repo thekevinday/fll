@@ -31,6 +31,29 @@
 extern "C" {
 #endif
 
+/**
+ * Copy the source control group onto the destination control group.
+ *
+ * @param source
+ *   The source to append.
+ * @param destination
+ *   The destination the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamics_append().
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamics_append()
+ */
+#ifndef _di_f_control_group_copy_
+  extern f_status_t f_control_group_copy(const f_control_group_t source, f_control_group_t *destination);
+#endif // _di_f_control_group_copy_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

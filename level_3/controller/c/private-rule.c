@@ -411,10 +411,10 @@ extern "C" {
     destination->user = source.user;
     destination->group = source.group;
 
-    destination->timestamp.seconds = source.seconds;
-    destination->timestamp.nanoseconds = source.nanoseconds;
+    destination->timestamp.seconds = source.timestamp.seconds;
+    destination->timestamp.nanoseconds = source.timestamp.nanoseconds;
 
-    destination->path_control.used = 0;
+    destination->id.used = 0;
     destination->name.used = 0;
     destination->path.used = 0;
     destination->script.used = 0;
@@ -428,88 +428,131 @@ extern "C" {
     destination->wish.used = 0;
 
     destination->affinity.used = 0;
-    destination->capability.used = 0;
-    destination->control_group.used = 0;
     destination->groups.used = 0;
     destination->limits.used = 0;
-    destination->scheduler.used = 0;
+    destination->scheduler.policy = source.scheduler.policy;
+    destination->scheduler.priority = source.scheduler.priority;
 
     destination->items.used = 0;
 
     if (source.id.used) {
-
-      status = f_string_dynamic_append(source.id, &dynamic->id);
+      status = f_string_dynamic_append(source.id, &destination->id);
       if (F_status_is_error(status)) return status;
     }
 
     if (source.name.used) {
-
-      status = f_string_dynamic_append(source.name, &dynamic->name);
+      status = f_string_dynamic_append(source.name, &destination->name);
       if (F_status_is_error(status)) return status;
     }
 
     if (source.path.used) {
-
-      status = f_string_dynamic_append(source.path, &dynamic->path);
+      status = f_string_dynamic_append(source.path, &destination->path);
       if (F_status_is_error(status)) return status;
     }
 
     if (source.script.used) {
-
-      status = f_string_dynamic_append(source.script, &dynamic->script);
+      status = f_string_dynamic_append(source.script, &destination->script);
       if (F_status_is_error(status)) return status;
     }
 
     if (source.define.used) {
       status = f_string_maps_append(source.define, &destination->define);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.parameter.used) {
       status = f_string_maps_append(source.parameter, &destination->parameter);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.environment.used) {
       status = f_string_dynamics_append(source.environment, &destination->environment);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.need.used) {
       status = f_string_dynamics_append(source.need, &destination->need);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.want.used) {
       status = f_string_dynamics_append(source.want, &destination->want);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.wish.used) {
       status = f_string_dynamics_append(source.wish, &destination->wish);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.affinity.used) {
-      status = f_int32s_append(source.affinity, &destination->affinity);
+      status = f_type_int32s_append(source.affinity, &destination->affinity);
+      if (F_status_is_error(status)) return status;
     }
 
-    if (source.capability.used) {
-      // @todo copy capability
-    }
+    status = f_capability_copy(source.capability, &destination->capability);
+    if (F_status_is_error(status)) return status;
 
-    if (source.control_group.used) {
-      // @todo copy control_group
-    }
+    status = f_control_group_copy(source.control_group, &destination->control_group);
+    if (F_status_is_error(status)) return status;
 
     if (source.groups.used) {
-      status = f_int32s_append(source.groups, &destination->groups);
+      status = f_type_int32s_append(source.groups, &destination->groups);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.limits.used) {
-      status = f_limit_sets_append(source.limits, &destination->limits);
-    }
-
-    if (source.scheduler.used) {
-      // @todo copy scheduler
+      status = f_limit_sets_copy(source.limits, &destination->limits);
+      if (F_status_is_error(status)) return status;
     }
 
     if (source.items.used) {
-      // @todo copy items
+      controller_rule_item_t *item_source = 0;
+      controller_rule_item_t *item_destination = 0;
+
+      controller_rule_action_t *action_source = 0;
+      controller_rule_action_t *action_destination = 0;
+
+      if (source.items.used > destination->items.size) {
+        status = controller_rule_items_increase_by(source.items.used - destination->items.size, &destination->items);
+        if (F_status_is_error(status)) return status;
+      }
+
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+
+      for (; i < source.items.used; ++i) {
+
+        item_source = &source.items.array[i];
+        item_destination = &destination->items.array[i];
+
+        if (item_source->actions.used > item_destination->actions.size) {
+          status = controller_rule_actions_increase_by(item_source->actions.used - item_destination->actions.size, &item_destination->actions);
+          if (F_status_is_error(status)) return status;
+        }
+
+        item_destination->type = item_source->type;
+        item_destination->line = item_source->line;
+
+        for (j = 0; j < item_source->actions.used; ++j) {
+
+          action_source = &item_source->actions.array[j];
+          action_destination = &item_destination->actions.array[j];
+
+          action_destination->type = action_source->type;
+          action_destination->line = action_source->line;
+          action_destination->status = action_source->status;
+
+          action_destination->parameters.used = 0;
+
+          status = f_string_dynamics_append(action_source->parameters, &action_destination->parameters);
+          if (F_status_is_error(status)) return status;
+        } // for
+
+        item_destination->actions.used = item_source->actions.used;
+      } // for
+
+      destination->items.used = source.items.used;
     }
 
     return status;
@@ -678,7 +721,7 @@ extern "C" {
         status = fll_control_group_prepare(rule->control_group);
 
         if (F_status_is_error(status)) {
-          controller_error_print_locked(thread_data.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, thread_data.thread);
+          controller_error_print(thread_data.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, thread_data.thread);
 
           rule->status = F_status_set_error(F_failure);
           return status;
@@ -719,7 +762,7 @@ extern "C" {
     status = fl_environment_load_names(rule->environment, &environment);
 
     if (F_status_is_error(status)) {
-      controller_error_print_locked(thread_data.data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, thread_data.thread);
+      controller_error_print(thread_data.data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, thread_data.thread);
 
       rule->status = F_status_set_error(F_failure);
       return status;
@@ -1906,7 +1949,7 @@ extern "C" {
         // @fixme the cache should probably store a rule type and then that can used instead of calling controller_rule_copy() here.
         controller_rule_t rule = controller_rule_t_initialize;
 
-        status = controller_rule_copy(&thread_data.setting->rules.array[index], &rule);
+        status = controller_rule_copy(thread_data.setting->rules.array[index], &rule);
 
         if (F_status_is_error_not(status)) {
           status = controller_rule_execute(action, options, thread_data, &cache, &rule);

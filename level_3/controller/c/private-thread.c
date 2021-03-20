@@ -75,7 +75,7 @@ extern "C" {
 
     thread->asynchronouss.used = 0;
 
-    f_thread_mutex_unlock(&thread->lock.asynchronous);
+    f_thread_unlock(&thread->lock.asynchronous);
   }
 #endif // _di_controller_thread_asynchronous_cancel_
 
@@ -91,7 +91,8 @@ extern "C" {
     for (; thread_data->thread->enabled; ) {
       sleep(interval);
 
-      if (f_thread_mutex_lock_try(&thread_data->thread->lock.asynchronous) == F_none) {
+      /*
+      if (f_thread_lock_write_try(&thread_data->thread->lock.asynchronous) == F_none) {
         controller_thread_t *thread = &thread_data->thread;
 
         if (thread->asynchronouss.used) {
@@ -100,9 +101,9 @@ extern "C" {
             if (!thread->enabled) break;
             if (!thread->asynchronouss.array[i].state) continue;
 
-            if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
+            if (f_thread_lock_write_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
 
-            if (f_thread_mutex_lock_try(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
+            if (f_thread_lock_write_try(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
 
               if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
                 f_thread_join(thread->asynchronouss.array[i].id, 0);
@@ -134,11 +135,11 @@ extern "C" {
               thread->asynchronouss.array[i].state = 0;
             }
             else if (thread->asynchronouss.array[i].state) {
-              f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
+              f_thread_unlock(&thread->asynchronouss.array[i].lock);
               break;
             }
 
-            f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
+            f_thread_unlock(&thread->asynchronouss.array[i].lock);
           } // for
         }
 
@@ -146,8 +147,9 @@ extern "C" {
           controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
         }
 
-        f_thread_mutex_unlock(&thread->lock.asynchronous);
+        f_thread_unlock(&thread->lock.asynchronous);
       }
+      */
     } // for
 
     return 0;
@@ -281,7 +283,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            controller_error_print_locked(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+            controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
           }
         }
       }

@@ -1353,8 +1353,6 @@ extern "C" {
   }
 #endif // _di_controller_validate_has_graph_
 
-controller_processs_t
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -23,6 +23,54 @@ extern "C" {
   }
 #endif // _di_f_limit_process_
 
+#ifndef _di_f_limit_sets_copy_
+  f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    destination->used = 0;
+
+    if (source.used > destination->size) {
+      f_status_t status = F_none;
+
+      f_macro_memory_structure_resize(status, (*destination), f_limit_set_t, source.used)
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+      destination->array[i].type = source.array[i].type;
+      destination->array[i].value = source.array[i].value;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_limit_sets_copy_
+
+#ifndef _di_f_limit_values_copy_
+  f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    destination->used = 0;
+
+    if (source.used > destination->size) {
+      f_status_t status = F_none;
+
+      f_macro_memory_structure_resize(status, (*destination), f_limit_value_t, source.used)
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+      destination->array[i].rlim_cur = source.array[i].rlim_cur;
+      destination->array[i].rlim_max = source.array[i].rlim_max;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_limit_values_copy_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

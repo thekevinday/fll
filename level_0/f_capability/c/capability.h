@@ -158,10 +158,10 @@ extern "C" {
 #endif // _di_f_capability_clear_flag_
 
 /**
- * Clone (copy) the capability structure.
+ * Copy the capability structure.
  *
  * @param source
- *   The capability to clone.
+ *   The capability to copy from.
  * @param destination
  *   The capability to copy to.
  *   This must be freed via f_capability_delete() when finished with.
@@ -177,9 +177,9 @@ extern "C" {
  *
  * @see cap_dup()
  */
-#ifndef _di_f_capability_clone_
-  extern f_status_t f_capability_clone(const f_capability_t source, f_capability_t *destination);
-#endif // _di_f_capability_clone_
+#ifndef _di_f_capability_copy_
+  extern f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination);
+#endif // _di_f_capability_copy_
 
 /**
  * Compare two capability structures.

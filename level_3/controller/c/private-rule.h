@@ -144,10 +144,24 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: XXXX().
+ *   Errors (with error bit) from: f_capability_copy().
+ *   Errors (with error bit) from: f_control_group_copy().
+ *   Errors (with error bit) from: f_limit_sets_copy().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamics_append().
+ *   Errors (with error bit) from: f_string_maps_append().
+ *   Errors (with error bit) from: f_type_int32s_append().
+ *
+ *  @see f_capability_copy()
+ *  @see f_control_group_copy()
+ *  @see f_limit_sets_append()
+ *  @see f_string_dynamic_append()
+ *  @see f_string_dynamics_append()
+ *  @see f_string_maps_append()
+ *  @see f_type_int32s_append()
  */
 #ifndef _di_controller_rule_copy_
-  extern f_status_t controller_rule_copy(controller_rule_t *source, controller_rule_t *destination) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_copy_
 
 /**

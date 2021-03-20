@@ -52,15 +52,15 @@ extern "C" {
     }
   #endif // _di_f_capability_clear_flag_
 
-  #ifndef _di_f_capability_clone_
-    f_status_t f_capability_clone(const f_capability_t source, f_capability_t *destination) {
+  #ifndef _di_f_capability_copy_
+    f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
       #ifndef _di_level_0_parameter_checking_
         if (!destination) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
       return F_status_set_error(F_implemented_not);
     }
-  #endif // _di_f_capability_clone_
+  #endif // _di_f_capability_copy_
 
   #ifndef _di_f_capability_compare_
     f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
@@ -477,8 +477,8 @@ extern "C" {
     }
   #endif // _di_f_capability_clear_flag_
 
-  #ifndef _di_f_capability_clone_
-    f_status_t f_capability_clone(const f_capability_t source, f_capability_t *destination) {
+  #ifndef _di_f_capability_copy_
+    f_status_t f_capability_copy(const f_capability_t source, f_capability_t *destination) {
       #ifndef _di_level_0_parameter_checking_
         if (!destination) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
@@ -494,7 +494,7 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
-  #endif // _di_f_capability_clone_
+  #endif // _di_f_capability_copy_
 
   #ifndef _di_f_capability_compare_
     f_status_t f_capability_compare(const f_capability_t capability1, const f_capability_t capability2, int *flags) {
