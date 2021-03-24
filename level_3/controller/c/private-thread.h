@@ -22,9 +22,9 @@ extern "C" {
  * @return
  *   0, always.
  */
-#ifndef _di_controller_thread_asynchronous_
-  extern void * controller_thread_asynchronous(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_asynchronous_
+#ifndef _di_controller_thread_asynchronous_process_
+  extern void * controller_thread_asynchronous_process(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_asynchronous_process_
 
 /**
  * Cancel all asynchronous threads.

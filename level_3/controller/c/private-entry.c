@@ -702,7 +702,7 @@ extern "C" {
 
         for (; i < cache->object_items.used; ++i) {
 
-          if (thread_data.setting->signal) {
+          if (thread_data.thread->signal) {
             return F_signal;
           }
 
@@ -853,7 +853,7 @@ extern "C" {
 
               for (j = 0; j < thread_data.setting->entry.items.array[i].actions.used; ++j) {
 
-                if (thread_data.setting->signal) {
+                if (thread_data.thread->signal) {
                   return F_signal;
                 }
 

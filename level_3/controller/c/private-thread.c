@@ -9,40 +9,73 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_thread_asynchronous_
-  void * controller_thread_asynchronous(void *arguments) {
+#ifndef _di_controller_thread_asynchronous_process_
+  void * controller_thread_asynchronous_process(void *arguments) {
 
     controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) arguments;
-    controller_thread_t *thread_main = (controller_thread_t *) asynchronous->thread;
+    controller_thread_t *main = (controller_thread_t *) asynchronous->thread;
 
-    if (!thread_main->enabled) {
+    f_thread_lock_read(&main->lock.asynchronous);
+
+    if (!main->enabled) {
+      f_thread_unlock(&main->lock.asynchronous);
+
       return 0;
     }
 
-    controller_thread_t thread = controller_thread_t_initialize;
+    f_thread_unlock(&main->lock.asynchronous);
 
-    f_thread_mutex_lock(&thread_main->setting->rules.array[asynchronous->index].lock);
-    f_thread_mutex_lock(&asynchronous->lock);
+    f_array_length_t at_process = 0;
 
-    thread.cache_main = thread_main->cache_main;
-    thread.cache_action = &asynchronous->cache;
-    thread.data = thread_main->data;
-    thread.lock = thread_main->lock;
-    thread.setting = thread_main->setting;
-    thread.stack = &asynchronous->stack;
+    f_thread_lock_read(&main->thread->lock.process);
 
-    if (controller_rule_process(asynchronous->index, asynchronous->action, asynchronous->options, &thread, asynchronous) != F_child) {
-      asynchronous->state = controller_asynchronous_state_done;
+    if (controller_find_process(rule.id, *main->processs, &at_process) == F_false) {
+      f_thread_unlock(&main->thread->lock.process);
+      f_thread_lock_write(&main->thread->lock.process);
+
+      const f_status_t status = controller_processs_increase(main->processs);
+
+      if (F_status_is_error(status)) {
+        controller_entry_error_print(main->data->error, asynchronous->cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main->thread);
+
+        f_thread_unlock(&main->thread->lock.process);
+        return 0;
+      }
+      else {
+        at_process = main->processs->used++;
+      }
     }
 
-    f_thread_mutex_unlock(&asynchronous->lock);
+    // once the "active" lock is in place for some process, then it will not be deleted and should be guaranteed to not change or be relocated.
+    f_thread_lock_read(&main->processs.array[id_process].active);
+    f_thread_unlock(&main->thread->lock.process);
 
-    f_thread_condition_signal(&thread_main->setting->rules.array[asynchronous->index].wait);
-    f_thread_mutex_unlock(&thread_main->setting->rules.array[asynchronous->index].lock);
+    // @todo looks like I do need a r/w lock on controller_asynchronous_t after all.
+
+    controller_rule_t rule = controller_rule_t_initialize;
+
+    // @todo copy rule, finding the rule using main->processs.array[id_process].id_rule.
+    //status = controller_rule_copy(, &rule);
+
+    {
+      const f_status_t status = controller_rule_process(rule, at_process, controller_rule_action_type_start, rule_options, thread_data, asynchronous->cache);
+
+      asynchronous->state = controller_asynchronous_state_done;
+
+      if (F_status_is_error(status)) {
+        f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+        controller_entry_error_print_cache(thread_data.data->error, asynchronous->cache->action);
+
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
+      }
+    }
+
+    f_thread_unlock(&main->processs.array[id_process].active);
 
     return 0;
   }
-#endif // _di_controller_thread_asynchronous_
+#endif // _di_controller_thread_asynchronous_process_
 
 #ifndef _di_controller_thread_asynchronous_cancel_
   void controller_thread_asynchronous_cancel(controller_thread_t *thread) {
@@ -174,12 +207,12 @@ extern "C" {
 
     controller_thread_t thread = controller_thread_t_initialize;
     controller_processs_t processs = controller_processs_t_initialize;
-    controller_thread_data_t data_main = controller_macro_thread_data_t_initialize(0, data, setting, &processs, &thread);
+    controller_thread_data_t thread_data = controller_macro_thread_data_t_initialize(0, data, setting, &processs, &thread);
 
     status = controller_asynchronouss_increase(&thread.asynchronouss);
 
     if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &data_main);
+      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &thread_data);
     }
 
     if (F_status_is_error(status)) {
@@ -210,13 +243,16 @@ extern "C" {
       }
       else {
 
-        status = controller_entry_read(entry_name, data_main, &thread.asynchronouss.array[0].cache);
+        // index 0 is reserved for running the main thread cache.
+        thread.asynchronouss.used = 1;
+
+        status = controller_entry_read(entry_name, thread_data, &thread.asynchronouss.array[0].cache);
 
         if (F_status_is_error(status)) {
           setting->ready = controller_setting_ready_fail;
         }
         else if (status != F_signal && status != F_child) {
-          status = controller_preprocess_entry(data_main, &thread.asynchronouss.array[0].cache);
+          status = controller_preprocess_entry(thread_data, &thread.asynchronouss.array[0].cache);
         }
 
         if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
@@ -238,7 +274,7 @@ extern "C" {
               status = F_status_set_error(F_available_not);
             }
             else {
-              status = controller_process_entry(data_main, &thread.asynchronouss.array[0].cache);
+              status = controller_process_entry(thread_data, &thread.asynchronouss.array[0].cache);
 
               if (F_status_is_error(status)) {
                 setting->ready = controller_setting_ready_fail;
@@ -271,14 +307,14 @@ extern "C" {
       if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
         controller_rule_wait_all(&thread);
 
-        status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &data_main);
+        status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &thread_data);
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &data_main);
+          status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &thread_data);
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &data_main);
+          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &thread_data);
         }
 
         if (F_status_is_error(status)) {
@@ -358,7 +394,7 @@ extern "C" {
 
       if (thread_data->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
-          thread_data->setting->signal = signal;
+          thread_data->thread->signal = signal;
 
           controller_thread_asynchronous_cancel(thread_data->thread);
           break;

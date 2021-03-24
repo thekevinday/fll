@@ -593,8 +593,8 @@ extern "C" {
  *
  * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
  *
- * @param index
- *   Position in the rules array representing the rule to execute
+ * @param id_rule
+ *   The ID of the rule, such as "boot/init".
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -623,7 +623,7 @@ extern "C" {
  *   Errors (with error bit) from: f_thread_create().
  */
 #ifndef _di_controller_rule_process_asynchronous_
-  extern f_status_t controller_rule_process_asynchronous(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_asynchronous(const f_string_static_t id_rule, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_asynchronous_
 
 /**

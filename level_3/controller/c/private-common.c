@@ -150,11 +150,13 @@ extern "C" {
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
-    f_string_dynamic_resize(0, &process->id);
+    f_string_dynamic_resize(0, &process->id_rule);
 
     f_thread_lock_delete(&process->lock);
-    f_thread_lock_attribute_delete(&process->attribute);
-    f_thread_condition_delete(&process->wait);
+    f_thread_lock_delete(&process->active);
+
+    f_thread_lock_attribute_delete(&process->lock_attribute);
+    f_thread_lock_attribute_delete(&process->active_attribute);
   }
 #endif // _di_controller_process_delete_simple_
 

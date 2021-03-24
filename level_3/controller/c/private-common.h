@@ -12,6 +12,11 @@
 extern "C" {
 #endif
 
+/**
+ * All special strings used within this program.
+ *
+ * These are generally the names to match, representing some action or setting.
+ */
 #ifndef _di_controller_string_
   #define controller_string_action        "action"
   #define controller_string_actions       "actions"
@@ -274,6 +279,11 @@ extern "C" {
   const static f_string_t controller_string_yes_s = controller_string_yes;
 #endif // _di_controller_string_
 
+/**
+ * A set of codes for resource limitations.
+ *
+ * This essentally converts the POSIX standard names into a more verbose format.
+ */
 #ifndef _di_controller_resource_limit_t_
   enum {
     controller_resource_limit_type_as = RLIMIT_AS,
@@ -295,6 +305,12 @@ extern "C" {
   };
 #endif // _di_controller_resource_limit_t_
 
+/**
+ * A structure for passing execution arguments to the execute functions.
+ *
+ * parameter: All parameters sent to the program on execution.
+ * as:        All special properties to apply, such as cpu affinity.
+ */
 #ifndef _di_controller_execute_set_t_
   typedef struct {
     fl_execute_parameter_t parameter;
@@ -319,10 +335,19 @@ extern "C" {
 /**
  * A structure for sharing mutexes globally between different threads.
  *
- * The asynchronous lock is intended to lock any activity on the asynchronouss structure.
+ * The asynchronous lock is intended to lock any activity on the asynchronouss structure and related.
  * The print lock is intended to lock any activity printing to stdout/stderr.
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
+ *
+ * print:                  The print mutex lock.
+ * asynchronous:           The asynchronous r/w lock.
+ * asynchronous_attribute: The asynchronous r/w lock attribute.
+ * process:                The process r/w lock.
+ * process_attribute:      The process r/w lock attribute.
+ * rule:                   The rule r/w lock.
+ * rule_attribute:         The rule r/w lock attribute.
+ *
  */
 #ifndef _di_controller_lock_t_
   typedef struct {
@@ -349,6 +374,14 @@ extern "C" {
   }
 #endif // _di_controller_mutex_t_
 
+/**
+ * A Rule Action.
+ *
+ * type:       The Rule Action type.
+ * line:       The line number where the Rule Action begins.
+ * status:     The last execution status of the Rule Action.
+ * parameters: All parameters associated with the Rule Action.
+ */
 #ifndef _di_controller_rule_action_t_
   #define controller_rule_action_method_string_extended      "FSS-0001 (Extended)"
   #define controller_rule_action_method_string_extended_list "FSS-0003 (Extended List)"
@@ -399,6 +432,13 @@ extern "C" {
     f_macro_string_dynamics_t_clear(rule.parameters)
 #endif // _di_controller_rule_action_t_
 
+/**
+ * The Rule Actions.
+ *
+ * array: An array of Rule Actions.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_rule_actions_t_
   typedef struct {
     controller_rule_action_t *array;
@@ -419,6 +459,13 @@ extern "C" {
     actions.used = 0;
 #endif // _di_controller_rule_actions_t_
 
+/**
+ * A Rule Item.
+ *
+ * type:    The type of the Rule Item.
+ * line:    The line number where the Rule Item begins.
+ * actions: The actions associated with the Rule Item.
+ */
 #ifndef _di_controller_rule_item_t_
   enum {
     controller_rule_item_type_command = 1,
@@ -447,6 +494,13 @@ extern "C" {
     controller_macro_rule_actions_t_clear(item.actions);
 #endif // _di_controller_rule_item_t_
 
+/**
+ * The Rule Items.
+ *
+ * array: An array of Rule Items.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_rule_items_t_
   typedef struct {
     controller_rule_item_t *array;
@@ -467,6 +521,35 @@ extern "C" {
     items.used = 0;
 #endif // _di_controller_rule_items_t_
 
+/**
+ * A Rule.
+ *
+ * timeout_kill:     The timeout to wait relating to using a kill signal.
+ * timeout_start:    The timeout to wait relating to starting a process.
+ * timeout_stop:     The timeout to wait relating to stopping a process.
+ * has:              Bitwise set of "has" codes representing what the Rule has.
+ * nice:             The niceness value if the Rule "has" nice.
+ * user:             The User ID if the Rule "has" a user.
+ * group:            The Group ID if the Rule "has" a group.
+ * timestamp:        The timestamp when the Rule was loaded.
+ * id:               The distinct ID (machine name) of the rule, such as "service/ssh".
+ * name:             A human name for the Rule (does not have to be distinct).
+ * path:             The path to the Rule file.
+ * script:           The program or path to the program of the scripting engine to use when processing scripts in this Rule.
+ * define:           Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
+ * parameters:       Any parameters made available to the Rule for IKI substitution.
+ * environment:      All environment variables allowed to be exposed to the Rule when processing.
+ * need:             A Rule ID (machine name) of the Rule that is needed (required).
+ * want:             A Rule ID (machine name) of the Rule that is wanted (optional).
+ * wish:             A Rule ID (machine name) of the Rule that is wished for (optional).
+ * affinity:         The cpu affinity to be used when executing the Rule.
+ * capability:       The capability setting if the Rule "has" a capability.
+ * control_group:    The control group setting if the Rule "has" a control group.
+ * groups:           The groups to assign to the user to run as (with the first group being the primary group).
+ * limits:           The cpu/resource limits to use when executing the Rule.
+ * scheduler:        The scheduler setting if the Rule "has" a scheduler.
+ * items:            All items associated with the Rule.
+ */
 #ifndef _di_controller_rule_t_
   enum {
     controller_rule_setting_type_affinity = 1,
@@ -592,6 +675,13 @@ extern "C" {
     controller_macro_rule_items_t_clear(rule.items)
 #endif // _di_controller_rule_t_
 
+/**
+ * The Rules.
+ *
+ * array: An array of Rules.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_rules_t_
   typedef struct {
     controller_rule_t *array;
@@ -613,37 +703,46 @@ extern "C" {
 #endif // _di_controller_rules_t_
 
 /**
- * Store controller process information for some rule.
+ * A Rule Process.
  *
- * This refers to "process" as in the processing of a rule and does not refer to "process" as in a CPU process.
+ * This refers to "process" as in the processing of a single rule for the given Rule ID and does not refer to "process" as in a CPU Process.
  *
- * This holds the success/failure rate and any associated locks.
- * This operates based on the rule id string (such as "network/ntpdate").
+ * id_rule:          The Rule ID, such as "network/ntpdate".
+ * status:           The last execution status of the Rule.
+ * lock:             A read/write lock on the structure.
+ * active:           A read/write lock representing that something is currently using this (read locks = in use, write lock = see if in use and possibly prepare for delete).
+ * lock_attribute:   The lock attribute for "lock".
+ * active_attribute: The lock attribute for "active".
  */
 #ifndef _di_controller_process_t_
   typedef struct {
-    f_string_dynamic_t id;
+    f_string_dynamic_t id_rule;
 
     f_status_t status;
 
     f_thread_lock_t lock;
-    f_thread_lock_attribute_t attribute;
-    f_thread_condition_t wait;
+    f_thread_lock_t active;
+    f_thread_lock_attribute_t lock_attribute;
+    f_thread_lock_attribute_t active_attribute;
   } controller_process_t;
 
   #define controller_process_t_initialize { \
     f_string_dynamic_t_initialize \
     F_known_not, \
     f_thread_lock_t_initialize, \
+    f_thread_lock_t_initialize, \
     f_thread_lock_attribute_t_initialize, \
-    f_thread_condition_t_initialize, \
+    f_thread_lock_attribute_t_initialize, \
   }
-
-  #define controller_macro_process_t_clear(process) \
-    process.status = F_known_not; \
-    f_macro_string_dynamic_t_clear(process.id)
 #endif // _di_controller_process_t_
 
+/**
+ * The Rule Processes.
+ *
+ * array: An array of rule processes.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_processs_t_
   typedef struct {
     controller_process_t *array;
@@ -664,6 +763,16 @@ extern "C" {
     process.used = 0;
 #endif // _di_controller_processs_t_
 
+/**
+ * An Entry Item Action
+ *
+ * type:       The type of Action.
+ * code:       A single code or sub-type associated with the Action.
+ * line:       The line number where the Entry Item begins.
+ * number:     The unsigned number that some types use instead of the "parameters".
+ * status:     The overall status.
+ * parameters: The values associated with the Action.
+ */
 #ifndef _di_controller_entry_action_t_
   enum {
     controller_entry_action_type_consider = 1,
@@ -712,6 +821,13 @@ extern "C" {
     f_macro_string_dynamics_t_clear(action.parameters)
 #endif // _di_controller_entry_action_t_
 
+/**
+ * The Entry Item Actions.
+ *
+ * array: An array of Entry Item Actions.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_entry_actions_t_
   typedef struct {
     controller_entry_action_t *array;
@@ -732,6 +848,13 @@ extern "C" {
     actions.used = 0;
 #endif // _di_controller_entry_actions_t_
 
+/**
+ * An Entry Item.
+ *
+ * line:    The line number where the Entry Item begins.
+ * name:    The name of the Entry Item.
+ * actions: The Actions associated with the Entry Item.
+ */
 #ifndef _di_controller_entry_item_t_
   typedef struct {
     f_array_length_t line;
@@ -753,6 +876,13 @@ extern "C" {
     controller_macro_entry_actions_t_clear(item.actions)
 #endif // _di_controller_entry_item_t_
 
+/**
+ * An Entry Items.
+ *
+ * array: An array of Entry Items.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_entry_items_t_
   typedef struct {
     controller_entry_item_t *array;
@@ -773,6 +903,12 @@ extern "C" {
     items.used = 0;
 #endif // _di_controller_entry_items_t_
 
+/**
+ * The Entry.
+ *
+ * status: The overall status.
+ * items:  The array of entry items.
+ */
 #ifndef _di_controller_entry_t_
   typedef struct {
     f_status_t status;
@@ -790,6 +926,22 @@ extern "C" {
     controller_macro_entry_items_t_clear(entry.items)
 #endif // _di_controller_entry_t_
 
+/**
+ * All setting data.
+ *
+ * interruptable:    TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
+ * ready:            State representing if the settings are all loaded and is ready to run program operations.
+ * timeout_kill:     The timeout to wait relating to using a kill signal.
+ * timeout_start:    The timeout to wait relating to starting a process.
+ * timeout_stop:     The timeout to wait relating to stopping a process.
+ * failsafe_enabled: TRUE if failsafe execution is enabled, FALSE otherwise.
+ * failsafe_rule_id: The Rule ID (such as "failsafe/bash") to execute when failsafe execution is enabled.
+ * path_control:     File path to the control socket.
+ * path_pid:         File path to the PID file.
+ * path_setting:     File path to the setting directory.
+ * entry:            The entry settings.
+ * rules:            All rules and their respective settings.
+ */
 #ifndef _di_controller_setting_t
   enum {
     controller_setting_ready_no = 0,
@@ -803,7 +955,6 @@ extern "C" {
   typedef struct {
     bool interruptable;
     uint8_t ready;
-    int signal;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -823,7 +974,6 @@ extern "C" {
   #define controller_setting_t_initialize { \
     F_false, \
     0, \
-    0, \
     3, \
     3, \
     3, \
@@ -839,7 +989,6 @@ extern "C" {
   #define controller_macro_setting_t_clear(setting) \
     setting.interruptable = F_false; \
     setting.ready = 0; \
-    setting.signal = 0; \
     setting.timeout_kill = 3; \
     setting.timeout_start = 3; \
     setting.timeout_stop = 3; \
@@ -852,6 +1001,16 @@ extern "C" {
     controller_macro_rules_t_clear(entry.setting)
 #endif // _di_controller_setting_t
 
+/**
+ * Action related cache.
+ *
+ * line_action: The line in some file representing an Action.
+ * line_item:   The line in some file representing an Item.
+ * name_action: A NULL terminated name of some Action.
+ * name_file:   A NULL terminated name of some File.
+ * name_item:   A NULL terminated name of some Item.
+ * generic:     A NULL terminated string for general use.
+ */
 #ifndef _di_controller_cache_action_t_
   typedef struct {
     f_array_length_t line_action;
@@ -882,6 +1041,25 @@ extern "C" {
     f_macro_string_dynamic_t_clear(cache.generic)
 #endif // _di_controller_cache_action_t_
 
+/**
+ * A cache intended for re-using memory while loading and processing rules whenever possible.
+ *
+ * timestamp:       The timestamp.
+ * range_action:    The Range for some Action.
+ * ats:             Locations.
+ * stack:           Locations within a items history used as a history stack for circular recursion prevention.
+ * comments:        Comments associated with a buffer string.
+ * delimits:        Delimits associated with a buffer string.
+ * content_action:  The specific Content for some Action.
+ * content_actions: Content for some Action.
+ * content_items:   Content for some Item.
+ * object_actions:  Objects for some Action.
+ * object_items:    Objects for some Item.
+ * buffer_file:     A generic file related buffer.
+ * buffer_item:     A generic item related buffer.
+ * buffer_path:     A generic path related buffer.
+ * action:          A cache for some Action, often used by error printing for reporting where an error happened.
+ */
 #ifndef _di_controller_cache_t_
   typedef struct {
     f_time_spec_t timestamp;
@@ -924,26 +1102,25 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     controller_cache_action_t_initialize, \
   }
-
-  #define controller_macro_cache_t_clear(cache) \
-    f_macro_time_spec_t_clear(cache.timestamp) \
-    f_macro_string_range_t_clear(cache.range_action) \
-    cache.ats = 0; \
-    cache.stack = 0; \
-    f_macro_time_spec_t_clear(cache.timestamp) \
-    f_macro_fss_comments_t_clear(cache.comments) \
-    f_macro_fss_delimits_t_clear(cache.delimits) \
-    f_macro_fss_content_t_clear(cache.content_action) \
-    f_macro_fss_contents_t_clear(cache.content_actions) \
-    f_macro_fss_contents_t_clear(cache.content_items) \
-    f_macro_fss_objects_t_clear(cache.object_actions) \
-    f_macro_fss_objects_t_clear(cache.object_items) \
-    f_macro_string_dynamic_t_clear(cache.buffer_file) \
-    f_macro_string_dynamic_t_clear(cache.buffer_item) \
-    f_macro_string_dynamic_t_clear(cache.buffer_path) \
-    controller_macro_cache_action_t_clear(cache.action)
 #endif // _di_controller_cache_t_
 
+/**
+ * Stores data passed to a thread on thread creation, specifically for rule processing.
+ *
+ * The thread has different states:
+ * - active: The thread is running.
+ * - done:   The thread has finished executed but has not been cleaned up.
+ * - joined: The thread has been cleaned up, this is safe to delete.
+ *
+ * id:         The thread id, which is controlled by pthread functions.
+ * id_process: The id representing the rule process this asynchronous thread operates for.
+ * state:      The state of the asynchronous.
+ * action:     The action being performed.
+ * options:    Configuration options for this asynchronous thread.
+ * child:      The process id of a child process, if one is running (when forking to execute a child process).
+ * stack:      The execution stack representing all other rule processes (by process id) that called this (to prevent infinite recursion). // @todo is this needed here anymore?
+ * cache:      A per asynchronous thread cache.
+ */
 #ifndef _di_controller_asynchronous_t_
   enum {
     controller_asynchronous_state_active = 1,
@@ -953,10 +1130,8 @@ extern "C" {
 
   typedef struct {
     f_thread_id_t id;
-    f_thread_lock_t lock;
-    f_thread_lock_attribute_t attribute;
+    f_array_length_t id_process;
 
-    f_array_length_t index;
     uint8_t state;
     uint8_t action;
     uint8_t options;
@@ -968,8 +1143,6 @@ extern "C" {
 
   #define controller_asynchronous_t_initialize { \
     f_thread_id_t_initialize, \
-    f_thread_lock_t_initialize, \
-    f_thread_lock_attribute_t_initialize, \
     0, \
     0, \
     0, \
@@ -978,19 +1151,15 @@ extern "C" {
     f_array_lengths_t_initialize, \
     controller_cache_t_initialize \
   }
-
-  // @fixme remove the clear() macros..clear isn't safe when mixing in mutexes and whatnot that cannot be cleared.
-  #define controller_macro_asynchronous_t_clear(asynchronous) \
-    f_macro_thread_id_t_clear(asynchronous.id) \
-    asynchronous.index = 0; \
-    asynchronous.state = 0; \
-    asynchronous.action = 0; \
-    asynchronous.options = 0; \
-    asynchronous.child = 0; \
-    f_macro_array_lengths_t_clear(asynchronous.stack) \
-    controller_macro_cache_t_clear(asynchronous.cache)
 #endif // _di_controller_asynchronous_t_
 
+/**
+ * The asynchronous execution data.
+ *
+ * array: An array of asynchronous execution data.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
 #ifndef _di_controller_asynchronouss_t_
   typedef struct {
     controller_asynchronous_t *array;
@@ -1011,9 +1180,26 @@ extern "C" {
     asynchronouss.used = 0;
 #endif // _di_controller_asynchronouss_t_
 
+/**
+ * A structure for managing threads.
+ *
+ * This is essentially data shared globally between threads, about threads.
+ *
+ * As a special case, index 0 of asynchronouss is reserved for use the main thread and is not used by any Rule Processes.
+ *
+ * enabled:       TRUE when threads are active, FALSE when inactive and the program is essentially shutting down, no new threads should be started when FALSE.
+ * signal:        The code of any signal received.
+ * id_cleanup:    The thread ID representing the cleanup Process.
+ * id_control:    The thread ID representing the cleanup Process.
+ * id_rule:       The thread ID representing the cleanup Process.
+ * id_signal:     The thread ID representing the cleanup Process.
+ * lock:          A r/w lock for operating on this structure.
+ * asynchronouss: All Rule Process thread data.
+ */
 #ifndef _di_controller_thread_t_
   typedef struct {
     bool enabled;
+    int signal;
 
     f_thread_id_t id_cleanup;
     f_thread_id_t id_control;
@@ -1026,6 +1212,7 @@ extern "C" {
 
   #define controller_thread_t_initialize { \
     F_true, \
+    0, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
@@ -1036,6 +1223,7 @@ extern "C" {
 
   #define controller_macro_thread_t_initialize(lock, asynchronouss) { \
     F_true, \
+    0, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
@@ -1046,6 +1234,7 @@ extern "C" {
 
   #define controller_macro_thread_t_clear(thread) \
     thread.enabled = F_true; \
+    thread.signal = 0; \
     f_macro_thread_id_t_clear(thread.id_cleanup); \
     f_macro_thread_id_t_clear(thread.id_control); \
     f_macro_thread_id_t_clear(thread.id_rule); \
@@ -1053,6 +1242,15 @@ extern "C" {
     controller_macro_asynchronouss_t_clear(thread.asynchronouss)
 #endif // _di_controller_data_common_t_
 
+/**
+ * A wrapper used for passing all data to each individual asynchronous thread.
+ *
+ * id_process: The index in the processs array representing the current process.
+ * data:       All standard program data.
+ * setting:    All loaded settings.
+ * processs:   All Rule Process data.
+ * thread:     All thread related data.
+ */
 #ifndef _di_controller_thread_data_t_
   // @todo relocate these under a different ifdef block.
   #define controller_thread_cache_cleanup_interval_long  3600  // 1 hour in seconds.
@@ -1063,7 +1261,7 @@ extern "C" {
   #define controller_thread_asynchronous_max             65535 // Total number of asynchronous threads allowed at any one time.
 
   typedef struct {
-    f_array_length_t id;
+    f_array_length_t id_process;
 
     controller_data_t *data;
     controller_setting_t *setting;
@@ -1073,8 +1271,8 @@ extern "C" {
 
   #define controller_thread_data_t_initialize { 0, 0, 0, 0, 0 }
 
-  #define controller_macro_thread_data_t_initialize(id, data, setting, processs, thread) { \
-    id, \
+  #define controller_macro_thread_data_t_initialize(id_process, data, setting, processs, thread) { \
+    id_process, \
     data, \
     setting, \
     processs, \
@@ -1082,7 +1280,7 @@ extern "C" {
   }
 
   #define controller_macro_thread_data_t_clear(thread_data) \
-    thread_data.id = 0; \
+    thread_data.id_process = 0; \
     thread_data.data = 0; \
     thread_data.setting = 0; \
     thread_data.processs = 0; \

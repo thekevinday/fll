@@ -770,7 +770,7 @@ extern "C" {
 
     for (i = 0; i < rule->items.used; ++i) {
 
-      if (thread_data.setting->signal) {
+      if (thread_data.thread->signal) {
         status = F_signal;
         break;
       }
@@ -779,7 +779,7 @@ extern "C" {
 
       for (j = 0; j < rule->items.array[i].actions.used; ++j) {
 
-        if (thread_data.setting->signal) {
+        if (thread_data.thread->signal) {
           status = F_signal;
           break;
         }
@@ -1109,6 +1109,7 @@ extern "C" {
   }
 #endif // _di_controller_rule_execute_pid_with_
 
+// @todo consider changing this to accept "at" as an argument and returning status so that error status can be returned.
 #ifndef _di_controller_rule_find_loaded_
   f_array_length_t controller_rule_find_loaded(const f_string_static_t rule_id, controller_thread_data_t thread_data) {
 
@@ -1985,20 +1986,77 @@ extern "C" {
   }
 #endif // _di_controller_rule_process_
 
-#ifndef _di_controller_rule_process_asynchronous_
-  f_status_t controller_rule_process_asynchronous(const f_array_length_t index, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
+#ifndef _di_controller_rule_process_do_
+  f_status_t controller_rule_process_do(const controller_rule_t rule, const f_array_length_t at_process, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
 
-    f_thread_mutex_lock(&thread_data->lock.asynchronous);
+    f_array_length_t at_process = 0;
+
+    f_thread_lock_read(&thread_data.thread->lock.process);
+
+    if (controller_find_process(rule_id, *thread_data.processs, &at_process) == F_false) {
+      f_thread_unlock(&thread_data.thread->lock.process);
+      f_thread_lock_write(&thread_data.thread->lock.process);
+
+      status = controller_processs_increase(thread_data.processs);
+
+      if (F_status_is_error(status)) {
+        controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, thread_data.thread);
+      }
+      else {
+        at_process = thread_data.processs->used;
+      }
+    }
+
+    f_thread_unlock(&thread_data.thread->lock.process);
+
+    if (F_status_is_error_not(status)) {
+
+      // retrieve a copy of the rule and use that for the lifespan of the rule's execution within the designated process.
+      controller_rule_t rule = controller_rule_t_initialize;
+
+      status = controller_rule_copy(thread_data.setting->rules.array[at], &rule);
+
+      f_thread_unlock(&thread_data.thread->lock.rule);
+
+      if (F_status_is_error(status)) {
+        controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_rule_copy", F_true, thread_data.thread);
+      }
+      else {
+        status = controller_rule_process(rule, at_process, controller_rule_action_type_start, rule_options, thread_data, cache);
+
+        controller_rule_delete_simple(&rule);
+
+        if (F_status_is_error(status)) {
+          f_thread_mutex_lock(&thread_data.thread->lock.print);
+
+          controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+          f_thread_mutex_unlock(&thread_data.thread->lock.print);
+        }
+      }
+    }
+  }
+#endif // _di_controller_rule_process_do_
+
+#ifndef _di_controller_rule_process_asynchronous_
+  f_status_t controller_rule_process_asynchronous(const f_string_static_t id_rule, const uint8_t action, const uint8_t options, controller_thread_data_t thread_data, controller_cache_t *cache) {
+
+    f_thread_lock_read(&thread_data.lock.asynchronous);
 
     if (!thread_data.thread->enabled) {
-      f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
+      f_thread_mutex_unlock(&thread_data.lock.asynchronous);
 
       return F_signal;
     }
 
+    f_thread_mutex_unlock(&thread_data.lock.asynchronous);
+    f_thread_lock_write(&thread_data.lock.asynchronous);
+
     f_status_t status = controller_asynchronouss_increase(&thread_data.thread->asynchronouss);
 
     if (F_status_is_error(status)) {
+      controller_entry_error_print(thread_data.data->error, cache->action, F_status_set_fine(status), "controller_asynchronouss_increase", F_true, thread_data.thread);
+
       f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
 
       return status;
@@ -2006,37 +2064,89 @@ extern "C" {
 
     controller_asynchronous_t *asynchronous = &thread_data.thread->asynchronouss.array[thread_data.thread->asynchronouss.used++];
 
-    controller_macro_asynchronous_t_clear((*asynchronous));
+    f_thread_lock_read(&thread_data.lock.process);
 
-    asynchronous->index = index;
-    asynchronous->state = controller_asynchronous_state_active;
-    asynchronous->action = action;
-    asynchronous->options = options;
-    asynchronous->thread_data.thread = (void *) thread_data.thread;
-    asynchronous->cache.line_action = thread_data.thread->cache_action->line_action;
-    asynchronous->cache.line_item = thread_data.thread->cache_action->line_item;
+    if (controller_find_process(id_rule, *thread_data.processs, &asynchronous->id_process) == F_true) {
 
-    status = f_string_dynamic_append(thread_data.thread->cache_action->name_action, &asynchronous->cache.name_action);
+      // use read locks to designate that the process is in use.
+      f_thread_lock_read(&thread_data.processs->array[asynchronous->id_process].lock);
+    }
+    else {
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_append(thread_data.thread->cache_action->name_file, &asynchronous->cache.name_file);
+      status = F_status_set_error(F_failure);
+
+      if (thread_data.data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&thread_main->thread->lock.print);
+
+        fprintf(thread_data.data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(thread_data.data->output.stream, "The entry item rule '");
+        fprintf(thread_data.data->output.stream, "%s%s%s", thread_data.data->context.set.title.before->string, id_rule.string, thread_data.data->context.set.title.after->string);
+        fprintf(thread_data.data->output.stream, "' is no longer loaded.%c", f_string_eol_s[0]);
+
+        controller_entry_error_print_cache(thread_data.data->error, cache->action);
+
+        f_thread_mutex_unlock(&thread_data.thread->lock.print);
+      }
     }
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_append(thread_data.thread->cache_action->name_item, &asynchronous->cache.name_item);
-    }
+    f_thread_unlock(&thread_data.lock.process);
 
     if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &asynchronous->id, controller_thread_asynchronous, (void *) asynchronous);
+
+      asynchronous->state = controller_asynchronous_state_active;
+      asynchronous->action = action;
+      asynchronous->options = options;
+      asynchronous->thread_data.thread = (void *) thread_data.thread;
+      //asynchronous->stack.used = 0; // @todo stack should be passed along each call!, might be better to make this a pointer. Maybe make this a id of process id?
+
+      f_macro_time_spec_t_clear(asynchronous->cache.timestamp)
+      f_macro_string_range_t_clear(asynchronous->cache.range_action)
+
+      asynchronous->cache.ats.used = 0;
+      asynchronous->cache.stack.used = 0;
+      asynchronous->cache.comments.used = 0;
+      asynchronous->cache.delimits.used = 0;
+      asynchronous->cache.content_action.used = 0;
+      asynchronous->cache.content_actions.used = 0;
+      asynchronous->cache.content_items.used = 0;
+      asynchronous->cache.object_actions.used = 0;
+      asynchronous->cache.object_items.used = 0;
+      asynchronous->cache.buffer_file.used = 0;
+      asynchronous->cache.buffer_item.used = 0;
+      asynchronous->cache.buffer_path.used = 0;
+      asynchronous->cache.action.used = 0;
+      asynchronous->cache.line_action = thread_data.thread->cache_action->line_action;
+      asynchronous->cache.line_item = thread_data.thread->cache_action->line_item;
+
+      if (F_status_is_error_not(status)) {
+        status = f_string_dynamic_append(thread_data.thread->cache_action->name_action, &asynchronous->cache.name_action);
+
+        if (F_status_is_error_not(status)) {
+          status = f_string_dynamic_append(thread_data.thread->cache_action->name_file, &asynchronous->cache.name_file);
+        }
+
+        if (F_status_is_error_not(status)) {
+          status = f_string_dynamic_append(thread_data.thread->cache_action->name_item, &asynchronous->cache.name_item);
+        }
+        else {
+          controller_entry_error_print(thread_data.data->error, asynchronous->cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, thread_data.thread);
+        }
+      }
+
+      if (F_status_is_error_not(status)) {
+        status = f_thread_create(0, &asynchronous->id, controller_thread_asynchronous_process, (void *) asynchronous);
+      }
     }
 
     if (F_status_is_error(status)) {
-      controller_macro_asynchronous_t_delete_simple((*asynchronous));
+      controller_entry_error_print(thread_data.data->error, asynchronous->cache->action, F_status_set_fine(status), "f_thread_create", F_true, thread_data.thread);
+
+      controller_asynchronous_delete_simple(asynchronous);
 
       thread_data.thread->asynchronouss.used--;
     }
 
-    f_thread_mutex_unlock(&thread_data.thread->lock.asynchronous);
+    f_thread_unlock(&thread_data->lock.asynchronous);
 
     if (F_status_is_error(status)) {
       return status;
