@@ -90,8 +90,8 @@ extern "C" {
  *   The length of the prefix path.
  * @param path_suffix_length
  *   The length of the suffix path.
- * @param thread_data
- *   The thread data.
+ * @param main
+ *   The main data.
  * @param cache
  *   The following within the cache is updated:
  *   - name_file: The partial path of the file is inserted.
@@ -114,7 +114,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_status_t controller_file_load(const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_file_load(const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_load_
 
 /**
@@ -164,8 +164,8 @@ extern "C" {
  *
  * This does not do any locking or unlocking for the processs data, be sure to lock appropriately before and after calling this.
  *
- * @param id
- *   The (rule) id to find.
+ * @param alias
+ *   The Rule alias to find.
  * @param processs
  *   The array of processes to.
  * @param at
@@ -177,7 +177,7 @@ extern "C" {
  *   F_true if there is a process found (address is stored in "at").
  */
 #ifndef _di_controller_find_process_
-  f_status_t controller_find_process(const f_string_static_t id, const controller_processs_t processs, f_array_length_t *at) f_gcc_attribute_visibility_internal;
+  f_status_t controller_find_process(const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_find_process_
 
 /**
@@ -241,8 +241,8 @@ extern "C" {
  *
  * This does not do any locking or unlocking for the setting data, be sure to lock appropriately before and after calling this.
  *
- * @param thread_data
- *   The thread data.
+ * @param main
+ *   The main data.
  * @param cache
  *   The cache.
  *
@@ -254,14 +254,14 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_perform_ready(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_perform_ready_
 
 /**
  * Pre-process all items for the loaded entry.
  *
- * @param thread_data
- *   The thread data.
+ * @param main
+ *   The main data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -282,14 +282,14 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_preprocess_entry_
-  extern f_status_t controller_preprocess_entry(controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_preprocess_entry(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_preprocess_entry_
 
 /**
  * Process (execute) all items for the loaded entry.
  *
- * @param thread_data
- *   The thread data.
+ * @param main
+ *   The main data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -306,7 +306,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(controller_thread_data_t thread_data, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**

@@ -9,181 +9,96 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_thread_asynchronous_process_
-  void * controller_thread_asynchronous_process(void *arguments) {
-
-    controller_asynchronous_t *asynchronous = (controller_asynchronous_t *) arguments;
-    controller_thread_t *main = (controller_thread_t *) asynchronous->thread;
-
-    f_thread_lock_read(&main->lock.asynchronous);
-
-    if (!main->enabled) {
-      f_thread_unlock(&main->lock.asynchronous);
-
-      return 0;
-    }
-
-    f_thread_unlock(&main->lock.asynchronous);
-
-    f_array_length_t at_process = 0;
-
-    f_thread_lock_read(&main->thread->lock.process);
-
-    if (controller_find_process(rule.id, *main->processs, &at_process) == F_false) {
-      f_thread_unlock(&main->thread->lock.process);
-      f_thread_lock_write(&main->thread->lock.process);
-
-      const f_status_t status = controller_processs_increase(main->processs);
-
-      if (F_status_is_error(status)) {
-        controller_entry_error_print(main->data->error, asynchronous->cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main->thread);
-
-        f_thread_unlock(&main->thread->lock.process);
-        return 0;
-      }
-      else {
-        at_process = main->processs->used++;
-      }
-    }
-
-    // once the "active" lock is in place for some process, then it will not be deleted and should be guaranteed to not change or be relocated.
-    f_thread_lock_read(&main->processs.array[id_process].active);
-    f_thread_unlock(&main->thread->lock.process);
-
-    // @todo looks like I do need a r/w lock on controller_asynchronous_t after all.
-
-    controller_rule_t rule = controller_rule_t_initialize;
-
-    // @todo copy rule, finding the rule using main->processs.array[id_process].id_rule.
-    //status = controller_rule_copy(, &rule);
-
-    {
-      const f_status_t status = controller_rule_process(rule, at_process, controller_rule_action_type_start, rule_options, thread_data, asynchronous->cache);
-
-      asynchronous->state = controller_asynchronous_state_done;
-
-      if (F_status_is_error(status)) {
-        f_thread_mutex_lock(&thread_data.thread->lock.print);
-
-        controller_entry_error_print_cache(thread_data.data->error, asynchronous->cache->action);
-
-        f_thread_mutex_unlock(&thread_data.thread->lock.print);
-      }
-    }
-
-    f_thread_unlock(&main->processs.array[id_process].active);
-
-    return 0;
-  }
-#endif // _di_controller_thread_asynchronous_process_
-
-#ifndef _di_controller_thread_asynchronous_cancel_
-  void controller_thread_asynchronous_cancel(controller_thread_t *thread) {
-
-    thread->enabled = F_false;
-
-    f_thread_mutex_lock(&thread->lock.asynchronous);
-
-    for (f_array_length_t i = 0; i < thread->asynchronouss.used; ++i) {
-
-      if (!thread->asynchronouss.array[i].state) continue;
-
-      if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) == F_none) {
-        f_thread_cancel(thread->asynchronouss.array[i].id);
-        f_thread_detach(thread->asynchronouss.array[i].id);
-        f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
-      }
-      else {
-        if (thread->asynchronouss.array[i].child > 0) {
-          f_signal_send(F_signal_termination, thread->asynchronouss.array[i].child);
-        }
-        else {
-          f_thread_cancel(thread->asynchronouss.array[i].id);
-        }
-
-        // the cancel make take time so detach the process to allow it to exit on its own.
-        f_thread_detach(thread->asynchronouss.array[i].id);
-      }
-    } // for
-
-    thread->asynchronouss.used = 0;
-
-    f_thread_unlock(&thread->lock.asynchronous);
-  }
-#endif // _di_controller_thread_asynchronous_cancel_
-
 #ifndef _di_controller_thread_cleanup_
   void * controller_thread_cleanup(void *arguments) {
 
-    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
+    const controller_main_t *main = (controller_main_t *) arguments;
 
-    const unsigned int interval = thread_data->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
+    const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
 
-    f_array_length_t i = 0;
+    while (main->thread->enabled) {
 
-    for (; thread_data->thread->enabled; ) {
       sleep(interval);
 
-      /*
-      if (f_thread_lock_write_try(&thread_data->thread->lock.asynchronous) == F_none) {
-        controller_thread_t *thread = &thread_data->thread;
+      if (f_thread_lock_write_try(&main->thread->lock.process) == F_none) {
+        controller_process_t *process = 0;
 
-        if (thread->asynchronouss.used) {
-          for (i = 0; i < thread->asynchronouss.used; ++i) {
+        // index 0 is reserved for "main thread".
+        f_array_length_t i = 1;
 
-            if (!thread->enabled) break;
-            if (!thread->asynchronouss.array[i].state) continue;
+        for (; j < main->thread->processs.used; ++i) {
 
-            if (f_thread_lock_write_try(&thread->asynchronouss.array[i].lock) != F_none) continue;
+          process = &main->thread->processs.array[i];
 
-            if (f_thread_lock_write_try(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock) == F_none) {
+          if (f_thread_lock_write_try(&process->active) != F_none) {
+            continue;
+          }
 
-              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_done) {
-                f_thread_join(thread->asynchronouss.array[i].id, 0);
-                thread->asynchronouss.array[i].state = controller_asynchronous_state_joined;
-              }
+          if (f_thread_lock_write_try(&process->lock) != F_none) {
+            f_thread_unlock(&process->active);
 
-              if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
-                controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
+            continue;
+          }
 
-                thread->asynchronouss.array[i].state = 0;
-              }
+          if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+            f_thread_unlock(&process->active);
+            f_thread_unlock(&process->lock);
 
-              f_thread_condition_signal(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].wait);
-              f_thread_mutex_unlock(&thread_data->setting->rules.array[thread->asynchronouss.array[i].index].lock);
-            }
+            continue;
+          }
 
-            f_thread_mutex_unlock(&thread->asynchronouss.array[i].lock);
-          } // for
+          if (process->state == controller_process_state_done) {
+            f_thread_detach(process->id_thread);
+            process->state = controller_process_state_idle;
+          }
 
-          for (i = thread->asynchronouss.used - 1; thread->asynchronouss.used; --i, --thread->asynchronouss.used) {
+          // deallocate dynamic portions of the structure that are only ever needed while the process is running.
+          controller_cache_delete_simple(&process->cache);
+          f_type_array_lengths_resize(0, &process->stack);
 
-            if (!thread->enabled) break;
+          f_thread_unlock(&process->active);
+          f_thread_unlock(&process->lock);
+        } // for
 
-            if (f_thread_mutex_lock_try(&thread->asynchronouss.array[i].lock) != F_none) break;
+        for (i = main->thread->processs.used - 1; main->thread->processs.used; --i, --main->thread->processs.used) {
 
-            if (thread->asynchronouss.array[i].state == controller_asynchronous_state_joined) {
-              controller_macro_asynchronous_t_delete_simple(thread->asynchronouss.array[i]);
+          process = &main->thread->processs.array[i];
 
-              thread->asynchronouss.array[i].state = 0;
-            }
-            else if (thread->asynchronouss.array[i].state) {
-              f_thread_unlock(&thread->asynchronouss.array[i].lock);
-              break;
-            }
+          if (f_thread_lock_write_try(&process->active) != F_none) {
+            break;
+          }
 
-            f_thread_unlock(&thread->asynchronouss.array[i].lock);
-          } // for
-        }
+          if (f_thread_lock_write_try(&process->lock) != F_none) {
+            f_thread_unlock(&process->active);
 
-        if (thread->enabled && thread->asynchronouss.used < thread->asynchronouss.size) {
-          controller_asynchronouss_resize(thread->asynchronouss.used, &thread->asynchronouss);
-        }
+            break;
+          }
 
-        f_thread_unlock(&thread->lock.asynchronous);
+          if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+            f_thread_unlock(&process->active);
+            f_thread_unlock(&process->lock);
+
+            break;
+          }
+
+          if (process->state == controller_process_state_done) {
+            f_thread_detach(process->id_thread);
+            process->state = controller_process_state_idle;
+          }
+
+          // deallocate dynamic portions of the structure that are only ever needed while the process is running.
+          controller_cache_delete_simple(&process->cache);
+          f_type_array_lengths_resize(0, &process->stack);
+
+          --main->thread->processs.used;
+
+          f_thread_unlock(&process->active);
+          f_thread_unlock(&process->lock);
+        } // for
+
+        f_thread_unlock(&main->thread->lock.process);
       }
-      */
-    } // for
+    } // while
 
     return 0;
   }
@@ -192,7 +107,7 @@ extern "C" {
 #ifndef _di_controller_thread_control_
   void * controller_thread_control(void *arguments) {
 
-    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
+    controller_main_t *main = (controller_main_t *) arguments;
 
     // @todo
 
@@ -206,27 +121,40 @@ extern "C" {
     f_status_t status = F_none;
 
     controller_thread_t thread = controller_thread_t_initialize;
-    controller_processs_t processs = controller_processs_t_initialize;
-    controller_thread_data_t thread_data = controller_macro_thread_data_t_initialize(0, data, setting, &processs, &thread);
+    controller_main_t main = controller_macro_main_t_initialize(data, setting, &thread);
 
-    status = controller_asynchronouss_increase(&thread.asynchronouss);
-
-    if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &thread_data);
-    }
+    // the main locks must be initialized, but only once, so initialize immediately upon allocation.
+    status = controller_lock_create(&thread.lock);
 
     if (F_status_is_error(status)) {
+      if (data->error.verbosity != f_console_verbosity_quiet) {
+        fll_error_print(data->error, status, "controller_lock_create", F_true);
+      }
+    }
+    else {
+      status = controller_processs_increase(&thread.processs);
+
+      if (F_status_is_error(status)) {
+        controller_error_print(data->error, F_status_set_fine(status), "controller_processs_increase", F_true, &thread);
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &main);
+
       if (data->error.verbosity != f_console_verbosity_quiet) {
         controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
       }
     }
-    else {
+
+    if (F_status_is_error_not(status)) {
       if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
 
         setting->ready = controller_setting_ready_done;
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
+
             f_thread_mutex_lock(&thread.lock.print);
 
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
@@ -244,22 +172,24 @@ extern "C" {
       else {
 
         // index 0 is reserved for running the main thread cache.
-        thread.asynchronouss.used = 1;
+        thread.processs.used = 1;
 
-        status = controller_entry_read(entry_name, thread_data, &thread.asynchronouss.array[0].cache);
+        status = controller_entry_read(entry_name, main, &thread.processs.array[0].cache);
 
         if (F_status_is_error(status)) {
           setting->ready = controller_setting_ready_fail;
         }
         else if (status != F_signal && status != F_child) {
-          status = controller_preprocess_entry(thread_data, &thread.asynchronouss.array[0].cache);
+          status = controller_preprocess_entry(main, &thread.processs.array[0].cache);
         }
 
         if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
+
           if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
 
             if (f_file_exists(setting->path_pid.string) == F_true) {
               if (data->error.verbosity != f_console_verbosity_quiet) {
+
                 f_thread_mutex_lock(&thread.lock.print);
 
                 fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
@@ -274,7 +204,7 @@ extern "C" {
               status = F_status_set_error(F_available_not);
             }
             else {
-              status = controller_process_entry(thread_data, &thread.asynchronouss.array[0].cache);
+              status = controller_process_entry(main, &thread.processs.array[0].cache);
 
               if (F_status_is_error(status)) {
                 setting->ready = controller_setting_ready_fail;
@@ -301,20 +231,16 @@ extern "C" {
       status = F_signal;
     }
 
-    // only make the rule and control threads available once any/all pre-processing and is completed.
+    // only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
 
       if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
-        controller_rule_wait_all(&thread);
+        controller_rule_wait_all(main);
 
-        status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &thread_data);
-
-        if (F_status_is_error_not(status)) {
-          status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &thread_data);
-        }
+        status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &main);
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &thread_data);
+          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &main);
         }
 
         if (F_status_is_error(status)) {
@@ -343,19 +269,15 @@ extern "C" {
     }
 
     if (thread.enabled) {
-      controller_thread_asynchronous_cancel(&thread);
+      controller_thread_process_cancel(main);
     }
 
-    // @todo when cancelling, make sure that whatever has a lock, no longer has any lock.
     f_thread_cancel(thread.id_cleanup);
     f_thread_cancel(thread.id_control);
-    f_thread_cancel(thread.id_rule);
 
-    f_thread_join(thread.id_cleanup, 0);
-    f_thread_join(thread.id_control, 0);
-    f_thread_join(thread.id_rule, 0);
+    f_thread_detach(thread.id_cleanup);
+    f_thread_detach(thread.id_control);
 
-    controller_processs_delete_simple(&processs);
     controller_thread_delete_simple(&thread);
 
     if (F_status_is_error(status)) {
@@ -370,33 +292,91 @@ extern "C" {
   }
 #endif // _di_controller_thread_main_
 
-#ifndef _di_controller_thread_rule_
-  void * controller_thread_rule(void *arguments) {
+#ifndef _di_controller_thread_process_
+  void * controller_thread_process(void *arguments) {
 
-    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
-
-    // @todo
-    // f_thread_mutex_lock(&thread_data->lock.rule);
-    // f_thread_mutex_unlock(&thread_data->lock.rule);
+    controller_rule_process_do(F_true, (controller_process_t *) arguments);
 
     return 0;
   }
-#endif // _di_controller_thread_rule_
+#endif // _di_controller_thread_process_
+
+#ifndef _di_controller_thread_process_cancel_
+  void controller_thread_process_cancel(const controller_main_t main) {
+
+    // this must be set, regardless of lock state and only this function changes this.
+    main.thread->enabled = F_false;
+
+    f_thread_lock_write(&main.thread->lock.process);
+
+    if (!main.thread->processs.used) {
+      f_thread_unlock(&main.thread->lock.process);
+
+      return;
+    }
+
+    controller_process_t *process = 0;
+
+    bool locked = 0;
+
+    //pid_t[main.thread->processs.used] pids;
+    //memset(&pids, 0, sizeof(pid_t) * main.thread->processs.used);
+
+    // index 0 is reserved for running the main thread cache.
+    for (f_array_length_t i = 1; i < main.thread->processs.used; ++i) {
+
+      process = &main.thread->processs.array[i];
+
+      locked = f_thread_lock_write_try(&process->lock) == F_none;
+
+      if (!locked) {
+        locked = f_thread_lock_read_try(&process->lock) == F_none;
+      }
+
+      if (locked) {
+        if (process->child > 0) {
+          f_signal_send(F_signal_quit, process->child);
+        }
+
+        if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+          f_thread_cancel(process->id_thread);
+          f_thread_detach(process->id_thread);
+        }
+        else if (process->state == controller_process_state_done) {
+          f_thread_detach(process->id_thread);
+        }
+
+        f_thread_unlock(&process->lock);
+      }
+    } // for
+
+    main.thread->processs.used = 0;
+
+    // @todo: sleep a little, check to see if child processes quit, and if not then sen F_signal_quit_termination.
+    //        this will likely need to be done by:
+    //        1) create an array of child process ids from above loop.
+    //        2) search through loop at this location in the code and if the process id is found, sleep a little.
+    //        3) check again to see if the child process quit and if not, then send the F_signal_quit_termination.
+    //        4) continue to next child until entire array is processed.
+
+    f_thread_unlock(&main.thread->lock.process);
+  }
+#endif // _di_controller_thread_process_cancel_
 
 #ifndef _di_controller_thread_signal_
   void * controller_thread_signal(void *arguments) {
 
-    controller_thread_data_t *thread_data = (controller_thread_data_t *) arguments;
+    controller_main_t *main = (controller_main_t *) arguments;
 
-    for (int signal = 0; thread_data->thread->enabled; ) {
+    for (int signal = 0; main->thread->enabled; ) {
 
-      sigwait(&thread_data->data->signal.set, &signal);
+      sigwait(&main->data->signal.set, &signal);
 
-      if (thread_data->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
+      if (main->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
-          thread_data->thread->signal = signal;
+          main->thread->signal = signal;
 
-          controller_thread_asynchronous_cancel(thread_data->thread);
+          controller_thread_process_cancel(*main);
           break;
         }
       }

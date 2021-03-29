@@ -5,59 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_asynchronous_delete_simple_
-  void controller_asynchronous_delete_simple(controller_asynchronous_t *asynchronous) {
-
-    f_macro_array_lengths_t_delete_simple(asynchronous->stack)
-
-    controller_cache_delete_simple(&asynchronous->cache);
-  }
-#endif // _di_controller_asynchronous_delete_simple_
-
-#ifndef _di_controller_asynchronouss_increase_
-  f_status_t controller_asynchronouss_increase(controller_asynchronouss_t *asynchronouss) {
-
-    if (asynchronouss->used + 1 > asynchronouss->size) {
-      f_array_length_t size = asynchronouss->used + controller_default_allocation_step;
-
-      if (size > f_array_length_t_size) {
-        if (asynchronouss->used + 1 > f_array_length_t_size) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = f_array_length_t_size;
-      }
-
-      return controller_asynchronouss_resize(size, asynchronouss);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_controller_asynchronous_increase_
-
-#ifndef _di_controller_asynchronouss_resize_
-  f_status_t controller_asynchronouss_resize(const f_array_length_t length, controller_asynchronouss_t *asynchronouss) {
-
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < asynchronouss->size; ++i) {
-      controller_asynchronous_delete_simple(&asynchronouss->array[i]);
-    } // for
-
-    status = f_memory_resize(asynchronouss->size, length, sizeof(controller_asynchronous_t), (void **) & asynchronouss->array);
-
-    if (F_status_is_error_not(status)) {
-      asynchronouss->size = length;
-
-      if (asynchronouss->used > asynchronouss->size) {
-        asynchronouss->used = length;
-      }
-    }
-
-    return status;
-  }
-#endif // _di_controller_asynchronouss_resize_
-
 #ifndef _di_controller_cache_action_delete_simple_
   void controller_cache_action_delete_simple(controller_cache_action_t *cache) {
 
@@ -147,16 +94,49 @@ extern "C" {
   }
 #endif // _di_controller_error_print_
 
+#ifndef _di_controller_lock_create_
+  f_status_t controller_lock_create(controller_lock_t *lock) {
+
+    f_status_t status = f_thread_mutex_create(0, &lock->print);
+    if (F_status_is_error(status)) return status;
+
+    status = f_thread_lock_create(0, &lock->entry);
+    if (F_status_is_error(status)) return status;
+
+    status = f_thread_lock_create(0, &lock->process);
+    if (F_status_is_error(status)) return status;
+
+    status = f_thread_lock_create(0, &lock->rule);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_controller_lock_create_
+
+#ifndef _di_controller_lock_delete_simple_
+  void controller_lock_delete_simple(controller_lock_t *lock) {
+
+    f_thread_mutex_delete(&lock->print);
+
+    f_thread_lock_delete(&lock->entry);
+    f_thread_lock_delete(&lock->process);
+    f_thread_lock_delete(&lock->rule);
+  }
+#endif // _di_controller_lock_delete_simple_
+
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
-    f_string_dynamic_resize(0, &process->id_rule);
+    f_string_dynamic_resize(0, &process->alias_rule);
 
     f_thread_lock_delete(&process->lock);
     f_thread_lock_delete(&process->active);
+    f_thread_mutex_delete(&process->running);
+    f_thread_condition_delete(&process->wait);
 
-    f_thread_lock_attribute_delete(&process->lock_attribute);
-    f_thread_lock_attribute_delete(&process->active_attribute);
+    controller_cache_delete_simple(&process->cache);
+
+    f_macro_array_lengths_t_delete_simple(process->stack)
   }
 #endif // _di_controller_process_delete_simple_
 
@@ -200,6 +180,32 @@ extern "C" {
     status = f_memory_resize(processs->size, length, sizeof(controller_process_t), (void **) & processs->array);
 
     if (F_status_is_error_not(status)) {
+
+      // the lock must be initialized, but only once, so initialize immediately upon allocation.
+      while (processs->size < length) {
+
+        status = f_thread_lock_create(0, &processs->array[processs->size].lock);
+
+        if (F_status_is_error_not(status)) {
+          status = f_thread_lock_create(0, &processs->array[processs->size].active);
+        }
+
+        if (F_status_is_error_not(status)) {
+          status = f_thread_mutex_create(0, &processs->array[processs->size].running);
+        }
+
+        if (F_status_is_error_not(status)) {
+          status = f_thread_condition_create(0, &processs->array[processs->size].wait);
+        }
+
+        ++processs->size;
+
+        if (F_status_is_error(status)) {
+          processs->size = length;
+          return status;
+        }
+      } // while
+
       processs->size = length;
 
       if (processs->used > processs->size) {
@@ -235,7 +241,7 @@ extern "C" {
 #ifndef _di_controller_rule_delete_simple_
   void controller_rule_delete_simple(controller_rule_t *rule) {
 
-    f_string_dynamic_resize(0, &rule->id);
+    f_string_dynamic_resize(0, &rule->alias);
     f_string_dynamic_resize(0, &rule->name);
     f_string_dynamic_resize(0, &rule->path);
     f_string_dynamic_resize(0, &rule->script);
@@ -346,18 +352,8 @@ extern "C" {
 #ifndef _di_controller_thread_delete_simple_
   void controller_thread_delete_simple(controller_thread_t *thread) {
 
-    f_thread_mutex_delete(&thread->lock.print);
-
-    f_thread_lock_delete(&thread->lock.asynchronous);
-    f_thread_lock_attribute_delete(&thread->lock.asynchronous_attribute);
-
-    f_thread_lock_delete(&thread->lock.process);
-    f_thread_lock_attribute_delete(&thread->lock.process_attribute);
-
-    f_thread_lock_delete(&thread->lock.rule);
-    f_thread_lock_attribute_delete(&thread->lock.rule_attribute);
-
-    controller_asynchronouss_resize(0, &thread->asynchronouss);
+    controller_lock_delete_simple(&thread->lock);
+    controller_processs_resize(0, &thread->processs);
   }
 #endif // _di_controller_thread_delete_simple_
 

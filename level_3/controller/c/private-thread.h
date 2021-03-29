@@ -13,35 +13,11 @@ extern "C" {
 #endif
 
 /**
- * Asynchronously execute a process.
- *
- * @param arguments
- *   The thread arguments.
- *   Must be of type controller_asynchronous_t.
- *
- * @return
- *   0, always.
- */
-#ifndef _di_controller_thread_asynchronous_process_
-  extern void * controller_thread_asynchronous_process(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_asynchronous_process_
-
-/**
- * Cancel all asynchronous threads.
- *
- * @param thread
- *   The thread data.
- */
-#ifndef _di_controller_thread_asynchronous_cancel_
-  void controller_thread_asynchronous_cancel(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_asynchronous_cancel_
-
-/**
  * Thread for periodically cleanup data when not busy.
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_data_t.
+ *   Must be of type controller_main_t.
  *
  * @return
  *   0, always.
@@ -55,7 +31,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_data_t.
+ *   Must be of type controller_main_t.
  *
  * @return
  *   0, always.
@@ -85,18 +61,30 @@ extern "C" {
 #endif // _di_controller_thread_main_
 
 /**
- * Thread for handling loading of rules into memory.
+ * Asynchronously execute a Rule process.
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_data_t.
+ *   Must be of type controller_process_t.
  *
  * @return
  *   0, always.
+ *
+ * @see controller_rule_process_do()
  */
-#ifndef _di_controller_thread_rule_
-  extern void * controller_thread_rule(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_rule_
+#ifndef _di_controller_thread_process_
+  extern void * controller_thread_process(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_
+
+/**
+ * Cancel all process threads.
+ *
+ * @param main
+ *   The main thread data.
+ */
+#ifndef _di_controller_thread_process_cancel_
+  void controller_thread_process_cancel(const controller_main_t main) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_cancel_
 
 /**
  * Thread for handling signals/interrupts.
@@ -105,7 +93,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_thread_data_t.
+ *   Must be of type controller_main_t.
  *
  * @return
  *   0, always.
