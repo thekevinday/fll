@@ -152,6 +152,9 @@ extern "C" {
 
 /**
  * A typedef representing pthread_cond_t.
+ *
+ * This must be dynamically initialized using f_thread_condition_create().
+ * In some cases, they can be utilized statically, in which case only f_thread_condition_t_initialize is needed.
  */
 #ifndef _di_f_thread_condition_t_
   typedef pthread_cond_t f_thread_condition_t;
@@ -323,6 +326,9 @@ extern "C" {
 
 /**
  * A typedef representing pthread_rwlock_t (read/write lock).
+ *
+ * This must be dynamically initialized using f_thread_lock_create().
+ * In some cases, they can be utilized statically, in which case only f_thread_lock_t_initialize is needed.
  */
 #ifndef _di_f_thread_lock_t_
   typedef pthread_rwlock_t f_thread_lock_t;
@@ -410,6 +416,9 @@ extern "C" {
  * A typedef representing pthread_mutex_t.
  *
  * This variable cannot be cleared by setting value to 0, so there is no clear macro provided.
+ *
+ * This must be dynamically initialized using f_thread_mutex_create().
+ * In some cases, they can be utilized statically, in which case only f_thread_mutex_t_initialize is needed.
  */
 #ifndef _di_f_thread_mutex_t_
   typedef pthread_mutex_t f_thread_mutex_t;
@@ -497,13 +506,13 @@ extern "C" {
 
 /**
  * A typedef representing pthread_once_t.
+ *
+ * There are no delete functions and therefore no delete macros.
  */
 #ifndef _di_f_thread_once_t_
   typedef pthread_once_t f_thread_once_t;
 
   #define f_thread_once_t_initialize PTHREAD_ONCE_INIT
-
-  #define f_macro_thread_once_t_delete_simple(once) f_thread_once_delete(&once);
 #endif // _di_f_thread_once_t_
 
 /**
@@ -591,11 +600,13 @@ extern "C" {
 
 /**
  * A typedef representing pthread_spinlock_t.
+ *
+ * Note: there appears to be no pthread init macro for spinlock, so initialize manually similarly to how the other inits work.
  */
 #ifndef _di_f_thread_spin_t_
   typedef pthread_spinlock_t f_thread_spin_t;
 
-  #define f_thread_spin_t_initialize PTHREAD_MUTEX_INITIALIZER
+  #define f_thread_spin_t_initialize ((pthread_spinlock_t) 0xFFFFFFFF)
 
   #define f_macro_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
 #endif // _di_f_thread_spin_t_
