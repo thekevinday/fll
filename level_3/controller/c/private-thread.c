@@ -14,19 +14,18 @@ extern "C" {
 
     const controller_main_t *main = (controller_main_t *) arguments;
 
-    const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cache_cleanup_interval_short : controller_thread_cache_cleanup_interval_long;
+    const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
 
     while (main->thread->enabled) {
 
       sleep(interval);
 
-      if (f_thread_lock_write_try(&main->thread->lock.process) == F_none) {
+      if (main->thread->enabled && f_thread_lock_write_try(&main->thread->lock.process) == F_none) {
         controller_process_t *process = 0;
 
-        // index 0 is reserved for "main thread".
-        f_array_length_t i = 1;
+        f_array_length_t i = 0;
 
-        for (; j < main->thread->processs.used; ++i) {
+        for (; i < main->thread->processs.used && main->thread->enabled; ++i) {
 
           process = &main->thread->processs.array[i];
 
@@ -60,41 +59,43 @@ extern "C" {
           f_thread_unlock(&process->lock);
         } // for
 
-        for (i = main->thread->processs.used - 1; main->thread->processs.used; --i, --main->thread->processs.used) {
+        if (main->thread->processs.used) {
+          for (i = main->thread->processs.used - 1; main->thread->processs.used && main->thread->enabled; --i) {
 
-          process = &main->thread->processs.array[i];
+            process = &main->thread->processs.array[i];
 
-          if (f_thread_lock_write_try(&process->active) != F_none) {
-            break;
-          }
+            if (f_thread_lock_write_try(&process->active) != F_none) {
+              break;
+            }
 
-          if (f_thread_lock_write_try(&process->lock) != F_none) {
-            f_thread_unlock(&process->active);
+            if (f_thread_lock_write_try(&process->lock) != F_none) {
+              f_thread_unlock(&process->active);
 
-            break;
-          }
+              break;
+            }
 
-          if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+            if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+              f_thread_unlock(&process->active);
+              f_thread_unlock(&process->lock);
+
+              break;
+            }
+
+            if (process->state == controller_process_state_done) {
+              f_thread_detach(process->id_thread);
+              process->state = controller_process_state_idle;
+            }
+
+            // deallocate dynamic portions of the structure that are only ever needed while the rule is being processed.
+            controller_cache_delete_simple(&process->cache);
+            f_type_array_lengths_resize(0, &process->stack);
+
+            --main->thread->processs.used;
+
             f_thread_unlock(&process->active);
             f_thread_unlock(&process->lock);
-
-            break;
-          }
-
-          if (process->state == controller_process_state_done) {
-            f_thread_detach(process->id_thread);
-            process->state = controller_process_state_idle;
-          }
-
-          // deallocate dynamic portions of the structure that are only ever needed while the process is running.
-          controller_cache_delete_simple(&process->cache);
-          f_type_array_lengths_resize(0, &process->stack);
-
-          --main->thread->processs.used;
-
-          f_thread_unlock(&process->active);
-          f_thread_unlock(&process->lock);
-        } // for
+          } // for
+        }
 
         f_thread_unlock(&main->thread->lock.process);
       }
@@ -141,13 +142,14 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &main);
+    }
 
+    if (F_status_is_error(status)) {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
       }
     }
-
-    if (F_status_is_error_not(status)) {
+    else {
       if (data->parameters[controller_parameter_daemon].result == f_console_result_found) {
 
         setting->ready = controller_setting_ready_done;
@@ -170,17 +172,15 @@ extern "C" {
         }
       }
       else {
+        controller_cache_t cache = controller_cache_t_initialize;
 
-        // index 0 is reserved for running the main thread cache.
-        thread.processs.used = 1;
-
-        status = controller_entry_read(entry_name, main, &thread.processs.array[0].cache);
+        status = controller_entry_read(entry_name, main, &cache);
 
         if (F_status_is_error(status)) {
           setting->ready = controller_setting_ready_fail;
         }
         else if (status != F_signal && status != F_child) {
-          status = controller_preprocess_entry(main, &thread.processs.array[0].cache);
+          status = controller_preprocess_entry(main, &cache);
         }
 
         if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
@@ -204,7 +204,7 @@ extern "C" {
               status = F_status_set_error(F_available_not);
             }
             else {
-              status = controller_process_entry(main, &thread.processs.array[0].cache);
+              status = controller_process_entry(main, &cache);
 
               if (F_status_is_error(status)) {
                 setting->ready = controller_setting_ready_fail;
@@ -219,6 +219,8 @@ extern "C" {
           }
         }
 
+        controller_cache_delete_simple(&cache);
+
         if (status == F_child) {
           controller_thread_delete_simple(&thread);
 
@@ -227,7 +229,7 @@ extern "C" {
       }
     }
 
-    if (status != F_signal && setting->signal) {
+    if (status != F_signal && thread.signal) {
       status = F_signal;
     }
 
@@ -257,7 +259,6 @@ extern "C" {
       return F_child;
     }
 
-    // @todo consider f_thread_detach() over f_thread_join() when exiting.
     if (F_status_is_error_not(status) && status != F_signal && (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
 
       // wait until signal thread exits, which happens on any termination signal.
@@ -275,8 +276,8 @@ extern "C" {
     f_thread_cancel(thread.id_cleanup);
     f_thread_cancel(thread.id_control);
 
-    f_thread_detach(thread.id_cleanup);
-    f_thread_detach(thread.id_control);
+    f_thread_join(thread.id_cleanup, 0);
+    f_thread_join(thread.id_control, 0);
 
     controller_thread_delete_simple(&thread);
 
@@ -322,8 +323,7 @@ extern "C" {
     //pid_t[main.thread->processs.used] pids;
     //memset(&pids, 0, sizeof(pid_t) * main.thread->processs.used);
 
-    // index 0 is reserved for running the main thread cache.
-    for (f_array_length_t i = 1; i < main.thread->processs.used; ++i) {
+    for (f_array_length_t i = 0; i < main.thread->processs.used; ++i) {
 
       process = &main.thread->processs.array[i];
 
@@ -338,12 +338,9 @@ extern "C" {
           f_signal_send(F_signal_quit, process->child);
         }
 
-        if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+        if (process->state == controller_process_state_active || process->state == controller_process_state_busy || process->state == controller_process_state_done) {
           f_thread_cancel(process->id_thread);
-          f_thread_detach(process->id_thread);
-        }
-        else if (process->state == controller_process_state_done) {
-          f_thread_detach(process->id_thread);
+          f_thread_join(process->id_thread, 0);
         }
 
         f_thread_unlock(&process->lock);

@@ -448,14 +448,12 @@ extern "C" {
   typedef struct {
     f_thread_mutex_t print;
 
-    f_thread_lock_t entry;
     f_thread_lock_t process;
     f_thread_lock_t rule;
   } controller_lock_t;
 
   #define controller_lock_t_initialize { \
     f_thread_mutex_t_initialize, \
-    f_thread_lock_t_initialize, \
     f_thread_lock_t_initialize, \
     f_thread_lock_t_initialize, \
   }
@@ -593,6 +591,7 @@ extern "C" {
  * timeout_kill:     The timeout to wait relating to using a kill signal.
  * timeout_start:    The timeout to wait relating to starting a process.
  * timeout_stop:     The timeout to wait relating to stopping a process.
+ * status:           A status associated with the loading of the rule (not the execution of the rule).
  * has:              Bitwise set of "has" codes representing what the Rule has.
  * nice:             The niceness value if the Rule "has" nice.
  * user:             The User ID if the Rule "has" a user.
@@ -651,6 +650,8 @@ extern "C" {
   #define controller_rule_has_user          0x10
 
   typedef struct {
+    f_status_t status;
+
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
     f_number_unsigned_t timeout_stop;
@@ -686,6 +687,7 @@ extern "C" {
   } controller_rule_t;
 
   #define controller_rule_t_initialize { \
+    F_known_not, \
     0, \
     0, \
     0, \
@@ -1047,8 +1049,6 @@ extern "C" {
  *
  * This is essentially data shared globally between threads, about threads.
  *
- * As a special case, index 0 of processs is reserved for use the main thread and is not used by any Rule Processes.
- *
  * The "enabled" and "signal" utilize the lock: lock.process.
  *
  * enabled:    TRUE when threads are active, FALSE when inactive and the program is essentially shutting down, no new threads should be started when FALSE.
@@ -1060,6 +1060,9 @@ extern "C" {
  * processs:   All Rule Process thread data.
  */
 #ifndef _di_controller_thread_t_
+  #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
+  #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
+
   typedef struct {
     bool enabled;
     int signal;
@@ -1092,10 +1095,6 @@ extern "C" {
  * thread:   All thread related data.
  */
 #ifndef _di_controller_main_t_
-  // @todo relocate these under a different ifdef block.
-  #define controller_thread_cache_cleanup_interval_long  3600 // 1 hour in seconds.
-  #define controller_thread_cache_cleanup_interval_short 180  // 3 minutes in seconds.
-
   typedef struct {
     controller_data_t *data;
     controller_setting_t *setting;

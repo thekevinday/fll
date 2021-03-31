@@ -170,6 +170,7 @@ extern "C" {
  *   The array of processes to.
  * @param at
  *   The location within processs the id was found.
+ *   (optional) Set to NULL to disable.
  *
  * @return
  *   F_none if not given a valid id to search.

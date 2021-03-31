@@ -100,9 +100,6 @@ extern "C" {
     f_status_t status = f_thread_mutex_create(0, &lock->print);
     if (F_status_is_error(status)) return status;
 
-    status = f_thread_lock_create(0, &lock->entry);
-    if (F_status_is_error(status)) return status;
-
     status = f_thread_lock_create(0, &lock->process);
     if (F_status_is_error(status)) return status;
 
@@ -118,7 +115,6 @@ extern "C" {
 
     f_thread_mutex_delete(&lock->print);
 
-    f_thread_lock_delete(&lock->entry);
     f_thread_lock_delete(&lock->process);
     f_thread_lock_delete(&lock->rule);
   }
