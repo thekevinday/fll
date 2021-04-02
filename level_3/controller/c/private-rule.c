@@ -51,7 +51,7 @@ extern "C" {
 #endif // _di_controller_rule_find_
 
 #ifndef _di_controller_rule_parameters_read_
-  f_status_t controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) {
+  f_status_t controller_rule_parameters_read(const controller_main_t main, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) {
 
     f_status_t status = F_none;
 
@@ -62,7 +62,8 @@ extern "C" {
       status = f_string_dynamics_increase(parameters);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
+
         return status;
       }
 
@@ -71,14 +72,16 @@ extern "C" {
       status = f_string_dynamic_partial_append_nulless(buffer, *object, &parameters->array[0]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
+
         return status;
       }
 
       status = f_string_dynamic_terminate_after(&parameters->array[0]);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
+
         return status;
       }
 
@@ -94,7 +97,8 @@ extern "C" {
         status = f_string_dynamics_increase(parameters);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
+
           return status;
         }
 
@@ -103,18 +107,20 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, content->array[i], &parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
+
           return status;
         }
 
         status = f_string_dynamic_terminate_after(&parameters->array[parameters->used]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
+
           return status;
         }
 
-        parameters->used++;
+        ++parameters->used;
       } // for
     }
 
@@ -202,7 +208,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 #ifndef _di_controller_rule_action_read_
-  f_status_t controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+  f_status_t controller_rule_action_read(const controller_main_t main, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
 
     f_status_t status = F_none;
 
@@ -220,13 +226,13 @@ extern "C" {
       status = fl_fss_extended_list_content_read(cache->buffer_item, range, &cache->content_action, &cache->delimits, &cache->comments);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true, main.thread);
       }
       else if (status == FL_fss_found_content) {
         status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
         }
         else {
 
@@ -237,7 +243,7 @@ extern "C" {
             status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+              controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
             }
             else {
 
@@ -249,13 +255,13 @@ extern "C" {
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_action.array[0], &actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+                controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, main.thread);
               }
 
               status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+                controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
               }
               else {
                 actions->array[actions->used].parameters.used = 1;
@@ -270,14 +276,14 @@ extern "C" {
           status = fll_fss_extended_read(cache->buffer_item, &cache->content_action.array[0], &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, main.thread);
           }
           else {
 
             status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+              controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
             }
             else {
 
@@ -288,14 +294,14 @@ extern "C" {
                 status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
+                  controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true, main.thread);
                   break;
                 }
 
                 status = f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &actions->array[actions->used].line);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+                  controller_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
                   break;
                 }
 
@@ -307,13 +313,13 @@ extern "C" {
                 status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+                  controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
 
                   actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
                   break;
                 }
 
-                status = controller_rule_parameters_read(data, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used].parameters);
+                status = controller_rule_parameters_read(main, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used].parameters);
 
                 actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
                 actions->used++;
@@ -336,19 +342,19 @@ extern "C" {
       status = fl_fss_extended_content_read(cache->buffer_item, range, &cache->content_action, 0, &cache->delimits);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_content_read", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fll_fss_extended_content_read", F_true, main.thread);
       }
       else if (status == FL_fss_found_content) {
         status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
         }
         else if (item->type == controller_rule_item_type_script) {
           status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
           }
           else {
 
@@ -367,7 +373,7 @@ extern "C" {
               status = f_string_dynamic_terminate_after(&actions->array[actions->used].parameters.array[0]);
 
               if (F_status_is_error(status)) {
-                fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+                controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
               }
               else {
                 actions->array[actions->used].parameters.used = 1;
@@ -382,7 +388,7 @@ extern "C" {
           status = f_fss_count_lines(cache->buffer_item, range->start, &actions->array[actions->used].line);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
           }
           else {
 
@@ -391,10 +397,10 @@ extern "C" {
             actions->array[actions->used].parameters.used = 0;
             actions->array[actions->used].status = F_known_not;
 
-            status = controller_rule_parameters_read(data, cache->buffer_item, 0, &cache->content_action, &actions->array[actions->used].parameters);
+            status = controller_rule_parameters_read(main, cache->buffer_item, 0, &cache->content_action, &actions->array[actions->used].parameters);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "controller_rule_parameters_read", F_true);
+              controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_parameters_read", F_true, main.thread);
 
               actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
             }
@@ -412,11 +418,15 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && status == F_data_not) {
-      if (data.warning.verbosity == f_console_verbosity_debug) {
-        fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(data.warning.to.stream, "%s%sAction is empty, nothing to do.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
+      if (main.data->warning.verbosity == f_console_verbosity_debug) {
+        f_thread_mutex_lock(&main.thread->lock.print);
 
-        controller_rule_error_print(data.warning, cache->action, F_true);
+        fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(main.data->warning.to.stream, "%s%sAction is empty, nothing to do.%s%c", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, main.data->warning.context.after->string, f_string_eol_s[0]);
+
+        controller_rule_error_print_cache(main.data->warning, cache->action, F_true);
+
+        f_thread_mutex_unlock(&main.thread->lock.print);
       }
     }
 
@@ -517,15 +527,9 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    status = f_capability_copy(source.capability, &destination->capability);
-
-    if (F_status_is_error(status)) {
-
-      // F_parameter is returned when source.capability is not used or when destination->capability is 0.
-      // check to see why the error happens, such that source.capability not being used is not an error.
-      if (F_status_set_fine(status) != F_parameter || !&destination->capability) {
-        return status;
-      }
+    if (source.capability) {
+      status = f_capability_copy(source.capability, &destination->capability);
+      if (F_status_is_error(status)) return status;
     }
 
     status = f_control_group_copy(source.control_group, &destination->control_group);
@@ -594,8 +598,23 @@ extern "C" {
   }
 #endif // _di_controller_rule_copy_
 
+
 #ifndef _di_controller_rule_error_print_
-  void controller_rule_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) {
+  void controller_rule_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) {
+
+    if (print.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->lock.print);
+
+      fll_error_print(print, status, function, fallback);
+      controller_rule_error_print_cache(print, cache, item);
+
+      f_thread_mutex_unlock(&thread->lock.print);
+    }
+  }
+#endif // _di_controller_rule_error_print_
+
+#ifndef _di_controller_rule_error_print_cache_
+  void controller_rule_error_print_cache(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       fprintf(output.to.stream, "%c", f_string_eol_s[0]);
@@ -620,106 +639,106 @@ extern "C" {
       }
 
       if (cache.name_file.used) {
-        fprintf(output.to.stream, "file '");
+        fprintf(output.to.stream, "rule file '");
         fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
         f_print_dynamic(output.to.stream, cache.name_file);
         fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
       }
     }
   }
-#endif // _di_controller_rule_error_print_
+#endif // _di_controller_rule_error_print_cache_
 
-#ifndef _di_controller_rule_error_print_
-  void controller_rule_error_print_locked(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) {
+#ifndef _di_controller_rule_item_error_print_
+  void controller_rule_item_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
       f_thread_mutex_lock(&thread->lock.print);
 
-      controller_rule_error_print(output, cache, item);
+      controller_rule_error_print_cache(output, cache, item);
 
       f_thread_mutex_unlock(&thread->lock.print);
     }
   }
-#endif // _di_controller_rule_error_print_
+#endif // _di_controller_rule_item_error_print_
 
-#ifndef _di_controller_rule_error_print_execute_
-  void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status) {
+#ifndef _di_controller_rule_item_error_print_execute_
+  void controller_rule_item_error_print_execute(const fll_error_print_t print, const bool script_is, const f_string_t name, const int code, const f_status_t status) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
-      fprintf(output.to.stream, "%s%sThe %s '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, name ? name : f_string_empty_s, output.notable.after->string);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name ? name : f_string_empty_s, print.notable.after->string);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
-        fprintf(output.to.stream, "%s' failed due to a failure to setup the '", output.context.before->string);
-        fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
+        fprintf(print.to.stream, "%s' failed due to a failure to setup the '", print.context.before->string);
+        fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
 
         if (status == F_control_group) {
-          fprintf(output.to.stream, "%s", controller_string_control_group_s);
+          fprintf(print.to.stream, "%s", controller_string_control_group_s);
         }
         else if (status == F_limit) {
-          fprintf(output.to.stream, "%s", controller_string_limit_s);
+          fprintf(print.to.stream, "%s", controller_string_limit_s);
         }
         else if (status == F_processor) {
-          fprintf(output.to.stream, "%s", controller_string_processor_s);
+          fprintf(print.to.stream, "%s", controller_string_processor_s);
         }
         else if (status == F_schedule) {
-          fprintf(output.to.stream, "%s", controller_string_scheduler_s);
+          fprintf(print.to.stream, "%s", controller_string_scheduler_s);
         }
 
-        fprintf(output.to.stream, "%s", output.notable.after->string);
-        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s", print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
       else if (code) {
-        fprintf(output.to.stream, "%s' failed with the exit code '", output.context.before->string);
-        fprintf(output.to.stream, "%s%s%i%s", output.context.after->string, output.notable.before->string, code, output.notable.after->string);
-        fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s' failed with the exit code '", print.context.before->string);
+        fprintf(print.to.stream, "%s%s%i%s", print.context.after->string, print.notable.before->string, code, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
       else {
-        fprintf(output.to.stream, "%s' failed.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s' failed.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
     }
   }
-#endif // _di_controller_rule_error_print_execute_
+#endif // _di_controller_rule_item_error_print_execute_
 
-#ifndef _di_controller_rule_error_print_execute_not_found_
-  void controller_rule_error_print_execute_not_found(const fll_error_print_t output, const bool script_is, const f_string_t name) {
+#ifndef _di_controller_rule_item_error_print_execute_not_found_
+  void controller_rule_item_error_print_execute_not_found(const fll_error_print_t print, const bool script_is, const f_string_t name) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
-      fprintf(output.to.stream, "%s%sThe %s '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, name ? name : f_string_empty_s, output.notable.after->string);
-      fprintf(output.to.stream, "%s' could not be executed because it was not found.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name ? name : f_string_empty_s, print.notable.after->string);
+      fprintf(print.to.stream, "%s' could not be executed because it was not found.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
-#endif // _di_controller_rule_error_print_execute_not_found_
+#endif // _di_controller_rule_item_error_print_execute_not_found_
 
-#ifndef _di_controller_rule_error_print_need_want_wish_
-  void controller_rule_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
+#ifndef _di_controller_rule_item_error_print_need_want_wish_
+  void controller_rule_item_error_print_need_want_wish(const fll_error_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
-      fprintf(output.to.stream, "%s%sThe %s rule '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s, need_want_wish);
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, value, output.notable.after->string);
-      fprintf(output.to.stream, "%s' %s.%s%c", output.context.before->string, why, output.context.after->string, f_string_eol_s[0]);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sThe %s rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, need_want_wish);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, value, print.notable.after->string);
+      fprintf(print.to.stream, "%s' %s.%s%c", print.context.before->string, why, print.context.after->string, f_string_eol_s[0]);
     }
   }
-#endif // _di_controller_rule_error_print_need_want_wish_
+#endif // _di_controller_rule_item_error_print_need_want_wish_
 
-#ifndef _di_controller_rule_error_print_rule_not_loaded_
-  void controller_rule_error_print_rule_not_loaded(const fll_error_print_t output, const f_string_t alias) {
+#ifndef _di_controller_rule_item_error_print_rule_not_loaded_
+  void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t print, const f_string_t alias) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fprintf(output.to.stream, "%c", f_string_eol_s[0]);
-      fprintf(output.to.stream, "%s%sThe rule '", output.context.before->string, output.prefix ? output.prefix : f_string_empty_s);
-      fprintf(output.to.stream, "%s%s%s%s", output.context.after->string, output.notable.before->string, alias, output.notable.after->string);
-      fprintf(output.to.stream, "%s' is no longer loaded.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sThe rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, alias, print.notable.after->string);
+      fprintf(print.to.stream, "%s' is no longer loaded.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
-#endif // _di_controller_rule_error_print_rule_not_loaded_
+#endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 #ifndef _di_controller_rule_execute_
-  f_status_t controller_rule_execute(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) {
+  f_status_t controller_rule_execute(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) {
 
     f_status_t status = F_none;
     f_status_t success = F_false;
@@ -739,7 +758,6 @@ extern "C" {
 
     controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
-    // @todo now that "rule' is a (local) copy, this workaround might no longer be necessary.
     // when using pointers in threads and calling the exec functions, invalid reads and writes may occur.
     // this problem might be happening due to a compiler optimization/decision, so make local copies and have the pointers reference these to avoid invalid reads and writes.
     int local_nice;
@@ -752,22 +770,22 @@ extern "C" {
     f_limit_sets_t local_limits;
     f_execute_scheduler_t local_scheduler;
 
-    if (rule.affinity.used) {
-      local_affinity = rule.affinity;
+    if (process->rule.affinity.used) {
+      local_affinity = process->rule.affinity;
       execute_set.as.affinity = &local_affinity;
     }
 
-    if (rule.capability) {
-      execute_set.as.capability = rule.capability;
+    if (process->rule.capability) {
+      execute_set.as.capability = process->rule.capability;
     }
 
-    if (rule.has & controller_rule_has_control_group) {
-      local_control_group = rule.control_group;
+    if (process->rule.has & controller_rule_has_control_group) {
+      local_control_group = process->rule.control_group;
       execute_set.as.control_group = &local_control_group;
 
       // make sure all required cgroup directories exist.
       if (process->status == F_known_not) {
-        status = fll_control_group_prepare(rule.control_group);
+        status = fll_control_group_prepare(process->rule.control_group);
 
         if (F_status_is_error(status)) {
           controller_error_print(main.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, main.thread);
@@ -778,37 +796,37 @@ extern "C" {
       }
     }
 
-    if (rule.has & controller_rule_has_group) {
-      local_id_group = rule.group;
+    if (process->rule.has & controller_rule_has_group) {
+      local_id_group = process->rule.group;
       execute_set.as.id_group = &local_id_group;
 
-      if (rule.groups.used) {
-        local_id_groups = rule.groups;
+      if (process->rule.groups.used) {
+        local_id_groups = process->rule.groups;
         execute_set.as.id_groups = &local_id_groups;
       }
     }
 
-    if (rule.limits.used) {
-      local_limits = rule.limits;
+    if (process->rule.limits.used) {
+      local_limits = process->rule.limits;
       execute_set.as.limits = &local_limits;
     }
 
-    if (rule.has & controller_rule_has_scheduler) {
-      local_scheduler = rule.scheduler;
+    if (process->rule.has & controller_rule_has_scheduler) {
+      local_scheduler = process->rule.scheduler;
       execute_set.as.scheduler = &local_scheduler;
     }
 
-    if (rule.has & controller_rule_has_nice) {
-      local_nice = rule.nice;
+    if (process->rule.has & controller_rule_has_nice) {
+      local_nice = process->rule.nice;
       execute_set.as.nice = &local_nice;
     }
 
-    if (rule.has & controller_rule_has_user) {
-      local_id_user = rule.user;
+    if (process->rule.has & controller_rule_has_user) {
+      local_id_user = process->rule.user;
       execute_set.as.id_user = &local_id_user;
     }
 
-    status = fl_environment_load_names(rule.environment, &environment);
+    status = fl_environment_load_names(process->rule.environment, &environment);
 
     if (F_status_is_error(status)) {
       controller_error_print(main.data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, main.thread);
@@ -817,23 +835,23 @@ extern "C" {
       return status;
     }
 
-    for (i = 0; i < rule.items.used; ++i) {
+    for (i = 0; i < process->rule.items.used; ++i) {
 
       if (main.thread->signal) {
         status = F_signal;
         break;
       }
 
-      if (rule.items.array[i].type == controller_rule_item_type_setting) continue;
+      if (process->rule.items.array[i].type == controller_rule_item_type_setting) continue;
 
-      for (j = 0; j < rule.items.array[i].actions.used; ++j) {
+      for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
         if (main.thread->signal) {
           status = F_signal;
           break;
         }
 
-        if (rule.items.array[i].actions.array[j].type != action) continue;
+        if (process->rule.items.array[i].actions.array[j].type != action) continue;
 
         execute_set.parameter.data = 0;
         execute_set.parameter.option = fl_execute_parameter_option_threadsafe;
@@ -842,56 +860,56 @@ extern "C" {
           execute_set.parameter.option |= fl_execute_parameter_option_return;
         }
 
-        if (rule.items.array[i].type == controller_rule_item_type_command) {
+        if (process->rule.items.array[i].type == controller_rule_item_type_command) {
 
-          if (strchr(rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
+          if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(rule, rule.items.array[i].type, rule.items.array[i].actions.array[j], 0, rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
+          status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
+            process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
         }
-        else if (rule.items.array[i].type == controller_rule_item_type_script) {
+        else if (process->rule.items.array[i].type == controller_rule_item_type_script) {
 
-          execute_set.parameter.data = &rule.items.array[i].actions.array[j].parameters.array[0];
+          execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
 
-          if (rule.script.used && strchr(rule.script.string, f_path_separator_s[0])) {
+          if (process->rule.script.used && strchr(process->rule.script.string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_foreground(rule, rule.items.array[i].type, rule.items.array[i].actions.array[j], rule.script.used ? rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
+          status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
+            process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
 
           success = F_true;
         }
-        else if (rule.items.array[i].type == controller_rule_item_type_service) {
+        else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
 
-          if (strchr(rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
+          if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
             execute_set.parameter.option |= fl_execute_parameter_option_path;
           }
 
-          status = controller_rule_execute_pid_with(rule, rule.items.array[i].type, rule.items.array[i].actions.array[j], 0, rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
+          status = controller_rule_execute_pid_with(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
 
           if (status == F_child) break;
 
           if (F_status_is_error(status)) {
-            rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
+            process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
           }
@@ -906,12 +924,12 @@ extern "C" {
             fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
             fprintf(main.data->warning.to.stream, "%s%sAction type is unknown, ignoring.%s%c", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, main.data->warning.context.after->string, f_string_eol_s[0]);
 
-            controller_rule_error_print(main.data->warning, process->cache.action, F_true);
+            controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
             f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
-          rule.items.array[i].actions.array[j].status = F_ignore;
+          process->rule.items.array[i].actions.array[j].status = F_ignore;
 
           if (success != F_true) {
             success = F_ignore;
@@ -947,7 +965,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_
 
 #ifndef _di_controller_rule_execute_foreground_
-  f_status_t controller_rule_execute_foreground(const controller_rule_t rule, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
+  f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
     int result = 0;
@@ -967,7 +985,7 @@ extern "C" {
         } // for
 
         fprintf(main.data->output.stream, "%s' from '", main.data->context.reset.string);
-        fprintf(main.data->output.stream, "%s%s%s", main.data->context.notable.string, rule.name.used ? rule.name.string : f_string_empty_s, main.data->context.reset.string);
+        fprintf(main.data->output.stream, "%s%s%s", main.data->context.notable.string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, main.data->context.reset.string);
         fprintf(main.data->output.stream, "%s'.%c", main.data->context.reset.string, f_string_eol_s[0]);
 
         f_thread_mutex_unlock(&main.thread->lock.print);
@@ -1029,13 +1047,13 @@ extern "C" {
       f_thread_mutex_lock(&main.thread->lock.print);
 
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_error_print_execute(main.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
+        controller_rule_item_error_print_execute(main.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
       }
       else if (status == F_file_found_not) {
-        controller_rule_error_print_execute_not_found(main.data->error, F_false, program);
+        controller_rule_item_error_print_execute_not_found(main.data->error, F_false, program);
       }
       else {
-        fll_error_print(main.data->error, status, "fll_execute_program", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fll_execute_program", F_true, main.thread);
       }
 
       f_thread_mutex_unlock(&main.thread->lock.print);
@@ -1048,7 +1066,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const controller_rule_t rule, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
+  f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
     int result = 0;
@@ -1077,7 +1095,7 @@ extern "C" {
         } // for
 
         fprintf(main.data->output.stream, "%s' from '", main.data->context.reset.string);
-        fprintf(main.data->output.stream, "%s%s%s", main.data->context.notable.string, rule.name.used ? rule.name.string : f_string_empty_s, main.data->context.reset.string);
+        fprintf(main.data->output.stream, "%s%s%s", main.data->context.notable.string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, main.data->context.reset.string);
         fprintf(main.data->output.stream, "%s'.%c", main.data->context.reset.string, f_string_eol_s[0]);
 
         f_thread_mutex_unlock(&main.thread->lock.print);
@@ -1115,7 +1133,6 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-
       status = F_status_set_fine(status);
 
       if (status == F_child || status == F_capability || status == F_group || status == F_nice || status == F_user) {
@@ -1135,19 +1152,18 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-
       status = F_status_set_fine(status);
 
       f_thread_mutex_lock(&main.thread->lock.print);
 
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_error_print_execute(main.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
+        controller_rule_item_error_print_execute(main.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
       }
       else if (status == F_file_found_not) {
-        controller_rule_error_print_execute_not_found(main.data->error, F_false, program);
+        controller_rule_item_error_print_execute_not_found(main.data->error, F_false, program);
       }
       else {
-        fll_error_print(main.data->error, status, "fll_execute_program", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fll_execute_program", F_true, main.thread);
       }
 
       f_thread_mutex_unlock(&main.thread->lock.print);
@@ -1162,7 +1178,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_pid_with_
 
 #ifndef _di_controller_rule_id_construct_
-  f_status_t controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) {
+  f_status_t controller_rule_id_construct(const controller_main_t main, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) {
 
     f_status_t status = F_none;
 
@@ -1171,28 +1187,31 @@ extern "C" {
     status = f_string_dynamic_partial_append_nulless(source, directory, alias);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+      controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
+
       return status;
     }
 
     status = f_string_append(f_path_separator_s, f_path_separator_length, alias);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
+      controller_error_print(main.data->error, F_status_set_fine(status), "f_string_append", F_true, main.thread);
+
       return status;
     }
 
     status = f_string_dynamic_partial_append_nulless(source, basename, alias);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+      controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
+
       return status;
     }
 
     status = f_string_dynamic_terminate_after(alias);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+      controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
     }
 
     return status;
@@ -1200,7 +1219,7 @@ extern "C" {
 #endif // _di_controller_rule_id_construct_
 
 #ifndef _di_controller_rule_item_read_
-  f_status_t controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) {
+  f_status_t controller_rule_item_read(const controller_main_t main, controller_cache_t *cache, controller_rule_item_t *item) {
 
     f_status_t status = F_none;
 
@@ -1218,7 +1237,7 @@ extern "C" {
       status = fl_fss_extended_list_object_read(cache->buffer_item, &range, &cache->range_action, &cache->delimits);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_list_object_read", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_extended_list_object_read", F_true, main.thread);
         break;
       }
 
@@ -1234,7 +1253,7 @@ extern "C" {
         status = fl_fss_extended_object_read(cache->buffer_item, &range, &cache->range_action, 0, &cache->delimits);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true, main.thread);
           break;
         }
 
@@ -1246,14 +1265,14 @@ extern "C" {
       status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_item);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
         break;
       }
 
       status = f_fss_count_lines(cache->buffer_item, cache->range_action.start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
         break;
       }
 
@@ -1263,7 +1282,7 @@ extern "C" {
       status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_item, cache->range_action, &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, main.thread);
         break;
       }
 
@@ -1301,14 +1320,19 @@ extern "C" {
         type = controller_rule_action_type_user;
       }
       else {
-        if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%s%sUnknown rule item action '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-          fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
-          f_print_dynamic(data.warning.to.stream, cache->action.name_action);
-          fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
-          fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+        if (main.data->warning.verbosity == f_console_verbosity_debug) {
+          f_thread_mutex_lock(&main.thread->lock.print);
 
-          controller_rule_error_print(data.warning, cache->action, F_true);
+          fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main.data->warning.to.stream, "%s%sUnknown rule item action '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
+          fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
+          f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
+          fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
+          fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+
+          controller_rule_error_print_cache(main.data->warning, cache->action, F_true);
+
+          f_thread_mutex_unlock(&main.thread->lock.print);
         }
 
         continue;
@@ -1317,13 +1341,17 @@ extern "C" {
       if (multiple) {
         if (type == controller_rule_action_type_create || type == controller_rule_action_type_group || type == controller_rule_action_type_use || type == controller_rule_action_type_user) {
 
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-            f_print_dynamic(data.error.to.stream, cache->action.name_action);
-            fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+            fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+            f_print_dynamic(main.data->error.to.stream, cache->action.name_action);
+            fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+            fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           status = F_status_set_error(F_supported_not);
@@ -1339,11 +1367,11 @@ extern "C" {
       status = controller_rule_actions_increase_by(controller_default_allocation_step, &item->actions);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true, main.thread);
         break;
       }
 
-      status = controller_rule_action_read(data, type, method, cache, item, &item->actions, &range);
+      status = controller_rule_action_read(main, type, method, cache, item, &item->actions, &range);
       if (F_status_is_error(status)) break;
     } // for
 
@@ -1498,79 +1526,8 @@ extern "C" {
   }
 #endif // _di_controller_rule_setting_limit_type_name_
 
-#ifndef _di_controller_rule_path_
-  f_status_t controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) {
-
-    f_status_t status = F_none;
-
-    path->used = 0;
-
-    if (setting.path_setting.used) {
-      status = f_string_append(setting.path_setting.string, setting.path_setting.used, path);
-
-      if (F_status_is_error_not(status)) {
-        status = f_string_append(f_path_separator_s, f_path_separator_length, path);
-      }
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(controller_string_rules_s, controller_string_rules_length, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(f_path_separator_s, f_path_separator_length, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(path_directory.string, path_directory.used, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(f_path_separator_s, f_path_separator_length, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(path_name.string, path_name.used, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(f_path_extension_separator_s, f_path_extension_separator_length, path);
-    }
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_append(controller_string_rule_s, controller_string_rule_length, path);
-    }
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
-      return status;
-    }
-
-    status = f_string_dynamic_terminate_after(path);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-      return status;
-    }
-
-    char path_raw[path->used + 1];
-
-    memcpy(path_raw, path->string, path->used);
-    path_raw[path->used] = 0;
-
-    status = fll_path_canonical(path_raw, path);
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fll_path_canonical", F_true);
-      return status;
-    }
-
-    return F_none;
-  }
-#endif // _di_controller_rule_path_
-
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_rule_t rule, controller_process_t *process) {
+  f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) {
 
     switch (action) {
       case controller_rule_action_type_freeze:
@@ -1594,7 +1551,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(action), main.data->error.notable.after->string);
           fprintf(main.data->error.to.stream, "%s' while attempting to execute rule.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-          controller_rule_error_print(main.data->error, process->cache.action, F_true);
+          controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
           f_thread_mutex_unlock(&main.thread->lock.print);
         }
@@ -1615,25 +1572,15 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&main.thread->lock.print);
-
-      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_append", F_true);
-      controller_rule_error_print(main.data->error, process->cache.action, F_true);
-
-      f_thread_mutex_unlock(&main.thread->lock.print);
+      controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_string_append", F_true, F_true, main.thread);
 
       return status;
     }
 
-    status = f_string_dynamic_append(rule.alias, &process->cache.action.name_file);
+    status = f_string_dynamic_append(process->rule.alias, &process->cache.action.name_file);
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&main.thread->lock.print);
-
-      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-      controller_rule_error_print(main.data->error, process->cache.action, F_true);
-
-      f_thread_mutex_unlock(&main.thread->lock.print);
+      controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_string_dynamic_append", F_true, F_true, main.thread);
 
       return status;
     }
@@ -1645,12 +1592,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&main.thread->lock.print);
-
-      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_append", F_true);
-      controller_rule_error_print(main.data->error, process->cache.action, F_true);
-
-      f_thread_mutex_unlock(&main.thread->lock.print);
+      controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_string_append", F_true, F_true, main.thread);
 
       return status;
     }
@@ -1658,18 +1600,13 @@ extern "C" {
     status = f_string_dynamic_terminate_after(&process->cache.action.name_file);
 
     if (F_status_is_error(status)) {
-      f_thread_mutex_lock(&main.thread->lock.print);
-
-      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-      controller_rule_error_print(main.data->error, process->cache.action, F_true);
-
-      f_thread_mutex_unlock(&main.thread->lock.print);
+      controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_true, main.thread);
 
       return status;
     }
 
     if ((options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_simulate(rule, controller_rule_action_type_start, options, main, &process->cache);
+      controller_rule_simulate(process->rule, controller_rule_action_type_start, options, main, &process->cache);
     }
 
     f_array_length_t i = 0;
@@ -1680,13 +1617,12 @@ extern "C" {
       f_array_length_t id_rule = 0;
       f_array_length_t id_process = 0;
 
-      controller_rule_t *rule_other = 0;
       controller_process_t *process_other = 0;
 
       f_string_dynamics_t * const dynamics[] = {
-        &rule.need,
-        &rule.want,
-        &rule.wish,
+        &process->rule.need,
+        &process->rule.want,
+        &process->rule.wish,
       };
 
       const f_string_t strings[] = {
@@ -1701,22 +1637,30 @@ extern "C" {
 
         for (j = 0; j < dynamics[i]->used; ++j) {
 
-          f_thread_lock_read(&main.thread->lock.rule);
+          f_thread_lock_read(&main.thread->lock.process);
 
           status = controller_find_process(dynamics[i]->array[j], main.thread->processs, &id_process);
 
+          f_thread_unlock(&main.thread->lock.process);
+
           if (status == F_true) {
+            f_thread_lock_read(&main.thread->lock.rule);
+
             status = controller_rule_find(dynamics[i]->array[j], main.setting->rules, &id_rule);
+
+            f_thread_unlock(&main.thread->lock.rule);
           }
 
           if (status != F_true) {
+            f_thread_lock_read(&main.thread->lock.rule);
+
             id_rule = main.setting->rules.used;
 
             if (i == 0) {
               f_thread_mutex_lock(&main.thread->lock.print);
 
-              controller_rule_error_print_need_want_wish(main.data->error, strings[i], dynamics[i]->array[j].string, "was not found");
-              controller_rule_error_print(main.data->error, process->cache.action, F_true);
+              controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], dynamics[i]->array[j].string, "was not found");
+              controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
               f_thread_mutex_unlock(&main.thread->lock.print);
 
@@ -1732,15 +1676,20 @@ extern "C" {
               if (main.data->warning.verbosity == f_console_verbosity_debug) {
                 f_thread_mutex_lock(&main.thread->lock.print);
 
-                controller_rule_error_print_need_want_wish(main.data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
-                controller_rule_error_print(main.data->warning, process->cache.action, F_true);
+                controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
+                controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
                 f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
+
+            f_thread_unlock(&main.thread->lock.rule);
           }
 
+          f_thread_lock_read(&main.thread->lock.rule);
+
           if (status == F_true && id_rule < main.setting->rules.used) {
+            f_thread_unlock(&main.thread->lock.rule);
             f_thread_lock_read(&main.thread->lock.process);
 
             process_other = &main.thread->processs.array[id_process];
@@ -1750,37 +1699,44 @@ extern "C" {
 
             if (process_other->status == F_known_not && (process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy)) {
               f_thread_unlock(&process_other->lock);
-              f_thread_condition_wait(&process_other->wait, &process_other->running);
 
-              // always pass the signal along when done waiting.
-              f_thread_condition_signal(&process->wait);
-              f_thread_mutex_unlock(&process->running);
+              if (main.thread->enabled) {
+                f_thread_mutex_lock(&process_other->wait_lock);
+                f_thread_condition_wait(&process_other->wait, &process_other->wait_lock);
+                f_thread_mutex_unlock(&process_other->wait_lock);
+              }
             }
             else {
               f_thread_unlock(&process_other->lock);
             }
 
+            f_thread_unlock(&main.thread->lock.process);
+
             if (!main.thread->enabled) {
-              f_thread_unlock(&main.thread->lock.process);
               f_thread_unlock(&process_other->active);
-              f_thread_unlock(&main.thread->lock.rule);
 
               status = F_signal;
               break;
             }
 
-            f_thread_unlock(&main.thread->lock.process);
+            f_thread_lock_read(&main.thread->lock.rule);
 
-            rule_other = &main.setting->rules.array[id_rule];
+            char alias_other_buffer[main.setting->rules.array[id_rule].alias.used + 1];
+
+            memcpy(alias_other_buffer, main.setting->rules.array[id_rule].alias.string, sizeof(char) * main.setting->rules.array[id_rule].alias.used);
+            alias_other_buffer[main.setting->rules.array[id_rule].alias.used] = 0;
+
+            f_thread_unlock(&main.thread->lock.rule);
 
             // attempt to (synchronously) execute the rule when the status is unknown (the rule has not yet been run).
             if (process_other->status == F_known_not) {
 
-              status = controller_rule_process_begin(F_false, rule_other->alias, action, options & controller_rule_option_asynchronous ? options - controller_rule_option_asynchronous : options, process->stack, main, process->cache);
+              const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, main.setting->rules.array[id_rule].alias.used);
+
+              status = controller_rule_process_begin(F_false, alias_other, action, options & controller_rule_option_asynchronous ? options - controller_rule_option_asynchronous : options, process->stack, main, process->cache);
 
               if (status == F_child || status == F_signal) {
                 f_thread_unlock(&process_other->active);
-                f_thread_unlock(&main.thread->lock.rule);
 
                 break;
               }
@@ -1789,14 +1745,13 @@ extern "C" {
                 if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
                   f_thread_mutex_lock(&main.thread->lock.print);
 
-                  controller_rule_error_print_need_want_wish(main.data->error, strings[i], rule_other->alias.string, "failed during execution");
-                  controller_rule_error_print(main.data->error, process->cache.action, F_true);
+                  controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], alias_other_buffer, "failed during execution");
+                  controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
                   f_thread_mutex_unlock(&main.thread->lock.print);
 
                   if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                     f_thread_unlock(&process_other->active);
-                    f_thread_unlock(&main.thread->lock.rule);
 
                     break;
                   }
@@ -1805,8 +1760,8 @@ extern "C" {
                   if (main.data->warning.verbosity == f_console_verbosity_debug) {
                     f_thread_mutex_lock(&main.thread->lock.print);
 
-                    controller_rule_error_print_need_want_wish(main.data->warning, strings[i], rule_other->alias.string, "failed during execution");
-                    controller_rule_error_print(main.data->warning, process->cache.action, F_true);
+                    controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "failed during execution");
+                    controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
                     f_thread_mutex_unlock(&main.thread->lock.print);
                   }
@@ -1820,10 +1775,10 @@ extern "C" {
               if (i == 0 || i == 1) {
                 f_thread_mutex_lock(&main.thread->lock.print);
 
-                controller_rule_error_print_need_want_wish(main.data->error, strings[i], rule_other->alias.string, "is in a failed state");
+                controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], alias_other_buffer, "is in a failed state");
 
                 status = F_status_set_error(F_found_not);
-                controller_rule_error_print(main.data->error, process->cache.action, F_true);
+                controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
                 f_thread_mutex_unlock(&main.thread->lock.print);
 
@@ -1836,16 +1791,17 @@ extern "C" {
                 if (main.data->warning.verbosity == f_console_verbosity_debug) {
                   f_thread_mutex_lock(&main.thread->lock.print);
 
-                  controller_rule_error_print_need_want_wish(main.data->warning, strings[i], rule_other->alias.string, "is in a failed state");
-                  controller_rule_error_print(main.data->warning, process->cache.action, F_true);
+                  controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "is in a failed state");
+                  controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
                   f_thread_mutex_unlock(&main.thread->lock.print);
                 }
               }
             }
           }
-
-          f_thread_unlock(&main.thread->lock.rule);
+          else {
+            f_thread_unlock(&main.thread->lock.rule);
+          }
         } // for
 
         if (status == F_child || status == F_signal) break;
@@ -1863,7 +1819,7 @@ extern "C" {
     }
 
     if (!(options & controller_rule_option_wait) && F_status_is_error_not(status)) {
-      controller_rule_wait_all(main);
+      controller_rule_wait_all(main, process);
 
       if (!main.thread->enabled) {
         return F_signal;
@@ -1878,11 +1834,11 @@ extern "C" {
 
         f_array_length_t j = 0;
 
-        for (i = 0; i < rule.items.used; ++i) {
+        for (i = 0; i < process->rule.items.used; ++i) {
 
-          for (j = 0; j < rule.items.array[i].actions.used; ++j) {
+          for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
-            if (rule.items.array[i].actions.array[j].type == action) {
+            if (process->rule.items.array[i].actions.array[j].type == action) {
               missing = F_false;
               break;
             }
@@ -1895,12 +1851,12 @@ extern "C" {
 
             fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(main.data->error.to.stream, "%s%sThe rule '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-            fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, rule.name.used ? rule.name.string : f_string_empty_s, main.data->error.notable.after->string);
+            fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' has no '", main.data->error.context.before->string);
             fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(action).string, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' action to execute.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-            controller_rule_error_print(main.data->error, process->cache.action, F_true);
+            controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
             f_thread_mutex_unlock(&main.thread->lock.print);
           }
@@ -1910,7 +1866,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(rule, action, options, main, process);
+        status = controller_rule_execute(action, options, main, process);
 
         if (status == F_child) {
           return F_child;
@@ -1921,7 +1877,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          controller_rule_error_print_locked(main.data->error, process->cache.action, F_true, main.thread);
+          controller_rule_item_error_print(main.data->error, process->cache.action, F_true, main.thread);
         }
       }
     }
@@ -1948,6 +1904,8 @@ extern "C" {
     {
       f_array_length_t at = 0;
 
+      f_thread_lock_read(&main.thread->lock.process);
+
       if (controller_find_process(alias_rule, main.thread->processs, &at) != F_true) {
         status = F_status_set_error(F_found_not);
       }
@@ -1959,8 +1917,8 @@ extern "C" {
         if (main.data->error.verbosity != f_console_verbosity_quiet) {
           f_thread_mutex_lock(&main.thread->lock.print);
 
-          controller_rule_error_print_rule_not_loaded(main.data->error, alias_rule.string);
-          controller_rule_error_print(main.data->error, cache.action, F_false);
+          controller_rule_item_error_print_rule_not_loaded(main.data->error, alias_rule.string);
+          controller_rule_error_print_cache(main.data->error, cache.action, F_false);
 
           f_thread_mutex_unlock(&main.thread->lock.print);
         }
@@ -1968,7 +1926,9 @@ extern "C" {
         return status;
       }
 
+      f_thread_lock_read(&main.thread->lock.process);
       f_thread_lock_write(&main.thread->processs.array[at].lock);
+      f_thread_unlock(&main.thread->lock.process);
 
       process = &main.thread->processs.array[at];
 
@@ -2080,28 +2040,29 @@ extern "C" {
 #ifndef _di_controller_rule_process_do_
   f_status_t controller_rule_process_do(const bool asynchronous, controller_process_t *process) {
 
-    f_thread_lock_read(&process->lock);
+    // the process lock shall be held for the duration of this processing (aside from switching between read to/from write).
+    f_thread_lock_read(&process->active);
+    f_thread_lock_write(&process->lock);
 
     controller_main_t main = controller_macro_main_t_initialize((controller_data_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
     if (!main.thread->enabled) {
       f_thread_unlock(&process->lock);
+      f_thread_unlock(&process->active);
 
       return F_signal;
     }
 
-    f_thread_lock_read(&process->active);
-    f_thread_mutex_lock(&process->running);
-
     f_status_t status = F_none;
     f_array_length_t id_rule = 0;
 
+    const f_array_length_t used_original_stack = process->stack.used;
+
     f_thread_lock_read(&main.thread->lock.rule);
 
-    if (controller_rule_find(process->alias_rule, main.setting->rules, &id_rule) == F_true) {
-      controller_rule_t rule = controller_rule_t_initialize;
+    if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
 
-      status = controller_rule_copy(main.setting->rules.array[id_rule], &rule);
+      status = controller_rule_copy(main.setting->rules.array[id_rule], &process->rule);
 
       f_thread_unlock(&main.thread->lock.rule);
 
@@ -2109,7 +2070,7 @@ extern "C" {
         controller_entry_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "controller_rule_copy", F_true, main.thread);
       }
       else {
-        for (f_array_length_t i = 0; i < process->stack.used; ++i) {
+        for (f_array_length_t i = 0; i < process->stack.used && main.thread->enabled; ++i) {
 
           if (process->stack.array[i] == id_rule) {
             if (main.data->error.verbosity != f_console_verbosity_quiet) {
@@ -2117,10 +2078,10 @@ extern "C" {
 
               fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
               fprintf(main.data->error.to.stream, "%s%sThe rule '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-              fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, process->alias_rule.string, main.data->error.notable.after->string);
+              fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, process->rule.alias.string, main.data->error.notable.after->string);
               fprintf(main.data->error.to.stream, "%s' is already on the execution dependency stack, this recursion is prohibited.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-              controller_rule_error_print(main.data->error, process->cache.action, F_true);
+              controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
               f_thread_mutex_unlock(&main.thread->lock.print);
             }
@@ -2133,9 +2094,6 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(status)) {
-          f_thread_unlock(&process->lock);
-          f_thread_lock_write(&process->lock);
-
           status = f_type_array_lengths_increase(&process->stack);
 
           if (F_status_is_error(status)) {
@@ -2144,24 +2102,13 @@ extern "C" {
           else {
             process->stack.array[process->stack.used++] = id_rule;
           }
-
-          f_thread_unlock(&process->lock);
-          f_thread_lock_read(&process->lock);
         }
       }
 
-      if (F_status_is_error_not(status)) {
+      if (F_status_is_error_not(status) && main.thread->enabled) {
         const uint8_t rule_options = asynchronous ? controller_rule_option_asynchronous : 0;
 
-        status = controller_rule_process(controller_rule_action_type_start, rule_options, main, rule, process);
-
-        if (F_status_is_error(status)) {
-          f_thread_mutex_lock(&main.thread->lock.print);
-
-          controller_entry_error_print_cache(main.data->error, process->cache.action);
-
-          f_thread_mutex_unlock(&main.thread->lock.print);
-        }
+        status = controller_rule_process(controller_rule_action_type_start, rule_options, main, process);
       }
     }
     else {
@@ -2172,15 +2119,12 @@ extern "C" {
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main.thread->lock.print);
 
-        controller_rule_error_print_rule_not_loaded(main.data->error, process->alias_rule.string);
-        controller_rule_error_print(main.data->error, process->cache.action, F_false);
+        controller_rule_item_error_print_rule_not_loaded(main.data->error, process->rule.alias.string);
+        controller_rule_error_print_cache(main.data->error, process->cache.action, F_false);
 
         f_thread_mutex_unlock(&main.thread->lock.print);
       }
     }
-
-    f_thread_unlock(&process->lock);
-    f_thread_lock_write(&process->lock);
 
     if (asynchronous) {
       process->state = controller_process_state_done;
@@ -2189,14 +2133,21 @@ extern "C" {
       process->state = controller_process_state_idle;
     }
 
-    --process->stack.used;
+    process->stack.used = used_original_stack;
 
-    // inform all things waiting that the process has finished running.
-    f_thread_condition_signal(&process->wait);
-    f_thread_mutex_unlock(&process->running);
-
-    f_thread_unlock(&process->active);
     f_thread_unlock(&process->lock);
+    f_thread_unlock(&process->active);
+
+    if (main.thread->enabled) {
+
+      // inform all things waiting that the process has finished running.
+      f_thread_mutex_lock(&process->wait_lock);
+      f_thread_condition_signal_all(&process->wait);
+      f_thread_mutex_unlock(&process->wait_lock);
+    }
+    else {
+      return F_signal;
+    }
 
     return status;
   }
@@ -2287,14 +2238,14 @@ extern "C" {
     status = f_string_dynamic_append_nulless(rule_id, &rule->alias);
 
     if (F_status_is_error(status)) {
-      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+      controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true, main.thread);
     }
     else {
 
       status = f_string_dynamic_terminate_after(&rule->alias);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
       }
       else {
         status = controller_file_load(controller_string_rules_s, rule->alias, controller_string_rule_s, controller_string_rules_length, controller_string_rule_length, main, cache);
@@ -2310,13 +2261,13 @@ extern "C" {
         status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main.data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true);
+          controller_error_print(main.data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, main.thread);
         }
         else {
           status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
           }
         }
       }
@@ -2326,7 +2277,7 @@ extern "C" {
       status = controller_rule_items_increase_by(cache->object_items.used, &rule->items);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.data->error, F_status_set_fine(status), "controller_rule_items_increase_by", F_true);
+        controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_items_increase_by", F_true, main.thread);
       }
       else {
         f_array_length_t i = 0;
@@ -2363,7 +2314,7 @@ extern "C" {
           status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
             break;
           }
 
@@ -2372,7 +2323,7 @@ extern "C" {
           status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, main.thread);
             break;
           }
 
@@ -2390,13 +2341,18 @@ extern "C" {
           }
           else {
             if (main.data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&main.thread->lock.print);
+
+              fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(main.data->warning.to.stream, "%s%sUnknown rule item '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
               fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
               f_print_dynamic(main.data->warning.to.stream, cache->action.name_item);
               fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
               fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_rule_error_print(main.data->warning, cache->action, F_true);
+              controller_rule_error_print_cache(main.data->warning, cache->action, F_true);
+
+              f_thread_mutex_lock(&main.thread->lock.print);
             }
 
             continue;
@@ -2405,19 +2361,19 @@ extern "C" {
           status = f_string_dynamic_partial_append(cache->buffer_file, cache->content_items.array[i].array[0], &cache->buffer_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append", F_true, main.thread);
             break;
           }
 
           status = f_string_dynamic_terminate_after(&cache->buffer_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
             break;
           }
 
           if (rule->items.array[rule->items.used].type) {
-            status = controller_rule_item_read(*main.data, cache, &rule->items.array[rule->items.used]);
+            status = controller_rule_item_read(main, cache, &rule->items.array[rule->items.used]);
             if (F_status_is_error(status)) break;
 
             rule->items.used++;
@@ -2425,7 +2381,7 @@ extern "C" {
           else {
             for_item = F_false;
 
-            status = controller_rule_setting_read(*main.data, *main.setting, cache, rule);
+            status = controller_rule_setting_read(main, *main.setting, cache, rule);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_memory_not) {
@@ -2438,7 +2394,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_rule_error_print(main.data->error, cache->action, for_item);
+      controller_rule_item_error_print(main.data->error, cache->action, for_item, main.thread);
 
       rule->status = controller_status_simplify(F_status_set_fine(status));
       return F_false;
@@ -2449,7 +2405,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_status_t controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
+  f_status_t controller_rule_setting_read(const controller_main_t main, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
 
     f_status_t status = F_none;
     f_status_t status_return = F_none;
@@ -2460,8 +2416,7 @@ extern "C" {
     status = fll_fss_extended_read(cache->buffer_item, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data.error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
-      controller_rule_error_print(data.error, cache->action, F_false);
+      controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, F_false, main.thread);
 
       return status;
     }
@@ -2495,13 +2450,13 @@ extern "C" {
       status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->object_actions.array[i], &cache->action.name_item);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+        controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
       }
       else {
         status = f_string_dynamic_terminate_after(&cache->action.name_item);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
         }
       }
 
@@ -2521,7 +2476,8 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_error_print(data.error, cache->action, F_false);
+        controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
         continue;
       }
 
@@ -2577,13 +2533,15 @@ extern "C" {
         type = controller_rule_setting_type_wish;
       }
       else {
-        if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.warning.to.stream, "%s%sUnknown rule setting '", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s);
-          fprintf(data.warning.to.stream, "%s%s", data.warning.context.after->string, data.warning.notable.before->string);
-          f_print_dynamic(data.warning.to.stream, cache->action.name_item);
-          fprintf(data.warning.to.stream, "%s", data.warning.notable.after->string);
-          fprintf(data.warning.to.stream, "%s'.%s%c", data.warning.context.before->string, data.warning.context.after->string, f_string_eol_s[0]);
+        if (main.data->warning.verbosity == f_console_verbosity_debug) {
+          f_thread_mutex_lock(&main.thread->lock.print);
+
+          fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main.data->warning.to.stream, "%s%sUnknown rule setting '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
+          fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
+          f_print_dynamic(main.data->warning.to.stream, cache->action.name_item);
+          fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
+          fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -2591,16 +2549,20 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.warning, cache->action, F_false);
+          controller_rule_error_print_cache(main.data->warning, cache->action, F_false);
+
+          f_thread_mutex_unlock(&main.thread->lock.print);
         }
 
         continue;
       }
 
       if (!cache->content_actions.array[i].used) {
-        if (data.warning.verbosity == f_console_verbosity_debug) {
-          fprintf(data.warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.warning.to.stream, "%s%sEmpty rule setting.%s%c", data.warning.context.before->string, data.warning.prefix ? data.warning.prefix : f_string_empty_s, data.warning.context.after->string, f_string_eol_s[0]);
+        if (main.data->warning.verbosity == f_console_verbosity_debug) {
+          f_thread_mutex_lock(&main.thread->lock.print);
+
+          fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main.data->warning.to.stream, "%s%sEmpty rule setting.%s%c", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, main.data->warning.context.after->string, f_string_eol_s[0]);
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -2608,7 +2570,9 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.warning, cache->action, F_false);
+          controller_rule_error_print_cache(main.data->warning, cache->action, F_false);
+
+          f_thread_mutex_unlock(&main.thread->lock.print);
         }
 
         continue;
@@ -2620,13 +2584,13 @@ extern "C" {
       status = f_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+        controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
       }
       else {
         status = f_string_dynamic_terminate_after(&cache->action.name_action);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
         }
       }
 
@@ -2638,7 +2602,7 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_error_print(data.error, cache->action, F_false);
+        controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
 
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
@@ -2656,7 +2620,7 @@ extern "C" {
         // @todo use sched_getaffinity() to get the available cpus and do not add an invalid cpu to the affinity array.
 
         if (!cache->content_actions.array[i].used) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -2664,10 +2628,14 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires one or more Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+            f_thread_mutex_lock(&main.thread->lock.print);
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires one or more Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -2702,7 +2670,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_macro_int32s_t_resize", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_macro_int32s_t_resize", F_true, F_false, main.thread);
             break;
           }
 
@@ -2712,21 +2680,29 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if (status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_underflow) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
 
                 if (status == F_number_overflow || status == F_number_underflow) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sRule setting has an unsupported number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                  f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                  fprintf(data.error.to.stream, "%s%s', the number is too large for this system.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+                  f_thread_mutex_lock(&main.thread->lock.print);
+
+                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%s%sRule setting has an unsupported number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                  fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                  f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fprintf(main.data->error.to.stream, "%s%s', the number is too large for this system.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                  f_thread_mutex_unlock(&main.thread->lock.print);
                 }
                 else {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                  f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                  fprintf(data.error.to.stream, "%s%s', only whole numbers are allowed for an affinity value.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+                  f_thread_mutex_lock(&main.thread->lock.print);
+
+                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                  fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                  f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fprintf(main.data->error.to.stream, "%s%s', only whole numbers are allowed for an affinity value.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                  f_thread_mutex_unlock(&main.thread->lock.print);
                 }
 
                 // get the current line number within the settings item.
@@ -2735,7 +2711,7 @@ extern "C" {
 
                 cache->action.line_action = ++cache->action.line_item;
 
-                controller_rule_error_print(data.error, cache->action, F_false);
+                controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
               }
 
               status = F_status_set_error(F_valid_not);
@@ -2745,7 +2721,7 @@ extern "C" {
               }
             }
             else {
-              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_signed", F_true, F_false, main.thread);
 
               status = F_status_set_error(status);
 
@@ -2766,7 +2742,7 @@ extern "C" {
       if (type == controller_rule_setting_type_define || type == controller_rule_setting_type_parameter) {
 
         if (cache->content_actions.array[i].used != 2) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -2774,10 +2750,14 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+            f_thread_mutex_lock(&main.thread->lock.print);
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
+
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -2797,7 +2777,7 @@ extern "C" {
         status = f_string_maps_increase(setting_maps);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_maps_increase", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_maps_increase", F_true, F_false, main.thread);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
@@ -2814,7 +2794,8 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
           continue;
         }
 
@@ -2824,7 +2805,7 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &setting_maps->array[setting_maps->used].name);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
@@ -2841,20 +2822,21 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
           continue;
         }
 
         status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &setting_maps->array[setting_maps->used].value);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
         }
         else {
           status = f_string_dynamic_terminate_after(&setting_maps->array[setting_maps->used].value);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
           }
         }
 
@@ -2874,7 +2856,8 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
           continue;
         }
 
@@ -2885,9 +2868,11 @@ extern "C" {
       if (type == controller_rule_setting_type_control_group) {
 
         if (cache->content_actions.array[i].used < 2 || rule->has & controller_rule_has_control_group) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires two or more Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires two or more Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -2895,7 +2880,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -2912,12 +2899,14 @@ extern "C" {
           rule->control_group.as_new = F_true;
         }
         else {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting has an unknown option '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-            f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-            fprintf(data.error.to.stream, "%s%s'.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting has an unknown option '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+            fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+            f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+            fprintf(main.data->error.to.stream, "%s%s'.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -2925,7 +2914,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -2945,7 +2936,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_append", F_true, F_false, main.thread);
         }
         else {
           rule->control_group.groups.used = 0;
@@ -2955,7 +2946,7 @@ extern "C" {
             status = f_string_dynamics_increase(&rule->control_group.groups);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false, main.thread);
               break;
             }
 
@@ -2964,7 +2955,7 @@ extern "C" {
             status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &rule->control_group.groups.array[rule->control_group.groups.used]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
               break;
             }
 
@@ -2990,7 +2981,8 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
           continue;
         }
 
@@ -3002,9 +2994,11 @@ extern "C" {
       if (type == controller_rule_setting_type_limit) {
         if (cache->content_actions.array[i].used != 3) {
 
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires three Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires three Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3012,7 +3006,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3071,13 +3067,15 @@ extern "C" {
           type = controller_resource_limit_type_stack;
         }
         else {
-          if (data.error.verbosity == f_console_verbosity_debug) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sUnknown resource limit type '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-            f_print_dynamic(data.error.to.stream, cache->action.name_action);
-            fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-            fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity == f_console_verbosity_debug) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sUnknown resource limit type '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+            fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+            f_print_dynamic(main.data->error.to.stream, cache->action.name_action);
+            fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+            fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3085,7 +3083,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_true);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_true);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3098,10 +3098,12 @@ extern "C" {
         for (j = 0; j < rule->limits.used; ++j) {
 
           if (type == rule->limits.array[j].type) {
-            if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sThe resource limit type is already specified.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
+            if (main.data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main.thread->lock.print);
+
+              fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main.data->error.to.stream, "%s%sThe resource limit type is already specified.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -3109,7 +3111,9 @@ extern "C" {
 
               cache->action.line_action = ++cache->action.line_item;
 
-              controller_rule_error_print(data.error, cache->action, F_false);
+              controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+              f_thread_mutex_unlock(&main.thread->lock.print);
             }
 
             status = F_status_set_error(F_valid_not);
@@ -3125,7 +3129,7 @@ extern "C" {
         f_macro_limit_sets_t_increase(status, rule->limits);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data.error, F_status_set_fine(status), "f_limit_sets_increase", F_true);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_limit_sets_increase", F_true, F_false, main.thread);
 
           if (F_status_set_fine(status) == F_memory_not) {
             status_return = status;
@@ -3142,7 +3146,8 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
           continue;
         }
 
@@ -3157,20 +3162,22 @@ extern "C" {
 
             if (status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_underflow) {
 
-              if (data.error.verbosity != f_console_verbosity_quiet) {
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
                 if (status == F_number_overflow || status == F_number_underflow) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sRule setting has an unsupported number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                  f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                  fprintf(data.error.to.stream, "%s%s', the number is too large for this system.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%s%sRule setting has an unsupported number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                  fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                  f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fprintf(main.data->error.to.stream, "%s%s', the number is too large for this system.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
                 }
                 else {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                  f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                  fprintf(data.error.to.stream, "%s%s', only whole numbers are allowed for a resource limit value.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                  fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                  f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fprintf(main.data->error.to.stream, "%s%s', only whole numbers are allowed for a resource limit value.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
                 }
 
                 // get the current line number within the settings item.
@@ -3179,7 +3186,9 @@ extern "C" {
 
                 cache->action.line_action = ++cache->action.line_item;
 
-                controller_rule_error_print(data.error, cache->action, F_false);
+                controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
 
               status = F_status_set_error(F_valid_not);
@@ -3189,7 +3198,7 @@ extern "C" {
               }
             }
             else {
-              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_signed", F_true, F_false, main.thread);
 
               status = F_status_set_error(status);
 
@@ -3229,9 +3238,11 @@ extern "C" {
         }
 
         if (setting_value->used || cache->content_actions.array[i].used != 1) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3239,7 +3250,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3270,7 +3283,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
 
@@ -3280,13 +3294,15 @@ extern "C" {
             if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
 
               if (status == F_false) {
-                if (data.error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(data.error.to.stream, "%s%sRule setting has an invalid name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                  fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                  f_print_dynamic(data.error.to.stream, *setting_value);
-                  fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s', there must be at least 1 graph character.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+                if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                  f_thread_mutex_lock(&main.thread->lock.print);
+
+                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid name '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                  fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                  f_print_dynamic(main.data->error.to.stream, *setting_value);
+                  fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                  fprintf(main.data->error.to.stream, "%s', there must be at least 1 graph character.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
                   // get the current line number within the settings item.
                   cache->action.line_item = line_item;
@@ -3294,7 +3310,9 @@ extern "C" {
 
                   cache->action.line_action = ++cache->action.line_item;
 
-                  controller_rule_error_print(data.error, cache->action, F_false);
+                  controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+                  f_thread_mutex_unlock(&main.thread->lock.print);
                 }
 
                 if (F_status_is_error_not(status_return)) {
@@ -3302,9 +3320,12 @@ extern "C" {
                 }
               }
               else {
+                f_thread_mutex_lock(&main.thread->lock.print);
 
                 // this function should only return F_complete_not_utf on error.
-                fll_error_print(data.error, F_complete_not_utf, "controller_validate_has_graph", F_true);
+                controller_rule_error_print(main.data->error, cache->action, F_complete_not_utf, "controller_validate_has_graph", F_true, F_false, main.thread);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
 
                 if (F_status_is_error_not(status_return)) {
                   status_return = status;
@@ -3319,7 +3340,8 @@ extern "C" {
 
               cache->action.line_action = ++cache->action.line_item;
 
-              controller_rule_error_print(data.error, cache->action, F_false);
+              controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
               continue;
             }
           }
@@ -3328,13 +3350,13 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
           }
           else {
             status = f_string_dynamic_terminate_after(setting_value);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
             }
           }
 
@@ -3356,7 +3378,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
         }
@@ -3367,9 +3390,11 @@ extern "C" {
       if (type == controller_rule_setting_type_scheduler) {
 
         if (cache->content_actions.array[i].used < 1 || cache->content_actions.array[i].used > 2 || rule->has & controller_rule_has_scheduler) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires either one or two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires either one or two Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3377,7 +3402,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3412,12 +3439,14 @@ extern "C" {
           rule->scheduler.priority = 49;
         }
         else {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting has an unknown scheduler '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-            fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-            f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-            fprintf(data.error.to.stream, "%s%s'.%s%c", data.error.notable.after->string, data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting has an unknown scheduler '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+            fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+            f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+            fprintf(main.data->error.to.stream, "%s%s'.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3425,7 +3454,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3447,26 +3478,28 @@ extern "C" {
 
             if ((zero_only && number) || (!zero_only && (number < 1 || number > 99)) || status == F_data_not || status == F_number || status == F_number_overflow) {
 
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
 
                 if (zero_only) {
-                  fprintf(data.error.to.stream, "%s%s', only ", data.error.notable.after->string, data.error.context.before->string);
-                  fprintf(data.error.to.stream, "%s%s0%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s is", data.error.context.before->string);
+                  fprintf(main.data->error.to.stream, "%s%s', only ", main.data->error.notable.after->string, main.data->error.context.before->string);
+                  fprintf(main.data->error.to.stream, "%s%s0%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
+                  fprintf(main.data->error.to.stream, "%s is", main.data->error.context.before->string);
                 }
                 else {
-                  fprintf(data.error.to.stream, "%s%s', only the whole numbers inclusively between ", data.error.notable.after->string, data.error.context.before->string);
-                  fprintf(data.error.to.stream, "%s%s1%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s and ", data.error.context.before->string);
-                  fprintf(data.error.to.stream, "%s%s99%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
-                  fprintf(data.error.to.stream, "%s are", data.error.context.before->string);
+                  fprintf(main.data->error.to.stream, "%s%s', only the whole numbers inclusively between ", main.data->error.notable.after->string, main.data->error.context.before->string);
+                  fprintf(main.data->error.to.stream, "%s%s1%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
+                  fprintf(main.data->error.to.stream, "%s and ", main.data->error.context.before->string);
+                  fprintf(main.data->error.to.stream, "%s%s99%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
+                  fprintf(main.data->error.to.stream, "%s are", main.data->error.context.before->string);
                 }
 
-                fprintf(data.error.to.stream, " allowed for the designated scheduler.%s%c", data.error.context.after->string, f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, " allowed for the designated scheduler.%s%c", main.data->error.context.after->string, f_string_eol_s[0]);
 
                 // get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -3474,7 +3507,9 @@ extern "C" {
 
                 cache->action.line_action = ++cache->action.line_item;
 
-                controller_rule_error_print(data.error, cache->action, F_false);
+                controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -3482,7 +3517,7 @@ extern "C" {
               }
             }
             else {
-              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              controller_rule_error_print(main.data->error, cache->action, status, "fl_conversion_string_to_number_signed", F_true, F_false, main.thread);
               status = F_status_set_error(status);
 
               if (F_status_is_error_not(status_return)) {
@@ -3505,9 +3540,11 @@ extern "C" {
 
         if (cache->content_actions.array[i].used != 1 || type == controller_rule_setting_type_capability && rule->capability || type == controller_rule_setting_type_group && (rule->has & controller_rule_has_group) || type == controller_rule_setting_type_nice && (rule->has & controller_rule_has_nice) || type == controller_rule_setting_type_user && (rule->has & controller_rule_has_user)) {
 
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires exactly one Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3515,7 +3552,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3531,7 +3570,9 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3539,7 +3580,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3554,7 +3597,9 @@ extern "C" {
           status = f_string_dynamic_terminate_after(&cache->action.generic);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3562,7 +3607,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3578,7 +3625,9 @@ extern "C" {
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
             if (F_status_set_fine(status) == F_memory_not) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_capability_from_text", F_true);
+              f_thread_mutex_lock(&main.thread->lock.print);
+
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_capability_from_text", F_true, F_false, main.thread);
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -3586,15 +3635,19 @@ extern "C" {
 
               cache->action.line_action = ++cache->action.line_item;
 
-              controller_rule_error_print(data.error, cache->action, F_false);
+              controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+              f_thread_mutex_unlock(&main.thread->lock.print);
 
               status_return = status;
               break;
             }
 
-            if (data.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(data.error.to.stream, "%s%sRule setting failed to process the capabilities.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+            if (main.data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main.thread->lock.print);
+
+              fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main.data->error.to.stream, "%s%sRule setting failed to process the capabilities.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
               // get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -3602,7 +3655,9 @@ extern "C" {
 
               cache->action.line_action = ++cache->action.line_item;
 
-              controller_rule_error_print(data.error, cache->action, F_false);
+              controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+              f_thread_mutex_unlock(&main.thread->lock.print);
             }
 
             if (F_status_is_error_not(status_return)) {
@@ -3622,16 +3677,18 @@ extern "C" {
 
             if (number < -20 || number > 19 || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_underflow) {
 
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid number '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-                fprintf(data.error.to.stream, "%s%s', only the whole numbers inclusively between ", data.error.notable.after->string, data.error.context.before->string);
-                fprintf(data.error.to.stream, "%s%s-20%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s and ", data.error.context.before->string);
-                fprintf(data.error.to.stream, "%s%s19%s", data.error.context.after->string, data.error.notable.before->string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s are allowed.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid number '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(main.data->error.to.stream, "%s%s', only the whole numbers inclusively between ", main.data->error.notable.after->string, main.data->error.context.before->string);
+                fprintf(main.data->error.to.stream, "%s%s-20%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s and ", main.data->error.context.before->string);
+                fprintf(main.data->error.to.stream, "%s%s19%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s are allowed.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
                 // get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -3639,7 +3696,9 @@ extern "C" {
 
                 cache->action.line_action = ++cache->action.line_item;
 
-                controller_rule_error_print(data.error, cache->action, F_false);
+                controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -3647,7 +3706,7 @@ extern "C" {
               }
             }
             else {
-              fll_error_print(data.error, status, "fl_conversion_string_to_number_signed", F_true);
+              controller_rule_error_print(main.data->error, cache->action, status, "fl_conversion_string_to_number_signed", F_true, F_false, main.thread);
               status = F_status_set_error(status);
 
               if (F_status_is_error_not(status_return)) {
@@ -3669,37 +3728,49 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if (status == F_exist_not) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because no user was found by that name.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid user '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because no user was found by that name.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else if (status == F_number_too_large) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because the given ID is too large.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid user '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because the given ID is too large.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else if (status == F_number) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid user '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid user '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else {
-              fll_error_print(data.error, status, "f_account_id_user_by_name", F_true);
+              controller_rule_error_print(main.data->error, cache->action, status, "f_account_id_user_by_name", F_true, F_false, main.thread);
             }
 
             // get the current line number within the settings item.
@@ -3708,7 +3779,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
 
             if (F_status_is_error_not(status_return)) {
               status_return = F_status_set_error(status);
@@ -3725,9 +3796,11 @@ extern "C" {
 
       if (type == controller_rule_setting_type_group) {
         if (!cache->content_actions.array[i].used) {
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(data.error.to.stream, "%s%sRule setting requires one or more Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+          if (main.data->error.verbosity != f_console_verbosity_quiet) {
+            f_thread_mutex_lock(&main.thread->lock.print);
+
+            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(main.data->error.to.stream, "%s%sRule setting requires one or more Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3735,7 +3808,9 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+            f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3754,7 +3829,7 @@ extern "C" {
           f_macro_array_lengths_t_increase_by(status, rule->groups, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, F_false, main.thread);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3771,7 +3846,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
 
@@ -3781,37 +3857,49 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if (status == F_exist_not) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because no group was found by that name.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid group '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because no group was found by that name.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else if (status == F_number_too_large) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because the given ID is too large.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid group '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because the given ID is too large.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else if (status == F_number) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid group '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-                f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
-                fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid group '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+                f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
             }
             else {
-              fll_error_print(data.error, status, "f_account_id_group_by_name", F_true);
+              controller_rule_error_print(main.data->error, cache->action, status, "f_account_id_group_by_name", F_true, F_false, main.thread);
             }
 
             // get the current line number within the settings item.
@@ -3820,7 +3908,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
 
             if (F_status_is_error_not(status_return)) {
               status_return = F_status_set_error(status);
@@ -3848,7 +3936,7 @@ extern "C" {
           status = f_string_dynamics_increase(setting_values);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false, main.thread);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3865,7 +3953,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
 
@@ -3874,13 +3963,13 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[j], &setting_values->array[setting_values->used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+            controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, main.thread);
           }
           else {
             status = f_string_dynamic_terminate_after(&setting_values->array[setting_values->used]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, main.thread);
             }
           }
 
@@ -3902,7 +3991,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
 
@@ -3911,11 +4001,13 @@ extern "C" {
           if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
             if (status == F_false) {
 
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data.error.to.stream, "%s%sRule setting has an invalid environment variable name '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-                fprintf(data.error.to.stream, "%s%s%s%s", data.error.context.after->string, data.error.notable.before->string, setting_values->array[setting_values->used].string, data.error.notable.after->string);
-                fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+              if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main.thread->lock.print);
+
+                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main.data->error.to.stream, "%s%sRule setting has an invalid environment variable name '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, setting_values->array[setting_values->used].string, main.data->error.notable.after->string);
+                fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
                 // get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -3923,7 +4015,9 @@ extern "C" {
 
                 cache->action.line_action = ++cache->action.line_item;
 
-                controller_rule_error_print(data.error, cache->action, F_false);
+                controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+                f_thread_mutex_unlock(&main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -3933,7 +4027,7 @@ extern "C" {
             else {
 
               // this function should only return F_complete_not_utf on error.
-              fll_error_print(data.error, F_complete_not_utf, "controller_validate_environment_name", F_true);
+              controller_rule_error_print(main.data->error, cache->action, F_complete_not_utf, "controller_validate_environment_name", F_true, F_false, main.thread);
 
               if (F_status_is_error_not(status_return)) {
                 status_return = status;
@@ -3948,7 +4042,8 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_error_print(data.error, cache->action, F_false);
+            controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
             continue;
           }
 
@@ -3960,9 +4055,11 @@ extern "C" {
 
       if (cache->content_actions.array[i].used != 2) {
 
-        if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s, data.error.context.after->string, f_string_eol_s[0]);
+        if (main.data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&main.thread->lock.print);
+
+          fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main.data->error.to.stream, "%s%sRule setting requires exactly two Content.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -3970,7 +4067,9 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_error_print(data.error, cache->action, F_false);
+          controller_rule_error_print_cache(main.data->error, cache->action, F_false);
+
+          f_thread_mutex_unlock(&main.thread->lock.print);
         }
 
         if (F_status_is_error_not(status_return)) {
@@ -3993,7 +4092,7 @@ extern "C" {
       status = f_string_dynamics_increase_by(controller_default_allocation_step, setting_values);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
+        controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, F_false, main.thread);
 
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
@@ -4010,11 +4109,12 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_error_print(data.error, cache->action, F_false);
+        controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
         continue;
       }
 
-      status = controller_rule_id_construct(data, cache->buffer_item, cache->content_actions.array[i].array[0], cache->content_actions.array[i].array[1], &setting_values->array[setting_values->used]);
+      status = controller_rule_id_construct(main, cache->buffer_item, cache->content_actions.array[i].array[0], cache->content_actions.array[i].array[1], &setting_values->array[setting_values->used]);
 
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
@@ -4034,7 +4134,8 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_error_print(data.error, cache->action, F_false);
+        controller_rule_item_error_print(main.data->error, cache->action, F_false, main.thread);
+
         continue;
       }
 
@@ -4045,7 +4146,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         setting_values->array[setting_values->used].used = 0;
 
-        fll_error_print(data.error, F_status_set_fine(status), "f_file_name_base", F_true);
+        controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_file_name_base", F_true, F_false, main.thread);
 
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
@@ -4061,17 +4162,21 @@ extern "C" {
 
       if (fl_string_dynamic_partial_compare_string(cache->buffer_item.string, cache->buffer_path, cache->buffer_item.used, cache->content_actions.array[i].array[1]) == F_equal_to_not) {
 
-        if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(data.error.to.stream, "%s%sThe rule item action second parameter '", data.error.context.before->string, data.error.prefix ? data.error.prefix : f_string_empty_s);
-          fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-          f_print_dynamic_partial(data.error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
-          fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-          fprintf(data.error.to.stream, "%s' must be a base path name, such as %llu '", data.error.context.before->string, cache->buffer_path.used);
-          fprintf(data.error.to.stream, "%s%s", data.error.context.after->string, data.error.notable.before->string);
-          f_print_dynamic(data.error.to.stream, cache->buffer_path);
-          fprintf(data.error.to.stream, "%s", data.error.notable.after->string);
-          fprintf(data.error.to.stream, "%s'.%s%c", data.error.context.before->string, data.error.context.after->string, f_string_eol_s[0]);
+        if (main.data->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&main.thread->lock.print);
+
+          fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main.data->error.to.stream, "%s%sThe rule item action second parameter '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+          fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+          f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+          fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+          fprintf(main.data->error.to.stream, "%s' must be a base path name, such as %llu '", main.data->error.context.before->string, cache->buffer_path.used);
+          fprintf(main.data->error.to.stream, "%s%s", main.data->error.context.after->string, main.data->error.notable.before->string);
+          f_print_dynamic(main.data->error.to.stream, cache->buffer_path);
+          fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
+          fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+
+          f_thread_mutex_unlock(&main.thread->lock.print);
         }
 
         setting_values->array[setting_values->used].used = 0;
@@ -4117,7 +4222,7 @@ extern "C" {
           fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, controller_rule_action_type_name(action).string, data->error.notable.after->string);
           fprintf(data->error.to.stream, "%s' while attempting to simulate rule execution.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-          controller_rule_error_print(data->error, cache->action, F_true);
+          controller_rule_error_print_cache(data->error, cache->action, F_true);
         }
 
         f_thread_mutex_unlock(&main.thread->lock.print);
@@ -4390,20 +4495,48 @@ extern "C" {
 #endif // _di_controller_rule_simulate_
 
 #ifndef _di_controller_rule_wait_all_
-  void controller_rule_wait_all(const controller_main_t main) {
+  void controller_rule_wait_all(const controller_main_t main, controller_process_t *caller) {
 
     f_thread_lock_read(&main.thread->lock.process);
 
+    if (!main.thread->processs.used) {
+      f_thread_unlock(&main.thread->lock.process);
+      return;
+    }
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
     controller_process_t *process = 0;
 
-    for (f_array_length_t i = 0; i < main.thread->processs.used && main.thread->enabled; ++i) {
+    bool skip = F_false;
+
+    for (; i < main.thread->processs.used && main.thread->enabled; ++i, skip = F_false) {
 
       process = &main.thread->processs.array[i];
 
+      if (caller) {
+        f_thread_lock_read(&main.thread->lock.rule);
+
+        for (j = 0; j < caller->stack.used; ++j) {
+
+          if (fl_string_dynamic_compare(process->rule.alias, main.thread->processs.array[caller->stack.array[j]].rule.alias) == F_equal_to) {
+            skip = F_true;
+          }
+
+          if (skip) break;
+        } // for
+
+        f_thread_unlock(&main.thread->lock.rule);
+
+        if (skip) continue;
+      }
+
       f_thread_lock_read(&process->active);
+      f_thread_unlock(&main.thread->lock.process);
       f_thread_lock_read(&process->lock);
 
-      if (process->state == controller_process_state_idle || process->state == controller_process_state_done) {
+      if (!process->state || process->state == controller_process_state_idle || process->state == controller_process_state_done) {
 
         if (process->state == controller_process_state_done) {
           f_thread_unlock(&process->lock);
@@ -4411,37 +4544,25 @@ extern "C" {
 
           if (process->state == controller_process_state_done) {
             f_thread_join(process->id_thread, 0);
-
             process->state = controller_process_state_idle;
+            process->id_thread = 0;
           }
         }
 
-        f_thread_unlock(&process->active);
         f_thread_unlock(&process->lock);
+        f_thread_unlock(&process->active);
+        f_thread_lock_read(&main.thread->lock.process);
 
         continue;
       }
 
-      f_thread_condition_wait(&process->wait, &process->running);
-
-      if (process->state == controller_process_state_done) {
-        f_thread_unlock(&process->lock);
-        f_thread_lock_write(&process->lock);
-
-        if (process->state == controller_process_state_done) {
-          f_thread_join(process->id_thread, 0);
-
-          process->state = controller_process_state_idle;
-        }
-      }
-
       f_thread_unlock(&process->lock);
-
-      // always pass the signal along when done waiting.
-      f_thread_condition_signal(&process->wait);
-      f_thread_mutex_unlock(&process->running);
+      f_thread_mutex_lock(&process->wait_lock);
+      f_thread_condition_wait(&process->wait, &process->wait_lock);
+      f_thread_mutex_unlock(&process->wait_lock);
 
       f_thread_unlock(&process->active);
+      f_thread_lock_read(&main.thread->lock.process);
     } // for
 
     f_thread_unlock(&main.thread->lock.process);

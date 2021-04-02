@@ -41,6 +41,22 @@ extern "C" {
 #endif // _di_controller_thread_control_
 
 /**
+ * Thread that gets started on exit to force other threads to exit.
+ *
+ * This will sleep for some time and then send termination signals to all threads and child processes.
+ *
+ * @param arguments
+ *   The thread arguments.
+ *   Must be of type controller_main_t.
+ *
+ * @return
+ *   0, always.
+ */
+#ifndef _di_controller_thread_exit_force_
+  extern void * controller_thread_exit_force(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_exit_force_
+
+/**
  * Start all threads, wait on threads, and handle requests.
  *
  * @param entry_name
@@ -83,8 +99,45 @@ extern "C" {
  *   The main thread data.
  */
 #ifndef _di_controller_thread_process_cancel_
-  void controller_thread_process_cancel(const controller_main_t main) f_gcc_attribute_visibility_internal;
+  void controller_thread_process_cancel(controller_main_t *main) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_thread_process_cancel_
+
+/**
+ * Thread for handling entry processing.
+ *
+ * This acts as the main rule thread during entry processing.
+ * This runs all synchronous rules or spawns asynchronous rules.
+ *
+ * @param arguments
+ *   The thread arguments.
+ *   Must be of type controller_main_entry_t.
+ *
+ * @return
+ *   0, always.
+ */
+#ifndef _di_controller_thread_entry_
+  extern void * controller_thread_entry(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_entry_
+
+/**
+ * Thread for handling rule processing.
+ *
+ *
+ * This acts as the main rule thread after entry processing.
+ * This runs all synchronous rules or spawns asynchronous rules.
+ *
+ * @todo the control thread should send commands to this thread, somehow.
+ *
+ * @param arguments
+ *   The thread arguments.
+ *   Must be of type controller_main_t.
+ *
+ * @return
+ *   0, always.
+ */
+#ifndef _di_controller_thread_rule_
+  extern void * controller_thread_rule(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_rule_
 
 /**
  * Thread for handling signals/interrupts.

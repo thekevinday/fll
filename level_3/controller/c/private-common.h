@@ -749,23 +749,23 @@ extern "C" {
  * - active: A process is actively using this, and is running asynchronously.
  * - done:   A process has finished running on this and there is a thread that needs to be cleaned up.
  *
- * id:            The ID of this process relative to the processes array.
- * alias_rule:    The Rule alias, such as "network/ntpdate".
- * status:        The last execution status of the Rule.
- * state:         The state of the process.
- * action:        The action being performed.
- * options:       Configuration options for this asynchronous thread.
- * child:         The process id of a child process, if one is running (when forking to execute a child process).
- * id_thread:     The thread id, a valid ID when state is "active", and an invalid ID when the state is "busy".
- * lock:          A read/write lock on the structure.
- * active:        A read/write lock representing that something is currently using this (read locks = in use, write lock = begin deleting).
- * running:       A mutex lock for working with "wait" to designate that the process is being executed and to trigger anything waiting when done.
- * wait:          A thread condition to tell a process waiting process that the rule has is done being processed.
- * cache:         The cache used in this process.
- * stack:         A stack used to represent dependencies to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
- * main_data:     Used for passing the controller_data_t data to the process thread (to populate controller_main_t).
- * main_setting:  Used for passing the controller_setting_t data to the process thread (to populate controller_main_t).
- * main_thread:   Used for passing the controller_thread_t data to the process thread (to populate controller_main_t).
+ * id:           The ID of this process relative to the processes array.
+ * status:       The last execution status of the Rule.
+ * state:        The state of the process.
+ * action:       The action being performed.
+ * options:      Configuration options for this asynchronous thread.
+ * child:        The process id of a child process, if one is running (when forking to execute a child process).
+ * id_thread:    The thread id, a valid ID when state is "active", and an invalid ID when the state is "busy".
+ * lock:         A read/write lock on the structure.
+ * active:       A read/write lock representing that something is currently using this (read locks = in use, write lock = begin deleting).
+ * wait:         A thread condition to tell a process waiting process that the rule has is done being processed.
+ * wait_lock:    A mutex lock for working with "wait".
+ * cache:        The cache used in this process.
+ * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
+ * rule:         A copy of the rule actively being executed.
+ * main_data:    Used for passing the controller_data_t data to the process thread (to populate controller_main_t).
+ * main_setting: Used for passing the controller_setting_t data to the process thread (to populate controller_main_t).
+ * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_main_t).
  */
 #ifndef _di_controller_process_t_
   enum {
@@ -777,7 +777,6 @@ extern "C" {
 
   typedef struct {
     f_array_length_t id;
-    f_string_dynamic_t alias_rule;
 
     f_status_t status;
 
@@ -789,11 +788,13 @@ extern "C" {
     f_thread_id_t id_thread;
     f_thread_lock_t lock;
     f_thread_lock_t active;
-    f_thread_mutex_t running;
     f_thread_condition_t wait;
+    f_thread_mutex_t wait_lock;
 
     controller_cache_t cache;
     f_array_lengths_t stack;
+
+    controller_rule_t rule;
 
     void *main_data;
     void *main_setting;
@@ -802,7 +803,6 @@ extern "C" {
 
   #define controller_process_t_initialize { \
     0, \
-    f_string_dynamic_t_initialize \
     F_known_not, \
     0, \
     0, \
@@ -814,6 +814,7 @@ extern "C" {
     f_thread_condition_t_initialize, \
     controller_cache_t_initialize, \
     f_array_lengths_t_initialize, \
+    controller_rule_t_initialize, \
     0, \
     0, \
     0, \
@@ -1053,36 +1054,49 @@ extern "C" {
  *
  * enabled:    TRUE when threads are active, FALSE when inactive and the program is essentially shutting down, no new threads should be started when FALSE.
  * signal:     The code of any signal received.
+ * status:     A status used by the main entry/rule processing thread for synchronous operations.
  * id_cleanup: The thread ID representing the Cleanup Process.
  * id_control: The thread ID representing the Control Process.
+ * id_rule:    The thread ID representing the Entry or Rule Process.
  * id_signal:  The thread ID representing the Signal Process.
  * lock:       A r/w lock for operating on this structure.
  * processs:   All Rule Process thread data.
+ * cache:      A cache used by the main entry/rule processing thread for synchronous operations.
  */
 #ifndef _di_controller_thread_t_
   #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
+  //#define controller_thread_exit_force_timeout 60  // 1 minute in seconds.
+  #define controller_thread_exit_force_timeout 5
 
   typedef struct {
     bool enabled;
     int signal;
+    f_status_t status;
 
     f_thread_id_t id_cleanup;
     f_thread_id_t id_control;
+    f_thread_id_t id_exit;
+    f_thread_id_t id_rule;
     f_thread_id_t id_signal;
 
     controller_lock_t lock;
     controller_processs_t processs;
+    controller_cache_t cache;
   } controller_thread_t;
 
   #define controller_thread_t_initialize { \
     F_true, \
     0, \
+    F_none, \
+    f_thread_id_t_initialize, \
+    f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     controller_lock_t_initialize, \
     controller_processs_t_initialize, \
+    controller_cache_t_initialize, \
   }
 #endif // _di_controller_data_common_t_
 
@@ -1109,6 +1123,31 @@ extern "C" {
     thread, \
   }
 #endif // _di_controller_main_t_
+
+/**
+ * A wrapper used for passing a set of entry processing and execution related data.
+ *
+ * status:  The return status of entry processing, processed by the main thread.
+ * name:    A string representing the entry name.
+ * main:    The main data.
+ * setting: The setting data.
+ */
+#ifndef _di_controller_main_entry_t_
+  typedef struct {
+    const f_string_static_t *name;
+
+    controller_main_t *main;
+    controller_setting_t *setting;
+  } controller_main_entry_t;
+
+  #define controller_main_entry_t_initialize { 0, 0, 0 }
+
+  #define controller_macro_main_entry_t_initialize(name, main, setting) { \
+    name, \
+    main, \
+    setting, \
+  }
+#endif // _di_controller_main_entry_t_
 
 /**
  * Fully deallocate all memory for the given cache without caring about return status.

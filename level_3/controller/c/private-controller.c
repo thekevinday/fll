@@ -70,11 +70,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&main.thread->lock.print);
-
-        fll_error_print(main.data->error, F_status_set_fine(status), "f_string_append", F_true);
-
-        f_thread_mutex_unlock(&main.thread->lock.print);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_append", F_true, main.thread);
       }
 
       return status;
@@ -84,11 +80,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&main.thread->lock.print);
-
-        fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-
-        f_thread_mutex_unlock(&main.thread->lock.print);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
       }
 
       return status;
@@ -259,7 +251,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < processs.used; ++i) {
 
-      if (fl_string_dynamic_compare(alias, processs.array[i].alias_rule) == F_equal_to) {
+      if (fl_string_dynamic_compare(alias, processs.array[i].rule.alias) == F_equal_to) {
         if (at) *at = i;
         return F_true;
       }
@@ -936,7 +928,6 @@ extern "C" {
           break;
         }
         else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
-
           f_thread_lock_write(&main.thread->lock.rule);
 
           status = controller_rules_increase(&main.setting->rules);
@@ -1052,15 +1043,21 @@ extern "C" {
                   controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main.thread);
                 }
                 else {
+
+                  // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
                   controller_process_t *process = &main.thread->processs.array[main.thread->processs.used];
 
-                  status = f_string_dynamic_append(alias_rule, &process->alias_rule);
+                  f_thread_lock_write(&process->lock);
+
+                  process->rule.alias.used = 0;
+
+                  status = f_string_dynamic_append(alias_rule, &process->rule.alias);
 
                   if (F_status_is_error(status)) {
                     controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, main.thread);
                   }
                   else {
-                    status = f_string_dynamic_terminate_after(&process->alias_rule);
+                    status = f_string_dynamic_terminate_after(&process->rule.alias);
 
                     if (F_status_is_error(status)) {
                       controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
@@ -1069,6 +1066,8 @@ extern "C" {
                       process->id = main.thread->processs.used++;
                     }
                   }
+
+                  f_thread_unlock(&process->lock);
                 }
               }
 
@@ -1181,7 +1180,7 @@ extern "C" {
         }
       } // for
 
-      if (main.thread->signal) {
+      if (main.thread->signal || !main.thread->enabled) {
         status = F_signal;
       }
 

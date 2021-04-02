@@ -64,6 +64,8 @@ extern "C" {
   void controller_entry_item_delete_simple(controller_entry_item_t *item) {
 
     f_string_dynamic_resize(0, &item->name);
+
+    controller_entry_actions_delete_simple(&item->actions);
   }
 #endif // _di_controller_entry_item_delete_simple_
 
@@ -123,14 +125,16 @@ extern "C" {
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
-    f_string_dynamic_resize(0, &process->alias_rule);
-
     f_thread_lock_delete(&process->lock);
     f_thread_lock_delete(&process->active);
-    f_thread_mutex_delete(&process->running);
-    f_thread_condition_delete(&process->wait);
+
+    f_thread_mutex_lock(&process->wait_lock);
+    f_thread_condition_signal_all(&process->wait);
+    f_thread_mutex_unlock(&process->wait_lock);
+    f_thread_mutex_delete(&process->wait_lock);
 
     controller_cache_delete_simple(&process->cache);
+    controller_rule_delete_simple(&process->rule);
 
     f_macro_array_lengths_t_delete_simple(process->stack)
   }
@@ -178,7 +182,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
 
       // the lock must be initialized, but only once, so initialize immediately upon allocation.
-      while (processs->size < length) {
+      for (; processs->size < length; ++processs->size) {
 
         status = f_thread_lock_create(0, &processs->array[processs->size].lock);
 
@@ -187,20 +191,18 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_mutex_create(0, &processs->array[processs->size].running);
-        }
-
-        if (F_status_is_error_not(status)) {
           status = f_thread_condition_create(0, &processs->array[processs->size].wait);
         }
 
-        ++processs->size;
+        if (F_status_is_error_not(status)) {
+          status = f_thread_mutex_create(0, &processs->array[processs->size].wait_lock);
+        }
 
         if (F_status_is_error(status)) {
           processs->size = length;
           return status;
         }
-      } // while
+      } // for
 
       processs->size = length;
 
@@ -350,6 +352,7 @@ extern "C" {
 
     controller_lock_delete_simple(&thread->lock);
     controller_processs_resize(0, &thread->processs);
+    controller_cache_delete_simple(&thread->cache);
   }
 #endif // _di_controller_thread_delete_simple_
 

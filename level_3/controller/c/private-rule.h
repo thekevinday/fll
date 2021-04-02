@@ -51,8 +51,8 @@ extern "C" {
  *
  * The object and content ranges are merged together (in that order) as the action parameters.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param buffer
  *   The buffer containing the content.
  * @param object
@@ -76,7 +76,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_data_t data, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_parameters_read(const controller_main_t main, const f_string_static_t buffer, f_fss_object_t *object, f_fss_content_t *content, f_string_dynamics_t *parameters) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_parameters_read_
 
 /**
@@ -118,8 +118,8 @@ extern "C" {
  *
  * This will automatically increase the size of the actions array as needed.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param type
  *   The action type for this action or set of actions.
  * @param method
@@ -146,15 +146,13 @@ extern "C" {
  * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_action_read_
-  extern f_status_t controller_rule_action_read(const controller_data_t data, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_action_read(const controller_main_t main, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_action_read_
 
 /**
  * Copy a rule, allocating new space as necessary.
  *
  * This does not do any locking or unlocking for the rule data, be sure to lock appropriately before and after calling this.
- *
- * @todo finish writing this.
  *
  * @param source
  *   The source rule to copy from.
@@ -185,9 +183,41 @@ extern "C" {
 #endif // _di_controller_rule_copy_
 
 /**
+ * Print generic error/warning information.
+ *
+ * This is essentially a wrapper to fll_error_print() that includes locking.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param cache
+ *   The action cache.
+ * @param status
+ *   The status code to process.
+ *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+ * @param function
+ *   The name of the function where the error happened.
+ *   Set to 0 to disable.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ * @param thread
+ *   The thread data.
+ * @param item
+ *   If TRUE, then this error is associated with an item.
+ *   If FALSE, then this error is associated with a rule setting.
+ *
+ * @see fll_error_print()
+ * @see controller_entry_error_print_cache()
+ */
+#ifndef _di_controller_rule_error_print_
+  extern void controller_rule_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_
+
+/**
  * Print additional error/warning information in addition to existing error.
  *
  * This is explicitly intended to be used in addition to the error message.
+ *
+ * This neither locks the thread nor does it check to see if output is enabled or disabled.
  *
  * @param output
  *   The error or warning output structure.
@@ -203,9 +233,9 @@ extern "C" {
  * @see controller_rule_read()
  * @see controller_rule_setting_read()
  */
-#ifndef _di_controller_rule_error_print_
-  extern void controller_rule_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_print_
+#ifndef _di_controller_rule_error_print_cache_
+  extern void controller_rule_error_print_cache(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_error_print_cache_
 
 /**
  * Print additional error/warning information in addition to existing error.
@@ -222,16 +252,16 @@ extern "C" {
  * @param thread
  *   The thread data.
  *
- * @see controller_rule_error_print()
+ * @see controller_rule_error_print_cache()
  */
-#ifndef _di_controller_rule_error_print_
-  extern void controller_rule_error_print_locked(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_print_
+#ifndef _di_controller_rule_item_error_print_
+  extern void controller_rule_item_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_error_print_
 
 /**
  * Print an error or warning message related to the failed execution of some program or script.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param script_is
  *   If TRUE, then this represents a script.
@@ -243,14 +273,14 @@ extern "C" {
  * @param status
  *   The status code representing the failure (without the error bit set).
  */
-#ifndef _di_controller_rule_error_print_execute_
-  extern void controller_rule_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_print_execute_
+#ifndef _di_controller_rule_item_error_print_execute_
+  extern void controller_rule_item_error_print_execute(const fll_error_print_t print, const bool script_is, const f_string_t name, const int code, const f_status_t status) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_error_print_execute_
 
 /**
  * Print an error or warning message related to the failed execution of some program or script for when the program or script is not found.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param script_is
  *   If TRUE, then this represents a script.
@@ -258,14 +288,14 @@ extern "C" {
  * @param code
  *   The code returned by the executed program or script.
  */
-#ifndef _di_controller_rule_error_print_execute_not_found_
-  extern void controller_rule_error_print_execute_not_found(const fll_error_print_t output, const bool script_is, const f_string_t name) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_print_execute_not_found_
+#ifndef _di_controller_rule_item_error_print_execute_not_found_
+  extern void controller_rule_item_error_print_execute_not_found(const fll_error_print_t print, const bool script_is, const f_string_t name) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_error_print_execute_not_found_
 
 /**
  * Print an error or warning message related to need/want/wish settings of some rule.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param need_want_wish
  *   The appropriate string, such as "needs", "wants", or "wishes for" to print when describing this error/warning.
@@ -274,15 +304,25 @@ extern "C" {
  * @param why
  *   A short explanation on why this is an error or warning.
  */
-#ifndef _di_controller_rule_error_print_need_want_wish_
-  extern void controller_rule_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_error_print_need_want_wish_
+#ifndef _di_controller_rule_item_error_print_need_want_wish_
+  extern void controller_rule_item_error_print_need_want_wish(const fll_error_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_error_print_need_want_wish_
+
+/**
+ * Print an error or warning message about some rule not being loaded.
+ *
+ * @param print
+ *   The error or warning output structure.
+ * @param alias
+ *   The rule alias of the rule that is not loaded.
+ */
+#ifndef _di_controller_rule_item_error_print_rule_not_loaded_
+  extern void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t print, const f_string_t alias) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 /**
  * Perform an execution of the given rule.
  *
- * @param rule
- *   The rule being executed.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -312,14 +352,12 @@ extern "C" {
  *   On failure, the individual status for the rule is set to an appropriate error status.
  */
 #ifndef _di_controller_rule_execute_
-  extern f_status_t controller_rule_execute(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_
 
 /**
  * Perform an execution of the given rule in the foreground.
  *
- * @param rule
- *   The rule being executed.
  * @param type
  *   The item type code.
  * @param action
@@ -355,7 +393,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const controller_rule_t rule, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -364,8 +402,6 @@ extern "C" {
  * When this is synchronous, this will wait for the PID file to be generated before continuing.
  * When this is asynchronous, this will continue on adding the rule id and action to the asynchronous list.
  *
- * @param rule
- *   The rule being executed.
  * @param type
  *   The item type code.
  * @param action
@@ -402,14 +438,14 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const controller_rule_t rule, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
  * Construct an id from two distinct strings found within a single given source.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param source
  *   The source string that both the directory and basename are copied from.
  * @param directory
@@ -430,7 +466,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_id_construct_
-  extern f_status_t controller_rule_id_construct(const controller_data_t data, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_id_construct(const controller_main_t main, const f_string_static_t source, const f_string_range_t directory, const f_string_range_t basename, f_string_dynamic_t *alias) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_id_construct_
 
 /**
@@ -438,8 +474,8 @@ extern "C" {
  *
  * This will perform additional FSS read functions as appropriate.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param item
@@ -458,7 +494,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
-  extern f_status_t controller_rule_item_read(const controller_data_t data, controller_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_item_read(const controller_main_t main, controller_cache_t *cache, controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_item_read_
 
 /**
@@ -512,40 +548,6 @@ extern "C" {
 #endif // di_controller_rule_setting_limit_type_name_
 
 /**
- * Construct a canonical rule file path from the given path directory and name.
- *
- * @param data
- *   The program data.
- * @param setting
- *   The controller settings data.
- * @param path_directory
- *   The path directory, such as 'boot' from '/etc/controller/rules/boot/default.rule'.
- * @param path_name
- *   The path name, such as 'default' from '/etc/controller/rules/boot/default.rule'.
- * @param path
- *   The constructed path.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_file_stream_open().
- *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: f_string_dynamic_terminate_after().
- *   Errors (with error bit) from: fll_path_canonical().
- *
- * @see f_file_stat()
- * @see f_file_stream_open()
- * @see f_file_stream_read()
- * @see f_string_append()
- * @see f_string_dynamic_terminate_after()
- * @see fll_path_canonical()
- */
-#ifndef _di_controller_rule_path_
-  extern f_status_t controller_rule_path(const controller_data_t data, const controller_setting_t setting, const f_string_static_t path_directory, const f_string_static_t path_name, f_string_dynamic_t *path) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_path_
-
-/**
  * Process and execute the given rule.
  *
  * Any dependent rules are processed and executed as per "need", "want", and "wish" rule settings.
@@ -570,8 +572,6 @@ extern "C" {
  *   If bit controller_rule_option_asynchronous, then run asynchronously.
  * @param main
  *   The main data.
- * @param rule
- *   The rule information at the time the rule process started.
  * @param process
  *   The process data for processing this rule.
  *
@@ -581,7 +581,7 @@ extern "C" {
  *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_rule_t rule, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**
@@ -630,6 +630,7 @@ extern "C" {
  * Helper for calling controller_rule_process().
  *
  * This does all the preparation work that needs to be synchronously performed within the same thread.
+ * This will copy the rule by the alias to the process structure.
  *
  * @param asynchronous
  *   If TRUE, designates that this function is being asynchronously executed.
@@ -699,8 +700,8 @@ extern "C" {
  * Errors from this are not considered fatal, but the first error code encountered is returned.
  * Memory failure errors are always immediately returned.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param setting
  *   The controller settings data.
  * @param cache
@@ -727,7 +728,7 @@ extern "C" {
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_status_t controller_rule_setting_read(const controller_data_t data, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_setting_read(const controller_main_t main, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
 
 /**
@@ -767,9 +768,13 @@ extern "C" {
  *
  * @param main
  *   The main data.
+ * @param caller
+ *   The process representing the caller so that the process never waits on itself.
+ *   (optional) set to 0 when calling from a thread that is not running/executing any process.
+ *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern void controller_rule_wait_all(const controller_main_t main) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_wait_all(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_wait_all_
 
 #ifdef __cplusplus

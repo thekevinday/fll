@@ -119,7 +119,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(main.data->error, F_status_set_fine(status), "fll_fss_extended_read", F_true);
+      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, main.thread);
 
       return status;
     }
@@ -127,7 +127,7 @@ extern "C" {
     status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
     if (F_status_is_error(status)) {
-      fll_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true);
+      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
 
       return status;
     }
@@ -137,7 +137,7 @@ extern "C" {
     status = controller_entry_actions_increase_by(cache->object_actions.used, actions);
 
     if (F_status_is_error(status)) {
-      fll_error_print(main.data->error, F_status_set_fine(status), "controller_entry_actions_increase_by", F_true);
+      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_entry_actions_increase_by", F_true, main.thread);
 
       return status;
     }
@@ -167,7 +167,7 @@ extern "C" {
       status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+        controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
         break;
       }
 
@@ -176,7 +176,7 @@ extern "C" {
       status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true);
+        controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, main.thread);
         break;
       }
 
@@ -279,7 +279,7 @@ extern "C" {
         status = f_string_dynamics_increase_by(allocate, &action->parameters);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
+          controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, main.thread);
 
           action->status = status;
 
@@ -297,7 +297,7 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
 
             action->status = status;
 
@@ -319,7 +319,7 @@ extern "C" {
               status = fll_path_canonical(action->parameters.array[0].string, &cache->buffer_path);
 
               if (F_status_is_error(status)) {
-                fll_error_print(main.data->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+                controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, main.thread);
 
                 action->status = status;
 
@@ -352,7 +352,7 @@ extern "C" {
               status = f_file_name_base(action->parameters.array[1].string, action->parameters.array[1].used, &cache->buffer_path);
 
               if (F_status_is_error(status)) {
-                fll_error_print(main.data->error, F_status_set_fine(status), "f_file_name_base", F_true);
+                controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_file_name_base", F_true, main.thread);
 
                 if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
@@ -372,7 +372,7 @@ extern "C" {
                     status = f_string_dynamic_terminate_after(&cache->buffer_path);
 
                     if (F_status_is_error(status)) {
-                      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+                      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
 
                       action->status = status;
 
@@ -511,7 +511,7 @@ extern "C" {
                 }
 
                 if (F_status_set_fine(status) == F_memory_not) {
-                  fll_error_print(main.data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
+                  controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, main.thread);
 
                   status_action = status;
                   break;
@@ -577,7 +577,7 @@ extern "C" {
     }
 
     if (cache.name_file.used) {
-      fprintf(print.to.stream, "file '");
+      fprintf(print.to.stream, "entry file '");
       fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, cache.name_file.string, print.notable.after->string);
       fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
@@ -608,9 +608,6 @@ extern "C" {
 #ifndef _di_controller_entry_read_
   f_status_t controller_entry_read(const f_string_static_t entry_name, controller_main_t main, controller_cache_t *cache) {
     f_status_t status = F_none;
-
-    // @fixme all printfs in this function and child functions now need to be using the print mutex.
-    // @fixme this should lock the global rule mutex until all rules for the entry have been processed.
 
     main.setting->entry.status = F_known_not;
     main.setting->entry.items.used = 0;
@@ -665,7 +662,7 @@ extern "C" {
           status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
+            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
           }
         }
       }
@@ -687,7 +684,7 @@ extern "C" {
       status = controller_entry_items_increase_by(cache->object_items.used, &main.setting->entry.items);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main.data->error, F_status_set_fine(status), "controller_entry_items_increase_by", F_true);
+        controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
       }
       else {
 
@@ -732,21 +729,21 @@ extern "C" {
           status = controller_entry_items_increase_by(controller_default_allocation_step, &main.setting->entry.items);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "controller_entry_items_increase_by", F_true);
+            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
             break;
           }
 
           status = controller_string_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true);
+            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true, main.thread);
             break;
           }
 
           status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main.data->error, F_status_set_fine(status), "f_fss_count_lines", F_true);
+            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
             break;
           }
 

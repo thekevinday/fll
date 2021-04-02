@@ -46,9 +46,10 @@ extern "C" {
             continue;
           }
 
-          if (process->state == controller_process_state_done) {
-            f_thread_detach(process->id_thread);
+          if (process->id_thread) {
+            f_thread_join(process->id_thread, 0);
             process->state = controller_process_state_idle;
+            process->id_thread = 0;
           }
 
           // deallocate dynamic portions of the structure that are only ever needed while the process is running.
@@ -81,9 +82,10 @@ extern "C" {
               break;
             }
 
-            if (process->state == controller_process_state_done) {
-              f_thread_detach(process->id_thread);
+            if (process->id_thread) {
+              f_thread_join(process->id_thread, 0);
               process->state = controller_process_state_idle;
+              process->id_thread = 0;
             }
 
             // deallocate dynamic portions of the structure that are only ever needed while the rule is being processed.
@@ -110,11 +112,48 @@ extern "C" {
 
     controller_main_t *main = (controller_main_t *) arguments;
 
-    // @todo
-
     return 0;
   }
 #endif // _di_controller_thread_control_
+
+#ifndef _di_controller_thread_exit_force_
+  void * controller_thread_exit_force(void *arguments) {
+
+    controller_main_t *main = (controller_main_t *) arguments;
+
+    sleep(controller_thread_exit_force_timeout);
+
+    for (f_array_length_t i = 0; i < main->thread->processs.used; ++i) {
+
+      if (main->thread->processs.array[i].child > 0) {
+        f_signal_send(F_signal_kill, main->thread->processs.array[i].child);
+      }
+
+      if (main->thread->processs.array[i].id_thread) {
+        f_thread_signal(main->thread->processs.array[i].id_thread, F_signal_kill);
+      }
+    } // for
+
+
+    if (main->thread->id_cleanup) {
+      f_thread_signal(main->thread->id_cleanup, F_signal_kill);
+    }
+
+    if (main->thread->id_control) {
+      f_thread_signal(main->thread->id_control, F_signal_kill);
+    }
+
+    if (main->thread->id_signal) {
+      f_thread_signal(main->thread->id_signal, F_signal_kill);
+    }
+
+    if (main->thread->id_rule) {
+      f_thread_signal(main->thread->id_rule, F_signal_kill);
+    }
+
+    return 0;
+  }
+#endif // _di_controller_thread_exit_force_
 
 #ifndef _di_controller_thread_main_
   f_status_t controller_thread_main(const f_string_static_t entry_name, controller_data_t *data, controller_setting_t *setting) {
@@ -172,54 +211,20 @@ extern "C" {
         }
       }
       else {
-        controller_cache_t cache = controller_cache_t_initialize;
+        const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(&entry_name, &main, setting);
 
-        status = controller_entry_read(entry_name, main, &cache);
+        status = f_thread_create(0, &thread.id_rule, &controller_thread_entry, (void *) &entry);
 
         if (F_status_is_error(status)) {
-          setting->ready = controller_setting_ready_fail;
-        }
-        else if (status != F_signal && status != F_child) {
-          status = controller_preprocess_entry(main, &cache);
-        }
-
-        if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
-
-          if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
-
-            if (f_file_exists(setting->path_pid.string) == F_true) {
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-
-                f_thread_mutex_lock(&thread.lock.print);
-
-                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-                fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
-                fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
-
-                f_thread_mutex_unlock(&thread.lock.print);
-              }
-
-              setting->ready = controller_setting_ready_fail;
-              status = F_status_set_error(F_available_not);
-            }
-            else {
-              status = controller_process_entry(main, &cache);
-
-              if (F_status_is_error(status)) {
-                setting->ready = controller_setting_ready_fail;
-              }
-              else if (status == F_signal || status == F_child) {
-                setting->ready = controller_setting_ready_abort;
-              }
-              else {
-                setting->ready = controller_setting_ready_done;
-              }
-            }
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
           }
         }
+        else {
+          f_thread_join(thread.id_rule, 0);
 
-        controller_cache_delete_simple(&cache);
+          status = thread.status;
+        }
 
         if (status == F_child) {
           controller_thread_delete_simple(&thread);
@@ -237,7 +242,7 @@ extern "C" {
     if (F_status_is_error_not(status) && status != F_signal && status != F_child) {
 
       if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
-        controller_rule_wait_all(main);
+        controller_rule_wait_all(main, 0);
 
         status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &main);
 
@@ -259,25 +264,34 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error_not(status) && status != F_signal && (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
-
-      // wait until signal thread exits, which happens on any termination signal.
-      f_thread_join(thread.id_signal, 0);
-    }
-    else {
+    if (F_status_is_error(status) || status == F_signal || !(data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
       f_thread_cancel(thread.id_signal);
-      f_thread_join(thread.id_signal, 0);
+      f_thread_create(0, &thread.id_exit, &controller_thread_exit_force, (void *) &main);
     }
+
+    // wait until signal thread exits, which happens on any termination signal.
+    f_thread_join(thread.id_signal, 0);
 
     if (thread.enabled) {
-      controller_thread_process_cancel(main);
+      controller_thread_process_cancel(&main);
     }
 
     f_thread_cancel(thread.id_cleanup);
     f_thread_cancel(thread.id_control);
+    f_thread_cancel(thread.id_rule);
 
     f_thread_join(thread.id_cleanup, 0);
     f_thread_join(thread.id_control, 0);
+    f_thread_join(thread.id_rule, 0);
+
+    // if made it here, then the threads no longer need to be killed.
+    f_thread_join(thread.id_exit, 0);
+
+    thread.id_cleanup = 0;
+    thread.id_control = 0;
+    thread.id_rule = 0;
+    thread.id_signal = 0;
+    thread.id_exit = 0;
 
     controller_thread_delete_simple(&thread);
 
@@ -303,62 +317,124 @@ extern "C" {
 #endif // _di_controller_thread_process_
 
 #ifndef _di_controller_thread_process_cancel_
-  void controller_thread_process_cancel(const controller_main_t main) {
+  void controller_thread_process_cancel(controller_main_t *main) {
+
+    // only cancel when enabled.
+    if (!main->thread->enabled) return;
 
     // this must be set, regardless of lock state and only this function changes this.
-    main.thread->enabled = F_false;
+    main->thread->enabled = F_false;
 
-    f_thread_lock_write(&main.thread->lock.process);
+    f_thread_lock_read(&main->thread->lock.process);
 
-    if (!main.thread->processs.used) {
-      f_thread_unlock(&main.thread->lock.process);
-
-      return;
-    }
+    f_thread_create(0, &main->thread->id_exit, &controller_thread_exit_force, (void *) main);
 
     controller_process_t *process = 0;
 
-    bool locked = 0;
+    f_array_length_t i = 0;
 
-    //pid_t[main.thread->processs.used] pids;
-    //memset(&pids, 0, sizeof(pid_t) * main.thread->processs.used);
+    for (; i < main->thread->processs.used; ++i) {
 
-    for (f_array_length_t i = 0; i < main.thread->processs.used; ++i) {
+      process = &main->thread->processs.array[i];
 
-      process = &main.thread->processs.array[i];
-
-      locked = f_thread_lock_write_try(&process->lock) == F_none;
-
-      if (!locked) {
-        locked = f_thread_lock_read_try(&process->lock) == F_none;
+      if (process->child > 0) {
+        f_signal_send(F_signal_termination, process->child);
       }
 
-      if (locked) {
-        if (process->child > 0) {
-          f_signal_send(F_signal_quit, process->child);
-        }
+      if (process->id_thread) {
+        f_thread_cancel(process->id_thread);
+        f_thread_join(process->id_thread, 0);
 
-        if (process->state == controller_process_state_active || process->state == controller_process_state_busy || process->state == controller_process_state_done) {
-          f_thread_cancel(process->id_thread);
-          f_thread_join(process->id_thread, 0);
-        }
-
-        f_thread_unlock(&process->lock);
+        process->id_thread = 0;
       }
     } // for
 
-    main.thread->processs.used = 0;
+    for (; i < main->thread->processs.size; ++i) {
 
-    // @todo: sleep a little, check to see if child processes quit, and if not then sen F_signal_quit_termination.
-    //        this will likely need to be done by:
-    //        1) create an array of child process ids from above loop.
-    //        2) search through loop at this location in the code and if the process id is found, sleep a little.
-    //        3) check again to see if the child process quit and if not, then send the F_signal_quit_termination.
-    //        4) continue to next child until entire array is processed.
+      process = &main->thread->processs.array[i];
 
-    f_thread_unlock(&main.thread->lock.process);
+      if (process->id_thread) {
+        f_thread_cancel(process->id_thread);
+        f_thread_join(process->id_thread, 0);
+
+        process->id_thread = 0;
+      }
+    } // for
+
+    f_thread_unlock(&main->thread->lock.process);
+    f_thread_lock_write(&main->thread->lock.process);
+
+    main->thread->processs.used = 0;
+
+    f_thread_unlock(&main->thread->lock.process);
   }
 #endif // _di_controller_thread_process_cancel_
+
+#ifndef _di_controller_thread_entry_
+  void * controller_thread_entry(void *arguments) {
+
+    controller_main_entry_t *entry = (controller_main_entry_t *) arguments;
+    controller_data_t *data = entry->main->data;
+    controller_cache_t *cache = &entry->main->thread->cache;
+    f_status_t *status = &entry->main->thread->status;
+
+    *status = controller_entry_read(*entry->name, *entry->main, cache);
+
+    if (F_status_is_error(*status)) {
+      entry->setting->ready = controller_setting_ready_fail;
+    }
+    else if (*status != F_signal && *status != F_child) {
+      *status = controller_preprocess_entry(*entry->main, cache);
+    }
+
+    if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child) {
+
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
+
+        if (f_file_exists(entry->setting->path_pid.string) == F_true) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+
+            f_thread_mutex_lock(&entry->main->thread->lock.print);
+
+            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(data->error.to.stream, "%s%sThe pid file '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+            fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, entry->setting->path_pid.string, data->error.notable.after->string);
+            fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+
+            f_thread_mutex_unlock(&entry->main->thread->lock.print);
+          }
+
+          entry->setting->ready = controller_setting_ready_fail;
+          *status = F_status_set_error(F_available_not);
+        }
+        else {
+          *status = controller_process_entry(*entry->main, cache);
+
+          if (F_status_is_error(*status)) {
+            entry->setting->ready = controller_setting_ready_fail;
+          }
+          else if (*status == F_signal || *status == F_child) {
+            entry->setting->ready = controller_setting_ready_abort;
+          }
+          else {
+            entry->setting->ready = controller_setting_ready_done;
+          }
+        }
+      }
+    }
+
+    return 0;
+  }
+#endif // _di_controller_thread_entry_
+
+#ifndef _di_controller_thread_rule_
+  void * controller_thread_rule(void *arguments) {
+
+    controller_main_t *main = (controller_main_t *) arguments;
+
+    return 0;
+  }
+#endif // _di_controller_thread_rule_
 
 #ifndef _di_controller_thread_signal_
   void * controller_thread_signal(void *arguments) {
@@ -373,7 +449,7 @@ extern "C" {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
           main->thread->signal = signal;
 
-          controller_thread_process_cancel(*main);
+          controller_thread_process_cancel(main);
           break;
         }
       }
