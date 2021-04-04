@@ -27,20 +27,25 @@ extern "C" {
 
         f_array_length_t i = 0;
 
-        for (; i < main->thread->processs.used && main->thread->enabled; ++i) {
+        for (; i < main->thread->processs.size && main->thread->enabled; ++i) {
 
-          process = &main->thread->processs.array[i];
+          if (!main->thread->processs.array[i]) continue;
 
+          process = main->thread->processs.array[i];
+
+          // if "active" has a read lock, then do not attempt to clean it.
           if (f_thread_lock_write_try(&process->active) != F_none) {
             continue;
           }
 
+          // if "lock" has a read or write lock, then do not attempt to clean it.
           if (f_thread_lock_write_try(&process->lock) != F_none) {
             f_thread_unlock(&process->active);
 
             continue;
           }
 
+          // if process is active or busy, then do not attempt to clean it.
           if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
             f_thread_unlock(&process->active);
             f_thread_unlock(&process->lock);
@@ -48,8 +53,16 @@ extern "C" {
             continue;
           }
 
+          f_thread_unlock(&process->lock);
+
           if (process->id_thread) {
             f_thread_join(process->id_thread, 0);
+
+            if (!main->thread->enabled) {
+              f_thread_unlock(&process->active);
+
+              break;
+            }
 
             f_thread_lock_write(&process->lock);
 
@@ -64,24 +77,30 @@ extern "C" {
           f_type_array_lengths_resize(0, &process->stack);
 
           f_thread_unlock(&process->active);
-          f_thread_unlock(&process->lock);
         } // for
 
-        if (main->thread->processs.used) {
-          for (i = main->thread->processs.used - 1; main->thread->processs.used && main->thread->enabled; --i) {
+        if (main->thread->processs.size) {
+          f_array_length_t j = main->thread->processs.size;
 
-            process = &main->thread->processs.array[i];
+          for (i = main->thread->processs.size - 1; j && main->thread->enabled; --i, --j) {
 
+            if (!main->thread->processs.array[i]) continue;
+
+            process = main->thread->processs.array[i];
+
+            // if "active" has a read lock, then do not attempt to clean it.
             if (f_thread_lock_write_try(&process->active) != F_none) {
               break;
             }
 
+            // if "lock" has a read or write lock, then do not attempt to clean it.
             if (f_thread_lock_write_try(&process->lock) != F_none) {
               f_thread_unlock(&process->active);
 
               break;
             }
 
+            // if process is active or busy, then do not attempt to clean it.
             if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
               f_thread_unlock(&process->active);
               f_thread_unlock(&process->lock);
@@ -89,8 +108,16 @@ extern "C" {
               break;
             }
 
+            f_thread_unlock(&process->lock);
+
             if (process->id_thread) {
               f_thread_join(process->id_thread, 0);
+
+              if (!main->thread->enabled) {
+                f_thread_unlock(&process->active);
+
+                break;
+              }
 
               f_thread_lock_write(&process->lock);
 
@@ -107,7 +134,6 @@ extern "C" {
             --main->thread->processs.used;
 
             f_thread_unlock(&process->active);
-            f_thread_unlock(&process->lock);
           } // for
         }
 
@@ -140,21 +166,23 @@ extern "C" {
     // @todo redesign this to use timed waits, that include a counter and a max wait such that when max wait is reached, send kill signals.
     //       this would, in theory, allow faster exits without as much waiting when there is nothing to wait for.
 
-    if (main->thread->processs.used) {
+    if (main->thread->processs.size) {
       f_thread_unlock(&main->thread->lock.process);
 
       usleep(controller_thread_exit_process_force_timeout);
 
       f_thread_lock_read(&main->thread->lock.process);
 
-      for (f_array_length_t i = 0; i < main->thread->processs.used; ++i) {
+      for (f_array_length_t i = 0; i < main->thread->processs.size; ++i) {
 
-        if (main->thread->processs.array[i].child > 0) {
-          f_signal_send(F_signal_kill, main->thread->processs.array[i].child);
+        if (!main->thread->processs.array[i]) continue;
+
+        if (main->thread->processs.array[i]->child > 0) {
+          f_signal_send(F_signal_kill, main->thread->processs.array[i]->child);
         }
 
-        if (main->thread->processs.array[i].id_thread) {
-          f_thread_signal(main->thread->processs.array[i].id_thread, F_signal_kill);
+        if (main->thread->processs.array[i]->id_thread) {
+          f_thread_signal(main->thread->processs.array[i]->id_thread, F_signal_kill);
         }
       } // for
     }
@@ -386,42 +414,48 @@ extern "C" {
 
     for (; i < main->thread->processs.used; ++i) {
 
-      process = &main->thread->processs.array[i];
+      if (!main->thread->processs.array[i]) continue;
 
-      f_thread_lock_read(&process->lock);
+      process = main->thread->processs.array[i];
+
+      f_thread_lock_read(&process->active);
 
       if (process->child > 0) {
         f_signal_send(F_signal_termination, process->child);
       }
 
-      f_thread_unlock(&process->lock);
+      f_thread_unlock(&process->active);
     } // for
 
     for (i = 0; i < main->thread->processs.used; ++i) {
 
-      process = &main->thread->processs.array[i];
+      if (!main->thread->processs.array[i]) continue;
 
-      f_thread_lock_read(&process->lock);
+      process = main->thread->processs.array[i];
+
+      f_thread_lock_read(&process->active);
 
       if (process->id_thread) {
         f_thread_cancel(process->id_thread);
       }
 
-      f_thread_unlock(&process->lock);
+      f_thread_unlock(&process->active);
     } // for
 
     for (i = 0; i < main->thread->processs.size; ++i) {
 
-      process = &main->thread->processs.array[i];
+      if (!main->thread->processs.array[i]) continue;
+
+      process = main->thread->processs.array[i];
 
       if (process->id_thread) {
         f_thread_join(process->id_thread, 0);
 
-        f_thread_lock_write(&process->lock);
+        f_thread_lock_read(&process->active);
 
         process->id_thread = 0;
 
-        f_thread_unlock(&process->lock);
+        f_thread_unlock(&process->active);
       }
     } // for
 

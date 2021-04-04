@@ -828,13 +828,15 @@ extern "C" {
 /**
  * The Rule Processes.
  *
+ * Each process is a pointer of a process, to preserve memory locations that may ultimately change due to the resizing the array.
+ *
  * array: An array of rule processes.
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
 #ifndef _di_controller_processs_t_
   typedef struct {
-    controller_process_t *array;
+    controller_process_t **array;
 
     f_array_length_t size;
     f_array_length_t used;
@@ -1073,6 +1075,9 @@ extern "C" {
   //#define controller_thread_exit_force_timeout 60  // 1 minute in seconds.
   #define controller_thread_exit_process_force_timeout 2000000 // 2 seconds in microseconds.
   #define controller_thread_exit_main_force_timeout 100000 // 0.1 seconds in microseconds.
+  #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
+  #define controller_thread_wait_timeout_seconds 10
+  #define controller_thread_wait_timeout_nanoseconds 0
 
   typedef struct {
     bool enabled;
@@ -1326,6 +1331,20 @@ extern "C" {
 #ifndef _di_controller_process_delete_simple_
   extern void controller_process_delete_simple(controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_delete_simple_
+
+/***
+ * Safely wait for a process, periodically checking to see if process completed or check if exiting.
+ *
+ * @param main
+ *   The main data.
+ * @param process
+ *   The process to wait on.
+ *
+ * @see f_thread_condition_wait_timed()
+ */
+#ifndef _di_controller_process_wait_
+  extern void controller_process_wait(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_process_wait_
 
 /**
  * Fully deallocate all memory for the given processs without caring about return status.

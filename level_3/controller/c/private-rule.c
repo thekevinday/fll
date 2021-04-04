@@ -978,7 +978,7 @@ extern "C" {
 
     f_status_t status = F_none;
     int result = 0;
-    pid_t id_process = 0;
+    pid_t id_child = 0;
 
     if (options & controller_rule_option_simulate) {
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
@@ -1001,16 +1001,16 @@ extern "C" {
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
-      usleep(200000);
+      usleep(controller_thread_simulation_timeout);
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
       fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_child);
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_child);
     }
 
     if (status == F_parent) {
@@ -1020,13 +1020,13 @@ extern "C" {
       f_thread_lock_write(&process->lock);
 
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
-      process->child = id_process;
+      process->child = id_child;
 
       f_thread_unlock(&process->lock);
       f_thread_lock_read(&process->lock);
 
       // have the parent wait for the child process to finish.
-      waitpid(id_process, &result, 0);
+      waitpid(id_child, &result, 0);
 
       f_thread_unlock(&process->lock);
       f_thread_lock_write(&process->lock);
@@ -1123,7 +1123,7 @@ extern "C" {
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
-      usleep(200000);
+      usleep(controller_thread_simulation_timeout);
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
@@ -1147,13 +1147,13 @@ extern "C" {
       f_thread_unlock(&process->lock);
       f_thread_lock_read(&process->lock);
 
-      // have the parent wait for the child process to finish.
+      // have the parent wait for the child process to finish. @todo do not wait, this is a background execution!
       waitpid(id_process, &result, 0);
 
       f_thread_unlock(&process->lock);
       f_thread_lock_write(&process->lock);
 
-      // remove the pid now that waidpid() has returned.
+      // remove the pid now that waidpid() has returned. @todo do not clear until forked execution is known to have exited, this is a background execution
       process->child = 0;
 
       f_thread_unlock(&process->lock);
@@ -1729,7 +1729,7 @@ extern "C" {
             f_thread_unlock(&main.thread->lock.rule);
             f_thread_lock_read(&main.thread->lock.process);
 
-            process_other = &main.thread->processs.array[id_process];
+            process_other = main.thread->processs.array[id_process];
 
             f_thread_lock_read(&process_other->active);
             f_thread_lock_read(&process_other->lock);
@@ -1737,11 +1737,7 @@ extern "C" {
             if (process_other->status == F_known_not && (process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy)) {
               f_thread_unlock(&process_other->lock);
 
-              if (main.thread->enabled) {
-                f_thread_mutex_lock(&process_other->wait_lock);
-                f_thread_condition_wait(&process_other->wait, &process_other->wait_lock);
-                f_thread_mutex_unlock(&process_other->wait_lock);
-              }
+              controller_process_wait(main, process_other);
             }
             else {
               f_thread_unlock(&process_other->lock);
@@ -1989,7 +1985,7 @@ extern "C" {
         return status;
       }
 
-      process = &main.thread->processs.array[at];
+      process = main.thread->processs.array[at];
 
       f_thread_lock_read(&process->active);
       f_thread_lock_write(&process->lock);
@@ -4606,14 +4602,14 @@ extern "C" {
 
     for (; i < main.thread->processs.used && main.thread->enabled; ++i, skip = F_false) {
 
-      process = &main.thread->processs.array[i];
+      process = main.thread->processs.array[i];
 
       if (caller) {
         f_thread_lock_read(&main.thread->lock.rule);
 
         for (j = 0; j < caller->stack.used; ++j) {
 
-          if (fl_string_dynamic_compare(process->rule.alias, main.thread->processs.array[caller->stack.array[j]].rule.alias) == F_equal_to) {
+          if (main.thread->processs.array[caller->stack.array[j]] && fl_string_dynamic_compare(process->rule.alias, main.thread->processs.array[caller->stack.array[j]]->rule.alias) == F_equal_to) {
             skip = F_true;
           }
 
@@ -4636,9 +4632,16 @@ extern "C" {
           f_thread_lock_write(&process->lock);
 
           if (process->state == controller_process_state_done) {
-            f_thread_join(process->id_thread, 0);
-            process->state = controller_process_state_idle;
-            process->id_thread = 0;
+            f_thread_unlock(&process->active);
+
+            if (f_thread_lock_write_try(&process->active) == F_none) {
+              f_thread_join(process->id_thread, 0);
+              process->state = controller_process_state_idle;
+              process->id_thread = 0;
+            }
+            else {
+              f_thread_lock_read(&process->active);
+            }
           }
         }
 
@@ -4649,10 +4652,14 @@ extern "C" {
         continue;
       }
 
-      f_thread_unlock(&process->lock);
-      f_thread_mutex_lock(&process->wait_lock);
-      f_thread_condition_wait(&process->wait, &process->wait_lock);
-      f_thread_mutex_unlock(&process->wait_lock);
+      if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+        f_thread_unlock(&process->lock);
+
+        controller_process_wait(main, process);
+      }
+      else {
+        f_thread_unlock(&process->lock);
+      }
 
       f_thread_unlock(&process->active);
       f_thread_lock_read(&main.thread->lock.process);

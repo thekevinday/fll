@@ -251,7 +251,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < processs.used; ++i) {
 
-      if (fl_string_dynamic_compare(alias, processs.array[i].rule.alias) == F_equal_to) {
+      if (processs.array[i] && fl_string_dynamic_compare(alias, processs.array[i]->rule.alias) == F_equal_to) {
         if (at) *at = i;
         return F_true;
       }
@@ -1045,10 +1045,10 @@ extern "C" {
                 if (F_status_is_error(status)) {
                   controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main.thread);
                 }
-                else {
+                else if (main.thread->processs.array[main.thread->processs.used]) {
 
                   // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
-                  controller_process_t *process = &main.thread->processs.array[main.thread->processs.used];
+                  controller_process_t *process = main.thread->processs.array[main.thread->processs.used];
 
                   f_thread_lock_write(&process->lock);
 
@@ -1224,6 +1224,9 @@ extern "C" {
 
           break;
         }
+      }
+      else {
+        cache->ats.array[at_j]++;
       }
     } // for
 

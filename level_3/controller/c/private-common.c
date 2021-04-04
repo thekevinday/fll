@@ -166,10 +166,16 @@ extern "C" {
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
+    if (process->id_thread) {
+      f_thread_join(process->id_thread, 0);
+    }
+
+    f_thread_condition_signal_all(&process->wait);
+    f_thread_condition_delete(&process->wait);
+
     controller_lock_delete_rw(&process->lock);
     controller_lock_delete_rw(&process->active);
     controller_lock_delete_mutex(&process->wait_lock);
-    f_thread_condition_delete(&process->wait);
 
     controller_cache_delete_simple(&process->cache);
     controller_rule_delete_simple(&process->rule);
@@ -177,6 +183,39 @@ extern "C" {
     f_macro_array_lengths_t_delete_simple(process->stack)
   }
 #endif // _di_controller_process_delete_simple_
+
+#ifndef _di_controller_process_wait_
+  void controller_process_wait(const controller_main_t main, controller_process_t *process) {
+
+    if (!main.thread->enabled) return;
+
+    struct timespec time;
+    time.tv_sec = controller_thread_wait_timeout_seconds;
+    time.tv_nsec = controller_thread_wait_timeout_nanoseconds;
+
+    f_status_t status = F_none;
+
+    do {
+      f_thread_mutex_lock(&process->wait_lock);
+
+      status = f_thread_condition_wait_timed(&time, &process->wait, &process->wait_lock);
+
+      f_thread_mutex_unlock(&process->wait_lock);
+
+      if (!main.thread->enabled) break;
+
+      f_thread_lock_read(&process->lock);
+
+      if (process->status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+        f_thread_unlock(&process->lock);
+
+        break;
+      }
+
+      f_thread_unlock(&process->lock);
+    } while (main.thread->enabled);
+  }
+#endif // _di_controller_process_wait_
 
 #ifndef _di_controller_processs_delete_simple_
   void controller_processs_delete_simple(controller_processs_t *processs) {
@@ -212,28 +251,41 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < processs->size; ++i) {
-      controller_process_delete_simple(&processs->array[i]);
+
+      if (processs->array[i]) {
+        controller_process_delete_simple(processs->array[i]);
+
+        f_memory_delete(1, sizeof(f_array_length_t *), (void **) & processs->array[i]);
+      }
     } // for
 
     status = f_memory_resize(processs->size, length, sizeof(controller_process_t), (void **) & processs->array);
 
     if (F_status_is_error_not(status) && length) {
 
+      controller_process_t *process = 0;
+
       // the lock must be initialized, but only once, so initialize immediately upon allocation.
       for (; processs->size < length; ++processs->size) {
 
-        status = f_thread_lock_create(0, &processs->array[processs->size].lock);
+        status = f_memory_new(1, sizeof(controller_process_t), (void **) &processs->array[processs->size]);
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_lock_create(0, &processs->array[processs->size].active);
+          process = processs->array[processs->size];
+
+          status = f_thread_lock_create(0, &process->lock);
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_condition_create(0, &processs->array[processs->size].wait);
+          status = f_thread_lock_create(0, &process->active);
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_thread_mutex_create(0, &processs->array[processs->size].wait_lock);
+          status = f_thread_condition_create(0, &process->wait);
+        }
+
+        if (F_status_is_error_not(status)) {
+          status = f_thread_mutex_create(0, &process->wait_lock);
         }
 
         if (F_status_is_error(status)) {
