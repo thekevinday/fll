@@ -1234,6 +1234,19 @@ extern "C" {
       return status;
     }
 
+    if (simulate) {
+      if (main.data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&main.thread->lock.print);
+
+        fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(main.data->output.stream, "Done processing entry item '");
+        fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_main_s, main.data->context.set.title.after->string);
+        fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+
+        f_thread_mutex_unlock(&main.thread->lock.print);
+      }
+    }
+
     if (F_status_is_error_not(status) && simulate) {
       f_thread_mutex_lock(&main.thread->lock.print);
 
