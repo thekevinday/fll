@@ -41,7 +41,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, &environment, &signals, 0);
+      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
       *status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
 

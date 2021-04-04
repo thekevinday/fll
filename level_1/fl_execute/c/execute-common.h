@@ -27,10 +27,11 @@ extern "C" {
  *
  * If thread support is disabled in the library, then fl_execute_parameter_option_threadsafe will fallback to non-threadsafe.
  *
- * option:      accepts the bitwise options
- * environment: the environment variable name and value pairs, set to 0 to not use.
- * signals:     the set of signals the child process should or should block, set to 0 to not use.
- * data:        the data to pipe to the child process, set to 0 to not use.
+ * option:      Accepts the bitwise options
+ * wait:        Represents options passed to waitpid(), such as WUNTRACED.
+ * environment: The environment variable name and value pairs, set to 0 to not use.
+ * signals:     The set of signals the child process should or should block, set to 0 to not use.
+ * data:        The data to pipe to the child process, set to 0 to not use.
  */
 #ifndef _di_fl_execute_parameter_t_
   #define fl_execute_parameter_option_exit       0x1
@@ -40,18 +41,20 @@ extern "C" {
 
   typedef struct {
     uint8_t option;
+    int wait;
 
     const f_string_maps_t *environment;
     const f_signal_how_t *signals;
     const f_string_static_t *data;
   } fl_execute_parameter_t;
 
-  #define fl_execute_parameter_t_initialize { 0, 0, 0, 0 }
+  #define fl_execute_parameter_t_initialize { 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_parameter_t_initialize(option, environment, signals, data) { option, environment, signals, data }
+  #define fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, data) { option, wait, environment, signals, data }
 
   #define fl_macro_execute_parameter_t_clear(set) \
     set.option = 0; \
+    set.wait = 0; \
     set.environment = 0; \
     set.signals = 0; \
     set.data = 0;

@@ -318,7 +318,7 @@ extern "C" {
       }
 
       // have the parent wait for the child process to finish.
-      waitpid(id_process, (int *) result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, (int *) result, parameter->wait);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
@@ -490,7 +490,7 @@ extern "C" {
       }
 
       // have the parent wait for the child process to finish.
-      waitpid(id_process, (int *) result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, (int *) result, parameter->wait);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
