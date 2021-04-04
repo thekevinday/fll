@@ -338,20 +338,27 @@ extern "C" {
       controller_thread_process_cancel(&main);
     }
 
-    // wait until signal thread exits, which happens on any termination signal.
-    if (thread.id_signal) f_thread_join(thread.id_signal, 0);
+    if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
+      if (thread.id_signal) {
+        f_thread_join(thread.id_signal, 0);
+
+        thread.id_signal = 0;
+      }
+    }
 
     controller_thread_process_cancel(&main);
 
+    if (thread.id_signal) f_thread_cancel(thread.id_signal);
     if (thread.id_cleanup) f_thread_cancel(thread.id_cleanup);
     if (thread.id_control) f_thread_cancel(thread.id_control);
     if (thread.id_rule) f_thread_cancel(thread.id_rule);
 
+    if (thread.id_signal) f_thread_join(thread.id_signal, 0);
     if (thread.id_cleanup) f_thread_join(thread.id_cleanup, 0);
     if (thread.id_control) f_thread_join(thread.id_control, 0);
     if (thread.id_rule) f_thread_join(thread.id_rule, 0);
 
-    // if made it here, then the threads no longer need to be killed.
+    // wait for exit thread to finish any cleanup.
     f_thread_join(thread.id_exit, 0);
 
     thread.id_cleanup = 0;
