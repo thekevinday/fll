@@ -2085,7 +2085,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (asynchronous) {
-        status = f_thread_create(0, &process->id_thread, controller_thread_process, (void *) &process);
+        status = f_thread_create(0, &process->id_thread, controller_thread_process, (void *) process);
 
         if (F_status_is_error(status)) {
           controller_entry_error_print(main.data->error, cache.action, F_status_set_fine(status), "f_thread_create", F_true, main.thread);
