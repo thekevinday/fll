@@ -323,6 +323,8 @@ extern "C" {
 /**
  * Perform an execution of the given rule.
  *
+ * This requires that a read lock be set on process->lock before being called.
+ *
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -357,6 +359,8 @@ extern "C" {
 
 /**
  * Perform an execution of the given rule in the foreground.
+ *
+ * This requires that a read lock be set on process->lock before being called.
  *
  * @param type
  *   The item type code.
@@ -398,6 +402,8 @@ extern "C" {
 
 /**
  * Perform an execution of the given rule in the foreground or background and creating a PID file.
+ *
+ * This requires that a read lock be set on process->lock before being called.
  *
  * When this is synchronous, this will wait for the PID file to be generated before continuing.
  * When this is asynchronous, this will continue on adding the rule id and action to the asynchronous list.
@@ -553,8 +559,11 @@ extern "C" {
  * Any dependent rules are processed and executed as per "need", "want", and "wish" rule settings.
  * All dependent rules must be already loaded, this function will not load any rules.
  *
- * @fixme recursion is no longer happening is it?
+ * This requires that a read lock be set on process->lock before being called.
+ *
  * This function is recursively called for each "need", "want", and "wish", and has a max recursion length of the max size of the f_array_lengths_t array.
+ *
+ * The rule status will be updated by this function.
  *
  * @param action
  *   The action to perform based on the action type codes.
@@ -565,11 +574,6 @@ extern "C" {
  *   - controller_rule_action_type_restart
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
- * @param options
- *   A number using bits to represent specific boolean options.
- *   If no bits set, then operate normally in a synchronous manner.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
- *   If bit controller_rule_option_asynchronous, then run asynchronously.
  * @param main
  *   The main data.
  * @param process
@@ -581,7 +585,7 @@ extern "C" {
  *   F_signal on (exit) signal received.
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**

@@ -507,7 +507,7 @@ extern "C" {
                   action->status = F_status_set_error(F_number);
                 }
                 else {
-                  action->status = controller_status_simplify(F_status_set_fine(status));
+                  action->status = controller_status_simplify_error(F_status_set_fine(status));
                 }
 
                 if (F_status_set_fine(status) == F_memory_not) {
@@ -697,9 +697,9 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t j = 0;
 
-        for (; i < cache->object_items.used; ++i) {
+        for (; i < cache->object_items.used && main.thread->enabled; ++i) {
 
-          if (main.thread->signal) {
+          if (!main.thread->enabled) {
             return F_signal;
           }
 
@@ -850,7 +850,7 @@ extern "C" {
 
               for (j = 0; j < main.setting->entry.items.array[i].actions.used; ++j) {
 
-                if (main.thread->signal) {
+                if (!main.thread->enabled) {
                   return F_signal;
                 }
 
@@ -900,10 +900,10 @@ extern "C" {
                     }
 
                     action->number = 0;
-                    action->status = controller_status_simplify(F_found_not);
+                    action->status = controller_status_simplify_error(F_found_not);
 
                     // @fixme review how main.setting->entry.status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
-                    //main.setting->entry.status = controller_status_simplify(F_found_not);
+                    //main.setting->entry.status = controller_status_simplify_error(F_found_not);
 
                     cache->action.name_action.used = 0;
                     cache->action.name_item.used = 0;
@@ -928,7 +928,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       controller_entry_error_print_cache(main.data->error, cache->action);
 
-      main.setting->entry.status = controller_status_simplify(F_status_set_fine(status));
+      main.setting->entry.status = controller_status_simplify_error(F_status_set_fine(status));
     }
     else {
       main.setting->entry.status = F_none;

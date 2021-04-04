@@ -8,7 +8,7 @@ script:
   start {
     \#!/bin/bash
     my_function() {
-      echo "Hello this is the second script."
+      echo "Hello this is the last script."
       return 1;
     \}
 

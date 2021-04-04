@@ -311,7 +311,7 @@ extern "C" {
 #endif // _di_controller_process_entry_
 
 /**
- * Given a wide range of status codes, simplify them down to a small subset.
+ * Given a wide range of status codes (that are errors), simplify them down to a small subset.
  *
  * @param status
  *   The status code (without the error bit set) to simplify.
@@ -319,9 +319,9 @@ extern "C" {
  * @return
  *   A subset of status codes with error bit.
  */
-#ifndef _di_controller_status_simplify_
-  extern f_status_t controller_status_simplify(const f_status_t status) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_status_simplify_
+#ifndef _di_controller_status_simplify_error_
+  extern f_status_t controller_status_simplify_error(const f_status_t status) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_status_simplify_error_
 
 /**
  * Validate that the given string is a valid environment variable name.

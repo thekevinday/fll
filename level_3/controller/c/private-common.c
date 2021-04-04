@@ -112,26 +112,64 @@ extern "C" {
   }
 #endif // _di_controller_lock_create_
 
+#ifndef _di_controller_lock_delete_mutex_
+  void controller_lock_delete_mutex(f_thread_mutex_t *mutex) {
+
+    const f_status_t status = f_thread_mutex_delete(mutex);
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_busy) {
+        f_thread_mutex_lock(mutex);
+        f_thread_mutex_unlock(mutex);
+
+        if (f_thread_mutex_delete(mutex) == F_none) {
+          mutex = 0;
+        }
+      }
+    }
+    else {
+      mutex = 0;
+    }
+  }
+#endif // _di_controller_lock_delete_mutex_
+
+#ifndef _di_controller_lock_delete_rw_
+  void controller_lock_delete_rw(f_thread_lock_t *lock) {
+
+    const f_status_t status = f_thread_lock_delete(lock);
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_busy) {
+        f_thread_lock_write(lock);
+        f_thread_unlock(lock);
+
+        if (f_thread_lock_delete(lock) == F_none) {
+          lock = 0;
+        }
+      }
+    }
+    else {
+      lock = 0;
+    }
+  }
+#endif // _di_controller_lock_delete_rw_
+
 #ifndef _di_controller_lock_delete_simple_
   void controller_lock_delete_simple(controller_lock_t *lock) {
 
-    f_thread_mutex_delete(&lock->print);
-
-    f_thread_lock_delete(&lock->process);
-    f_thread_lock_delete(&lock->rule);
+    controller_lock_delete_mutex(&lock->print);
+    controller_lock_delete_rw(&lock->process);
+    controller_lock_delete_rw(&lock->rule);
   }
 #endif // _di_controller_lock_delete_simple_
 
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {
 
-    f_thread_lock_delete(&process->lock);
-    f_thread_lock_delete(&process->active);
-
-    f_thread_mutex_lock(&process->wait_lock);
-    f_thread_condition_signal_all(&process->wait);
-    f_thread_mutex_unlock(&process->wait_lock);
-    f_thread_mutex_delete(&process->wait_lock);
+    controller_lock_delete_rw(&process->lock);
+    controller_lock_delete_rw(&process->active);
+    controller_lock_delete_mutex(&process->wait_lock);
+    f_thread_condition_delete(&process->wait);
 
     controller_cache_delete_simple(&process->cache);
     controller_rule_delete_simple(&process->rule);
@@ -179,7 +217,7 @@ extern "C" {
 
     status = f_memory_resize(processs->size, length, sizeof(controller_process_t), (void **) & processs->array);
 
-    if (F_status_is_error_not(status)) {
+    if (F_status_is_error_not(status) && length) {
 
       // the lock must be initialized, but only once, so initialize immediately upon allocation.
       for (; processs->size < length; ++processs->size) {
@@ -257,7 +295,9 @@ extern "C" {
     f_macro_int32s_t_delete_simple(rule->groups)
     f_macro_limit_sets_t_delete_simple(rule->limits)
 
-    f_capability_delete(&rule->capability);
+    if (rule->capability) {
+      f_capability_delete(&rule->capability);
+    }
 
     controller_rule_items_delete_simple(&rule->items);
   }

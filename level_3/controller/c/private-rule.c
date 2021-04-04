@@ -315,13 +315,13 @@ extern "C" {
                 if (F_status_is_error(status)) {
                   controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, main.thread);
 
-                  actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
+                  actions->array[actions->used].status = controller_status_simplify_error(F_status_set_fine(status));
                   break;
                 }
 
                 status = controller_rule_parameters_read(main, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used].parameters);
 
-                actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
+                actions->array[actions->used].status = controller_status_simplify_error(F_status_set_fine(status));
                 actions->used++;
               } // for
 
@@ -402,7 +402,7 @@ extern "C" {
             if (F_status_is_error(status)) {
               controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_parameters_read", F_true, main.thread);
 
-              actions->array[actions->used].status = controller_status_simplify(F_status_set_fine(status));
+              actions->array[actions->used].status = controller_status_simplify_error(F_status_set_fine(status));
             }
             else {
               actions->array[actions->used].status = status;
@@ -438,6 +438,12 @@ extern "C" {
   f_status_t controller_rule_copy(const controller_rule_t source, controller_rule_t *destination) {
 
     f_status_t status = F_none;
+
+    // delete the third party structures.
+    f_macro_control_group_t_delete_simple(destination->control_group)
+    f_capability_delete(&destination->capability);
+
+    destination->status = source.status;
 
     destination->timeout_kill = source.timeout_kill;
     destination->timeout_start = source.timeout_start;
@@ -756,7 +762,7 @@ extern "C" {
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
 
-    controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, &environment, &signals, 0, fl_execute_as_t_initialize);
+    controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     // when using pointers in threads and calling the exec functions, invalid reads and writes may occur.
     // this problem might be happening due to a compiler optimization/decision, so make local copies and have the pointers reference these to avoid invalid reads and writes.
@@ -790,7 +796,6 @@ extern "C" {
         if (F_status_is_error(status)) {
           controller_error_print(main.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, main.thread);
 
-          process->status = F_status_set_error(F_failure);
           return status;
         }
       }
@@ -831,13 +836,12 @@ extern "C" {
     if (F_status_is_error(status)) {
       controller_error_print(main.data->error, F_status_set_fine(status), "fl_environment_load_names", F_true, main.thread);
 
-      process->status = F_status_set_error(F_failure);
       return status;
     }
 
     for (i = 0; i < process->rule.items.used; ++i) {
 
-      if (main.thread->signal) {
+      if (!main.thread->enabled) {
         status = F_signal;
         break;
       }
@@ -846,7 +850,7 @@ extern "C" {
 
       for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
-        if (main.thread->signal) {
+        if (!main.thread->enabled) {
           status = F_signal;
           break;
         }
@@ -874,9 +878,12 @@ extern "C" {
             process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
-          }
 
-          success = F_true;
+            success = F_status_set_error(F_failure);
+          }
+          else if (success == F_false || success == F_ignore) {
+            success = F_true;
+          }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_script) {
 
@@ -894,9 +901,12 @@ extern "C" {
             process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
-          }
 
-          success = F_true;
+            success = F_status_set_error(F_failure);
+          }
+          else if (success == F_false || success == F_ignore) {
+            success = F_true;
+          }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
 
@@ -912,9 +922,12 @@ extern "C" {
             process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
 
             if (!(options & controller_rule_option_simulate)) break;
-          }
 
-          success = F_true;
+            success = F_status_set_error(F_failure);
+          }
+          else if (success == F_false || success == F_ignore) {
+            success = F_true;
+          }
         }
         else {
 
@@ -929,9 +942,7 @@ extern "C" {
             f_thread_mutex_unlock(&main.thread->lock.print);
           }
 
-          process->rule.items.array[i].actions.array[j].status = F_ignore;
-
-          if (success != F_true) {
+          if (success == F_false) {
             success = F_ignore;
           }
 
@@ -951,16 +962,14 @@ extern "C" {
     }
 
     if (F_status_is_error(status) || success == F_false) {
-      process->status = F_status_set_error(F_failure);
-    }
-    else if (success == F_ignore || success == F_busy) {
-      process->status = success;
-    }
-    else {
-      process->status = F_none;
+      return F_status_set_error(F_failure);
     }
 
-    return process->status;
+    if (success == F_ignore) {
+      return F_ignore;
+    }
+
+    return F_none;
   }
 #endif // _di_controller_rule_execute_
 
@@ -996,7 +1005,7 @@ extern "C" {
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
@@ -1007,14 +1016,26 @@ extern "C" {
     if (status == F_parent) {
       result = 0;
 
+      f_thread_unlock(&process->lock);
+      f_thread_lock_write(&process->lock);
+
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
       process->child = id_process;
 
+      f_thread_unlock(&process->lock);
+      f_thread_lock_read(&process->lock);
+
       // have the parent wait for the child process to finish.
-      waitpid(id_process, &result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, &result, 0);
+
+      f_thread_unlock(&process->lock);
+      f_thread_lock_write(&process->lock);
 
       // remove the pid now that waidpid() has returned.
       process->child = 0;
+
+      f_thread_unlock(&process->lock);
+      f_thread_lock_read(&process->lock);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (!WIFEXITED(result)) {
@@ -1106,7 +1127,7 @@ extern "C" {
 
       const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
     }
@@ -1117,14 +1138,26 @@ extern "C" {
     if (status == F_parent) {
       result = 0;
 
+      f_thread_unlock(&process->lock);
+      f_thread_lock_write(&process->lock);
+
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
       process->child = id_process;
 
+      f_thread_unlock(&process->lock);
+      f_thread_lock_read(&process->lock);
+
       // have the parent wait for the child process to finish.
-      waitpid(id_process, &result, WUNTRACED | WCONTINUED);
+      waitpid(id_process, &result, 0);
+
+      f_thread_unlock(&process->lock);
+      f_thread_lock_write(&process->lock);
 
       // remove the pid now that waidpid() has returned.
       process->child = 0;
+
+      f_thread_unlock(&process->lock);
+      f_thread_lock_read(&process->lock);
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
       if (!WIFEXITED(result)) {
@@ -1527,7 +1560,7 @@ extern "C" {
 #endif // _di_controller_rule_setting_limit_type_name_
 
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) {
+  f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) {
 
     switch (action) {
       case controller_rule_action_type_freeze:
@@ -1605,8 +1638,8 @@ extern "C" {
       return status;
     }
 
-    if ((options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_simulate(process->rule, controller_rule_action_type_start, options, main, &process->cache);
+    if ((process->options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+      controller_rule_simulate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
     }
 
     f_array_length_t i = 0;
@@ -1616,6 +1649,7 @@ extern "C" {
       f_array_length_t k = 0;
       f_array_length_t id_rule = 0;
       f_array_length_t id_process = 0;
+      bool found = F_false;
 
       controller_process_t *process_other = 0;
 
@@ -1649,12 +1683,15 @@ extern "C" {
             status = controller_rule_find(dynamics[i]->array[j], main.setting->rules, &id_rule);
 
             f_thread_unlock(&main.thread->lock.rule);
+
+            found = F_true;
           }
 
           if (status != F_true) {
-            f_thread_lock_read(&main.thread->lock.rule);
+            found = F_false;
+            id_rule = 0;
 
-            id_rule = main.setting->rules.used;
+            f_thread_lock_read(&main.thread->lock.rule);
 
             if (i == 0) {
               f_thread_mutex_lock(&main.thread->lock.print);
@@ -1666,7 +1703,7 @@ extern "C" {
 
               status = F_status_set_error(F_found_not);
 
-              if (!(options & controller_rule_option_simulate)) {
+              if (!(process->options & controller_rule_option_simulate)) {
                 f_thread_unlock(&main.thread->lock.rule);
 
                 break;
@@ -1688,7 +1725,7 @@ extern "C" {
 
           f_thread_lock_read(&main.thread->lock.rule);
 
-          if (status == F_true && id_rule < main.setting->rules.used) {
+          if (status == F_true && found) {
             f_thread_unlock(&main.thread->lock.rule);
             f_thread_lock_read(&main.thread->lock.process);
 
@@ -1729,11 +1766,11 @@ extern "C" {
             f_thread_unlock(&main.thread->lock.rule);
 
             // attempt to (synchronously) execute the rule when the status is unknown (the rule has not yet been run).
-            if (process_other->status == F_known_not) {
+            if (main.setting->rules.array[id_rule].status == F_known_not) {
 
               const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, main.setting->rules.array[id_rule].alias.used);
 
-              status = controller_rule_process_begin(F_false, alias_other, action, options & controller_rule_option_asynchronous ? options - controller_rule_option_asynchronous : options, process->stack, main, process->cache);
+              status = controller_rule_process_begin(F_false, alias_other, action, process->options & controller_rule_option_asynchronous ? process->options - controller_rule_option_asynchronous : process->options, process->stack, main, process->cache);
 
               if (status == F_child || status == F_signal) {
                 f_thread_unlock(&process_other->active);
@@ -1750,7 +1787,7 @@ extern "C" {
 
                   f_thread_mutex_unlock(&main.thread->lock.print);
 
-                  if (!(options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
+                  if (!(process->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                     f_thread_unlock(&process_other->active);
 
                     break;
@@ -1769,9 +1806,10 @@ extern "C" {
               }
             }
 
+            f_thread_lock_read(&main.thread->lock.rule);
             f_thread_unlock(&process_other->active);
 
-            if (F_status_is_error(process_other->status)) {
+            if (F_status_is_error(main.setting->rules.array[id_rule].status)) {
               if (i == 0 || i == 1) {
                 f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -1782,7 +1820,7 @@ extern "C" {
 
                 f_thread_mutex_unlock(&main.thread->lock.print);
 
-                if (!(options & controller_rule_option_simulate)) {
+                if (!(process->options & controller_rule_option_simulate)) {
                   f_thread_unlock(&main.thread->lock.rule);
                   break;
                 }
@@ -1798,6 +1836,8 @@ extern "C" {
                 }
               }
             }
+
+            f_thread_unlock(&main.thread->lock.rule);
           }
           else {
             f_thread_unlock(&main.thread->lock.rule);
@@ -1806,7 +1846,7 @@ extern "C" {
 
         if (status == F_child || status == F_signal) break;
 
-        if (F_status_is_error(status) && !(options & controller_rule_option_simulate)) break;
+        if (F_status_is_error(status) && !(process->options & controller_rule_option_simulate)) break;
       } // for
     }
 
@@ -1818,7 +1858,7 @@ extern "C" {
       return F_signal;
     }
 
-    if (!(options & controller_rule_option_wait) && F_status_is_error_not(status)) {
+    if (!(process->options & controller_rule_option_wait) && F_status_is_error_not(status)) {
       controller_rule_wait_all(main, process);
 
       if (!main.thread->enabled) {
@@ -1826,10 +1866,10 @@ extern "C" {
       }
     }
 
-    if (!(options & controller_rule_option_validate) && F_status_is_error_not(status)) {
+    if (!(process->options & controller_rule_option_validate) && F_status_is_error_not(status)) {
 
       // find at least one of the requested action when the rule is required.
-      if (options & controller_rule_option_require) {
+      if (process->options & controller_rule_option_require) {
         bool missing = F_true;
 
         f_array_length_t j = 0;
@@ -1866,10 +1906,10 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(action, options, main, process);
+        status = controller_rule_execute(action, process->options, main, process);
 
-        if (status == F_child) {
-          return F_child;
+        if (status == F_child || status == F_signal) {
+          return status;
         }
 
         if (!main.thread->enabled) {
@@ -1882,11 +1922,36 @@ extern "C" {
       }
     }
 
+    f_array_length_t id_rule = 0;
+
+    f_thread_unlock(&process->lock);
+    f_thread_lock_write(&process->lock);
+
     if (F_status_is_error(status)) {
-      return status;
+      process->rule.status = controller_status_simplify_error(F_status_set_fine(status));
+    }
+    else {
+      process->rule.status = status;
     }
 
-    return F_none;
+    f_thread_lock_write(&main.thread->lock.rule);
+
+    status = controller_rule_find(process->rule.alias, main.setting->rules, &id_rule);
+
+    if (F_status_is_error(status)) {
+      controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "controller_rule_find", F_true, F_true, main.thread);
+    }
+    else {
+      main.setting->rules.array[id_rule].status = process->rule.status;
+
+      // @fixme the rule item action status needs to be copied over from the local rule to the old one but there is no way to map the two (the structure could have changeed).
+    }
+
+    f_thread_unlock(&main.thread->lock.rule);
+    f_thread_unlock(&process->lock);
+    f_thread_lock_read(&process->lock);
+
+    return process->rule.status;
   }
 #endif // _di_controller_rule_process_
 
@@ -1898,21 +1963,19 @@ extern "C" {
     }
 
     f_status_t status = F_none;
-
     controller_process_t *process = 0;
+
+    f_thread_lock_read(&main.thread->lock.process);
 
     {
       f_array_length_t at = 0;
-
-      f_thread_lock_read(&main.thread->lock.process);
 
       if (controller_find_process(alias_rule, main.thread->processs, &at) != F_true) {
         status = F_status_set_error(F_found_not);
       }
 
-      f_thread_unlock(&main.thread->lock.process);
-
       if (F_status_is_error(status)) {
+        f_thread_unlock(&main.thread->lock.process);
 
         if (main.data->error.verbosity != f_console_verbosity_quiet) {
           f_thread_mutex_lock(&main.thread->lock.print);
@@ -1926,20 +1989,21 @@ extern "C" {
         return status;
       }
 
-      f_thread_lock_read(&main.thread->lock.process);
-      f_thread_lock_write(&main.thread->processs.array[at].lock);
-      f_thread_unlock(&main.thread->lock.process);
-
       process = &main.thread->processs.array[at];
+
+      f_thread_lock_read(&process->active);
+      f_thread_lock_write(&process->lock);
+
+      // once a write lock on the process is achieved, it is safe to unlock the main process read lock.
+      f_thread_unlock(&main.thread->lock.process);
 
       // if the process is already running, then there is nothing to do.
       if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
         f_thread_unlock(&process->lock);
+        f_thread_unlock(&process->active);
 
         return F_busy;
       }
-
-      f_thread_lock_read(&process->active);
 
       // the thread is done, so detach/close the thread.
       if (process->state == controller_process_state_done) {
@@ -1949,6 +2013,9 @@ extern "C" {
 
       process->id = at;
     }
+
+    f_thread_unlock(&process->lock);
+    f_thread_lock_write(&process->lock);
 
     process->state = controller_process_state_active;
     process->action = action;
@@ -1983,8 +2050,8 @@ extern "C" {
     process->main_thread = (void *) main.thread;
 
     if (F_status_is_error_not(status) && stack.used) {
-      if (process->stack.used < stack.used) {
-        status = f_type_array_lengths_resize(process->stack.used, &process->stack);
+      if (process->stack.size < stack.used) {
+        status = f_type_array_lengths_resize(stack.used, &process->stack);
       }
 
       if (F_status_is_error(status)) {
@@ -1992,8 +2059,10 @@ extern "C" {
       }
       else {
         for (f_array_length_t i = 0; i < stack.used; ++i) {
-          process->stack.array[process->stack.used++] = stack.array[i];
+          process->stack.array[i] = stack.array[i];
         } // for
+
+        process->stack.used = stack.used;
       }
     }
 
@@ -2041,14 +2110,14 @@ extern "C" {
   f_status_t controller_rule_process_do(const bool asynchronous, controller_process_t *process) {
 
     // the process lock shall be held for the duration of this processing (aside from switching between read to/from write).
-    f_thread_lock_read(&process->active);
-    f_thread_lock_write(&process->lock);
+    if (asynchronous) f_thread_lock_read(&process->active);
+    f_thread_lock_read(&process->lock);
 
     controller_main_t main = controller_macro_main_t_initialize((controller_data_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
     if (!main.thread->enabled) {
       f_thread_unlock(&process->lock);
-      f_thread_unlock(&process->active);
+      if (asynchronous) f_thread_unlock(&process->active);
 
       return F_signal;
     }
@@ -2057,12 +2126,21 @@ extern "C" {
     f_array_length_t id_rule = 0;
 
     const f_array_length_t used_original_stack = process->stack.used;
+    const bool simulate = main.data->parameters[controller_parameter_test].result == f_console_result_found;
 
     f_thread_lock_read(&main.thread->lock.rule);
 
     if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
 
+      f_thread_unlock(&process->lock);
+      f_thread_lock_write(&process->lock);
+
+      controller_rule_delete_simple(&process->rule);
+
       status = controller_rule_copy(main.setting->rules.array[id_rule], &process->rule);
+
+      f_thread_unlock(&process->lock);
+      f_thread_lock_read(&process->lock);
 
       f_thread_unlock(&main.thread->lock.rule);
 
@@ -2100,15 +2178,19 @@ extern "C" {
             controller_entry_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_type_array_lengths_increase", F_true, main.thread);
           }
           else {
+            f_thread_unlock(&process->lock);
+            f_thread_lock_write(&process->lock);
+
             process->stack.array[process->stack.used++] = id_rule;
+
+            f_thread_unlock(&process->lock);
+            f_thread_lock_read(&process->lock);
           }
         }
       }
 
       if (F_status_is_error_not(status) && main.thread->enabled) {
-        const uint8_t rule_options = asynchronous ? controller_rule_option_asynchronous : 0;
-
-        status = controller_rule_process(controller_rule_action_type_start, rule_options, main, process);
+        status = controller_rule_process(controller_rule_action_type_start, main, process);
       }
     }
     else {
@@ -2126,6 +2208,17 @@ extern "C" {
       }
     }
 
+    f_thread_lock_write(&main.thread->lock.rule);
+
+    if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
+      main.setting->rules.array[id_rule].status = status;
+    }
+
+    f_thread_unlock(&main.thread->lock.rule);
+
+    f_thread_unlock(&process->lock);
+    f_thread_lock_write(&process->lock);
+
     if (asynchronous) {
       process->state = controller_process_state_done;
     }
@@ -2136,7 +2229,7 @@ extern "C" {
     process->stack.used = used_original_stack;
 
     f_thread_unlock(&process->lock);
-    f_thread_unlock(&process->active);
+    if (asynchronous) f_thread_unlock(&process->active);
 
     if (main.thread->enabled) {
 
@@ -2396,7 +2489,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       controller_rule_item_error_print(main.data->error, cache->action, for_item, main.thread);
 
-      rule->status = controller_status_simplify(F_status_set_fine(status));
+      rule->status = controller_status_simplify_error(F_status_set_fine(status));
       return F_false;
     }
 

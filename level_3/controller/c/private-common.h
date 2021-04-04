@@ -425,8 +425,8 @@ extern "C" {
     fl_execute_as_t_initialize \
   }
 
-  #define controller_macro_execute_set_t_initialize(option, environment, signals, data, as) { \
-    fl_macro_execute_parameter_t_initialize(option, environment, signals, data), \
+  #define controller_macro_execute_set_t_initialize(option, wait, environment, signals, data, as) { \
+    fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, data), \
     as, \
   }
 #endif // _di_controller_execute_set_t_
@@ -588,6 +588,7 @@ extern "C" {
 /**
  * A Rule.
  *
+ * status:           The status of the rule as the result of processing/execution.
  * timeout_kill:     The timeout to wait relating to using a kill signal.
  * timeout_start:    The timeout to wait relating to starting a process.
  * timeout_stop:     The timeout to wait relating to stopping a process.
@@ -743,6 +744,9 @@ extern "C" {
  *
  * This refers to "process" as in the processing of a single rule for the given Rule ID and does not refer to "process" as in a CPU Process.
  *
+ * The "cache" should only be used by the function processing/executing the process and as such should not require a write lock on the "process".
+ * There should only be a single thread running any given Rule process at a time, guaranteeing the cache to not need read/write locks.
+ *
  * Process States:
  * - idle:   No process is running for this rule.
  * - busy:   A process is actively using this, and is running synchronously.
@@ -750,7 +754,7 @@ extern "C" {
  * - done:   A process has finished running on this and there is a thread that needs to be cleaned up.
  *
  * id:           The ID of this process relative to the processes array.
- * status:       The last execution status of the Rule.
+ * status:       The last execution status of the process.
  * state:        The state of the process.
  * action:       The action being performed.
  * options:      Configuration options for this asynchronous thread.
@@ -1067,7 +1071,8 @@ extern "C" {
   #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
   //#define controller_thread_exit_force_timeout 60  // 1 minute in seconds.
-  #define controller_thread_exit_force_timeout 5
+  #define controller_thread_exit_process_force_timeout 2000000 // 2 seconds in microseconds.
+  #define controller_thread_exit_main_force_timeout 100000 // 0.1 seconds in microseconds.
 
   typedef struct {
     bool enabled;
@@ -1269,6 +1274,28 @@ extern "C" {
 #ifndef _di_controller_lock_create_
   extern f_status_t controller_lock_create(controller_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_create_
+
+/**
+ * Delete the mutex lock and if the mutex lock is busy, forcibly unlock it and then delete it.
+ *
+ * @param mutex
+ *   The mutex lock to delete.
+ *   Will be set to NULLif delete succeeded.
+ */
+#ifndef _di_controller_lock_delete_mutex_
+  extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_delete_mutex_
+
+/**
+ * Delete the r/w lock and if the r/w lock is busy, forcibly unlock it and then delete it.
+ *
+ * @param lock
+ *   The r/w lock to delete.
+ *   Will be set to NULL if delete succeeded.
+ */
+#ifndef _di_controller_lock_delete_rw_
+  extern void controller_lock_delete_rw(f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_delete_rw_
 
 /**
  * Fully deallocate all memory for the given lock without caring about return status.

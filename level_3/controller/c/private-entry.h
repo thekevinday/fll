@@ -182,7 +182,7 @@ extern "C" {
  *   Errors (with error bit) from: controller_entry_actions_read().
  *   Errors (with error bit) from: controller_entry_items_increase_by().
  *   Errors (with error bit) from: controller_file_load().
- *   Errors (with error bit) from: controller_status_simplify().
+ *   Errors (with error bit) from: controller_status_simplify_error().
  *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
  *   Errors (with error bit) from: controller_string_dynamic_partial_append_terminated().
  *   Errors (with error bit) from: f_fss_count_lines().
@@ -195,7 +195,7 @@ extern "C" {
  * @see controller_entry_actions_read()
  * @see controller_entry_items_increase_by()
  * @see controller_file_load()
- * @see controller_status_simplify()
+ * @see controller_status_simplify_error()
  * @see controller_string_dynamic_append_terminated()
  * @see controller_string_dynamic_partial_append_terminated()
  * @see f_fss_count_lines()
