@@ -879,7 +879,7 @@ extern "C" {
 
             if (!(options & controller_rule_option_simulate)) break;
 
-            success = F_status_set_error(F_failure);
+            success = F_failure;
           }
           else if (success == F_false || success == F_ignore) {
             success = F_true;
@@ -923,14 +923,13 @@ extern "C" {
 
             if (!(options & controller_rule_option_simulate)) break;
 
-            success = F_status_set_error(F_failure);
+            success = F_failure;
           }
           else if (success == F_false || success == F_ignore) {
             success = F_true;
           }
         }
         else {
-
           if (main.data->warning.verbosity == f_console_verbosity_debug) {
             f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -957,12 +956,12 @@ extern "C" {
 
     f_macro_string_maps_t_delete_simple(environment);
 
-    if (status == F_child || status == F_signal) {
+    if (status == F_child || status == F_signal || F_status_is_error(status)) {
       return status;
     }
 
-    if (F_status_is_error(status) || success == F_false) {
-      return F_status_set_error(F_failure);
+    if (success == F_false || success == F_failure) {
+      return F_failure;
     }
 
     if (success == F_ignore) {
@@ -2185,14 +2184,34 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && main.thread->enabled) {
-        status = controller_rule_process(controller_rule_action_type_start, main, process);
+      if (F_status_is_error(status)) {
+        f_thread_unlock(&main.thread->lock.rule);
+        f_thread_lock_write(&main.thread->lock.rule);
+
+        if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
+          main.setting->rules.array[id_rule].status = status;
+        }
+
+        f_thread_unlock(&main.thread->lock.rule);
+      }
+      else {
+        if (main.thread->enabled) {
+          status = controller_rule_process(controller_rule_action_type_start, main, process);
+        }
       }
     }
     else {
       f_thread_unlock(&main.thread->lock.rule);
 
       status = F_status_set_error(F_found_not);
+
+      f_thread_lock_write(&main.thread->lock.rule);
+
+      if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
+        main.setting->rules.array[id_rule].status = status;
+      }
+
+      f_thread_unlock(&main.thread->lock.rule);
 
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main.thread->lock.print);
@@ -2203,14 +2222,6 @@ extern "C" {
         f_thread_mutex_unlock(&main.thread->lock.print);
       }
     }
-
-    f_thread_lock_write(&main.thread->lock.rule);
-
-    if (controller_rule_find(process->rule.alias, main.setting->rules, &id_rule) == F_true) {
-      main.setting->rules.array[id_rule].status = status;
-    }
-
-    f_thread_unlock(&main.thread->lock.rule);
 
     f_thread_unlock(&process->lock);
     f_thread_lock_write(&process->lock);

@@ -583,6 +583,7 @@ extern "C" {
  *   F_none on success.
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
+ *   F_failure on execution failure.
  */
 #ifndef _di_controller_rule_process_
   extern f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;

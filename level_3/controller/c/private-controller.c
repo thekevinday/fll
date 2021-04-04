@@ -1197,7 +1197,7 @@ extern "C" {
       cache->action.name_action.used = 0;
 
       if (F_status_is_error(status)) {
-        if (!simulate || F_status_set_fine(status) == F_memory_not) {
+        if (F_status_set_fine(status) == F_memory_not) {
           break;
         }
       }
