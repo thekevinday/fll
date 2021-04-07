@@ -249,7 +249,6 @@ extern "C" {
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-
             f_thread_mutex_lock(&thread.lock.print);
 
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
@@ -501,7 +500,6 @@ extern "C" {
 
         if (f_file_exists(entry->setting->path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-
             f_thread_mutex_lock(&entry->main->thread->lock.print);
 
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);

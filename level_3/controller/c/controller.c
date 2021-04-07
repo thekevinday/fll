@@ -320,8 +320,8 @@ extern "C" {
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (!(status == F_child || status == F_signal) && data->error.verbosity != f_console_verbosity_quiet) {
-      if (F_status_is_error(status)) {
+    if (!(status == F_child || status == F_signal)) {
+      if (F_status_is_error(status) && data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }

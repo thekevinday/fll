@@ -2121,7 +2121,6 @@ extern "C" {
     f_array_length_t id_rule = 0;
 
     const f_array_length_t used_original_stack = process->stack.used;
-    const bool simulate = main.data->parameters[controller_parameter_test].result == f_console_result_found;
 
     f_thread_lock_read(&main.thread->lock.rule);
 
