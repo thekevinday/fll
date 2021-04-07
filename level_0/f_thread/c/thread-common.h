@@ -545,6 +545,52 @@ extern "C" {
 #endif // _di_f_thread_onces_t_
 
 /**
+ * A typedef representing sem_t.
+ *
+ * This variable cannot be cleared by setting value to 0, so there is no clear macro provided.
+ *
+ * This must be dynamically initialized using f_thread_semaphore_create().
+ */
+#ifndef _di_f_thread_semaphore_t_
+  typedef sem_t f_thread_semaphore_t;
+
+  #define f_thread_semaphore_t_initialize 0
+
+  #define f_macro_thread_semaphore_t_delete_simple(semaphore) f_thread_semaphore_delete(&semaphore);
+#endif // _di_f_thread_semaphore_t_
+
+/**
+ * An array of thread semaphorees.
+ *
+ * array: the array of f_thread_semaphore_t.
+ * size: total amount of allocated space.
+ * used: total number of allocated spaces used.
+ */
+#ifndef _di_f_thread_semaphores_t_
+  typedef struct {
+    f_thread_semaphore_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_thread_semaphores_t;
+
+  #define f_thread_semaphores_t_initialize { 0, 0, 0 }
+
+  #define f_macro_thread_semaphores_t_clear(semaphores) f_macro_memory_structure_clear(semaphores)
+
+  #define f_macro_thread_semaphores_t_resize(status, semaphores, length) status = f_thread_semaphores_resize(length, &semaphores);
+  #define f_macro_thread_semaphores_t_adjust(status, semaphores, length) status = f_thread_semaphores_adjust(length, &semaphores);
+
+  #define f_macro_thread_semaphores_t_delete_simple(semaphores)  f_thread_semaphores_resize(0, &semaphores);
+  #define f_macro_thread_semaphores_t_destroy_simple(semaphores) f_thread_semaphores_adjust(0, &semaphores);
+
+  #define f_macro_thread_semaphores_t_increase(status, semaphores)            status = f_thread_semaphores_increase(semaphores);
+  #define f_macro_thread_semaphores_t_increase_by(status, semaphores, amount) status = f_thread_semaphores_increase_by(amount, semaphores);
+  #define f_macro_thread_semaphores_t_decrease_by(status, semaphores, amount) status = f_thread_semaphores_decrease_by(amount, semaphores);
+  #define f_macro_thread_semaphores_t_decimate_by(status, semaphores, amount) status = f_thread_semaphores_decimate_by(amount, semaphores);
+#endif // _di_f_thread_semaphores_t_
+
+/**
  * A structure containing basic thread information.
  *
  * attribute: The thread attributes (which is a union).

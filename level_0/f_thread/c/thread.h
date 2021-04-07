@@ -14,6 +14,8 @@
 #define _GNU_SOURCE
 
 // libc includes
+#include <fcntl.h>
+#include <semaphore.h>
 #include <signal.h>
 #include <sys/types.h>
 #include <time.h>
@@ -24,6 +26,7 @@
 #include <level_0/type.h>
 #include <level_0/status.h>
 #include <level_0/memory.h>
+#include <level_0/string.h>
 
 // fll-0 thread includes
 #include <level_0/thread-common.h>
@@ -47,6 +50,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_atfork()
@@ -69,6 +73,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getaffinity_np()
@@ -92,6 +97,7 @@ extern "C" {
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setaffinity_np()
@@ -112,6 +118,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_getclock()
@@ -132,6 +139,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_setclock()
@@ -152,6 +160,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_getpshared()
@@ -172,6 +181,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_setpshared()
@@ -192,6 +202,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_init()
@@ -210,6 +221,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_getattr_default_np()
@@ -229,6 +241,7 @@ extern "C" {
  *
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setattr_default_np()
@@ -252,6 +265,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_destroy()
@@ -272,6 +286,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getdetachstate()
@@ -292,6 +307,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setdetachstate()
@@ -312,6 +328,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getguardsize()
@@ -332,6 +349,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setguardsize()
@@ -352,6 +370,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getinheritsched()
@@ -372,6 +391,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setinheritsched()
@@ -392,6 +412,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getschedparam()
@@ -412,6 +433,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setschedparam()
@@ -432,6 +454,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getschedpolicy()
@@ -452,6 +475,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setschedpolicy()
@@ -472,6 +496,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getscope()
@@ -493,6 +518,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_supported_not (with error bit) if the scope is not supported by the current OS (such as Linux not supporting PTHREAD_SCOPE_PROCESS).
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setscope()
@@ -516,6 +542,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getstack()
@@ -539,6 +566,7 @@ extern "C" {
  *
  *   F_access_denied (with error bit) if the caller cannot both read and write to the stack address.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setstack()
@@ -559,6 +587,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_getstacksize()
@@ -579,6 +608,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_attr_setstacksize()
@@ -686,9 +716,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_attributes_increase_by_
   extern f_status_t f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t *attributes);
@@ -724,6 +754,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrierattr_init()
@@ -747,6 +778,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrierattr_destroy()
@@ -767,6 +799,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrierattr_getpshared()
@@ -787,6 +820,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrierattr_setpshared()
@@ -894,9 +928,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_barrier_attributes_increase_by_
   extern f_status_t f_thread_barrier_attributes_increase_by(const f_array_length_t amount, f_thread_barrier_attributes_t *attributes);
@@ -932,6 +966,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) if out of memory.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrier_init()
@@ -955,6 +990,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_barrier_destroy()
@@ -1082,9 +1118,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_barriers_increase_by_
   extern f_status_t f_thread_barriers_increase_by(const f_array_length_t amount, f_thread_barriers_t *barriers);
@@ -1130,6 +1166,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cancel()
@@ -1152,6 +1189,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setcancelstate()
@@ -1189,6 +1227,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setcanceltype()
@@ -1210,6 +1249,7 @@ extern "C" {
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_supported_not (with error bit) if per-CPU clocks are not supported by the OS.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_getcpuclockid()
@@ -1248,6 +1288,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the new level would cause the system to exceed available resources.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_getconcurrency()
@@ -1269,6 +1310,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setconcurrency()
@@ -1288,6 +1330,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_init()
@@ -1310,6 +1353,7 @@ extern "C" {
  *
  *   F_busy (with error bit) if the attribute is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_condattr_destroy()
@@ -1417,9 +1461,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_condition_attributes_increase_by_
   extern f_status_t f_thread_condition_attributes_increase_by(const f_array_length_t amount, f_thread_condition_attributes_t *attributes);
@@ -1456,6 +1500,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cond_init()
@@ -1496,6 +1541,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cond_broadcast()
@@ -1516,6 +1562,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cond_signal()
@@ -1538,6 +1585,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cond_wait()
@@ -1566,6 +1614,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_cond_timedwait()
@@ -1673,9 +1722,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_conditions_increase_by_
   extern f_status_t f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t *conditions);
@@ -1720,6 +1769,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
  *   F_resource_not (with error bit) if there are not enough resources to create another thread.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_create()
@@ -1746,6 +1796,7 @@ extern "C" {
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_detach()
  */
@@ -1790,6 +1841,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_join()
  */
@@ -1816,8 +1868,9 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thr
+ *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_tryjoin_np()
  */
@@ -1851,6 +1904,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_timedjoin_np()
  */
@@ -1872,6 +1926,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to set the scheduling policy and parameters specified in attribute.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_key_create()
@@ -1893,6 +1948,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_key_delete()
@@ -1932,6 +1988,8 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setspecific()
  */
@@ -2038,9 +2096,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_keys_increase_by_
   extern f_status_t f_thread_keys_increase_by(const f_array_length_t amount, f_thread_keys_t *keys);
@@ -2078,6 +2136,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *   F_resource_not (with error bit) if max lockes is reached.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlockattr_init()
@@ -2100,6 +2159,7 @@ extern "C" {
  *
  *   F_busy (with error bit) if the lock is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlockattr_destroy()
@@ -2120,6 +2180,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlockattr_getpshared()
@@ -2140,6 +2201,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlockattr_setpshared()
@@ -2247,9 +2309,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_lock_attributes_increase_by_
   extern f_status_t f_thread_lock_attributes_increase_by(const f_array_length_t amount, f_thread_lock_attributes_t *attributes);
@@ -2287,6 +2349,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max lockes is reached.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_init()
@@ -2309,6 +2372,7 @@ extern "C" {
  *
  *   F_busy (with error bit) if the lock is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_destroy()
@@ -2330,6 +2394,8 @@ extern "C" {
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_rdlock()
  */
@@ -2356,6 +2422,8 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_rwlock_timedrdlock()
  */
 #ifndef _di_f_thread_lock_read_timed_
@@ -2379,6 +2447,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max locks is reached.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_rwlock_tryrdlock()
  */
 #ifndef _di_f_thread_lock_read_try_
@@ -2399,6 +2469,8 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_wrlock()
  */
@@ -2425,6 +2497,8 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_rwlock_timedwrlock()
  */
 #ifndef _di_f_thread_lock_write_timed_
@@ -2447,6 +2521,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_trywrlock()
  */
@@ -2553,9 +2629,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_locks_increase_by_
   extern f_status_t f_thread_locks_increase_by(const f_array_length_t amount, f_thread_locks_t *locks);
@@ -2675,6 +2751,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutexattr_getpshared()
@@ -2695,6 +2772,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutexattr_setpshared()
@@ -2715,6 +2793,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutexattr_gettype()
@@ -2735,6 +2814,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutexattr_settype()
@@ -2757,6 +2837,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_mutexattr_getprotocol()
  */
 #ifndef _di_f_thread_mutex_attribute_protocol_get_
@@ -2777,6 +2859,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *   F_supported_not (with error bit) if the protocol is not supported.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutexattr_setprotocol()
  */
@@ -2883,9 +2967,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_by_
   extern f_status_t f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t *attributes);
@@ -2926,6 +3010,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *   F_resource_not (with error bit) if max mutexes is reached.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutex_init()
@@ -2948,6 +3033,7 @@ extern "C" {
  *
  *   F_busy (with error bit) if the mutex is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutex_destroy()
@@ -2970,6 +3056,8 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max mutex locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutex_lock()
  */
@@ -3000,6 +3088,8 @@ extern "C" {
  *   F_resource_not (with error bit) if max mutex locks is reached.
  *   F_thread_not (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_mutex_timedlock()
  */
 #ifndef _di_f_thread_mutex_lock_timed_
@@ -3023,6 +3113,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max mutex locks is reached.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_mutex_trylock()
  */
 #ifndef _di_f_thread_mutex_lock_try_
@@ -3042,6 +3134,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutex_getprioceiling()
  */
@@ -3070,6 +3164,8 @@ extern "C" {
  *   F_resource_not (with error bit) if max mutex locks is reached.
  *   F_thread_not (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_mutex_setprioceiling()
  */
 #ifndef _di_f_thread_mutex_priority_ceiling_set_
@@ -3088,6 +3184,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
  *   F_resource_not (with error bit) if max mutex locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_mutex_unlock()
  */
@@ -3194,9 +3292,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_mutexs_increase_by_
   extern f_status_t f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t *mutexs);
@@ -3233,6 +3331,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_once()
  */
 #ifndef _di_f_thread_once_
@@ -3254,6 +3354,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_supported_not (with error bit) if the policy or scheduling parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_getschedparam()
@@ -3277,6 +3378,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if insufficient privileges or scheduler (or policy) does not allow operation.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setschedparam()
@@ -3296,9 +3398,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_found_not (with error bit) no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if insufficient privileges.
- *   F_found_not (with error bit) no thread by the given ID was found.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_setschedprio()
@@ -3306,6 +3409,387 @@ extern "C" {
 #ifndef _di_f_thread_scheduler_priority_set_
   extern f_status_t f_thread_scheduler_priority_set(const f_thread_id_t id, const int priority);
 #endif // _di_f_thread_scheduler_priority_set_
+
+/**
+ * Create a thread semaphore.
+ *
+ * @param shared
+ *   If TRUE, then the semaphore is shared between processes (stored as posix shared memory, memory mapped, etc..).
+ *   IF FALSE, then the semphore is shared between threads of a process (stored as a global variable or in the heap).
+ *   Not all systems support semaphores shared amongst processes.
+ * @param value
+ *   The value to initially assign the semaphore on creation.
+ * @param semaphore
+ *   The semaphore to create.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_supported_not (with error bit) if the system does not support the process shared semaphore (shared == true).
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_init()
+ */
+#ifndef _di_f_thread_semaphore_create_
+  extern f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_create_
+
+/**
+ * Delete a thread semaphore.
+ *
+ * The sem_destroy() function has no distinction like the *_destroy() and the *_delete() used by the FLL project.
+ * Therefore there is only this function for both deleting and destroying.
+ *
+ * @param semaphore
+ *   The semaphore to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_busy (with error bit) if the semaphore is busy.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_destroy()
+ */
+#ifndef _di_f_thread_semaphore_delete_
+  extern f_status_t f_thread_semaphore_delete(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_delete_
+
+/**
+ * Create a thread (named) semaphore.
+ *
+ * @param name
+ *   The semaphore file name to create.
+ * @param flag
+ *   The file create/open flags.
+ * @param mode
+ *   (optional) The file permissions to assign the semaphore.
+ *   Ignored if O_CREAT is not used in flag.
+ *   Ignored if the named semaphore already exists.
+ * @param value
+ *   (optional) The value to initially assign the semaphore on creation.
+ *   Ignored if O_CREAT is not used in flag.
+ *   Ignored if the named semaphore already exists.
+ * @param semaphore
+ *   The thread semaphore.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_file_descriptor_max (with error bit) if max file descrriptors was reached.
+ *   F_file_found (with error bit) if the file was found and both the O_CREAT and O_EXCL flags are set.
+ *   F_file_open_max (with error bit) too many open files.
+ *   F_file_found_not (with error bit) if the file was not found and the O_CREAT is not set.
+ *   F_name_not (with error bit) if file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_supported_not (with error bit) if the system does not support the process shared semaphore (shared == true).
+ *   F_memory_not (with error bit) if out of memory.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_open()
+ */
+#ifndef _di_f_thread_semaphore_file_create_
+  extern f_status_t f_thread_semaphore_file_create(const f_string_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_file_create_
+
+/**
+ * Delete a thread (named) semaphore.
+ *
+ * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
+ *
+ * @param semaphore
+ *   The semaphore to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
+ *
+ * @see sem_close()
+ *
+ * @see f_thread_semaphore_file_destroy()
+ */
+#ifndef _di_f_thread_semaphore_file_delete_
+  extern f_status_t f_thread_semaphore_file_delete(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_file_delete_
+
+/**
+ * Destroy a thread (named) semaphore.
+ *
+ * This will immediately delete the semaphore file and all processes holding this semaphore will be forced to close.
+ *
+ * A named semaphore should be deleted with this function or with f_thread_semephore_file_delete().
+ *
+ * @param name
+ *   The semaphore name to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_file_found_not the named file was not found.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_name_not (with error bit) if file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_unlink()
+ *
+ * @see f_thread_semaphore_file_delete()
+ */
+#ifndef _di_f_thread_semaphore_file_destroy_
+  extern f_status_t f_thread_semaphore_file_destroy(const f_string_t name);
+#endif // _di_f_thread_semaphore_file_destroy_
+
+/**
+ * Lock the semaphore.
+ *
+ * This is a blocking function.
+ *
+ * @param semaphore
+ *   The thread semaphore.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_interrupt (with error bit) if returned due to an interrupt signal.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_wait()
+ */
+#ifndef _di_f_thread_semaphore_lock_
+  extern f_status_t f_thread_semaphore_lock(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_lock_
+
+/**
+ * Lock the semaphore, waiting for a set period of time to get the lock if already locked.
+ *
+ * If the semaphore is already locked and the timeout expires, then the lock attempt fails.
+ *
+ * This is a blocking function (until timeout expires).
+ *
+ * @param timeout
+ *   The timeout.
+ * @param semaphore
+ *   The thread semaphore.
+ *
+ * @return
+ *   F_none on success.
+ *   F_time if the timeout was reached before obtaining the lock.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_interrupt (with error bit) if returned due to an interrupt signal.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_timedwait()
+ */
+#ifndef _di_f_thread_semaphore_lock_timed_
+  extern f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_lock_timed_
+
+/**
+ * Try to lock the semaphore.
+ *
+ * If semaphore is already locked, return immediately.
+ *
+ * This is a non-blocking function.
+ *
+ * @param semaphore
+ *   The thread semaphore.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_interrupt (with error bit) if returned due to an interrupt signal.
+ *   F_resource_not (with error bit) if max semaphore locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_trywait()
+ */
+#ifndef _di_f_thread_semaphore_lock_try_
+  extern f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_lock_try_
+
+/**
+ * Unlock the semaphore.
+ *
+ * @param semaphore
+ *   The thread semaphore.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_number_overflow (with error bit) if max semaphore value is reached.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_post()
+ */
+#ifndef _di_f_thread_semaphore_unlock_
+  extern f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_unlock_
+
+/**
+ * Get the semaphore value.
+ *
+ * @param semaphore
+ *   The thread semaphore.
+ * @param value
+ *   The semaphore's value.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_getvalue()
+ */
+#ifndef _di_f_thread_semaphore_value_get_
+  extern f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t *semaphore, int *value);
+#endif // _di_f_thread_semaphore_value_get_
+
+/**
+ * Resize the thread semaphores array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param semaphores
+ *   The string semaphores array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_adjust_
+  extern f_status_t f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_adjust_
+
+/**
+ * Resize the thread semaphores array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param semaphores
+ *   The string semaphores array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_decimate_by_
+  extern f_status_t f_thread_semaphores_decimate_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_decimate_by_
+
+/**
+ * Resize the thread semaphores array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param semaphores
+ *   The string semaphores array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_decrease_by_
+  extern f_status_t f_thread_semaphores_decrease_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_decrease_by_
+
+/**
+ * Increase the size of the thread semaphores array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param semaphores
+ *   The string semaphores array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_increase_
+  extern f_status_t f_thread_semaphores_increase(f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_increase_
+
+/**
+ * Resize the thread semaphores array to a larger size.
+ *
+ * This will resize making the array larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param semaphores
+ *   The string semaphores array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_increase_by_
+  extern f_status_t f_thread_semaphores_increase_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_increase_by_
+
+/**
+ * Resize the thread semaphores array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param semaphores
+ *   The string semaphores array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_thread_semaphores_resize_
+  extern f_status_t f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t *semaphores);
+#endif // _di_f_thread_semaphores_resize_
 
 /**
  * Resize the thread sets array.
@@ -3406,9 +3890,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_sets_increase_by_
   extern f_status_t f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t *sets);
@@ -3474,7 +3958,8 @@ extern "C" {
  *   F_none on success but no signal found.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_failure (with error bit) for any other error.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_sigmask()
  */
@@ -3499,7 +3984,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
  *   F_supported_not (with error bit) if this action is not supported by the current OS.
- *   F_failure (with error bit) for any other error.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_sigqueue()
  */
@@ -3521,6 +4007,7 @@ extern "C" {
  *   F_memory_not (with error bit) if out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max spines is reached.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_spin_init()
@@ -3543,6 +4030,7 @@ extern "C" {
  *
  *   F_busy (with error bit) if the spin is busy.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
  *   F_failure (with error bit) on any other error.
  *
  * @see pthread_spin_destroy()
@@ -3565,6 +4053,8 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max spin locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_spin_lock()
  */
@@ -3589,6 +4079,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if max spin locks is reached.
  *
+ *   F_failure (with error bit) on any other error.
+ *
  * @see pthread_spin_trylock()
  */
 #ifndef _di_f_thread_spin_lock_try_
@@ -3607,6 +4099,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because spin is not owned by current thread).
  *   F_resource_not (with error bit) if max spin locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_spin_unlock()
  */
@@ -3713,9 +4207,9 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
+ *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
  */
 #ifndef _di_f_thread_spins_increase_by_
   extern f_status_t f_thread_spins_increase_by(const f_array_length_t amount, f_thread_spins_t *spins);
@@ -3751,6 +4245,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because lock is not owned by current thread).
  *   F_resource_not (with error bit) if max lock locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
  *
  * @see pthread_rwlock_unlock()
  */

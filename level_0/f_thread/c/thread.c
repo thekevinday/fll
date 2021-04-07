@@ -2324,6 +2324,183 @@ extern "C" {
   }
 #endif // _di_f_thread_mutex_lock_try_
 
+#ifndef _di_f_thread_semaphore_create_
+  f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_init(semaphore, shared, value) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_create_
+
+#ifndef _di_f_thread_semaphore_delete_
+  f_status_t f_thread_semaphore_delete(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_semaphore_delete(semaphore);
+  }
+#endif // _di_f_thread_semaphore_delete_
+
+#ifndef _di_f_thread_semaphore_file_create_
+  f_status_t f_thread_semaphore_file_create(const f_string_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (flag & O_CREAT) {
+      semaphore = sem_open(name, flag, mode, value);
+    }
+    else {
+      semaphore = sem_open(name, flag);
+    }
+
+    if (semaphore == SEM_FAILED) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EEXIST) return F_status_set_error(F_file_found);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
+      if (errno == ENFILE) return F_status_set_error(F_file_open_max);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_create_
+
+#ifndef _di_f_thread_semaphore_file_delete_
+  f_status_t f_thread_semaphore_file_delete(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_close(semaphore) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_delete_
+
+#ifndef _di_f_thread_semaphore_file_destroy_
+  f_status_t f_thread_semaphore_file_destroy(const f_string_t name) {
+
+    if (sem_unlink(name) == -1) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
+      if (errno == ENOENT) return F_file_found_not;
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_destroy_
+
+#ifndef _di_f_thread_semaphore_lock_
+  f_status_t f_thread_semaphore_lock(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_wait(semaphore) == -1) {
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_
+
+#ifndef _di_f_thread_semaphore_lock_timed_
+  f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!timeout) return F_status_set_error(F_parameter);
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_timedwait(semaphore, timeout) == -1) {
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ETIMEDOUT) return F_time;
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_timed_
+
+#ifndef _di_f_thread_semaphore_lock_try_
+  f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_trywait(semaphore) == -1) {
+      if (errno == EAGAIN) return F_status_set_error(F_resource_not);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_try_
+
+#ifndef _di_f_thread_semaphore_unlock_
+  f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_post(semaphore) == -1) {
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_unlock_
+
+#ifndef _di_f_thread_semaphore_value_get_
+  f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t *semaphore, int *value) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+      if (!value) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_getvalue(semaphore, value) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_value_get_
+
 #ifndef _di_f_thread_mutex_priority_ceiling_get_
   f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t *mutex, int *ceiling) {
     #ifndef _di_level_0_parameter_checking_
@@ -2555,6 +2732,99 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_scheduler_priority_set_
+
+#ifndef _di_f_thread_semaphores_adjust_
+  f_status_t f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_semaphores_adjust(length, semaphores);
+  }
+#endif // _di_f_thread_semaphores_adjust_
+
+#ifndef _di_f_thread_semaphores_decimate_by_
+  f_status_t f_thread_semaphores_decimate_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (semaphores->size - amount > 0) {
+      return private_f_thread_semaphores_adjust(semaphores->size - amount, semaphores);
+    }
+
+    return private_f_thread_semaphores_adjust(0, semaphores);
+  }
+#endif // _di_f_thread_semaphores_decimate_by_
+
+#ifndef _di_f_thread_semaphores_decrease_by_
+  f_status_t f_thread_semaphores_decrease_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (semaphores->size - amount > 0) {
+      return private_f_thread_semaphores_resize(semaphores->size - amount, semaphores);
+    }
+
+    return private_f_thread_semaphores_resize(0, semaphores);
+  }
+#endif // _di_f_thread_semaphores_decrease_by_
+
+#ifndef _di_f_thread_semaphores_increase_
+  f_status_t f_thread_semaphores_increase(f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (semaphores->used + 1 > semaphores->size) {
+      f_array_length_t size = semaphores->used + f_memory_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (semaphores->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_thread_semaphores_resize(size, semaphores);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_thread_semaphores_increase_
+
+#ifndef _di_f_thread_semaphores_increase_by_
+  f_status_t f_thread_semaphores_increase_by(const f_array_length_t amount, f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (semaphores->used + amount > semaphores->size) {
+      if (semaphores->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_thread_semaphores_resize(semaphores->used + amount, semaphores);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_thread_semaphores_increase_by_
+
+#ifndef _di_f_thread_semaphores_resize_
+  f_status_t f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t *semaphores) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphores) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_semaphores_resize(length, semaphores);
+  }
+#endif // _di_f_thread_semaphores_resize_
 
 #ifndef _di_f_thread_sets_adjust_
   f_status_t f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t *sets) {
