@@ -772,6 +772,9 @@ extern "C" {
  * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_main_t).
  */
 #ifndef _di_controller_process_t_
+  #define controller_process_option_asynchronous 0x1
+  #define controller_process_option_execute      0x2
+
   enum {
     controller_process_state_idle = 1,
     controller_process_state_busy,
@@ -1113,10 +1116,9 @@ extern "C" {
 /**
  * A wrapper used for passing a common set of all data, particularly for sharing between threads.
  *
- * data:     All standard program data.
- * setting:  All loaded settings.
- * processs: All Rule Process data.
- * thread:   All thread related data.
+ * data:    All standard program data.
+ * setting: All loaded settings.
+ * thread:  All thread related data.
  */
 #ifndef _di_controller_main_t_
   typedef struct {
@@ -1318,9 +1320,6 @@ extern "C" {
 /**
  * Fully deallocate all memory for the given process without caring about return status.
  *
- * This does not close/cancel the id_thread.
- * Be sure to properly close and/or detach the thread.
- *
  * @param process
  *   The process to deallocate.
  *
@@ -1348,9 +1347,6 @@ extern "C" {
 
 /**
  * Fully deallocate all memory for the given processs without caring about return status.
- *
- * This does not close/cancel the id_thread for any process.
- * Be sure to properly close and/or detach the thread for each process.
  *
  * @param processs
  *   The process array to deallocate.

@@ -592,9 +592,12 @@ extern "C" {
 /**
  * Synchronously or Asynchronously begin processing some rule.
  *
- * @param asynchronous
- *   If TRUE, then asynchronously execute a process.
- *   If FALSE, then synchronously execute a process.
+ * @param process_options
+ *   If controller_process_option_asynchronous, then asynchronously execute.
+ *   If controller_process_option_execute, then load and execute.
+ *
+ *   If not controller_process_option_asynchronous, then synchronously execute.
+ *   If not controller_process_option_execute, then load only, do not execute at all.
  * @param alias_rule
  *   The alias of the rule, such as "boot/init".
  * @param action
@@ -628,7 +631,7 @@ extern "C" {
  * @see f_thread_create()
  */
 #ifndef _di_controller_rule_process_begin_
-  extern f_status_t controller_rule_process_begin(const bool asynchronous, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_begin(const uint8_t process_options, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_begin_
 
 /**
@@ -637,9 +640,12 @@ extern "C" {
  * This does all the preparation work that needs to be synchronously performed within the same thread.
  * This will copy the rule by the alias to the process structure.
  *
- * @param asynchronous
- *   If TRUE, designates that this function is being asynchronously executed.
- *   If FALSE, designates that this function is being synchronously executed.
+ * @param options
+ *   If controller_process_option_asynchronous, then asynchronously execute.
+ *   If controller_process_option_execute, then load and execute.
+ *
+ *   If not controller_process_option_asynchronous, then synchronously execute.
+ *   If not controller_process_option_execute, then load only, do not execute at all.
  * @param process
  *   The process data.
  *
@@ -660,7 +666,7 @@ extern "C" {
  * @see controller_rule_process_begin()
  */
 #ifndef _di_controller_rule_process_do_
-  extern f_status_t controller_rule_process_do(const bool asynchronous, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_do(const uint8_t options, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_do_
 
 /**

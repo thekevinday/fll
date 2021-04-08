@@ -626,6 +626,7 @@ extern "C" {
     f_array_length_t at_j = 1;
 
     uint8_t rule_options = 0;
+    uint8_t process_options = 0;
 
     controller_entry_action_t *entry_action = 0;
     controller_entry_actions_t *entry_actions = 0;
@@ -1078,8 +1079,13 @@ extern "C" {
             }
           }
 
-          if (F_status_is_error_not(status) && entry_action->type == controller_entry_action_type_rule) {
+          if (F_status_is_error_not(status)) {
+            process_options = 0;
             rule_options = 0;
+
+            if (entry_action->type == controller_entry_action_type_rule) {
+              process_options |= controller_process_option_execute;
+            }
 
             if (simulate) {
               rule_options |= controller_rule_option_simulate;
@@ -1094,10 +1100,11 @@ extern "C" {
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
+              process_options |= controller_process_option_asynchronous;
               rule_options |= controller_rule_option_asynchronous;
             }
 
-            status = controller_rule_process_begin(entry_action->code & controller_entry_rule_code_asynchronous, alias_rule, controller_rule_action_type_start, rule_options, stack, main, *cache);
+            status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, main, *cache);
 
             if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal) {
               break;
@@ -1224,9 +1231,6 @@ extern "C" {
 
           break;
         }
-      }
-      else {
-        cache->ats.array[at_j]++;
       }
     } // for
 

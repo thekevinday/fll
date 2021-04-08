@@ -14,7 +14,7 @@ extern "C" {
 
     const controller_main_t *main = (controller_main_t *) arguments;
 
-    if (!main->thread->enabled) f_thread_exit(0);
+    if (!main->thread->enabled) return 0;
 
     const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
 
@@ -55,6 +55,7 @@ extern "C" {
 
           f_thread_unlock(&process->lock);
 
+          // close any still open thread.
           if (process->id_thread) {
             f_thread_join(process->id_thread, 0);
 
@@ -79,69 +80,11 @@ extern "C" {
           f_thread_unlock(&process->active);
         } // for
 
-        if (main->thread->processs.size) {
-          f_array_length_t j = main->thread->processs.size;
-
-          for (i = main->thread->processs.size - 1; j && main->thread->enabled; --i, --j) {
-
-            if (!main->thread->processs.array[i]) continue;
-
-            process = main->thread->processs.array[i];
-
-            // if "active" has a read lock, then do not attempt to clean it.
-            if (f_thread_lock_write_try(&process->active) != F_none) {
-              break;
-            }
-
-            // if "lock" has a read or write lock, then do not attempt to clean it.
-            if (f_thread_lock_write_try(&process->lock) != F_none) {
-              f_thread_unlock(&process->active);
-
-              break;
-            }
-
-            // if process is active or busy, then do not attempt to clean it.
-            if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
-              f_thread_unlock(&process->active);
-              f_thread_unlock(&process->lock);
-
-              break;
-            }
-
-            f_thread_unlock(&process->lock);
-
-            if (process->id_thread) {
-              f_thread_join(process->id_thread, 0);
-
-              if (!main->thread->enabled) {
-                f_thread_unlock(&process->active);
-
-                break;
-              }
-
-              f_thread_lock_write(&process->lock);
-
-              process->state = controller_process_state_idle;
-              process->id_thread = 0;
-
-              f_thread_unlock(&process->lock);
-            }
-
-            // deallocate dynamic portions of the structure that are only ever needed while the rule is being processed.
-            controller_cache_delete_simple(&process->cache);
-            f_type_array_lengths_resize(0, &process->stack);
-
-            --main->thread->processs.used;
-
-            f_thread_unlock(&process->active);
-          } // for
-        }
-
         f_thread_unlock(&main->thread->lock.process);
       }
     } // while
 
-    f_thread_exit(0);
+    return 0;
   }
 #endif // _di_controller_thread_cleanup_
 
@@ -150,9 +93,9 @@ extern "C" {
 
     controller_main_t *main = (controller_main_t *) arguments;
 
-    if (!main->thread->enabled) f_thread_exit(0);
+    if (!main->thread->enabled) return 0;
 
-    f_thread_exit(0);
+    return 0;
   }
 #endif // _di_controller_thread_control_
 
@@ -203,7 +146,7 @@ extern "C" {
       f_thread_signal(main->thread->id_rule, F_signal_kill);
     }
 
-    f_thread_exit(0);
+    return 0;
   }
 #endif // _di_controller_thread_exit_force_
 
@@ -297,6 +240,12 @@ extern "C" {
         // wait for the entry thread to complete before starting the rule thread.
         f_thread_join(thread.id_rule, 0);
 
+        if (thread.status == F_child) {
+          controller_thread_delete_simple(&thread);
+
+          return F_child;
+        }
+
         thread.id_rule = 0;
 
         if (thread.enabled) {
@@ -388,12 +337,25 @@ extern "C" {
     {
       controller_thread_t *thread = (controller_thread_t *) process->main_thread;
 
-      if (!thread->enabled) f_thread_exit(0);
+      if (!thread->enabled) return 0;
     }
 
-    controller_rule_process_do(F_true, process);
+    if (controller_rule_process_do(controller_process_option_asynchronous | controller_process_option_execute, process) == F_child) {
 
-    f_thread_exit(0);
+      // A forked child process should deallocate memory on exit.
+      // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
+      // Deallocate as much as possible.
+
+      controller_data_t *data = (controller_data_t *) process->main_data;
+      controller_setting_t *setting = (controller_setting_t *) process->main_setting;
+      controller_thread_t *thread = (controller_thread_t *) process->main_thread;
+
+      controller_thread_delete_simple(thread);
+      controller_setting_delete_simple(setting);
+      controller_delete_data(data);
+    }
+
+    return 0;
   }
 #endif // _di_controller_thread_process_
 
@@ -479,7 +441,7 @@ extern "C" {
 
     controller_main_entry_t *entry = (controller_main_entry_t *) arguments;
 
-    if (!entry->main->thread->enabled) f_thread_exit(0);
+    if (!entry->main->thread->enabled) return 0;
 
     controller_data_t *data = entry->main->data;
     controller_cache_t *cache = &entry->main->thread->cache;
@@ -529,7 +491,18 @@ extern "C" {
       }
     }
 
-    f_thread_exit(0);
+    if (*status == F_child) {
+
+      // A forked child process should deallocate memory on exit.
+      // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
+      // Deallocate as much as possible.
+
+      controller_thread_delete_simple(entry->main->thread);
+      controller_setting_delete_simple(entry->main->setting);
+      controller_delete_data(entry->main->data);
+    }
+
+    return 0;
   }
 #endif // _di_controller_thread_entry_
 
@@ -538,9 +511,9 @@ extern "C" {
 
     controller_main_t *main = (controller_main_t *) arguments;
 
-    if (!main->thread->enabled) f_thread_exit(0);
+    if (!main->thread->enabled) return 0;
 
-    f_thread_exit(0);
+    return 0;
   }
 #endif // _di_controller_thread_rule_
 
@@ -549,7 +522,7 @@ extern "C" {
 
     controller_main_t *main = (controller_main_t *) arguments;
 
-    if (!main->thread->enabled) f_thread_exit(0);
+    if (!main->thread->enabled) return 0;
 
     for (int signal = 0; main->thread->enabled; ) {
 
@@ -565,7 +538,7 @@ extern "C" {
       }
     } // for
 
-    f_thread_exit(0);
+    return 0;
   }
 #endif // _di_controller_thread_signal_
 
