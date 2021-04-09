@@ -770,9 +770,9 @@ extern "C" {
  * @param cache
  *   A structure for containing and caching relevant data.
  */
-#ifndef _di_controller_rule_simulate_
-  extern void controller_rule_simulate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_rule_simulate_
+#ifndef _di_controller_rule_validate_
+  extern void controller_rule_validate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_validate_
 
 /**
  * Wait until all currently running Rule processes are complete.

@@ -1638,7 +1638,7 @@ extern "C" {
     }
 
     if ((process->options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_simulate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
+      controller_rule_validate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
     }
 
     f_array_length_t i = 0;
@@ -4306,8 +4306,8 @@ extern "C" {
   }
 #endif // _di_controller_rule_setting_read_
 
-#ifndef _di_controller_rule_simulate_
-  void controller_rule_simulate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_cache_t *cache) {
+#ifndef _di_controller_rule_validate_
+  void controller_rule_validate(const controller_rule_t rule, const uint8_t action, const uint8_t options, const controller_main_t main, controller_cache_t *cache) {
 
     const controller_data_t *data = main.data;
 
@@ -4327,7 +4327,7 @@ extern "C" {
           fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(data->error.to.stream, "%s%sUnsupported action type '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
           fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, controller_rule_action_type_name(action).string, data->error.notable.after->string);
-          fprintf(data->error.to.stream, "%s' while attempting to simulate rule execution.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+          fprintf(data->error.to.stream, "%s' while attempting to validate rule execution.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(data->error, cache->action, F_true);
         }
@@ -4599,7 +4599,7 @@ extern "C" {
 
     f_thread_mutex_unlock(&main.thread->lock.print);
   }
-#endif // _di_controller_rule_simulate_
+#endif // _di_controller_rule_validate_
 
 #ifndef _di_controller_rule_wait_all_
   void controller_rule_wait_all(const controller_main_t main, controller_process_t *caller) {
