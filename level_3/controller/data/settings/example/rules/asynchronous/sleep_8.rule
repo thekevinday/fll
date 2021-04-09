@@ -1,0 +1,12 @@
+# fss-000d
+
+setting:
+  name "Sleep 8 Seconds."
+  nice 15
+  limit nice 1 2
+
+script:
+  start sleep 8
+
+script:
+  start echo "Sleep 8: $(date -u)"

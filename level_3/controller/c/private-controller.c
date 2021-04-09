@@ -1100,8 +1100,10 @@ extern "C" {
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
-              process_options |= controller_process_option_asynchronous;
-              rule_options |= controller_rule_option_asynchronous;
+              if (main.data->parameters[controller_parameter_validate].result != f_console_result_found) {
+                process_options |= controller_process_option_asynchronous;
+                rule_options |= controller_rule_option_asynchronous;
+              }
             }
 
             status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, main, *cache);

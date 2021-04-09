@@ -1,0 +1,13 @@
+# fss-000d
+
+setting:
+  name "Sleep 2 Seconds."
+  nice 15
+  limit nice 1 2
+  need asynchronous sleep_5
+
+script:
+  start sleep 2
+
+script:
+  start echo "Sleep 2: $(date -u)"

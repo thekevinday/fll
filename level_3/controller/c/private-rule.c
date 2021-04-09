@@ -1639,6 +1639,8 @@ extern "C" {
 
     if ((process->options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
       controller_rule_validate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
+
+      return F_none;
     }
 
     f_array_length_t i = 0;
@@ -1935,9 +1937,25 @@ extern "C" {
       controller_rule_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "controller_rule_find", F_true, F_true, main.thread);
     }
     else {
-      main.setting->rules.array[id_rule].status = process->rule.status;
+      controller_rule_t *rule = &main.setting->rules.array[id_rule];
 
-      // @fixme the rule item action status needs to be copied over from the local rule to the old one but there is no way to map the two (the structure could have changeed).
+      rule->status = process->rule.status;
+
+      f_array_length_t j = 0;
+
+      controller_rule_item_t *rule_item = 0;
+      controller_rule_action_t *rule_action = 0;
+
+      // @todo implement a "version" counter and detect if the rule version is different before attempting update.
+      // copy all rule item action statuses from the rule process to the rule.
+      for (i = 0; i < rule->items.used; ++i) {
+
+        rule_item = &rule->items.array[i];
+
+        for (j = 0; j < rule_item->actions.used; ++j) {
+          rule_item->actions.array[j].status = process->rule.items.array[i].actions.array[j].status;
+        } // for
+      } // for
     }
 
     f_thread_unlock(&main.thread->lock.rule);

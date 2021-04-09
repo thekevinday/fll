@@ -25,3 +25,10 @@ GLIBC Problems:
 
   There needs to be more investigation into the cause of this.
   Maybe there is some way to fix this during compile or link time without having to fix GLIBC or use a different libc for static linking.
+
+Valgrind Debugging:
+  The tool "helgrind" in valgrind allows for debugging threads (such as valgrind --tool=helgrrind controller).
+
+  The way in which the "active" lock is used will result in out of order locks.
+  This causes "helgrind" to produce a lot of warnings about locks being out of order.
+  Therefore, it is stongly recommended to use the parameter "--track-lockorders=no".

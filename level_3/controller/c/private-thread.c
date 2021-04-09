@@ -77,6 +77,11 @@ extern "C" {
           controller_cache_delete_simple(&process->cache);
           f_type_array_lengths_resize(0, &process->stack);
 
+          // deallocate any rules in the space that is declared to be unused.
+          if (i >= main->thread->processs.used) {
+            controller_rule_delete_simple(&process->rule);
+          }
+
           f_thread_unlock(&process->active);
         } // for
 
@@ -222,50 +227,60 @@ extern "C" {
 
           thread.id_rule = 0;
           status = thread.status;
-        }
 
-        if (status == F_child) {
-          controller_thread_delete_simple(&thread);
+          if (status == F_child) {
+            controller_thread_delete_simple(&thread);
 
-          return F_child;
+            return F_child;
+          }
         }
       }
     }
 
+    // @todo consider redesigning to spawn forked processes from main thread to allow proper deallocation via a timed mutex condition (only need to do this for scripts).
+
     // only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_child && thread.enabled) {
 
-      if (data->parameters[controller_parameter_validate].result == f_console_result_none && thread.id_rule) {
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
 
-        // wait for the entry thread to complete before starting the rule thread.
-        f_thread_join(thread.id_rule, 0);
+        if (thread.id_rule) {
 
-        if (thread.status == F_child) {
-          controller_thread_delete_simple(&thread);
+          // wait for the entry thread to complete before starting the rule thread.
+          f_thread_join(thread.id_rule, 0);
 
-          return F_child;
+          if (thread.status == F_child) {
+            controller_thread_delete_simple(&thread);
+
+            return F_child;
+          }
+
+          thread.id_rule = 0;
         }
-
-        thread.id_rule = 0;
 
         if (thread.enabled) {
           status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &main);
-        }
 
-        status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &main);
+          if (F_status_is_error(status)) {
+            thread.id_rule = 0;
+          }
+          else {
+            status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &main);
+          }
 
-        if (F_status_is_error(status)) {
-          thread.id_control = 0;
-        }
-        else {
-          status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &main);
-        }
+          if (F_status_is_error(status)) {
+            thread.id_control = 0;
+          }
+          else {
+            status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &main);
+          }
 
-        if (F_status_is_error(status)) {
-          thread.id_cleanup = 0;
+          if (F_status_is_error(status)) {
+            thread.id_cleanup = 0;
 
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+            if (data->error.verbosity != f_console_verbosity_quiet) {
+              controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+            }
           }
         }
       }
@@ -292,9 +307,9 @@ extern "C" {
 
         thread.id_signal = 0;
       }
-    }
 
-    controller_thread_process_cancel(&main);
+      controller_thread_process_cancel(&main);
+    }
 
     if (thread.id_signal) f_thread_cancel(thread.id_signal);
     if (thread.id_cleanup) f_thread_cancel(thread.id_cleanup);
