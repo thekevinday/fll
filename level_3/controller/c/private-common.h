@@ -1318,6 +1318,23 @@ extern "C" {
 #endif // _di_controller_lock_delete_simple_
 
 /**
+ * Flush the stream buffer and then unlock the mutex.
+ *
+ * Weird behavior was observed when piping data from this program.
+ * The behavior appears related to how this handles locks in addition to the file streams own locking mechanisms.
+ *
+ * As a work-around, this performs a flush immediately before unlocking the print mutex.
+ *
+ * @param stream
+ *   The output stream to flush.
+ * @param mutex
+ *   The print mutex to unlock.
+ */
+#ifndef _di_controller_print_unlock_flush_
+  void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_print_unlock_flush_
+
+/**
  * Fully deallocate all memory for the given process without caring about return status.
  *
  * @param process

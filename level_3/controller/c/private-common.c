@@ -91,7 +91,7 @@ extern "C" {
 
       fll_error_print(print, status, function, fallback);
 
-      f_thread_mutex_unlock(&thread->lock.print);
+      controller_print_unlock_flush(print.to.stream, &thread->lock.print);
     }
   }
 #endif // _di_controller_error_print_
@@ -162,6 +162,18 @@ extern "C" {
     controller_lock_delete_rw(&lock->rule);
   }
 #endif // _di_controller_lock_delete_simple_
+
+#ifndef _di_controller_print_unlock_flush_
+  void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) {
+
+    if (stream == 0 || mutex == 0) {
+      return;
+    }
+
+    fflush(stream);
+    f_thread_mutex_unlock(mutex);
+  }
+#endif // _di_controller_print_unlock_flush_
 
 #ifndef _di_controller_process_delete_simple_
   void controller_process_delete_simple(controller_process_t *process) {

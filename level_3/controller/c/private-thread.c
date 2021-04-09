@@ -199,7 +199,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, setting->path_pid.string, data->error.notable.after->string);
             fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-            f_thread_mutex_unlock(&thread.lock.print);
+            controller_print_unlock_flush(data->error.to.stream, &thread.lock.print);
           }
 
           setting->ready = controller_setting_ready_abort;
@@ -469,7 +469,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, entry->setting->path_pid.string, data->error.notable.after->string);
             fprintf(data->error.to.stream, "%s' must not already exist.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
 
-            f_thread_mutex_unlock(&entry->main->thread->lock.print);
+            controller_print_unlock_flush(data->error.to.stream, &entry->main->thread->lock.print);
           }
 
           entry->setting->ready = controller_setting_ready_fail;

@@ -549,7 +549,7 @@ extern "C" {
       fll_error_print(print, status, function, fallback);
       controller_entry_error_print_cache(print, cache);
 
-      f_thread_mutex_unlock(&thread->lock.print);
+      controller_print_unlock_flush(print.to.stream, &thread->lock.print);
     }
   }
 #endif // _di_controller_entry_error_print_
@@ -673,7 +673,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(main.data->error.to.stream, "%s%sThe entry file is empty.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
-          f_thread_mutex_unlock(&main.thread->lock.print);
+          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
         }
 
         status = F_status_set_error(F_data_not);
@@ -762,7 +762,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->warning, cache->action);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
 
               code |= 0x2;
@@ -811,7 +811,7 @@ extern "C" {
 
             controller_entry_error_print_cache(main.data->error, cache->action);
 
-            f_thread_mutex_unlock(&main.thread->lock.print);
+            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -832,7 +832,7 @@ extern "C" {
               fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_main_s, main.data->error.notable.after->string);
               fprintf(main.data->error.to.stream, "%s' was not found.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
 
             status = F_status_set_error(F_found_not);
@@ -896,7 +896,7 @@ extern "C" {
 
                       controller_entry_error_print_cache(main.data->error, cache->action);
 
-                      f_thread_mutex_unlock(&main.thread->lock.print);
+                      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
                     }
 
                     action->number = 0;

@@ -106,7 +106,7 @@ extern "C" {
 
         fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
 
-        f_thread_mutex_unlock(&main.thread->lock.print);
+        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
       }
     }
     else {
@@ -118,7 +118,7 @@ extern "C" {
 
           fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
 
-          f_thread_mutex_unlock(&main.thread->lock.print);
+          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
         }
       }
     }
@@ -136,7 +136,7 @@ extern "C" {
 
           fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
 
-          f_thread_mutex_unlock(&main.thread->lock.print);
+          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
         }
       }
       else {
@@ -366,7 +366,7 @@ extern "C" {
 
             controller_entry_error_print_cache(main.data->error, cache->action);
 
-            f_thread_mutex_unlock(&main.thread->lock.print);
+            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
           }
 
           return status;
@@ -379,7 +379,7 @@ extern "C" {
 
           controller_entry_error_print_cache(main.data->warning, cache->action);
 
-          f_thread_mutex_unlock(&main.thread->lock.print);
+          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
         }
 
         status = F_none;
@@ -467,7 +467,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->warning, cache->action);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
 
@@ -500,7 +500,7 @@ extern "C" {
 
                     controller_entry_error_print_cache(main.data->error, cache->action);
 
-                    f_thread_mutex_unlock(&main.thread->lock.print);
+                    controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
                   }
 
                   if (F_status_is_error_not(status)) {
@@ -563,7 +563,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->error, cache->action);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status)) {
@@ -683,7 +683,7 @@ extern "C" {
         fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_main_s, main.data->context.set.title.after->string);
         fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
 
-        f_thread_mutex_unlock(&main.thread->lock.print);
+        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
       }
     }
 
@@ -725,7 +725,7 @@ extern "C" {
 
                 fprintf(main.data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", entry_action->code & controller_entry_rule_code_require ? "required" : "optional", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
             }
             else if (entry_action->code & controller_entry_rule_code_require) {
@@ -750,7 +750,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->error, cache->action);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
 
               return F_status_is_error(F_require);
@@ -775,7 +775,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->warning, cache->action);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
           else {
@@ -796,7 +796,7 @@ extern "C" {
 
                 fprintf(main.data->output.stream, "' is in a %sfailed%s state, skipping.%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
             }
             else if (main.data->warning.verbosity == f_console_verbosity_debug) {
@@ -817,7 +817,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->warning, cache->action);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
 
@@ -837,7 +837,7 @@ extern "C" {
                 fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_ready_s, main.data->context.set.title.after->string);
                 fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
             }
             else {
@@ -857,7 +857,7 @@ extern "C" {
               fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_ready_s, main.data->context.set.title.after->string);
               fprintf(main.data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
         }
@@ -876,7 +876,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->error, cache->action);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
 
             return F_status_is_error(F_critical);
@@ -922,7 +922,7 @@ extern "C" {
               fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, cache->action.name_item.string, main.data->context.set.title.after->string);
               fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
 
@@ -967,7 +967,7 @@ extern "C" {
               fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, alias_rule.string, main.data->context.set.title.after->string);
               fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
 
@@ -1017,7 +1017,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->error, cache->action);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
 
               if (!simulate) {
@@ -1138,7 +1138,7 @@ extern "C" {
               fprintf(main.data->output.stream, "%s%llu%s", main.data->context.set.important.before->string, entry_action->number, main.data->context.set.important.after->string);
               fprintf(main.data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
           }
 
@@ -1167,7 +1167,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->error, cache->action);
 
-              f_thread_mutex_unlock(&main.thread->lock.print);
+              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
             }
 
             return F_status_is_error(F_critical);
@@ -1187,7 +1187,7 @@ extern "C" {
                 fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.important.before->string, main.setting->entry.items.array[main.setting->failsafe_rule_id].name.string, main.data->context.set.important.after->string);
                 fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
 
-                f_thread_mutex_unlock(&main.thread->lock.print);
+                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
             }
           }
@@ -1247,7 +1247,7 @@ extern "C" {
         fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_main_s, main.data->context.set.title.after->string);
         fprintf(main.data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
-        f_thread_mutex_unlock(&main.thread->lock.print);
+        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
       }
     }
 
