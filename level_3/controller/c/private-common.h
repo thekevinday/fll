@@ -1077,6 +1077,7 @@ extern "C" {
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
   #define controller_thread_exit_process_cancel_wait 60000000 // 0.06 seconds in nanoseconds.
   #define controller_thread_exit_process_cancel_total 150 // 9 seconds in multiples of wait.
+  #define controller_thread_lock_timeout 100000000 // 0.1 seconds in nanoseconds.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
   #define controller_thread_wait_timeout_seconds 10
   #define controller_thread_wait_timeout_nanoseconds 0
@@ -1313,6 +1314,30 @@ extern "C" {
 #ifndef _di_controller_lock_delete_simple_
   extern void controller_lock_delete_simple(controller_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_delete_simple_
+
+/**
+ * Wait to get a write lock.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param lock
+ *   The r/w lock to obtain a write lock on.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ *
+ * @return
+ *   F_none on success.
+ *   F_status if main thread is disabled and write lock was never achieved.
+ *
+ *   Status from: f_thread_lock_write_timed().
+ *
+ *   Errors (with error bit) from: f_thread_lock_write_timed().
+ *
+ * @see f_thread_lock_write_timed()
+ */
+#ifndef _di_controller_lock_write_
+  extern f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_write_
 
 /**
  * Flush the stream buffer and then unlock the mutex.

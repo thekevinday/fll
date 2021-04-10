@@ -140,9 +140,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_busy) {
-        f_thread_lock_write(lock);
-        f_thread_unlock(lock);
-
         if (f_thread_lock_delete(lock) == F_none) {
           lock = 0;
         }
@@ -162,6 +159,32 @@ extern "C" {
     controller_lock_delete_rw(&lock->rule);
   }
 #endif // _di_controller_lock_delete_simple_
+
+#ifndef _di_controller_lock_write_
+  f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    struct timespec time;
+    time.tv_sec = 0;
+    time.tv_nsec = controller_thread_lock_timeout;
+
+    f_status_t status = F_none;
+
+    for (;;) {
+      status = f_thread_lock_write_timed(&time, lock);
+
+      if (status == F_time) {
+        if (!thread->enabled) {
+          return F_signal;
+        }
+      }
+      else {
+        break;
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_controller_lock_write_
 
 #ifndef _di_controller_print_unlock_flush_
   void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) {

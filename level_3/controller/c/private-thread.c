@@ -12,11 +12,15 @@ extern "C" {
 #ifndef _di_controller_thread_cleanup_
   void * controller_thread_cleanup(void *arguments) {
 
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
     const controller_main_t *main = (controller_main_t *) arguments;
 
     if (!main->thread->enabled) return 0;
 
     const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
+
+    f_status_t status = F_none;
 
     while (main->thread->enabled) {
 
@@ -65,7 +69,20 @@ extern "C" {
               break;
             }
 
-            f_thread_lock_write(&process->lock);
+            status = controller_lock_write(main->thread, &process->lock);
+
+            if (status == F_signal) {
+              f_thread_unlock(&process->active);
+
+              break;
+            }
+
+            if (!main->thread->enabled) {
+              f_thread_unlock(&process->lock);
+              f_thread_unlock(&process->active);
+
+              break;
+            }
 
             process->state = controller_process_state_idle;
             process->id_thread = 0;
@@ -95,6 +112,8 @@ extern "C" {
 
 #ifndef _di_controller_thread_control_
   void * controller_thread_control(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
     controller_main_t *main = (controller_main_t *) arguments;
 
@@ -288,6 +307,8 @@ extern "C" {
 #ifndef _di_controller_thread_process_
   void * controller_thread_process(void *arguments) {
 
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
     controller_process_t *process = (controller_process_t *) arguments;
 
     {
@@ -411,32 +432,19 @@ extern "C" {
           nanosleep(&wait, 0);
         }
 
-        f_thread_signal(process->id_thread, F_signal_kill);
-
         f_thread_join(process->id_thread, 0);
 
         process->child = 0;
         process->id_thread = 0;
       }
     } // for
-
-    // guarantee these threads are terminated.
-    if (main->thread->id_cleanup) {
-      f_thread_signal(main->thread->id_cleanup, F_signal_kill);
-    }
-
-    if (main->thread->id_control) {
-      f_thread_signal(main->thread->id_control, F_signal_kill);
-    }
-
-    if (main->thread->id_rule) {
-      f_thread_signal(main->thread->id_rule, F_signal_kill);
-    }
   }
 #endif // _di_controller_thread_process_cancel_
 
 #ifndef _di_controller_thread_entry_
   void * controller_thread_entry(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
     controller_main_entry_t *entry = (controller_main_entry_t *) arguments;
 
@@ -507,6 +515,8 @@ extern "C" {
 
 #ifndef _di_controller_thread_rule_
   void * controller_thread_rule(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
 
     controller_main_t *main = (controller_main_t *) arguments;
 

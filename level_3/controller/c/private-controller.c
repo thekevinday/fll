@@ -437,7 +437,7 @@ extern "C" {
       return status;
     }
 
-    for (;;) {
+    for (; main.thread->enabled; ) {
 
       actions = &main.setting->entry.items.array[cache->ats.array[at_i]].actions;
 
@@ -605,6 +605,10 @@ extern "C" {
       }
     } // for
 
+    if (!main.thread->enabled) {
+      return F_signal;
+    }
+
     // if ready was never found in the entry, then default to always ready.
     if (main.setting->ready == controller_setting_ready_no) {
       main.setting->ready = controller_setting_ready_yes;
@@ -687,7 +691,7 @@ extern "C" {
       }
     }
 
-    for (;;) {
+    for (; main.thread->enabled; ) {
 
       entry_actions = &main.setting->entry.items.array[cache->ats.array[at_i]].actions;
 
@@ -930,7 +934,18 @@ extern "C" {
           break;
         }
         else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
-          f_thread_lock_write(&main.thread->lock.rule);
+
+          status = controller_lock_write(main.thread, &main.thread->lock.rule);
+
+          if (status == F_signal) {
+            break;
+          }
+
+          if (!main.thread->enabled) {
+            f_thread_unlock(&main.thread->lock.rule);
+
+            break;
+          }
 
           status = controller_rules_increase(&main.setting->rules);
 
@@ -971,6 +986,8 @@ extern "C" {
             }
           }
 
+          if (!main.thread->enabled) break;
+
           // the rule is not yet loaded, ensure that it is loaded.
           if (status != F_true) {
 
@@ -990,7 +1007,17 @@ extern "C" {
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            f_thread_lock_write(&main.thread->lock.rule);
+            status = controller_lock_write(main.thread, &main.thread->lock.rule);
+
+            if (status == F_signal) {
+              break;
+            }
+
+            if (!main.thread->enabled) {
+              f_thread_unlock(&main.thread->lock.rule);
+
+              break;
+            }
 
             status = controller_rule_read(alias_rule, main, cache, &main.setting->rules.array[main.setting->rules.used]);
 
@@ -1009,6 +1036,12 @@ extern "C" {
 
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
+
+            if (!main.thread->enabled) {
+              f_thread_unlock(&main.thread->lock.rule);
+
+              break;
+            }
 
             if (F_status_is_error(status)) {
 
@@ -1039,7 +1072,18 @@ extern "C" {
               if (controller_find_process(alias_rule, main.thread->processs, 0) == F_false) {
 
                 f_thread_unlock(&main.thread->lock.process);
-                f_thread_lock_write(&main.thread->lock.process);
+
+                status = controller_lock_write(main.thread, &main.thread->lock.process);
+
+                if (status == F_signal) {
+                  break;
+                }
+
+                if (!main.thread->enabled) {
+                  f_thread_unlock(&main.thread->lock.process);
+
+                  break;
+                }
 
                 status = controller_processs_increase(&main.thread->processs);
 
@@ -1051,7 +1095,20 @@ extern "C" {
                   // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
                   controller_process_t *process = main.thread->processs.array[main.thread->processs.used];
 
-                  f_thread_lock_write(&process->lock);
+                  status = controller_lock_write(main.thread, &process->lock);
+
+                  if (status == F_signal) {
+                    f_thread_unlock(&main.thread->lock.process);
+
+                    break;
+                  }
+
+                  if (!main.thread->enabled) {
+                    f_thread_unlock(&process->lock);
+                    f_thread_unlock(&main.thread->lock.process);
+
+                    break;
+                  }
 
                   process->rule.alias.used = 0;
 
@@ -1108,7 +1165,7 @@ extern "C" {
 
             status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, main, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal) {
+            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !main.thread->enabled) {
               break;
             }
           }
@@ -1235,6 +1292,10 @@ extern "C" {
         }
       }
     } // for
+
+    if (!main.thread->enabled) {
+      return F_signal;
+    }
 
     if (status == F_child || status == F_signal) {
       return status;
