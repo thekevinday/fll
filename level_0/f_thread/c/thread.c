@@ -882,7 +882,17 @@ extern "C" {
 #ifndef _di_f_thread_cancel_state_set_
   f_status_t f_thread_cancel_state_set(const int state, int *previous) {
 
-    const int error = pthread_setcancelstate(state, previous);
+    int error = 0;
+
+    // POSIX doesn't allow this to be NULL, so make POSIX happy.
+    if (previous == 0) {
+      int ignore = 0;
+
+      error = pthread_setcancelstate(state, &ignore);
+    }
+    else {
+      error = pthread_setcancelstate(state, previous);
+    }
 
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);

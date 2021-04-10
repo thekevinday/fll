@@ -1183,7 +1183,6 @@ extern "C" {
  * @param previous
  *   (optional) The previously assigned cancellation state.
  *   Set to NULL to not use.
- *   (Note: Linux allows this to be optional/NULL but POSIX does not explicitly defined this and there may be portability issues.)
  *
  * @return
  *   F_none on success.
