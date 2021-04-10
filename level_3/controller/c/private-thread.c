@@ -139,6 +139,8 @@ extern "C" {
 
     usleep(controller_thread_exit_main_force_timeout);
 
+    f_thread_lock_read(&main->thread->lock.process);
+
     if (main->thread->id_cleanup) {
       f_thread_signal(main->thread->id_cleanup, F_signal_kill);
     }
@@ -150,6 +152,8 @@ extern "C" {
     if (main->thread->id_rule) {
       f_thread_signal(main->thread->id_rule, F_signal_kill);
     }
+
+    f_thread_unlock(&main->thread->lock.process);
 
     return 0;
   }
@@ -180,7 +184,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
+      f_thread_lock_write(&main.thread->lock.process);
+
       status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &main);
+
+      f_thread_unlock(&main.thread->lock.process);
     }
 
     if (F_status_is_error(status)) {
@@ -214,8 +222,12 @@ extern "C" {
       else {
         const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(&entry_name, &main, setting);
 
+        f_thread_lock_write(&main.thread->lock.process);
+
         // the entry processing runs using the rule thread.
         status = f_thread_create(0, &thread.id_rule, &controller_thread_entry, (void *) &entry);
+
+        f_thread_unlock(&main.thread->lock.process);
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
@@ -259,20 +271,32 @@ extern "C" {
         }
 
         if (thread.enabled) {
+          f_thread_lock_write(&main.thread->lock.process);
+
           status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &main);
+
+          f_thread_unlock(&main.thread->lock.process);
 
           if (F_status_is_error(status)) {
             thread.id_rule = 0;
           }
           else {
+            f_thread_lock_write(&main.thread->lock.process);
+
             status = f_thread_create(0, &thread.id_control, &controller_thread_control, (void *) &main);
+
+            f_thread_unlock(&main.thread->lock.process);
           }
 
           if (F_status_is_error(status)) {
             thread.id_control = 0;
           }
           else {
+            f_thread_lock_write(&main.thread->lock.process);
+
             status = f_thread_create(0, &thread.id_cleanup, &controller_thread_cleanup, (void *) &main);
+
+            f_thread_unlock(&main.thread->lock.process);
           }
 
           if (F_status_is_error(status)) {
@@ -302,14 +326,23 @@ extern "C" {
     }
 
     if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
+      f_thread_lock_read(&main.thread->lock.process);
+
       if (thread.id_signal) {
+        f_thread_unlock(&main.thread->lock.process);
+
         f_thread_join(thread.id_signal, 0);
 
         thread.id_signal = 0;
       }
+      else {
+        f_thread_unlock(&main.thread->lock.process);
+      }
 
       controller_thread_process_cancel(&main);
     }
+
+    f_thread_lock_read(&main.thread->lock.process);
 
     if (thread.id_signal) f_thread_cancel(thread.id_signal);
     if (thread.id_cleanup) f_thread_cancel(thread.id_cleanup);
@@ -321,8 +354,10 @@ extern "C" {
     if (thread.id_control) f_thread_join(thread.id_control, 0);
     if (thread.id_rule) f_thread_join(thread.id_rule, 0);
 
+    f_thread_unlock(&main.thread->lock.process);
+
     // wait for exit thread to finish any cleanup.
-    f_thread_join(thread.id_exit, 0);
+    if (thread.id_exit) f_thread_join(thread.id_exit, 0);
 
     thread.id_cleanup = 0;
     thread.id_control = 0;

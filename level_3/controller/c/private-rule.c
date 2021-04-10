@@ -1760,16 +1760,18 @@ extern "C" {
             memcpy(alias_other_buffer, main.setting->rules.array[id_rule].alias.string, sizeof(char) * main.setting->rules.array[id_rule].alias.used);
             alias_other_buffer[main.setting->rules.array[id_rule].alias.used] = 0;
 
-            f_thread_unlock(&main.thread->lock.rule);
-
             // attempt to (synchronously) execute the rule when the status is unknown (the rule has not yet been run).
             if (main.setting->rules.array[id_rule].status == F_known_not) {
 
               const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, main.setting->rules.array[id_rule].alias.used);
 
+              f_thread_unlock(&main.thread->lock.rule);
+
               status = controller_rule_process_begin(controller_process_option_execute, alias_other, action, process->options & controller_rule_option_asynchronous ? process->options - controller_rule_option_asynchronous : process->options, process->stack, main, process->cache);
 
               if (status == F_child || status == F_signal) {
+                f_thread_unlock(&process_other->active);
+
                 break;
               }
 
@@ -1799,10 +1801,9 @@ extern "C" {
                   }
                 }
               }
-            }
 
-            f_thread_lock_read(&main.thread->lock.rule);
-            f_thread_unlock(&process_other->active);
+              f_thread_lock_read(&main.thread->lock.rule);
+            }
 
             if (F_status_is_error(main.setting->rules.array[id_rule].status)) {
               if (i == 0 || i == 1) {
@@ -1817,6 +1818,7 @@ extern "C" {
 
                 if (!(process->options & controller_rule_option_simulate)) {
                   f_thread_unlock(&main.thread->lock.rule);
+                  f_thread_unlock(&process_other->active);
                   break;
                 }
               }
@@ -1833,6 +1835,7 @@ extern "C" {
             }
 
             f_thread_unlock(&main.thread->lock.rule);
+            f_thread_unlock(&process_other->active);
           }
           else {
             f_thread_unlock(&main.thread->lock.rule);
