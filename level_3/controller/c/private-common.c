@@ -179,7 +179,10 @@ extern "C" {
   void controller_process_delete_simple(controller_process_t *process) {
 
     if (process->id_thread) {
+      f_thread_signal(process->id_thread, F_signal_kill);
       f_thread_join(process->id_thread, 0);
+
+      process->id_thread = 0;
     }
 
     f_thread_condition_signal_all(&process->wait);

@@ -1075,10 +1075,8 @@ extern "C" {
 #ifndef _di_controller_thread_t_
   #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
-  //#define controller_thread_exit_force_timeout 60  // 1 minute in seconds.
-  #define controller_thread_exit_process_force_wait 30000000 // 0.03 seconds in nanoseconds.
-  #define controller_thread_exit_process_force_total 200 // 6 seconds in multiples of wait.
-  #define controller_thread_exit_main_force_timeout 100000 // 0.1 seconds in microseconds.
+  #define controller_thread_exit_process_cancel_wait 60000000 // 0.06 seconds in nanoseconds.
+  #define controller_thread_exit_process_cancel_total 150 // 9 seconds in multiples of wait.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
   #define controller_thread_wait_timeout_seconds 10
   #define controller_thread_wait_timeout_nanoseconds 0
@@ -1090,7 +1088,6 @@ extern "C" {
 
     f_thread_id_t id_cleanup;
     f_thread_id_t id_control;
-    f_thread_id_t id_exit;
     f_thread_id_t id_rule;
     f_thread_id_t id_signal;
 
@@ -1103,7 +1100,6 @@ extern "C" {
     F_true, \
     0, \
     F_none, \
-    f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
