@@ -111,28 +111,85 @@ extern "C" {
 
     f_thread_lock_read(&main->thread->lock.process);
 
-    // @todo redesign this to use timed waits, that include a counter and a max wait such that when max wait is reached, send kill signals.
-    //       this would, in theory, allow faster exits without as much waiting when there is nothing to wait for.
-
     if (main->thread->processs.size) {
       f_thread_unlock(&main->thread->lock.process);
 
-      usleep(controller_thread_exit_process_force_timeout);
-
       f_thread_lock_read(&main->thread->lock.process);
 
-      for (f_array_length_t i = 0; i < main->thread->processs.size; ++i) {
+      pid_t *process_pids[main->thread->processs.used];
+      f_thread_id_t *process_threads[main->thread->processs.used];
 
-        if (!main->thread->processs.array[i]) continue;
+      memset(process_pids, 0, sizeof(pid_t *) * main->thread->processs.used);
+      memset(process_threads, 0, sizeof(f_thread_id_t *) * main->thread->processs.used);
 
+      f_array_length_t i = 0;
+      f_array_length_t used = 0;
+
+      for (; i < main->thread->processs.size; ++i) {
         if (main->thread->processs.array[i]->child > 0) {
-          f_signal_send(F_signal_kill, main->thread->processs.array[i]->child);
-        }
 
-        if (main->thread->processs.array[i]->id_thread) {
-          f_thread_signal(main->thread->processs.array[i]->id_thread, F_signal_kill);
+          process_pids[used] = &main->thread->processs.array[i]->child;
+
+          if (main->thread->processs.array[i]->id_thread) {
+            process_threads[used] = &main->thread->processs.array[i]->id_thread;
+          }
+
+          ++used;
+        }
+        else if (main->thread->processs.array[i]->id_thread) {
+          process_threads[used] = &main->thread->processs.array[i]->id_thread;
+
+          ++used;
         }
       } // for
+
+      if (used) {
+        f_status_t status = F_none;
+        f_array_length_t spent = 0;
+
+        struct timespec wait;
+        wait.tv_sec = 0;
+        wait.tv_nsec = controller_thread_exit_process_force_wait;
+
+        for (i = 0; i < used && spent < controller_thread_exit_process_force_total; ++i) {
+
+          do {
+
+            status = f_thread_join_timed(*process_threads[i], wait, 0);
+
+            if (status == F_none) {
+              if (process_pids[i]) *process_pids[i] = 0;
+              if (process_threads[i]) *process_threads[i] = 0;
+
+              process_pids[i] = 0;
+              process_threads[i] = 0;
+            }
+
+            spent++;
+
+          } while (status == F_time && spent < controller_thread_exit_process_force_total);
+
+        } // for
+
+        for (i = 0; i < used; ++i) {
+
+          if (process_pids[i] && *process_pids[i]) {
+            f_signal_send(F_signal_kill, *process_pids[i]);
+
+            *process_pids[i] = 0;
+            process_pids[i] = 0;
+          }
+
+          if (process_pids[i] && *process_pids[i]) {
+            f_thread_signal(*process_pids[i], F_signal_kill);
+
+            f_thread_join(*process_pids[i], 0);
+
+            *process_threads[i] = 0;
+            process_threads[i] = 0;
+          }
+        } // for
+      }
     }
 
     f_thread_unlock(&main->thread->lock.process);

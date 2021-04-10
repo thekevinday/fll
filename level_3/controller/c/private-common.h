@@ -1076,7 +1076,8 @@ extern "C" {
   #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
   //#define controller_thread_exit_force_timeout 60  // 1 minute in seconds.
-  #define controller_thread_exit_process_force_timeout 2000000 // 2 seconds in microseconds.
+  #define controller_thread_exit_process_force_wait 30000000 // 0.03 seconds in nanoseconds.
+  #define controller_thread_exit_process_force_total 200 // 6 seconds in multiples of wait.
   #define controller_thread_exit_main_force_timeout 100000 // 0.1 seconds in microseconds.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
   #define controller_thread_wait_timeout_seconds 10
