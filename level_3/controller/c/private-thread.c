@@ -350,9 +350,7 @@ extern "C" {
     f_status_t status = F_none;
     f_array_length_t spent = 0;
 
-    struct timespec wait;
-    wait.tv_sec = 0;
-    wait.tv_nsec = controller_thread_exit_process_cancel_wait;
+    struct timespec time;
 
     controller_process_t *process = 0;
 
@@ -388,7 +386,9 @@ extern "C" {
       process = main->thread->processs.array[i];
 
       if (process->id_thread) {
-        status = f_thread_join_timed(process->id_thread, wait, 0);
+        controller_time(0, controller_thread_exit_process_cancel_wait, &time);
+
+        status = f_thread_join_timed(process->id_thread, time, 0);
 
         if (status == F_none) {
           process->child = 0;
@@ -407,7 +407,9 @@ extern "C" {
       process = main->thread->processs.array[i];
 
       do {
-        status = f_thread_join_timed(process->id_thread, wait, 0);
+        controller_time(0, controller_thread_exit_process_cancel_wait, &time);
+
+        status = f_thread_join_timed(process->id_thread, time, 0);
 
         if (status == F_none) {
           process->child = 0;
@@ -429,7 +431,10 @@ extern "C" {
         if (process->child > 0) {
           f_signal_send(F_signal_kill, process->child);
 
-          nanosleep(&wait, 0);
+          time.tv_sec = 0;
+          time.tv_nsec = controller_thread_exit_process_cancel_wait;
+
+          nanosleep(&time, 0);
         }
 
         f_thread_join(process->id_thread, 0);

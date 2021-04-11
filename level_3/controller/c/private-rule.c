@@ -1705,9 +1705,13 @@ extern "C" {
       f_array_length_t k = 0;
       f_array_length_t id_rule = 0;
       f_array_length_t id_process = 0;
+
       bool found = F_false;
+      bool busy = F_false;
 
       controller_process_t *process_other = 0;
+
+      uint8_t rule_options = 0;
 
       f_string_dynamics_t * const dynamics[] = {
         &process->rule.need,
@@ -1727,9 +1731,18 @@ extern "C" {
 
         for (j = 0; j < dynamics[i]->used; ++j) {
 
+          process_other = 0;
+          found = F_false;
+
           f_thread_lock_read(&main.thread->lock.process);
 
           status = controller_find_process(dynamics[i]->array[j], main.thread->processs, &id_process);
+
+          if (status == F_true) {
+            process_other = main.thread->processs.array[id_process];
+
+            f_thread_lock_read(&process_other->active);
+          }
 
           f_thread_unlock(&main.thread->lock.process);
 
@@ -1762,6 +1775,10 @@ extern "C" {
               if (!(process->options & controller_rule_option_simulate)) {
                 f_thread_unlock(&main.thread->lock.rule);
 
+                if (process_other) {
+                  f_thread_unlock(&process_other->active);
+                }
+
                 break;
               }
             }
@@ -1775,54 +1792,50 @@ extern "C" {
                 controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
               }
             }
-
-            f_thread_unlock(&main.thread->lock.rule);
+          }
+          else {
+            f_thread_lock_read(&main.thread->lock.rule);
           }
 
-          f_thread_lock_read(&main.thread->lock.rule);
+          if (found) {
 
-          if (status == F_true && found) {
-            f_thread_unlock(&main.thread->lock.rule);
-            f_thread_lock_read(&main.thread->lock.process);
-
-            process_other = main.thread->processs.array[id_process];
-
-            f_thread_lock_read(&process_other->active);
-            f_thread_lock_read(&process_other->lock);
-
-            if (process_other->status == F_known_not && (process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy)) {
-              f_thread_unlock(&process_other->lock);
-
-              controller_process_wait(main, process_other);
-            }
-            else {
-              f_thread_unlock(&process_other->lock);
-            }
-
-            f_thread_unlock(&main.thread->lock.process);
-
-            if (!main.thread->enabled) {
-              f_thread_unlock(&process_other->active);
-
-              status = F_signal;
-              break;
-            }
-
-            f_thread_lock_read(&main.thread->lock.rule);
-
+            // the process_other may have write locks, which needs to be avoided, so copy the alias from the rule.
             char alias_other_buffer[main.setting->rules.array[id_rule].alias.used + 1];
 
             memcpy(alias_other_buffer, main.setting->rules.array[id_rule].alias.string, sizeof(char) * main.setting->rules.array[id_rule].alias.used);
             alias_other_buffer[main.setting->rules.array[id_rule].alias.used] = 0;
 
-            // attempt to (synchronously) execute the rule when the status is unknown (the rule has not yet been run).
-            if (main.setting->rules.array[id_rule].status == F_known_not) {
+            const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, main.setting->rules.array[id_rule].alias.used);
 
-              const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, main.setting->rules.array[id_rule].alias.used);
+            f_thread_unlock(&main.thread->lock.rule);
 
-              f_thread_unlock(&main.thread->lock.rule);
+            busy = F_false;
 
-              status = controller_rule_process_begin(controller_process_option_execute, alias_other, action, process->options & controller_rule_option_asynchronous ? process->options - controller_rule_option_asynchronous : process->options, process->stack, main, process->cache);
+            status = f_thread_lock_read_try(&process_other->lock);
+
+            if (status == F_busy) {
+              busy = F_true;
+            }
+            else {
+              if (process_other->status == F_known_not || process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy) {
+                busy = F_true;
+              }
+
+              f_thread_unlock(&process_other->lock);
+            }
+
+            if (busy) {
+              controller_process_wait(main, process_other);
+            }
+            else {
+              rule_options = 0;
+
+              if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
+                rule_options |= controller_rule_option_simulate;
+              }
+
+              // synchronously execute dependency.
+              status = controller_rule_process_begin(controller_process_option_execute, alias_other, controller_rule_action_type_start, controller_process_option_execute, process->stack, main, process_other->cache);
 
               if (status == F_child || status == F_signal) {
                 f_thread_unlock(&process_other->active);
@@ -1839,7 +1852,7 @@ extern "C" {
 
                   controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
 
-                  if (!(process->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
+                  if (!(process_other->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                     f_thread_unlock(&process_other->active);
 
                     break;
@@ -1856,9 +1869,15 @@ extern "C" {
                   }
                 }
               }
-
-              f_thread_lock_read(&main.thread->lock.rule);
             }
+
+            if (!main.thread->enabled) {
+              f_thread_unlock(&process_other->active);
+
+              break;
+            }
+
+            f_thread_lock_read(&main.thread->lock.rule);
 
             if (F_status_is_error(main.setting->rules.array[id_rule].status)) {
               if (i == 0 || i == 1) {
@@ -1871,9 +1890,13 @@ extern "C" {
 
                 controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
 
-                if (!(process->options & controller_rule_option_simulate)) {
+                if (!(process_other->options & controller_rule_option_simulate)) {
                   f_thread_unlock(&main.thread->lock.rule);
-                  f_thread_unlock(&process_other->active);
+
+                  if (process_other) {
+                    f_thread_unlock(&process_other->active);
+                  }
+
                   break;
                 }
               }
@@ -1890,10 +1913,13 @@ extern "C" {
             }
 
             f_thread_unlock(&main.thread->lock.rule);
-            f_thread_unlock(&process_other->active);
           }
           else {
             f_thread_unlock(&main.thread->lock.rule);
+          }
+
+          if (process_other) {
+            f_thread_unlock(&process_other->active);
           }
 
           if (!main.thread->enabled) break;
@@ -1915,8 +1941,8 @@ extern "C" {
       return F_signal;
     }
 
-    if (!(process->options & controller_rule_option_wait) && F_status_is_error_not(status)) {
-      controller_rule_wait_all(main, process);
+    if ((process->options & controller_rule_option_wait) && F_status_is_error_not(status)) {
+      controller_rule_wait_all(main, process); // @fixme review this, it needs to check anything depending on itself!
 
       if (!main.thread->enabled) {
         return F_signal;
@@ -2497,6 +2523,11 @@ extern "C" {
 
     process->stack.used = used_original_stack;
 
+    // inform all things waiting that the process has finished running.
+    f_thread_mutex_lock(&process->wait_lock);
+    f_thread_condition_signal_all(&process->wait);
+    f_thread_mutex_unlock(&process->wait_lock);
+
     f_thread_unlock(&process->lock);
 
     if (options & controller_process_option_asynchronous) {
@@ -2504,19 +2535,10 @@ extern "C" {
     }
 
     if (main.thread->enabled) {
-      if (options & controller_process_option_execute) {
-
-        // inform all things waiting that the process has finished running.
-        f_thread_mutex_lock(&process->wait_lock);
-        f_thread_condition_signal_all(&process->wait);
-        f_thread_mutex_unlock(&process->wait_lock);
-      }
-    }
-    else {
-      return F_signal;
+      return status;
     }
 
-    return status;
+    return F_signal;
   }
 #endif // _di_controller_rule_process_do_
 
@@ -4888,7 +4910,7 @@ extern "C" {
       if (caller) {
         f_thread_lock_read(&main.thread->lock.rule);
 
-        for (j = 0; j < caller->stack.used; ++j) {
+        for (j = 0; j < caller->stack.used && main.thread->enabled; ++j) {
 
           if (main.thread->processs.array[caller->stack.array[j]] && fl_string_dynamic_compare(process->rule.alias, main.thread->processs.array[caller->stack.array[j]]->rule.alias) == F_equal_to) {
             skip = F_true;
@@ -4899,6 +4921,7 @@ extern "C" {
 
         f_thread_unlock(&main.thread->lock.rule);
 
+        if (!main.thread->enabled) break;
         if (skip) continue;
       }
 
@@ -4927,15 +4950,11 @@ extern "C" {
           }
 
           if (process->state == controller_process_state_done) {
-            f_thread_unlock(&process->active);
-
             if (f_thread_lock_write_try(&process->active) == F_none) {
               f_thread_join(process->id_thread, 0);
+
               process->state = controller_process_state_idle;
               process->id_thread = 0;
-            }
-            else {
-              f_thread_lock_read(&process->active);
             }
           }
         }

@@ -1,0 +1,11 @@
+# fss-000d
+
+setting:
+  name "Serial 3"
+  need serial s_2
+
+script:
+  start {
+    echo "Serial 3: $(date -u)"
+    sleep 1
+  }

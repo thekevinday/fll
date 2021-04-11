@@ -1,0 +1,12 @@
+# fss-0005
+
+main:
+
+  rule serial s_1 asynchronous
+  rule serial s_2 asynchronous
+  rule serial s_3 asynchronous
+  rule serial s_4 asynchronous
+  rule serial s_5 asynchronous
+  rule serial s_6 asynchronous
+
+  ready

@@ -6,7 +6,10 @@ setting:
   limit nice 1 2
 
 script:
+  start echo "Sleeping 5: $(date -u)"
+
+script:
   start sleep 5
 
 script:
-  start echo "Sleep 5: $(date -u)"
+  start echo "Slept 5: $(date -u)"

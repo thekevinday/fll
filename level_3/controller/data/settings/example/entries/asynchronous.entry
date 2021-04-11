@@ -1,8 +1,8 @@
 # fss-0005
 
 main:
-  consider asynchronous sleep_3 asynchronous
-  consider asynchronous sleep_5 asynchronous
+  consider asynchronous sleep_8 asynchronous
+  consider asynchronous sleep_10 asynchronous
 
   rule asynchronous sleep_1 asynchronous
   rule asynchronous sleep_2 asynchronous

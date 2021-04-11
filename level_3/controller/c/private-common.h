@@ -1079,7 +1079,13 @@ extern "C" {
   #define controller_thread_exit_process_cancel_total 150 // 9 seconds in multiples of wait.
   #define controller_thread_lock_timeout 100000000 // 0.1 seconds in nanoseconds.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
-  #define controller_thread_wait_timeout_seconds 10
+
+   // @todo implement a staged incrementing wait that waits a short amount of time for say 3 times, then waits a longer amount of time for say 3 times, and then wait a long period of time.
+   //       example: wait 0.02 seconds for 4 times, then
+   //                wait 0.2 seconds for 8 times, then
+   //                wait 2 seconds for 16 times, then
+   //                wait 20 seconds for every time thereafter.
+  #define controller_thread_wait_timeout_seconds 5
   #define controller_thread_wait_timeout_nanoseconds 0
 
   typedef struct {
@@ -1378,10 +1384,18 @@ extern "C" {
  * @param process
  *   The process to wait on.
  *
+ * @return
+ *   F_none on success.
+ *   F_signal on success and signal found.
+ *
+ *   Success from f_thread_condition_wait_timed().
+ *
+ *   Errors (with error bit) from: f_thread_condition_wait_timed().
+ *
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern void controller_process_wait(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_wait_
 
 /**
@@ -1597,6 +1611,23 @@ extern "C" {
 #ifndef _di_controller_thread_delete_simple_
   extern void controller_thread_delete_simple(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_thread_delete_simple_
+
+/**
+ * Get the current time, plus the given offset.
+ *
+ * @todo this is basic enough that there needs to be an f_time class with this function f_time_now(), f_time_future(), f_time_past().
+ *       "struct timespec" -> f_time_nano_t, "struct timeval" -> f_time_micro_t.
+ *
+ * @param seconds
+ *   The seconds to add to current time.
+ * @param nanos
+ *   The nanoseconds to add to current time.
+ * @param time
+ *   The resulting current time.
+ */
+#ifndef _di_controller_time_
+  void controller_time(const time_t seconds, const long nanos, struct timespec *time) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_time_
 
 #ifdef __cplusplus
 } // extern "C"

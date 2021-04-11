@@ -1,0 +1,10 @@
+# fss-000d
+
+setting:
+  name "Serial 1"
+
+script:
+  start {
+    echo "Serial 1: $(date -u)"
+    sleep 1
+  }

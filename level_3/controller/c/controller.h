@@ -27,6 +27,8 @@
 // libc includes
 #include <sched.h>
 #include <string.h>
+#include <time.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <linux/sched.h>
 #include <unistd.h>

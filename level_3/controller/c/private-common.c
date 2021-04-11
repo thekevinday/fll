@@ -164,12 +164,13 @@ extern "C" {
   f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) {
 
     struct timespec time;
-    time.tv_sec = 0;
-    time.tv_nsec = controller_thread_lock_timeout;
 
     f_status_t status = F_none;
 
     for (;;) {
+
+      controller_time(0, controller_thread_lock_timeout, &time);
+
       status = f_thread_lock_write_timed(&time, lock);
 
       if (status == F_time) {
@@ -223,35 +224,41 @@ extern "C" {
 #endif // _di_controller_process_delete_simple_
 
 #ifndef _di_controller_process_wait_
-  void controller_process_wait(const controller_main_t main, controller_process_t *process) {
+  f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) {
 
-    if (!main.thread->enabled) return;
+    if (!main.thread->enabled) {
+      return F_signal;
+    }
 
     struct timespec time;
-    time.tv_sec = controller_thread_wait_timeout_seconds;
-    time.tv_nsec = controller_thread_wait_timeout_nanoseconds;
 
     f_status_t status = F_none;
 
     do {
       f_thread_mutex_lock(&process->wait_lock);
 
+      controller_time(controller_thread_wait_timeout_seconds, controller_thread_wait_timeout_nanoseconds, &time);
+
       status = f_thread_condition_wait_timed(&time, &process->wait, &process->wait_lock);
 
       f_thread_mutex_unlock(&process->wait_lock);
 
-      if (!main.thread->enabled) break;
+      if (!main.thread->enabled) {
+        return F_signal;
+      }
 
       f_thread_lock_read(&process->lock);
 
       if (process->status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);
 
-        break;
+        return F_none;
       }
 
       f_thread_unlock(&process->lock);
-    } while (main.thread->enabled);
+    } while (status == F_time && main.thread->enabled);
+
+    return status;
   }
 #endif // _di_controller_process_wait_
 
@@ -329,6 +336,10 @@ extern "C" {
         if (F_status_is_error(status)) {
           processs->size = length;
           return status;
+        }
+        else {
+          process->status = F_known_not;
+          process->rule.status = F_known_not;
         }
       } // for
 
@@ -485,6 +496,18 @@ extern "C" {
     controller_cache_delete_simple(&thread->cache);
   }
 #endif // _di_controller_thread_delete_simple_
+
+#ifndef _di_controller_time_
+  void controller_time(const time_t seconds, const long nanos, struct timespec *time) {
+
+    struct timeval now;
+
+    gettimeofday(&now, 0);
+
+    time->tv_sec = now.tv_sec + seconds;
+    time->tv_nsec = now.tv_usec * 1000 + nanos;
+  }
+#endif // _di_controller_time_
 
 #ifdef __cplusplus
 } // extern "C"
