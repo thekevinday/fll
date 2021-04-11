@@ -119,9 +119,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_busy) {
-        f_thread_mutex_lock(mutex);
-        f_thread_mutex_unlock(mutex);
-
         if (f_thread_mutex_delete(mutex) == F_none) {
           mutex = 0;
         }
