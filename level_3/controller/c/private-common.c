@@ -505,7 +505,14 @@ extern "C" {
     gettimeofday(&now, 0);
 
     time->tv_sec = now.tv_sec + seconds;
-    time->tv_nsec = now.tv_usec * 1000 + nanos;
+    time->tv_nsec = (now.tv_usec * 1000) + nanos;
+
+    // If tv_nsec is 1 second or greater, then increment seconds.
+    if (time->tv_nsec >= 1000000000) {
+      ++(time->tv_sec);
+
+      time->tv_nsec -= 1000000000;
+    }
   }
 #endif // _di_controller_time_
 
