@@ -1005,10 +1005,10 @@ extern "C" {
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
       fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_child);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_child);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
 
     if (status == F_parent) {
@@ -1037,13 +1037,11 @@ extern "C" {
       // have the parent wait for the child process to finish.
       waitpid(id_child, &result, 0);
 
-      if (!main.thread->enabled) {
-        f_thread_unlock(&process->lock);
+      f_thread_unlock(&process->lock);
 
+      if (!main.thread->enabled) {
         return F_signal;
       }
-
-      f_thread_unlock(&process->lock);
 
       status = controller_lock_write(main.thread, &process->lock);
 
@@ -1068,6 +1066,11 @@ extern "C" {
         status = F_status_set_error(F_failure);
       }
     }
+    else {
+      if (!main.thread->enabled) {
+        return F_signal;
+      }
+    }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -1080,8 +1083,8 @@ extern "C" {
       }
     }
 
-    if (status == F_child) {
-      return F_child;
+    if (status == F_child || status == F_signal) {
+      return status;
     }
 
     if (result != 0) {
@@ -1117,7 +1120,7 @@ extern "C" {
 
     f_status_t status = F_none;
     int result = 0;
-    pid_t id_process = 0;
+    pid_t id_child = 0;
 
     // @todo check to see if pid file exists.
 
@@ -1155,10 +1158,10 @@ extern "C" {
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
       fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
-      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
+      status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
     else {
-      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &result : (void *) &id_process);
+      status = fll_execute_program(program, arguments, &execute_set->parameter, &execute_set->as, execute_set->parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
 
     if (status == F_parent) {
@@ -1179,21 +1182,19 @@ extern "C" {
       }
 
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
-      process->child = id_process;
+      process->child = id_child;
 
       f_thread_unlock(&process->lock);
       f_thread_lock_read(&process->lock);
 
       // have the parent wait for the child process to finish. @todo do not wait, this is a background execution!
-      waitpid(id_process, &result, 0);
-
-      if (!main.thread->enabled) {
-        f_thread_unlock(&process->lock);
-
-        return F_signal;
-      }
+      waitpid(id_child, &result, 0);
 
       f_thread_unlock(&process->lock);
+
+      if (!main.thread->enabled) {
+        return F_signal;
+      }
 
       status = controller_lock_write(main.thread, &process->lock);
 
@@ -1218,6 +1219,11 @@ extern "C" {
         status = F_status_set_error(F_failure);
       }
     }
+    else {
+      if (!main.thread->enabled) {
+        return F_signal;
+      }
+    }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -1230,8 +1236,8 @@ extern "C" {
       }
     }
 
-    if (status == F_child) {
-      return F_child;
+    if (status == F_child || status == F_signal) {
+      return status;
     }
 
     if (result != 0) {
