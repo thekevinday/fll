@@ -1700,8 +1700,6 @@ extern "C" {
 
     if ((process->options & controller_rule_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
       controller_rule_validate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
-
-      return F_none;
     }
 
     f_array_length_t i = 0;
@@ -1839,6 +1837,10 @@ extern "C" {
 
                 if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
                   rule_options |= controller_rule_option_simulate;
+                }
+
+                if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+                  rule_options |= controller_rule_option_validate;
                 }
 
                 // synchronously execute dependency.

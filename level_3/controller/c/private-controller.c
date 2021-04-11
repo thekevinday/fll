@@ -1156,6 +1156,10 @@ extern "C" {
               rule_options |= controller_rule_option_wait;
             }
 
+            if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+              rule_options |= controller_rule_option_validate;
+            }
+
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
               if (main.data->parameters[controller_parameter_validate].result != f_console_result_found) {
                 process_options |= controller_process_option_asynchronous;
