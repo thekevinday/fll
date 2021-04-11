@@ -1183,6 +1183,8 @@ extern "C" {
 
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOTRECOVERABLE) return F_status_set_error(F_recover_not);
+      if (error == EOWNERDEAD) return F_status_set_error(F_dead);
       if (error == EPERM) return F_status_set_error(F_prohibited);
 
       return F_status_set_error(F_failure);
@@ -1203,7 +1205,10 @@ extern "C" {
 
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOTRECOVERABLE) return F_status_set_error(F_recover_not);
+      if (error == EOWNERDEAD) return F_status_set_error(F_dead);
       if (error == EPERM) return F_status_set_error(F_prohibited);
+      if (error == ETIMEDOUT) return F_time;
 
       return F_status_set_error(F_failure);
     }
@@ -2304,7 +2309,7 @@ extern "C" {
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == ENOTRECOVERABLE) return F_status_set_error(F_recover_not);
-      if (error == EOWNERDEAD) return F_status_set_error(F_thread_not);
+      if (error == EOWNERDEAD) return F_status_set_error(F_dead);
       if (error == ETIMEDOUT) return F_time;
 
       return F_status_set_error(F_failure);
@@ -2544,7 +2549,7 @@ extern "C" {
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == ENOTRECOVERABLE) return F_status_set_error(F_recover_not);
-      if (error == EOWNERDEAD) return F_status_set_error(F_thread_not);
+      if (error == EOWNERDEAD) return F_status_set_error(F_dead);
       if (error == EPERM) return F_status_set_error(F_prohibited);
 
       return F_status_set_error(F_failure);

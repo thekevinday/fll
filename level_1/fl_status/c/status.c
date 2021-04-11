@@ -290,6 +290,12 @@ extern "C" {
         case F_critical_not:
           *string = FL_status_string_critical_not;
           break;
+        case F_dead:
+          *string = FL_status_string_dead;
+          break;
+        case F_dead_not:
+          *string = FL_status_string_dead_not;
+          break;
         case F_deadlock:
           *string = FL_status_string_deadlock;
           break;
@@ -430,6 +436,12 @@ extern "C" {
           break;
         case F_link_not:
           *string = FL_status_string_link_not;
+          break;
+        case F_live:
+          *string = FL_status_string_live;
+          break;
+        case F_live_not:
+          *string = FL_status_string_live_not;
           break;
         case F_lock:
           *string = FL_status_string_lock;

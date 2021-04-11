@@ -486,6 +486,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_dead, length, FL_status_string_dead_length) == F_equal_to) {
+        *code = F_dead;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_dead_not, length, FL_status_string_dead_not_length) == F_equal_to) {
+        *code = F_dead_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_deadlock, length, FL_status_string_deadlock_length) == F_equal_to) {
         *code = F_deadlock;
         return F_none;
@@ -728,6 +738,16 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_link_not, length, FL_status_string_link_not_length) == F_equal_to) {
         *code = F_link_not;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_live, length, FL_status_string_live_length) == F_equal_to) {
+        *code = F_live;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_live_not, length, FL_status_string_live_not_length) == F_equal_to) {
+        *code = F_live_not;
         return F_none;
       }
 

@@ -189,6 +189,8 @@ extern "C" {
     #define FL_status_string_control_group_not "F_control_group_not"
     #define FL_status_string_critical          "F_critical"
     #define FL_status_string_critical_not      "F_critical_not"
+    #define FL_status_string_dead              "F_dead"
+    #define FL_status_string_dead_not          "F_dead_not"
     #define FL_status_string_deadlock          "F_deadlock"
     #define FL_status_string_deadlock_not      "F_deadlock_not"
     #define FL_status_string_descriptor        "F_descriptor"
@@ -238,6 +240,8 @@ extern "C" {
     #define FL_status_string_limit_not         "F_limit_not"
     #define FL_status_string_link              "F_link"
     #define FL_status_string_link_not          "F_link_not"
+    #define FL_status_string_live              "F_live"
+    #define FL_status_string_live_not          "F_live_not"
     #define FL_status_string_lock              "F_lock"
     #define FL_status_string_lock_not          "F_lock_not"
     #define FL_status_string_loop              "F_loop"
@@ -354,6 +358,8 @@ extern "C" {
     #define FL_status_string_control_group_not_length 19
     #define FL_status_string_critical_length          10
     #define FL_status_string_critical_not_length      14
+    #define FL_status_string_dead_length              6
+    #define FL_status_string_dead_not_length          10
     #define FL_status_string_deadlock_length          10
     #define FL_status_string_deadlock_not_length      14
     #define FL_status_string_descriptor_length        12
@@ -403,6 +409,8 @@ extern "C" {
     #define FL_status_string_limit_not_length         11
     #define FL_status_string_link_length              6
     #define FL_status_string_link_not_length          10
+    #define FL_status_string_live_length              6
+    #define FL_status_string_live_not_length          10
     #define FL_status_string_lock_length              6
     #define FL_status_string_lock_not_length          10
     #define FL_status_string_loop_length              6

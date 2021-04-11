@@ -1583,7 +1583,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
+ *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
+ *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1601,7 +1604,7 @@ extern "C" {
  *
  * @param wait
  *   The amount of time to wait for.
- *   The wait time is relative to the clock, so consider calling clock_gettime() and then adding the amount of wait time.
+ *   The wait time is relative to the clock, so consider calling clock_gettime() or gettimeofday() and then adding the amount of wait time.
  * @param condition
  *   The condition to wait on.
  * @param mutex
@@ -1611,8 +1614,10 @@ extern "C" {
  *   F_none on success.
  *   F_time on success, and wait timeout was reached before condition was triggered.
  *
+ *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
+ *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1887,7 +1892,7 @@ extern "C" {
  *   The ID of the thread to wait for.
  * @param wait
  *   The amount of time to wait for.
- *   The wait time is relative to the clock, so consider calling clock_gettime() and then adding the amount of wait time.
+ *   The wait time is relative to the clock, so consider calling clock_gettime() or gettimeofday() and then adding the amount of wait time.
  * @param result
  *   (optional) The data returned by the terminated thread (usually the exist status).
  *   If the terminated thread is cancelled, then this holds PTHREAD_CANCELED.
@@ -3085,7 +3090,7 @@ extern "C" {
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable.
  *   F_resource_not (with error bit) if max mutex locks is reached.
- *   F_thread_not (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
+ *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -3161,7 +3166,7 @@ extern "C" {
  *   F_prohibited (with error bit) if not allowed to perform the operation.
  *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable (for a "robust" mutex).
  *   F_resource_not (with error bit) if max mutex locks is reached.
- *   F_thread_not (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
+ *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
  *
  *   F_failure (with error bit) on any other error.
  *
