@@ -1835,14 +1835,14 @@ extern "C" {
                 f_thread_unlock(&main.thread->lock.rule);
                 f_thread_unlock(&process_other->lock);
 
-                rule_options = 0;
+                rule_options = controller_process_option_execute;
 
                 if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
                   rule_options |= controller_rule_option_simulate;
                 }
 
                 // synchronously execute dependency.
-                status = controller_rule_process_begin(controller_process_option_execute, alias_other, controller_rule_action_type_start, controller_process_option_execute, process->stack, main, process_other->cache);
+                status = controller_rule_process_begin(controller_process_option_execute, alias_other, controller_rule_action_type_start, rule_options, process->stack, main, process_other->cache);
 
                 if (status == F_child || status == F_signal) {
                   f_thread_unlock(&process_other->active);
