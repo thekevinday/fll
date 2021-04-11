@@ -1811,63 +1811,69 @@ extern "C" {
 
             busy = F_false;
 
-            status = f_thread_lock_read_try(&process_other->lock);
+            f_thread_lock_read(&process_other->lock);
 
-            if (status == F_busy) {
+            if (process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy) {
               busy = F_true;
-            }
-            else {
-              if (process_other->status == F_known_not || process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy) {
-                busy = F_true;
-              }
-
-              f_thread_unlock(&process_other->lock);
             }
 
             if (busy) {
+              f_thread_unlock(&process_other->lock);
+
               controller_process_wait(main, process_other);
             }
             else {
-              rule_options = 0;
+              f_thread_lock_read(&main.thread->lock.rule);
 
-              if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
-                rule_options |= controller_rule_option_simulate;
-              }
+              if (main.setting->rules.array[id_rule].status == F_known_not) {
+                f_thread_unlock(&main.thread->lock.rule);
+                f_thread_unlock(&process_other->lock);
 
-              // synchronously execute dependency.
-              status = controller_rule_process_begin(controller_process_option_execute, alias_other, controller_rule_action_type_start, controller_process_option_execute, process->stack, main, process_other->cache);
+                rule_options = 0;
 
-              if (status == F_child || status == F_signal) {
-                f_thread_unlock(&process_other->active);
-
-                break;
-              }
-
-              if (F_status_is_error(status)) {
-                if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
-                  f_thread_mutex_lock(&main.thread->lock.print);
-
-                  controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], alias_other_buffer, "failed during execution");
-                  controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
-
-                  controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
-
-                  if (!(process_other->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
-                    f_thread_unlock(&process_other->active);
-
-                    break;
-                  }
+                if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
+                  rule_options |= controller_rule_option_simulate;
                 }
-                else {
-                  if (main.data->warning.verbosity == f_console_verbosity_debug) {
+
+                // synchronously execute dependency.
+                status = controller_rule_process_begin(controller_process_option_execute, alias_other, controller_rule_action_type_start, controller_process_option_execute, process->stack, main, process_other->cache);
+
+                if (status == F_child || status == F_signal) {
+                  f_thread_unlock(&process_other->active);
+
+                  break;
+                }
+
+                if (F_status_is_error(status)) {
+                  if (i == 0 || i == 1 || F_status_set_fine(status) == F_memory_not) {
                     f_thread_mutex_lock(&main.thread->lock.print);
 
-                    controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "failed during execution");
-                    controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
+                    controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], alias_other_buffer, "failed during execution");
+                    controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
                     controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+
+                    if (!(process_other->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
+                      f_thread_unlock(&process_other->active);
+
+                      break;
+                    }
+                  }
+                  else {
+                    if (main.data->warning.verbosity == f_console_verbosity_debug) {
+                      f_thread_mutex_lock(&main.thread->lock.print);
+
+                      controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "failed during execution");
+                      controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
+
+                      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                    }
                   }
                 }
+              }
+              else {
+                f_thread_unlock(&main.thread->lock.rule);
+                f_thread_unlock(&process_other->lock);
               }
             }
 
@@ -1942,7 +1948,7 @@ extern "C" {
     }
 
     if ((process->options & controller_rule_option_wait) && F_status_is_error_not(status)) {
-      controller_rule_wait_all(main, process); // @fixme review this, it needs to check anything depending on itself!
+      controller_rule_wait_all(main, process); // @fixme review this, it needs to check anything depending on this!
 
       if (!main.thread->enabled) {
         return F_signal;

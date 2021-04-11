@@ -6,6 +6,7 @@ setting:
 
 script:
   start {
-    echo "Serial 2: $(date -u)"
+    echo "Serial 2: sleeping $(date -u)"
     sleep 1
+    echo "Serial 2: slept    $(date -u)"
   }

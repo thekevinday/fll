@@ -1,0 +1,11 @@
+# fss-0005
+
+main:
+  rule serial s_1
+  rule serial s_2
+  rule serial s_3
+  rule serial s_4
+  rule serial s_5
+  rule serial s_6
+
+  ready

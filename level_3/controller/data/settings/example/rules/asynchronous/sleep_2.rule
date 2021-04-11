@@ -7,7 +7,7 @@ setting:
   need asynchronous sleep_10
 
 script:
-  start echo "Sleeping 2: $(date -u)"
+  start echo "Sleeping 2: $(date -u), depends: 10"
 
 script:
   start sleep 2
