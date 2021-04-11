@@ -15,9 +15,6 @@
  *       This would then allow for switching modes.
  *
  * @fixme the entire program needs to check the return status on all locks (mutex, r/w locks, etc..) and if there is a problem, print a message and wait (but ideally allow for signals, if enabled).
- *
- * @todo This currently only exits on memory error.
- *       For a production "init" program, this should continue to run...so it needs to sleep and wait for resources to become available.
  */
 #ifndef _controller_h
 

@@ -205,8 +205,6 @@ extern "C" {
       }
     }
 
-    // @todo consider redesigning to spawn forked processes from main thread to allow proper deallocation via a timed mutex condition (only need to do this for scripts).
-
     // only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_child && thread.enabled) {
 
@@ -544,7 +542,7 @@ extern "C" {
 
       if (main->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
-          main->thread->signal = signal; // @todo determine if I need signal saved anymore.
+          main->thread->signal = signal;
 
           controller_thread_process_cancel(main);
           break;

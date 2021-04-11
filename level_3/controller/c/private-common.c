@@ -231,10 +231,23 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    uint8_t count = 0;
+
     do {
       f_thread_mutex_lock(&process->wait_lock);
 
-      controller_time(controller_thread_wait_timeout_seconds, controller_thread_wait_timeout_nanoseconds, &time);
+      if (count < controller_thread_wait_timeout_1_before) {
+        controller_time(controller_thread_wait_timeout_1_seconds, controller_thread_wait_timeout_1_nanoseconds, &time);
+      }
+      else if (count < controller_thread_wait_timeout_2_before) {
+        controller_time(controller_thread_wait_timeout_2_seconds, controller_thread_wait_timeout_2_nanoseconds, &time);
+      }
+      else if (count < controller_thread_wait_timeout_3_before) {
+        controller_time(controller_thread_wait_timeout_3_seconds, controller_thread_wait_timeout_3_nanoseconds, &time);
+      }
+      else {
+        controller_time(controller_thread_wait_timeout_4_seconds, controller_thread_wait_timeout_4_nanoseconds, &time);
+      }
 
       status = f_thread_condition_wait_timed(&time, &process->wait, &process->wait_lock);
 
@@ -253,6 +266,11 @@ extern "C" {
       }
 
       f_thread_unlock(&process->lock);
+
+      if (count < controller_thread_wait_timeout_3_before) {
+        count++;
+      }
+
     } while (status == F_time && main.thread->enabled);
 
     return status;

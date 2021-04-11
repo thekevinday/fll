@@ -1080,13 +1080,18 @@ extern "C" {
   #define controller_thread_lock_timeout 100000000 // 0.1 seconds in nanoseconds.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
 
-   // @todo implement a staged incrementing wait that waits a short amount of time for say 3 times, then waits a longer amount of time for say 3 times, and then wait a long period of time.
-   //       example: wait 0.02 seconds for 4 times, then
-   //                wait 0.2 seconds for 8 times, then
-   //                wait 2 seconds for 16 times, then
-   //                wait 20 seconds for every time thereafter.
-  #define controller_thread_wait_timeout_seconds 5
-  #define controller_thread_wait_timeout_nanoseconds 0
+  #define controller_thread_wait_timeout_1_before 4
+  #define controller_thread_wait_timeout_2_before 12
+  #define controller_thread_wait_timeout_3_before 28
+
+  #define controller_thread_wait_timeout_1_seconds 0
+  #define controller_thread_wait_timeout_1_nanoseconds 20000000
+  #define controller_thread_wait_timeout_2_seconds 0
+  #define controller_thread_wait_timeout_2_nanoseconds 200000000
+  #define controller_thread_wait_timeout_3_seconds 2
+  #define controller_thread_wait_timeout_3_nanoseconds 0
+  #define controller_thread_wait_timeout_4_seconds 20
+  #define controller_thread_wait_timeout_4_nanoseconds 0
 
   typedef struct {
     bool enabled;
