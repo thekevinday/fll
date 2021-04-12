@@ -94,12 +94,10 @@ extern "C" {
 
   #define controller_default_program_script "bash"
 
-  #define controller_path_control  "/sys/fs/cgroup/unified"
   #define controller_path_pid      "/var/run/controller/controller-"
   #define controller_path_settings "/etc/controller"
   #define controller_path_suffix   ".pid"
 
-  #define controller_path_control_length  22
   #define controller_path_pid_length      31
   #define controller_path_settings_length 15
   #define controller_path_suffix_length   4

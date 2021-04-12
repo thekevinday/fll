@@ -780,7 +780,7 @@ extern "C" {
         status = fll_control_group_prepare(process->rule.control_group);
 
         if (F_status_is_error(status)) {
-          controller_error_print(main.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, main.thread);
+          controller_error_file_print(main.data->error, F_status_set_fine(status), "fll_control_group_prepare", F_true, process->rule.control_group.path.string, "prepare control groups for", fll_error_file_type_directory, main.thread);
 
           return status;
         }
@@ -3311,15 +3311,10 @@ extern "C" {
 
         rule->control_group.path.used = 0;
 
-        // @todo path prefix needs to be configurable via a parameter.
-        status = f_string_append(f_control_group_path_system_prefix, f_control_group_path_system_prefix_length, &rule->control_group.path);
-
-        if (F_status_is_error_not(status)) {
-          status = f_string_append(f_control_group_path_system_default, f_control_group_path_system_default_length, &rule->control_group.path);
-        }
+        status = f_string_dynamic_append(main.setting->path_control, &rule->control_group.path);
 
         if (F_status_is_error(status)) {
-          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_append", F_true, F_false, main.thread);
+          controller_rule_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, F_false, main.thread);
         }
         else {
           rule->control_group.groups.used = 0;

@@ -1251,6 +1251,35 @@ extern "C" {
 #endif // _di_controller_entry_items_delete_simple_
 
 /**
+ * Print the file error, locking the print mutex during the print.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param status
+ *   The status code to process.
+ *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+ * @param function
+ *   The name of the function where the error happened.
+ *   Set to 0 to disable.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ * @param name
+ *   The name of the file or directory.
+ * @param operation
+ *   The operation that fails, such as 'create' or 'access'.
+ * @param type
+ *   A valid file type code from the fll_error_file_type enum.
+ * @param thread
+ *   The thread data.
+ *
+ * @see fll_error_file_print()
+ */
+#ifndef _di_controller_error_file_print_
+  extern void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_error_file_print_
+
+
+/**
  * Print the error, locking the print mutex during the print.
  *
  * @param print

@@ -27,7 +27,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" controller_path_control "'.");
+    fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program can be interrupted.");
     fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
@@ -262,6 +262,24 @@ extern "C" {
             fll_error_print(data->error, F_status_set_fine(status), "fll_path_canonical", F_true);
           }
         }
+        else {
+          status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
+
+          if (F_status_is_error(status)) {
+            if (data->error.verbosity != f_console_verbosity_quiet) {
+              fll_error_print(data->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+            }
+          }
+          else {
+            status = f_string_dynamic_terminate_after(&setting.path_control);
+
+            if (F_status_is_error(status)) {
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              }
+            }
+          }
+        }
       }
       else {
         if (data->warning.verbosity == f_console_verbosity_debug) {
@@ -305,11 +323,33 @@ extern "C" {
 
       // a control file path is required.
       if (!setting.path_control.used) {
-        status = f_string_append(controller_path_control, controller_path_control_length, &setting.path_control);
+        status = f_string_append_nulless(f_control_group_path_system_prefix, f_control_group_path_system_prefix_length, &setting.path_control);
+
+        if (F_status_is_error_not(status)) {
+          status = f_string_append_nulless(f_control_group_path_system_default, f_control_group_path_system_default_length, &setting.path_control);
+        }
 
         if (F_status_is_error(status)) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
+            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          }
+        }
+        else {
+          status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
+
+          if (F_status_is_error(status)) {
+            if (data->error.verbosity != f_console_verbosity_quiet) {
+              fll_error_print(data->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+            }
+          }
+          else {
+            status = f_string_dynamic_terminate_after(&setting.path_control);
+
+            if (F_status_is_error(status)) {
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              }
+            }
           }
         }
       }

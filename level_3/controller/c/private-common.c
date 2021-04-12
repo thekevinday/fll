@@ -83,6 +83,19 @@ extern "C" {
   }
 #endif // _di_controller_entry_items_delete_simple_
 
+#ifndef _di_controller_error_file_print_
+  void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
+
+    if (print.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->lock.print);
+
+      fll_error_file_print(print, status, function, fallback, name, operation, type);
+
+      controller_print_unlock_flush(print.to.stream, &thread->lock.print);
+    }
+  }
+#endif // _di_controller_error_file_print_
+
 #ifndef _di_controller_error_print_
   void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 

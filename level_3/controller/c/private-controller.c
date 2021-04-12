@@ -265,7 +265,6 @@ extern "C" {
   f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
     f_number_unsigned_t number = 0;
 
-    // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
     f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
@@ -307,7 +306,6 @@ extern "C" {
   f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) {
     f_number_unsigned_t number = 0;
 
-    // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
     f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
