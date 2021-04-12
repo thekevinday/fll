@@ -234,7 +234,7 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
@@ -266,7 +266,7 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
@@ -298,7 +298,7 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
           fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);

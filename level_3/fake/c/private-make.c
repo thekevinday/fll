@@ -49,7 +49,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -127,7 +127,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -3169,7 +3169,7 @@ extern "C" {
           status_number = F_status_set_error(F_failure);
         }
         else {
-          status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number_left, range);
+          status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, range, &number_left);
         }
 
         if (F_status_is_error_not(status_number)) {
@@ -3193,7 +3193,7 @@ extern "C" {
                 status_number = F_status_set_error(F_failure);
               }
               else {
-                status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number_right, range);
+                status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, range, &number_right);
               }
             }
             else {
@@ -4842,7 +4842,7 @@ extern "C" {
                   status_number = F_status_set_error(F_failure);
                 }
                 else {
-                  status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, &number, range);
+                  status_number = fl_conversion_string_to_number_unsigned(arguments.array[i].string, range, &number);
                 }
               }
               else {

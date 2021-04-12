@@ -194,7 +194,7 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
           fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_at, arguments.argv[index]);
@@ -234,7 +234,7 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &number, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
           fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_line, arguments.argv[index]);

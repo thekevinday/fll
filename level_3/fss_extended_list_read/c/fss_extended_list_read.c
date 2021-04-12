@@ -388,7 +388,7 @@ extern "C" {
               range.start++;
             }
 
-            status = fl_conversion_string_to_number_unsigned(arguments.argv[location], &data->delimit_depth, range);
+            status = fl_conversion_string_to_number_unsigned(arguments.argv[location], range, &data->delimit_depth);
 
             if (F_status_is_error(status)) {
               fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_list_read_long_delimit, arguments.argv[location]);

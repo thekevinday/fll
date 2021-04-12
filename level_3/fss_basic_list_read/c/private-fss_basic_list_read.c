@@ -46,7 +46,7 @@ extern "C" {
 
         const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[position_depth]));
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], &depths->array[i].depth, range);
+        status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], range, &depths->array[i].depth);
 
         if (F_status_is_error(status)) {
           fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_depth, arguments.argv[position_depth]);
@@ -69,7 +69,7 @@ extern "C" {
 
           const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
-          status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], &depths->array[i].value_at, range);
+          status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], range, &depths->array[i].value_at);
 
           if (F_status_is_error(status)) {
             fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_at, arguments.argv[depths->array[i].index_at]);
@@ -231,7 +231,7 @@ extern "C" {
       const f_array_length_t index = data->parameters[fss_basic_list_read_parameter_select].values.array[data->parameters[fss_basic_list_read_parameter_select].values.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &select, range);
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
 
       if (F_status_is_error(status)) {
         fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_select, arguments.argv[index]);
@@ -250,7 +250,7 @@ extern "C" {
       const f_array_length_t index = data->parameters[fss_basic_list_read_parameter_line].values.array[data->parameters[fss_basic_list_read_parameter_line].values.used - 1];
       const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
 
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], &line, range);
+      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
 
       if (F_status_is_error(status)) {
         fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_list_read_long_line, arguments.argv[index]);

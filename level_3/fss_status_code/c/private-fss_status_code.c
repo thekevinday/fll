@@ -50,7 +50,7 @@ extern "C" {
 
       f_number_unsigned_t number = 0;
 
-      status = fl_conversion_string_to_number_unsigned(value, &number, range);
+      status = fl_conversion_string_to_number_unsigned(value, range, &number);
 
       if (status == F_none) {
         fl_color_print(data.output.stream, data.context.set.error, "invalid name%c", f_string_eol_s[0]);
@@ -131,7 +131,7 @@ extern "C" {
   f_status_t fss_status_code_convert_number(const fss_status_code_data_t data, const f_string_t value, f_number_unsigned_t *number) {
     const f_string_range_t range = f_macro_string_range_t_initialize(strlen(value));
 
-    f_status_t status = fl_conversion_string_to_number_unsigned(value, number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(value, range, number);
 
     if (*number > F_status_size_max_with_signal) {
       fl_color_print(data.output.stream, data.context.set.error, "out of range%c", f_string_eol_s[0]);

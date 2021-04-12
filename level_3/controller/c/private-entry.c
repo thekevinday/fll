@@ -498,7 +498,7 @@ extern "C" {
             if (action->status == F_none) {
               const f_string_range_t range = f_macro_string_range_t_initialize(action->parameters.array[1].used);
 
-              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, &action->number, range);
+              status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, range, &action->number);
 
               if (F_status_is_error(status) || status == F_data_not) {
                 action->number = 0;

@@ -52,7 +52,7 @@ extern "C" {
                         range.stop = i;
 
                         // 1: A possibly valid header type was found, now convert it into its proper format and save the header type.
-                        const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                        const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, range, &header->type);
                         if (F_status_is_error(status)) return status;
 
                         if (status == F_none) {
@@ -110,7 +110,7 @@ extern "C" {
                       range.start = i - 4;
                       range.stop = i;
 
-                      const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, &header->type, range);
+                      const f_status_t status = fl_conversion_string_to_hexidecimal_unsigned(buffer.string, range, &header->type);
                       if (F_status_is_error(status)) return status;
 
                       header->length = i + 1;

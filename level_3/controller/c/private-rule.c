@@ -3057,7 +3057,7 @@ extern "C" {
             break;
           }
 
-          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[j]);
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, cache->content_actions.array[i].array[j], &number);
 
           if (F_status_is_error(status)) {
             status = F_status_set_fine(status);
@@ -3538,7 +3538,7 @@ extern "C" {
 
         for (j = 1; j < 3; ++j, number = 0) {
 
-          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[j]);
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, cache->content_actions.array[i].array[j], &number);
 
           if (F_status_is_error(status)) {
             status = F_status_set_fine(status);
@@ -3854,7 +3854,7 @@ extern "C" {
 
           f_number_signed_t number = 0;
 
-          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[1]);
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, cache->content_actions.array[i].array[1], &number);
 
           if (F_status_is_error(status) || (zero_only && number) || (!zero_only && (number < 1 || number > 99))) {
             status = F_status_set_fine(status);
@@ -4053,7 +4053,7 @@ extern "C" {
         else if (type == controller_rule_setting_type_nice) {
           f_number_signed_t number = 0;
 
-          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, &number, cache->content_actions.array[i].array[0]);
+          status = fl_conversion_string_to_number_signed(cache->buffer_item.string, cache->content_actions.array[i].array[0], &number);
 
           if (F_status_is_error(status) || number < -20 || number > 19) {
             status = F_status_set_fine(status);

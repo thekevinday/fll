@@ -228,7 +228,7 @@ extern "C" {
         if (!isspace(pid_buffer.string[range.stop])) break;
       } // for
 
-      status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, &number, range);
+      status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, range, &number);
 
       if (F_status_is_error_not(status) && number == data.pid) {
         status = f_file_remove(path_pid.string);
@@ -266,7 +266,7 @@ extern "C" {
     f_number_unsigned_t number = 0;
 
     // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -308,7 +308,7 @@ extern "C" {
     f_number_unsigned_t number = 0;
 
     // @todo fix argument ordering in fl_conversion_string_to_number_unsigned().
-    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, &number, range);
+    f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
