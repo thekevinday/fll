@@ -243,7 +243,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string, main.data->error.notable.after->string);
           fprintf(main.data->error.to.stream, "%s' requires ", main.data->error.context.before->string);
 
-          if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
+          if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
             fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.line_action, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s or more parameters.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
           }

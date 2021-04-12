@@ -1085,9 +1085,9 @@ extern "C" {
   #define controller_thread_wait_timeout_3_before 28
 
   #define controller_thread_wait_timeout_1_seconds 0
-  #define controller_thread_wait_timeout_1_nanoseconds 20000000
+  #define controller_thread_wait_timeout_1_nanoseconds 20000000 // 0.02 seconds in nanoseconds.
   #define controller_thread_wait_timeout_2_seconds 0
-  #define controller_thread_wait_timeout_2_nanoseconds 200000000
+  #define controller_thread_wait_timeout_2_nanoseconds 200000000 // 0.2 seconds in nanoseconds.
   #define controller_thread_wait_timeout_3_seconds 2
   #define controller_thread_wait_timeout_3_nanoseconds 0
   #define controller_thread_wait_timeout_4_seconds 20
@@ -1148,7 +1148,6 @@ extern "C" {
 /**
  * A wrapper used for passing a set of entry processing and execution related data.
  *
- * status:  The return status of entry processing, processed by the main thread.
  * name:    A string representing the entry name.
  * main:    The main data.
  * setting: The setting data.

@@ -14,8 +14,8 @@ Entry Documentation:
 
   The "consider" Action is a special case of a "rule" Action.
   All Action Parameters are the same as with the "rule" Action Parameters.
-  The difference is that "consider" is only processed at this spot at this time if and when some "rule" Action (or another "consider" Action) designates that this consideration is required (via "require"), wanted (via "want"), or wished (via "wish") from the within the referenced Rule file.
-  If this is determined to be executed, then this is immediately executed in the designated position and applies all properties as appropriate (such as "asynchronous", for example).
+  The difference is that "consider" is only processed (instead of being processed and executed) and when some "rule" Action designates that this consideration is required (via "need"), wanted (via "want"), or wished for (via "wish") from the within the Rule file.
+  If this is determined to be executed, then this is immediately executed when needed, wanted or wished for and applies all properties as appropriate (such as "asynchronous", for example).
   If this is determined not to be executed, then this "consider" is ignored as if it was never there in the first place.
 
   The "failsafe" Action accepts only a valid Item Name in which will be executed when a failure is detected.
