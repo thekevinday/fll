@@ -764,21 +764,8 @@ extern "C" {
 
     controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
-    // when using pointers in threads and calling the exec functions, invalid reads and writes may occur.
-    // this problem might be happening due to a compiler optimization/decision, so make local copies and have the pointers reference these to avoid invalid reads and writes.
-    int local_nice;
-    uid_t local_id_user;
-    gid_t local_id_group;
-
-    f_int32s_t local_affinity;
-    f_control_group_t local_control_group;
-    f_int32s_t local_id_groups;
-    f_limit_sets_t local_limits;
-    f_execute_scheduler_t local_scheduler;
-
     if (process->rule.affinity.used) {
-      local_affinity = process->rule.affinity;
-      execute_set.as.affinity = &local_affinity;
+      execute_set.as.affinity = &process->rule.affinity;
     }
 
     if (process->rule.capability) {
@@ -786,8 +773,7 @@ extern "C" {
     }
 
     if (process->rule.has & controller_rule_has_control_group) {
-      local_control_group = process->rule.control_group;
-      execute_set.as.control_group = &local_control_group;
+      execute_set.as.control_group = &process->rule.control_group;
 
       // make sure all required cgroup directories exist.
       if (process->status == F_known_not) {
@@ -802,33 +788,27 @@ extern "C" {
     }
 
     if (process->rule.has & controller_rule_has_group) {
-      local_id_group = process->rule.group;
-      execute_set.as.id_group = &local_id_group;
+      execute_set.as.id_group = &process->rule.group;
 
       if (process->rule.groups.used) {
-        local_id_groups = process->rule.groups;
-        execute_set.as.id_groups = &local_id_groups;
+        execute_set.as.id_groups = &process->rule.groups;
       }
     }
 
     if (process->rule.limits.used) {
-      local_limits = process->rule.limits;
-      execute_set.as.limits = &local_limits;
+      execute_set.as.limits = &process->rule.limits;
     }
 
     if (process->rule.has & controller_rule_has_scheduler) {
-      local_scheduler = process->rule.scheduler;
-      execute_set.as.scheduler = &local_scheduler;
+      execute_set.as.scheduler = &process->rule.scheduler;
     }
 
     if (process->rule.has & controller_rule_has_nice) {
-      local_nice = process->rule.nice;
-      execute_set.as.nice = &local_nice;
+      execute_set.as.nice = &process->rule.nice;
     }
 
     if (process->rule.has & controller_rule_has_user) {
-      local_id_user = process->rule.user;
-      execute_set.as.id_user = &local_id_user;
+      execute_set.as.id_user = &process->rule.user;
     }
 
     status = fl_environment_load_names(process->rule.environment, &environment);
