@@ -106,7 +106,7 @@ extern "C" {
 
         fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, "open", fll_error_file_type_file);
 
-        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
       }
     }
     else {
@@ -118,7 +118,7 @@ extern "C" {
 
           fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, "read", fll_error_file_type_file);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
       }
     }
@@ -136,7 +136,7 @@ extern "C" {
 
           fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_stat", F_true, path, "stat", fll_error_file_type_file);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
       }
       else {
@@ -364,7 +364,7 @@ extern "C" {
 
             controller_entry_error_print_cache(main.data->error, cache->action);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           return status;
@@ -377,7 +377,7 @@ extern "C" {
 
           controller_entry_error_print_cache(main.data->warning, cache->action);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
         }
 
         status = F_none;
@@ -465,7 +465,7 @@ extern "C" {
 
               controller_entry_error_print_cache(main.data->warning, cache->action);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
             }
           }
 
@@ -498,7 +498,7 @@ extern "C" {
 
                     controller_entry_error_print_cache(main.data->error, cache->action);
 
-                    controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                    controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
                   }
 
                   if (F_status_is_error_not(status)) {
@@ -561,7 +561,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->error, cache->action);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status)) {
@@ -617,7 +617,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_status_t controller_process_entry(controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_process_entry(const bool failsafe, controller_main_t *main, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     f_array_length_t i = 0;
@@ -637,7 +637,7 @@ extern "C" {
     // an empty stack is used here because each rule here is the first rule run in the rule's scope.
     const f_array_lengths_t stack = f_array_lengths_t_initialize;
 
-    const bool simulate = main.data->parameters[controller_parameter_test].result == f_console_result_found;
+    const bool simulate = main->data->parameters[controller_parameter_test].result == f_console_result_found;
 
     cache->ats.used = 0;
     cache->stack.used = 0;
@@ -647,53 +647,53 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    if (main.setting->ready == controller_setting_ready_yes) {
-      status = controller_perform_ready(main, cache);
+    if (main->setting->ready == controller_setting_ready_yes) {
+      status = controller_perform_ready(*main, cache);
       if (F_status_is_error(status)) return status;
     }
 
     f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, main.thread);
+      controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, main->thread);
 
       return status;
     }
 
     // utilize the ats cache as an item execution stack (at_i is for item index, and at_j (at_i + 1) is for action index).
-    cache->ats.array[0] = 0;
+    cache->ats.array[0] = failsafe ? main->setting->failsafe_item_id : 0;
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
 
-    cache->action.line_item = main.setting->entry.items.array[0].line;
+    cache->action.line_item = main->setting->entry.items.array[cache->ats.array[0]].line;
     cache->action.name_item.used = 0;
 
-    status = controller_string_dynamic_append_terminated(main.setting->entry.items.array[0].name, &cache->action.name_item);
+    status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[0]].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+      controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
 
       return status;
     }
 
     if (simulate) {
-      if (main.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&main.thread->lock.print);
+      if (main->data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&main->thread->lock.print);
 
-        fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-        fprintf(main.data->output.stream, "Processing entry item '");
-        fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_main_s, main.data->context.set.title.after->string);
-        fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+        fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(main->data->output.stream, "Processing %sentry item '", (failsafe ? "failsafe " : ""));
+        fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_item.string, main->data->context.set.title.after->string);
+        fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
-        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
       }
     }
 
-    for (; main.thread->enabled; ) {
+    for (; main->thread->enabled; ) {
 
-      entry_actions = &main.setting->entry.items.array[cache->ats.array[at_i]].actions;
+      entry_actions = &main->setting->entry.items.array[cache->ats.array[at_i]].actions;
 
-      for (; cache->ats.array[at_j] < entry_actions->used && main.thread->enabled; ++cache->ats.array[at_j]) {
+      for (; cache->ats.array[at_j] < entry_actions->used && main->thread->enabled; ++cache->ats.array[at_j]) {
 
         entry_action = &entry_actions->array[cache->ats.array[at_j]];
 
@@ -703,7 +703,7 @@ extern "C" {
         status = controller_string_dynamic_append_terminated(controller_entry_action_type_name(entry_action->type), &cache->action.name_action);
 
         if (F_status_is_error(status)) {
-          controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+          controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
 
           return status;
         }
@@ -711,115 +711,115 @@ extern "C" {
         if (F_status_is_error(entry_action->status)) {
           if (entry_action->type == controller_entry_action_type_rule) {
             if (simulate) {
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->output.stream, "The entry item action '");
-                fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, cache->action.name_action.string, main.data->context.set.title.after->string);
+                fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "The entry item action '");
+                fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_action.string, main->data->context.set.title.after->string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main.data->output.stream, f_string_space_s);
-                  fprintf(main.data->output.stream, "%s", main.data->context.set.notable.before->string);
-                  controller_entry_action_parameters_print(main.data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
-                  fprintf(main.data->output.stream, "%s", main.data->context.set.notable.after->string);
+                  fprintf(main->data->output.stream, f_string_space_s);
+                  fprintf(main->data->output.stream, "%s", main->data->context.set.notable.before->string);
+                  controller_entry_action_parameters_print(main->data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
+                  fprintf(main->data->output.stream, "%s", main->data->context.set.notable.after->string);
                 }
 
-                fprintf(main.data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", entry_action->code & controller_entry_rule_code_require ? "required" : "optional", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "' is %s and is in a %sfailed%s state, skipping execution.%c", entry_action->code & controller_entry_rule_code_require ? "required" : "optional", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
               }
             }
             else if (entry_action->code & controller_entry_rule_code_require) {
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->error.to.stream, "%s%sThe entry item action '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-                fprintf(main.data->error.to.stream, "%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string);
+                fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->error.to.stream, "%s%sThe entry item action '", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s);
+                fprintf(main->data->error.to.stream, "%s%s%s", main->data->error.context.after->string, main->data->error.notable.before->string, cache->action.name_action.string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main.data->error.to.stream, f_string_space_s);
-                  controller_entry_action_parameters_print(main.data->error.to.stream, entry_actions->array[cache->ats.array[at_j]]);
+                  fprintf(main->data->error.to.stream, f_string_space_s);
+                  controller_entry_action_parameters_print(main->data->error.to.stream, entry_actions->array[cache->ats.array[at_j]]);
                 }
 
-                fprintf(main.data->error.to.stream, "%s%s' is ", main.data->error.notable.after->string, main.data->error.context.before->string);
-                fprintf(main.data->error.to.stream, "%s%srequired%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s and is in a ", main.data->error.context.before->string);
-                fprintf(main.data->error.to.stream, "%s%sfailed%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s state, skipping execution.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                fprintf(main->data->error.to.stream, "%s%s' is ", main->data->error.notable.after->string, main->data->error.context.before->string);
+                fprintf(main->data->error.to.stream, "%s%srequired%s", main->data->error.context.after->string, main->data->error.notable.before->string, main->data->error.notable.after->string);
+                fprintf(main->data->error.to.stream, "%s and is in a ", main->data->error.context.before->string);
+                fprintf(main->data->error.to.stream, "%s%sfailed%s", main->data->error.context.after->string, main->data->error.notable.before->string, main->data->error.notable.after->string);
+                fprintf(main->data->error.to.stream, "%s state, skipping execution.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_entry_error_print_cache(main.data->error, cache->action);
+                controller_entry_error_print_cache(main->data->error, cache->action);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main->data->error.to.stream, &main->thread->lock.print);
               }
 
               return F_status_is_error(F_require);
             }
-            else if (main.data->warning.verbosity == f_console_verbosity_debug) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            else if (main->data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->warning.to.stream, "%s%sThe entry item action '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
-              fprintf(main.data->warning.to.stream, "%s%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, cache->action.name_action.string);
+              fprintf(main->data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->warning.to.stream, "%s%sThe entry item action '", main->data->warning.context.before->string, main->data->warning.prefix ? main->data->warning.prefix : f_string_empty_s);
+              fprintf(main->data->warning.to.stream, "%s%s%s", main->data->warning.context.after->string, main->data->warning.notable.before->string, cache->action.name_action.string);
 
               if (entry_action->parameters.used) {
-                fprintf(main.data->warning.to.stream, f_string_space_s);
-                controller_entry_action_parameters_print(main.data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
+                fprintf(main->data->warning.to.stream, f_string_space_s);
+                controller_entry_action_parameters_print(main->data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
               }
 
-              fprintf(main.data->warning.to.stream, "%s%s' is ", main.data->warning.notable.after->string, main.data->warning.context.before->string);
-              fprintf(main.data->warning.to.stream, "%s%srequired%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, main.data->warning.notable.after->string);
-              fprintf(main.data->warning.to.stream, "%s and is in a ", main.data->warning.context.before->string);
-              fprintf(main.data->warning.to.stream, "%s%sfailed%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, main.data->warning.notable.after->string);
-              fprintf(main.data->warning.to.stream, "%s state, skipping execution.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+              fprintf(main->data->warning.to.stream, "%s%s' is ", main->data->warning.notable.after->string, main->data->warning.context.before->string);
+              fprintf(main->data->warning.to.stream, "%s%srequired%s", main->data->warning.context.after->string, main->data->warning.notable.before->string, main->data->warning.notable.after->string);
+              fprintf(main->data->warning.to.stream, "%s and is in a ", main->data->warning.context.before->string);
+              fprintf(main->data->warning.to.stream, "%s%sfailed%s", main->data->warning.context.after->string, main->data->warning.notable.before->string, main->data->warning.notable.after->string);
+              fprintf(main->data->warning.to.stream, "%s state, skipping execution.%s%c", main->data->warning.context.before->string, main->data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print_cache(main.data->warning, cache->action);
+              controller_entry_error_print_cache(main->data->warning, cache->action);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->warning.to.stream, &main->thread->lock.print);
             }
           }
           else {
             if (simulate) {
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->output.stream, "The entry item action '");
-                fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, cache->action.name_action.string, main.data->context.set.title.after->string);
+                fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "The entry item action '");
+                fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_action.string, main->data->context.set.title.after->string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main.data->output.stream, f_string_space_s);
-                  fprintf(main.data->output.stream, "%s", main.data->context.set.notable.before->string);
-                  controller_entry_action_parameters_print(main.data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
-                  fprintf(main.data->output.stream, "%s", main.data->context.set.notable.after->string);
+                  fprintf(main->data->output.stream, f_string_space_s);
+                  fprintf(main->data->output.stream, "%s", main->data->context.set.notable.before->string);
+                  controller_entry_action_parameters_print(main->data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
+                  fprintf(main->data->output.stream, "%s", main->data->context.set.notable.after->string);
                 }
 
-                fprintf(main.data->output.stream, "' is in a %sfailed%s state, skipping.%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "' is in a %sfailed%s state, skipping.%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
               }
             }
-            else if (main.data->warning.verbosity == f_console_verbosity_debug) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            else if (main->data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->warning.to.stream, "%s%sThe entry item action '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
-              fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.notable.before->string, cache->action.name_action.string);
+              fprintf(main->data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->warning.to.stream, "%s%sThe entry item action '", main->data->warning.context.before->string, main->data->warning.prefix ? main->data->warning.prefix : f_string_empty_s);
+              fprintf(main->data->warning.to.stream, "%s%s", main->data->warning.notable.before->string, cache->action.name_action.string);
 
               if (entry_action->parameters.used) {
-                fprintf(main.data->warning.to.stream, f_string_space_s);
-                controller_entry_action_parameters_print(main.data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
+                fprintf(main->data->warning.to.stream, f_string_space_s);
+                controller_entry_action_parameters_print(main->data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
               }
 
-              fprintf(main.data->warning.to.stream, "%s' is in a ", main.data->warning.notable.after->string);
-              fprintf(main.data->warning.to.stream, "%s%sfailed%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, main.data->warning.notable.after->string);
-              fprintf(main.data->warning.to.stream, "%s state, skipping.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+              fprintf(main->data->warning.to.stream, "%s' is in a ", main->data->warning.notable.after->string);
+              fprintf(main->data->warning.to.stream, "%s%sfailed%s", main->data->warning.context.after->string, main->data->warning.notable.before->string, main->data->warning.notable.after->string);
+              fprintf(main->data->warning.to.stream, "%s state, skipping.%s%c", main->data->warning.context.before->string, main->data->warning.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print_cache(main.data->warning, cache->action);
+              controller_entry_error_print_cache(main->data->warning, cache->action);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->warning.to.stream, &main->thread->lock.print);
             }
           }
 
@@ -828,57 +828,58 @@ extern "C" {
 
         if (entry_action->type == controller_entry_action_type_ready) {
 
-          if (main.setting->ready == controller_setting_ready_wait) {
+          if (main->setting->ready == controller_setting_ready_wait) {
 
             if (simulate) {
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->output.stream, "Processing entry item action '");
-                fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_ready_s, main.data->context.set.title.after->string);
-                fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "Processing entry item action '");
+                fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_ready_s, main->data->context.set.title.after->string);
+                fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
               }
             }
             else {
-              controller_perform_ready(main, cache);
+              controller_perform_ready(*main, cache);
 
               if (F_status_is_error(status)) return status;
             }
 
-            main.setting->ready = controller_setting_ready_yes;
+            main->setting->ready = controller_setting_ready_yes;
           }
           else if (simulate) {
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->output.stream, "Ignoring entry item action '");
-              fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_ready_s, main.data->context.set.title.after->string);
-              fprintf(main.data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "Ignoring entry item action '");
+              fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_ready_s, main->data->context.set.title.after->string);
+              fprintf(main->data->output.stream, "', state already is ready.%c", f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
             }
           }
         }
         else if (entry_action->type == controller_entry_action_type_item) {
 
-          if (entry_action->number == 0 || entry_action->number >= main.setting->entry.items.used) {
+          // @todo also prevent failsafe item from being recursively called, when failsafe == F_true.
+          if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used) {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->error.to.stream, "%s%sInvalid entry item index ", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-              fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, entry_action->number, main.data->error.notable.after->string);
-              fprintf(main.data->error.to.stream, "%s detected.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->error.to.stream, "%s%sInvalid entry item index ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s);
+              fprintf(main->data->error.to.stream, "%s%s%llu%s", main->data->error.context.after->string, main->data->error.notable.before->string, entry_action->number, main->data->error.notable.after->string);
+              fprintf(main->data->error.to.stream, "%s detected.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
-              controller_entry_error_print_cache(main.data->error, cache->action);
+              controller_entry_error_print_cache(main->data->error, cache->action);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->error.to.stream, &main->thread->lock.print);
             }
 
             return F_status_is_error(F_critical);
@@ -887,7 +888,7 @@ extern "C" {
           f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, main.thread);
+            controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, main->thread);
 
             return status;
           }
@@ -905,26 +906,26 @@ extern "C" {
           cache->action.line_action = 0;
 
           cache->action.name_item.used = 0;
-          cache->action.line_item = main.setting->entry.items.array[cache->ats.array[at_i]].line;
+          cache->action.line_item = main->setting->entry.items.array[cache->ats.array[at_i]].line;
 
-          status = controller_string_dynamic_append_terminated(main.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+          status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+            controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
 
             return status;
           }
 
           if (simulate) {
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->output.stream, "Processing entry item '");
-              fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, cache->action.name_item.string, main.data->context.set.title.after->string);
-              fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "Processing entry item '");
+              fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_item.string, main->data->context.set.title.after->string);
+              fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
             }
           }
 
@@ -933,24 +934,24 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
 
-          status = controller_lock_write(main.thread, &main.thread->lock.rule);
+          status = controller_lock_write(main->thread, &main->thread->lock.rule);
 
           if (status == F_signal) {
             break;
           }
 
-          if (!main.thread->enabled) {
-            f_thread_unlock(&main.thread->lock.rule);
+          if (!main->thread->enabled) {
+            f_thread_unlock(&main->thread->lock.rule);
 
             break;
           }
 
-          status = controller_rules_increase(&main.setting->rules);
+          status = controller_rules_increase(&main->setting->rules);
 
-          f_thread_unlock(&main.thread->lock.rule);
+          f_thread_unlock(&main->thread->lock.rule);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_rules_increase", F_true, main.thread);
+            controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_rules_increase", F_true, main->thread);
 
             return status;
           }
@@ -965,26 +966,26 @@ extern "C" {
           id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s[0];
           id_rule_name[id_rule_length] = 0;
 
-          f_thread_lock_read(&main.thread->lock.rule);
+          f_thread_lock_read(&main->thread->lock.rule);
 
-          status = controller_rule_find(alias_rule, main.setting->rules, &at);
+          status = controller_rule_find(alias_rule, main->setting->rules, &at);
 
-          f_thread_unlock(&main.thread->lock.rule);
+          f_thread_unlock(&main->thread->lock.rule);
 
           if (simulate) {
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->output.stream, "%s entry item rule '", entry_action->type == controller_entry_action_type_rule ? "Processing" : "Considering");
-              fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, alias_rule.string, main.data->context.set.title.after->string);
-              fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%s entry item rule '", entry_action->type == controller_entry_action_type_rule ? "Processing" : "Considering");
+              fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, alias_rule.string, main->data->context.set.title.after->string);
+              fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
             }
           }
 
-          if (!main.thread->enabled) break;
+          if (!main->thread->enabled) break;
 
           // the rule is not yet loaded, ensure that it is loaded.
           if (status != F_true) {
@@ -1005,19 +1006,19 @@ extern "C" {
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            status = controller_lock_write(main.thread, &main.thread->lock.rule);
+            status = controller_lock_write(main->thread, &main->thread->lock.rule);
 
             if (status == F_signal) {
               break;
             }
 
-            if (!main.thread->enabled) {
-              f_thread_unlock(&main.thread->lock.rule);
+            if (!main->thread->enabled) {
+              f_thread_unlock(&main->thread->lock.rule);
 
               break;
             }
 
-            status = controller_rule_read(alias_rule, main, cache, &main.setting->rules.array[main.setting->rules.used]);
+            status = controller_rule_read(alias_rule, *main, cache, &main->setting->rules.array[main->setting->rules.used]);
 
             // restore cache.
             memcpy(cache->action.name_action.string, cache_name_action, cache_name_action_used);
@@ -1035,75 +1036,75 @@ extern "C" {
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
 
-            if (!main.thread->enabled) {
-              f_thread_unlock(&main.thread->lock.rule);
+            if (!main->thread->enabled) {
+              f_thread_unlock(&main->thread->lock.rule);
 
               break;
             }
 
             if (F_status_is_error(status)) {
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                controller_entry_error_print_cache(main.data->error, cache->action);
+                controller_entry_error_print_cache(main->data->error, cache->action);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
               }
 
               if (!simulate) {
-                f_thread_unlock(&main.thread->lock.rule);
+                f_thread_unlock(&main->thread->lock.rule);
 
                 break;
               }
             }
             else {
-              main.setting->rules.used++;
+              main->setting->rules.used++;
             }
 
-            f_thread_unlock(&main.thread->lock.rule);
+            f_thread_unlock(&main->thread->lock.rule);
 
             // ensure that a process exists for the added rule.
             if (F_status_is_error_not(status)) {
-              f_thread_lock_read(&main.thread->lock.process);
+              f_thread_lock_read(&main->thread->lock.process);
 
-              if (controller_find_process(alias_rule, main.thread->processs, 0) == F_false) {
+              if (controller_find_process(alias_rule, main->thread->processs, 0) == F_false) {
 
-                f_thread_unlock(&main.thread->lock.process);
+                f_thread_unlock(&main->thread->lock.process);
 
-                status = controller_lock_write(main.thread, &main.thread->lock.process);
+                status = controller_lock_write(main->thread, &main->thread->lock.process);
 
                 if (status == F_signal) {
                   break;
                 }
 
-                if (!main.thread->enabled) {
-                  f_thread_unlock(&main.thread->lock.process);
+                if (!main->thread->enabled) {
+                  f_thread_unlock(&main->thread->lock.process);
 
                   break;
                 }
 
-                status = controller_processs_increase(&main.thread->processs);
+                status = controller_processs_increase(&main->thread->processs);
 
                 if (F_status_is_error(status)) {
-                  controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main.thread);
+                  controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_processs_increase", F_true, main->thread);
                 }
-                else if (main.thread->processs.array[main.thread->processs.used]) {
+                else if (main->thread->processs.array[main->thread->processs.used]) {
 
                   // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
-                  controller_process_t *process = main.thread->processs.array[main.thread->processs.used];
+                  controller_process_t *process = main->thread->processs.array[main->thread->processs.used];
 
-                  status = controller_lock_write(main.thread, &process->lock);
+                  status = controller_lock_write(main->thread, &process->lock);
 
                   if (status == F_signal) {
-                    f_thread_unlock(&main.thread->lock.process);
+                    f_thread_unlock(&main->thread->lock.process);
 
                     break;
                   }
 
-                  if (!main.thread->enabled) {
+                  if (!main->thread->enabled) {
                     f_thread_unlock(&process->lock);
-                    f_thread_unlock(&main.thread->lock.process);
+                    f_thread_unlock(&main->thread->lock.process);
 
                     break;
                   }
@@ -1113,16 +1114,16 @@ extern "C" {
                   status = f_string_dynamic_append(alias_rule, &process->rule.alias);
 
                   if (F_status_is_error(status)) {
-                    controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, main.thread);
+                    controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_append", F_true, main->thread);
                   }
                   else {
                     status = f_string_dynamic_terminate_after(&process->rule.alias);
 
                     if (F_status_is_error(status)) {
-                      controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
+                      controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main->thread);
                     }
                     else {
-                      process->id = main.thread->processs.used++;
+                      process->id = main->thread->processs.used++;
                     }
                   }
 
@@ -1130,7 +1131,7 @@ extern "C" {
                 }
               }
 
-              f_thread_unlock(&main.thread->lock.process);
+              f_thread_unlock(&main->thread->lock.process);
             }
           }
 
@@ -1154,21 +1155,25 @@ extern "C" {
               rule_options |= controller_rule_option_wait;
             }
 
-            if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+            if (main->data->parameters[controller_parameter_validate].result == f_console_result_found) {
               rule_options |= controller_rule_option_validate;
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
-              if (main.data->parameters[controller_parameter_validate].result != f_console_result_found) {
+              if (main->data->parameters[controller_parameter_validate].result != f_console_result_found) {
                 process_options |= controller_process_option_asynchronous;
                 rule_options |= controller_rule_option_asynchronous;
               }
             }
 
-            status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, main, *cache);
+            status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, *main, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !main.thread->enabled) {
+            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !main->thread->enabled) {
               break;
+            }
+
+            if (F_status_is_error(status) && !simulate && (entry_action->code & controller_entry_rule_code_require)) {
+              return F_status_set_error(F_require);
             }
           }
         }
@@ -1187,75 +1192,89 @@ extern "C" {
               code = controller_string_stop_s;
             }
 
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-              fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->output.stream, "Processing entry item action '");
-              fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_timeout_s, main.data->context.set.title.after->string);
-              fprintf(main.data->output.stream, "' setting '");
-              fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.important.before->string, code, main.data->context.set.important.after->string);
-              fprintf(main.data->output.stream, "' to '");
-              fprintf(main.data->output.stream, "%s%llu%s", main.data->context.set.important.before->string, entry_action->number, main.data->context.set.important.after->string);
-              fprintf(main.data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "Processing entry item action '");
+              fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_timeout_s, main->data->context.set.title.after->string);
+              fprintf(main->data->output.stream, "' setting '");
+              fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.important.before->string, code, main->data->context.set.important.after->string);
+              fprintf(main->data->output.stream, "' to '");
+              fprintf(main->data->output.stream, "%s%llu%s", main->data->context.set.important.before->string, entry_action->number, main->data->context.set.important.after->string);
+              fprintf(main->data->output.stream, "' MegaTime (milliseconds).%c", f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
             }
           }
 
           if (entry_action->code == controller_entry_timeout_code_kill) {
-            main.setting->timeout_kill = entry_action->number;
+            main->setting->timeout_kill = entry_action->number;
           }
           else if (entry_action->code == controller_entry_timeout_code_start) {
-            main.setting->timeout_start = entry_action->number;
+            main->setting->timeout_start = entry_action->number;
           }
           else if (entry_action->code == controller_entry_timeout_code_stop) {
-            main.setting->timeout_stop = entry_action->number;
+            main->setting->timeout_stop = entry_action->number;
           }
         }
         else if (entry_action->type == controller_entry_action_type_failsafe) {
 
-          if (entry_action->number == 0 || entry_action->number >= main.setting->entry.items.used) {
+          if (failsafe) {
+            if (main->data->warning.verbosity == f_console_verbosity_debug) {
+              f_thread_mutex_lock(&main->thread->lock.print);
 
-            // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+              fprintf(main->data->warning.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->warning.to.stream, "%s%sFailsafe may not be specified when running in failsafe, ignoring.%s%c", main->data->warning.context.before->string, main->data->warning.prefix ? main->data->warning.prefix : f_string_empty_s, main->data->warning.context.after->string, f_string_eol_s[0]);
 
-              fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->error.to.stream, "%s%sInvalid entry item index ", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-              fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, entry_action->number, main.data->error.notable.after->string);
-              fprintf(main.data->error.to.stream, "%s detected.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              controller_entry_error_print_cache(main->data->warning, cache->action);
 
-              controller_entry_error_print_cache(main.data->error, cache->action);
-
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main->data->warning.to.stream, &main->thread->lock.print);
             }
-
-            return F_status_is_error(F_critical);
           }
           else {
-            main.setting->failsafe_enabled = F_true;
-            main.setting->failsafe_rule_id = entry_action->number;
+            if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used) {
 
-            if (simulate) {
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
-                fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->output.stream, "Processing entry item action '");
-                fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_failsafe_s, main.data->context.set.title.after->string);
-                fprintf(main.data->output.stream, "' setting value to '");
-                fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.important.before->string, main.setting->entry.items.array[main.setting->failsafe_rule_id].name.string, main.data->context.set.important.after->string);
-                fprintf(main.data->output.stream, "'.%c", f_string_eol_s[0]);
+                fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->error.to.stream, "%s%sInvalid entry item index ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s);
+                fprintf(main->data->error.to.stream, "%s%s%llu%s", main->data->error.context.after->string, main->data->error.notable.before->string, entry_action->number, main->data->error.notable.after->string);
+                fprintf(main->data->error.to.stream, "%s detected.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_entry_error_print_cache(main->data->error, cache->action);
+
+                controller_print_unlock_flush(main->data->error.to.stream, &main->thread->lock.print);
+              }
+
+              return F_status_is_error(F_critical);
+            }
+            else {
+              main->setting->failsafe_enabled = F_true;
+              main->setting->failsafe_item_id = entry_action->number;
+
+              if (simulate) {
+                if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                  f_thread_mutex_lock(&main->thread->lock.print);
+
+                  fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+                  fprintf(main->data->output.stream, "Processing entry item action '");
+                  fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_failsafe_s, main->data->context.set.title.after->string);
+                  fprintf(main->data->output.stream, "' setting value to '");
+                  fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.important.before->string, main->setting->entry.items.array[main->setting->failsafe_item_id].name.string, main->data->context.set.important.after->string);
+                  fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
+
+                  controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
+                }
               }
             }
           }
         }
       } // for
 
-      if (!main.thread->enabled) {
+      if (!main->thread->enabled) {
         status = F_signal;
       }
 
@@ -1265,7 +1284,7 @@ extern "C" {
       cache->action.name_action.used = 0;
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_memory_not) {
+        if (F_status_set_fine(status) == F_memory_not || F_status_set_fine(status) == F_require) {
           break;
         }
       }
@@ -1282,20 +1301,20 @@ extern "C" {
         cache->ats.used -= 2;
         cache->ats.array[at_j]++;
 
-        cache->action.line_item = main.setting->entry.items.array[cache->ats.array[at_i]].line;
+        cache->action.line_item = main->setting->entry.items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
 
-        status = controller_string_dynamic_append_terminated(main.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+        status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status)) {
-          controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+          controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
 
           break;
         }
       }
     } // for
 
-    if (!main.thread->enabled) {
+    if (!main->thread->enabled) {
       return F_signal;
     }
 
@@ -1303,16 +1322,20 @@ extern "C" {
       return status;
     }
 
+    // @todo wait for all asynchronous processes to complete.
+    //       then, check to see if any "required" rule failed.
+    //       if failed, then return F_status_set_error(F_require).
+
     if (simulate) {
-      if (main.data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&main.thread->lock.print);
+      if (main->data->error.verbosity != f_console_verbosity_quiet) {
+        f_thread_mutex_lock(&main->thread->lock.print);
 
-        fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
-        fprintf(main.data->output.stream, "Done processing entry item '");
-        fprintf(main.data->output.stream, "%s%s%s", main.data->context.set.title.before->string, controller_string_main_s, main.data->context.set.title.after->string);
-        fprintf(main.data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+        fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+        fprintf(main->data->output.stream, "Done processing entry item '");
+        fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_main_s, main->data->context.set.title.after->string);
+        fprintf(main->data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
-        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
       }
     }
 
@@ -1347,11 +1370,11 @@ extern "C" {
       return F_status_set_error(status);
     }
 
-    if (status == F_failure) {
-      return F_status_set_error(F_failure);
+    if (status == F_valid_not) {
+      return F_status_set_error(F_valid_not);
     }
 
-    return F_status_set_error(F_valid_not);
+    return F_status_set_error(F_failure);
   }
 #endif // _di_controller_status_simplify_error_
 

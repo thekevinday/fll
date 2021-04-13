@@ -376,10 +376,6 @@ extern "C" {
       return status;
     }
 
-    if (setting.ready == controller_setting_ready_fail) {
-      // @todo trigger failsafe/fallback execution, if defined.
-    }
-
     return status;
   }
 #endif // _di_controller_main_

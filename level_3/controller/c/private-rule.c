@@ -426,7 +426,7 @@ extern "C" {
 
         controller_rule_error_print_cache(main.data->warning, cache->action, F_true);
 
-        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
       }
     }
 
@@ -913,7 +913,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
           }
 
           if (success == F_false) {
@@ -955,6 +955,8 @@ extern "C" {
   f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
+
     int result = 0;
     pid_t id_child = 0;
 
@@ -996,10 +998,10 @@ extern "C" {
 
       f_thread_unlock(&process->lock);
 
-      status = controller_lock_write(main.thread, &process->lock);
+      status_lock = controller_lock_write(main.thread, &process->lock);
 
-      if (status == F_signal) {
-        return status;
+      if (status_lock == F_signal) {
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -1023,10 +1025,10 @@ extern "C" {
         return F_signal;
       }
 
-      status = controller_lock_write(main.thread, &process->lock);
+      status_lock = controller_lock_write(main.thread, &process->lock);
 
-      if (status == F_signal) {
-        return status;
+      if (status_lock == F_signal) {
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -1086,7 +1088,7 @@ extern "C" {
         controller_error_print(main.data->error, F_status_set_fine(status), "fll_execute_program", F_true, main.thread);
       }
 
-      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+      controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
       status = F_status_set_error(status);
     }
@@ -1099,6 +1101,8 @@ extern "C" {
   f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
+
     int result = 0;
     pid_t id_child = 0;
 
@@ -1149,10 +1153,10 @@ extern "C" {
 
       f_thread_unlock(&process->lock);
 
-      status = controller_lock_write(main.thread, &process->lock);
+      status_lock = controller_lock_write(main.thread, &process->lock);
 
-      if (status == F_signal) {
-        return status;
+      if (status_lock == F_signal) {
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -1176,10 +1180,10 @@ extern "C" {
         return F_signal;
       }
 
-      status = controller_lock_write(main.thread, &process->lock);
+      status_lock = controller_lock_write(main.thread, &process->lock);
 
-      if (status == F_signal) {
-        return status;
+      if (status_lock == F_signal) {
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -1239,7 +1243,7 @@ extern "C" {
         controller_error_print(main.data->error, F_status_set_fine(status), "fll_execute_program", F_true, main.thread);
       }
 
-      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+      controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
       return F_status_set_error(status);
     }
@@ -1405,7 +1409,7 @@ extern "C" {
 
           controller_rule_error_print_cache(main.data->warning, cache->action, F_true);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
         }
 
         continue;
@@ -1424,7 +1428,7 @@ extern "C" {
             fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           status = F_status_set_error(F_supported_not);
@@ -1626,13 +1630,14 @@ extern "C" {
 
           controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
 
         return F_status_set_error(F_parameter);
     }
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
 
     process->cache.action.name_action.used = 0;
     process->cache.action.name_item.used = 0;
@@ -1752,7 +1757,7 @@ extern "C" {
               controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], dynamics[i]->array[j].string, "was not found");
               controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
               status = F_status_set_error(F_found_not);
 
@@ -1773,7 +1778,7 @@ extern "C" {
                 controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], dynamics[i]->array[j].string, "was not found");
                 controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
               }
             }
           }
@@ -1839,7 +1844,7 @@ extern "C" {
                     controller_rule_item_error_print_need_want_wish(main.data->error, strings[i], alias_other_buffer, "failed during execution");
                     controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-                    controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                    controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
                     if (!(process_other->options & controller_rule_option_simulate) || F_status_set_fine(status) == F_memory_not) {
                       f_thread_unlock(&process_other->active);
@@ -1854,7 +1859,7 @@ extern "C" {
                       controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "failed during execution");
                       controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
-                      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                      controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
                     }
                   }
                 }
@@ -1882,7 +1887,7 @@ extern "C" {
                 status = F_status_set_error(F_found_not);
                 controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
                 if (!(process_other->options & controller_rule_option_simulate)) {
                   f_thread_unlock(&main.thread->lock.rule);
@@ -1901,7 +1906,7 @@ extern "C" {
                   controller_rule_item_error_print_need_want_wish(main.data->warning, strings[i], alias_other_buffer, "is in a failed state");
                   controller_rule_error_print_cache(main.data->warning, process->cache.action, F_true);
 
-                  controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                  controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
                 }
               }
             }
@@ -1975,7 +1980,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           status = F_status_set_error(F_parameter);
@@ -2003,12 +2008,12 @@ extern "C" {
 
     f_thread_unlock(&process->lock);
 
-    status = controller_lock_write(main.thread, &process->lock);
+    status_lock = controller_lock_write(main.thread, &process->lock);
 
-    if (status == F_signal) {
+    if (status_lock == F_signal) {
       f_thread_lock_read(&process->lock);
 
-      return status;
+      return status_lock;
     }
 
     if (!main.thread->enabled) {
@@ -2025,13 +2030,13 @@ extern "C" {
       process->rule.status = status;
     }
 
-    status = controller_lock_write(main.thread, &main.thread->lock.rule);
+    status_lock = controller_lock_write(main.thread, &main.thread->lock.rule);
 
-    if (status == F_signal) {
+    if (status_lock == F_signal) {
       f_thread_unlock(&process->lock);
       f_thread_lock_read(&process->lock);
 
-      return status;
+      return status_lock;
     }
 
     if (!main.thread->enabled) {
@@ -2105,7 +2110,7 @@ extern "C" {
           controller_rule_item_error_print_rule_not_loaded(main.data->error, alias_rule.string);
           controller_rule_error_print_cache(main.data->error, cache.action, F_false);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
 
         return status;
@@ -2285,6 +2290,8 @@ extern "C" {
     }
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
+
     f_array_length_t id_rule = 0;
 
     const f_array_length_t used_original_stack = process->stack.used;
@@ -2295,14 +2302,14 @@ extern "C" {
 
       f_thread_unlock(&process->lock);
 
-      status = controller_lock_write(main.thread, &process->lock);
+      status_lock = controller_lock_write(main.thread, &process->lock);
 
-      if (status == F_signal) {
+      if (status_lock == F_signal) {
         if (options & controller_process_option_asynchronous) {
           f_thread_unlock(&process->active);
         }
 
-        return status;
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -2341,7 +2348,7 @@ extern "C" {
 
               controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
             }
 
             // never continue on circular recursion errors even in simulate mode.
@@ -2370,14 +2377,14 @@ extern "C" {
           else {
             f_thread_unlock(&process->lock);
 
-            status = controller_lock_write(main.thread, &process->lock);
+            status_lock = controller_lock_write(main.thread, &process->lock);
 
-            if (status == F_signal) {
+            if (status_lock == F_signal) {
               if (options & controller_process_option_asynchronous) {
                 f_thread_unlock(&process->active);
               }
 
-              return status;
+              return status_lock;
             }
 
             if (!main.thread->enabled) {
@@ -2401,14 +2408,14 @@ extern "C" {
       if (F_status_is_error(status)) {
         f_thread_unlock(&main.thread->lock.rule);
 
-        status = controller_lock_write(main.thread, &main.thread->lock.rule);
+        status_lock = controller_lock_write(main.thread, &main.thread->lock.rule);
 
-        if (status == F_signal) {
+        if (status_lock == F_signal) {
           if (options & controller_process_option_asynchronous) {
             f_thread_unlock(&process->active);
           }
 
-          return status;
+          return status_lock;
         }
 
         if (!main.thread->enabled) {
@@ -2436,14 +2443,14 @@ extern "C" {
     else {
       f_thread_unlock(&main.thread->lock.rule);
 
-      status = controller_lock_write(main.thread, &main.thread->lock.rule);
+      status_lock = controller_lock_write(main.thread, &main.thread->lock.rule);
 
-      if (status == F_signal) {
+      if (status_lock == F_signal) {
         if (options & controller_process_option_asynchronous) {
           f_thread_unlock(&process->active);
         }
 
-        return status;
+        return status_lock;
       }
 
       if (!main.thread->enabled) {
@@ -2470,7 +2477,7 @@ extern "C" {
         controller_rule_item_error_print_rule_not_loaded(main.data->error, process->rule.alias.string);
         controller_rule_error_print_cache(main.data->error, process->cache.action, F_false);
 
-        controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
       }
     }
 
@@ -2488,14 +2495,14 @@ extern "C" {
       return status;
     }
 
-    status = controller_lock_write(main.thread, &process->lock);
+    status_lock = controller_lock_write(main.thread, &process->lock);
 
-    if (status == F_signal) {
+    if (status_lock == F_signal) {
       if (options & controller_process_option_asynchronous) {
         f_thread_unlock(&process->active);
       }
 
-      return status;
+      return status_lock;
     }
 
     if (!main.thread->enabled) {
@@ -2934,7 +2941,7 @@ extern "C" {
 
           controller_rule_error_print_cache(main.data->warning, cache->action, F_false);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
         }
 
         continue;
@@ -2955,7 +2962,7 @@ extern "C" {
 
           controller_rule_error_print_cache(main.data->warning, cache->action, F_false);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
         }
 
         continue;
@@ -3018,7 +3025,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3074,7 +3081,7 @@ extern "C" {
                   f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(main.data->error.to.stream, "%s%s', the number is too large for this system.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                  controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                  controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
                 }
                 else {
                   f_thread_mutex_lock(&main.thread->lock.print);
@@ -3085,7 +3092,7 @@ extern "C" {
                   f_print_dynamic_partial(main.data->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(main.data->error.to.stream, "%s%s', only whole numbers are allowed for an affinity value.%s%c", main.data->error.notable.after->string, main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                  controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                  controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
                 }
 
                 // get the current line number within the settings item.
@@ -3140,7 +3147,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3265,7 +3272,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3299,7 +3306,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3386,7 +3393,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3463,7 +3470,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_true);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3491,7 +3498,7 @@ extern "C" {
 
               controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
             }
 
             status = F_status_set_error(F_valid_not);
@@ -3566,7 +3573,7 @@ extern "C" {
 
                 controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
 
               status = F_status_set_error(F_valid_not);
@@ -3630,7 +3637,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3690,7 +3697,7 @@ extern "C" {
 
                   controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-                  controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                  controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
                 }
 
                 if (F_status_is_error_not(status_return)) {
@@ -3703,7 +3710,7 @@ extern "C" {
                 // this function should only return F_complete_not_utf on error.
                 controller_rule_error_print(main.data->error, cache->action, F_complete_not_utf, "controller_validate_has_graph", F_true, F_false, main.thread);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
                 if (F_status_is_error_not(status_return)) {
                   status_return = status;
@@ -3782,7 +3789,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3834,7 +3841,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3887,7 +3894,7 @@ extern "C" {
 
                 controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -3932,7 +3939,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -3960,7 +3967,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -3987,7 +3994,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -4015,7 +4022,7 @@ extern "C" {
 
               controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
               status_return = status;
               break;
@@ -4035,7 +4042,7 @@ extern "C" {
 
               controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
             }
 
             if (F_status_is_error_not(status_return)) {
@@ -4076,7 +4083,7 @@ extern "C" {
 
                 controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -4116,7 +4123,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because no user was found by that name.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else if (status == F_number_too_large) {
@@ -4130,7 +4137,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because the given ID is too large.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else if (status == F_number) {
@@ -4144,7 +4151,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else {
@@ -4188,7 +4195,7 @@ extern "C" {
 
             controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -4245,7 +4252,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because no group was found by that name.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else if (status == F_number_too_large) {
@@ -4259,7 +4266,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because the given ID is too large.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else if (status == F_number) {
@@ -4273,7 +4280,7 @@ extern "C" {
                 fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
                 fprintf(main.data->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
             }
             else {
@@ -4395,7 +4402,7 @@ extern "C" {
 
                 controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
               }
 
               if (F_status_is_error_not(status_return)) {
@@ -4447,7 +4454,7 @@ extern "C" {
 
           controller_rule_error_print_cache(main.data->error, cache->action, F_false);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
 
         if (F_status_is_error_not(status_return)) {
@@ -4554,7 +4561,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%s", main.data->error.notable.after->string);
           fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
 
         setting_values->array[setting_values->used].used = 0;
@@ -4603,7 +4610,7 @@ extern "C" {
           controller_rule_error_print_cache(data->error, cache->action, F_true);
         }
 
-        controller_print_unlock_flush(data->output.stream, &main.thread->lock.print);
+        controller_print_unlock_flush(data->error.to.stream, &main.thread->lock.print);
 
         return;
     }

@@ -486,10 +486,27 @@ extern "C" {
           *status = F_status_set_error(F_available_not);
         }
         else {
-          *status = controller_process_entry(*entry->main, cache);
+          *status = controller_process_entry(F_false, entry->main, cache);
 
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail;
+
+            if (F_status_set_fine(*status) == F_require && entry->main->setting->failsafe_enabled) {
+              const f_status_t status_failsafe = controller_process_entry(F_true, entry->main, cache);
+
+              if (F_status_is_error(status_failsafe)) {
+                if (data->error.verbosity != f_console_verbosity_quiet) {
+                  f_thread_mutex_lock(&entry->main->thread->lock.print);
+
+                  fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(data->error.to.stream, "%s%sFailed while processing requested failsafe item '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+                  fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, entry->main->setting->entry.items.array[entry->main->setting->failsafe_enabled].name.string, data->error.notable.after->string);
+                  fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+
+                  controller_print_unlock_flush(data->error.to.stream, &entry->main->thread->lock.print);
+                }
+              }
+            }
           }
           else if (*status == F_signal || *status == F_child) {
             entry->setting->ready = controller_setting_ready_abort;

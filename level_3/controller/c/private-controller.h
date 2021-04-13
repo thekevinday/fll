@@ -289,6 +289,9 @@ extern "C" {
 /**
  * Process (execute) all items for the loaded entry.
  *
+ * @param failsafe
+ *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
+ *   If FALSE, operate in normal mode (starts at "main" Item).
  * @param main
  *   The main data.
  * @param cache
@@ -296,6 +299,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
+ *   F_require (with error bit) if a required entry item failed.
  *   F_critical (with error bit) on any critical error.
  *
  *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
@@ -307,7 +312,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(const bool failsafe, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**

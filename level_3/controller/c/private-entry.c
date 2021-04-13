@@ -673,7 +673,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(main.data->error.to.stream, "%s%sThe entry file is empty.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
 
         status = F_status_set_error(F_data_not);
@@ -762,7 +762,7 @@ extern "C" {
 
                 controller_entry_error_print_cache(main.data->warning, cache->action);
 
-                controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
               }
 
               code |= 0x2;
@@ -811,7 +811,7 @@ extern "C" {
 
             controller_entry_error_print_cache(main.data->error, cache->action);
 
-            controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -832,7 +832,7 @@ extern "C" {
               fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_main_s, main.data->error.notable.after->string);
               fprintf(main.data->error.to.stream, "%s' was not found.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
             }
 
             status = F_status_set_error(F_found_not);
@@ -896,14 +896,11 @@ extern "C" {
 
                       controller_entry_error_print_cache(main.data->error, cache->action);
 
-                      controller_print_unlock_flush(main.data->output.stream, &main.thread->lock.print);
+                      controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
                     }
 
                     action->number = 0;
                     action->status = controller_status_simplify_error(F_found_not);
-
-                    // @fixme review how main.setting->entry.status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
-                    //main.setting->entry.status = controller_status_simplify_error(F_found_not);
 
                     cache->action.name_action.used = 0;
                     cache->action.name_item.used = 0;
@@ -914,12 +911,6 @@ extern "C" {
                 }
               } // for
             } // for
-
-            // the error is already fully printed and the entry status is already assigned, so immediately exit.
-            if (missing & 0x2) {
-              // @fixme review how main.setting->entry.status is being handled with respect to action->status (here the action failed, should the entire entry fail? at the moment if mode is simulation this prevents simulation from continuing).
-              //return main.setting->entry.status;
-            }
           }
         }
       }

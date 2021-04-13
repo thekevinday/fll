@@ -165,6 +165,7 @@ extern "C" {
   void controller_lock_delete_simple(controller_lock_t *lock) {
 
     controller_lock_delete_mutex(&lock->print);
+
     controller_lock_delete_rw(&lock->process);
     controller_lock_delete_rw(&lock->rule);
   }

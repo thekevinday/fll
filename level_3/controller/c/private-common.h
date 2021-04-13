@@ -435,12 +435,10 @@ extern "C" {
  * A structure for sharing mutexes globally between different threads.
  *
  * The print lock is intended to lock any activity printing to stdout/stderr.
- * The entry lock is intended to lock any activity on the entrys structure.
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
  *
  * print:   The print mutex lock.
- * entry:   The entry r/w lock.
  * process: The process r/w lock.
  * rule:    The rule r/w lock.
  */
@@ -1002,11 +1000,11 @@ extern "C" {
  * timeout_start:    The timeout to wait relating to starting a process.
  * timeout_stop:     The timeout to wait relating to stopping a process.
  * failsafe_enabled: TRUE if failsafe execution is enabled, FALSE otherwise.
- * failsafe_rule_id: The Rule ID (such as "failsafe/bash") to execute when failsafe execution is enabled.
+ * failsafe_item_id: The Entry Item ID to execute when failsafe execution is enabled.
  * path_control:     File path to the control socket.
  * path_pid:         File path to the PID file.
  * path_setting:     File path to the setting directory.
- * entry:            The entry settings.
+ * entry:            The Entry settings.
  * rules:            All rules and their respective settings.
  */
 #ifndef _di_controller_setting_t
@@ -1028,7 +1026,7 @@ extern "C" {
     f_number_unsigned_t timeout_stop;
 
     bool failsafe_enabled;
-    f_array_length_t failsafe_rule_id;
+    f_array_length_t failsafe_item_id;
 
     f_string_dynamic_t path_control;
     f_string_dynamic_t path_pid;
@@ -1095,6 +1093,7 @@ extern "C" {
 
   typedef struct {
     bool enabled;
+    bool failed;
     int signal;
     f_status_t status;
 
@@ -1110,6 +1109,7 @@ extern "C" {
 
   #define controller_thread_t_initialize { \
     F_true, \
+    F_false, \
     0, \
     F_none, \
     f_thread_id_t_initialize, \

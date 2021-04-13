@@ -8,7 +8,7 @@ script:
   start {
     \#!/bin/bash
     my_function() {
-      echo "Hello this is the last script."
+      echo "Hello this is the last script, it should trigger failure."
       return 1;
     \}
 
