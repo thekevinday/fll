@@ -191,16 +191,16 @@ extern "C" {
           }
         }
         else {
-          f_thread_join(thread.id_rule, 0);
-
-          thread.id_rule = 0;
-          status = thread.status;
-
           if (status == F_child) {
             controller_thread_delete_simple(&thread);
 
             return F_child;
           }
+
+          f_thread_join(thread.id_rule, 0);
+
+          thread.id_rule = 0;
+          status = thread.status;
         }
       }
     }
@@ -315,7 +315,9 @@ extern "C" {
       if (!thread->enabled) return 0;
     }
 
-    if (controller_rule_process_do(controller_process_option_asynchronous | controller_process_option_execute, process) == F_child) {
+    const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous, process);
+
+    if (status == F_child) {
 
       // A forked child process should deallocate memory on exit.
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.

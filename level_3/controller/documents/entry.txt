@@ -21,6 +21,7 @@ Entry Documentation:
   The "failsafe" Action accepts only a valid Item Name in which will be executed when a failure is detected.
   Only a single "failsafe" Action may exist at a time.
   Each successive "failsafe" Action specified replaces the previously defined "failsafe" Action (in a top-down manner).
+  When operating in "failsafe", the "require" Action is ignored given that it is meaningless once operating in failsafe.
 
   The "item" Action accepts only a valid Item Name in which will be immediately executed.
   Any valid Item Name, except for the reserved "main", may be used.

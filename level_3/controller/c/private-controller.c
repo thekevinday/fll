@@ -623,12 +623,11 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    f_array_length_t at = 0;
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
-    uint8_t rule_options = 0;
-    uint8_t process_options = 0;
+    uint8_t options_force = 0;
+    uint8_t options_process = 0;
 
     controller_entry_action_t *entry_action = 0;
     controller_entry_actions_t *entry_actions = 0;
@@ -865,8 +864,7 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_item) {
 
-          // @todo also prevent failsafe item from being recursively called, when failsafe == F_true.
-          if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used) {
+          if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used || failsafe && entry_action->number == main->setting->failsafe_item_id) {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
@@ -968,7 +966,7 @@ extern "C" {
 
           f_thread_lock_read(&main->thread->lock.rule);
 
-          status = controller_rule_find(alias_rule, main->setting->rules, &at);
+          status = controller_rule_find(alias_rule, main->setting->rules, 0);
 
           f_thread_unlock(&main->thread->lock.rule);
 
@@ -1069,7 +1067,6 @@ extern "C" {
               f_thread_lock_read(&main->thread->lock.process);
 
               if (controller_find_process(alias_rule, main->thread->processs, 0) == F_false) {
-
                 f_thread_unlock(&main->thread->lock.process);
 
                 status = controller_lock_write(main->thread, &main->thread->lock.process);
@@ -1136,37 +1133,33 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            process_options = 0;
-            rule_options = 0;
-
-            if (entry_action->type == controller_entry_action_type_rule) {
-              process_options |= controller_process_option_execute;
-            }
+            options_force = 0;
+            options_process = 0;
 
             if (simulate) {
-              rule_options |= controller_rule_option_simulate;
+              options_process |= controller_process_option_simulate;
             }
 
             if (entry_action->code & controller_entry_rule_code_require) {
-              rule_options |= controller_rule_option_require;
+              options_process |= controller_process_option_require;
             }
 
             if (entry_action->code & controller_entry_rule_code_wait) {
-              rule_options |= controller_rule_option_wait;
+              options_process |= controller_process_option_wait;
             }
 
             if (main->data->parameters[controller_parameter_validate].result == f_console_result_found) {
-              rule_options |= controller_rule_option_validate;
+              options_process |= controller_process_option_validate;
             }
 
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
               if (main->data->parameters[controller_parameter_validate].result != f_console_result_found) {
-                process_options |= controller_process_option_asynchronous;
-                rule_options |= controller_rule_option_asynchronous;
+                options_force |= controller_process_option_asynchronous;
+                options_process |= controller_process_option_asynchronous;
               }
             }
 
-            status = controller_rule_process_begin(process_options, alias_rule, controller_rule_action_type_start, rule_options, stack, *main, *cache);
+            status = controller_rule_process_begin(options_force, alias_rule, controller_rule_action_type_start, options_process, stack, *main, *cache);
 
             if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !main->thread->enabled) {
               break;
@@ -1322,9 +1315,18 @@ extern "C" {
       return status;
     }
 
-    // @todo wait for all asynchronous processes to complete.
-    //       then, check to see if any "required" rule failed.
-    //       if failed, then return F_status_set_error(F_require).
+    // check to see if any requied processes failed, but do not do this if already operating in failsafe.
+    if (F_status_is_error_not(status) && !failsafe) {
+      const f_status_t status_wait = controller_rule_wait_all(*main, F_true, 0);
+
+      if (status_wait == F_signal) {
+        return F_signal;
+      }
+
+      if (F_status_set_fine(status_wait) == F_require) {
+        return F_status_set_error(F_require);
+      }
+    }
 
     if (simulate) {
       if (main->data->error.verbosity != f_console_verbosity_quiet) {

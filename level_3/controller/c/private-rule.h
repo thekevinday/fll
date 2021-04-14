@@ -338,7 +338,7 @@ extern "C" {
  *   - controller_rule_action_type_stop
  * @param options
  *   A number using bits to represent specific boolean options.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param main
  *   The main data.
  * @param process
@@ -379,7 +379,7 @@ extern "C" {
  *   The arguments to pass to the program.
  * @param options
  *   A number using bits to represent specific boolean options.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param main
  *   The main data.
  * @param execute_set
@@ -425,7 +425,7 @@ extern "C" {
  *   The arguments to pass to the program.
  * @param options
  *   A number using bits to represent specific boolean options.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param main
  *   The main data.
  * @param execute_set
@@ -590,20 +590,19 @@ extern "C" {
 #endif // _di_controller_rule_process_
 
 /**
- * Synchronously or Asynchronously begin processing some rule.
+ * Synchronously or asynchronously begin processing some rule.
  *
- * @param process_options
+ * @param options_force
+ *   Force the given process options, only supporting a subset of process options.
+ *
  *   If controller_process_option_asynchronous, then asynchronously execute.
- *   If controller_process_option_execute, then load and execute.
- *
  *   If not controller_process_option_asynchronous, then synchronously execute.
- *   If not controller_process_option_execute, then load only, do not execute at all.
  * @param alias_rule
  *   The alias of the rule, such as "boot/init".
  * @param action
  *   The action to perform based on the action type codes.
  * @param options
- *   A number using bits to represent specific boolean options.
+ *   The process options to pass to the process.
  * @param stack
  *   A stack representing the processes already running in this rule process dependency tree.
  *   This is used to prevent circular dependencies.
@@ -631,7 +630,7 @@ extern "C" {
  * @see f_thread_create()
  */
 #ifndef _di_controller_rule_process_begin_
-  extern f_status_t controller_rule_process_begin(const uint8_t process_options, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_begin(const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_begin_
 
 /**
@@ -640,12 +639,11 @@ extern "C" {
  * This does all the preparation work that needs to be synchronously performed within the same thread.
  * This will copy the rule by the alias to the process structure.
  *
- * @param options
- *   If controller_process_option_asynchronous, then asynchronously execute.
- *   If controller_process_option_execute, then load and execute.
+ * @param options_force
+ *   Force the given process options, only supporting a subset of process options.
  *
+ *   If controller_process_option_asynchronous, then asynchronously execute.
  *   If not controller_process_option_asynchronous, then synchronously execute.
- *   If not controller_process_option_execute, then load only, do not execute at all.
  * @param process
  *   The process data.
  *
@@ -666,7 +664,7 @@ extern "C" {
  * @see controller_rule_process_begin()
  */
 #ifndef _di_controller_rule_process_do_
-  extern f_status_t controller_rule_process_do(const uint8_t options, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_do(const uint8_t options_force, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_do_
 
 /**
@@ -685,8 +683,9 @@ extern "C" {
  *   The rule status will be updated by this function.
  *
  * @return
- *   F_true on success.
- *   F_false on failure.
+ *   F_none on success.
+ *
+ *   Simplified status (with error bit) from controller_status_simplify_error() on failure.
  *
  * @see controller_rule_items_increase_by().
  * @see controller_rule_item_read().
@@ -763,8 +762,8 @@ extern "C" {
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If no bits set, then operate normally in a synchronous manner.
- *   If bit controller_rule_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
- *   If bit controller_rule_option_asynchronous, then run asynchronously.
+ *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ *   If bit controller_process_option_asynchronous, then run asynchronously.
  * @param main
  *   The main data.
  * @param cache
@@ -779,13 +778,24 @@ extern "C" {
  *
  * @param main
  *   The main data.
+ * @param required
+ *   If TRUE, then only process required rules and if a required rule has failed, return.
+ *   If FALSE, process all waits, returning normally.
  * @param caller
  *   The process representing the caller so that the process never waits on itself.
  *   (optional) set to 0 when calling from a thread that is not running/executing any process.
  *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
+ *
+ * @return
+ *    F_none on success.
+ *    F_data_not on success and nothing to do.
+ *    F_require on success, but a required rule has not been run yet.
+ *    F_signal on (exit) signal received.
+ *
+ *    F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern void controller_rule_wait_all(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_wait_all(const controller_main_t main, const bool required, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_wait_all_
 
 #ifdef __cplusplus

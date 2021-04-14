@@ -220,7 +220,6 @@ extern "C" {
       process->id_thread = 0;
     }
 
-    f_thread_condition_signal_all(&process->wait);
     f_thread_condition_delete(&process->wait);
 
     controller_lock_delete_rw(&process->lock);
@@ -273,7 +272,7 @@ extern "C" {
 
       f_thread_lock_read(&process->lock);
 
-      if (process->status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      if (process->rule.status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);
 
         return F_none;
@@ -367,7 +366,6 @@ extern "C" {
           return status;
         }
         else {
-          process->status = F_known_not;
           process->rule.status = F_known_not;
         }
       } // for

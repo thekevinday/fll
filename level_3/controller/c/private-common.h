@@ -635,12 +635,6 @@ extern "C" {
     controller_rule_setting_type_wish,
   };
 
-  #define controller_rule_option_asynchronous 0x1
-  #define controller_rule_option_require      0x2
-  #define controller_rule_option_simulate     0x4
-  #define controller_rule_option_validate     0x8
-  #define controller_rule_option_wait         0x10
-
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
   #define controller_rule_has_control_group 0x1
   #define controller_rule_has_group         0x2
@@ -771,7 +765,10 @@ extern "C" {
  */
 #ifndef _di_controller_process_t_
   #define controller_process_option_asynchronous 0x1
-  #define controller_process_option_execute      0x2
+  #define controller_process_option_require      0x2
+  #define controller_process_option_simulate     0x4
+  #define controller_process_option_validate     0x8
+  #define controller_process_option_wait         0x10
 
   enum {
     controller_process_state_idle = 1,
@@ -782,8 +779,6 @@ extern "C" {
 
   typedef struct {
     f_array_length_t id;
-
-    f_status_t status;
 
     uint8_t state;
     uint8_t action;
@@ -808,7 +803,6 @@ extern "C" {
 
   #define controller_process_t_initialize { \
     0, \
-    F_known_not, \
     0, \
     0, \
     0, \
@@ -1093,7 +1087,6 @@ extern "C" {
 
   typedef struct {
     bool enabled;
-    bool failed;
     int signal;
     f_status_t status;
 
@@ -1109,7 +1102,6 @@ extern "C" {
 
   #define controller_thread_t_initialize { \
     F_true, \
-    F_false, \
     0, \
     F_none, \
     f_thread_id_t_initialize, \
@@ -1366,6 +1358,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_signal on (exit) signal received, lock will not be set when this is returned.
  *   F_status if main thread is disabled and write lock was never achieved.
  *
  *   Status from: f_thread_lock_write_timed().
