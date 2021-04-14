@@ -2426,6 +2426,7 @@ extern "C" {
  *
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_resource_not (with error bit) if max number of read locks allowed is reached.
  *
  *   F_failure (with error bit) on any other error.
  *

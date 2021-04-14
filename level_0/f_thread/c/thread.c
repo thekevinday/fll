@@ -1788,6 +1788,7 @@ extern "C" {
     const int error = pthread_rwlock_timedrdlock(lock, timeout);
 
     if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == ETIMEDOUT) return F_time;
