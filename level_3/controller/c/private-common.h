@@ -1067,10 +1067,14 @@ extern "C" {
 #ifndef _di_controller_thread_t_
   #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
   #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
-  #define controller_thread_exit_process_cancel_wait 60000000 // 0.06 seconds in nanoseconds.
-  #define controller_thread_exit_process_cancel_total 150 // 9 seconds in multiples of wait.
-  #define controller_thread_lock_timeout 100000000 // 0.1 seconds in nanoseconds.
+  #define controller_thread_exit_process_cancel_wait 600000000 // 0.6 seconds in nanoseconds.
+  #define controller_thread_exit_process_cancel_total 150 // 90 seconds in multiples of wait.
   #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
+
+  // read locks are more common, use longer waits to reduce the potentially CPU activity.
+  // write locks are less common, use shorter waits to increase potential response time.
+  #define controller_thread_lock_read_timeout 2 // seconds
+  #define controller_thread_lock_write_timeout 100000000 // 0.1 seconds in nanoseconds.
 
   #define controller_thread_wait_timeout_1_before 4
   #define controller_thread_wait_timeout_2_before 12
@@ -1345,6 +1349,54 @@ extern "C" {
 #ifndef _di_controller_lock_delete_simple_
   extern void controller_lock_delete_simple(controller_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_delete_simple_
+
+/**
+ * Print a r/w lock related error message, locking the print mutex during the print.
+ *
+ * This will ignore F_signal and not print any messages, if passed.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param status
+ *   The status code to process.
+ *   Make sure this has F_status_set_fine() called if the status code has any error or warning bits.
+ * @param read
+ *   If TRUE, then this is for a read lock.
+ *   If FALSE, then this is for a write lock.
+ * @param thread
+ *   The thread data.
+ *
+ * @see fll_error_print()
+ * @see controller_entry_error_print_cache()
+ */
+#ifndef _di_controller_lock_error_critical_print_
+  extern void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_error_critical_print_
+
+/**
+ * Wait to get a read lock.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param lock
+ *   The r/w lock to obtain a read lock on.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ *
+ * @return
+ *   F_none on success.
+ *   F_signal on (exit) signal received, lock will not be set when this is returned.
+ *   F_status if main thread is disabled and write lock was never achieved.
+ *
+ *   Status from: f_thread_lock_read_timed().
+ *
+ *   Errors (with error bit) from: f_thread_lock_read_timed().
+ *
+ * @see f_thread_lock_read_timed()
+ */
+#ifndef _di_controller_lock_read_
+  extern f_status_t controller_lock_read(controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_read_
 
 /**
  * Wait to get a write lock.

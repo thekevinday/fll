@@ -171,6 +171,69 @@ extern "C" {
   }
 #endif // _di_controller_lock_delete_simple_
 
+#ifndef _di_controller_lock_error_critical_print_
+  void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) {
+
+    // A signal is not an error.
+    if (status == F_signal) {
+      return;
+    }
+
+    if (print.verbosity != f_console_verbosity_quiet) {
+      f_thread_mutex_lock(&thread->lock.print);
+
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sCritical failure while attempting to establish ", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
+      fprintf(print.to.stream, "%s%s%s lock%s", print.context.after->string, print.notable.before->string, read ? "read" : "write", print.notable.after->string);
+
+      if (status != F_failure) {
+        fprintf(print.to.stream, "%s' due to %s", print.context.before->string, print.context.after->string);
+
+        if (status == F_parameter) {
+          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Invalid Parameter", print.notable.after->string);
+        }
+        else if (status == F_deadlock) {
+          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Deadlock", print.notable.after->string);
+        }
+        else if (status == F_resource_not) {
+          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Too Many Locks", print.notable.after->string);
+        }
+      }
+
+      fprintf(print.to.stream, "%s.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      controller_print_unlock_flush(print.to.stream, &thread->lock.print);
+    }
+  }
+#endif // _di_controller_lock_error_critical_print_
+
+#ifndef _di_controller_lock_read_
+  f_status_t controller_lock_read(controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    struct timespec time;
+
+    f_status_t status = F_none;
+
+    for (;;) {
+
+      controller_time(0, controller_thread_lock_read_timeout, &time);
+
+      status = f_thread_lock_read_timed(&time, lock);
+
+      if (status == F_time) {
+        if (!thread->enabled) {
+          return F_signal;
+        }
+      }
+      else {
+        break;
+      }
+    } // for
+
+    return status;
+  }
+#endif // _di_controller_lock_read_
+
 #ifndef _di_controller_lock_write_
   f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) {
 
@@ -180,7 +243,7 @@ extern "C" {
 
     for (;;) {
 
-      controller_time(0, controller_thread_lock_timeout, &time);
+      controller_time(0, controller_thread_lock_write_timeout, &time);
 
       status = f_thread_lock_write_timed(&time, lock);
 
