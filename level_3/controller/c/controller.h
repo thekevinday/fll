@@ -10,11 +10,19 @@
  * This program utilizes the Featureless Linux Library.
  * This program provides system service management, much like sysvcontroller and controllerng.
  * This program can be controlled from user-space via the "control" program.
+ * This program can be used in an initrd and should be capable of pivot root operations.
  *
  * @todo Implement "exit" files that are the opposite of "entry" files whereas rules specified within are all called via the "stop" action type.
  *       This would then allow for switching modes.
+ *       The "exit" would be specified in the "entry", by name and would be found under "exits" directory alongside the "entries" directory.
  *
- * @fixme the entire program needs to check the return status on all locks (mutex, r/w locks, etc..) and if there is a problem, print a message and wait (but ideally allow for signals, if enabled).
+ * @todo check the return status of unlocks.
+ *
+ * @todo the read/write locks (and unlocks) needs to be more robust in that they need to attempt to keep going even on failure or need to wait until resolvable.
+ *       this is done to help ensure that the controller program always continues onward.
+ *
+ * @todo just like with the read/write locks, the out of memory cases need to be handled to keep going instead of bailing.
+ *       likely these will need to be sleeps on the premise that eventually memory will clear itself up.
  */
 #ifndef _controller_h
 

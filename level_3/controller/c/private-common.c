@@ -333,7 +333,12 @@ extern "C" {
         return F_signal;
       }
 
-      f_thread_lock_read(&process->lock);
+      status = controller_lock_read(main.thread, &process->lock);
+      if (status == F_signal || F_status_is_error(status)) {
+        controller_lock_error_critical_print(main.data->error, F_status_set_fine(status), F_true, main.thread);
+
+        break;
+      }
 
       if (process->rule.status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);

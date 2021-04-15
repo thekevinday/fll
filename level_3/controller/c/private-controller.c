@@ -618,7 +618,9 @@ extern "C" {
 
 #ifndef _di_controller_process_entry_
   f_status_t controller_process_entry(const bool failsafe, controller_main_t *main, controller_cache_t *cache) {
+
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
@@ -932,10 +934,9 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
 
-          status = controller_lock_write(main->thread, &main->thread->lock.rule);
-
-          if (status == F_signal || F_status_is_error(status)) {
-            controller_lock_error_critical_print(main->data->error, F_status_set_fine(status), F_false, main->thread);
+          status_lock = controller_lock_write(main->thread, &main->thread->lock.rule);
+          if (status_lock == F_signal || F_status_is_error(status_lock)) {
+            controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
             break;
           }
 
@@ -959,7 +960,12 @@ extern "C" {
           id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s[0];
           id_rule_name[id_rule_length] = 0;
 
-          f_thread_lock_read(&main->thread->lock.rule);
+          status_lock = controller_lock_read(main->thread, &main->thread->lock.rule);
+          if (status_lock == F_signal || F_status_is_error(status_lock)) {
+            controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_true, main->thread);
+
+            break;
+          }
 
           status = controller_rule_find(alias_rule, main->setting->rules, 0);
 
@@ -999,10 +1005,9 @@ extern "C" {
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            status = controller_lock_write(main->thread, &main->thread->lock.rule);
-
-            if (status == F_signal || F_status_is_error(status)) {
-              controller_lock_error_critical_print(main->data->error, F_status_set_fine(status), F_false, main->thread);
+            status_lock = controller_lock_write(main->thread, &main->thread->lock.rule);
+            if (status_lock == F_signal || F_status_is_error(status_lock)) {
+              controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
               break;
             }
@@ -1025,7 +1030,7 @@ extern "C" {
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
 
-            if (!main->thread->enabled) {
+            if (status == F_signal || !main->thread->enabled) {
               f_thread_unlock(&main->thread->lock.rule);
 
               break;
@@ -1055,15 +1060,19 @@ extern "C" {
 
             // ensure that a process exists for the added rule.
             if (F_status_is_error_not(status)) {
-              f_thread_lock_read(&main->thread->lock.process);
+              status_lock = controller_lock_read(main->thread, &main->thread->lock.process);
+              if (status_lock == F_signal || F_status_is_error(status_lock)) {
+                controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_true, main->thread);
+
+                break;
+              }
 
               if (controller_find_process(alias_rule, main->thread->processs, 0) == F_false) {
                 f_thread_unlock(&main->thread->lock.process);
 
-                status = controller_lock_write(main->thread, &main->thread->lock.process);
-
-                if (status == F_signal || F_status_is_error(status)) {
-                  controller_lock_error_critical_print(main->data->error, F_status_set_fine(status), F_false, main->thread);
+                status_lock = controller_lock_write(main->thread, &main->thread->lock.process);
+                if (status_lock == F_signal || F_status_is_error(status_lock)) {
+                  controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
                   break;
                 }
@@ -1078,13 +1087,11 @@ extern "C" {
                   // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
                   controller_process_t *process = main->thread->processs.array[main->thread->processs.used];
 
-                  status = controller_lock_write(main->thread, &process->lock);
-
-                  if (status == F_signal || F_status_is_error(status)) {
-                    controller_lock_error_critical_print(main->data->error, F_status_set_fine(status), F_false, main->thread);
+                  status_lock = controller_lock_write(main->thread, &process->lock);
+                  if (status_lock == F_signal || F_status_is_error(status_lock)) {
+                    controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
                     f_thread_unlock(&main->thread->lock.process);
-
                     break;
                   }
 
@@ -1297,12 +1304,16 @@ extern "C" {
       return status;
     }
 
+    if (status_lock == F_signal || F_status_is_error(status_lock)) {
+      return status_lock;
+    }
+
     // check to see if any requied processes failed, but do not do this if already operating in failsafe.
     if (F_status_is_error_not(status) && !failsafe) {
       const f_status_t status_wait = controller_rule_wait_all(*main, F_true, 0);
 
-      if (status_wait == F_signal) {
-        return F_signal;
+      if (status_wait == F_signal || F_status_is_error(status_wait)) {
+        return status_wait;
       }
 
       if (F_status_set_fine(status_wait) == F_require) {

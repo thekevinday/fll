@@ -349,6 +349,8 @@ extern "C" {
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
  *
+ *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
+ *
  *   On success and the rule is run synchronously, then the individual status for the rule is set to F_complete.
  *   On success and the rule is run asynchronously, then the individual status for the rule is set to F_busy.
  *   On failure, the individual status for the rule is set to an appropriate error status.
@@ -391,6 +393,8 @@ extern "C" {
  *   F_none on success.
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
+ *
+ *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   Errors (with error bit) from: fll_execute_program().
  *
@@ -438,6 +442,8 @@ extern "C" {
  *   F_busy on successful execute in asynchronous mode (executed process may or may not fail later on).
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
+ *
+ *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   Errors (with error bit) from: fll_execute_program().
  *
@@ -584,6 +590,11 @@ extern "C" {
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
  *   F_failure on execution failure.
+ *
+ *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
+ *
+ *   Errors (with error bit) from: controller_lock_read().
+ *   Errors (with error bit) from: controller_lock_write().
  */
 #ifndef _di_controller_rule_process_
   extern f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;

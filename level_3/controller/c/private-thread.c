@@ -70,7 +70,6 @@ extern "C" {
             }
 
             status = controller_lock_write(main->thread, &process->lock);
-
             if (status == F_signal || F_status_is_error(status)) {
               controller_lock_error_critical_print(main->data->error, F_status_set_fine(status), F_false, main->thread);
 
