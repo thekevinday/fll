@@ -10,4 +10,4 @@ setting:
 
 service:
   use /var/run/sshd.pid
-  start /var/run/sshd.pid
+  start /usr/sbin/sshd
