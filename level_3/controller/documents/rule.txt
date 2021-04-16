@@ -56,11 +56,12 @@ Rule Documentation:
   Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
   Supported real-time schedulers are: "deadline", "fifo", "round_robin".
 
+  There are four available Rule Types to choose from: "command", "service", "script", and "utility".
+
   The "command" Rule Type provides a simple command to run under the different circumstances: "start", "stop", "restart", and "reload".
   A "command" always operates in the foreground.
 
   The "service" Rule Type provides a "command" accompanied with a PID file (Process Identifier file).
-  Unlike the "command", a "service" always operates in the background.
 
   The "script" Rule Type provides a series of lines to be executed by a (Bash) script.
   This "script" operates in the foreground, but individual things done within the script may operate in foreground or background.
@@ -68,6 +69,8 @@ Rule Documentation:
   Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.
   A "script" is assumed to be in GNU Bash, which is the default expected behavior, but the specification does not explicitly require this.
   Another scripting language can be used but changing this incurs the responsibility to ensure all rules are updated to the appropriate scripting language.
+
+  The "utility" Rule Type provides a "script" accompanied with a PID file (Process Identifier file).
 
   There are seven primary inner Content to perform: "kill", "pause", "restart", "resume", "reload", "start", and "stop".
 
@@ -83,6 +86,6 @@ Rule Documentation:
   When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
   Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  The "create" Content designates that this controller program to create the PID file after successfully starting the service.
-  The "use" Content designates that the called program will provide the PID file after successfully starting the service.
-  For both "create" and "program" the PID file is expected to only exist on success or failure and the existence thereof designates the success or failure rate.
+  The "create" Content designates that this controller program to create the PID file after successfully starting a Service or Utility.
+  The "use" Content designates that the called program will provide the PID file after successfully starting the Service or Utility.
+  For both "create" and "program" the PID file is expected to only exist on success and the existence thereof designates the success or failure.

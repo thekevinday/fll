@@ -321,6 +321,18 @@ extern "C" {
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 /**
+ * Print an error or warning message about some rule not having the pid file information.
+ *
+ * @param print
+ *   The error or warning output structure.
+ * @param alias
+ *   The rule alias of the rule that is missing the pid file designation.
+ */
+#ifndef _di_controller_rule_action_error_missing_pid_
+  extern void controller_rule_action_error_missing_pid(const fll_error_print_t print, const f_string_t alias) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_action_error_missing_pid_
+
+/**
  * Perform an execution of the given rule.
  *
  * This requires that a read lock be set on process->lock before being called.
@@ -348,7 +360,9 @@ extern "C" {
  *   F_none on success.
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
+ *   F_ignore if the rule is unknown and nothing can be done.
  *
+ *   F_failure (with error bit) if failed to execute.
  *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
  *
  *   On success and the rule is run synchronously, then the individual status for the rule is set to F_complete.
@@ -412,6 +426,10 @@ extern "C" {
  * When this is synchronous, this will wait for the PID file to be generated before continuing.
  * When this is asynchronous, this will continue on adding the rule id and action to the asynchronous list.
  *
+ * @param pid_file
+ *   The path to the PID file.
+ * @param pid_type
+ *   The type of the PID file, either "controller_rule_action_type_create" or "controller_rule_action_type_use".
  * @param type
  *   The item type code.
  * @param action
@@ -450,7 +468,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t *pid_file, const uint8_t pid_type, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**

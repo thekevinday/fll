@@ -100,6 +100,7 @@ extern "C" {
   #define controller_string_type          "type"
   #define controller_string_use           "use"
   #define controller_string_user          "user"
+  #define controller_string_utility       "utility"
   #define controller_string_wait          "wait"
   #define controller_string_want          "want"
   #define controller_string_wish          "wish"
@@ -186,6 +187,7 @@ extern "C" {
   #define controller_string_type_length          4
   #define controller_string_use_length           3
   #define controller_string_user_length          4
+  #define controller_string_utility_length       7
   #define controller_string_wait_length          4
   #define controller_string_want_length          4
   #define controller_string_wish_length          4
@@ -273,6 +275,7 @@ extern "C" {
   const static f_string_t controller_string_type_s = controller_string_type;
   const static f_string_t controller_string_use_s = controller_string_use;
   const static f_string_t controller_string_user_s = controller_string_user;
+  const static f_string_t controller_string_utility_s = controller_string_utility;
   const static f_string_t controller_string_wait_s = controller_string_wait;
   const static f_string_t controller_string_want_s = controller_string_want;
   const static f_string_t controller_string_wish_s = controller_string_wish;
@@ -544,6 +547,7 @@ extern "C" {
     controller_rule_item_type_script,
     controller_rule_item_type_service,
     controller_rule_item_type_setting,
+    controller_rule_item_type_utility,
   };
 
   typedef struct {

@@ -1,0 +1,14 @@
+# fss-0005
+
+main:
+  timeout start 7
+  timeout stop 7
+  timeout kill 3
+
+  failsafe boom
+
+  rule utility sleeper_1
+  rule utility sleeper_2
+
+boom:
+  rule maintenance explode

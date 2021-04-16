@@ -236,8 +236,8 @@ extern "C" {
         }
         else {
 
-          // "script" types use the entire content and can be directly passed through.
-          if (item->type == controller_rule_item_type_script) {
+          // "script" and "utility" types use the entire content and can be directly passed through.
+          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
             actions->array[actions->used].parameters.used = 0;
 
             status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
@@ -350,7 +350,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           controller_error_print(main.data->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
         }
-        else if (item->type == controller_rule_item_type_script) {
+        else if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
           status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
 
           if (F_status_is_error(status)) {
@@ -743,6 +743,18 @@ extern "C" {
   }
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
+#ifndef _di_controller_rule_action_error_missing_pid_
+  void controller_rule_action_error_missing_pid(const fll_error_print_t print, const f_string_t alias) {
+
+    if (print.verbosity != f_console_verbosity_quiet) {
+      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s%sThe rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, alias, print.notable.after->string);
+      fprintf(print.to.stream, "%s' is not designating a pid file.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+    }
+  }
+#endif // _di_controller_rule_action_error_missing_pid_
+
 #ifndef _di_controller_rule_execute_
   f_status_t controller_rule_execute(const uint8_t action, const uint8_t options, const controller_main_t main, controller_process_t *process) {
 
@@ -752,6 +764,9 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
     f_array_length_t k = 0;
+
+    f_string_dynamic_t *pid_file = 0;
+    uint8_t pid_type = 0;
 
     // child processes should receive all signals and handle the signals as they see fit.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -850,7 +865,7 @@ extern "C" {
 
             if (!(options & controller_process_option_simulate)) break;
 
-            success = F_failure;
+            success = F_status_set_error(F_failure);
           }
           else if (success == F_false || success == F_ignore) {
             success = F_true;
@@ -881,23 +896,96 @@ extern "C" {
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
 
-          if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
-            execute_set.parameter.option |= fl_execute_parameter_option_path;
+          pid_file = 0;
+          pid_type = 0;
+
+          for (k = 0; k < process->rule.items.array[i].actions.used; ++k) {
+
+            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_create && process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_use) {
+              continue;
+            }
+
+            if (!process->rule.items.array[i].actions.array[k].parameters.used) {
+              continue;
+            }
+
+            pid_file = &process->rule.items.array[i].actions.array[k].parameters.array[0];
+            pid_type = process->rule.items.array[i].actions.array[k].type;
+          } // for
+
+          if (pid_file) {
+            if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
+              execute_set.parameter.option |= fl_execute_parameter_option_path;
+            }
+
+            status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
+
+            if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
+
+            if (F_status_is_error(status)) {
+              process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
+
+              if (!(options & controller_process_option_simulate)) break;
+
+              success = F_status_set_error(F_failure);
+            }
+            else if (success == F_false || success == F_ignore) {
+              success = F_true;
+            }
           }
+          else {
+            success = F_status_set_error(F_failure);
 
-          status = controller_rule_execute_pid_with(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
-
-          if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
-
-          if (F_status_is_error(status)) {
-            process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
-
-            if (!(options & controller_process_option_simulate)) break;
-
-            success = F_failure;
+            // @todo make this more specific.
+            controller_rule_action_error_missing_pid(main.data->error, process->rule.alias.string);
           }
-          else if (success == F_false || success == F_ignore) {
-            success = F_true;
+        }
+        else if (process->rule.items.array[i].type == controller_rule_item_type_utility) {
+
+          pid_file = 0;
+          pid_type = 0;
+
+          for (k = 0; k < process->rule.items.array[i].actions.used; ++k) {
+
+            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_create && process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_use) {
+              continue;
+            }
+
+            if (!process->rule.items.array[i].actions.array[k].parameters.used) {
+              continue;
+            }
+
+            pid_file = &process->rule.items.array[i].actions.array[k].parameters.array[0];
+            pid_type = process->rule.items.array[i].actions.array[k].type;
+          } // for
+
+          if (pid_file) {
+            execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
+
+            if (process->rule.script.used && strchr(process->rule.script.string, f_path_separator_s[0])) {
+              execute_set.parameter.option |= fl_execute_parameter_option_path;
+            }
+
+            status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
+
+            if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
+
+            if (F_status_is_error(status)) {
+              process->rule.items.array[i].actions.array[j].status = F_status_set_error(F_failure);
+
+              if (!(options & controller_process_option_simulate)) break;
+
+              success = F_status_set_error(F_failure);
+            }
+            else if (success == F_false || success == F_ignore) {
+              success = F_true;
+            }
+          }
+          else {
+            success = F_status_set_error(F_failure);
+
+            // @todo make this more specific.
+            controller_rule_action_error_missing_pid(main.data->error, process->rule.alias.string);
           }
         }
         else {
@@ -946,7 +1034,7 @@ extern "C" {
     }
 
     if (success == F_false || success == F_failure) {
-      return F_failure;
+      return F_status_set_error(F_failure);
     }
 
     if (success == F_ignore) {
@@ -1126,7 +1214,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
+  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t *pid_file, const uint8_t pid_type, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -1136,15 +1224,9 @@ extern "C" {
 
     // @todo check to see if pid file exists.
 
-    // @todo this needs to support/use an option to designate that the process automatically forks in the background.
-    //       in which case fll_execute_program() is called.
-    //       otherwise this needs to call an asynchronous execute process.
-    //       until then, this controller_rule_execute_pid_with() function is not correct and only represents a process that forks to the background.
-
     if (options & controller_process_option_simulate) {
 
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
-
         f_thread_mutex_lock(&main.thread->lock.print);
 
         fprintf(main.data->output.stream, "%c", f_string_eol_s[0]);
@@ -1209,16 +1291,16 @@ extern "C" {
       // have the parent wait for the child process to finish. @todo do not wait, this is a background execution! instead, wait for pid file or timeout (or perhaps optional create the pid file).
       waitpid(id_child, &result, 0);
 
-      if (status_lock == F_none) {
-        f_thread_unlock(&process->lock);
-      }
-
       if (!main.thread->enabled) {
         if (status_lock == F_none) {
           return F_signal;
         }
 
         return F_signal;
+      }
+
+      if (status_lock == F_none) {
+        f_thread_unlock(&process->lock);
       }
 
       status_lock = controller_lock_write(main.thread, &process->lock);
@@ -1284,7 +1366,7 @@ extern "C" {
       f_thread_mutex_lock(&main.thread->lock.print);
 
       if (status == F_control_group || status == F_failure || status == F_limit || status == F_processor || status == F_schedule) {
-        controller_rule_item_error_print_execute(main.data->error, type == controller_rule_item_type_script, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
+        controller_rule_item_error_print_execute(main.data->error, type == controller_rule_item_type_utility, program ? program : arguments.used ? arguments.array[0].string : f_string_empty_s, result, status);
       }
       else if (status == F_file_found_not) {
         controller_rule_item_error_print_execute_not_found(main.data->error, F_false, program);
@@ -1528,6 +1610,11 @@ extern "C" {
       case controller_rule_item_type_setting:
         buffer.string = controller_string_setting_s;
         buffer.used = controller_string_setting_length;
+        break;
+
+      case controller_rule_item_type_utility:
+        buffer.string = controller_string_utility_s;
+        buffer.used = controller_string_utility_length;
         break;
     }
 
@@ -2797,6 +2884,9 @@ extern "C" {
           }
           else if (fl_string_dynamic_compare_string(controller_string_service_s, cache->action.name_item, controller_string_service_length) == F_equal_to) {
             rule->items.array[rule->items.used].type = controller_rule_item_type_service;
+          }
+          else if (fl_string_dynamic_compare_string(controller_string_utility_s, cache->action.name_item, controller_string_utility_length) == F_equal_to) {
+            rule->items.array[rule->items.used].type = controller_rule_item_type_utility;
           }
           else {
             if (main.data->warning.verbosity == f_console_verbosity_debug) {
@@ -4907,7 +4997,7 @@ extern "C" {
           fprintf(data->output.stream, "    %s%s%s {%c", data->context.set.important.before->string, controller_string_action_s, data->context.set.important.after->string, f_string_eol_s[0]);
           fprintf(data->output.stream, "      %s%s%s %s%c", data->context.set.important.before->string, controller_string_type_s, data->context.set.important.after->string, controller_rule_action_type_name(action->type).string, f_string_eol_s[0]);
 
-          if (item->type == controller_rule_item_type_script) {
+          if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
             fprintf(data->output.stream, "      %s%s%s {%c", data->context.set.important.before->string, controller_string_parameter_s, data->context.set.important.after->string, f_string_eol_s[0]);
 
             parameter = &action->parameters.array[0];

@@ -1,0 +1,22 @@
+# fss-000d
+# sleeper rule whose program does not create its own PID file, sleeps for a while and returns.
+
+setting:
+  name "Sleeper #2"
+  nice 10
+
+utility:
+  create /tmp/sleeper_2.pid
+  start {
+    \#!/bin/bash
+
+    main() {
+      echo "Sleeper 2, now sleeping."
+      sleep 25m
+
+      echo "Sleeper 2, done sleeping."
+      return 0
+    \}
+
+    main
+  }
