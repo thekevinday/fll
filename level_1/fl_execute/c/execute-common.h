@@ -21,7 +21,7 @@ extern "C" {
  *
  * bitwise options:
  *   fl_execute_parameter_option_exit:       used to desginate to exit after calling child otherwise child process will return.
- *   fl_execute_parameter_option_path:       used to designate that this is a path to a program (such as '/bin/bash').
+ *   fl_execute_parameter_option_path:       used to designate that the full path to the program is to be passed in argument[0] instead of the program name (such as '/bin/bash' instead of 'bash').
  *   fl_execute_parameter_option_threadsafe: used to designate that threadsafe functions are to be used (such as: f_thread_signal_mask instead of f_signal_mask).
  *   fl_execute_parameter_option_return:     used to designate that the parent process will immediately return instead of waiting for the child process to complete.
  *

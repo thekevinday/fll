@@ -175,6 +175,9 @@ extern "C" {
  *
  * This implementation ignores parameter.data.
  *
+ * @param direct
+ *   If TRUE, then use execv() to directly execute.
+ *   If FALSE, then use execvp() to search for in PATH then execute.
  * @param program
  *   The name or path of the program.
  * @param arguments
@@ -240,7 +243,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**
@@ -248,6 +251,9 @@ extern "C" {
  *
  * This implementation requires parameter.data.
  *
+ * @param direct
+ *   If TRUE, then use execv() to directly execute.
+ *   If FALSE, then use execvp() to search for in PATH then execute.
  * @param program
  *   The name or path of the program.
  * @param arguments
@@ -312,7 +318,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 /**

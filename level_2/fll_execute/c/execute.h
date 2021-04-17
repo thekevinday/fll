@@ -362,7 +362,7 @@ extern "C" {
  * @param option
  *   A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
  *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
- *   If fl_execute_parameter_option_path: this is a program path (such as "/bin/bash"), otherwise this is a program (such as "bash").
+ *   If fl_execute_parameter_option_path: use the whole program path (such as "/bin/bash" instead "bash" when populated argument[0].
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -391,7 +391,7 @@ extern "C" {
  *   The environment is defined by the names and values pair.
  *   This requires paramete.values to also be specified with the same used length as parameter.names.
  *
- * When parameter.option has the fl_execute_parameter_option_path bit set, then this does validate the path to the program.
+ * When the path has a slash "/" or the environment is to be cleared, then this does validate the path to the program.
  * Otherwise, this does not validate the path to the program.
  *
  * When the parameter.option has the fl_execute_parameter_option_exit bit set, then this calls exit() when the child process returns.
@@ -411,7 +411,7 @@ extern "C" {
  * @param parameter
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   option:
- *     A bitwise set of options, such as: fl_execute_parameter_option_exit, and fl_execute_parameter_option_path.
+ *     A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
  *   names:
  *     An array of strings representing the environment variable names.
  *     At most names.used variables are created.

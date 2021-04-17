@@ -253,7 +253,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -405,7 +405,7 @@ extern "C" {
       }
     }
 
-    const int code = parameter && (parameter->option & fl_execute_parameter_option_path) ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
     if (result) {
       int *r = (int *) result;
@@ -421,7 +421,7 @@ extern "C" {
 #endif // !defined(_di_fll_execute_program_)
 
 #if !defined(_di_fll_execute_program_)
-  f_status_t private_fll_execute_fork_data(const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
+  f_status_t private_fll_execute_fork_data(const bool direct, const f_string_t program, const f_string_t fixed_arguments[], fl_execute_parameter_t * const parameter, fl_execute_as_t * const as, void *result) {
 
     int descriptors[2] = { -1, -1 };
 
@@ -575,7 +575,7 @@ extern "C" {
       }
     }
 
-    const int code = parameter && parameter->option & fl_execute_parameter_option_path ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
     // close the write pipe for the child when done.
     close(descriptors[0]);
