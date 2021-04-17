@@ -4,7 +4,7 @@ f_type
 f_status
 f_memory
 f_string
+f_color
 f_directory
 f_file
-fl_color
 fl_directory

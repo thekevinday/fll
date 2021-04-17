@@ -8,13 +8,13 @@ extern "C" {
   f_status_t fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
     fprintf(file.stream, "%c", f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.title, " %s", name);
+    f_color_print(file.stream, context.set.title, " %s", name);
 
     fprintf(file.stream, "%c", f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.notable, "  Version %s", version);
+    f_color_print(file.stream, context.set.notable, "  Version %s", version);
 
     fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.important, " Available Options: ");
+    f_color_print(file.stream, context.set.important, " Available Options: ");
 
     return F_none;
   }
@@ -24,10 +24,10 @@ extern "C" {
   f_status_t fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
     fprintf(file.stream, "%c  %s", f_string_eol_s[0], symbol_short);
-    fl_color_print(file.stream, context.set.standout, option_short);
+    f_color_print(file.stream, context.set.standout, option_short);
 
     fprintf(file.stream, ", %s", symbol_long);
-    fl_color_print(file.stream, context.set.standout, option_long);
+    f_color_print(file.stream, context.set.standout, option_long);
 
     fprintf(file.stream, "  %s", description);
 
@@ -39,7 +39,7 @@ extern "C" {
   f_status_t fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
     fprintf(file.stream, "%c      %s", f_string_eol_s[0], symbol_long);
-    fl_color_print(file.stream, context.set.standout, option_long);
+    f_color_print(file.stream, context.set.standout, option_long);
 
     fprintf(file.stream, "  %s", description);
 
@@ -51,7 +51,7 @@ extern "C" {
   f_status_t fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
     fprintf(file.stream, "%c  ", f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.standout, option_other);
+    f_color_print(file.stream, context.set.standout, option_other);
 
     fprintf(file.stream, "  %s", description);
 
@@ -63,23 +63,23 @@ extern "C" {
   f_status_t fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
     fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.important, " Usage:");
+    f_color_print(file.stream, context.set.important, " Usage:");
 
     fprintf(file.stream, "%c  ", f_string_eol_s[0]);
-    fl_color_print(file.stream, context.set.standout, name);
+    f_color_print(file.stream, context.set.standout, name);
 
     fprintf(file.stream, f_string_space_s);
-    fl_color_print(file.stream, context.set.notable, "[");
+    f_color_print(file.stream, context.set.notable, "[");
 
     fprintf(file.stream, " options ");
-    fl_color_print(file.stream, context.set.notable, "]");
+    f_color_print(file.stream, context.set.notable, "]");
 
     if (parameters[0] != '\0') {
       fprintf(file.stream, f_string_space_s);
-      fl_color_print(file.stream, context.set.notable, "[");
+      f_color_print(file.stream, context.set.notable, "[");
 
       fprintf(file.stream, " %s ", parameters);
-      fl_color_print(file.stream, context.set.notable, "]");
+      f_color_print(file.stream, context.set.notable, "]");
     }
 
     fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
@@ -122,7 +122,7 @@ extern "C" {
       f_macro_color_context_t_new(allocation_status, (*context));
       if (F_status_is_error(status)) return status;
 
-      status = fl_color_load_context(context, decision == choices.id[1]);
+      status = f_color_load_context(context, decision == choices.id[1]);
     }
     else {
       context->mode = f_color_mode_no_color;

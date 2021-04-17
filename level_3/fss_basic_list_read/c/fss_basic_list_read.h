@@ -26,6 +26,7 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/color.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/file.h>
@@ -33,7 +34,6 @@
 #include <level_0/print.h>
 
 // fll-1 includes
-#include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/conversion.h>
 #include <level_1/print.h>

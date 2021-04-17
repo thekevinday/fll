@@ -18,7 +18,6 @@ f_fss
 f_path
 f_pipe
 f_print
-fl_color
 fl_console
 fl_control_group
 fl_conversion

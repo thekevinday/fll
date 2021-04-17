@@ -361,7 +361,7 @@ Consider the "*.device" files such that they are also use IKI.
 
           if (data.error.verbosity != f_console_verbosity_quiet) {
             fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            fl_color_print(data.error.to.stream, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
+            f_color_print(data.error.to.stream, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
             fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
           }
 

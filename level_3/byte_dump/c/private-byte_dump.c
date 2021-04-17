@@ -212,17 +212,17 @@ extern "C" {
     fflush(data.output.stream);
 
     if (found_invalid_utf) {
-      fl_color_print(data.error.to.stream, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
-      fl_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
-      fl_color_print(data.error.to.stream, data.context.set.error, "'.");
+      f_color_print(data.error.to.stream, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
+      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
+      f_color_print(data.error.to.stream, data.context.set.error, "'.");
       fprintf(data.error.to.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     }
 
     if (size < 0) {
       // @todo: determine what the error from read() is and display it.
-      fl_color_print(data.error.to.stream, data.context.set.error, "%sread() failed for '", fll_error_print_error);
-      fl_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
-      fl_color_print(data.error.to.stream, data.context.set.error, "'.");
+      f_color_print(data.error.to.stream, data.context.set.error, "%sread() failed for '", fll_error_print_error);
+      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
+      f_color_print(data.error.to.stream, data.context.set.error, "'.");
       fprintf(data.error.to.stream, "%c%x", f_string_eol_s[0], f_string_eol_s[0]);
 
       status = F_status_set_error(F_failure);
@@ -256,7 +256,7 @@ extern "C" {
     }
 
     if (!cell->column) {
-      fl_color_print(data.output.stream, data.context.set.notable, "%016X ", (uint64_t) cell->row);
+      f_color_print(data.output.stream, data.context.set.notable, "%016X ", (uint64_t) cell->row);
 
       if (*offset > 0) {
         uint8_t offset_to_print = *offset;
@@ -306,7 +306,7 @@ extern "C" {
     if (cell->column < data.width) {
       if (data.mode == byte_dump_mode_hexidecimal) {
         if (invalid[character_current]) {
-          fl_color_print(data.output.stream, data.context.set.error, " %02x", (uint8_t) byte);
+          f_color_print(data.output.stream, data.context.set.error, " %02x", (uint8_t) byte);
         }
         else {
           fprintf(data.output.stream, " %02x", (uint8_t) byte);
@@ -349,7 +349,7 @@ extern "C" {
       }
       else if (data.mode == byte_dump_mode_octal) {
         if (invalid[character_current]) {
-          fl_color_print(data.output.stream, data.context.set.error, " %03o", (uint8_t) byte);
+          f_color_print(data.output.stream, data.context.set.error, " %03o", (uint8_t) byte);
         }
         else {
           fprintf(data.output.stream, " %03o", (uint8_t) byte);
@@ -368,7 +368,7 @@ extern "C" {
         binary_string[7] = (byte & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
 
         if (invalid[character_current]) {
-          fl_color_print(data.output.stream, data.context.set.error, " %s", binary_string);
+          f_color_print(data.output.stream, data.context.set.error, " %s", binary_string);
         }
         else {
           fprintf(data.output.stream, " %s", binary_string);
@@ -376,7 +376,7 @@ extern "C" {
       }
       else if (data.mode == byte_dump_mode_decimal) {
         if (invalid[character_current]) {
-          fl_color_print(data.output.stream, data.context.set.error, " %3d", (uint8_t) byte);
+          f_color_print(data.output.stream, data.context.set.error, " %3d", (uint8_t) byte);
         }
         else {
           fprintf(data.output.stream, " %3d", (uint8_t) byte);
@@ -441,7 +441,7 @@ extern "C" {
     uint8_t width_utf = 0;
     bool printed = F_false;
 
-    fl_color_print(data.output.stream, data.context.set.notable, "  %s ", byte_dump_character_wall);
+    f_color_print(data.output.stream, data.context.set.notable, "  %s ", byte_dump_character_wall);
 
     if (*offset > 0) {
       if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
@@ -459,7 +459,7 @@ extern "C" {
         }
 
         while (*offset > 0 && j < data.width) {
-          fl_color_print(data.output.stream, data.context.set.warning, "%s", placeholder);
+          f_color_print(data.output.stream, data.context.set.warning, "%s", placeholder);
           (*offset)--;
           j++;
         } // while
@@ -479,13 +479,13 @@ extern "C" {
           for (; j < previous->bytes && j < data.width; j++) {
 
             if (previous->invalid) {
-              fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
+              f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
               fprintf(data.output.stream, f_string_ascii_period_s);
             }
             else {
-              fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+              f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
             }
           } // for
         }
@@ -511,111 +511,111 @@ extern "C" {
       width_utf = f_macro_utf_byte_width_is(output);
 
       if (invalid[i]) {
-        fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_incomplete);
+        f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_incomplete);
       }
       else if (output >= 0 && output <= 32 || output == 127) {
         if (data.presentation == byte_dump_presentation_normal) {
           if (!output) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_null);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_null);
           }
           else if (output == 1) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_header);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_header);
           }
           else if (output == 2) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_text);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_start_of_text);
           }
           else if (output == 3) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_text);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_text);
           }
           else if (output == 4) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission);
           }
           else if (output == 5) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_enquiry);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_enquiry);
           }
           else if (output == 6) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_acknowledge);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_acknowledge);
           }
           else if (output == 7) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_bell);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_bell);
           }
           else if (output == 8) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_backspace);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_backspace);
           }
           else if (output == 9) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab);
           }
           else if (output == 10) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_new_line);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_new_line);
           }
           else if (output == 11) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab_vertical);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_tab_vertical);
           }
           else if (output == 12) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_form_feed);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_form_feed);
           }
           else if (output == 13) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_carriage_return);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_carriage_return);
           }
           else if (output == 14) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_out);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_out);
           }
           else if (output == 15) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_in);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_shift_in);
           }
           else if (output == 16) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_data_link_escape);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_data_link_escape);
           }
           else if (output == 17) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_1);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_1);
           }
           else if (output == 18) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_2);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_2);
           }
           else if (output == 19) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_3);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_3);
           }
           else if (output == 20) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_4);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_device_control_4);
           }
           else if (output == 21) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_negative_acknowledge);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_negative_acknowledge);
           }
           else if (output == 22) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_synchronous_idle);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_synchronous_idle);
           }
           else if (output == 23) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission_block);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_transmission_block);
           }
           else if (output == 24) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_cancel);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_cancel);
           }
           else if (output == 25) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_medium);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_end_of_medium);
           }
           else if (output == 26) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_substitute);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_substitute);
           }
           else if (output == 27) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_escape);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_escape);
           }
           else if (output == 28) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_file_separator);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_file_separator);
           }
           else if (output == 29) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_group_separator);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_group_separator);
           }
           else if (output == 30) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_record_separator);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_record_separator);
           }
           else if (output == 31) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_unit_separator);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_unit_separator);
           }
           else if (output == 32) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
           }
           else if (output == 127) {
-            fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_delete);
+            f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_delete);
           }
         }
         else if (data.presentation == byte_dump_presentation_simple) {
@@ -630,7 +630,7 @@ extern "C" {
           fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else {
-          fl_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
+          f_color_print2(data.output.stream, data.context.set.notable, data.context.set.warning, "%s", byte_dump_sequence_space);
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
@@ -638,7 +638,7 @@ extern "C" {
           fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-          fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+          f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
         }
         else {
           fprintf(data.output.stream, f_string_space_s);
@@ -647,7 +647,7 @@ extern "C" {
       else if (f_utf_character_is_control(characters.string[i]) == F_true) {
         // print a space (or '.') for control characters.
         if (data.presentation == byte_dump_presentation_classic) {
-          fl_color_print(data.output.stream, data.context.set.warning, f_string_ascii_period_s);
+          f_color_print(data.output.stream, data.context.set.warning, f_string_ascii_period_s);
         }
         else {
           fprintf(data.output.stream, f_string_space_s);
@@ -685,10 +685,10 @@ extern "C" {
       else if (width_utf == 1) {
         // print invalid placeholder for invalid UTF-8 widths.
         if (invalid[i]) {
-          fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_incomplete);
+          f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_incomplete);
         }
         else {
-          fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_incomplete);
+          f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_incomplete);
         }
       }
       else if (width_utf > 0) {
@@ -751,13 +751,13 @@ extern "C" {
       if (width_utf > 1 && j + 1 < data.width) {
         if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           if (invalid[i]) {
-            fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
+            f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
           }
           else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
             fprintf(data.output.stream, f_string_ascii_period_s);
           }
           else {
-            fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+            f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
           }
         }
         else {
@@ -769,13 +769,13 @@ extern "C" {
         if (width_utf > 2 && j + 1 < data.width) {
           if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
             if (invalid[i]) {
-              fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
+              f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
             }
             else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
               fprintf(data.output.stream, f_string_ascii_period_s);
             }
             else {
-              fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+              f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
             }
           }
           else {
@@ -787,13 +787,13 @@ extern "C" {
           if (width_utf > 3 && j + 1 < data.width) {
             if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
               if (invalid[i]) {
-                fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
+                f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
               }
               else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
                 fprintf(data.output.stream, f_string_ascii_period_s);
               }
               else {
-                fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+                f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
               }
             }
             else {
@@ -811,13 +811,13 @@ extern "C" {
       for (; j < data.width; j++) {
 
         if (invalid[j]) {
-          fl_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
+          f_color_print(data.output.stream, data.context.set.error, "%s", byte_dump_character_placeholder);
         }
         else if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
           fprintf(data.output.stream, f_string_ascii_period_s);
         }
         else {
-          fl_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
+          f_color_print(data.output.stream, data.context.set.warning, "%s", byte_dump_character_placeholder);
         }
       } // for
     }
@@ -827,7 +827,7 @@ extern "C" {
       } // for
     }
 
-    fl_color_print(data.output.stream, data.context.set.notable, " |");
+    f_color_print(data.output.stream, data.context.set.notable, " |");
     fprintf(data.output.stream, "%c", f_string_eol_s[0]);
   }
 #endif // _di_byte_dump_file_

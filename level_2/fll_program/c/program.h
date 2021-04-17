@@ -19,10 +19,11 @@
 #include <level_0/memory.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/color.h>
 #include <level_0/console.h>
+#include <level_0/file.h>
 
 // fll-1 includes
-#include <level_1/color.h>
 #include <level_1/string.h>
 
 #ifdef __cplusplus
@@ -44,9 +45,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_color_print().
+ *   Errors (with error bit) from: f_color_print().
  *
- * @param fl_color_print()
+ * @param f_color_print()
  */
 #ifndef _di_fll_program_print_help_header_
   extern f_status_t fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version);
@@ -73,9 +74,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_color_print().
+ *   Errors (with error bit) from: f_color_print().
  *
- * @param fl_color_print()
+ * @param f_color_print()
  */
 #ifndef _di_fll_program_print_help_option_
   extern f_status_t fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
@@ -98,9 +99,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_color_print().
+ *   Errors (with error bit) from: f_color_print().
  *
- * @param fl_color_print()
+ * @param f_color_print()
  */
 #ifndef _di_fll_program_print_help_option_long_
   extern f_status_t fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
@@ -121,9 +122,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_color_print().
+ *   Errors (with error bit) from: f_color_print().
  *
- * @param fl_color_print()
+ * @param f_color_print()
  */
 #ifndef _di_fll_program_print_help_option_other_
   extern f_status_t fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
@@ -145,9 +146,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_color_print().
+ *   Errors (with error bit) from: f_color_print().
  *
- * @param fl_color_print()
+ * @param f_color_print()
  */
 #ifndef _di_fll_program_print_help_usage_
   extern f_status_t fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
@@ -194,12 +195,12 @@ extern "C" {
  *   Errors (with error bit) from: f_console_parameter_prioritize_left().
  *   Errors (with error bit) from: f_console_parameter_prioritize_right().
  *   Errors (with error bit) from: f_console_parameter_process().
- *   Errors (with error bit) from: fl_color_load_context().
+ *   Errors (with error bit) from: f_color_load_context().
  *
  * @see f_console_parameter_prioritize_left()
  * @see f_console_parameter_prioritize_right()
  * @see f_console_parameter_process()
- * @see fl_color_load_context()
+ * @see f_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
   extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t parameters, const f_console_parameter_ids_t choices, const bool right, f_array_lengths_t *remaining, f_color_context_t *context);

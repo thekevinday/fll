@@ -5,5 +5,7 @@ f_status
 f_memory
 f_string
 f_utf
+f_color
 f_console
-fl_color
+f_file
+fl_string

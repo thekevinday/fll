@@ -15,9 +15,9 @@ extern "C" {
 
     if (data.error.verbosity != f_console_verbosity_quiet) {
       fprintf(data.output.stream, "%c", f_string_eol_s[0]);
-      fl_color_print(data.output.stream, data.context.set.important, "Deleting all files within build directory '");
-      fl_color_print(data.output.stream, data.context.set.notable, "%s", data.path_build.string);
-      fl_color_print(data.output.stream, data.context.set.important, "'.%c", f_string_eol_s[0]);
+      f_color_print(data.output.stream, data.context.set.important, "Deleting all files within build directory '");
+      f_color_print(data.output.stream, data.context.set.notable, "%s", data.path_build.string);
+      f_color_print(data.output.stream, data.context.set.important, "'.%c", f_string_eol_s[0]);
     }
 
     if (fake_signal_received(data)) {

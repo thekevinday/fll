@@ -61,7 +61,6 @@
 #include <level_0/signal.h>
 
 // fll-1 includes
-#include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/control_group.h>
 #include <level_1/environment.h>

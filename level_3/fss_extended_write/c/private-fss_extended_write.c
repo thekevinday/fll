@@ -13,13 +13,13 @@ extern "C" {
     }
 
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    fl_color_print(data.error.to.stream, data.context.set.error, "%sMust specify the '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_object);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' parameter at least once and the '");
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_content);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' parameter one or more times when not specifying the ");
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_partial);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol_s[0]);
+    f_color_print(data.error.to.stream, data.context.set.error, "%sMust specify the '", fll_error_print_error);
+    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_object);
+    f_color_print(data.error.to.stream, data.context.set.error, "' parameter at least once and the '");
+    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_content);
+    f_color_print(data.error.to.stream, data.context.set.error, "' parameter one or more times when not specifying the ");
+    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_partial);
+    f_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
@@ -31,9 +31,9 @@ extern "C" {
     }
 
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    fl_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "%s%s", symbol, parameter);
-    fl_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+    f_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
+    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", symbol, parameter);
+    f_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_extended_write_error_parameter_value_missing_print_
 
@@ -45,9 +45,9 @@ extern "C" {
     }
 
     fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    fl_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
-    fl_color_print(data.error.to.stream, data.context.set.notable, "\\n");
-    fl_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
+    f_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
+    f_color_print(data.error.to.stream, data.context.set.notable, "\\n");
+    f_color_print(data.error.to.stream, data.context.set.error, "'.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_extended_write_error_parameter_unsupported_eol_print_
 

@@ -451,7 +451,7 @@ extern "C" {
     f_macro_string_dynamic_t_destroy_simple(context.normal) \
     f_macro_string_dynamic_t_destroy_simple(context.normal_reset) \
     f_macro_color_context_t_clear(context)
-#endif // _di_fl_color_context_t_
+#endif // _di_f_color__context_t_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -18,7 +18,7 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, init_name, f_string_empty_s);
 
-    fl_color_print(output.stream, context.set.important, " Notes:");
+    f_color_print(output.stream, context.set.important, " Notes:");
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  This program is intended to be directly called by the kernel during boot.%c", f_string_eol_s[0]);

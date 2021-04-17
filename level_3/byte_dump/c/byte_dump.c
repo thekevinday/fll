@@ -41,7 +41,7 @@ extern "C" {
 
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_color_print(output.stream, context.set.important, " Special Options: ");
+    f_color_print(output.stream, context.set.important, " Special Options: ");
 
     fll_program_print_help_option_long(output, context, byte_dump_long_normal, f_console_symbol_long_enable_s, " Display UTF-8 symbols for ASCII control codes.");
     fll_program_print_help_option_long(output, context, byte_dump_long_simple, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
@@ -50,13 +50,13 @@ extern "C" {
     fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
 
     fprintf(output.stream, "  When using the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_text);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_text);
     fprintf(output.stream, " option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.");
 
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
     fprintf(output.stream, "  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_placeholder);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_placeholder);
     fprintf(output.stream, " option is used).");
 
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
@@ -66,7 +66,7 @@ extern "C" {
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
     fprintf(output.stream, "  When ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
     fprintf(output.stream, " is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
 
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
@@ -221,9 +221,9 @@ extern "C" {
 
     if (data->remaining.used > 0 || data->process_pipe) {
       if (data->parameters[byte_dump_parameter_width].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-        fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_width);
-        fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+        f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_width);
+        f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -237,13 +237,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_width);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number between ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "0");
-          fl_color_print(data->error.to.stream, data->context.set.error, " and ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "251");
-          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_width);
+          f_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number between ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "0");
+          f_color_print(data->error.to.stream, data->context.set.error, " and ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "251");
+          f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -253,9 +253,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-        fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
-        fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+        f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
+        f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -269,13 +269,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "0");
-          fl_color_print(data->error.to.stream, data->context.set.error, " and ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
-          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
+          f_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "0");
+          f_color_print(data->error.to.stream, data->context.set.error, " and ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
+          f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -285,9 +285,9 @@ extern "C" {
       }
 
       if (data->parameters[byte_dump_parameter_last].result == f_console_result_found) {
-        fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-        fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
-        fl_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+        f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
+        f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
         byte_dump_delete_data(data);
         return F_status_set_error(status);
@@ -301,13 +301,13 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "0");
-          fl_color_print(data->error.to.stream, data->context.set.error, " and ");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
-          fl_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
+          f_color_print(data->error.to.stream, data->context.set.error, "' value can only be a number (inclusively) between ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "0");
+          f_color_print(data->error.to.stream, data->context.set.error, " and ");
+          f_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
+          f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -318,11 +318,11 @@ extern "C" {
 
       if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional && data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         if (data->first > data->last) {
-          fl_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' value cannot be greater than the parameter '");
-          fl_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
-          fl_color_print(data->error.to.stream, data->context.set.error, "' value.%c", f_string_eol_s[0]);
+          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
+          f_color_print(data->error.to.stream, data->context.set.error, "' value cannot be greater than the parameter '");
+          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
+          f_color_print(data->error.to.stream, data->context.set.error, "' value.%c", f_string_eol_s[0]);
 
           byte_dump_delete_data(data);
           return F_status_set_error(status);
@@ -338,25 +338,25 @@ extern "C" {
         file.id = f_type_descriptor_input;
 
         printf("%c", f_string_eol_s[0]);
-        fl_color_print(data->output.stream, data->context.set.title, "Piped Byte Dump: (in ");
+        f_color_print(data->output.stream, data->context.set.title, "Piped Byte Dump: (in ");
 
         if (data->mode == byte_dump_mode_hexidecimal) {
-          fl_color_print(data->output.stream, data->context.set.title, "Hexidecimal");
+          f_color_print(data->output.stream, data->context.set.title, "Hexidecimal");
         }
         else if (data->mode == byte_dump_mode_duodecimal) {
-          fl_color_print(data->output.stream, data->context.set.title, "Duodecimal");
+          f_color_print(data->output.stream, data->context.set.title, "Duodecimal");
         }
         else if (data->mode == byte_dump_mode_octal) {
-          fl_color_print(data->output.stream, data->context.set.title, "Octal");
+          f_color_print(data->output.stream, data->context.set.title, "Octal");
         }
         else if (data->mode == byte_dump_mode_binary) {
-          fl_color_print(data->output.stream, data->context.set.title, "Binary");
+          f_color_print(data->output.stream, data->context.set.title, "Binary");
         }
         else if (data->mode == byte_dump_mode_decimal) {
-          fl_color_print(data->output.stream, data->context.set.title, "Decimal");
+          f_color_print(data->output.stream, data->context.set.title, "Decimal");
         }
 
-        fl_color_print(data->output.stream, data->context.set.title, ")%c", f_string_eol_s[0]);
+        f_color_print(data->output.stream, data->context.set.title, ")%c", f_string_eol_s[0]);
 
         status = byte_dump_file(*data, "-", file);
 
@@ -408,27 +408,27 @@ extern "C" {
           }
 
           printf("%c", f_string_eol_s[0]);
-          fl_color_print(data->output.stream, data->context.set.title, "Byte Dump of: ");
-          fl_color_print(data->output.stream, data->context.set.notable, "%s", arguments.argv[data->remaining.array[counter]]);
-          fl_color_print(data->output.stream, data->context.set.title, " (in ");
+          f_color_print(data->output.stream, data->context.set.title, "Byte Dump of: ");
+          f_color_print(data->output.stream, data->context.set.notable, "%s", arguments.argv[data->remaining.array[counter]]);
+          f_color_print(data->output.stream, data->context.set.title, " (in ");
 
           if (data->mode == byte_dump_mode_hexidecimal) {
-            fl_color_print(data->output.stream, data->context.set.title, "Hexidecimal");
+            f_color_print(data->output.stream, data->context.set.title, "Hexidecimal");
           }
           else if (data->mode == byte_dump_mode_duodecimal) {
-            fl_color_print(data->output.stream, data->context.set.title, "Duodecimal");
+            f_color_print(data->output.stream, data->context.set.title, "Duodecimal");
           }
           else if (data->mode == byte_dump_mode_octal) {
-            fl_color_print(data->output.stream, data->context.set.title, "Octal");
+            f_color_print(data->output.stream, data->context.set.title, "Octal");
           }
           else if (data->mode == byte_dump_mode_binary) {
-            fl_color_print(data->output.stream, data->context.set.title, "Binary");
+            f_color_print(data->output.stream, data->context.set.title, "Binary");
           }
           else if (data->mode == byte_dump_mode_decimal) {
-            fl_color_print(data->output.stream, data->context.set.title, "Decimal");
+            f_color_print(data->output.stream, data->context.set.title, "Decimal");
           }
 
-          fl_color_print(data->output.stream, data->context.set.title, ")%c", f_string_eol_s[0]);
+          f_color_print(data->output.stream, data->context.set.title, ")%c", f_string_eol_s[0]);
 
           status = byte_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
@@ -447,7 +447,7 @@ extern "C" {
       }
     }
     else {
-      fl_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify one or more filenames.%c", fll_error_print_error, f_string_eol_s[0]);
+      f_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify one or more filenames.%c", fll_error_print_error, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 

@@ -24,6 +24,7 @@
 #include <level_0/type_array.h>
 #include <level_0/string.h>
 #include <level_0/utf.h>
+#include <level_0/color.h>
 #include <level_0/console.h>
 #include <level_0/directory.h>
 #include <level_0/execute.h>
@@ -32,7 +33,6 @@
 #include <level_0/print.h>
 
 // fll-1 includes
-#include <level_1/color.h>
 #include <level_1/console.h>
 #include <level_1/string.h>
 

@@ -10,7 +10,6 @@ f_console
 f_file
 f_pipe
 f_print
-fl_color
 fl_console
 fll_error
 fll_program

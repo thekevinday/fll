@@ -38,9 +38,9 @@ extern "C" {
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
     fprintf(output.stream, "  When both the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_test);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_test);
     fprintf(output.stream, " operation and the ");
-    fl_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_validate);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_validate);
     fprintf(output.stream, " operation are specified, then additional information on each would be executed rule is printed.");
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 

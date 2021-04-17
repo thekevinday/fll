@@ -11,7 +11,6 @@ f_conversion
 f_file
 f_pipe
 f_print
-fl_color
 fl_console
 fl_conversion
 fl_status
