@@ -1824,11 +1824,13 @@ extern "C" {
  * @return
  *   F_none is returned on success.
  *   F_access_denied (with error bit) on access denied.
+ *   F_block (with error bit) if the action would block and non-blocking is set on the stream.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_file_close (with error bit) if fclose() failed for any other reason.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_descriptor_max (with error bit) if max file descriptors was reached.
+ *   F_file_overflow (with error bit) if the write exceeds some implementation defined maximum file size.
  *   F_file_synchronize (with error bit) on flush failure.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
@@ -1836,8 +1838,10 @@ extern "C" {
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_pipe_not (with error bit) if the stream is a pipe or a socket but the pipe or socket is already closed.
  *   F_prohibited (with error bit) if filesystem does not allow for making changes.
  *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *   F_socket_not (with error bit) if the datagram socket in which a peer has not been set (for socket related streams).
  *
  * @see close()
  * @see fclose()

@@ -1833,14 +1833,21 @@ extern "C" {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EAGAIN) return F_status_set_error(F_prohibited);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
+      if (errno == EFBIG) return F_status_set_error(F_file_overflow);
       if (errno == EDEADLK) return F_status_set_error(F_deadlock);
+      if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
+      if (errno == EDQUOT) return F_status_set_error(F_space_not);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENOLCK) return F_status_set_error(F_lock);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EPIPE) return F_status_set_error(F_pipe_not);
+      if (errno == EWOULDBLOCK) return F_status_set_error(F_block);
 
       return F_status_set_error(F_failure);
     }

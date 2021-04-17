@@ -69,9 +69,20 @@ extern "C" {
     if (status == F_directory_empty_not) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-        fprintf(print.to.stream, "%s' is not empty.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s', not empty.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_close) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s', failed to close.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
 
       return F_false;
@@ -80,9 +91,9 @@ extern "C" {
     if (status == F_file_closed) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-        fprintf(print.to.stream, "%s' is not open.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s', is closed.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
 
       return F_false;
@@ -91,9 +102,9 @@ extern "C" {
     if (status == F_file_found) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-        fprintf(print.to.stream, "%s' already exists.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s', found %s.%s%c", print.context.before->string, type_name, print.context.after->string, f_string_eol_s[0]);
       }
 
       return F_false;
@@ -102,7 +113,42 @@ extern "C" {
     if (status == F_file_found_not) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sFailed to find %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s', could not find %s.%s%c", print.context.before->string, type_name, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_open) {
+      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s', already open.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_descriptor) {
+      fprintf(print.to.stream, "%s%sFile descriptor error while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_descriptor_max) {
+      fprintf(print.to.stream, "%s%sMax file descriptors reached while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_descriptor_not) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sInvalid file descriptor while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
         fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
@@ -110,26 +156,45 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_file_open) {
-      fprintf(print.to.stream, "%s%sUnable to open the %s '", print.context.before->string, print.prefix, type_name);
+    if (status == F_file_empty) {
+      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s', %s is empty.%s%c", print.context.before->string, type_name, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_flush) {
+      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s', flush failed.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_open_max) {
+      fprintf(print.to.stream, "%s%sMax open files reached while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
       fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
       fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
 
       return F_false;
     }
 
-    if (status == F_file_descriptor) {
-      fprintf(print.to.stream, "%s%sFile descriptor print while trying to open the %s '", print.context.before->string, print.prefix, type_name);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+    if (status == F_file_overflow) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sOverflow while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
 
       return F_false;
     }
 
-    if (status == F_number_underflow) {
-      fprintf(print.to.stream, "%s%sInteger underflow while trying to buffer the %s '", print.context.before->string, print.prefix, type_name);
+    if (status == F_file_purge) {
+      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
       fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-      fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      fprintf(print.to.stream, "%s', purge failed.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
 
       return F_false;
     }
@@ -137,7 +202,7 @@ extern "C" {
     if (status == F_file_read) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sA read print occurred while accessing the %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sRead failed while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
         fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
@@ -148,10 +213,70 @@ extern "C" {
     if (status == F_file_seek) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sA seek print occurred while accessing the %s '", print.context.before->string, print.prefix, type_name);
+        fprintf(print.to.stream, "%s%sSeek failed while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
         fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
+
+      return F_false;
+    }
+
+    if (status == F_file_stat) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sStat failed while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_synchronize) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sSynchronize failed while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_utf) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sUTF failure while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_utf_not) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sInvalid UTF while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_underflow) {
+      fprintf(print.to.stream, "%s%sUnderflow while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+      return F_false;
+    }
+
+    if (status == F_file_write) {
+      fprintf(print.to.stream, "%s%sFailed to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s', write failure.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
 
       return F_false;
     }
@@ -181,10 +306,18 @@ extern "C" {
     if (status == F_number_overflow) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sOverflow while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%sNumber overflow while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
         fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
         fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
       }
+
+      return F_false;
+    }
+
+    if (status == F_number_underflow) {
+      fprintf(print.to.stream, "%s%sNumber underflow while trying to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+      fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
 
       return F_false;
     }
@@ -228,6 +361,17 @@ extern "C" {
       }
     }
 
+    if (status == F_failure) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sFailed to %s %s '", print.context.before->string, print.prefix, operation, type_name);
+        fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
+        fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
     if (type == fll_error_file_type_file || type == fll_error_file_type_directory) {
       if (status == F_directory_found_not) {
         if (print.verbosity != f_console_verbosity_quiet) {
@@ -238,19 +382,6 @@ extern "C" {
         }
 
         return F_false;
-      }
-
-      if (type == fll_error_file_type_directory) {
-        if (status == F_failure) {
-          if (print.verbosity != f_console_verbosity_quiet) {
-            fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(print.to.stream, "%s%sFailed to %s %s '", print.context.before->string, print.prefix, operation, type_name);
-            fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
-            fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
-          }
-
-          return F_false;
-        }
       }
     }
 

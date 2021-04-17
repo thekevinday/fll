@@ -1007,23 +1007,20 @@ extern "C" {
         case F_file:
           *string = FL_status_string_file;
           break;
-        case F_file_allocation:
-          *string = FL_status_string_file_allocation;
-          break;
         case F_file_close:
           *string = FL_status_string_file_close;
           break;
         case F_file_closed:
           *string = FL_status_string_file_closed;
           break;
-        case F_file_deallocation:
-          *string = FL_status_string_file_deallocation;
-          break;
         case F_file_descriptor:
           *string = FL_status_string_file_descriptor;
           break;
         case F_file_descriptor_max:
           *string = FL_status_string_file_descriptor_max;
+          break;
+        case F_file_descriptor_not:
+          *string = FL_status_string_file_descriptor_not;
           break;
         case F_file_empty:
           *string = FL_status_string_file_empty;
@@ -1048,6 +1045,9 @@ extern "C" {
           break;
         case F_file_opened:
           *string = FL_status_string_file_opened;
+          break;
+        case F_file_overflow:
+          *string = FL_status_string_file_overflow;
           break;
         case F_file_purge:
           *string = FL_status_string_file_purge;
@@ -1117,6 +1117,9 @@ extern "C" {
           break;
         case F_file_type_unknown:
           *string = FL_status_string_file_type_unknown;
+          break;
+        case F_file_underflow:
+          *string = FL_status_string_file_underflow;
           break;
         case F_file_utf:
           *string = FL_status_string_file_utf;

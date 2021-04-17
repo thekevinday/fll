@@ -708,12 +708,11 @@ extern "C" {
 
   #ifndef _di_F_status_file_
     #define FL_status_string_file                    "F_file"
-    #define FL_status_string_file_allocation         "F_file_allocation"
     #define FL_status_string_file_close              "F_file_close"
     #define FL_status_string_file_closed             "F_file_closed"
-    #define FL_status_string_file_deallocation       "F_file_deallocation"
     #define FL_status_string_file_descriptor         "F_file_descriptor"
     #define FL_status_string_file_descriptor_max     "F_file_descriptor_max"
+    #define FL_status_string_file_descriptor_not     "F_file_descriptor_not"
     #define FL_status_string_file_empty              "F_file_empty"
     #define FL_status_string_file_flush              "F_file_flush"
     #define FL_status_string_file_found              "F_file_found"
@@ -722,6 +721,7 @@ extern "C" {
     #define FL_status_string_file_open               "F_file_open"
     #define FL_status_string_file_open_max           "F_file_open_max"
     #define FL_status_string_file_opened             "F_file_opened"
+    #define FL_status_string_file_overflow           "F_file_overflow"
     #define FL_status_string_file_purge              "F_file_purge"
     #define FL_status_string_file_read               "F_file_read"
     #define FL_status_string_file_reallocation       "F_file_reallocation"
@@ -746,17 +746,17 @@ extern "C" {
     #define FL_status_string_file_type_regular       "F_file_type_regular"
     #define FL_status_string_file_type_socket        "F_file_type_socket"
     #define FL_status_string_file_type_unknown       "F_file_type_unknown"
+    #define FL_status_string_file_underflow          "F_file_underflow"
     #define FL_status_string_file_utf                "F_file_utf"
     #define FL_status_string_file_utf_not            "F_file_utf_not"
     #define FL_status_string_file_write              "F_file_write"
 
     #define FL_status_string_file_length                     6
-    #define FL_status_string_file_allocation_length          17
     #define FL_status_string_file_close_length               12
     #define FL_status_string_file_closed_length              13
-    #define FL_status_string_file_deallocation_length        19
     #define FL_status_string_file_descriptor_length          17
     #define FL_status_string_file_descriptor_max_length      21
+    #define FL_status_string_file_descriptor_not_length      21
     #define FL_status_string_file_empty_length               12
     #define FL_status_string_file_flush_length               12
     #define FL_status_string_file_found_length               12
@@ -765,6 +765,7 @@ extern "C" {
     #define FL_status_string_file_open_length                11
     #define FL_status_string_file_open_max_length            15
     #define FL_status_string_file_opened_length              13
+    #define FL_status_string_file_overflow_length            15
     #define FL_status_string_file_purge_length               12
     #define FL_status_string_file_read_length                11
     #define FL_status_string_file_reallocation_length        19
@@ -789,6 +790,7 @@ extern "C" {
     #define FL_status_string_file_type_regular_length        19
     #define FL_status_string_file_type_socket_length         18
     #define FL_status_string_file_type_unknown_length        19
+    #define FL_status_string_file_underflow_length           16
     #define FL_status_string_file_utf_length                 10
     #define FL_status_string_file_utf_not_length             14
     #define FL_status_string_file_write_length               12

@@ -1665,11 +1665,6 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_file_allocation, length, FL_status_string_file_allocation_length) == F_equal_to) {
-        *code = F_file_allocation;
-        return F_none;
-      }
-
       if (fl_string_compare(string, FL_status_string_file_close, length, FL_status_string_file_close_length) == F_equal_to) {
         *code = F_file_close;
         return F_none;
@@ -1680,11 +1675,6 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_compare(string, FL_status_string_file_deallocation, length, FL_status_string_file_deallocation_length) == F_equal_to) {
-        *code = F_file_deallocation;
-        return F_none;
-      }
-
       if (fl_string_compare(string, FL_status_string_file_descriptor, length, FL_status_string_file_descriptor_length) == F_equal_to) {
         *code = F_file_descriptor;
         return F_none;
@@ -1692,6 +1682,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_file_descriptor_max, length, FL_status_string_file_descriptor_max_length) == F_equal_to) {
         *code = F_file_descriptor_max;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_file_descriptor_not, length, FL_status_string_file_descriptor_not_length) == F_equal_to) {
+        *code = F_file_descriptor_not;
         return F_none;
       }
 
@@ -1732,6 +1727,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_file_opened, length, FL_status_string_file_opened_length) == F_equal_to) {
         *code = F_file_opened;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_file_overflow, length, FL_status_string_file_overflow_length) == F_equal_to) {
+        *code = F_file_overflow;
         return F_none;
       }
 
@@ -1847,6 +1847,11 @@ extern "C" {
 
       if (fl_string_compare(string, FL_status_string_file_type_unknown, length, FL_status_string_file_type_unknown_length) == F_equal_to) {
         *code = F_file_type_unknown;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_file_underflow, length, FL_status_string_file_underflow_length) == F_equal_to) {
+        *code = F_file_underflow;
         return F_none;
       }
 
