@@ -178,6 +178,11 @@ extern "C" {
         buffer.string = controller_string_user_s;
         buffer.used = controller_string_user_length;
         break;
+
+      case controller_rule_action_type_with:
+        buffer.string = controller_string_with_s;
+        buffer.used = controller_string_with_length;
+        break;
     }
 
     buffer.size = buffer.used;
@@ -768,6 +773,8 @@ extern "C" {
     f_string_dynamic_t *pid_file = 0;
     uint8_t pid_type = 0;
 
+    bool with_full_path = F_false;
+
     // child processes should receive all signals and handle the signals as they see fit.
     f_signal_how_t signals = f_signal_how_t_initialize;
     f_signal_set_empty(&signals.block);
@@ -838,6 +845,24 @@ extern "C" {
 
       if (process->rule.items.array[i].type == controller_rule_item_type_setting) continue;
 
+      with_full_path = F_false;
+
+      for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
+
+        if (process->rule.items.array[i].actions.array[j].type == controller_rule_action_type_with) {
+          for (k = 0; k < process->rule.items.array[i].actions.array[j].parameters.used; ++k) {
+
+            if (fl_string_dynamic_compare_string(controller_string_full_path_s, process->rule.items.array[i].actions.array[j].parameters.array[k], controller_string_full_path_length) == F_equal_to) {
+              with_full_path = F_true;
+
+              break;
+            }
+          } // for
+
+          if (with_full_path) break;
+        }
+      } // for
+
       for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
         if (!main.thread->enabled) {
@@ -850,12 +875,11 @@ extern "C" {
         execute_set.parameter.data = 0;
         execute_set.parameter.option = fl_execute_parameter_option_threadsafe | fl_execute_parameter_option_return;
 
+        if (with_full_path) {
+          execute_set.parameter.option |= fl_execute_parameter_option_path;
+        }
+
         if (process->rule.items.array[i].type == controller_rule_item_type_command) {
-
-          if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
-            execute_set.parameter.option |= fl_execute_parameter_option_path;
-          }
-
           status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
 
           if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
@@ -872,12 +896,7 @@ extern "C" {
           }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_script) {
-
           execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
-
-          if (process->rule.script.used && strchr(process->rule.script.string, f_path_separator_s[0])) {
-            execute_set.parameter.option |= fl_execute_parameter_option_path;
-          }
 
           status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
 
@@ -895,7 +914,6 @@ extern "C" {
           }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
-
           pid_file = 0;
           pid_type = 0;
 
@@ -914,10 +932,6 @@ extern "C" {
           } // for
 
           if (pid_file) {
-            if (strchr(process->rule.items.array[i].actions.array[j].parameters.array[0].string, f_path_separator_s[0])) {
-              execute_set.parameter.option |= fl_execute_parameter_option_path;
-            }
-
             status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
 
             if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
@@ -941,7 +955,6 @@ extern "C" {
           }
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_utility) {
-
           pid_file = 0;
           pid_type = 0;
 
@@ -961,10 +974,6 @@ extern "C" {
 
           if (pid_file) {
             execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
-
-            if (process->rule.script.used && strchr(process->rule.script.string, f_path_separator_s[0])) {
-              execute_set.parameter.option |= fl_execute_parameter_option_path;
-            }
 
             status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
 
@@ -1334,6 +1343,8 @@ extern "C" {
       if (!WIFEXITED(result)) {
         status = F_status_set_error(F_failure);
       }
+
+      // @fixme needs a custom option to desginate what is an error.
     }
     else {
       if (!main.thread->enabled) {
@@ -1525,6 +1536,9 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare_string(controller_string_user_s, cache->action.name_action, controller_string_user_length) == F_equal_to) {
         type = controller_rule_action_type_user;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_with_s, cache->action.name_action, controller_string_with_length) == F_equal_to) {
+        type = controller_rule_action_type_with;
       }
       else {
         if (main.data->warning.verbosity == f_console_verbosity_debug) {
@@ -1819,7 +1833,7 @@ extern "C" {
     }
 
     if ((process->options & controller_process_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_validate(process->rule, controller_rule_action_type_start, process->options, main, &process->cache);
+      controller_rule_validate(process->rule, action, process->options, main, &process->cache);
     }
 
     f_array_length_t i = 0;
@@ -1991,7 +2005,7 @@ extern "C" {
                 }
 
                 // synchronously execute dependency.
-                status = controller_rule_process_begin(0, alias_other, controller_rule_action_type_start, options_process, process->stack, main, process_other->cache);
+                status = controller_rule_process_begin(0, alias_other, action, options_process, process->stack, main, process_other->cache);
 
                 if (status == F_child || status == F_signal) {
                   f_thread_unlock(&process_other->active);
@@ -2594,6 +2608,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
+        // @todo this needs to support passing different (supported) types, particularly when the "control" is written, (an entry will always send start and an exit will always send stop).
         status = controller_rule_process(controller_rule_action_type_start, main, process);
       }
     }

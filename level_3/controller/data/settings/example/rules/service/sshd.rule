@@ -10,4 +10,5 @@ setting:
 
 service:
   use /var/run/sshd.pid
-  start /usr/sbin/sshd
+  with full_path
+  start sshd

@@ -89,3 +89,8 @@ Rule Documentation:
   The "create" Content designates that this controller program to create the PID file after successfully starting a Service or Utility.
   The "use" Content designates that the called program will provide the PID file after successfully starting the Service or Utility.
   For both "create" and "program" the PID file is expected to only exist on success and the existence thereof designates the success or failure.
+
+  The "with" Content designates special flags designating very specific behavior to be applied to any single Rule Type.
+  The following flags are supported:
+    "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
+                 When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").

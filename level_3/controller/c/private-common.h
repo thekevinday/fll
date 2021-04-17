@@ -46,6 +46,7 @@ extern "C" {
   #define controller_string_fifo          "fifo"
   #define controller_string_freeze        "freeze"
   #define controller_string_fsize         "fsize"
+  #define controller_string_full_path     "full_path"
   #define controller_string_group         "group"
   #define controller_string_groups        "groups"
   #define controller_string_how           "how"
@@ -104,6 +105,7 @@ extern "C" {
   #define controller_string_wait          "wait"
   #define controller_string_want          "want"
   #define controller_string_wish          "wish"
+  #define controller_string_with          "with"
   #define controller_string_yes           "yes"
 
   #define controller_string_action_length        6
@@ -134,6 +136,7 @@ extern "C" {
   #define controller_string_fifo_length          4
   #define controller_string_freeze_length        6
   #define controller_string_fsize_length         5
+  #define controller_string_full_path_length     9
   #define controller_string_group_length         5
   #define controller_string_how_length           3
   #define controller_string_idle_length          4
@@ -191,6 +194,7 @@ extern "C" {
   #define controller_string_wait_length          4
   #define controller_string_want_length          4
   #define controller_string_wish_length          4
+  #define controller_string_with_length          4
   #define controller_string_yes_length           3
 
   const static f_string_t controller_string_action_s = controller_string_action;
@@ -221,6 +225,7 @@ extern "C" {
   const static f_string_t controller_string_fifo_s = controller_string_fifo;
   const static f_string_t controller_string_freeze_s = controller_string_freeze;
   const static f_string_t controller_string_fsize_s = controller_string_fsize;
+  const static f_string_t controller_string_full_path_s = controller_string_full_path;
   const static f_string_t controller_string_group_s = controller_string_group;
   const static f_string_t controller_string_groups_s = controller_string_groups;
   const static f_string_t controller_string_how_s = controller_string_how;
@@ -279,6 +284,7 @@ extern "C" {
   const static f_string_t controller_string_wait_s = controller_string_wait;
   const static f_string_t controller_string_want_s = controller_string_want;
   const static f_string_t controller_string_wish_s = controller_string_wish;
+  const static f_string_t controller_string_with_s = controller_string_with;
   const static f_string_t controller_string_yes_s = controller_string_yes;
 #endif // _di_controller_string_
 
@@ -494,6 +500,7 @@ extern "C" {
     controller_rule_action_type_thaw,
     controller_rule_action_type_use,
     controller_rule_action_type_user,
+    controller_rule_action_type_with,
   };
 
   typedef struct {

@@ -47,10 +47,6 @@ Rule Specification:
     "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
     "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 
-  The "service" and "utility" Rule Types allow the following the FSS-0001 (Extended)\:
-    "create": One Content representing the path to a PID file.
-    "use": One Content representing the path to a PID file.
-
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
     "kill": One or more Content representing a program being executed and its arguments.
     "pause": One or more Content representing a program being executed and its arguments.
@@ -59,6 +55,12 @@ Rule Specification:
     "resume": One or more Content representing a program being executed and its arguments.
     "start": One or more Content representing a program being executed and its arguments.
     "stop": One or more Content representing a program being executed and its arguments.
+    "with": One or more Content representing special options for the Rule Type.
+
+  The "service" and "utility" Rule Types allow the following the FSS-0001 (Extended)\:
+    "create": One Content representing the path to a PID file.
+    "use": One Content representing the path to a PID file.
+    "with": One or more Content representing special options for the Rule Type.
 
   The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
     "kill": A list repesenting multiple programs and their respective arguments to execute.
