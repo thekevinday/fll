@@ -112,6 +112,19 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_failure) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(print.to.stream, "%s%sFailure", print.context.before->string, print.prefix);
+
+        private_fll_error_print_function(print, function);
+
+        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
     if (fallback && print.verbosity != f_console_verbosity_quiet) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
