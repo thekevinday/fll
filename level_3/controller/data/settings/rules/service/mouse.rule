@@ -16,7 +16,7 @@ script:
   }
 
 service:
-  use /var/run/mouse/mouse.pid
+  pid_file /var/run/mouse/mouse.pid
 
   # @todo
   start gpm -m [device] -t [protocol] [options]

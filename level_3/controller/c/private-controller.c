@@ -246,6 +246,56 @@ extern "C" {
   }
 #endif // _di_controller_file_pid_delete_
 
+#ifndef _di_controller_file_pid_read_
+  f_status_t controller_file_pid_read(const f_string_static_t path, pid_t *pid) {
+
+    *pid = 0;
+
+    f_status_t status = f_file_exists(path.string);
+    if (F_status_is_error(status)) return status;
+
+    if (status != F_true) {
+      return F_data_not;
+    }
+
+    f_file_t pid_file = f_file_t_initialize;
+
+    status = f_file_stream_open(path.string, f_file_open_mode_read_s, &pid_file);
+    if (F_status_is_error(status)) return status;
+
+    f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
+
+    status = f_file_stream_read(pid_file, 1, &pid_buffer);
+
+    if (F_status_is_error_not(status)) {
+      status = f_file_stream_close(F_true, &pid_file);
+    }
+
+    if (F_status_is_error_not(status)) {
+      f_number_unsigned_t number = 0;
+      f_string_range_t range = f_macro_string_range_t_initialize(pid_buffer.used);
+
+      for (; range.start < pid_buffer.used; ++range.start) {
+        if (!isspace(pid_buffer.string[range.start])) break;
+      } // for
+
+      for (; range.stop > 0; --range.stop) {
+        if (!isspace(pid_buffer.string[range.stop])) break;
+      } // for
+
+      status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, range, &number);
+
+      if (F_status_is_error_not(status)) {
+        *pid = (pid_t) number;
+      }
+    }
+
+    f_macro_string_dynamic_t_delete_simple(pid_buffer);
+
+    return status;
+  }
+#endif // _di_controller_file_pid_read_
+
 #ifndef _di_controller_find_process_
   f_status_t controller_find_process(const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) {
 

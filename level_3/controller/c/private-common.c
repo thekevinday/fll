@@ -306,6 +306,8 @@ extern "C" {
     controller_cache_delete_simple(&process->cache);
     controller_rule_delete_simple(&process->rule);
 
+    f_string_dynamic_resize(0, &process->path_pid);
+
     f_macro_array_lengths_t_delete_simple(process->stack)
   }
 #endif // _di_controller_process_delete_simple_

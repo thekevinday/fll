@@ -11,6 +11,6 @@ setting:
 
 service:
   # @todo consider adding support for IKI to make "/var/run/logger/logger.pid" a variable.
-  use /var/run/logger/logger.pid
+  pid_file /var/run/logger/logger.pid
 
   start metalog -B -p /var/run/logger/logger.pid -C /etc/logger.conf

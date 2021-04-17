@@ -134,11 +134,6 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     switch (type) {
-      case controller_rule_action_type_create:
-        buffer.string = controller_string_create_s;
-        buffer.used = controller_string_create_length;
-        break;
-
       case controller_rule_action_type_group:
         buffer.string = controller_string_group_s;
         buffer.used = controller_string_group_length;
@@ -147,6 +142,11 @@ extern "C" {
       case controller_rule_action_type_kill:
         buffer.string = controller_string_kill_s;
         buffer.used = controller_string_kill_length;
+        break;
+
+      case controller_rule_action_type_pid_file:
+        buffer.string = controller_string_pid_file_s;
+        buffer.used = controller_string_pid_file_length;
         break;
 
       case controller_rule_action_type_restart:
@@ -167,11 +167,6 @@ extern "C" {
       case controller_rule_action_type_stop:
         buffer.string = controller_string_stop_s;
         buffer.used = controller_string_stop_length;
-        break;
-
-      case controller_rule_action_type_use:
-        buffer.string = controller_string_use_s;
-        buffer.used = controller_string_use_length;
         break;
 
       case controller_rule_action_type_user:
@@ -771,9 +766,8 @@ extern "C" {
     f_array_length_t k = 0;
 
     f_string_dynamic_t *pid_file = 0;
-    uint8_t pid_type = 0;
 
-    bool with_full_path = F_false;
+    uint8_t with = 0;
 
     // child processes should receive all signals and handle the signals as they see fit.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -845,7 +839,7 @@ extern "C" {
 
       if (process->rule.items.array[i].type == controller_rule_item_type_setting) continue;
 
-      with_full_path = F_false;
+      with = 0;
 
       for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
@@ -853,13 +847,9 @@ extern "C" {
           for (k = 0; k < process->rule.items.array[i].actions.array[j].parameters.used; ++k) {
 
             if (fl_string_dynamic_compare_string(controller_string_full_path_s, process->rule.items.array[i].actions.array[j].parameters.array[k], controller_string_full_path_length) == F_equal_to) {
-              with_full_path = F_true;
-
-              break;
+              with |= controller_with_full_path;
             }
           } // for
-
-          if (with_full_path) break;
         }
       } // for
 
@@ -875,7 +865,7 @@ extern "C" {
         execute_set.parameter.data = 0;
         execute_set.parameter.option = fl_execute_parameter_option_threadsafe | fl_execute_parameter_option_return;
 
-        if (with_full_path) {
+        if (with & controller_with_full_path) {
           execute_set.parameter.option |= fl_execute_parameter_option_path;
         }
 
@@ -915,11 +905,10 @@ extern "C" {
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_service) {
           pid_file = 0;
-          pid_type = 0;
 
           for (k = 0; k < process->rule.items.array[i].actions.used; ++k) {
 
-            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_create && process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_use) {
+            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_pid_file) {
               continue;
             }
 
@@ -928,11 +917,10 @@ extern "C" {
             }
 
             pid_file = &process->rule.items.array[i].actions.array[k].parameters.array[0];
-            pid_type = process->rule.items.array[i].actions.array[k].type;
           } // for
 
           if (pid_file) {
-            status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, main, &execute_set, process);
+            status = controller_rule_execute_pid_with(*pid_file, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], 0, process->rule.items.array[i].actions.array[j].parameters, options, with, main, &execute_set, process);
 
             if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
 
@@ -956,11 +944,10 @@ extern "C" {
         }
         else if (process->rule.items.array[i].type == controller_rule_item_type_utility) {
           pid_file = 0;
-          pid_type = 0;
 
           for (k = 0; k < process->rule.items.array[i].actions.used; ++k) {
 
-            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_create && process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_use) {
+            if (process->rule.items.array[i].actions.array[k].type != controller_rule_action_type_pid_file) {
               continue;
             }
 
@@ -969,13 +956,12 @@ extern "C" {
             }
 
             pid_file = &process->rule.items.array[i].actions.array[k].parameters.array[0];
-            pid_type = process->rule.items.array[i].actions.array[k].type;
           } // for
 
           if (pid_file) {
             execute_set.parameter.data = &process->rule.items.array[i].actions.array[j].parameters.array[0];
 
-            status = controller_rule_execute_pid_with(pid_file, pid_type, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, main, &execute_set, process);
+            status = controller_rule_execute_pid_with(*pid_file, process->rule.items.array[i].type, process->rule.items.array[i].actions.array[j], process->rule.script.used ? process->rule.script.string : controller_default_program_script, arguments_none, options, with, main, &execute_set, process);
 
             if (status == F_child || status == F_signal || F_status_set_fine(status) == F_lock) break;
 
@@ -1172,6 +1158,9 @@ extern "C" {
       if (!WIFEXITED(result)) {
         status = F_status_set_error(F_failure);
       }
+      else {
+        status = F_none;
+      }
     }
     else {
       if (!main.thread->enabled) {
@@ -1223,7 +1212,7 @@ extern "C" {
 #endif // _di_controller_rule_execute_foreground_
 
 #ifndef _di_controller_rule_execute_pid_with_
-  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t *pid_file, const uint8_t pid_type, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
+  f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const uint8_t with, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -1231,7 +1220,29 @@ extern "C" {
     int result = 0;
     pid_t id_child = 0;
 
-    // @todo check to see if pid file exists.
+    process->path_pid.used = 0;
+
+    status = f_file_exists(pid_file.string);
+
+    if (F_status_is_error(status)) {
+      fll_error_file_print(main.data->error, F_status_set_fine(status), "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file);
+
+      return status;
+    }
+
+    if (status == F_true) {
+      fll_error_file_print(main.data->error, F_file_found, "f_file_exists", F_true, pid_file.string, "create PID", fll_error_file_type_file);
+
+      return F_status_set_error(F_file_found);
+    }
+
+    status = controller_string_dynamic_append_terminated(pid_file, &process->path_pid);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
+
+      return status;
+    }
 
     if (options & controller_process_option_simulate) {
 
@@ -1297,7 +1308,7 @@ extern "C" {
         controller_lock_error_critical_print(main.data->error, F_status_set_fine(status_lock), F_true, main.thread);
       }
 
-      // have the parent wait for the child process to finish. @todo do not wait, this is a background execution! instead, wait for pid file or timeout (or perhaps optional create the pid file).
+      // the child process should perform the change into background, therefore it is safe to wait for the child to exit (another process is spawned).
       waitpid(id_child, &result, 0);
 
       if (!main.thread->enabled) {
@@ -1327,7 +1338,7 @@ extern "C" {
         return F_status_set_error(F_lock);
       }
 
-      // remove the pid now that waidpid() has returned. @todo do not clear until forked execution is known to have exited, this is a background execution
+      // remove the pid now that waidpid() has returned.
       process->child = 0;
 
       f_thread_unlock(&process->lock);
@@ -1340,11 +1351,13 @@ extern "C" {
       }
 
       // this must explicitly check for 0 (as opposed to checking (!result)).
+      // @todo expand this to provide user more control over what is or is not an error to designate as a failure.
       if (!WIFEXITED(result)) {
         status = F_status_set_error(F_failure);
       }
-
-      // @fixme needs a custom option to desginate what is an error.
+      else {
+        status = F_none;
+      }
     }
     else {
       if (!main.thread->enabled) {
@@ -1504,10 +1517,7 @@ extern "C" {
         break;
       }
 
-      if (fl_string_dynamic_compare_string(controller_string_create_s, cache->action.name_action, controller_string_create_length) == F_equal_to) {
-        type = controller_rule_action_type_create;
-      }
-      else if (fl_string_dynamic_compare_string(controller_string_group_s, cache->action.name_action, controller_string_group_length) == F_equal_to) {
+      if (fl_string_dynamic_compare_string(controller_string_group_s, cache->action.name_action, controller_string_group_length) == F_equal_to) {
         type = controller_rule_action_type_group;
       }
       else if (fl_string_dynamic_compare_string(controller_string_kill_s, cache->action.name_action, controller_string_kill_length) == F_equal_to) {
@@ -1515,6 +1525,9 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare_string(controller_string_pause_s, cache->action.name_action, controller_string_pause_length) == F_equal_to) {
         type = controller_rule_action_type_pause;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_pid_file_s, cache->action.name_action, controller_string_pid_file_length) == F_equal_to) {
+        type = controller_rule_action_type_pid_file;
       }
       else if (fl_string_dynamic_compare_string(controller_string_restart_s, cache->action.name_action, controller_string_restart_length) == F_equal_to) {
         type = controller_rule_action_type_restart;
@@ -1530,9 +1543,6 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare_string(controller_string_stop_s, cache->action.name_action, controller_string_stop_length) == F_equal_to) {
         type = controller_rule_action_type_stop;
-      }
-      else if (fl_string_dynamic_compare_string(controller_string_use_s, cache->action.name_action, controller_string_use_length) == F_equal_to) {
-        type = controller_rule_action_type_use;
       }
       else if (fl_string_dynamic_compare_string(controller_string_user_s, cache->action.name_action, controller_string_user_length) == F_equal_to) {
         type = controller_rule_action_type_user;
@@ -1560,7 +1570,7 @@ extern "C" {
       }
 
       if (multiple) {
-        if (type == controller_rule_action_type_create || type == controller_rule_action_type_group || type == controller_rule_action_type_use || type == controller_rule_action_type_user) {
+        if (type == controller_rule_action_type_group || type == controller_rule_action_type_pid_file || type == controller_rule_action_type_user) {
 
           if (main.data->error.verbosity != f_console_verbosity_quiet) {
             f_thread_mutex_lock(&main.thread->lock.print);

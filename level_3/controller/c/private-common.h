@@ -71,7 +71,7 @@ extern "C" {
   #define controller_string_parameter     "parameter"
   #define controller_string_path          "path"
   #define controller_string_pause         "pause"
-  #define controller_string_pid           "pid"
+  #define controller_string_pid_file      "pid_file"
   #define controller_string_processor     "processor"
   #define controller_string_program       "program"
   #define controller_string_ready         "ready"
@@ -160,7 +160,7 @@ extern "C" {
   #define controller_string_parameter_length     9
   #define controller_string_path_length          4
   #define controller_string_pause_length         5
-  #define controller_string_pid_length           3
+  #define controller_string_pid_file_length      8
   #define controller_string_processor_length     9
   #define controller_string_program_length       7
   #define controller_string_ready_length         5
@@ -250,7 +250,7 @@ extern "C" {
   const static f_string_t controller_string_parameter_s = controller_string_parameter;
   const static f_string_t controller_string_path_s = controller_string_path;
   const static f_string_t controller_string_pause_s = controller_string_pause;
-  const static f_string_t controller_string_pid_s = controller_string_pid;
+  const static f_string_t controller_string_pid_file_s = controller_string_pid_file;
   const static f_string_t controller_string_processor_s = controller_string_processor;
   const static f_string_t controller_string_program_s = controller_string_program;
   const static f_string_t controller_string_ready_s = controller_string_ready;
@@ -487,18 +487,17 @@ extern "C" {
   };
 
   enum {
-    controller_rule_action_type_create = 1,
-    controller_rule_action_type_freeze,
+    controller_rule_action_type_freeze = 1,
     controller_rule_action_type_group,
     controller_rule_action_type_kill,
     controller_rule_action_type_pause,
+    controller_rule_action_type_pid_file,
     controller_rule_action_type_reload,
     controller_rule_action_type_restart,
     controller_rule_action_type_resume,
     controller_rule_action_type_start,
     controller_rule_action_type_stop,
     controller_rule_action_type_thaw,
-    controller_rule_action_type_use,
     controller_rule_action_type_user,
     controller_rule_action_type_with,
   };
@@ -743,6 +742,13 @@ extern "C" {
 #endif // _di_controller_rules_t_
 
 /**
+ * A set of codes representing different with flags.
+ */
+#ifndef _di_controller_with_defines_
+  #define controller_with_full_path 0x1
+#endif // _di_controller_with_defines_
+
+/**
  * A Rule Process.
  *
  * This refers to "process" as in the processing of a single rule for the given Rule ID and does not refer to "process" as in a CPU Process.
@@ -805,6 +811,8 @@ extern "C" {
     controller_cache_t cache;
     f_array_lengths_t stack;
 
+    f_string_dynamic_t path_pid;
+
     controller_rule_t rule;
 
     void *main_data;
@@ -824,6 +832,7 @@ extern "C" {
     f_thread_condition_t_initialize, \
     controller_cache_t_initialize, \
     f_array_lengths_t_initialize, \
+    f_string_dynamic_t_initialize, \
     controller_rule_t_initialize, \
     0, \
     0, \

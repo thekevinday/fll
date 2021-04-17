@@ -86,9 +86,7 @@ Rule Documentation:
   When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
   Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  The "create" Content designates that this controller program to create the PID file after successfully starting a Service or Utility.
-  The "use" Content designates that the called program will provide the PID file after successfully starting the Service or Utility.
-  For both "create" and "program" the PID file is expected to only exist on success and the existence thereof designates the success or failure.
+  The "pid_file" Content designates the path to the PID file created by the called program.
 
   The "with" Content designates special flags designating very specific behavior to be applied to any single Rule Type.
   The following flags are supported:

@@ -160,10 +160,31 @@ extern "C" {
  *   Errors (with error bit) from: f_file_stream_close().
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
+ *   Errors (with error bit) from: fl_conversion_string_to_decimal_unsigned()
  */
 #ifndef _di_controller_file_pid_delete_
   f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_pid_delete_
+
+/**
+ * Read the PID from a PID file.
+ *
+ * @param path
+ *   The file path to the pid file to create.
+ * @param pid
+ *   The PID to be read.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_stream_close().
+ *   Errors (with error bit) from: f_file_stream_open().
+ *   Errors (with error bit) from: f_file_stream_read().
+ *   Errors (with error bit) from: fl_conversion_string_to_decimal_unsigned()
+ */
+#ifndef _di_controller_file_pid_read_
+  f_status_t controller_file_pid_read(const f_string_static_t path, pid_t *pid) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_file_pid_read_
 
 /**
  * Find an existing process.

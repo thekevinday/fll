@@ -9,6 +9,6 @@ setting:
   nice 15
 
 service:
-  use /var/run/dbus/dbus.pid
+  pid_file /var/run/dbus/dbus.pid
 
   start dbus-daemon --system --fork

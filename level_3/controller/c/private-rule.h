@@ -428,8 +428,6 @@ extern "C" {
  *
  * @param pid_file
  *   The path to the PID file.
- * @param pid_type
- *   The type of the PID file, either "controller_rule_action_type_create" or "controller_rule_action_type_use".
  * @param type
  *   The item type code.
  * @param action
@@ -448,6 +446,8 @@ extern "C" {
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
+ * @param with
+ *   The "with" option flags.
  * @param main
  *   The main data.
  * @param execute_set
@@ -457,18 +457,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_busy on successful execute in asynchronous mode (executed process may or may not fail later on).
  *   F_child on child process exiting.
  *   F_signal on (exit) signal received.
  *
  *   F_lock (with error bit) if failed to re-establish read lock on process->lock while returning.
+ *   F_file_found (with error bit) if the PID file already exists.
  *
  *   Errors (with error bit) from: fll_execute_program().
  *
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t *pid_file, const uint8_t pid_type, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const uint8_t with, const controller_main_t main, controller_execute_set_t * const execute_set, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**

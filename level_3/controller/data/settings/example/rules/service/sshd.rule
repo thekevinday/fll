@@ -9,6 +9,6 @@ setting:
   nice 15
 
 service:
-  use /var/run/sshd.pid
+  pid_file /var/run/sshd.pid
   with full_path
   start sshd

@@ -58,8 +58,7 @@ Rule Specification:
     "with": One or more Content representing special options for the Rule Type.
 
   The "service" and "utility" Rule Types allow the following the FSS-0001 (Extended)\:
-    "create": One Content representing the path to a PID file.
-    "use": One Content representing the path to a PID file.
+    "pid_file": One Content representing the path to a PID file.
     "with": One or more Content representing special options for the Rule Type.
 
   The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
