@@ -96,6 +96,20 @@ extern "C" {
   }
 #endif // _di_controller_error_file_print_
 
+#ifndef _di_controller_error_pid_bad_match_print_
+  void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) {
+
+    if (thread) f_thread_mutex_lock(&thread->lock.print);
+
+    fprintf(print.to.stream, "%c", f_string_eol_s[0]);
+    fprintf(print.to.stream, "%s%sThe pid file '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
+    fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, path, print.notable.after->string);
+    fprintf(print.to.stream, "%s' doesn't contain the expected number, not deleting file.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+
+    if (thread) controller_print_unlock_flush(print.to.stream, &thread->lock.print);
+  }
+#endif // _di_controller_error_pid_bad_match_print_
+
 #ifndef _di_controller_error_print_
   void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 

@@ -368,7 +368,19 @@ extern "C" {
 
     f_signal_close(&data->signal);
 
-    controller_file_pid_delete(*data, setting.path_pid);
+    if (status != F_child && setting.pid_created) {
+      f_status_t status_delete = controller_file_pid_delete(data->pid, setting.path_pid);
+
+      if (F_status_is_error(status_delete) && data->warning.verbosity == f_console_verbosity_debug) {
+        if (F_status_set_fine(status_delete) == F_number_not) {
+          controller_error_pid_bad_match_print(data->warning, setting.path_pid.string, 0);
+        }
+        else {
+          fll_error_file_print(data->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid.string, "delete", fll_error_file_type_file);
+        }
+      }
+    }
+
     controller_setting_delete_simple(&setting);
     controller_delete_data(data);
 

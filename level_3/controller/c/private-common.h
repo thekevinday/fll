@@ -1024,6 +1024,7 @@ extern "C" {
 
   typedef struct {
     bool interruptable;
+    bool pid_created;
     uint8_t ready;
 
     f_number_unsigned_t timeout_kill;
@@ -1042,6 +1043,7 @@ extern "C" {
   } controller_setting_t;
 
   #define controller_setting_t_initialize { \
+    F_false, \
     F_false, \
     0, \
     3, \
@@ -1284,6 +1286,24 @@ extern "C" {
   extern void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_error_file_print_
 
+/**
+ * Print the error, locking the print mutex during the print.
+ *
+ * This does not check verbosity.
+ *
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param path
+ *   The path to the PID file.
+ * @param thread
+ *   (optional) The thread data.
+ *   Set to NULL to not use (locking will not be performed).
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_controller_error_pid_bad_match_print_
+  extern void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_error_pid_bad_match_print_
 
 /**
  * Print the error, locking the print mutex during the print.

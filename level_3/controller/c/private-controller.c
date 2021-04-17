@@ -152,18 +152,18 @@ extern "C" {
 #endif // _di_controller_file_load_
 
 #ifndef _di_controller_file_pid_create_
-  f_status_t controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) {
+  f_status_t controller_file_pid_create(const pid_t pid, const f_string_static_t path) {
     f_status_t status = F_none;
 
     // the file exists, do not attempt to overwrite.
-    if (f_file_exists(path_pid.string) == F_true) {
+    if (f_file_exists(path.string) == F_true) {
       return F_status_set_error(F_file_found);
     }
 
     {
       f_string_dynamic_t path_directory = f_string_dynamic_t_initialize;
 
-      status = f_file_name_directory(path_pid.string, path_pid.used, &path_directory);
+      status = f_file_name_directory(path.string, path.used, &path_directory);
 
       if (F_status_is_error_not(status)) {
         status = f_directory_exists(path_directory.string);
@@ -183,10 +183,10 @@ extern "C" {
 
     file.flag = f_file_flag_write_only;
 
-    status = f_file_stream_open(path_pid.string, f_file_open_mode_truncate_s, &file);
+    status = f_file_stream_open(path.string, f_file_open_mode_truncate_s, &file);
     if (F_status_is_error(status)) return status;
 
-    fprintf(file.stream, "%llu%c", data.pid, f_string_eol_s[0]);
+    fprintf(file.stream, "%llu%c", pid, f_string_eol_s[0]);
 
     f_file_stream_close(F_true, &file);
 
@@ -197,24 +197,26 @@ extern "C" {
 #endif // _di_controller_file_pid_create_
 
 #ifndef _di_controller_file_pid_delete_
-  void controller_file_pid_delete(const controller_data_t data, const f_string_static_t path_pid) {
+  f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) {
 
     // only delete if the file exists and there is no error while checking.
-    if (f_file_exists(path_pid.string) != F_true) {
-      return;
+    if (f_file_exists(path.string) != F_true) {
+      return F_none;
     }
 
     f_status_t status = F_none;
     f_file_t pid_file = f_file_t_initialize;
 
-    status = f_file_stream_open(path_pid.string, f_file_open_mode_read_s, &pid_file);
-    if (F_status_is_error(status)) return;
+    status = f_file_stream_open(path.string, f_file_open_mode_read_s, &pid_file);
+    if (F_status_is_error(status)) return status;
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
 
     status = f_file_stream_read(pid_file, 1, &pid_buffer);
 
-    f_file_stream_close(F_true, &pid_file);
+    if (F_status_is_error_not(status)) {
+      status = f_file_stream_close(F_true, &pid_file);
+    }
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
@@ -230,16 +232,17 @@ extern "C" {
 
       status = fl_conversion_string_to_decimal_unsigned(pid_buffer.string, range, &number);
 
-      if (F_status_is_error_not(status) && number == data.pid) {
-        status = f_file_remove(path_pid.string);
-
-        if (F_status_is_error(status) && data.warning.verbosity == f_console_verbosity_debug) {
-          fll_error_file_print(data.warning, F_status_set_fine(status), "f_file_remove", F_true, path_pid.string, "delete", fll_error_file_type_file);
-        }
+      if (F_status_is_error_not(status) && number == pid) {
+        status = f_file_remove(path.string);
+      }
+      else {
+        status = F_status_set_error(F_number_not);
       }
     }
 
     f_macro_string_dynamic_t_delete_simple(pid_buffer);
+
+    return status;
   }
 #endif // _di_controller_file_pid_delete_
 
@@ -350,7 +353,7 @@ extern "C" {
     // only create pid file when not in validate mode.
     if (main.data->parameters[controller_parameter_validate].result == f_console_result_none) {
 
-      status = controller_file_pid_create(*main.data, main.setting->path_pid);
+      status = controller_file_pid_create(main.data->pid, main.setting->path_pid);
 
       // report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
       if (F_status_is_error(status)) {
@@ -381,6 +384,9 @@ extern "C" {
         }
 
         status = F_none;
+      }
+      else {
+        main.setting->pid_created = F_true;
       }
     }
 

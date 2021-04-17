@@ -120,9 +120,9 @@ extern "C" {
 /**
  * Create the pid file, if possible.
  *
- * @param data
- *   The program data.
- * @param path_pid
+ * @param pid
+ *   The PID (process id).
+ * @param path
  *   The file path to the pid file to create.
  *
  * @return
@@ -139,7 +139,7 @@ extern "C" {
  * @see f_file_stream_open()
  */
 #ifndef _di_controller_file_pid_create_
-  f_status_t controller_file_pid_create(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
+  f_status_t controller_file_pid_create(const pid_t pid, const f_string_static_t path) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_pid_create_
 
 /**
@@ -147,13 +147,22 @@ extern "C" {
  *
  * This is meant to be called on exit and avoids checking status codes, returning void.
  *
- * @param data
- *   The program data.
- * @param path_pid
+ * @param pid
+ *   The PID (process id).
+ * @param path
  *   The file path to the pid file to create.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_number_not (with error bit) if the number from the pid file doesn't match the expected pid.
+ *
+ *   Errors (with error bit) from: f_file_stream_close().
+ *   Errors (with error bit) from: f_file_stream_open().
+ *   Errors (with error bit) from: f_file_stream_read().
  */
 #ifndef _di_controller_file_pid_delete_
-  void controller_file_pid_delete(const controller_data_t data, const f_string_static_t path_pid) f_gcc_attribute_visibility_internal;
+  f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_pid_delete_
 
 /**
