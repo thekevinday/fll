@@ -356,7 +356,7 @@ extern "C" {
  *
  * @param program
  *   The name or path of the program.
- *   The string pointer may be set to 0, to designate that the first index in arguments is assumed to be the program.
+ *   Set to NULL, to designate that arguments[0] is the program name or path.
  * @param arguments
  *   An array of strings representing the arguments.
  * @param option
@@ -405,7 +405,7 @@ extern "C" {
  *
  * @param program
  *   The name or path of the program.
- *   The string pointer may be set to 0, to designate that the first index in arguments is assumed to be the program.
+ *   Set to NULL, to designate that arguments[0] is the program name or path.
  * @param arguments
  *   An array of strings representing the arguments.
  * @param parameter
@@ -462,7 +462,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_delete().
- *   Errors (with error bit) from: f_string_dynamic_terminate().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  * @see close()
  * @see clearenv()

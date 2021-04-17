@@ -319,12 +319,15 @@ extern "C" {
  * Private function for reconstructing the arguments into a fixed array.
  *
  * @param program_path
- *   The part of the path to the program representing the program name to copy from.
+ *   The full path to the program or the program name to copy from.
  * @param arguments
  *   An array of strings representing the arguments.
+ * @param last_slash
+ *   A pointer to the last slash.
+ *   Set to NULL if there is no slash in the program_path.
  * @param fixated_is
- *   If TRUE, then this is a path to a program (such as "/bin/bash").
- *   If FALSE, then this is not a path to a program (such as "bash").
+ *   If TRUE, then the program_path is already fixated in the fixed_arguments at index 0.
+ *   If FALSE, then the program_path needs to be fixated in the fixed_arguments at index 0.
  * @param name_size
  *   The size of the program_path to copy.
  * @param program_name
@@ -338,7 +341,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #if !defined(_di_fll_execute_program_)
-  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
+  extern void private_fll_execute_path_arguments_fixate(const f_string_t program_path, const f_string_statics_t arguments, const f_string_t last_slash, const bool fixated_is, const f_array_length_t name_size, char program_name[], f_string_t fixed_arguments[]) f_gcc_attribute_visibility_internal;
 #endif // !defined(_di_fll_execute_program_)
 
 #ifdef __cplusplus

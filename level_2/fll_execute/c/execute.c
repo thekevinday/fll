@@ -140,15 +140,15 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_array_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t name_size = last_slash ? strnlen(last_slash + 1, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
     char program_name[name_size + 1];
 
     program_name[name_size] = 0;
 
-    private_fll_execute_path_arguments_fixate(last_slash ? last_slash : program ? program : arguments.array[0].string, arguments, !program, name_size, program_name, fixed_arguments);
+    private_fll_execute_path_arguments_fixate(program ? program : arguments.array[0].string, arguments, last_slash, !program, name_size, program_name, fixed_arguments);
 
-    const int code = option & fl_execute_parameter_option_path ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    const int code = option & fl_execute_parameter_option_path ? execv(program ? program : arguments.array[0].string, fixed_arguments) : execvp(program ? program : arguments.array[0].string, fixed_arguments);
 
     // generally this does not return, but in some cases (such as with scripts) this does return so handle the results.
     if (result) {
@@ -178,87 +178,104 @@ extern "C" {
     f_string_t fixed_arguments[arguments.used + 2];
 
     const f_string_t last_slash = strrchr(program ? program : arguments.array[0].string, f_path_separator_s[0]);
-    const f_array_length_t name_size = last_slash ? strnlen(last_slash, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+    const f_array_length_t size_name = last_slash ? strnlen(last_slash + 1, f_path_length_max) : strnlen(program ? program : arguments.array[0].string, f_path_length_max);
 
-    char program_name[name_size + 1];
+    char program_name[size_name + 1];
 
-    program_name[name_size] = 0;
-
-    private_fll_execute_path_arguments_fixate(last_slash ? last_slash : program ? program : arguments.array[0].string, arguments, !program, name_size, program_name, fixed_arguments);
+    private_fll_execute_path_arguments_fixate(program ? program : arguments.array[0].string, arguments, last_slash, !program, size_name, program_name, fixed_arguments);
 
     // when the environment is to be cleared, a full path must be used.
     if (parameter && !(parameter->option & fl_execute_parameter_option_path) && parameter->environment) {
       f_string_dynamic_t path = f_string_dynamic_t_initialize;
       f_string_dynamics_t paths = f_string_dynamics_t_initialize;
-
-      f_status_t status = f_environment_get(f_path_environment_s, &path);
-
-      if (F_status_is_error(status)) {
-
-        // Do not consider PATH is not available (or valid?) to be an error.
-        if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
-          status = F_none;
-        }
-      }
-      else {
-        status = fl_environment_path_explode_dynamic(path, &paths);
-      }
-
-      f_macro_string_dynamic_t_delete_simple(path);
-
-      if (F_status_is_error(status)) {
-        f_macro_string_dynamics_t_delete_simple(paths);
-        return status;
-      }
-
       f_string_dynamic_t *found = 0;
 
-      for (f_array_length_t i = 0; i < paths.used; i++) {
+      f_status_t status = F_none;
 
-        status = f_string_append(program_name, name_size, &paths.array[i]);
+      if (last_slash) {
+        status = f_file_exists(program ? program : arguments.array[0].string);
 
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_terminate(&paths.array[i]);
+        if (status != F_true) {
+          f_macro_string_dynamics_t_delete_simple(paths);
+
+          return F_status_set_error(F_file_found_not);
         }
 
-        if (F_status_is_error_not(status)) {
-          status = f_file_exists(paths.array[i].string);
+        path.string = program ? program : arguments.array[0].string;
+        path.used = strnlen(program ? program : arguments.array[0].string, f_path_length_max);
+        found = &path;
+      }
+      else {
+        status = f_environment_get(f_path_environment_s, &path);
 
-          if (status == F_true) {
-            found = &paths.array[i];
-            break;
-          }
+        if (F_status_is_error(status)) {
 
-          if (F_status_is_error(status)) {
-            status = F_status_set_fine(status);
-
-            // don't consider bad/non-accessible paths an error, just ignore them.
-            if (status == F_name) {
-              continue;
-            }
-            else if (status == F_directory) {
-              continue;
-            }
-            else if (status == F_access_denied) {
-              continue;
-            }
+          // Do not consider PATH is not available (or valid?) to be an error.
+          if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
+            status = F_none;
           }
         }
+        else {
+          status = fl_environment_path_explode_dynamic(path, &paths);
+        }
+
+        f_macro_string_dynamic_t_delete_simple(path);
 
         if (F_status_is_error(status)) {
           f_macro_string_dynamics_t_delete_simple(paths);
 
           return status;
         }
-      } // for
 
-      if (!found) {
-        f_macro_string_dynamics_t_delete_simple(paths);
+        for (f_array_length_t i = 0; i < paths.used; ++i) {
 
-        return F_status_set_error(F_file_found_not);
+          status = f_string_append(program_name, size_name, &paths.array[i]);
+
+          if (F_status_is_error_not(status)) {
+            status = f_string_dynamic_terminate_after(&paths.array[i]);
+          }
+
+          if (F_status_is_error_not(status)) {
+            status = f_file_exists(paths.array[i].string);
+
+            if (status == F_true) {
+              found = &paths.array[i];
+
+              break;
+            }
+
+            if (F_status_is_error(status)) {
+              status = F_status_set_fine(status);
+
+              // don't consider bad/non-accessible paths an error, just ignore them.
+              if (status == F_name) {
+                continue;
+              }
+              else if (status == F_directory) {
+                continue;
+              }
+              else if (status == F_access_denied) {
+                continue;
+              }
+            }
+          }
+
+          if (F_status_is_error(status)) {
+            f_macro_string_dynamics_t_delete_simple(paths);
+
+            return status;
+          }
+        } // for
+
+        if (!found) {
+          f_macro_string_dynamics_t_delete_simple(paths);
+
+          return F_status_set_error(F_file_found_not);
+        }
       }
 
-      char program_path[found->used];
+      char program_path[found->used + 1];
+      program_path[found->used] = 0;
 
       memcpy(&program_path, found->string, found->used);
 
@@ -273,10 +290,10 @@ extern "C" {
     }
 
     if (parameter && parameter->data) {
-      return private_fll_execute_fork_data(program, fixed_arguments, parameter, as, result);
+      return private_fll_execute_fork_data(program ? program : arguments.array[0].string, fixed_arguments, parameter, as, result);
     }
 
-    return private_fll_execute_fork(program, fixed_arguments, parameter, as, result);
+    return private_fll_execute_fork(program ? program : arguments.array[0].string, fixed_arguments, parameter, as, result);
   }
 #endif // _di_fll_execute_program_
 
