@@ -125,9 +125,7 @@ extern "C" {
 /**
  * Close an open file.
  *
- * Will flush before closing.
- *
- * @todo consider making this consistent and acceptinf f_file_t instead of just the id.
+ * Will not flush before closing.
  *
  * @param id
  *   The file descriptor.
@@ -147,6 +145,30 @@ extern "C" {
 #ifndef _di_f_file_close_
   extern f_status_t f_file_close(int *id);
 #endif // _di_f_file_close_
+
+/**
+ * Close an open file.
+ *
+ * Will flush before closing.
+ *
+ * @param id
+ *   The file descriptor.
+ *
+ * @return
+ *   F_none on success.
+ *   F_file_close (with error bit) if fclose() failed for any other reason.
+ *   F_file_descriptor (with error bit) if file descriptor is invalid.
+ *   F_file_synchronize (with error bit) on flush failure.
+ *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *   F_space_not (with error bit) if filesystem is out of space (or filesystem quota is reached).
+ *
+ * @see fclose()
+ */
+#ifndef _di_f_file_close_flush_
+  extern f_status_t f_file_close_flush(int *id);
+#endif // _di_f_file_close_flush_
 
 /**
  * Copy a file.
@@ -1815,8 +1837,8 @@ extern "C" {
  * Close an open file stream.
  *
  * @param complete
- *   When TRUE, will close the file descriptor as well, setting file.id is reset to -1, on success.
- *   When FALSE, will do nothing in regards to the file descriptor.
+ *   If TRUE, will close the file descriptor as well, setting file.id is reset to -1, on success.
+ *   If FALSE, will do nothing in regards to the file descriptor.
  * @param file
  *   The file information.
  *   The file.stream is set to 0, on success.

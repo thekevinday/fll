@@ -6,14 +6,16 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  f_status_t private_f_file_close(int *id) {
+  f_status_t private_f_file_close(const bool flush, int *id) {
 
-    if (*id == -1) return F_none;
+    if (id == 0 || *id == -1) return F_none;
 
-    if (F_status_is_error(private_f_file_flush(*id))) return F_status_set_error(F_file_synchronize);
+    if (flush && F_status_is_error(private_f_file_flush(*id))) {
+      return F_status_set_error(F_file_synchronize);
+    }
 
     if (close(*id) < 0) {
-      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EINTR) return F_status_set_error(F_interrupt);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
@@ -41,7 +43,7 @@ extern "C" {
     status = private_f_file_open(destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(&file_source.id);
+      private_f_file_close(F_true, &file_source.id);
       return status;
     }
 
@@ -56,15 +58,15 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(&file_destination.id);
-        private_f_file_close(&file_source.id);
+        private_f_file_close(F_true, &file_destination.id);
+        private_f_file_close(F_true, &file_source.id);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(&file_destination.id);
-    private_f_file_close(&file_source.id);
+    private_f_file_close(F_true, &file_destination.id);
+    private_f_file_close(F_true, &file_source.id);
 
     if (size_read < 0) return F_status_set_error(F_file_read);
 
@@ -86,7 +88,7 @@ extern "C" {
     status = private_f_file_open_at(at_id, destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(&file_source.id);
+      private_f_file_close(F_true, &file_source.id);
       return status;
     }
 
@@ -101,15 +103,15 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(&file_destination.id);
-        private_f_file_close(&file_source.id);
+        private_f_file_close(F_true, &file_destination.id);
+        private_f_file_close(F_true, &file_source.id);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(&file_destination.id);
-    private_f_file_close(&file_source.id);
+    private_f_file_close(F_true, &file_destination.id);
+    private_f_file_close(F_true, &file_source.id);
 
     if (size_read < 0) return F_status_set_error(F_file_read);
 
@@ -130,7 +132,7 @@ extern "C" {
     const f_status_t status = private_f_file_open(path, mode, &file);
 
     if (file.id != -1) {
-      return private_f_file_close(&file.id);
+      return private_f_file_close(F_true, &file.id);
     }
 
     return status;
@@ -150,7 +152,7 @@ extern "C" {
     const f_status_t status = private_f_file_open_at(at_id, path, mode, &file);
 
     if (file.id != -1) {
-      return private_f_file_close(&file.id);
+      return private_f_file_close(F_true, &file.id);
     }
 
     return status;
