@@ -317,11 +317,13 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 /**
- * Process (execute) all items for the loaded entry.
+ * Process (execute) all items for the loaded entry or exit.
  *
  * @param failsafe
  *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
  *   If FALSE, operate in normal mode (starts at "main" Item).
+ * @param action
+ *   The action to perform, should be either controller_rule_action_type_start (for entry) or controller_rule_action_type_stop (for exit).
  * @param main
  *   The main data.
  * @param cache
@@ -342,7 +344,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(const bool failsafe, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(const bool failsafe, const uint8_t action, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**

@@ -552,13 +552,13 @@ extern "C" {
           *status = F_status_set_error(F_available_not);
         }
         else {
-          *status = controller_process_entry(F_false, entry->main, cache);
+          *status = controller_process_entry(F_false, controller_rule_action_type_start, entry->main, cache);
 
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail;
 
             if (F_status_set_fine(*status) == F_require && entry->main->setting->failsafe_enabled) {
-              const f_status_t status_failsafe = controller_process_entry(F_true, entry->main, cache);
+              const f_status_t status_failsafe = controller_process_entry(F_true, controller_rule_action_type_start, entry->main, cache);
 
               if (F_status_is_error(status_failsafe)) {
                 if (data->error.verbosity != f_console_verbosity_quiet) {

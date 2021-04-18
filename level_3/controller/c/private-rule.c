@@ -1763,9 +1763,9 @@ extern "C" {
 #endif // _di_controller_rule_setting_limit_type_name_
 
 #ifndef _di_controller_rule_process_
-  f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) {
+  f_status_t controller_rule_process(const controller_main_t main, controller_process_t *process) {
 
-    switch (action) {
+    switch (process->action) {
       case controller_rule_action_type_freeze:
       case controller_rule_action_type_kill:
       case controller_rule_action_type_pause:
@@ -1784,7 +1784,7 @@ extern "C" {
 
           fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(main.data->error.to.stream, "%s%sUnsupported action type '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-          fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(action), main.data->error.notable.after->string);
+          fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(process->action), main.data->error.notable.after->string);
           fprintf(main.data->error.to.stream, "%s' while attempting to execute rule.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
@@ -1843,7 +1843,7 @@ extern "C" {
     }
 
     if ((process->options & controller_process_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-      controller_rule_validate(process->rule, action, process->options, main, &process->cache);
+      controller_rule_validate(process->rule, process->action, process->options, main, &process->cache);
     }
 
     f_array_length_t i = 0;
@@ -2015,7 +2015,7 @@ extern "C" {
                 }
 
                 // synchronously execute dependency.
-                status = controller_rule_process_begin(0, alias_other, action, options_process, process->stack, main, process_other->cache);
+                status = controller_rule_process_begin(0, alias_other, process->action, options_process, process->stack, main, process_other->cache);
 
                 if (status == F_child || status == F_signal) {
                   f_thread_unlock(&process_other->active);
@@ -2152,7 +2152,7 @@ extern "C" {
 
           for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
-            if (process->rule.items.array[i].actions.array[j].type == action) {
+            if (process->rule.items.array[i].actions.array[j].type == process->action) {
               missing = F_false;
               break;
             }
@@ -2167,7 +2167,7 @@ extern "C" {
             fprintf(main.data->error.to.stream, "%s%sThe rule '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
             fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' has no '", main.data->error.context.before->string);
-            fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(action).string, main.data->error.notable.after->string);
+            fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_rule_action_type_name(process->action).string, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' action to execute.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(main.data->error, process->cache.action, F_true);
@@ -2180,7 +2180,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = controller_rule_execute(action, process->options, main, process);
+        status = controller_rule_execute(process->action, process->options, main, process);
 
         if (status == F_child || status == F_signal || status == F_status_set_error(F_lock)) {
           return status;
@@ -2618,8 +2618,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        // @todo this needs to support passing different (supported) types, particularly when the "control" is written, (an entry will always send start and an exit will always send stop).
-        status = controller_rule_process(controller_rule_action_type_start, main, process);
+        status = controller_rule_process(main, process);
       }
     }
     else {

@@ -673,7 +673,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_status_t controller_process_entry(const bool failsafe, controller_main_t *main, controller_cache_t *cache) {
+  f_status_t controller_process_entry(const bool failsafe, const uint8_t action, controller_main_t *main, controller_cache_t *cache) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;

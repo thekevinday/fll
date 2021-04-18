@@ -589,15 +589,6 @@ extern "C" {
  *
  * The rule status will be updated by this function.
  *
- * @param action
- *   The action to perform based on the action type codes.
- *
- *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
  * @param main
  *   The main data.
  * @param process
@@ -615,7 +606,7 @@ extern "C" {
  *   Errors (with error bit) from: controller_lock_write().
  */
 #ifndef _di_controller_rule_process_
-  extern f_status_t controller_rule_process(const uint8_t action, const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_
 
 /**
