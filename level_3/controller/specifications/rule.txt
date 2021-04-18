@@ -21,14 +21,14 @@ Rule Specification:
     "command": FSS-0003 (Extended List) or FSS-0001 (Extended).
     "script": FSS-0003 (Extended List) or FSS-0001 (Extended).
     "service": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    "settings": (Required) FSS-0001 (Extended).
+    "setting": (Required) FSS-0001 (Extended).
     "utility": FSS-0003 (Extended List) or FSS-0001 (Extended).
 
-  For the above Rule Types, "settings" may be specified only once whereas the others may be specifed multiple times.
-  The "settings" Rule Type is always processed first, regardless of position.
+  For the above Rule Types, "setting" may be specified only once whereas the others may be specifed multiple times.
+  The "setting" Rule Type is always processed first, regardless of position.
   The other Rule Types are processed top-down.
 
-  The "settings" Rule Type has the following FSS-0001 (Extended)\:
+  The "setting" Rule Type has the following FSS-0001 (Extended)\:
     "affinity": One or more Content, each must be a 0 or greater whole number.
     "capability": One Content representing capabilities.
     "control_group": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid control group (cgroup) name, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).

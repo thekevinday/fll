@@ -1,5 +1,8 @@
 # fss-0005
 
+setting:
+  mode program
+
 main:
   rule serial s_1
   rule serial s_2

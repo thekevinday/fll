@@ -1,11 +1,11 @@
 # fss-0002
 
-Entry Specification:
-  The Entry files follow the FSS-0005 (Somewhat Basic List) format.
+Exit Specification:
+  The Exit files follow the FSS-0005 (Somewhat Basic List) format.
 
-  An Entry file name is expected to have the file extension ".entry".
+  An Exit file name is expected to have the file extension ".exit".
 
-  For each Entry file:
+  For each Exit file:
     - The outer most part is a FSS-0002 (Basic List).
     - The Basic List Object is considered the "Item".
     - The Basic List Content are considered the "Actions".
@@ -15,10 +15,9 @@ Entry Specification:
 
   The Items:
     "main": required.
-    "setting": optional, Actions may be one of:
-      - "mode": either "program" or "service".
+    "setting": optional, but not Actions are currently supported.
 
-    The Entry file may have any other valid Item Objects, but only the above are reserved.
+    The Exit file may have any other valid Item Objects, but only the above are reserved.
 
     The Actions\:
       "consider": One or more Content.

@@ -232,7 +232,7 @@ extern "C" {
           thread.id_rule = 0;
         }
 
-        if (thread.enabled) {
+        if (thread.enabled && setting->mode == controller_setting_mode_service) {
           status = f_thread_create(0, &thread.id_rule, &controller_thread_rule, (void *) &main);
 
           if (F_status_is_error(status)) {
@@ -272,16 +272,23 @@ extern "C" {
         f_thread_cancel(thread.id_signal);
       }
     }
-    else if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
-
-      if (thread.id_signal) {
-        f_thread_join(thread.id_signal, 0);
-
-        thread.id_signal = 0;
-      }
-    }
     else {
-      f_thread_cancel(thread.id_signal);
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none && setting->mode == controller_setting_mode_service) {
+
+        if (thread.id_signal) {
+          f_thread_join(thread.id_signal, 0);
+
+          thread.id_signal = 0;
+        }
+      }
+      else if (data->parameters[controller_parameter_validate].result == f_console_result_none && setting->mode == controller_setting_mode_program) {
+        controller_rule_wait_all(main, F_false, 0);
+
+        f_thread_cancel(thread.id_signal);
+      }
+      else {
+        f_thread_cancel(thread.id_signal);
+      }
     }
 
     controller_thread_process_cancel(&main);
@@ -624,10 +631,13 @@ extern "C" {
       sigwait(&main->data->signal.set, &signal);
 
       if (main->data->parameters[controller_parameter_interruptable].result == f_console_result_found) {
+
         if (signal == F_signal_interrupt || signal == F_signal_abort || signal == F_signal_quit || signal == F_signal_termination) {
+
           main->thread->signal = signal;
 
           controller_thread_process_cancel(main);
+
           break;
         }
       }

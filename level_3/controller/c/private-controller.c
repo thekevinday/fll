@@ -525,17 +525,20 @@ extern "C" {
             }
           }
 
-          // the pre-process currently only looks for "ready", so once found, pre-process is complete.
           main.setting->ready = controller_setting_ready_wait;
         }
         else if (actions->array[cache->ats.array[at_j]].type == controller_entry_action_type_item) {
           error_has = F_false;
 
+          // "main" is not allowed to be used for an "item" and "setting" is not an executable "item".
           if (fl_string_dynamic_compare_string(controller_string_main_s, actions->array[cache->ats.array[at_j]].parameters.array[0], controller_string_main_length) == F_equal_to) {
             continue;
           }
+          else if (fl_string_dynamic_compare_string(controller_string_setting_s, actions->array[cache->ats.array[at_j]].parameters.array[0], controller_string_setting_length) == F_equal_to) {
+            continue;
+          }
 
-          // walk though each items and check to see if the item actually exists (skipping main).
+          // walk though each items and check to see if the item actually exists.
           for (i = 1; i < main.setting->entry.items.used; ++i) {
 
             if (fl_string_dynamic_compare(main.setting->entry.items.array[i].name, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
@@ -885,8 +888,24 @@ extern "C" {
 
         if (entry_action->type == controller_entry_action_type_ready) {
 
-          if (main->setting->ready == controller_setting_ready_wait) {
+          if (entry_action->code & controller_entry_rule_code_wait) {
+            if (simulate) {
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
 
+                fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->output.stream, "Waiting before processing entry item action '");
+                fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_ready_s, main->data->context.set.title.after->string);
+                fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
+
+                controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
+              }
+            }
+
+            controller_rule_wait_all(*main, F_false, process);
+          }
+
+          if (main->setting->ready == controller_setting_ready_wait) {
             if (simulate) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);

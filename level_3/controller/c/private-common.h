@@ -41,6 +41,8 @@ extern "C" {
   #define controller_string_entries       "entries"
   #define controller_string_environment   "environment"
   #define controller_string_existing      "existing"
+  #define controller_string_exit          "exit"
+  #define controller_string_exits         "exits"
   #define controller_string_fail          "fail"
   #define controller_string_failsafe      "failsafe"
   #define controller_string_fifo          "fifo"
@@ -58,6 +60,7 @@ extern "C" {
   #define controller_string_main          "main"
   #define controller_string_memlock       "memlock"
   #define controller_string_method        "method"
+  #define controller_string_mode          "mode"
   #define controller_string_msgqueue      "msgqueue"
   #define controller_string_name          "name"
   #define controller_string_need          "need"
@@ -131,6 +134,8 @@ extern "C" {
   #define controller_string_entries_length       7
   #define controller_string_environment_length   11
   #define controller_string_existing_length      8
+  #define controller_string_exit_length          4
+  #define controller_string_exits_length         5
   #define controller_string_fail_length          4
   #define controller_string_failsafe_length      8
   #define controller_string_fifo_length          4
@@ -147,6 +152,7 @@ extern "C" {
   #define controller_string_main_length          4
   #define controller_string_memlock_length       7
   #define controller_string_method_length        6
+  #define controller_string_mode_length          4
   #define controller_string_msgqueue_length      8
   #define controller_string_name_length          4
   #define controller_string_need_length          4
@@ -220,6 +226,8 @@ extern "C" {
   const static f_string_t controller_string_entries_s = controller_string_entries;
   const static f_string_t controller_string_environment_s = controller_string_environment;
   const static f_string_t controller_string_existing_s = controller_string_existing;
+  const static f_string_t controller_string_exit_s = controller_string_exit;
+  const static f_string_t controller_string_exits_s = controller_string_exits;
   const static f_string_t controller_string_fail_s = controller_string_fail;
   const static f_string_t controller_string_failsafe_s = controller_string_failsafe;
   const static f_string_t controller_string_fifo_s = controller_string_fifo;
@@ -237,6 +245,7 @@ extern "C" {
   const static f_string_t controller_string_main_s = controller_string_main;
   const static f_string_t controller_string_memlock_s = controller_string_memlock;
   const static f_string_t controller_string_method_s = controller_string_method;
+  const static f_string_t controller_string_mode_s = controller_string_mode;
   const static f_string_t controller_string_msgqueue_s = controller_string_msgqueue;
   const static f_string_t controller_string_name_s = controller_string_name;
   const static f_string_t controller_string_need_s = controller_string_need;
@@ -1031,10 +1040,16 @@ extern "C" {
     controller_setting_ready_abort,
   };
 
+  enum {
+    controller_setting_mode_service = 0,
+    controller_setting_mode_program,
+  };
+
   typedef struct {
     bool interruptable;
     bool pid_created;
     uint8_t ready;
+    uint8_t mode;
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -1048,6 +1063,7 @@ extern "C" {
     f_string_dynamic_t path_setting;
 
     controller_entry_t entry;
+    controller_entry_t exit;
     controller_rules_t rules;
   } controller_setting_t;
 
@@ -1055,6 +1071,7 @@ extern "C" {
     F_false, \
     F_false, \
     0, \
+    0, \
     3, \
     3, \
     3, \
@@ -1063,6 +1080,7 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    controller_entry_t_initialize, \
     controller_entry_t_initialize, \
     controller_rules_t_initialize, \
   }

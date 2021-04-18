@@ -209,6 +209,20 @@ extern "C" {
   extern f_status_t controller_entry_read(const f_string_static_t entry_name, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
+/**
+ * Read the entry settings, loading all settings.
+ *
+ * @param content_range
+ *   The range in the list buffer representing the content.
+ * @param main
+ *   The main data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ */
+#ifndef _di_controller_entry_settings_read_
+  extern f_status_t controller_entry_settings_read(const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_settings_read_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

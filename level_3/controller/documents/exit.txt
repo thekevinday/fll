@@ -1,10 +1,10 @@
 # fss-0002
 
-Entry Documentation:
-  This describes the intent and purpose of the Entry file settings.
+Exit Documentation:
+  This describes the intent and purpose of the Exit file settings.
 
-  An Entry file, such as "default.entry", is intended to store a set of rules in which the controller will process on execution.
-  These are used to run some set of commands, such as booting a system.
+  An Exit file, such as "default.exit", is intended to store a set of rules in which the controller will process on execution.
+  These are used to run some set of commands, such as shutting down a system.
 
   The "main" Item Object is always executed first (Therefore "main" is both reserved and required).
   All other Basic List Objects are not executed unless either an "item" or a "failsafe" specifies a valid Item name.
@@ -12,12 +12,7 @@ Entry Documentation:
 
   The "setting" Item Object represents settings and is not an "item" that can be executed.
   A number of settings are supported, but if this Item Object is not specified, then defaults are used.
-  The following settings are available: "mode".
-
-  The "mode" setting represents the mode in which the Entry is operating in.
-  The "program" mode designates that the Entry operates as a program and exits when complete (does not execute an "exit" unless one is provided).
-  The "service" mode (the default mode) designates that the Entry operates as a service and will sit and wait for control commands when complete.
-  The "service" mode will call the "exit" with the same name as this Entry, but with the extension "exit", such as "default.exit".
+  There are no settings are available.
 
   Each item supports the following Action Names: "consider", "failsafe", "item", "ready", "rule", and "timeout".
 
@@ -35,13 +30,9 @@ Entry Documentation:
   The "item" Action accepts only a valid Item Name in which will be immediately executed.
   Any valid Item Name, except for the reserved "main", may be used.
 
-  The "ready" Action instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
-  When not specified, the state is always assumed to be ready.
-  For example, the controller program may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
-  If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
-  This could be a problem, such as on a read-only filesystem the pid creation fails and controller bails out on error.
-  Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
-  When the optional "wait" is provided, then "ready" will wait for all currently started asynchronous processes to complete before operating.
+  The "ready" Action instructs the controller program when it is safe to perform stop tasks.
+  A stop task is simply informing all controlled processes to stop.
+  When not specified, the state is always assumed to be ready (all controlled processes are immediately informed to stop).
 
   The "rule" Action immediately executes a named rule file.
   The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.
@@ -61,7 +52,7 @@ Entry Documentation:
   Until that execution succeeds and the daemon goes into the background the representing rule will block.
   After the daemon goes into the background, then the representing rule will be fully executed.
 
-  Any "rule" specified in this Entry file is always executed using the "start" rule action type.
+  Any "rule" specified in this Exit file is always executed using the "stop" rule action type.
 
   The "timeout" Action provides default global settings for each of the three special situations: "start", "stop", and "kill".
   Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").

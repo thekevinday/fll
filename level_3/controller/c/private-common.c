@@ -616,6 +616,7 @@ extern "C" {
     f_string_dynamic_resize(0, &setting->path_setting);
 
     controller_entry_items_delete_simple(&setting->entry.items);
+    controller_entry_items_delete_simple(&setting->exit.items);
     controller_rules_delete_simple(&setting->rules);
   }
 #endif // _di_controller_setting_delete_simple_
