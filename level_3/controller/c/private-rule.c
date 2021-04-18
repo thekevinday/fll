@@ -1987,7 +1987,9 @@ extern "C" {
             else if (process_other->state == controller_process_state_active || process_other->state == controller_process_state_busy) {
               f_thread_unlock(&process_other->lock);
 
-              controller_process_wait(main, process_other);
+              status = controller_process_wait(main, process_other);
+
+              if (F_status_is_error(status) && !(process->options & controller_process_option_simulate)) break;
 
               status = process_other->rule.status;
             }
@@ -2078,7 +2080,7 @@ extern "C" {
 
               status = status_lock;
             }
-            if (F_status_is_error(main.setting->rules.array[id_rule].status)) {
+            else if (F_status_is_error(main.setting->rules.array[id_rule].status)) {
               f_thread_unlock(&main.thread->lock.rule);
 
               if (i == 0 || i == 1) {

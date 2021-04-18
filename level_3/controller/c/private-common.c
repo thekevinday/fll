@@ -322,6 +322,7 @@ extern "C" {
     struct timespec time;
 
     f_status_t status = F_none;
+    f_status_t status_lock = F_none;
 
     uint8_t count = 0;
 
@@ -349,17 +350,37 @@ extern "C" {
         return F_signal;
       }
 
-      status = controller_lock_read(main.thread, &process->lock);
-      if (status == F_signal || F_status_is_error(status)) {
-        controller_lock_error_critical_print(main.data->error, F_status_set_fine(status), F_true, main.thread);
+      if (F_status_is_error(status)) {
+        break;
+      }
+
+      status_lock = controller_lock_read(main.thread, &process->lock);
+      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+        controller_lock_error_critical_print(main.data->error, F_status_set_fine(status_lock), F_true, main.thread);
 
         break;
       }
 
-      if (process->rule.status != F_known_not || !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      if (process->rule.status != F_known_not && !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);
 
         return F_none;
+      }
+      else if (status != F_time) {
+
+        // move up the wait timer after a trigger was received.
+        if (count < controller_thread_wait_timeout_1_before) {
+          count = 0;
+        }
+        else if (count < controller_thread_wait_timeout_2_before) {
+          count = controller_thread_wait_timeout_1_before;
+        }
+        else if (count < controller_thread_wait_timeout_3_before) {
+          count = controller_thread_wait_timeout_2_before;
+        }
+        else {
+          count = controller_thread_wait_timeout_3_before;
+        }
       }
 
       f_thread_unlock(&process->lock);
