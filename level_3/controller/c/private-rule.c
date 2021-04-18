@@ -5215,7 +5215,7 @@ extern "C" {
         continue;
       }
 
-      if (process->state == controller_process_state_active || process->state == controller_process_state_busy) {
+      if (process->rule.status == F_known_not || (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);
 
         status = controller_process_wait(main, process);
