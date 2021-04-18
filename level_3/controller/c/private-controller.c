@@ -1377,17 +1377,15 @@ extern "C" {
       }
     }
 
-    if (simulate) {
-      if (main->data->error.verbosity != f_console_verbosity_quiet) {
-        f_thread_mutex_lock(&main->thread->lock.print);
+    if ((simulate && main->data->error.verbosity != f_console_verbosity_quiet) || main->data->error.verbosity == f_console_verbosity_verbose) {
+      f_thread_mutex_lock(&main->thread->lock.print);
 
-        fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
-        fprintf(main->data->output.stream, "Done processing entry item '");
-        fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_main_s, main->data->context.set.title.after->string);
-        fprintf(main->data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+      fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+      fprintf(main->data->output.stream, "Done processing entry item '");
+      fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_main_s, main->data->context.set.title.after->string);
+      fprintf(main->data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
-        controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
-      }
+      controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
     }
 
     return status;
