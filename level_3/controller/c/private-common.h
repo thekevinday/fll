@@ -453,25 +453,33 @@ extern "C" {
  * A structure for sharing mutexes globally between different threads.
  *
  * The print lock is intended to lock any activity printing to stdout/stderr.
+ * The alert lock is intended for a generic waiting on alerts operations.
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
  *
- * print:   The print mutex lock.
- * process: The process r/w lock.
- * rule:    The rule r/w lock.
+ * print:           The print mutex lock.
+ * alert:           The alert mutex lock for waking up on alerts.
+ * process:         The process r/w lock.
+ * rule:            The rule r/w lock.
+ * alert_condition: The condition used to trigger alerts.
  */
 #ifndef _di_controller_lock_t_
   typedef struct {
     f_thread_mutex_t print;
+    f_thread_mutex_t alert;
 
     f_thread_lock_t process;
     f_thread_lock_t rule;
+
+    f_thread_condition_t alert_condition;
   } controller_lock_t;
 
   #define controller_lock_t_initialize { \
     f_thread_mutex_t_initialize, \
+    f_thread_mutex_t_initialize, \
     f_thread_lock_t_initialize, \
     f_thread_lock_t_initialize, \
+    f_thread_condition_t_initialize, \
   }
 #endif // _di_controller_mutex_t_
 
@@ -771,6 +779,11 @@ extern "C" {
  * - active: A process is actively using this, and is running asynchronously.
  * - done:   A process has finished running on this and there is a thread that needs to be cleaned up.
  *
+ * Process Types:
+ * - entry:   The process is started from an entry.
+ * - exit:    The process is started from an exit.
+ * - control: The process is started from a control operation.
+ *
  * id:           The ID of this process relative to the processes array.
  * status:       The last execution status of the process.
  * state:        The state of the process.
@@ -803,12 +816,19 @@ extern "C" {
     controller_process_state_done,
   };
 
+  enum {
+    controller_process_type_entry = 1,
+    controller_process_type_exit,
+    controller_process_type_control,
+  };
+
   typedef struct {
     f_array_length_t id;
 
     uint8_t state;
     uint8_t action;
     uint8_t options;
+    uint8_t type;
     pid_t child;
 
     f_thread_id_t id_thread;
@@ -830,6 +850,7 @@ extern "C" {
   } controller_process_t;
 
   #define controller_process_t_initialize { \
+    0, \
     0, \
     0, \
     0, \
@@ -996,7 +1017,10 @@ extern "C" {
 #endif // _di_controller_entry_items_t_
 
 /**
- * The Entry.
+ * The Entry or Exit.
+ *
+ * Entry and Exit files are essentially the same structure with minor differences in settings and behavior.
+ * The structure is identical and due to lacking any particularly good name to represent both "entry" or "exit", the name "entry" is being used for both.
  *
  * status: The overall status.
  * items:  The array of entry items.
@@ -1016,6 +1040,18 @@ extern "C" {
 
 /**
  * All setting data.
+ *
+ * controller_setting_ready_*:
+ *   - no:    Entry/Exit is not ready.
+ *   - wait:  Entry/Exit has "ready" somewhere in the file but is not yet ready.
+ *   - yes:   Entry/Exit is now ready (Entry/Exit is still being processed).
+ *   - done:  Entry/Exit is ready and processing is complete.
+ *   - fail:  Entry/Exit processing failed.
+ *   - abort: Abort received before finished processing Entry/Exit.
+ *
+ * controller_setting_mode_*:
+ *   - program: Run as a program, exiting when finished prrocess entry (and any respective exit).
+ *   - service: Run as a service, listening for requests after processing entry.
  *
  * interruptable:    TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
  * ready:            State representing if the settings are all loaded and is ready to run program operations.
@@ -1062,6 +1098,8 @@ extern "C" {
     f_string_dynamic_t path_pid;
     f_string_dynamic_t path_setting;
 
+    f_string_dynamic_t name_entry;
+
     controller_entry_t entry;
     controller_entry_t exit;
     controller_rules_t rules;
@@ -1077,6 +1115,7 @@ extern "C" {
     3, \
     F_false, \
     0, \
+    f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -1098,44 +1137,67 @@ extern "C" {
  * status:     A status used by the main entry/rule processing thread for synchronous operations.
  * id_cleanup: The thread ID representing the Cleanup Process.
  * id_control: The thread ID representing the Control Process.
- * id_rule:    The thread ID representing the Entry or Rule Process.
+ * id_entry:   The thread ID representing the Entry or Exit Process.
+ * id_rule:    The thread ID representing the Rule Process.
  * id_signal:  The thread ID representing the Signal Process.
  * lock:       A r/w lock for operating on this structure.
  * processs:   All Rule Process thread data.
  * cache:      A cache used by the main entry/rule processing thread for synchronous operations.
  */
 #ifndef _di_controller_thread_t_
-  #define controller_thread_cleanup_interval_long  3600 // 1 hour in seconds.
-  #define controller_thread_cleanup_interval_short 180  // 3 minutes in seconds.
-  #define controller_thread_exit_process_cancel_wait 600000000 // 0.6 seconds in nanoseconds.
-  #define controller_thread_exit_process_cancel_total 150 // 90 seconds in multiples of wait.
-  #define controller_thread_simulation_timeout 200000 // 0.2 seconds in microseconds.
+  #define controller_thread_cleanup_interval_long     3600      // 1 hour in seconds.
+  #define controller_thread_cleanup_interval_short    180       // 3 minutes in seconds.
+  #define controller_thread_exit_process_cancel_wait  600000000 // 0.6 seconds in nanoseconds.
+  #define controller_thread_exit_process_cancel_total 150       // 90 seconds in multiples of wait.
+  #define controller_thread_simulation_timeout        200000    // 0.2 seconds in microseconds.
 
-  // read locks are more common, use longer waits to reduce the potentially CPU activity.
-  // write locks are less common, use shorter waits to increase potential response time.
-  #define controller_thread_lock_read_timeout 2 // seconds
-  #define controller_thread_lock_write_timeout 100000000 // 0.1 seconds in nanoseconds.
+  #define controller_thread_signal_wait_timeout_seconds     70
+  #define controller_thread_signal_wait_timeout_nanoseconds 0
+
+  #define controller_thread_lock_read_timeout_seconds      3
+  #define controller_thread_lock_read_timeout_nanoseconds  0
+  #define controller_thread_lock_write_timeout_seconds     3
+  #define controller_thread_lock_write_timeout_nanoseconds 0
 
   #define controller_thread_wait_timeout_1_before 4
   #define controller_thread_wait_timeout_2_before 12
   #define controller_thread_wait_timeout_3_before 28
 
-  #define controller_thread_wait_timeout_1_seconds 0
-  #define controller_thread_wait_timeout_1_nanoseconds 20000000 // 0.02 seconds in nanoseconds.
-  #define controller_thread_wait_timeout_2_seconds 0
+  #define controller_thread_wait_timeout_1_seconds     0
+  #define controller_thread_wait_timeout_1_nanoseconds 20000000  // 0.02 seconds in nanoseconds.
+  #define controller_thread_wait_timeout_2_seconds     0
   #define controller_thread_wait_timeout_2_nanoseconds 200000000 // 0.2 seconds in nanoseconds.
-  #define controller_thread_wait_timeout_3_seconds 2
+  #define controller_thread_wait_timeout_3_seconds     2
   #define controller_thread_wait_timeout_3_nanoseconds 0
-  #define controller_thread_wait_timeout_4_seconds 20
+  #define controller_thread_wait_timeout_4_seconds     20
   #define controller_thread_wait_timeout_4_nanoseconds 0
 
+  #define controller_thread_exit_ready_timeout_seconds     0
+  #define controller_thread_exit_ready_timeout_nanoseconds 500000000 // 0.5 seconds in nanoseconds.
+
+  /**
+   * States for enabled, designating how to stop the process.
+   *
+   * controller_thread_enabled_not: the controller is no longer enabled, shut down and abort all work.
+   * controller_thread_enabled: the controller is operating normally.
+   * controller_thread_enabled_stop: the controller is shutting down, only process exit rules and stop actions.
+   * controller_thread_enabled_stop_ready: the controller is shutting down, only process exit rules and stop actions, and now ready to send termination signals.
+   */
+  enum {
+    controller_thread_enabled_not = 0,
+    controller_thread_enabled,
+    controller_thread_enabled_stop,
+    controller_thread_enabled_stop_ready,
+  };
+
   typedef struct {
-    bool enabled;
+    uint8_t enabled;
     int signal;
     f_status_t status;
 
     f_thread_id_t id_cleanup;
     f_thread_id_t id_control;
+    f_thread_id_t id_entry;
     f_thread_id_t id_rule;
     f_thread_id_t id_signal;
 
@@ -1145,9 +1207,10 @@ extern "C" {
   } controller_thread_t;
 
   #define controller_thread_t_initialize { \
-    F_true, \
+    controller_thread_enabled, \
     0, \
     F_none, \
+    f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
     f_thread_id_t_initialize, \
@@ -1184,22 +1247,18 @@ extern "C" {
 /**
  * A wrapper used for passing a set of entry processing and execution related data.
  *
- * name:    A string representing the entry name.
  * main:    The main data.
  * setting: The setting data.
  */
 #ifndef _di_controller_main_entry_t_
   typedef struct {
-    const f_string_static_t *name;
-
     controller_main_t *main;
     controller_setting_t *setting;
   } controller_main_entry_t;
 
-  #define controller_main_entry_t_initialize { 0, 0, 0 }
+  #define controller_main_entry_t_initialize { 0, 0 }
 
-  #define controller_macro_main_entry_t_initialize(name, main, setting) { \
-    name, \
+  #define controller_macro_main_entry_t_initialize(main, setting) { \
     main, \
     setting, \
   }
@@ -1436,10 +1495,13 @@ extern "C" {
  *
  * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
  *
- * @param lock
- *   The r/w lock to obtain a read lock on.
+ * @param is_normal
+ *   If TRUE, then process as if this is a normal operation (entry and control).
+ *   If FALSE, then process as if this is an exit operation.
  * @param thread
  *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a read lock on.
  *
  * @return
  *   F_none on success.
@@ -1453,18 +1515,69 @@ extern "C" {
  * @see f_thread_lock_read_timed()
  */
 #ifndef _di_controller_lock_read_
-  extern f_status_t controller_lock_read(controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_read_
+
+/**
+ * Wait to get a read lock for some process.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param process
+ *   The process to use when checking if thread is enabled.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a read lock on.
+ *
+ * @return
+ *
+ *   Status from: controller_lock_read().
+ *
+ *   Errors (with error bit) from: controller_lock_read().
+ *
+ * @see controller_lock_read()
+ */
+#ifndef _di_controller_lock_read_process_
+  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_read_process_
+
+/**
+ * Wait to get a read lock for some process type.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param type
+ *   The process type to use when checking if thread is enabled.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a read lock on.
+ *
+ * @return
+ *
+ *   Status from: controller_lock_read().
+ *
+ *   Errors (with error bit) from: controller_lock_read().
+ *
+ * @see controller_lock_read()
+ */
+#ifndef _di_controller_lock_read_process_type_
+  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_read_process_type_
 
 /**
  * Wait to get a write lock.
  *
  * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
  *
- * @param lock
- *   The r/w lock to obtain a write lock on.
+ * @param is_normal
+ *   If TRUE, then process as if this is a normal operation (entry and control).
+ *   If FALSE, then process as if this is an exit operation.
  * @param thread
  *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a write lock on.
  *
  * @return
  *   F_none on success.
@@ -1478,8 +1591,56 @@ extern "C" {
  * @see f_thread_lock_write_timed()
  */
 #ifndef _di_controller_lock_write_
-  extern f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_write_
+
+/**
+ * Wait to get a write lock for some process.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param process
+ *   The process to use when checking if thread is enabled.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a write lock on.
+ *
+ * @return
+ *
+ *   Status from: controller_lock_write_process_type().
+ *
+ *   Errors (with error bit) from: controller_lock_write_process_type().
+ *
+ * @see controller_lock_write_process_type()
+ */
+#ifndef _di_controller_lock_write_process_
+  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_write_process_
+
+/**
+ * Wait to get a write lock for some process type.
+ *
+ * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
+ *
+ * @param type
+ *   The process type to use when checking if thread is enabled.
+ * @param thread
+ *   The thread data used to determine if the main thread is disabled or not.
+ * @param lock
+ *   The r/w lock to obtain a write lock on.
+ *
+ * @return
+ *
+ *   Status from: controller_lock_write().
+ *
+ *   Errors (with error bit) from: controller_lock_write().
+ *
+ * @see controller_lock_write()
+ */
+#ifndef _di_controller_lock_write_process_type_
+  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_lock_write_process_type_
 
 /**
  * Flush the stream buffer and then unlock the mutex.
@@ -1756,13 +1917,13 @@ extern "C" {
  *
  * @param seconds
  *   The seconds to add to current time.
- * @param nanos
+ * @param nanoseconds
  *   The nanoseconds to add to current time.
  * @param time
  *   The resulting current time.
  */
 #ifndef _di_controller_time_
-  void controller_time(const time_t seconds, const long nanos, struct timespec *time) f_gcc_attribute_visibility_internal;
+  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_time_
 
 #ifdef __cplusplus

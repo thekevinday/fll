@@ -23,7 +23,7 @@ extern "C" {
 #ifndef _di_controller_string_dynamic_append_terminated_
   f_status_t controller_string_dynamic_append_terminated(const f_string_static_t source, f_string_dynamic_t *destination) {
 
-    f_status_t status = f_string_dynamic_append(source, destination);
+    f_status_t status = f_string_dynamic_append_nulless(source, destination);
     if (F_status_is_error(status)) return status;
 
     return f_string_dynamic_terminate_after(destination);
@@ -41,7 +41,8 @@ extern "C" {
 #endif // _di_controller_string_dynamic_partial_append_terminated_
 
 #ifndef _di_controller_file_load_
-  f_status_t controller_file_load(const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_file_load(const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) {
+
     f_status_t status = F_none;
     f_file_t file = f_file_t_initialize;
 
@@ -101,6 +102,12 @@ extern "C" {
     status = f_file_stream_open(path, 0, &file);
 
     if (F_status_is_error(status)) {
+      if (!required && F_status_set_fine(status) == F_file_found_not) {
+        f_file_stream_close(F_true, &file);
+
+        return F_file_found_not;
+      }
+
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -397,11 +404,11 @@ extern "C" {
 #endif // _di_controller_get_id_group_
 
 #ifndef _di_controller_perform_ready_
-  f_status_t controller_perform_ready(controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_perform_ready(const bool is_entry, controller_main_t main, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
-    if (main.data->parameters[controller_parameter_validate].result == f_console_result_none) {
+    if (is_entry && main.data->parameters[controller_parameter_validate].result == f_console_result_none) {
 
       status = controller_file_pid_create(main.data->pid, main.setting->path_pid);
 
@@ -445,7 +452,7 @@ extern "C" {
 #endif // _di_controller_perform_ready_
 
 #ifndef _di_controller_preprocess_entry_
-  f_status_t controller_preprocess_entry(controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_preprocess_entry(const bool is_entry, controller_main_t main, controller_cache_t *cache) {
     f_status_t status = F_none;
     f_status_t status2 = F_none;
 
@@ -455,10 +462,14 @@ extern "C" {
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
+    controller_entry_t *entry = is_entry ? &main.setting->entry : &main.setting->exit;
     controller_entry_actions_t *actions = 0;
 
     uint8_t error_has = F_false;
 
+    // this effectively sets the read for an entry and resets the ready for an exit.
+    // @todo should there be a ready_exit instead?
+    // @todo the main.setting->ready in this function may need mutex lock protection.
     main.setting->ready = controller_setting_ready_no;
 
     cache->ats.used = 0;
@@ -472,6 +483,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, main.thread);
+
       return status;
     }
 
@@ -480,10 +492,10 @@ extern "C" {
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
 
-    cache->action.line_item = main.setting->entry.items.array[0].line;
+    cache->action.line_item = entry->items.array[0].line;
     cache->action.name_item.used = 0;
 
-    status = controller_string_dynamic_append_terminated(main.setting->entry.items.array[0].name, &cache->action.name_item);
+    status = controller_string_dynamic_append_terminated(entry->items.array[0].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
       controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
@@ -491,11 +503,11 @@ extern "C" {
       return status;
     }
 
-    for (; main.thread->enabled; ) {
+    while (controller_thread_is_enabled(is_entry, main.thread)) {
 
-      actions = &main.setting->entry.items.array[cache->ats.array[at_i]].actions;
+      actions = &entry->items.array[cache->ats.array[at_i]].actions;
 
-      for (; cache->ats.array[at_j] < actions->used && main.thread->enabled; ++cache->ats.array[at_j]) {
+      for (; cache->ats.array[at_j] < actions->used && controller_thread_is_enabled(is_entry, main.thread); ++cache->ats.array[at_j]) {
 
         cache->action.line_action = actions->array[cache->ats.array[at_j]].line;
         cache->action.name_action.used = 0;
@@ -539,9 +551,9 @@ extern "C" {
           }
 
           // walk though each items and check to see if the item actually exists.
-          for (i = 1; i < main.setting->entry.items.used; ++i) {
+          for (i = 1; i < entry->items.used && controller_thread_is_enabled(is_entry, main.thread); ++i) {
 
-            if (fl_string_dynamic_compare(main.setting->entry.items.array[i].name, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
+            if (fl_string_dynamic_compare(entry->items.array[i].name, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
 
               // check to see if "i" is already in the stack (to prevent recursion) (skipping main).
               for (j = 2; j < cache->ats.used; j += 2) {
@@ -552,7 +564,7 @@ extern "C" {
 
                     fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
                     fprintf(main.data->error.to.stream, "%s%sThe entry item named '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
-                    fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, main.setting->entry.items.array[i].name.string, main.data->error.notable.after->string);
+                    fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, entry->items.array[i].name.string, main.data->error.notable.after->string);
                     fprintf(main.data->error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
                     controller_entry_error_print_cache(main.data->error, cache->action);
@@ -594,9 +606,9 @@ extern "C" {
               cache->action.line_action = 0;
 
               cache->action.name_item.used = 0;
-              cache->action.line_item = main.setting->entry.items.array[i].line;
+              cache->action.line_item = entry->items.array[i].line;
 
-              status2 = controller_string_dynamic_append_terminated(main.setting->entry.items.array[i].name, &cache->action.name_item);
+              status2 = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
 
               if (F_status_is_error(status2)) {
                 controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true, main.thread);
@@ -608,8 +620,8 @@ extern "C" {
             }
           } // for
 
-          if (error_has || i >= main.setting->entry.items.used) {
-            if (i >= main.setting->entry.items.used) {
+          if (error_has || i >= entry->items.used) {
+            if (i >= entry->items.used) {
               if (main.data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -649,10 +661,10 @@ extern "C" {
         cache->ats.used -= 2;
         cache->ats.array[at_j]++;
 
-        cache->action.line_item = main.setting->entry.items.array[cache->ats.array[at_i]].line;
+        cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
 
-        status2 = controller_string_dynamic_append_terminated(main.setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+        status2 = controller_string_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status2)) {
           controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status2), "controller_string_dynamic_append_terminated", F_true, main.thread);
@@ -660,9 +672,9 @@ extern "C" {
           return status2;
         }
       }
-    } // for
+    } // while
 
-    if (!main.thread->enabled) {
+    if (!controller_thread_is_enabled(is_entry, main.thread)) {
       return F_signal;
     }
 
@@ -676,7 +688,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_status_t controller_process_entry(const bool failsafe, const uint8_t action, controller_main_t *main, controller_cache_t *cache) {
+  f_status_t controller_process_entry(const bool failsafe, const bool is_entry, const uint8_t action, controller_main_t *main, controller_cache_t *cache) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -690,6 +702,7 @@ extern "C" {
     uint8_t options_force = 0;
     uint8_t options_process = 0;
 
+    controller_entry_t *entry = is_entry ? &main->setting->entry : &main->setting->exit;
     controller_entry_action_t *entry_action = 0;
     controller_entry_actions_t *entry_actions = 0;
     controller_process_t *process = 0;
@@ -708,7 +721,7 @@ extern "C" {
     cache->action.name_item.used = 0;
 
     if (main->setting->ready == controller_setting_ready_yes) {
-      status = controller_perform_ready(*main, cache);
+      status = controller_perform_ready(is_entry, *main, cache);
       if (F_status_is_error(status)) return status;
     }
 
@@ -725,10 +738,10 @@ extern "C" {
     cache->ats.array[1] = 0;
     cache->ats.used = 2;
 
-    cache->action.line_item = main->setting->entry.items.array[cache->ats.array[0]].line;
+    cache->action.line_item = entry->items.array[cache->ats.array[0]].line;
     cache->action.name_item.used = 0;
 
-    status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[0]].name, &cache->action.name_item);
+    status = controller_string_dynamic_append_terminated(entry->items.array[cache->ats.array[0]].name, &cache->action.name_item);
 
     if (F_status_is_error(status)) {
       controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
@@ -749,11 +762,11 @@ extern "C" {
       }
     }
 
-    for (; main->thread->enabled; ) {
+    while (controller_thread_is_enabled(is_entry, main->thread)) {
 
-      entry_actions = &main->setting->entry.items.array[cache->ats.array[at_i]].actions;
+      entry_actions = &entry->items.array[cache->ats.array[at_i]].actions;
 
-      for (; cache->ats.array[at_j] < entry_actions->used && main->thread->enabled; ++cache->ats.array[at_j]) {
+      for (; cache->ats.array[at_j] < entry_actions->used && controller_thread_is_enabled(is_entry, main->thread); ++cache->ats.array[at_j]) {
 
         entry_action = &entry_actions->array[cache->ats.array[at_j]];
 
@@ -902,7 +915,7 @@ extern "C" {
               }
             }
 
-            controller_rule_wait_all(*main, F_false, process);
+            controller_rule_wait_all(is_entry, *main, F_false, process);
           }
 
           if (main->setting->ready == controller_setting_ready_wait) {
@@ -919,7 +932,7 @@ extern "C" {
               }
             }
             else {
-              controller_perform_ready(*main, cache);
+              controller_perform_ready(is_entry, *main, cache);
 
               if (F_status_is_error(status)) return status;
             }
@@ -941,7 +954,7 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_item) {
 
-          if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used || failsafe && entry_action->number == main->setting->failsafe_item_id) {
+          if (entry_action->number == 0 || entry_action->number >= entry->items.used || failsafe && entry_action->number == main->setting->failsafe_item_id) {
 
             // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
@@ -981,9 +994,9 @@ extern "C" {
           cache->action.line_action = 0;
 
           cache->action.name_item.used = 0;
-          cache->action.line_item = main->setting->entry.items.array[cache->ats.array[at_i]].line;
+          cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
 
-          status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+          status = controller_string_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
           if (F_status_is_error(status)) {
             controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
@@ -1009,7 +1022,8 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
 
-          status_lock = controller_lock_write(main->thread, &main->thread->lock.rule);
+          status_lock = controller_lock_write(is_entry, main->thread, &main->thread->lock.rule);
+
           if (status_lock == F_signal || F_status_is_error(status_lock)) {
             controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
             break;
@@ -1035,7 +1049,8 @@ extern "C" {
           id_rule_name[entry_action->parameters.array[0].used] = f_path_separator_s[0];
           id_rule_name[id_rule_length] = 0;
 
-          status_lock = controller_lock_read(main->thread, &main->thread->lock.rule);
+          status_lock = controller_lock_read(is_entry, main->thread, &main->thread->lock.rule);
+
           if (status_lock == F_signal || F_status_is_error(status_lock)) {
             controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_true, main->thread);
 
@@ -1059,7 +1074,7 @@ extern "C" {
             }
           }
 
-          if (!main->thread->enabled) break;
+          if (!controller_thread_is_enabled(is_entry, main->thread)) break;
 
           // the rule is not yet loaded, ensure that it is loaded.
           if (status != F_true) {
@@ -1080,14 +1095,15 @@ extern "C" {
             memcpy(cache_name_item, cache->action.name_item.string, cache->action.name_item.used);
             memcpy(cache_name_file, cache->action.name_file.string, cache->action.name_file.used);
 
-            status_lock = controller_lock_write(main->thread, &main->thread->lock.rule);
+            status_lock = controller_lock_write(is_entry, main->thread, &main->thread->lock.rule);
+
             if (status_lock == F_signal || F_status_is_error(status_lock)) {
               controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
               break;
             }
 
-            status = controller_rule_read(alias_rule, *main, cache, &main->setting->rules.array[main->setting->rules.used]);
+            status = controller_rule_read(is_entry, alias_rule, *main, cache, &main->setting->rules.array[main->setting->rules.used]);
 
             // restore cache.
             memcpy(cache->action.name_action.string, cache_name_action, cache_name_action_used);
@@ -1105,7 +1121,7 @@ extern "C" {
             cache->action.line_action = cache_line_action;
             cache->action.line_item = cache_line_item;
 
-            if (status == F_signal || !main->thread->enabled) {
+            if (status == F_signal || !controller_thread_is_enabled(is_entry, main->thread)) {
               f_thread_unlock(&main->thread->lock.rule);
 
               break;
@@ -1135,7 +1151,8 @@ extern "C" {
 
             // ensure that a process exists for the added rule.
             if (F_status_is_error_not(status)) {
-              status_lock = controller_lock_read(main->thread, &main->thread->lock.process);
+              status_lock = controller_lock_read(is_entry, main->thread, &main->thread->lock.process);
+
               if (status_lock == F_signal || F_status_is_error(status_lock)) {
                 controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_true, main->thread);
 
@@ -1145,7 +1162,8 @@ extern "C" {
               if (controller_find_process(alias_rule, main->thread->processs, 0) == F_false) {
                 f_thread_unlock(&main->thread->lock.process);
 
-                status_lock = controller_lock_write(main->thread, &main->thread->lock.process);
+                status_lock = controller_lock_write(is_entry, main->thread, &main->thread->lock.process);
+
                 if (status_lock == F_signal || F_status_is_error(status_lock)) {
                   controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
@@ -1162,7 +1180,8 @@ extern "C" {
                   // only copy the rule alias, as that is all that is needed at this point (the entire rule gets copied prior to executing/processing).
                   controller_process_t *process = main->thread->processs.array[main->thread->processs.used];
 
-                  status_lock = controller_lock_write(main->thread, &process->lock);
+                  status_lock = controller_lock_write(is_entry, main->thread, &process->lock);
+
                   if (status_lock == F_signal || F_status_is_error(status_lock)) {
                     controller_lock_error_critical_print(main->data->error, F_status_set_fine(status_lock), F_false, main->thread);
 
@@ -1223,9 +1242,9 @@ extern "C" {
               }
             }
 
-            status = controller_rule_process_begin(options_force, alias_rule, controller_rule_action_type_start, options_process, stack, *main, *cache);
+            status = controller_rule_process_begin(options_force, alias_rule, is_entry ? controller_rule_action_type_start : controller_rule_action_type_stop, options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *main, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !main->thread->enabled) {
+            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !controller_thread_is_enabled(is_entry, main->thread)) {
               break;
             }
 
@@ -1290,7 +1309,7 @@ extern "C" {
             }
           }
           else {
-            if (entry_action->number == 0 || entry_action->number >= main->setting->entry.items.used) {
+            if (entry_action->number == 0 || entry_action->number >= entry->items.used) {
 
               // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
@@ -1320,7 +1339,7 @@ extern "C" {
                   fprintf(main->data->output.stream, "Processing entry item action '");
                   fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_failsafe_s, main->data->context.set.title.after->string);
                   fprintf(main->data->output.stream, "' setting value to '");
-                  fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.important.before->string, main->setting->entry.items.array[main->setting->failsafe_item_id].name.string, main->data->context.set.important.after->string);
+                  fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.important.before->string, entry->items.array[main->setting->failsafe_item_id].name.string, main->data->context.set.important.after->string);
                   fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
                   controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
@@ -1331,7 +1350,7 @@ extern "C" {
         }
       } // for
 
-      if (!main->thread->enabled) {
+      if (!controller_thread_is_enabled(is_entry, main->thread)) {
         status = F_signal;
       }
 
@@ -1358,10 +1377,10 @@ extern "C" {
         cache->ats.used -= 2;
         cache->ats.array[at_j]++;
 
-        cache->action.line_item = main->setting->entry.items.array[cache->ats.array[at_i]].line;
+        cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
 
-        status = controller_string_dynamic_append_terminated(main->setting->entry.items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
+        status = controller_string_dynamic_append_terminated(entry->items.array[cache->ats.array[at_i]].name, &cache->action.name_item);
 
         if (F_status_is_error(status)) {
           controller_entry_error_print(main->data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main->thread);
@@ -1369,23 +1388,23 @@ extern "C" {
           break;
         }
       }
-    } // for
+    } // while
 
-    if (!main->thread->enabled) {
+    if (!controller_thread_is_enabled(is_entry, main->thread)) {
       return F_signal;
     }
 
-    if (status == F_child || status == F_signal) {
+    if (status == F_child) {
       return status;
     }
 
-    if (status_lock == F_signal || F_status_is_error(status_lock)) {
+    if (F_status_is_error(status_lock)) {
       return status_lock;
     }
 
     // check to see if any requied processes failed, but do not do this if already operating in failsafe.
     if (F_status_is_error_not(status) && !failsafe) {
-      const f_status_t status_wait = controller_rule_wait_all(*main, F_true, 0);
+      const f_status_t status_wait = controller_rule_wait_all(is_entry, *main, F_true, 0);
 
       if (status_wait == F_signal || F_status_is_error(status_wait)) {
         return status_wait;

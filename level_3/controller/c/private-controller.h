@@ -44,10 +44,10 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
- * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_string_dynamic_append_terminated_
@@ -80,6 +80,9 @@ extern "C" {
 /**
  * Load a file from the controller settings directory.
  *
+ * @param required
+ *   If TRUE, the file is required to exist and will throw an error if not found.
+ *   If FALSE, the file is not required to exist and will return without error if not found.
  * @param path_prefix
  *   The path prefix, such as 'entries' from '/etc/controller/entries/default.entry'.
  * @param path_name
@@ -100,6 +103,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_found_not if required is FALSE and the file is not found.
  *
  *   Errors (with error bit) from: f_file_stat().
  *   Errors (with error bit) from: f_file_stream_open().
@@ -114,7 +118,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_status_t controller_file_load(const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_file_load(const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_file_load_
 
 /**
@@ -272,6 +276,9 @@ extern "C" {
  *
  * This does not do any locking or unlocking for the setting data, be sure to lock appropriately before and after calling this.
  *
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
  * @param main
  *   The main data.
  * @param cache
@@ -285,12 +292,15 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_perform_ready(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_perform_ready_
 
 /**
  * Pre-process all items for the loaded entry.
  *
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
  * @param main
  *   The main data.
  * @param cache
@@ -313,7 +323,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_preprocess_entry_
-  extern f_status_t controller_preprocess_entry(controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_preprocess_entry(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_preprocess_entry_
 
 /**
@@ -322,6 +332,9 @@ extern "C" {
  * @param failsafe
  *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
  *   If FALSE, operate in normal mode (starts at "main" Item).
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
  * @param action
  *   The action to perform, should be either controller_rule_action_type_start (for entry) or controller_rule_action_type_stop (for exit).
  * @param main
@@ -344,7 +357,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(const bool failsafe, const uint8_t action, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, const uint8_t action, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**

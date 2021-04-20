@@ -1,0 +1,13 @@
+# fss-0005
+
+main:
+  timeout start 7
+  timeout stop 7
+  timeout kill 3
+
+  failsafe boom
+
+  rule service sshd
+
+boom:
+  rule maintenance explode

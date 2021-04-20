@@ -10,3 +10,9 @@ script:
     sleep 1
     echo "Serial 5: slept    $(date -u)"
   }
+
+  stop {
+    echo "Serial 5: stopping, sleeping $(date -u)"
+    sleep 1
+    echo "Serial 5: stopping, slept    $(date -u)"
+  }

@@ -91,7 +91,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
-          controller_delete_data(data);
+          controller_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -105,7 +105,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          controller_delete_data(data);
+          controller_data_delete(data);
           return status;
         }
 
@@ -133,30 +133,40 @@ extern "C" {
     if (data->parameters[controller_parameter_help].result == f_console_result_found) {
       controller_print_help(data->output, data->context);
 
-      controller_delete_data(data);
+      controller_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[controller_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, controller_version);
 
-      controller_delete_data(data);
+      controller_data_delete(data);
       return F_none;
     }
 
     controller_setting_t setting = controller_setting_t_initialize;
 
-    f_string_static_t entry_name = f_string_static_t_initialize;
-
     if (data->remaining.used) {
-      entry_name.string = arguments.argv[data->remaining.array[0]];
-      entry_name.used = strnlen(entry_name.string, f_console_parameter_size);
-      entry_name.size = entry_name.used;
+      status = f_string_append_nulless(arguments.argv[data->remaining.array[0]], strnlen(arguments.argv[data->remaining.array[0]], f_console_parameter_size), &setting.name_entry);
     }
     else {
-      entry_name.string = controller_string_default_s;
-      entry_name.used = controller_string_default_length;
-      entry_name.size = entry_name.used;
+      status = f_string_append_nulless(controller_string_default_s, controller_string_default_length, &setting.name_entry);
+    }
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+
+      controller_data_delete(data);
+      return status;
+    }
+
+    status = f_string_dynamic_terminate_after(&setting.name_entry);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
+      controller_data_delete(data);
+      return status;
     }
 
     if (data->parameters[controller_parameter_settings].result == f_console_result_found) {
@@ -227,7 +237,7 @@ extern "C" {
       status = f_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
 
       if (F_status_is_error_not(status)) {
-        status = f_string_append(entry_name.string, entry_name.used, &setting.path_pid);
+        status = f_string_append(setting.name_entry.string, setting.name_entry.used, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
@@ -356,7 +366,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = controller_thread_main(entry_name, data, &setting);
+      status = controller_thread_main(data, &setting);
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
@@ -382,7 +392,7 @@ extern "C" {
     }
 
     controller_setting_delete_simple(&setting);
-    controller_delete_data(data);
+    controller_data_delete(data);
 
     if (status == F_child || status == F_signal) {
       return status;
@@ -392,8 +402,8 @@ extern "C" {
   }
 #endif // _di_controller_main_
 
-#ifndef _di_controller_delete_data_
-  f_status_t controller_delete_data(controller_data_t *data) {
+#ifndef _di_controller_data_delete_
+  f_status_t controller_data_delete(controller_data_t *data) {
 
     for (f_array_length_t i = 0; i < controller_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -406,7 +416,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_controller_delete_data_
+#endif // _di_controller_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

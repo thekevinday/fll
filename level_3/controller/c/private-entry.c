@@ -625,11 +625,14 @@ extern "C" {
 #endif // _di_controller_entry_items_increase_by_
 
 #ifndef _di_controller_entry_read_
-  f_status_t controller_entry_read(const f_string_static_t entry_name, controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_entry_read(const bool is_entry, controller_main_t main, controller_cache_t *cache) {
+
     f_status_t status = F_none;
 
-    main.setting->entry.status = F_known_not;
-    main.setting->entry.items.used = 0;
+    controller_entry_t *entry = is_entry ? &main.setting->entry : &main.setting->exit;
+
+    entry->status = F_known_not;
+    entry->items.used = 0;
 
     cache->action.line_action = 0;
     cache->action.line_item = 0;
@@ -666,7 +669,16 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    status = controller_file_load(controller_string_entries_s, entry_name, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, main, cache);
+    if (is_entry) {
+      status = controller_file_load(F_true, controller_string_entries_s, main.setting->name_entry, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, main, cache);
+    }
+    else {
+      status = controller_file_load(F_false, controller_string_exits_s, main.setting->name_entry, controller_string_exit_s, controller_string_exits_length, controller_string_exit_length, main, cache);
+
+      if (status == F_file_found_not) {
+        return F_file_found_not;
+      }
+    }
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
@@ -690,7 +702,7 @@ extern "C" {
           f_thread_mutex_lock(&main.thread->lock.print);
 
           fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main.data->error.to.stream, "%s%sThe entry file is empty.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, main.data->error.context.after->string, f_string_eol_s[0]);
+          fprintf(main.data->error.to.stream, "%s%sThe %s file is empty.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, main.data->error.context.after->string, f_string_eol_s[0]);
 
           controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
         }
@@ -700,7 +712,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && cache->object_items.used) {
-      status = controller_entry_items_increase_by(cache->object_items.used, &main.setting->entry.items);
+      status = controller_entry_items_increase_by(cache->object_items.used, &entry->items);
 
       if (F_status_is_error(status)) {
         controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
@@ -716,11 +728,7 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t j = 0;
 
-        for (; i < cache->object_items.used && main.thread->enabled; ++i) {
-
-          if (!main.thread->enabled) {
-            return F_signal;
-          }
+        for (; i < cache->object_items.used && controller_thread_is_enabled(is_entry, main.thread); ++i) {
 
           if (code & 0x2) {
             code -= 0x2;
@@ -745,7 +753,7 @@ extern "C" {
           cache->action.name_action.used = 0;
           cache->action.name_item.used = 0;
 
-          status = controller_entry_items_increase_by(controller_default_allocation_step, &main.setting->entry.items);
+          status = controller_entry_items_increase_by(controller_default_allocation_step, &entry->items);
 
           if (F_status_is_error(status)) {
             controller_entry_error_print(main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
@@ -768,14 +776,14 @@ extern "C" {
 
           cache->action.line_item++;
 
-          for (j = (code & 0x1) ? 1 : 0; j < main.setting->entry.items.used; ++j) {
+          for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
-            if (fl_string_dynamic_compare(main.setting->entry.items.array[j].name, cache->action.name_item) == F_equal_to) {
+            if (fl_string_dynamic_compare(entry->items.array[j].name, cache->action.name_item) == F_equal_to) {
               if (main.data->warning.verbosity == f_console_verbosity_debug) {
                 f_thread_mutex_lock(&main.thread->lock.print);
 
                 fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->warning.to.stream, "%s%sIgnoring duplicate entry item '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
+                fprintf(main.data->warning.to.stream, "%s%sIgnoring duplicate %s item '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
                 fprintf(main.data->warning.to.stream, "%s%s%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, cache->action.name_file.string, main.data->warning.notable.after->string);
                 fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
 
@@ -798,30 +806,30 @@ extern "C" {
 
             at = 0;
 
-            if (!main.setting->entry.items.used) {
-              main.setting->entry.items.used = 1;
+            if (!entry->items.used) {
+              entry->items.used = 1;
             }
           }
           else if (fl_string_dynamic_compare_string(controller_string_setting_s, cache->action.name_item, controller_string_setting_length) == F_equal_to) {
-            status = controller_entry_settings_read(*range, main, cache);
+            status = controller_entry_settings_read(is_entry, *range, main, cache);
 
             continue;
           }
-          else if (main.setting->entry.items.used) {
-            at = main.setting->entry.items.used++;
+          else if (entry->items.used) {
+            at = entry->items.used++;
           }
           else {
 
             // skip position 0, which is reserved for "main".
-            main.setting->entry.items.array[0].name.used = 0;
+            entry->items.array[0].name.used = 0;
 
             at = 1;
-            main.setting->entry.items.used = 2;
+            entry->items.used = 2;
           }
 
-          main.setting->entry.items.array[at].line = cache->action.line_item;
+          entry->items.array[at].line = cache->action.line_item;
 
-          status = controller_string_dynamic_append_terminated(cache->action.name_item, &main.setting->entry.items.array[at].name);
+          status = controller_string_dynamic_append_terminated(cache->action.name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
             controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
@@ -829,7 +837,7 @@ extern "C" {
             break;
           }
 
-          status = controller_entry_actions_read(*range, main, cache, &main.setting->entry.items.array[at].actions);
+          status = controller_entry_actions_read(*range, main, cache, &entry->items.array[at].actions);
 
           if (F_status_is_error(status)) {
             f_thread_mutex_lock(&main.thread->lock.print);
@@ -844,6 +852,10 @@ extern "C" {
           }
         } // for
 
+        if (is_entry && status == F_signal) {
+          return F_signal;
+        }
+
         if (F_status_is_error_not(status)) {
           cache->action.name_action.used = 0;
           cache->action.name_item.used = 0;
@@ -853,7 +865,7 @@ extern "C" {
               f_thread_mutex_lock(&main.thread->lock.print);
 
               fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->error.to.stream, "%s%sThe required entry item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+              fprintf(main.data->error.to.stream, "%s%sThe required %s item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
               fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_main_s, main.data->error.notable.after->string);
               fprintf(main.data->error.to.stream, "%s' was not found.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
@@ -871,15 +883,15 @@ extern "C" {
             // 0x1 = missing or not, 0x2 = one or more missing.
             uint8_t missing = 0;
 
-            for (i = 0; i < main.setting->entry.items.used; ++i) {
+            for (i = 0; i < entry->items.used; ++i) {
 
-              for (j = 0; j < main.setting->entry.items.array[i].actions.used; ++j) {
+              for (j = 0; j < entry->items.array[i].actions.used; ++j) {
 
-                if (!main.thread->enabled) {
+                if (!controller_thread_is_enabled(is_entry, main.thread)) {
                   return F_signal;
                 }
 
-                action = &main.setting->entry.items.array[i].actions.array[j];
+                action = &entry->items.array[i].actions.array[j];
 
                 // only process actions that don't already have an error.
                 if (F_status_is_error(action->status)) continue;
@@ -887,9 +899,9 @@ extern "C" {
                 if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {
                   missing |= 0x1;
 
-                  for (k = 0; k < main.setting->entry.items.used; ++k) {
+                  for (k = 0; k < entry->items.used; ++k) {
 
-                    if (fl_string_dynamic_compare(action->parameters.array[0], main.setting->entry.items.array[k].name) == F_equal_to) {
+                    if (fl_string_dynamic_compare(action->parameters.array[0], entry->items.array[k].name) == F_equal_to) {
                       if (missing & 0x1) {
                         missing -= 0x1;
                       }
@@ -902,9 +914,9 @@ extern "C" {
                     missing |= 0x2;
 
                     cache->action.line_action = action->line;
-                    cache->action.line_item = main.setting->entry.items.array[i].line;
+                    cache->action.line_item = entry->items.array[i].line;
 
-                    status = controller_string_dynamic_append_terminated(main.setting->entry.items.array[i].name, &cache->action.name_item);
+                    status = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
 
                     if (F_status_is_error(status)) {
                       controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
@@ -915,7 +927,7 @@ extern "C" {
                       f_thread_mutex_lock(&main.thread->lock.print);
 
                       fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                      fprintf(main.data->error.to.stream, "%s%sThe required entry item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+                      fprintf(main.data->error.to.stream, "%s%sThe required %s item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
                       fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[0].string, main.data->error.notable.after->string);
                       fprintf(main.data->error.to.stream, "%s' does not exist.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
 
@@ -944,18 +956,18 @@ extern "C" {
     if (F_status_is_error(status)) {
       controller_entry_error_print_cache(main.data->error, cache->action);
 
-      main.setting->entry.status = controller_status_simplify_error(F_status_set_fine(status));
+      entry->status = controller_status_simplify_error(F_status_set_fine(status));
     }
     else {
-      main.setting->entry.status = F_none;
+      entry->status = F_none;
     }
 
-    return main.setting->entry.status;
+    return entry->status;
   }
 #endif // _di_controller_entry_read_
 
 #ifndef _di_controller_entry_settings_read_
-  f_status_t controller_entry_settings_read(const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     {
@@ -1002,11 +1014,11 @@ extern "C" {
         break;
       }
 
-      if (fl_string_dynamic_compare_string(controller_string_mode_s, cache->action.name_action, controller_string_mode_length) == F_equal_to) {
+      if (is_entry && fl_string_dynamic_compare_string(controller_string_mode_s, cache->action.name_action, controller_string_mode_length) == F_equal_to) {
         if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
           if (main.data->error.verbosity != f_console_verbosity_quiet) {
             fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(main.data->error.to.stream, "%s%sThe entry item setting '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s);
+            fprintf(main.data->error.to.stream, "%s%sThe %s item setting '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' requires exactly ", main.data->error.context.before->string);
             fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, 1, main.data->error.notable.after->string);
@@ -1024,10 +1036,10 @@ extern "C" {
         }
         else {
           if (main.data->warning.verbosity == f_console_verbosity_debug) {
-            fprintf(main.data->warning.to.stream, "%s%sUnknown entry item setting value '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
+            fprintf(main.data->warning.to.stream, "%s%sUnknown %s item setting value '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
             f_print_dynamic_partial(main.data->warning.to.stream, cache->buffer_file, cache->content_actions.array[i].array[0]);
-            fprintf(main.data->warning.to.stream, "%s%s for entry item setting '", main.data->warning.notable.after->string, main.data->warning.context.before->string);
+            fprintf(main.data->warning.to.stream, "%s%s for %s item setting '", main.data->warning.notable.after->string, main.data->warning.context.before->string, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
             f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
             fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
@@ -1041,7 +1053,7 @@ extern "C" {
       }
       else {
         if (main.data->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(main.data->warning.to.stream, "%s%sUnknown entry item setting '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s);
+          fprintf(main.data->warning.to.stream, "%s%sUnknown %s item setting '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
           fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
           f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
           fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);

@@ -623,6 +623,8 @@ extern "C" {
  *   The action to perform based on the action type codes.
  * @param options
  *   The process options to pass to the process.
+ * @param type
+ *   The process type, such as controller_process_type_entry.
  * @param stack
  *   A stack representing the processes already running in this rule process dependency tree.
  *   This is used to prevent circular dependencies.
@@ -650,7 +652,7 @@ extern "C" {
  * @see f_thread_create()
  */
 #ifndef _di_controller_rule_process_begin_
-  extern f_status_t controller_rule_process_begin(const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_process_begin(const uint8_t options_force, const f_string_static_t alias_rule, const uint8_t action, const uint8_t options, const uint8_t type, const f_array_lengths_t stack, const controller_main_t main, const controller_cache_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_process_begin_
 
 /**
@@ -690,6 +692,9 @@ extern "C" {
 /**
  * Read the rule file, extracting all valid items.
  *
+ * @param is_normal
+ *   If TRUE, then this operates as an entry or control.
+ *   If FALSE, then this operates as an exit.
  * @param rule_id
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
@@ -719,7 +724,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_status_t controller_rule_read(const f_string_static_t rule_id, controller_main_t main, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t rule_id, controller_main_t main, controller_cache_t *cache, controller_rule_t *rule) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
 
 /**
@@ -796,6 +801,10 @@ extern "C" {
 /**
  * Wait until all currently running Rule processes are complete.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this is a normal operation (entry and control).
+ *   If FALSE, then process as if this is an exit operation.
+ *   This is ignored when caller is not NULL.
  * @param main
  *   The main data.
  * @param required
@@ -815,8 +824,35 @@ extern "C" {
  *    F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern f_status_t controller_rule_wait_all(const controller_main_t main, const bool required, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_wait_all(const bool is_normal, const controller_main_t main, const bool required, controller_process_t *process) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_wait_all_
+
+/**
+ * Wait until all currently running Rule processes are complete for some process type.
+ *
+ * @param type
+ *   The process type to use when checking if thread is enabled.
+ * @param main
+ *   The main data.
+ * @param required
+ *   If TRUE, then only process required rules and if a required rule has failed, return.
+ *   If FALSE, process all waits, returning normally.
+ * @param caller
+ *   The process representing the caller so that the process never waits on itself.
+ *   (optional) set to 0 when calling from a thread that is not running/executing any process.
+ *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
+ *
+ * @return
+ *
+ *   Success from controller_rule_wait_all().
+ *
+ *   Errors (with error bit) from: controller_rule_wait_all().
+ *
+ * @see controller_rule_wait_all()
+ */
+#ifndef _di_controller_rule_wait_all_process_type_
+  extern f_status_t controller_rule_wait_all_process_type(const uint8_t type, const controller_main_t main, const bool required, controller_process_t *caller) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_wait_all_process_type_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -166,10 +166,9 @@ extern "C" {
 /**
  * Read the entry, extracting all lists.
  *
- * @param entry_name
- *   The string identifying the entry.
- *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
- *   "/etc/controller/entries/example/my.entry" would have a rule id of "example/my".
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
  * @param main
  *   The main data.
  * @param cache
@@ -178,6 +177,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_found_not on file not found for a an exit file (is_entry is FALSE).
  *
  *   Errors (with error bit) from: controller_entry_actions_read().
  *   Errors (with error bit) from: controller_entry_items_increase_by().
@@ -206,12 +206,15 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_status_t controller_entry_read(const f_string_static_t entry_name, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_read(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
 /**
  * Read the entry settings, loading all settings.
  *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
  * @param content_range
  *   The range in the list buffer representing the content.
  * @param main
@@ -220,7 +223,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_entry_settings_read_
-  extern f_status_t controller_entry_settings_read(const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_settings_read_
 
 #ifdef __cplusplus

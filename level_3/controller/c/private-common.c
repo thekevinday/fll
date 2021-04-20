@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "private-common.h"
+#include "private-thread.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -129,10 +130,16 @@ extern "C" {
     f_status_t status = f_thread_mutex_create(0, &lock->print);
     if (F_status_is_error(status)) return status;
 
+    status = f_thread_mutex_create(0, &lock->alert);
+    if (F_status_is_error(status)) return status;
+
     status = f_thread_lock_create(0, &lock->process);
     if (F_status_is_error(status)) return status;
 
     status = f_thread_lock_create(0, &lock->rule);
+    if (F_status_is_error(status)) return status;
+
+    status = f_thread_condition_create(0, &lock->alert_condition);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -179,9 +186,12 @@ extern "C" {
   void controller_lock_delete_simple(controller_lock_t *lock) {
 
     controller_lock_delete_mutex(&lock->print);
+    controller_lock_delete_mutex(&lock->alert);
 
     controller_lock_delete_rw(&lock->process);
     controller_lock_delete_rw(&lock->rule);
+
+    f_thread_condition_delete(&lock->alert_condition);
   }
 #endif // _di_controller_lock_delete_simple_
 
@@ -222,7 +232,7 @@ extern "C" {
 #endif // _di_controller_lock_error_critical_print_
 
 #ifndef _di_controller_lock_read_
-  f_status_t controller_lock_read(controller_thread_t * const thread, f_thread_lock_t *lock) {
+  f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) {
 
     struct timespec time;
 
@@ -230,12 +240,12 @@ extern "C" {
 
     for (;;) {
 
-      controller_time(0, controller_thread_lock_read_timeout, &time);
+      controller_time(controller_thread_lock_read_timeout_seconds, controller_thread_lock_read_timeout_nanoseconds, &time);
 
       status = f_thread_lock_read_timed(&time, lock);
 
       if (status == F_time) {
-        if (!thread->enabled) {
+        if (!controller_thread_is_enabled(is_normal, thread)) {
           return F_signal;
         }
       }
@@ -248,8 +258,22 @@ extern "C" {
   }
 #endif // _di_controller_lock_read_
 
+#ifndef _di_controller_lock_read_process_
+  f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    return controller_lock_read_process_type(process->type, thread, lock);
+  }
+#endif // _di_controller_lock_read_process_
+
+#ifndef _di_controller_lock_read_process_type_
+  f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    return controller_lock_read(type != controller_process_type_exit, thread, lock);
+  }
+#endif // _di_controller_lock_read_process_type_
+
 #ifndef _di_controller_lock_write_
-  f_status_t controller_lock_write(controller_thread_t * const thread, f_thread_lock_t *lock) {
+  f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) {
 
     struct timespec time;
 
@@ -257,12 +281,12 @@ extern "C" {
 
     for (;;) {
 
-      controller_time(0, controller_thread_lock_write_timeout, &time);
+      controller_time(controller_thread_lock_write_timeout_seconds, controller_thread_lock_write_timeout_nanoseconds, &time);
 
       status = f_thread_lock_write_timed(&time, lock);
 
       if (status == F_time) {
-        if (!thread->enabled) {
+        if (!controller_thread_is_enabled(is_normal, thread)) {
           return F_signal;
         }
       }
@@ -274,6 +298,20 @@ extern "C" {
     return status;
   }
 #endif // _di_controller_lock_write_
+
+#ifndef _di_controller_lock_write_process_
+  f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    return controller_lock_write_process_type(process->type, thread, lock);
+  }
+#endif // _di_controller_lock_write_process_
+
+#ifndef _di_controller_lock_write_process_type_
+  f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) {
+
+    return controller_lock_write(type != controller_process_type_exit, thread, lock);
+  }
+#endif // _di_controller_lock_write_process_type_
 
 #ifndef _di_controller_print_unlock_flush_
   void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) {
@@ -315,7 +353,7 @@ extern "C" {
 #ifndef _di_controller_process_wait_
   f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) {
 
-    if (!main.thread->enabled) {
+    if (!controller_thread_is_enabled_process(process, main.thread)) {
       return F_signal;
     }
 
@@ -346,7 +384,7 @@ extern "C" {
 
       f_thread_mutex_unlock(&process->wait_lock);
 
-      if (!main.thread->enabled) {
+      if (!controller_thread_is_enabled_process(process, main.thread)) {
         return F_signal;
       }
 
@@ -354,7 +392,8 @@ extern "C" {
         break;
       }
 
-      status_lock = controller_lock_read(main.thread, &process->lock);
+      status_lock = controller_lock_read_process(process, main.thread, &process->lock);
+
       if (status_lock == F_signal || F_status_is_error(status_lock)) {
         controller_lock_error_critical_print(main.data->error, F_status_set_fine(status_lock), F_true, main.thread);
 
@@ -369,17 +408,14 @@ extern "C" {
       else if (status != F_time) {
 
         // move up the wait timer after a trigger was received.
-        if (count < controller_thread_wait_timeout_1_before) {
+        if (count < controller_thread_wait_timeout_2_before) {
           count = 0;
         }
-        else if (count < controller_thread_wait_timeout_2_before) {
+        else if (count < controller_thread_wait_timeout_3_before) {
           count = controller_thread_wait_timeout_1_before;
         }
-        else if (count < controller_thread_wait_timeout_3_before) {
-          count = controller_thread_wait_timeout_2_before;
-        }
         else {
-          count = controller_thread_wait_timeout_3_before;
+          count = controller_thread_wait_timeout_2_before;
         }
       }
 
@@ -389,7 +425,7 @@ extern "C" {
         count++;
       }
 
-    } while (status == F_time && main.thread->enabled);
+    } while (status == F_time && controller_thread_is_enabled_process(process, main.thread));
 
     return status;
   }
@@ -615,6 +651,8 @@ extern "C" {
     f_string_dynamic_resize(0, &setting->path_pid);
     f_string_dynamic_resize(0, &setting->path_setting);
 
+    f_string_dynamic_resize(0, &setting->name_entry);
+
     controller_entry_items_delete_simple(&setting->entry.items);
     controller_entry_items_delete_simple(&setting->exit.items);
     controller_rules_delete_simple(&setting->rules);
@@ -631,14 +669,14 @@ extern "C" {
 #endif // _di_controller_thread_delete_simple_
 
 #ifndef _di_controller_time_
-  void controller_time(const time_t seconds, const long nanos, struct timespec *time) {
+  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) {
 
     struct timeval now;
 
     gettimeofday(&now, 0);
 
     time->tv_sec = now.tv_sec + seconds;
-    time->tv_nsec = (now.tv_usec * 1000) + nanos;
+    time->tv_nsec = (now.tv_usec * 1000) + nanoseconds;
 
     // If tv_nsec is 1 second or greater, then increment seconds.
     if (time->tv_nsec >= 1000000000) {
