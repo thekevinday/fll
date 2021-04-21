@@ -72,23 +72,25 @@ Rule Documentation:
 
   The "utility" Rule Type provides a "script" accompanied with a PID file (Process Identifier file).
 
-  There are seven primary inner Content to perform: "kill", "pause", "restart", "resume", "reload", "start", and "stop".
+  There are nine primary inner Content Objects to perform: "freeze", "kill", "pause", "restart", "resume", "reload", "start", "stop", "thaw".
 
-  The "kill" Content is performed whenever this rule is executed using the kill action (which is, in general, a forced stop).
-  The "pause" Content is performed whenever this rule is executed using the pause action.
-  The "restart" Content is performed whenever this rule is executed using the restart action.
-  The "resume" Content is performed whenever this rule is executed using the resume action.
-  The "reload" Content is performed whenever this rule is executed using the reload action.
-  The "start" Content is performed whenever this rule is executed using the start action.
-  The "stop" Content is performed whenever this rule is executed using the stop action.
+  The "freeze" Object's Content is performed whenever this rule is executed using the freeze Action.
+  The "kill" Object's Content is performed whenever this rule is executed using the kill Action (which is, in general, a forced stop).
+  The "pause" Object's Content is performed whenever this rule is executed using the pause Action.
+  The "restart" Object's Content is performed whenever this rule is executed using the restart Action.
+  The "resume" Object's Content is performed whenever this rule is executed using the resume Action.
+  The "reload" Object's Content is performed whenever this rule is executed using the reload Action.
+  The "start" Object's Content is performed whenever this rule is executed using the start Action.
+  The "stop" Object's Content is performed whenever this rule is executed using the stop Action.
+  The "thaw" Object's Content is performed whenever this rule is executed using the thaw Action.
 
-  When "restart" Content is not provided, then "start" and "stop" is called when the rule is executed using the restart action, if both "start" and "stop" are provided.
-  When "reload", "start", or "stop" Content are not provided, then no respective action is performed.
+  When "restart" Object's Content is not provided, then "start" and "stop" is called when the rule is executed using the restart Action, if both "start" and "stop" are provided.
+  When "reload", "start", or "stop" Object's Content are not provided, then no respective Action is performed.
   Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  The "pid_file" Content designates the path to the PID file created by the called program.
+  The "pid_file" Object's Content designates the path to the PID file created by the called program.
 
-  The "with" Content designates special flags designating very specific behavior to be applied to any single Rule Type.
+  The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
   The following flags are supported:
     "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
                  When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").

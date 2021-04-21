@@ -25,6 +25,20 @@ extern "C" {
 #endif // _di_controller_entry_action_parameters_print_
 
 /**
+ * Determine if the type code represents a Rule type.
+ *
+ * @param type
+ *   The type code to compare against.
+ *
+ * @return
+ *    TRUE if Rule type.
+ *    FALSE otherwise.
+ */
+#ifndef _di_controller_entry_action_type_is_rule_
+  extern f_status_t controller_entry_action_type_is_rule(uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_type_is_rule_
+
+/**
  * Get a string representing the entry action type.
  *
  * @param type
@@ -37,6 +51,20 @@ extern "C" {
 #ifndef _di_controller_entry_action_type_name_
   extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_action_type_name_
+
+/**
+ * Convert the Entry Action type to Rule Action type.
+ *
+ * @param type
+ *   The Entry Action type.
+ *
+ * @return
+ *    TRUE if Rule type.
+ *    FALSE otherwise.
+ */
+#ifndef _di_controller_entry_action_type_to_rule_action_type_
+  extern uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_entry_action_type_to_rule_action_type_
 
 /**
  * Increase the size of the entry item actions array by the specified amount, but only if necessary.

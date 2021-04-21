@@ -5,9 +5,9 @@ main:
   timeout stop 7
   timeout kill 3
 
-  failsafe boom
+  failsafe explode
 
-  rule service sshd
+  start service sshd
 
-boom:
-  rule maintenance explode
+explode:
+  start maintenance boom

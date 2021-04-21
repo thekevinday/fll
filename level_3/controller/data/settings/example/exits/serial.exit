@@ -7,6 +7,6 @@ main:
   consider serial s_4
   consider serial s_5
 
-  rule serial s_6
+  stop serial s_6
 
   ready

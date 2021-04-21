@@ -12,4 +12,3 @@ service:
   pid_file /var/run/sshd.pid
   with full_path
   start sshd
-  #stop

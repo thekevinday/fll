@@ -17,31 +17,31 @@ main:
   item console
 
 boot:
-  rule boot filesystem require
-  rule boot modules require
-  rule boot devices require
+  start boot filesystem require
+  start boot modules require
+  start boot devices require
 
-  rule service logger wait
-  rule service dbus asynchronous
+  start service logger wait
+  start service dbus asynchronous
 
   ready
 
 net:
-  rule net all asynchronous
+  start net all asynchronous
 
 time:
-  rule task clock asynchronous
+  start task clock asynchronous
 
 keyboard:
-  rule task keyboard asynchronous
+  start task keyboard asynchronous
 
 console:
-  rule program terminal require wait
-  rule service mouse
+  start program terminal require wait
+  start service mouse
 
 maintenance:
   timeout start 2
   timeout stop 2
   timeout kill 2
 
-  rule maintenance console
+  start maintenance console

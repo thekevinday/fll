@@ -48,6 +48,7 @@ Rule Specification:
     "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
+    "freeze": One or more Content representing a program being executed and its arguments.
     "kill": One or more Content representing a program being executed and its arguments.
     "pause": One or more Content representing a program being executed and its arguments.
     "reload": One or more Content representing a program being executed and its arguments.
@@ -55,6 +56,7 @@ Rule Specification:
     "resume": One or more Content representing a program being executed and its arguments.
     "start": One or more Content representing a program being executed and its arguments.
     "stop": One or more Content representing a program being executed and its arguments.
+    "thaw": One or more Content representing a program being executed and its arguments.
     "with": One or more Content representing special options for the Rule Type.
 
   The "service" and "utility" Rule Types allow the following the FSS-0001 (Extended)\:
@@ -62,6 +64,7 @@ Rule Specification:
     "with": One or more Content representing special options for the Rule Type.
 
   The "command" and "service" Rule Types allow the following the FSS-0003 (Extended List)\:
+    "freeze": A list repesenting multiple programs and their respective arguments to execute.
     "kill": A list repesenting multiple programs and their respective arguments to execute.
     "pause": A list repesenting multiple programs and their respective arguments to execute.
     "reload": A list repesenting multiple programs and their respective arguments to execute.
@@ -69,8 +72,10 @@ Rule Specification:
     "resume": A list repesenting multiple programs and their respective arguments to execute.
     "start": A list repesenting multiple programs and their respective arguments to execute.
     "stop": A list repesenting multiple programs and their respective arguments to execute.
+    "thaw": A list repesenting multiple programs and their respective arguments to execute.
 
   The "script" and "utility" Rule Types allow the following the FSS-0003 (Extended List)\:
+    "freeze": A list repesenting the contents of a script, such as a GNU Bash shell.
     "kill": A list repesenting the contents of a script, such as a GNU Bash shell.
     "pause": A list repesenting the contents of a script, such as a GNU Bash shell.
     "reload": A list repesenting the contents of a script, such as a GNU Bash shell.
@@ -78,3 +83,4 @@ Rule Specification:
     "resume": A list repesenting the contents of a script, such as a GNU Bash shell.
     "start": A list repesenting the contents of a script, such as a GNU Bash shell.
     "stop": A list repesenting the contents of a script, such as a GNU Bash shell.
+    "thaw": A list repesenting the contents of a script, such as a GNU Bash shell.

@@ -5,10 +5,10 @@ main:
   timeout stop 7
   timeout kill 3
 
-  failsafe boom
+  failsafe explode
 
-  rule utility sleeper_1
-  rule utility sleeper_2
+  start utility sleeper_1
+  start utility sleeper_2
 
-boom:
-  rule maintenance explode
+explode:
+  start maintenance boom

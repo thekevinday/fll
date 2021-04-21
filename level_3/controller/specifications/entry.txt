@@ -29,11 +29,67 @@ Entry Specification:
           - "require"
           - "wait"
       "failsafe": One Content that is a valid Object name, except for the reserved "main".
+      "freeze": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
       "item": One Content that is a valid Object name, except for the reserved "main".
+      "kill": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "pause": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
       "ready": Zero or One Content.
         The first may only be one of\:
         - "wait"
-      "rule": Two or more Content.
+      "reload": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "restart": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "resume": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "start": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "stop": Two or more Content.
+        The first Content that is the relative directory path (without any leading/trailing slashes).
+        The second Content that is the basename for a rule file.
+        The third and beyond may only be one of\:
+          - "asynchronous"
+          - "require"
+          - "wait"
+      "thaw": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).
         The second Content that is the basename for a rule file.
         The third and beyond may only be one of\:

@@ -895,7 +895,33 @@ extern "C" {
 #endif // _di_controller_processs_t_
 
 /**
- * An Entry Item Action
+ * An Entry Item Action.
+ *
+ * controller_entry_action_type_*:
+ *   - consider: Designate a rule to be pre-loaded.
+ *   - failsafe: Designate a failsafe "item".
+ *   - freeze:   A Rule Action for freezing.
+ *   - item:     A named set of Rules.
+ *   - kill:     A Rule Action for killing.
+ *   - pause:    A Rule Action for pausing.
+ *   - ready:    Designate readiness for special processing for Entry or Exit.
+ *   - reload:   A Rule Action for reloading.
+ *   - restart:  A Rule Action for restarting.
+ *   - resume:   A Rule Action for resuming.
+ *   - start:    A Rule Action for starting.
+ *   - stop:     A Rule Action for stopping.
+ *   - timeout:  Inline timeout settings.
+ *   - thaw:     A Rule Action for unfreezing.
+ *
+ * controller_entry_rule_code_*:
+ *   - asynchronous: Process Rule asynchronously.
+ *   - require:      Require Rule operations to succeed or the Entry/Exit will fail.
+ *   - wait:         Wait for all existing asynchronous processes to finish before operating Rule.
+ *
+ * controller_entry_timeout_code_*:
+ *   - kill:  Designate time to wait before killing.
+ *   - start: Designate time to wait before starting.
+ *   - stop:  Designate time to wait before stopping.
  *
  * type:       The type of Action.
  * code:       A single code or sub-type associated with the Action.
@@ -908,10 +934,18 @@ extern "C" {
   enum {
     controller_entry_action_type_consider = 1,
     controller_entry_action_type_failsafe,
+    controller_entry_action_type_freeze,
     controller_entry_action_type_item,
+    controller_entry_action_type_kill,
+    controller_entry_action_type_pause,
     controller_entry_action_type_ready,
-    controller_entry_action_type_rule,
+    controller_entry_action_type_reload,
+    controller_entry_action_type_restart,
+    controller_entry_action_type_resume,
+    controller_entry_action_type_start,
+    controller_entry_action_type_stop,
     controller_entry_action_type_timeout,
+    controller_entry_action_type_thaw,
   };
 
   #define controller_entry_rule_code_asynchronous 0x1

@@ -688,7 +688,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 #ifndef _di_controller_process_entry_
-  f_status_t controller_process_entry(const bool failsafe, const bool is_entry, const uint8_t action, controller_main_t *main, controller_cache_t *cache) {
+  f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_main_t *main, controller_cache_t *cache) {
 
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
@@ -782,7 +782,7 @@ extern "C" {
         }
 
         if (F_status_is_error(entry_action->status)) {
-          if (entry_action->type == controller_entry_action_type_rule) {
+          if (controller_entry_action_type_is_rule(entry_action->type)) {
             if (simulate) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);
@@ -1020,7 +1020,7 @@ extern "C" {
           // exit inner loop to force restarting and start processing the requested item.
           break;
         }
-        else if (entry_action->type == controller_entry_action_type_consider || entry_action->type == controller_entry_action_type_rule) {
+        else if (entry_action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(entry_action->type)) {
 
           status_lock = controller_lock_write(is_entry, main->thread, &main->thread->lock.rule);
 
@@ -1066,7 +1066,7 @@ extern "C" {
               f_thread_mutex_lock(&main->thread->lock.print);
 
               fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
-              fprintf(main->data->output.stream, "%s entry item rule '", entry_action->type == controller_entry_action_type_rule ? "Processing" : "Considering");
+              fprintf(main->data->output.stream, "%s entry item rule '", entry_action->type == controller_entry_action_type_consider ? "Considering" : "Processing");
               fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, alias_rule.string, main->data->context.set.title.after->string);
               fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
 
@@ -1242,7 +1242,7 @@ extern "C" {
               }
             }
 
-            status = controller_rule_process_begin(options_force, alias_rule, is_entry ? controller_rule_action_type_start : controller_rule_action_type_stop, options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *main, *cache);
+            status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *main, *cache);
 
             if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !controller_thread_is_enabled(is_entry, main->thread)) {
               break;

@@ -671,7 +671,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_found on success and the process was found to already be running (nothing to do).
+ *   F_found on the process was found to already be running (nothing to do).
+ *   F_process_not if the process was not executed because it is a "consider" Action.
  *   F_signal on (exit) signal received.
  *
  *   F_found_not (with error bit) if unable to for a process for the given rule id.
@@ -777,13 +778,6 @@ extern "C" {
  *   The rule to process.
  * @param action
  *   The action to perform based on the action type codes.
- *
- *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
  * @param options
  *   A number using bits to represent specific boolean options.
  *   If no bits set, then operate normally in a synchronous manner.

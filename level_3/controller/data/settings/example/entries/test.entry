@@ -5,7 +5,7 @@ main:
   timeout stop 7
   timeout kill 3
 
-  failsafe boom
+  failsafe explode
 
   item first
   item last
@@ -13,15 +13,15 @@ main:
 first:
   consider script require_me
 
-  rule script succeed
-  rule script php
-  rule command multiple
+  start script succeed
+  start script php
+  start command multiple
 
   # uncomment python to see it fail.
-  #rule script python
+  #start script python
 
 last:
-  rule script fail require wait
+  start script fail require wait
 
-boom:
-  rule maintenance explode
+explode:
+  start maintenance boom

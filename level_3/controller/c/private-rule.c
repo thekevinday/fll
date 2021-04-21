@@ -1794,7 +1794,6 @@ extern "C" {
         break;
 
       default:
-
         if (main.data->error.verbosity != f_console_verbosity_quiet) {
           f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -1890,7 +1889,7 @@ extern "C" {
 
       // i==0 is need, i==1 is want, i==2 is wish.
       // loop through all dependencies: wait for depedency, execute dependency, fail due to missing required dependency, or skip unrequired missing dependencies.
-      for (i = 0; i < 3 && controller_thread_is_enabled_process(process, main.thread); ++i) {
+      for (; i < 3 && controller_thread_is_enabled_process(process, main.thread); ++i) {
 
         for (j = 0; j < dynamics[i]->used && controller_thread_is_enabled_process(process, main.thread); ++j) {
 
@@ -2466,7 +2465,7 @@ extern "C" {
     f_thread_unlock(&process->lock);
 
     if (F_status_is_error_not(status)) {
-      if (options_force & controller_process_option_asynchronous) {
+      if (process->action && (options_force & controller_process_option_asynchronous)) {
         status = f_thread_create(0, &process->id_thread, controller_thread_process, (void *) process);
 
         if (F_status_is_error(status)) {
@@ -2482,6 +2481,27 @@ extern "C" {
           return status;
         }
       }
+    }
+
+    if (!action || F_status_is_error(status) && (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      status = controller_lock_write_process(process, main.thread, &process->lock);
+
+      if (status == F_signal || F_status_is_error(status)) {
+        controller_lock_error_critical_print(main.data->error, F_status_set_fine(status), F_false, main.thread);
+
+        f_thread_unlock(&process->active);
+
+        return status;
+      }
+
+      if (!action || (options_force & controller_process_option_asynchronous)) {
+        process->state = controller_process_state_done;
+      }
+      else {
+        process->state = controller_process_state_idle;
+      }
+
+      f_thread_unlock(&process->lock);
     }
 
     f_thread_unlock(&process->active);
@@ -2585,6 +2605,17 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         controller_entry_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "controller_rule_copy", F_true, main.thread);
+      }
+      else if (!process->action) {
+
+        // this is a "consider" Action, so do not actually execute the rule.
+        f_thread_unlock(&process->lock);
+
+        if (options_force & controller_process_option_asynchronous) {
+          f_thread_unlock(&process->active);
+        }
+
+        return F_process_not;
       }
       else {
         for (f_array_length_t i = 0; i < process->stack.used && controller_thread_is_enabled_process(process, main.thread); ++i) {
@@ -4820,11 +4851,15 @@ extern "C" {
     f_thread_mutex_lock(&main.thread->lock.print);
 
     switch (action) {
+      case controller_rule_action_type_freeze:
       case controller_rule_action_type_kill:
+      case controller_rule_action_type_pause:
       case controller_rule_action_type_reload:
       case controller_rule_action_type_restart:
+      case controller_rule_action_type_resume:
       case controller_rule_action_type_start:
       case controller_rule_action_type_stop:
+      case controller_rule_action_type_thaw:
         break;
 
       default:
@@ -4854,7 +4889,7 @@ extern "C" {
 
         for (j = 0; j < rule.items.array[i].actions.used; ++j) {
 
-          if (rule.items.array[i].actions.array[j].type == action) {
+          if (!action || rule.items.array[i].actions.array[j].type == action) {
             missing = F_false;
             break;
           }

@@ -7,7 +7,7 @@ main:
 
   failsafe boom
 
-  rule service sshd
+  stop service sshd
 
 boom:
-  rule maintenance explode
+  stop maintenance explode

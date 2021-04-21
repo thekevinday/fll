@@ -26,6 +26,26 @@ extern "C" {
   }
 #endif // _di_controller_entry_action_parameters_print_
 
+#ifndef _di_controller_entry_action_type_is_rule_
+  f_status_t controller_entry_action_type_is_rule(uint8_t type) {
+
+    switch (type) {
+      case controller_entry_action_type_freeze:
+      case controller_entry_action_type_kill:
+      case controller_entry_action_type_pause:
+      case controller_entry_action_type_reload:
+      case controller_entry_action_type_restart:
+      case controller_entry_action_type_resume:
+      case controller_entry_action_type_start:
+      case controller_entry_action_type_stop:
+      case controller_entry_action_type_thaw:
+        return F_true;
+    }
+
+    return F_false;
+  }
+#endif // _di_controller_entry_action_type_is_rule_
+
 #ifndef _di_controller_entry_action_type_name_
   f_string_static_t controller_entry_action_type_name(const uint8_t type) {
 
@@ -42,9 +62,24 @@ extern "C" {
         buffer.used = controller_string_failsafe_length;
         break;
 
+      case controller_entry_action_type_freeze:
+        buffer.string = controller_string_freeze_s;
+        buffer.used = controller_string_freeze_length;
+        break;
+
       case controller_entry_action_type_item:
         buffer.string = controller_string_item_s;
         buffer.used = controller_string_item_length;
+        break;
+
+      case controller_entry_action_type_kill:
+        buffer.string = controller_string_kill_s;
+        buffer.used = controller_string_kill_length;
+        break;
+
+      case controller_entry_action_type_pause:
+        buffer.string = controller_string_pause_s;
+        buffer.used = controller_string_pause_length;
         break;
 
       case controller_entry_action_type_ready:
@@ -52,9 +87,34 @@ extern "C" {
         buffer.used = controller_string_ready_length;
         break;
 
-      case controller_entry_action_type_rule:
-        buffer.string = controller_string_rule_s;
-        buffer.used = controller_string_rule_length;
+      case controller_entry_action_type_reload:
+        buffer.string = controller_string_reload_s;
+        buffer.used = controller_string_reload_length;
+        break;
+
+      case controller_entry_action_type_restart:
+        buffer.string = controller_string_restart_s;
+        buffer.used = controller_string_restart_length;
+        break;
+
+      case controller_entry_action_type_resume:
+        buffer.string = controller_string_resume_s;
+        buffer.used = controller_string_resume_length;
+        break;
+
+      case controller_entry_action_type_start:
+        buffer.string = controller_string_start_s;
+        buffer.used = controller_string_start_length;
+        break;
+
+      case controller_entry_action_type_stop:
+        buffer.string = controller_string_stop_s;
+        buffer.used = controller_string_stop_length;
+        break;
+
+      case controller_entry_action_type_thaw:
+        buffer.string = controller_string_thaw_s;
+        buffer.used = controller_string_thaw_length;
         break;
 
       case controller_entry_action_type_timeout:
@@ -68,6 +128,42 @@ extern "C" {
     return buffer;
   }
 #endif // _di_controller_entry_action_type_name_
+
+#ifndef _di_controller_entry_action_type_to_rule_action_type_
+  uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) {
+
+    switch (type) {
+      case controller_entry_action_type_freeze:
+        return controller_rule_action_type_freeze;
+
+      case controller_entry_action_type_kill:
+        return controller_rule_action_type_kill;
+
+      case controller_entry_action_type_pause:
+        return controller_rule_action_type_pause;
+
+      case controller_entry_action_type_reload:
+        return controller_rule_action_type_reload;
+
+      case controller_entry_action_type_restart:
+        return controller_rule_action_type_restart;
+
+      case controller_entry_action_type_resume:
+        return controller_rule_action_type_resume;
+
+      case controller_entry_action_type_start:
+        return controller_rule_action_type_start;
+
+      case controller_entry_action_type_stop:
+        return controller_rule_action_type_stop;
+
+      case controller_entry_action_type_thaw:
+        return controller_rule_action_type_thaw;
+    }
+
+    return 0;
+  }
+#endif // _di_controller_entry_action_type_to_rule_action_type_
 
 #ifndef _di_controller_entry_actions_increase_by_
   f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) {
@@ -186,14 +282,38 @@ extern "C" {
       else if (fl_string_dynamic_compare_string(controller_string_failsafe_s, cache->action.name_action, controller_string_failsafe_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_failsafe;
       }
+      else if (fl_string_dynamic_compare_string(controller_string_freeze_s, cache->action.name_action, controller_string_freeze_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_freeze;
+      }
       else if (fl_string_dynamic_compare_string(controller_string_item_s, cache->action.name_action, controller_string_item_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_item;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_kill_s, cache->action.name_action, controller_string_kill_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_kill;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_pause_s, cache->action.name_action, controller_string_pause_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_pause;
       }
       else if (fl_string_dynamic_compare_string(controller_string_ready_s, cache->action.name_action, controller_string_ready_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_ready;
       }
-      else if (fl_string_dynamic_compare_string(controller_string_rule_s, cache->action.name_action, controller_string_rule_length) == F_equal_to) {
-        actions->array[actions->used].type = controller_entry_action_type_rule;
+      else if (fl_string_dynamic_compare_string(controller_string_reload_s, cache->action.name_action, controller_string_reload_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_reload;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_restart_s, cache->action.name_action, controller_string_restart_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_restart;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_resume_s, cache->action.name_action, controller_string_resume_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_resume;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_start_s, cache->action.name_action, controller_string_start_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_start;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_stop_s, cache->action.name_action, controller_string_stop_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_stop;
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_thaw_s, cache->action.name_action, controller_string_thaw_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_thaw;
       }
       else if (fl_string_dynamic_compare_string(controller_string_timeout_s, cache->action.name_action, controller_string_timeout_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_timeout;
@@ -212,7 +332,7 @@ extern "C" {
         continue;
       }
 
-      if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
+      if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
         allocate = cache->content_actions.array[i].used;
         at_least = 2;
         at_most = allocate;
@@ -248,7 +368,7 @@ extern "C" {
 
           fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, at_least, main.data->error.notable.after->string);
 
-          if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
+          if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
             fprintf(main.data->error.to.stream, "%s or more parameters.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
           }
           else {
@@ -312,7 +432,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error_not(action->status)) {
-          if (action->type == controller_entry_action_type_consider || action->type == controller_entry_action_type_rule) {
+          if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
             if (action->parameters.array[0].used) {
 
               // force the path to be canonical (removing all '../' parts).

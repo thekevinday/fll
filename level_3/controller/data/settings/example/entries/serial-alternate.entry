@@ -4,11 +4,11 @@ setting:
   mode program
 
 main:
-  rule serial s_1
-  rule serial s_2
-  rule serial s_3
-  rule serial s_4
-  rule serial s_5
-  rule serial s_6
+  start serial s_1
+  start serial s_2
+  start serial s_3
+  start serial s_4
+  start serial s_5
+  start serial s_6
 
   ready
