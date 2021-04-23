@@ -15,7 +15,7 @@ setting:
 
   affinity 0
 
-  need script require_me
+  on start need script require_me
 
 script:
   start {

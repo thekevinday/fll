@@ -82,7 +82,7 @@ Exit Documentation:
 
 Entry Rule Documentation:
   There are multiple Entry Actions that are considered "rule" Actions.
-  These are: "freeze", "kill", "pause", "reload", "restart", "resume", "start", and "stop".
+  These are: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
   The "rule" Actions immediately execute a named rule file.
   The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.

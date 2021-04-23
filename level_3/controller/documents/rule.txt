@@ -17,44 +17,61 @@ Rule Documentation:
     "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
     "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
     "name": A name used to represent this rule, which is printed to the user, screen, logs, etc...
-    "need": A single rule required to be executed (must exist and must succeed) before this rule starts.
     "nice": A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
+    "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
     "parameter": A statically defined IKI name and its associated value for use in this rule file. @todo make sure this is implemented and make sure to perform iki substitutions (with "define" being a reserved iki parameter name for environment variable usage, such as define:"PATH").
     "path": A single Content used to set a custom PATH environment variable value.
     "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     "scheduler": A valid name of a scheduler to use followed by an optional priority number.
     "user": A single user name or ID to execute as.
-    "want": A single rule desired to be executed (may exist and must succeed) before this rule starts.
-    "wish": A single rule desired to be executed (may exist and is not required to succeed) before this rule starts.
 
-  In the case of "capability", if the user the controller program is run as does not have the desired capabilities already, they cannot be added.
-  This essentially maintains or reduces the capabilities already available.
-  Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
-  If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
+  In the case of "capability"\:
+    If the user the controller program is run as does not have the desired capabilities already, they cannot be added.
+    This essentially maintains or reduces the capabilities already available.
+    Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
+    If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
 
-  In the case of "control", the first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
+  In the case of "control"\:
+    The first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
-  In the case of "group" and "user", only users and groups that the user the controller program is being run as may be used.
+  In the case of "group" and "user"\:
+    Only users and groups that the user the controller program is being run as may be used.
 
-  In the case of "limit", first parameter must be one of the following: as, core, cpu, data, fsize, locks, memlock, msgqueue, nice, nofile, nproc, rss, rtprio, rttime, sigpending, and stack.
-  The second parameter repesents the soft limit.
-  The third parameter represents the hard limit.
-  This may be specified multiply times, but only once for each type.
+  In the case of "limit"\:
+    The first parameter must be one of: "as", "core", "cpu", "data", "fsize", "locks", "memlock", "msgqueue", "nice", "nofile", "nproc", "rss", "rtprio", "rttime", "sigpending", or "stack".
+    The second parameter repesents the soft limit.
+    The third parameter represents the hard limit.
+    This may be specified multiply times, but only once for each type.
 
-  In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
+  In the case of "on"\:
+    The first parameter represents the Action the dependency exists under and must be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", or "thaw".
+    The second parameter represents how the dependency is required and must be one of: "need", "want", or "wish".
+    The third parameter is a partial path to the rule file.
+    The fourth parameter represents the name of the rule file.
 
-  In the case of "path", when specified, the PATH environment variable is automatically added to the "environment" setting.
+    In the case of the second parameter\:
+      A "need" designates that the dependent rule is required to be executed (must exist and must succeed).
+      A "want" designates that the dependent rule is to be executed (may exist and if it does, then it must succeed).
+      A "wish" designates that the dependent rule is to be executed (may exist and if it does, but it does not need to succeed).
 
-  In the case of "parameter", IKI variables are expanded in a pre-process manner and will be removed prior to any execution.
-  Any IKI variables referencing an undefined parameter will be fully removed.
-  These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
-  A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
-  These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
+      In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 
-  In the case of "scheduler", the valid range of the priority number is dependent on the scheduler.
-  For example, non-real-time schedulers (such as "idle") only support a value of 0 whereas real-time schedulers (such as "fifo") only support an inclusive range of 1 to 99.
-  Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
-  Supported real-time schedulers are: "deadline", "fifo", "round_robin".
+  In the case of "path"\:
+    When specified, the PATH environment variable is automatically added to the "environment" setting.
+
+  In the case of "parameter"\:
+    IKI variables are expanded in a pre-process manner and will be removed prior to any execution.
+    Any IKI variables referencing an undefined parameter will be fully removed.
+    These parameters are only exposed in the specific rule file in which they are defined and cannot be shared between rules.
+    A "parameter" variable and an "environment" variable are mutually exclusive but an environment variable, in theory, can have an IKI variable assigned to it inside of a "script".
+    These IKI variables are only substituted within a Rule Item's Content (and not within a Rule Setting nor within a Rule Item's Object).
+    Note: IKI variables are not yet implemented.
+
+  In the case of "scheduler"\:
+    The valid range of the priority number is dependent on the scheduler.
+    For example, non-real-time schedulers (such as "idle") only support a value of 0 whereas real-time schedulers (such as "fifo") only support an inclusive range of 1 to 99.
+    Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
+    Supported real-time schedulers are: "deadline", "fifo", "round_robin".
 
   There are four available Rule Types to choose from: "command", "service", "script", and "utility".
 
@@ -72,25 +89,16 @@ Rule Documentation:
 
   The "utility" Rule Type provides a "script" accompanied with a PID file (Process Identifier file).
 
-  There are nine primary inner Content Objects to perform: "freeze", "kill", "pause", "restart", "resume", "reload", "start", "stop", "thaw".
+  There are nine Rule Actions used to execute ("freeze", "kill", "pause", "restart", "resume", "reload", "start", "stop", and "thaw")\:
+    When "restart" Object's Content is not provided, then "start" and "stop" is called when the rule is executed using the restart Action, if both "start" and "stop" are provided.
+    When "reload", "start", or "stop" Object's Content are not provided, then no respective Action is performed.
 
-  The "freeze" Object's Content is performed whenever this rule is executed using the freeze Action.
-  The "kill" Object's Content is performed whenever this rule is executed using the kill Action (which is, in general, a forced stop).
-  The "pause" Object's Content is performed whenever this rule is executed using the pause Action.
-  The "restart" Object's Content is performed whenever this rule is executed using the restart Action.
-  The "resume" Object's Content is performed whenever this rule is executed using the resume Action.
-  The "reload" Object's Content is performed whenever this rule is executed using the reload Action.
-  The "start" Object's Content is performed whenever this rule is executed using the start Action.
-  The "stop" Object's Content is performed whenever this rule is executed using the stop Action.
-  The "thaw" Object's Content is performed whenever this rule is executed using the thaw Action.
+    Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  When "restart" Object's Content is not provided, then "start" and "stop" is called when the rule is executed using the restart Action, if both "start" and "stop" are provided.
-  When "reload", "start", or "stop" Object's Content are not provided, then no respective Action is performed.
-  Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
+  Thee are additional Rule Actions not used to execute ("pid_file" and "with")\:
+    The "pid_file" Object's Content designates the path to the PID file created by the called program.
 
-  The "pid_file" Object's Content designates the path to the PID file created by the called program.
-
-  The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
-  The following flags are supported:
-    "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
-                 When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").
+    The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
+    The following flags are supported:
+      "full_path": Used only by Rule Types that execute something, wherein the entire full path is used for execution and is assigned as argument[0] (such as "/bin/bash").
+                   When not specified, the path provided is used and the argument[0] will be the base name (such as "bash").

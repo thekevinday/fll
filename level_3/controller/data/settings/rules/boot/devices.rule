@@ -6,4 +6,4 @@
 setting:
   name "Setup System Devices"
 
-  need boot modules
+  on start need boot modules

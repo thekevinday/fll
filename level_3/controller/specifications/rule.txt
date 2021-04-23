@@ -37,15 +37,13 @@ Rule Specification:
     "group": One or more Content representing group names or group ids.
     "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).
     "name": One Content, must have at least 1 graph character (non-whitespace printing character) (leading and trailing whitespace are trimmed off).
-    "need": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
     "nice": One Content, must be a valid number for process "niceness" (Any whole number inclusively between -20 to 19).
+    "on": Four Content, the first being a Rule Action, the second being "need", "want", or "wish", the third being a partial path, and the fourth being a Rule file name without ".rule" extension.
     "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
     "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
     "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
     "user": One Content representing a user name or user id.
-    "want": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
-    "wish": Two Content, the first being a partial path and the second being a rule file name without extension (such as "boot" "modules").
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:
     "freeze": One or more Content representing a program being executed and its arguments.

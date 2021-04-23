@@ -6,7 +6,7 @@
 setting:
   name "Setup Kernel Modules"
 
-  need boot filesystem
+  on start need boot filesystem
 
 script:
   start {

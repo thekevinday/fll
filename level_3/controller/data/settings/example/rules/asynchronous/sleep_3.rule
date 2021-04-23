@@ -4,7 +4,7 @@ setting:
   name "Sleep 3 Seconds."
   nice 15
   limit nice 1 2
-  need asynchronous sleep_8
+  on start need asynchronous sleep_8
 
 script:
   start echo "Sleeping 3: $(date -u), depends: 8"

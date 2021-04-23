@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "private-common.h"
 #include "private-thread.h"
+#include "private-rule.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -400,7 +401,7 @@ extern "C" {
         break;
       }
 
-      if (process->rule.status != F_known_not && !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+      if (!controller_rule_status_is_available(process->action, process->rule) && !(process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
         f_thread_unlock(&process->lock);
 
         return F_none;
@@ -504,10 +505,13 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           processs->size = length;
+
           return status;
         }
         else {
-          process->rule.status = F_known_not;
+          for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size; ++i) {
+            process->rule.status[i] = F_known_not;
+          } // for
         }
       } // for
 
@@ -555,9 +559,6 @@ extern "C" {
     f_string_maps_resize(0, &rule->parameter);
 
     f_string_dynamics_resize(0, &rule->environment);
-    f_string_dynamics_resize(0, &rule->need);
-    f_string_dynamics_resize(0, &rule->want);
-    f_string_dynamics_resize(0, &rule->wish);
 
     f_macro_int32s_t_delete_simple(rule->affinity)
     f_macro_control_group_t_delete_simple(rule->control_group)
@@ -568,6 +569,7 @@ extern "C" {
       f_capability_delete(&rule->capability);
     }
 
+    controller_rule_ons_delete_simple(&rule->ons);
     controller_rule_items_delete_simple(&rule->items);
   }
 #endif // _di_controller_rule_delete_simple_
@@ -592,6 +594,73 @@ extern "C" {
     items->size = 0;
   }
 #endif // _di_controller_rule_items_delete_simple_
+
+#ifndef _di_controller_rule_on_delete_simple_
+  void controller_rule_on_delete_simple(controller_rule_on_t *on) {
+
+    f_string_dynamics_resize(0, &on->need);
+    f_string_dynamics_resize(0, &on->want);
+    f_string_dynamics_resize(0, &on->wish);
+  }
+#endif // _di_controller_rule_on_delete_simple_
+
+#ifndef _di_controller_rule_ons_delete_simple_
+  void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) {
+
+    ons->used = ons->size;
+
+    while (ons->used) {
+      controller_rule_on_delete_simple(&ons->array[--ons->used]);
+    } // while
+
+    f_memory_delete(ons->size, sizeof(controller_rule_on_t), (void **) & ons->array);
+    ons->size = 0;
+  }
+#endif // _di_controller_rule_ons_delete_simple_
+
+#ifndef _di_controller_rule_ons_increase_
+  f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) {
+
+    if (ons->used + 1 > ons->size) {
+      f_array_length_t size = ons->used + controller_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (ons->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return controller_rule_ons_resize(size, ons);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_rule_ons_increase_
+
+#ifndef _di_controller_rule_ons_resize_
+  f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < ons->size; ++i) {
+      controller_rule_on_delete_simple(&ons->array[i]);
+    } // for
+
+    status = f_memory_resize(ons->size, length, sizeof(controller_rule_on_t), (void **) & ons->array);
+
+    if (F_status_is_error_not(status)) {
+      ons->size = length;
+
+      if (ons->used > ons->size) {
+        ons->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // _di_controller_rule_ons_resize_
 
 #ifndef _di_controller_rules_delete_simple_
   void controller_rules_delete_simple(controller_rules_t *rules) {

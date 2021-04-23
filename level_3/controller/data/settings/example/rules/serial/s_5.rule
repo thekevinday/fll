@@ -2,7 +2,8 @@
 
 setting:
   name "Serial 5"
-  need serial s_4
+  on start need serial s_4
+  on stop need serial s_6
 
 script:
   start {

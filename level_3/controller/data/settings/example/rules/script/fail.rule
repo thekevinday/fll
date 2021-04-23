@@ -2,7 +2,7 @@
 
 setting:
   name "Script #2"
-  need script succeed
+  on start need script succeed
 
 script:
   start {
@@ -14,4 +14,3 @@ script:
 
     my_function
   }
-

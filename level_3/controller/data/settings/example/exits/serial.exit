@@ -6,7 +6,8 @@ main:
   consider serial s_3
   consider serial s_4
   consider serial s_5
+  consider serial s_6
 
-  stop serial s_6
+  stop serial s_1
 
   ready

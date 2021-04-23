@@ -69,6 +69,7 @@ extern "C" {
   #define controller_string_no            "no"
   #define controller_string_nofile        "nofile"
   #define controller_string_nproc         "nproc"
+  #define controller_string_on            "on"
   #define controller_string_optional      "optional"
   #define controller_string_other         "other"
   #define controller_string_parameter     "parameter"
@@ -161,6 +162,7 @@ extern "C" {
   #define controller_string_no_length            2
   #define controller_string_nofile_length        6
   #define controller_string_nproc_length         5
+  #define controller_string_on_length            2
   #define controller_string_optional_length      8
   #define controller_string_other_length         5
   #define controller_string_parameter_length     9
@@ -254,6 +256,7 @@ extern "C" {
   const static f_string_t controller_string_no_s = controller_string_no;
   const static f_string_t controller_string_nofile_s = controller_string_nofile;
   const static f_string_t controller_string_nproc_s = controller_string_nproc;
+  const static f_string_t controller_string_on_s = controller_string_on;
   const static f_string_t controller_string_optional_s = controller_string_optional;
   const static f_string_t controller_string_other_s = controller_string_other;
   const static f_string_t controller_string_parameter_s = controller_string_parameter;
@@ -486,6 +489,25 @@ extern "C" {
 /**
  * A Rule Action.
  *
+ * controller_rule_action_method_*:
+ *   - extended:      Designate that this Action is represented using FSS Extended.
+ *   - extended_list: Designate that this Action is represented using FSS Extended List.
+ *
+ * controller_rule_action_type_*:
+ *   - freeze:   The Freeze execution instructions.
+ *   - group:    The Group setting.
+ *   - kill:     The Kill execution instructions.
+ *   - pause:    The Pause execution instructions.
+ *   - pid_file: The PID file setting.
+ *   - reload:   The Reload execution instructions.
+ *   - restart:  The Restart execution instructions.
+ *   - resume:   The Resume execution instructions.
+ *   - start:    The Start execution instructions.
+ *   - stop:     The Stop execution instructions.
+ *   - thaw:     The Thaw execution instructions.
+ *   - user:     The User setting.
+ *   - with:     The With flags.
+ *
  * type:       The Rule Action type.
  * line:       The line number where the Rule Action begins.
  * status:     The last execution status of the Rule Action.
@@ -517,6 +539,9 @@ extern "C" {
     controller_rule_action_type_thaw,
     controller_rule_action_type_user,
     controller_rule_action_type_with,
+
+    // designate the largest value in the enum, the '__' is intended.
+    controller_rule_action_type__enum_size,
   };
 
   typedef struct {
@@ -559,6 +584,13 @@ extern "C" {
 
 /**
  * A Rule Item.
+ *
+ * controller_rule_item_type_*:
+ *   - command: A Command to execute.
+ *   - script:  A Script to execute.
+ *   - service: A Service to execute.
+ *   - setting: Settings associated with the Rule Item.
+ *   - utility: A Utility to execute.
  *
  * type:    The type of the Rule Item.
  * line:    The line number where the Rule Item begins.
@@ -611,35 +643,103 @@ extern "C" {
 #endif // _di_controller_rule_items_t_
 
 /**
+ * The Rule "on" values for designating dependencies.
+ *
+ * action: The Rule Action type this "on" dependencies are associated with.
+ * need:   The Rule Alias for a required Rule.
+ * want:   The Rule Alias for an optional Rule that is required to succeed if found.
+ * wish:   The Rule Alias for an optional Rule that is not required.
+ */
+#ifndef _di_controller_rule_on_t_
+  typedef struct {
+    uint8_t action;
+
+    f_string_dynamics_t need;
+    f_string_dynamics_t want;
+    f_string_dynamics_t wish;
+  } controller_rule_on_t;
+
+  #define controller_rule_on_initialize { \
+    0, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+  }
+#endif // _di_controller_rule_on_t_
+
+/**
+ * The Rule "on" array.
+ *
+ * array: An array of Rule "on" values.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_controller_rule_ons_t_
+  typedef struct {
+    controller_rule_on_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_rule_ons_t;
+
+  #define controller_rule_ons_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
+#endif // _di_controller_rule_ons_t_
+
+/**
  * A Rule.
  *
- * status:           The status of the rule as the result of processing/execution.
- * timeout_kill:     The timeout to wait relating to using a kill signal.
- * timeout_start:    The timeout to wait relating to starting a process.
- * timeout_stop:     The timeout to wait relating to stopping a process.
- * status:           A status associated with the loading of the rule (not the execution of the rule).
- * has:              Bitwise set of "has" codes representing what the Rule has.
- * nice:             The niceness value if the Rule "has" nice.
- * user:             The User ID if the Rule "has" a user.
- * group:            The Group ID if the Rule "has" a group.
- * timestamp:        The timestamp when the Rule was loaded.
- * id:               The distinct ID (machine name) of the rule, such as "service/ssh".
- * name:             A human name for the Rule (does not have to be distinct).
- * path:             The path to the Rule file.
- * script:           The program or path to the program of the scripting engine to use when processing scripts in this Rule.
- * define:           Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
- * parameters:       Any parameters made available to the Rule for IKI substitution.
- * environment:      All environment variables allowed to be exposed to the Rule when processing.
- * need:             A Rule ID (machine name) of the Rule that is needed (required).
- * want:             A Rule ID (machine name) of the Rule that is wanted (optional).
- * wish:             A Rule ID (machine name) of the Rule that is wished for (optional).
- * affinity:         The cpu affinity to be used when executing the Rule.
- * capability:       The capability setting if the Rule "has" a capability.
- * control_group:    The control group setting if the Rule "has" a control group.
- * groups:           The groups to assign to the user to run as (with the first group being the primary group).
- * limits:           The cpu/resource limits to use when executing the Rule.
- * scheduler:        The scheduler setting if the Rule "has" a scheduler.
- * items:            All items associated with the Rule.
+ * controller_rule_setting_type_*:
+ *   - affinity:      Setting type representing a affinity.
+ *   - capability:    Setting type representing a capability.
+ *   - control_group: Setting type representing a control group.
+ *   - define:        Setting type representing a define.
+ *   - environment:   Setting type representing a environment.
+ *   - group:         Setting type representing a group.
+ *   - limit:         Setting type representing a limit.
+ *   - name:          Setting type representing a name.
+ *   - nice:          Setting type representing a nice.
+ *   - on:            Setting type representing a on.
+ *   - parameter:     Setting type representing a parameter.
+ *   - path:          Setting type representing a path.
+ *   - scheduler:     Setting type representing a scheduler.
+ *   - script:        Setting type representing a script.
+ *   - user:          Setting type representing a user.
+ *
+ * controller_rule_has_*:
+ *   - control_group: Has type representing a control group.
+ *   - group:         Has type representing a group.
+ *   - nice:          Has type representing a nice.
+ *   - scheduler:     Has type representing a scheduler.
+ *   - user:          Has type representing a user.
+ *
+ * affinity:      The cpu affinity to be used when executing the Rule.
+ * alias:         The distinct ID (machine name) of the rule, such as "service/ssh".
+ * capability:    The capability setting if the Rule "has" a capability.
+ * control_group: The control group setting if the Rule "has" a control group.
+ * define:        Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
+ * environment:   All environment variables allowed to be exposed to the Rule when processing.
+ * group:         The group ID if the Rule "has" a group.
+ * groups:        A set of group IDs to run the process with (first specified group is the primary group).
+ * has:           Bitwise set of "has" codes representing what the Rule has.
+ * items:         All items associated with the Rule.
+ * limits:        The cpu/resource limits to use when executing the Rule.
+ * name:          A human name for the Rule (does not have to be distinct), such as "Bash Script".
+ * nice:          The niceness value if the Rule "has" nice.
+ * on:            A set of parameters for defining dependencies and how they are needed, wanted, or wished for.
+ * parameter:     Any parameters made available to the Rule for IKI substitution.
+ * path:          The path to the Rule file.
+ * scheduler:     The scheduler setting if the Rule "has" a scheduler.
+ * script:        The program or path to the program of the scripting engine to use when processing scripts in this Rule.
+ * status:        A set of action-specific success/failure status of the Rule. Each index represents a controller_rule_action_type_* enum value. Index 0 represents a global status.
+ * timeout_kill:  The timeout to wait relating to using a kill signal.
+ * timeout_start: The timeout to wait relating to starting a process.
+ * timeout_stop:  The timeout to wait relating to stopping a process.
+ * timestamp:     The timestamp when the Rule was loaded.
+ * user:          The User ID if the Rule "has" a user.
  */
 #ifndef _di_controller_rule_t_
   enum {
@@ -651,15 +751,13 @@ extern "C" {
     controller_rule_setting_type_group,
     controller_rule_setting_type_limit,
     controller_rule_setting_type_name,
-    controller_rule_setting_type_need,
     controller_rule_setting_type_nice,
+    controller_rule_setting_type_on,
     controller_rule_setting_type_parameter,
     controller_rule_setting_type_path,
     controller_rule_setting_type_scheduler,
     controller_rule_setting_type_script,
     controller_rule_setting_type_user,
-    controller_rule_setting_type_want,
-    controller_rule_setting_type_wish,
   };
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
@@ -670,7 +768,7 @@ extern "C" {
   #define controller_rule_has_user          0x10
 
   typedef struct {
-    f_status_t status;
+    f_status_t status[controller_rule_action_type__enum_size];
 
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
@@ -692,9 +790,6 @@ extern "C" {
     f_string_maps_t parameter;
 
     f_string_dynamics_t environment;
-    f_string_dynamics_t need;
-    f_string_dynamics_t want;
-    f_string_dynamics_t wish;
 
     f_int32s_t affinity;
     f_capability_t capability;
@@ -703,11 +798,27 @@ extern "C" {
     f_limit_sets_t limits;
     f_execute_scheduler_t scheduler;
 
+    controller_rule_ons_t ons;
     controller_rule_items_t items;
   } controller_rule_t;
 
   #define controller_rule_t_initialize { \
-    F_known_not, \
+      { \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+        F_known_not, \
+      }, \
     0, \
     0, \
     0, \
@@ -723,15 +834,13 @@ extern "C" {
     f_string_maps_t_initialize, \
     f_string_maps_t_initialize, \
     f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
-    f_string_dynamics_t_initialize, \
     f_int32s_t_initialize, \
     f_capability_t_initialize, \
     f_control_group_t_initialize, \
     f_int32s_t_initialize, \
     f_limit_sets_t_initialize, \
     f_execute_scheduler_t_initialize, \
+    controller_rule_ons_initialize, \
     controller_rule_items_initialize, \
   }
 #endif // _di_controller_rule_t_
@@ -1860,6 +1969,74 @@ extern "C" {
 #ifndef _di_controller_rule_items_delete_simple_
   extern void controller_rule_items_delete_simple(controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_rule_items_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule item without caring about return status.
+ *
+ * @param on
+ *   The on to deallocate.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_controller_rule_on_delete_simple_
+  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_on_delete_simple_
+
+/**
+ * Fully deallocate all memory for the given rule items without caring about return status.
+ *
+ * @param ons
+ *   The rule_ons to deallocate.
+ *
+ * @see controller_rule_on_delete_simple()
+ * @see f_memory_delete()
+ */
+#ifndef _di_controller_rule_ons_delete_simple_
+  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_ons_delete_simple_
+
+/**
+ * Increase the size of the rule array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param ons
+ *   The on array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see controller_rule_ons_resize()
+ */
+#ifndef _di_controller_rule_ons_increase_
+  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_
+
+/**
+ * Resize the rule array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param ons
+ *   The on array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_rule_ons_resize_
+  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_ons_resize_
 
 /**
  * Fully deallocate all memory for the given rules without caring about return status.

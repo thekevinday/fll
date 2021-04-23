@@ -191,13 +191,15 @@ extern "C" {
 #endif // _di_controller_file_pid_read_
 
 /**
- * Find an existing process.
+ * Find an existing process, for the given Rule Action.
  *
  * Do not confuse this with a process in the context of a PID.
  * This is a stucture for the current processing of some rule.
  *
  * This does not do any locking or unlocking for the processs data, be sure to lock appropriately before and after calling this.
  *
+ * @param action
+ *   The Rule Action to find.
  * @param alias
  *   The Rule alias to find.
  * @param processs
@@ -212,7 +214,7 @@ extern "C" {
  *   F_true if there is a process found (address is stored in "at").
  */
 #ifndef _di_controller_find_process_
-  f_status_t controller_find_process(const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) f_gcc_attribute_visibility_internal;
+  f_status_t controller_find_process(const f_array_length_t action, const f_string_static_t alias, const controller_processs_t processs, f_array_length_t *at) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_find_process_
 
 /**
@@ -357,6 +359,83 @@ extern "C" {
 #ifndef _di_controller_process_entry_
   extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_main_t *main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
+
+/**
+ * Prepare the process.
+ *
+ * The process is initialized with the process id, the rule alias, and the rule action type.
+ * These are the necessary parts for uniquely identifying the process.
+ *
+ * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
+ *
+ * This requires that a main.thread->lock.process lock be set on process->lock before being called.
+ *
+ * @param is_normal
+ *   If TRUE, then process as if this is a normal operation (entry and control).
+ *   If FALSE, then process as if this is an exit operation.
+ * @param action
+ *   The Rule Action to use.
+ * @param alias
+ *   The Rule alias to use.
+ * @param main
+ *   The main data.
+ * @param id
+ *   (optional) The process ID when found or created.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *   F_found on success, but nothing was done because an existing process was found.
+ *
+ *   F_lock (with error bit) if failed to re-establish read lock on main.thread->lock.process while returning.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_terminate_after().
+ *
+ *   Errors (with error bit) from: controller_lock_read().
+ *   Errors (with error bit) from: controller_lock_write().
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_terminate_after()
+ * @see controller_lock_read()
+ * @see controller_lock_write()
+ */
+#ifndef _di_controller_process_prepare_
+  extern f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_main_t main, f_array_length_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_process_prepare_
+
+/**
+ * Prepare the process for some process type.
+ *
+ * The process is initialized with the process id, the rule alias, and the rule action type.
+ * These are the necessary parts for uniquely identifying the process.
+ *
+ * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
+ *
+ * This requires that a main.thread->lock.process lock be set on process->lock before being called.
+ *
+ * @param type
+ *   The process type to use when checking if thread is enabled.
+ * @param action
+ *   The Rule Action to use.
+ * @param alias
+ *   The Rule alias to use.
+ * @param main
+ *   The main data.
+ * @param id
+ *   (optional) The process ID when found or created.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   Success from: controller_process_prepare()
+ *
+ *   Errors (with error bit) from: controller_process_prepare().
+ *
+ * @see controller_process_prepare()
+ */
+#ifndef _di_controller_process_prepare_process_type_
+  extern f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_main_t main, f_array_length_t *id) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_process_prepare_process_type_
 
 /**
  * Given a wide range of status codes (that are errors), simplify them down to a small subset.

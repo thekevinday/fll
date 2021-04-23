@@ -6,7 +6,7 @@
 setting:
   name "Loopback Device"
 
-  need boot modules
+  on start need boot modules
 
 script:
   start {

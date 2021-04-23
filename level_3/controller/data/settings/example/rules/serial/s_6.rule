@@ -2,7 +2,7 @@
 
 setting:
   name "Serial 6"
-  need serial s_5
+  on start need serial s_5
 
 script:
   start {
