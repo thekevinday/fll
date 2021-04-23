@@ -1358,7 +1358,7 @@ extern "C" {
       f_thread_mutex_lock(&main->thread->lock.print);
 
       fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
-      fprintf(main->data->output.stream, "Done processing entry item '");
+      fprintf(main->data->output.stream, "Done processing %s item '", is_entry ? controller_string_entry_s : controller_string_exit_s);
       fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_main_s, main->data->context.set.title.after->string);
       fprintf(main->data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
