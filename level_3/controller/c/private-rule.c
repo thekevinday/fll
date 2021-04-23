@@ -2471,6 +2471,10 @@ extern "C" {
       // the thread is done, so close the thread.
       if (process->state == controller_process_state_done) {
         controller_thread_join(&process->id_thread);
+
+        f_thread_mutex_lock(&process->wait_lock);
+        f_thread_condition_signal_all(&process->wait);
+        f_thread_mutex_unlock(&process->wait_lock);
       }
 
       process->id = at;
@@ -2591,6 +2595,10 @@ extern "C" {
       else {
         process->state = controller_process_state_idle;
       }
+
+      f_thread_mutex_lock(&process->wait_lock);
+      f_thread_condition_signal_all(&process->wait);
+      f_thread_mutex_unlock(&process->wait_lock);
 
       f_thread_unlock(&process->lock);
     }
@@ -5555,6 +5563,10 @@ extern "C" {
               process->state = controller_process_state_idle;
 
               f_thread_unlock(&process->active);
+
+              f_thread_mutex_lock(&process->wait_lock);
+              f_thread_condition_signal_all(&process->wait);
+              f_thread_mutex_unlock(&process->wait_lock);
             }
 
             if (caller) {

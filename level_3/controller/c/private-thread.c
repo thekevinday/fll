@@ -86,6 +86,10 @@ extern "C" {
               process->state = controller_process_state_idle;
               process->id_thread = 0;
 
+              f_thread_mutex_lock(&process->wait_lock);
+              f_thread_condition_signal_all(&process->wait);
+              f_thread_mutex_unlock(&process->wait_lock);
+
               f_thread_unlock(&process->lock);
             }
             else {
