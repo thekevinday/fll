@@ -1358,7 +1358,12 @@ extern "C" {
       fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
       fprintf(main->data->output.stream, "Done processing %s item '", is_entry ? controller_string_entry_s : controller_string_exit_s);
       fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, controller_string_main_s, main->data->context.set.title.after->string);
-      fprintf(main->data->output.stream, "'.%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+      fprintf(main->data->output.stream, "'.%c", f_string_eol_s[0]);
+
+      // failsafe should not print the extra newline because the failure exit from controller_main should handle this.
+      if (!failsafe) {
+        fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+      }
 
       controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
     }
