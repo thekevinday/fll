@@ -349,7 +349,7 @@ extern "C" {
  *   - controller_rule_action_type_start
  *   - controller_rule_action_type_stop
  * @param options
- *   A number using bits to represent specific boolean options.
+ *   Process options to consider when executing.
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param main
  *   The main data.
@@ -379,7 +379,7 @@ extern "C" {
  * This requires that a read lock be set on process->lock before being called.
  *
  * @param type
- *   The item type code.
+ *   The item type ID.
  * @param action
  *   The action to perform based on the action type codes.
  *
@@ -394,7 +394,7 @@ extern "C" {
  * @param arguments
  *   The arguments to pass to the program.
  * @param options
- *   A number using bits to represent specific boolean options.
+ *   Process options to consider when executing.
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param main
  *   The main data.
@@ -444,7 +444,7 @@ extern "C" {
  * @param arguments
  *   The arguments to pass to the program.
  * @param options
- *   A number using bits to represent specific boolean options.
+ *   Process options to consider when executing.
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param with
  *   The "with" option flags.

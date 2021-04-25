@@ -281,7 +281,23 @@ extern "C" {
     }
 
     if (F_status_is_error(status) || status == F_signal || !(data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
-      // do nothing
+
+      if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+        const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(&main, main.setting);
+
+        status = f_thread_create(0, &thread.id_entry, &controller_thread_exit, (void *) &entry);
+
+        if (F_status_is_error(status)) {
+          if (data->error.verbosity != f_console_verbosity_quiet) {
+            controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
+          }
+        }
+        else {
+          controller_thread_join(&thread.id_entry);
+
+          status = thread.status;
+        }
+      }
     }
     else {
       if (data->parameters[controller_parameter_validate].result == f_console_result_none && setting->mode == controller_setting_mode_service) {

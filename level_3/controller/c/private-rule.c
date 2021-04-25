@@ -1301,7 +1301,6 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate) {
-
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main.thread->lock.print);
 
@@ -2531,7 +2530,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(main.data->error, cache.action, F_status_set_fine(status), "f_type_array_lengths_resize", F_true, main.thread);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_type_array_lengths_resize", F_true, main.thread);
       }
       else {
         for (f_array_length_t i = 0; i < stack.used; ++i) {
@@ -2553,7 +2552,7 @@ extern "C" {
         status = f_string_dynamic_append(cache.action.name_item, &process->cache.action.name_item);
       }
       else {
-        controller_entry_error_print(main.data->error, cache.action, F_status_set_fine(status), "f_string_dynamic_append", F_true, main.thread);
+        controller_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamic_append", F_true, main.thread);
       }
     }
 
@@ -2564,7 +2563,7 @@ extern "C" {
         status = f_thread_create(0, &process->id_thread, controller_thread_process, (void *) process);
 
         if (F_status_is_error(status)) {
-          controller_entry_error_print(main.data->error, cache.action, F_status_set_fine(status), "f_thread_create", F_true, main.thread);
+          controller_error_print(main.data->error, F_status_set_fine(status), "f_thread_create", F_true, main.thread);
         }
       }
       else {
@@ -2579,6 +2578,7 @@ extern "C" {
     }
 
     if (!action || F_status_is_error(status) && (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
+
       status = controller_lock_write_process(process, main.thread, &process->lock);
 
       if (status == F_signal || F_status_is_error(status)) {
@@ -2703,7 +2703,7 @@ extern "C" {
       f_thread_unlock(&main.thread->lock.rule);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "controller_rule_copy", F_true, main.thread);
+        controller_error_print(main.data->error, F_status_set_fine(status), "controller_rule_copy", F_true, main.thread);
       }
       else if (!process->action) {
 
@@ -2754,7 +2754,7 @@ extern "C" {
           status = f_type_array_lengths_increase(&process->stack);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(main.data->error, process->cache.action, F_status_set_fine(status), "f_type_array_lengths_increase", F_true, main.thread);
+            controller_error_print(main.data->error, F_status_set_fine(status), "f_type_array_lengths_increase", F_true, main.thread);
           }
           else {
             f_thread_unlock(&process->lock);
@@ -5398,10 +5398,10 @@ extern "C" {
     f_status_t status_lock = F_none;
 
     if (caller) {
-      controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
+      status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
     }
     else {
-      controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
+      status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
     }
 
     if (status_lock == F_signal || F_status_is_error(status_lock)) {
@@ -5419,15 +5419,22 @@ extern "C" {
     f_status_t status = F_none;
 
     bool required_not_run = F_false;
+    bool skip = F_false;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    controller_process_t *process = 0;
+    // build a list of what to wait for so that anything new after this point will not be waited for.
+    const f_array_length_t process_total = main.thread->processs.used;
+    controller_process_t *process_list[process_total];
 
-    bool skip = F_false;
+    for (; i < process_total; ++i) {
+      process_list[i] = main.thread->processs.array[i];
+    } // for
 
-    for (; i < main.thread->processs.used; ++i) {
+    f_thread_unlock(&main.thread->lock.process);
+
+    for (i = 0; i < process_total; ++i) {
 
       if (caller) {
         if (!controller_thread_is_enabled_process(caller, main.thread)) break;
@@ -5436,11 +5443,39 @@ extern "C" {
         if (!controller_thread_is_enabled(is_normal, main.thread)) break;
       }
 
-      process = main.thread->processs.array[i];
-
+      // re-establish main process read lock to wait for or protect from the cleanup thread while checking the read process.
       if (caller) {
+        status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
+      }
+      else {
+        status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
+      }
+
+      if (status_lock == F_signal || F_status_is_error(status_lock)) break;
+
+      if (!process_list[i]) {
         f_thread_unlock(&main.thread->lock.process);
 
+        continue;
+      }
+
+      if (caller) {
+        status_lock = controller_lock_read_process(caller, main.thread, &process_list[i]->active);
+      }
+      else {
+        status_lock = controller_lock_read(is_normal, main.thread, &process_list[i]->active);
+      }
+
+      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+        f_thread_unlock(&main.thread->lock.process);
+
+        break;
+      }
+
+      // once the active lock is obtained, then the main process read lock can be safely released.
+      f_thread_unlock(&main.thread->lock.process);
+
+      if (caller) {
         if (caller) {
           status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.rule);
         }
@@ -5448,10 +5483,15 @@ extern "C" {
           status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.rule);
         }
 
-        if (status_lock == F_signal || F_status_is_error(status_lock)) break;
+        if (status_lock == F_signal || F_status_is_error(status_lock)) {
+          f_thread_unlock(&process_list[i]->active);
 
-        if (fl_string_dynamic_compare(caller->rule.alias, process->rule.alias) == F_equal_to) {
+          break;
+        }
+
+        if (fl_string_dynamic_compare(caller->rule.alias, process_list[i]->rule.alias) == F_equal_to) {
           f_thread_unlock(&main.thread->lock.rule);
+          f_thread_unlock(&process_list[i]->active);
 
           continue;
         }
@@ -5467,7 +5507,7 @@ extern "C" {
             if (!controller_thread_is_enabled(is_normal, main.thread)) break;
           }
 
-          if (main.thread->processs.array[caller->stack.array[j]] && fl_string_dynamic_compare(process->rule.alias, main.thread->processs.array[caller->stack.array[j]]->rule.alias) == F_equal_to) {
+          if (main.thread->processs.array[caller->stack.array[j]] && fl_string_dynamic_compare(process_list[i]->rule.alias, main.thread->processs.array[caller->stack.array[j]]->rule.alias) == F_equal_to) {
             skip = F_true;
           }
 
@@ -5476,231 +5516,165 @@ extern "C" {
 
         f_thread_unlock(&main.thread->lock.rule);
 
-        if (caller) {
-          status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-        }
-        else {
-          status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-        }
-
-        if (status_lock == F_signal || F_status_is_error(status_lock)) break;
-        if (skip) continue;
-      }
-
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, main.thread, &process->active);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, main.thread, &process->active);
-      }
-
-      if (status_lock == F_signal || F_status_is_error(status_lock)) {
-        f_thread_unlock(&main.thread->lock.process);
-
-        break;
-      }
-
-      f_thread_unlock(&main.thread->lock.process);
-
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, main.thread, &process->lock);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, main.thread, &process->lock);
-      }
-
-      if (status_lock == F_signal || F_status_is_error(status_lock)) {
-        f_thread_unlock(&process->active);
-
-        break;
-      }
-
-      if (required) {
-        if (!(process->options & controller_process_option_require)) {
-          f_thread_unlock(&process->lock);
-          f_thread_unlock(&process->active);
-
-          if (caller) {
-            status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-          }
-          else {
-            status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-          }
-
-          if (status_lock == F_signal || F_status_is_error(status_lock)) break;
+        if (skip) {
+          f_thread_unlock(&process_list[i]->active);
 
           continue;
         }
       }
 
-      if (!process->state || process->state == controller_process_state_idle || process->state == controller_process_state_done) {
+      if (caller) {
+        status_lock = controller_lock_read_process(caller, main.thread, &process_list[i]->lock);
+      }
+      else {
+        status_lock = controller_lock_read(is_normal, main.thread, &process_list[i]->lock);
+      }
 
-        if (process->state == controller_process_state_done) {
-          f_thread_unlock(&process->lock);
+      if (status_lock == F_signal || F_status_is_error(status_lock)) {
+        f_thread_unlock(&process_list[i]->active);
+
+        break;
+      }
+
+      if (required) {
+        if (!(process_list[i]->options & controller_process_option_require)) {
+          f_thread_unlock(&process_list[i]->lock);
+          f_thread_unlock(&process_list[i]->active);
+
+          continue;
+        }
+      }
+
+      if (!process_list[i]->state || process_list[i]->state == controller_process_state_idle || process_list[i]->state == controller_process_state_done) {
+
+        if (process_list[i]->state == controller_process_state_done) {
+          f_thread_unlock(&process_list[i]->lock);
 
           if (caller) {
-            status_lock = controller_lock_write_process(process, main.thread, &process->lock);
+            status_lock = controller_lock_write_process(process_list[i], main.thread, &process_list[i]->lock);
           }
           else {
-            status_lock = controller_lock_write(is_normal, main.thread, &process->lock);
+            status_lock = controller_lock_write(is_normal, main.thread, &process_list[i]->lock);
           }
 
           if (status_lock == F_signal || F_status_is_error(status_lock)) {
             controller_lock_error_critical_print(main.data->error, F_status_set_fine(status_lock), F_false, main.thread);
 
-            f_thread_unlock(&process->active);
+            f_thread_unlock(&process_list[i]->active);
 
             return status_lock;
           }
 
-          if (process->state == controller_process_state_done) {
-            f_thread_unlock(&process->active);
+          if (process_list[i]->state == controller_process_state_done) {
+            f_thread_unlock(&process_list[i]->active);
 
-            if (f_thread_lock_write_try(&process->active) == F_none) {
+            if (f_thread_lock_write_try(&process_list[i]->active) == F_none) {
 
-              controller_thread_join(&process->id_thread);
+              controller_thread_join(&process_list[i]->id_thread);
 
-              process->state = controller_process_state_idle;
+              process_list[i]->state = controller_process_state_idle;
 
-              f_thread_unlock(&process->active);
+              f_thread_unlock(&process_list[i]->active);
 
-              f_thread_mutex_lock(&process->wait_lock);
-              f_thread_condition_signal_all(&process->wait);
-              f_thread_mutex_unlock(&process->wait_lock);
+              f_thread_mutex_lock(&process_list[i]->wait_lock);
+              f_thread_condition_signal_all(&process_list[i]->wait);
+              f_thread_mutex_unlock(&process_list[i]->wait_lock);
             }
 
             if (caller) {
-              status_lock = controller_lock_read_process(caller, main.thread, &process->active);
+              status_lock = controller_lock_read_process(caller, main.thread, &process_list[i]->active);
             }
             else {
-              status_lock = controller_lock_read(is_normal, main.thread, &process->active);
+              status_lock = controller_lock_read(is_normal, main.thread, &process_list[i]->active);
             }
 
             if (status_lock == F_signal || F_status_is_error(status_lock)) {
-              f_thread_unlock(&process->lock);
+              f_thread_unlock(&process_list[i]->lock);
 
               break;
             }
           }
 
-          f_thread_unlock(&process->lock);
+          f_thread_unlock(&process_list[i]->lock);
 
           if (caller) {
-            status_lock = controller_lock_read_process(caller, main.thread, &process->lock);
+            status_lock = controller_lock_read_process(caller, main.thread, &process_list[i]->lock);
           }
           else {
-            status_lock = controller_lock_read(is_normal, main.thread, &process->lock);
+            status_lock = controller_lock_read(is_normal, main.thread, &process_list[i]->lock);
           }
 
           if (status_lock == F_signal || F_status_is_error(status_lock)) break;
         }
 
-        if (required && (process->options & controller_process_option_require)) {
-          if (controller_rule_status_is_error(process->action, process->rule)) {
+        if (required && (process_list[i]->options & controller_process_option_require)) {
+          if (controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule)) {
             status = F_status_set_error(F_require);
 
-            f_thread_unlock(&process->lock);
-            f_thread_unlock(&process->active);
-
-            if (caller) {
-              status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-            }
-            else {
-              status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-            }
+            f_thread_unlock(&process_list[i]->lock);
+            f_thread_unlock(&process_list[i]->active);
 
             break;
           }
-          else if (controller_rule_status_is_available(process->action, process->rule)) {
+          else if (controller_rule_status_is_available(process_list[i]->action, process_list[i]->rule)) {
             required_not_run = F_true;
           }
         }
 
-        f_thread_unlock(&process->lock);
-        f_thread_unlock(&process->active);
+        f_thread_unlock(&process_list[i]->lock);
+        f_thread_unlock(&process_list[i]->active);
 
-        if (caller) {
-          status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-        }
-        else {
-          status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-        }
-
-        if (status_lock == F_signal || F_status_is_error(status_lock)) break;
         if (F_status_set_fine(status) == F_require) break;
 
         continue;
       }
 
-      if (!controller_rule_status_is_error(process->action, process->rule) && (process->state == controller_process_state_active || process->state == controller_process_state_busy)) {
-        f_thread_unlock(&process->lock);
+      if (!controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule) && (process_list[i]->state == controller_process_state_active || process_list[i]->state == controller_process_state_busy)) {
+        f_thread_unlock(&process_list[i]->lock);
 
-        status = controller_process_wait(main, process);
+        status = controller_process_wait(main, process_list[i]);
 
         if (status == F_signal) {
-          f_thread_unlock(&process->active);
-
-          if (caller) {
-            status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-          }
-          else {
-            status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-          }
+          f_thread_unlock(&process_list[i]->active);
 
           break;
         }
 
         if (required) {
           if (caller) {
-            status_lock = controller_lock_read_process(caller, main.thread, &process->lock);
+            status_lock = controller_lock_read_process(caller, main.thread, &process_list[i]->lock);
           }
           else {
-            status_lock = controller_lock_read(is_normal, main.thread, &process->lock);
+            status_lock = controller_lock_read(is_normal, main.thread, &process_list[i]->lock);
           }
 
           if (status_lock == F_signal || F_status_is_error(status_lock)) {
-            f_thread_unlock(&process->active);
+            f_thread_unlock(&process_list[i]->active);
 
             break;
           }
 
-          if ((process->options & controller_process_option_require)) {
-            f_thread_unlock(&process->lock);
+          if ((process_list[i]->options & controller_process_option_require)) {
+            f_thread_unlock(&process_list[i]->lock);
 
-            if (controller_rule_status_is_error(process->action, process->rule)) {
+            if (controller_rule_status_is_error(process_list[i]->action, process_list[i]->rule)) {
               status = F_status_set_error(F_require);
 
-              f_thread_unlock(&process->active);
-
-              if (caller) {
-                status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-              }
-              else {
-                status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-              }
-
+              f_thread_unlock(&process_list[i]->active);
               break;
             }
           }
           else {
-            f_thread_unlock(&process->lock);
+            f_thread_unlock(&process_list[i]->lock);
           }
         }
       }
       else {
-        f_thread_unlock(&process->lock);
+        f_thread_unlock(&process_list[i]->lock);
       }
 
-      f_thread_unlock(&process->active);
+      f_thread_unlock(&process_list[i]->active);
 
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, main.thread, &main.thread->lock.process);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, main.thread, &main.thread->lock.process);
-      }
-
-      if (status_lock == F_signal || F_status_is_error(status_lock)) break;
       if (status == F_signal || F_status_set_fine(status) == F_require) break;
     } // for
 
@@ -5709,8 +5683,6 @@ extern "C" {
 
       return status_lock;
     }
-
-    f_thread_unlock(&main.thread->lock.process);
 
     if (caller) {
       if (!controller_thread_is_enabled_process(caller, main.thread)) {

@@ -91,6 +91,9 @@ extern "C" {
 /**
  * Read the entry list, extracting all items and values.
  *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
  * @param content_range
  *   The range in the list buffer representing the content.
  * @param main
@@ -122,12 +125,15 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**
  * Print the entry related error, locking the print mutex during the print.
  *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
  * @param print
  *   Designates how printing is to be performed.
  * @param cache
@@ -147,7 +153,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_
 
 /**
@@ -157,6 +163,9 @@ extern "C" {
  *
  * This neither locks the thread nor does it check to see if output is enabled or disabled.
  *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
  * @param print
  *   Designates how printing is to be performed.
  * @param cache
@@ -166,7 +175,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const fll_error_print_t print, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_cache_
 
 /**
