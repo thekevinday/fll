@@ -32,3 +32,29 @@ Valgrind Debugging:
   The way in which the "active" lock is used will result in out of order locks.
   This causes "helgrind" to produce a lot of warnings about locks being out of order.
   Therefore, it is stongly recommended to use the parameter "--track-lockorders=no".
+
+Thread Cancellation Problems:
+  The POSIX standard designates thread cancellation via pthread_cancel() (which is provided via f_thread_cancel()).
+  This cancellation approach works such that when pthread_cancel() the thread is immediately terminated at a cancellation point.
+  The POSIX standard designates the detecting and acting on a cancellation point via pthread_testcancel() (which is provided via f_thread_cancel_test()).
+
+  The pthread_testcancel() operates such that if pthread_cancel() was ever used for some thread with pthread_testcancel() that thread immediately exits.
+  There is no opportunity for the thread calling pthread_testcancel() to do any cleanup.
+
+  The POSIX standard designates a way to perform exit tasks via pthread_cleanup_push() and pthread_cleanup_pop().
+  These are allowed to be implemented as macros.
+
+  The POSIX standard then provides a number of POSIX functions that must act as a cancellation point (essentially they call pthread_testcancel() at act as if they do).
+
+  What all of this means is that the POSIX cancellation system is unusable, useless, and dangerous (except in a very restricted set of project designs).
+
+  The Featureless Linux Library is designed to encourage everything to be functional and non-global.
+  The pthread_cleanup_push() and pthread_cleanup_pop() functions cannot be safely and reliable used because they not only may be macros but the Featureless Linux Library allows for the design to be in multiple scopes.
+  The pthread_testcancel() is incredibly dangerous and can very easily result in segmentation faults, memory leaks, dead locks, and other security concerns.
+
+  The cancellation functions, such as sleep(), may require being either interrupted through an interrupt signal or be cancelled via pthread_testcancel().
+  The pthread_testcancel() may need to be used in these cases.
+
+  Therefore, avoid using any design or functions that may force or require the use of pthread_testcancel() but when forced to be very careful to clear up resources and locks to make sure that if a cancellation occurs that nothing bad can happen.
+  A better approach would be to use timed checks on some variable shared between all affected functions and scopes that designates cancellation.
+  That way when a cancellation is reseived through the custom variable, the functions can actually handle the situation, safely and properly, before cancelling.
