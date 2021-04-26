@@ -40,6 +40,7 @@ extern "C" {
   #define controller_string_entry         "entry"
   #define controller_string_entries       "entries"
   #define controller_string_environment   "environment"
+  #define controller_string_execute       "execute"
   #define controller_string_existing      "existing"
   #define controller_string_exit          "exit"
   #define controller_string_exits         "exits"
@@ -135,6 +136,7 @@ extern "C" {
   #define controller_string_entries_length       7
   #define controller_string_environment_length   11
   #define controller_string_existing_length      8
+  #define controller_string_execute_length       7
   #define controller_string_exit_length          4
   #define controller_string_exits_length         5
   #define controller_string_fail_length          4
@@ -228,6 +230,7 @@ extern "C" {
   const static f_string_t controller_string_entries_s = controller_string_entries;
   const static f_string_t controller_string_environment_s = controller_string_environment;
   const static f_string_t controller_string_existing_s = controller_string_existing;
+  const static f_string_t controller_string_execute_s = controller_string_execute;
   const static f_string_t controller_string_exit_s = controller_string_exit;
   const static f_string_t controller_string_exits_s = controller_string_exits;
   const static f_string_t controller_string_fail_s = controller_string_fail;
@@ -1008,6 +1011,7 @@ extern "C" {
  *
  * controller_entry_action_type_*:
  *   - consider: Designate a rule to be pre-loaded.
+ *   - execute:  Execute into another program.
  *   - failsafe: Designate a failsafe "item".
  *   - freeze:   A Rule Action for freezing.
  *   - item:     A named set of Rules.
@@ -1042,6 +1046,7 @@ extern "C" {
 #ifndef _di_controller_entry_action_t_
   enum {
     controller_entry_action_type_consider = 1,
+    controller_entry_action_type_execute,
     controller_entry_action_type_failsafe,
     controller_entry_action_type_freeze,
     controller_entry_action_type_item,
@@ -1321,16 +1326,36 @@ extern "C" {
   /**
    * States for enabled, designating how to stop the process.
    *
-   * controller_thread_enabled_not: the controller is no longer enabled, shut down and abort all work.
-   * controller_thread_enabled: the controller is operating normally.
-   * controller_thread_enabled_stop: the controller is shutting down, only process exit rules and stop actions.
-   * controller_thread_enabled_stop_ready: the controller is shutting down, only process exit rules and stop actions, and now ready to send termination signals.
+   * controller_thread_*:
+   *   - enabled_not:          The controller is no longer enabled, shut down and abort all work.
+   *   - enabled:              The controller is operating normally.
+   *   - enabled_execute:      The controller is executing another process, all running operations must terminate.
+   *   - enabled_exit:         The controller is shutting down, only process exit rules.
+   *   - enabled_exit_execute: The controller is executing another process while in failsafe mode, all running operations must terminate.
+   *   - enabled_exit_ready:   The controller is shutting down, only process exit rules, and now ready to send termination signals.
+   *
+   * controller_thread_cancel_*:
+   *   - signal:       Cancellation is triggered by a signal.
+   *   - call:         Cancellation is explicitly called.
+   *   - execute:      Cancellation is explicitly called due to an "execute" Item Action, when not during Exit.
+   *   - exit:         Cancellation is explicitly called during Exit.
+   *   - exit_execute: Cancellation is explicitly called due to an "execute" Item Action during Exit.
    */
   enum {
     controller_thread_enabled_not = 0,
     controller_thread_enabled,
-    controller_thread_enabled_stop,
-    controller_thread_enabled_stop_ready,
+    controller_thread_enabled_execute,
+    controller_thread_enabled_exit,
+    controller_thread_enabled_exit_execute,
+    controller_thread_enabled_exit_ready,
+  };
+
+  enum {
+    controller_thread_cancel_signal = 0,
+    controller_thread_cancel_call,
+    controller_thread_cancel_execute,
+    controller_thread_cancel_exit,
+    controller_thread_cancel_exit_execute,
   };
 
   typedef struct {
@@ -1639,8 +1664,8 @@ extern "C" {
  * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
  *
  * @param is_normal
- *   If TRUE, then process as if this is a normal operation (entry and control).
- *   If FALSE, then process as if this is an exit operation.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param thread
  *   The thread data used to determine if the main thread is disabled or not.
  * @param lock
@@ -1715,8 +1740,8 @@ extern "C" {
  * Given a r/w lock, periodically check to see if main thread is disabled while waiting.
  *
  * @param is_normal
- *   If TRUE, then process as if this is a normal operation (entry and control).
- *   If FALSE, then process as if this is an exit operation.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param thread
  *   The thread data used to determine if the main thread is disabled or not.
  * @param lock

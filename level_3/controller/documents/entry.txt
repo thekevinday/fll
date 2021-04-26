@@ -15,46 +15,59 @@ Entry Documentation:
   The following settings are available: "mode".
 
   The "mode" setting represents the mode in which the Entry is operating in.
-  The "program" mode designates that the Entry operates as a program and exits when complete (does not execute an "exit" unless one is provided).
-  The "service" mode (the default mode) designates that the Entry operates as a service and will sit and wait for control commands when complete.
-  The "service" mode will call the "exit" with the same name as this Entry, but with the extension "exit", such as "default.exit".
+  The following modes are supported: "program" and "service".
 
-  Each item supports the following Action Names: "consider", "failsafe", "freeze", "item", "kill", "pause", "reload", "restart", "ready", "resume", "start", "stop", and "timeout".
-  Of those types, the following are considered a "rule" Action: "freeze", "kill", "pause", "reload", "restart", "resume", "start", and "stop".
+  The "program" mode\:
+    Designates that the Entry operates as a program and exits when complete.
+    Will call the "exit" with the same name as this Entry, but with the extension "exit", such as "default.exit".
+    Supports the Item Action "execute" to execute a program (switching the "controller" program entirely with the executed process).
 
-  The "consider" Action is a special case of a "rule" Action.
+  The "service" mode\:
+    Designates that the Entry operates as a service and will sit and wait for control commands when complete.
+    Will call the "exit" with the same name as this Entry, but with the extension "exit", such as "default.exit".
+    Does not support the Item Action "execute".
+    This is the default mode.
+
+  Each "item" supports the following Action Names: "consider", "execute", "failsafe", "freeze", "item", "kill", "pause", "reload", "restart", "ready", "resume", "start", "stop", and "timeout".
+  Of those types, the following are considered a "rule" Action: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
+
+  The "consider" Item Action is a special case of a "rule" Action.
   All Action Parameters are the same as with the "rule" Action Parameters.
   The difference is that "consider" is only processed (instead of being processed and executed) and when some "rule" Action designates that this consideration is required (via "need"), wanted (via "want"), or wished for (via "wish") from the within the Rule file.
   If this is determined to be executed, then this is immediately executed when needed, wanted or wished for and applies all properties as appropriate (such as "asynchronous", for example).
   If this is determined not to be executed, then this "consider" is ignored as if it was never there in the first place.
 
-  The "failsafe" Action accepts only a valid Item Name in which will be executed when a failure is detected.
-  Only a single "failsafe" Action may exist at a time.
-  Each successive "failsafe" Action specified replaces the previously defined "failsafe" Action (in a top-down manner).
-  When operating in "failsafe", the "require" Action is ignored given that it is meaningless once operating in failsafe.
+  The "execute" Item Action well execute into the specified program.
+  On successfull execution, the controller program will no longer be running and will be replaced with the designated program.
+  This Item Action is only supported when operating in "program" mode.
 
-  The "freeze" is a "rule" Action for freezing some Control Group.
-  This "rule" Action will process the "freeze" inner Content of the named Rule.
+  The "failsafe" Item Action accepts only a valid Item Name in which will be executed when a failure is detected.
+  Only a single "failsafe" Item Action may function at a time.
+  Each successive "failsafe" Item Action specified replaces the previously defined "failsafe" Item Action (in a top-down manner).
+  When operating in "failsafe", the "require" Item Action is ignored (given that it is meaningless once operating in "failsafe" mode).
+
+  The "freeze" Item Action is a "rule" Action for freezing some Control Group.
+  This Item Action will process the "freeze" inner Content of the named Rule.
   This is specific to Control Groups and is not yet fully implemented.
   Once implemented this documentation will need to be updated and clarified.
 
-  The "item" Action accepts only a valid Item Name in which will be immediately executed.
+  The "item" Item Action accepts only a valid Item Name in which will be immediately executed.
   Any valid Item Name, except for the reserved "main", may be used.
 
-  The "kill" is a "rule" Action for forcibly terminating some process.
-  This "rule" Action will process the "kill" inner Content of the named Rule.
+  The "kill" Item Action is a "rule" Action for forcibly terminating some process.
+  This Item Action will process the "kill" inner Content of the named Rule.
 
-  The "pause" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "pause" inner Content of the named Rule.
+  The "pause" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "pause" inner Content of the named Rule.
 
-  The "reload" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "reload" inner Content of the named Rule.
+  The "reload" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "reload" inner Content of the named Rule.
 
-  The "restart" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "restart" inner Content of the named Rule.
+  The "restart" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "restart" inner Content of the named Rule.
 
-  The "resume" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "resume" inner Content of the named Rule.
+  The "resume" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "resume" inner Content of the named Rule.
 
   The "ready" Action instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
   When not specified, the state is always assumed to be ready.
@@ -64,20 +77,20 @@ Entry Documentation:
   Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
   When the optional "wait" is provided, then "ready" will wait for all currently started asynchronous processes to complete before operating.
 
-  The "start" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "start" inner Content of the named Rule.
+  The "start" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "start" inner Content of the named Rule.
 
-  The "stop" is a "rule" Action for pausing some process.
-  This "rule" Action will process the "stop" inner Content of the named Rule.
+  The "stop" Item Action is a "rule" Action for pausing some process.
+  This Item Action will process the "stop" inner Content of the named Rule.
 
-  The "thaw" is a "rule" Action for unfreezing some Control Group.
-  This "rule" Action will process the "thaw" inner Content of the named Rule.
+  The "thaw" Item Action is a "rule" Action for unfreezing some Control Group.
+  This Item Action will process the "thaw" inner Content of the named Rule.
   This is specific to Control Groups and is not yet fully implemented.
   Once implemented this documentation will need to be updated and clarified.
 
-  The "timeout" Action provides default global settings for each of the three special situations: "start", "stop", and "kill".
+  The "timeout" Item Action provides default global settings for each of the three special situations: "start", "stop", and "kill".
   Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
-  Each successive "timeout" Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
+  Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
   Each of these accepts a single Action Parameter that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
   For "start", this represents the number of MegaTime to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
   For "stop", this represents the number of MegaTime to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.

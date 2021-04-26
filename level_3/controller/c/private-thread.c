@@ -188,7 +188,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal, (void *) &main);
+      status = f_thread_create(0, &thread.id_signal, &controller_thread_signal_normal, (void *) &main);
     }
 
     if (F_status_is_error(status)) {
@@ -308,7 +308,9 @@ extern "C" {
       }
     }
 
-    controller_thread_process_cancel(F_false, &main);
+    controller_thread_process_cancel(F_true, controller_thread_cancel_call, &main, 0);
+
+    controller_thread_process_exit(&main);
 
     if (thread.id_signal) f_thread_join(thread.id_signal, 0);
     if (thread.id_cleanup) f_thread_join(thread.id_cleanup, 0);
@@ -336,16 +338,12 @@ extern "C" {
 #endif // _di_controller_thread_main_
 
 #ifndef _di_controller_thread_process_
-  void * controller_thread_process(void *arguments) {
-
-    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
-
-    controller_process_t *process = (controller_process_t *) arguments;
+  void controller_thread_process(const bool is_normal, controller_process_t *process) {
 
     {
       controller_thread_t *thread = (controller_thread_t *) process->main_thread;
 
-      if (thread->enabled != controller_thread_enabled) return 0;
+      if (!controller_thread_is_enabled(is_normal, thread)) return;
     }
 
     const f_status_t status = controller_rule_process_do(controller_process_option_asynchronous, process);
@@ -364,16 +362,36 @@ extern "C" {
       controller_setting_delete_simple(setting);
       controller_data_delete(data);
     }
-
-    return 0;
   }
 #endif // _di_controller_thread_process_
 
+#ifndef _di_controller_thread_process_normal_
+  void * controller_thread_process_normal(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
+    controller_thread_process(F_true, (controller_process_t *) arguments);
+
+    return 0;
+  }
+#endif // _di_controller_thread_process_normal_
+
+#ifndef _di_controller_thread_process_other_
+  void * controller_thread_process_other(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
+    controller_thread_process(F_false, (controller_process_t *) arguments);
+
+    return 0;
+  }
+#endif // _di_controller_thread_process_other_
+
 #ifndef _di_controller_thread_process_cancel_
-  void controller_thread_process_cancel(const bool by_signal, controller_main_t *main) {
+  void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_main_t *main, controller_process_t *caller) {
 
     // only cancel when enabled.
-    if (main->thread->enabled != controller_thread_enabled) {
+    if (!controller_thread_is_enabled(is_normal, main->thread)) {
       return;
     }
 
@@ -384,7 +402,18 @@ extern "C" {
       main->thread->enabled = controller_thread_enabled_not;
     }
     else {
-      main->thread->enabled = controller_thread_enabled_stop;
+      if (by == controller_thread_cancel_execute) {
+        main->thread->enabled = controller_thread_enabled_execute;
+      }
+      else if (by == controller_thread_cancel_exit) {
+        main->thread->enabled = controller_thread_enabled_not;
+      }
+      else if (by == controller_thread_cancel_exit_execute) {
+        main->thread->enabled = controller_thread_enabled_exit_execute;
+      }
+      else {
+        main->thread->enabled = controller_thread_enabled_exit;
+      }
 
       f_thread_mutex_unlock(&main->thread->lock.alert);
     }
@@ -402,95 +431,28 @@ extern "C" {
     // @todo consider switching to nanosleep() which may act better with interrupts and not require f_thread_cancel().
     if (main->thread->id_cleanup) {
       f_thread_cancel(main->thread->id_cleanup);
+      f_thread_join(main->thread->id_cleanup, 0);
+
+      main->thread->id_cleanup = 0;
     }
 
     // the sigtimedwait() function that is run inside of signal must be interrupted via the f_thread_cancel().
-    if (!by_signal && main->thread->id_signal) {
+    if (by != controller_thread_cancel_signal && main->thread->id_signal) {
       f_thread_cancel(main->thread->id_signal);
-    }
+      f_thread_join(main->thread->id_signal, 0);
 
-    if (main->thread->enabled == controller_thread_enabled_stop) {
-      if (main->setting->ready == controller_setting_ready_done) {
-
-        // the exit processing runs using the entry thread.
-        if (main->thread->id_entry) {
-          status = f_thread_join(main->thread->id_entry, 0);
-
-          main->thread->id_entry = 0;
-        }
-
-        const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(main, main->setting);
-
-        status = f_thread_create(0, &main->thread->id_entry, &controller_thread_exit, (void *) &entry);
-
-        if (F_status_is_error(status)) {
-          if (main->data->error.verbosity != f_console_verbosity_quiet) {
-            controller_error_print(main->data->error, F_status_set_fine(status), "f_thread_create", F_true, main->thread);
-          }
-
-          if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
-            main->thread->enabled = controller_thread_enabled_not;
-
-            f_thread_mutex_unlock(&main->thread->lock.alert);
-          }
-          else {
-            main->thread->enabled = controller_thread_enabled_not;
-          }
-        }
-        else {
-          struct timespec time;
-
-          do {
-            status = f_thread_mutex_lock(&main->thread->lock.alert);
-
-            if (F_status_is_error(status)) {
-              main->thread->enabled = controller_thread_enabled_not;
-
-              break;
-            }
-            else {
-            }
-
-            controller_time(controller_thread_exit_ready_timeout_seconds, controller_thread_exit_ready_timeout_nanoseconds, &time);
-
-            status = f_thread_condition_wait_timed(&time, &main->thread->lock.alert_condition, &main->thread->lock.alert);
-
-            f_thread_mutex_unlock(&main->thread->lock.alert);
-
-          } while (F_status_is_error_not(status) && main->thread->enabled == controller_thread_enabled_stop);
-
-          if (F_status_is_error(status)) {
-            if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
-              main->thread->enabled = controller_thread_enabled_not;
-
-              f_thread_mutex_unlock(&main->thread->lock.alert);
-            }
-            else {
-              main->thread->enabled = controller_thread_enabled_not;
-            }
-          }
-        }
-      }
-      else {
-        if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
-          main->thread->enabled = controller_thread_enabled_not;
-
-          f_thread_mutex_unlock(&main->thread->lock.alert);
-        }
-        else {
-          main->thread->enabled = controller_thread_enabled_not;
-        }
-      }
+      main->thread->id_signal = 0;
     }
 
     for (; i < main->thread->processs.used; ++i) {
 
       if (!main->thread->processs.array[i]) continue;
+      if (caller && i == caller->id) continue;
 
       process = main->thread->processs.array[i];
 
-      // do not cancel exit processes.
-      if (process->type == controller_process_type_exit) continue;
+      // do not cancel exit processes, when not performing "execute" during exit.
+      if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
       if (process->child > 0) {
         f_signal_send(F_signal_termination, process->child);
@@ -508,11 +470,12 @@ extern "C" {
     for (i = 0; i < main->thread->processs.used; ++i) {
 
       if (!main->thread->processs.array[i]) continue;
+      if (caller && i == caller->id) continue;
 
       process = main->thread->processs.array[i];
 
-      // do not cancel exit processes.
-      if (process->type == controller_process_type_exit) continue;
+      // do not cancel exit processes, when not performing "execute" during exit.
+      if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
       if (process->id_thread) {
         controller_time(0, controller_thread_exit_process_cancel_wait, &time);
@@ -529,11 +492,12 @@ extern "C" {
     for (i = 0; i < main->thread->processs.size && spent < controller_thread_exit_process_cancel_total; ++i) {
 
       if (!main->thread->processs.array[i]) continue;
+      if (caller && i == caller->id) continue;
 
       process = main->thread->processs.array[i];
 
-      // do not cancel exit processes.
-      if (process->type == controller_process_type_exit) continue;
+      // do not cancel exit processes, when not performing "execute" during exit.
+      if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
       do {
         if (!process->id_thread) break;
@@ -585,12 +549,14 @@ extern "C" {
     } // for
 
     for (i = 0; i < main->thread->processs.size; ++i) {
+
       if (!main->thread->processs.array[i]) continue;
+      if (caller && i == caller->id) continue;
 
       process = main->thread->processs.array[i];
 
-      // do not kill exit processes.
-      if (process->type == controller_process_type_exit) continue;
+      // do not kill exit processes, when not performing "execute" during exit.
+      if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
       if (process->id_thread) {
 
@@ -624,6 +590,99 @@ extern "C" {
     } // for
   }
 #endif // _di_controller_thread_process_cancel_
+
+#ifndef _di_controller_thread_process_exit_
+  void controller_thread_process_exit(controller_main_t *main) {
+
+    if (main->thread->enabled != controller_thread_enabled_exit) return;
+
+    if (main->setting->ready == controller_setting_ready_done) {
+
+      // the exit processing runs using the entry thread.
+      if (main->thread->id_entry) {
+        f_thread_cancel(main->thread->id_entry);
+        f_thread_join(main->thread->id_entry, 0);
+
+        main->thread->id_entry = 0;
+      }
+
+      // restart the signal thread to allow for signals while operating the Exit.
+      if (!main->thread->id_signal) {
+        f_thread_create(0, &main->thread->id_signal, &controller_thread_signal_other, (void *) main);
+      }
+
+      const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(main, main->setting);
+
+      f_status_t status = f_thread_create(0, &main->thread->id_entry, &controller_thread_exit, (void *) &entry);
+
+      if (F_status_is_error(status)) {
+        if (main->data->error.verbosity != f_console_verbosity_quiet) {
+          controller_error_print(main->data->error, F_status_set_fine(status), "f_thread_create", F_true, main->thread);
+        }
+
+        if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
+          main->thread->enabled = controller_thread_enabled_not;
+
+          f_thread_mutex_unlock(&main->thread->lock.alert);
+        }
+        else {
+          main->thread->enabled = controller_thread_enabled_not;
+        }
+      }
+      else {
+        struct timespec time;
+
+        do {
+          status = f_thread_mutex_lock(&main->thread->lock.alert);
+
+          if (F_status_is_error(status)) {
+            main->thread->enabled = controller_thread_enabled_not;
+
+            break;
+          }
+
+          controller_time(controller_thread_exit_ready_timeout_seconds, controller_thread_exit_ready_timeout_nanoseconds, &time);
+
+          status = f_thread_condition_wait_timed(&time, &main->thread->lock.alert_condition, &main->thread->lock.alert);
+
+          f_thread_mutex_unlock(&main->thread->lock.alert);
+
+        } while (F_status_is_error_not(status) && main->thread->enabled == controller_thread_enabled_exit);
+
+        if (F_status_is_error(status)) {
+          if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
+            main->thread->enabled = controller_thread_enabled_not;
+
+            f_thread_mutex_unlock(&main->thread->lock.alert);
+          }
+          else {
+            main->thread->enabled = controller_thread_enabled_not;
+          }
+        }
+      }
+
+      // the sigtimedwait() function that is run inside of signal must be interrupted via the f_thread_cancel().
+      if (main->thread->id_signal) {
+        f_thread_cancel(main->thread->id_signal);
+        f_thread_join(main->thread->id_signal, 0);
+
+        main->thread->id_signal = 0;
+      }
+
+      controller_thread_process_cancel(F_false, controller_thread_cancel_exit, main, 0);
+    }
+    else {
+      if (F_status_is_error_not(f_thread_mutex_lock(&main->thread->lock.alert))) {
+        main->thread->enabled = controller_thread_enabled_not;
+
+        f_thread_mutex_unlock(&main->thread->lock.alert);
+      }
+      else {
+        main->thread->enabled = controller_thread_enabled_not;
+      }
+    }
+  }
+#endif // _di_controller_thread_process_exit_
 
 #ifndef _di_controller_thread_entry_
   void * controller_thread_entry(void *arguments) {
@@ -671,7 +730,22 @@ extern "C" {
           if (F_status_is_error(*status)) {
             entry->setting->ready = controller_setting_ready_fail;
 
-            if (F_status_set_fine(*status) == F_require && entry->main->setting->failsafe_enabled) {
+            if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->main->setting->failsafe_enabled) {
+
+              // restore operating mode so that the failsafe can execute.
+              *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
+
+              if (F_status_is_error_not(*status)) {
+                entry->main->thread->enabled = controller_thread_enabled;
+
+                f_thread_mutex_unlock(&entry->main->thread->lock.alert);
+              }
+
+              // restart the signal thread to allow for signals while operating the failsafe Items.
+              if (!entry->main->thread->id_signal) {
+                f_thread_create(0, &entry->main->thread->id_signal, &controller_thread_signal_normal, (void *) entry->main);
+              }
+
               const f_status_t status_failsafe = controller_process_entry(F_true, F_true, entry->main, cache);
 
               if (F_status_is_error(status_failsafe)) {
@@ -747,6 +821,40 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           entry->setting->ready = controller_setting_ready_fail;
+
+          if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->main->setting->failsafe_enabled) {
+
+            // restore operating mode so that the failsafe can execute.
+            if (F_status_set_fine(*status) == F_execute) {
+              *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
+
+              if (F_status_is_error_not(*status)) {
+                entry->main->thread->enabled = controller_thread_enabled_exit;
+
+                f_thread_mutex_unlock(&entry->main->thread->lock.alert);
+              }
+
+              // restart the signal thread to allow for signals while operating the failsafe Items.
+              if (!entry->main->thread->id_signal) {
+                f_thread_create(0, &entry->main->thread->id_signal, &controller_thread_signal_other, (void *) entry->main);
+              }
+            }
+
+            const f_status_t status_failsafe = controller_process_entry(F_true, F_false, entry->main, cache);
+
+            if (F_status_is_error(status_failsafe)) {
+              if (data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&entry->main->thread->lock.print);
+
+                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(data->error.to.stream, "%s%sFailed while processing requested failsafe item '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
+                fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, entry->main->setting->entry.items.array[entry->main->setting->failsafe_enabled].name.string, data->error.notable.after->string);
+                fprintf(data->error.to.stream, "%s'.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
+
+                controller_print_unlock_flush(data->error.to.stream, &entry->main->thread->lock.print);
+              }
+            }
+          }
         }
         else if (*status == F_signal) {
           entry->setting->ready = controller_setting_ready_abort;
@@ -811,19 +919,15 @@ extern "C" {
 #endif // _di_controller_thread_rule_
 
 #ifndef _di_controller_thread_signal_
-  void * controller_thread_signal(void *arguments) {
+  void controller_thread_signal(const bool is_normal, controller_main_t *main) {
 
-    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
-
-    controller_main_t *main = (controller_main_t *) arguments;
-
-    if (!controller_thread_is_enabled(F_true, main->thread)) return 0;
+    if (!controller_thread_is_enabled(is_normal, main->thread)) return;
 
     siginfo_t information;
     struct timespec time;
     int error = 0;
 
-    while (controller_thread_is_enabled(F_true, main->thread)) {
+    while (controller_thread_is_enabled(is_normal, main->thread)) {
 
       controller_time(controller_thread_exit_ready_timeout_seconds, controller_thread_exit_ready_timeout_nanoseconds, &time);
 
@@ -839,16 +943,36 @@ extern "C" {
 
           main->thread->signal = information.si_signo;
 
-          controller_thread_process_cancel(F_true, main);
+          controller_thread_process_cancel(is_normal, controller_thread_cancel_signal, main, 0);
 
           break;
         }
       }
     } // while
+  }
+#endif // _di_controller_thread_signal_
+
+#ifndef _di_controller_thread_signal_normal_
+  void * controller_thread_signal_normal(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
+    controller_thread_signal(F_true, (controller_main_t *) arguments);
 
     return 0;
   }
-#endif // _di_controller_thread_signal_
+#endif // _di_controller_thread_signal_normal_
+
+#ifndef _di_controller_thread_signal_other_
+  void * controller_thread_signal_other(void *arguments) {
+
+    f_thread_cancel_state_set(PTHREAD_CANCEL_DEFERRED, 0);
+
+    controller_thread_signal(F_false, (controller_main_t *) arguments);
+
+    return 0;
+  }
+#endif // _di_controller_thread_signal_other_
 
 #ifdef __cplusplus
 } // extern "C"

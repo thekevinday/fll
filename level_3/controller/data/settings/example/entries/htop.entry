@@ -1,0 +1,18 @@
+# fss-0005
+
+setting:
+  mode program
+
+main:
+  failsafe start_top
+
+  start serial s_1 asynchronous
+  start serial s_2 asynchronous
+  start serial s_3 asynchronous
+
+  ready wait
+
+  execute htop
+
+start_top:
+  execute top

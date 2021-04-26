@@ -44,8 +44,8 @@ extern "C" {
  * Check to see if thread is enabled for the normal operations like entry and control or for exit operations.
  *
  * @param is_normal
- *   If TRUE, then process as if this is a normal operation (entry and control).
- *   If FALSE, then process as if this is an exit operation.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param thread
  *   The thread data.
  *
@@ -105,6 +105,7 @@ extern "C" {
  *   F_none on success.
  *   F_child on child process exiting.
  *   F_signal on signal received.
+ *
  *   F_failure (with error bit) on any failure.
  */
 #ifndef _di_controller_thread_main_
@@ -114,6 +115,21 @@ extern "C" {
 /**
  * Asynchronously execute a Rule process.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
+ * @param process
+ *   The process data.
+ *
+ * @see controller_rule_process_do()
+ */
+#ifndef _di_controller_thread_process_
+  extern void controller_thread_process(const bool is_normal, controller_process_t *process) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_
+
+/**
+ * Asynchronously execute a Rule process during normal operations.
+ *
  * @param arguments
  *   The thread arguments.
  *   Must be of type controller_process_t.
@@ -121,24 +137,59 @@ extern "C" {
  * @return
  *   0, always.
  *
- * @see controller_rule_process_do()
+ * @see controller_thread_process()
  */
-#ifndef _di_controller_thread_process_
-  extern void * controller_thread_process(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_process_
+#ifndef _di_controller_thread_process_normal_
+  extern void * controller_thread_process_normal(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_normal_
+
+/**
+ * Asynchronously execute a Rule process during other operations.
+ *
+ * @param arguments
+ *   The thread arguments.
+ *   Must be of type controller_process_t.
+ *
+ * @return
+ *   0, always.
+ *
+ * @see controller_thread_process()
+ */
+#ifndef _di_controller_thread_process_other_
+  extern void * controller_thread_process_other(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_other_
 
 /**
  * Cancel all process threads.
  *
- * @param by_signal
- *   If TRUE, this was called from within the signal handling thread, so do not cancel the signal thread.
- *   If FALSE, then this was not called from within the signal handling thread, so cancel the signal thread.
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
+ * @param by
+ *   Designate the way in which the cancellation should operate.
+ *
+ *   If controller_thread_cancel_signal, then this was called from within the signal handling thread, so do not cancel the signal thread.
+ *   If controller_thread_cancel_call, then this was not called from within the signal handling thread, so cancel the signal thread.
+ *   If controller_thread_cancel_execute, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
+ * @param main
+ *   The main thread data.
+ * @param caller
+ *   (optional) The process that is calling the cancel so that this process itself does not get cancelled.
+ *   Set to NULL to not use.
+ */
+#ifndef _di_controller_thread_process_cancel_
+  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_main_t *main, controller_process_t *caller) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_cancel_
+
+/**
+ * Process the Exit file, if applicable.
+ *
  * @param main
  *   The main thread data.
  */
-#ifndef _di_controller_thread_process_cancel_
-  void controller_thread_process_cancel(const bool by_signal, controller_main_t *main) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_process_cancel_
+#ifndef _di_controller_thread_process_exit_
+  extern void controller_thread_process_exit(controller_main_t *main) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_process_exit_
 
 /**
  * Thread for handling entry processing.
@@ -223,16 +274,51 @@ extern "C" {
  *
  * Currently this only handles signals to exist, but may be updated to handle interrupt and hangup signals.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
+ * @param main
+ *   The main data.
+ */
+#ifndef _di_controller_thread_signal_
+  extern void controller_thread_signal(const bool is_normal, controller_main_t *main) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_signal_
+
+/**
+ * Thread for handling signals/interrupts during normal operations.
+ *
+ * Currently this only handles signals to exist, but may be updated to handle interrupt and hangup signals.
+ *
  * @param arguments
  *   The thread arguments.
  *   Must be of type controller_main_t.
  *
  * @return
  *   0, always.
+ *
+ * @see controller_thread_signal()
  */
-#ifndef _di_controller_thread_signal_
-  extern void * controller_thread_signal(void *arguments) f_gcc_attribute_visibility_internal;
-#endif // _di_controller_thread_signal_
+#ifndef _di_controller_thread_signal_normal_
+  extern void * controller_thread_signal_normal(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_signal_normal_
+
+/**
+ * Thread for handling signals/interrupts during other operations.
+ *
+ * Currently this only handles signals to exist, but may be updated to handle interrupt and hangup signals.
+ *
+ * @param arguments
+ *   The thread arguments.
+ *   Must be of type controller_main_t.
+ *
+ * @return
+ *   0, always.
+ *
+ * @see controller_thread_signal()
+ */
+#ifndef _di_controller_thread_signal_other_
+  extern void * controller_thread_signal_other(void *arguments) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_thread_signal_other_
 
 #ifdef __cplusplus
 } // extern "C"

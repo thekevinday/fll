@@ -329,7 +329,7 @@ extern "C" {
 #endif // _di_controller_preprocess_entry_
 
 /**
- * Process (execute) all items for the loaded entry or exit.
+ * Process (execute) all Items for the loaded Entry or Exit.
  *
  * @param failsafe
  *   If TRUE, operate in failsafe mode (starts at designated failsafe Item).
@@ -344,9 +344,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_execute on success and program exiting (scripts may result in this) or when execute would have been executed but is instead simulated.
  *
- *   F_require (with error bit) if a required entry item failed.
+ *   F_require (with error bit) if a required Item failed.
  *   F_critical (with error bit) on any critical error.
+ *   F_execute (with error bit) if the "execute" Item Action failed.
  *
  *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
  *   Errors (with error bit) from: controller_perform_ready().
@@ -371,8 +373,8 @@ extern "C" {
  * This requires that a main.thread->lock.process lock be set on process->lock before being called.
  *
  * @param is_normal
- *   If TRUE, then process as if this is a normal operation (entry and control).
- *   If FALSE, then process as if this is an exit operation.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param action
  *   The Rule Action to use.
  * @param alias

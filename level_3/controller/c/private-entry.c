@@ -57,6 +57,11 @@ extern "C" {
         buffer.used = controller_string_consider_length;
         break;
 
+      case controller_entry_action_type_execute:
+        buffer.string = controller_string_execute_s;
+        buffer.used = controller_string_execute_length;
+        break;
+
       case controller_entry_action_type_failsafe:
         buffer.string = controller_string_failsafe_s;
         buffer.used = controller_string_failsafe_length;
@@ -279,6 +284,9 @@ extern "C" {
       if (fl_string_dynamic_compare_string(controller_string_consider_s, cache->action.name_action, controller_string_consider_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_consider;
       }
+      else if (fl_string_dynamic_compare_string(controller_string_execute_s, cache->action.name_action, controller_string_execute_length) == F_equal_to) {
+        actions->array[actions->used].type = controller_entry_action_type_execute;
+      }
       else if (fl_string_dynamic_compare_string(controller_string_failsafe_s, cache->action.name_action, controller_string_failsafe_length) == F_equal_to) {
         actions->array[actions->used].type = controller_entry_action_type_failsafe;
       }
@@ -335,6 +343,11 @@ extern "C" {
       if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
         allocate = cache->content_actions.array[i].used;
         at_least = 2;
+        at_most = allocate;
+      }
+      else if (action->type == controller_entry_action_type_execute) {
+        allocate = cache->content_actions.array[i].used;
+        at_least = 1;
         at_most = allocate;
       }
       else if (action->type == controller_entry_action_type_failsafe || action->type == controller_entry_action_type_item) {

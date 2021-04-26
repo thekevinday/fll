@@ -22,12 +22,15 @@ Entry Specification:
 
     The Actions\:
       "consider": One or more Content.
-        The first Content that is the relative file path (without any leading/trailing slashes and without file extension).
-        The second Content that is the basename for a rule file.
+        The first Content is the relative file path (without any leading/trailing slashes and without file extension).
+        The second Content is the basename for a rule file.
         The third and beyond may only be one of\:
           - "asynchronous"
           - "require"
           - "wait"
+      "execute": One or more Content.
+        The first Content is the program name or full path to the program (the program may be a script).
+        All remaining Content are passed as parameters to the program being executed.
       "failsafe": One Content that is a valid Object name, except for the reserved "main".
       "freeze": Two or more Content.
         The first Content that is the relative directory path (without any leading/trailing slashes).

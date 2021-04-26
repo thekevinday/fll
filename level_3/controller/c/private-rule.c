@@ -2560,7 +2560,12 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (process->action && (options_force & controller_process_option_asynchronous)) {
-        status = f_thread_create(0, &process->id_thread, controller_thread_process, (void *) process);
+        if (process->type == controller_process_type_exit) {
+          status = f_thread_create(0, &process->id_thread, controller_thread_process_other, (void *) process);
+        }
+        else {
+          status = f_thread_create(0, &process->id_thread, controller_thread_process_normal, (void *) process);
+        }
 
         if (F_status_is_error(status)) {
           controller_error_print(main.data->error, F_status_set_fine(status), "f_thread_create", F_true, main.thread);

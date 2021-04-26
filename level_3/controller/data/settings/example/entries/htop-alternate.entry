@@ -1,0 +1,11 @@
+# fss-0005
+
+setting:
+  mode program
+
+main:
+  start serial s_1 asynchronous
+  start serial s_2 asynchronous
+  start serial s_3 asynchronous
+
+  ready wait

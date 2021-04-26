@@ -933,7 +933,7 @@ extern "C" {
             }
 
             if (!simulate) {
-              controller_perform_ready(is_entry, *main, cache);
+              status = controller_perform_ready(is_entry, *main, cache);
 
               if (F_status_is_error(status)) return status;
             }
@@ -1181,7 +1181,7 @@ extern "C" {
 
             status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *main, *cache);
 
-            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal || !controller_thread_is_enabled(is_entry, main->thread)) {
+            if (F_status_set_fine(status) == F_memory_not || status == F_child || status == F_signal) {
               break;
             }
 
@@ -1189,6 +1189,79 @@ extern "C" {
               return F_status_set_error(F_require);
             }
           }
+        }
+        else if (entry_action->type == controller_entry_action_type_execute) {
+          if (simulate || main->data->error.verbosity == f_console_verbosity_verbose) {
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
+
+              fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->output.stream, "%s is executing '", is_entry ? controller_string_entry_s : controller_string_exit_s);
+
+              fprintf(main->data->output.stream, "%s", main->data->context.set.title.before->string);
+              for (f_array_length_t k = 0; k < entry_action->parameters.used; ++k) {
+
+                fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, entry_action->parameters.array[k].string, main->data->context.set.title.after->string);
+
+                if (k + 1 < entry_action->parameters.used) {
+                  fprintf(main->data->output.stream, " ");
+                }
+              } // for
+              fprintf(main->data->output.stream, "%s'.%c", main->data->context.set.title.after->string, f_string_eol_s[0]);
+
+              controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
+            }
+          }
+
+          if (simulate) {
+            return F_execute;
+          }
+
+          controller_thread_process_cancel(is_entry, is_entry ? controller_thread_cancel_execute : controller_thread_cancel_exit_execute, main, process);
+
+          int result = 0;
+
+          status = fll_execute_into(0, entry_action->parameters, fl_execute_parameter_option_path, &result);
+
+          if (F_status_is_error(status)) {
+            if (F_status_set_fine(status) == F_file_found_not) {
+              if (main->data->error.verbosity != f_console_verbosity_quiet) {
+                f_thread_mutex_lock(&main->thread->lock.print);
+
+                fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(main->data->error.to.stream, "%s%sExecution failed, unable to find program or script ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fprintf(main->data->error.to.stream, "%s%s%s%s", main->data->error.context.after->string, main->data->error.notable.before->string, entry_action->parameters.array[0].string, main->data->error.notable.after->string);
+                fprintf(main->data->error.to.stream, "%s.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
+
+                controller_entry_error_print_cache(is_entry, main->data->error, cache->action);
+
+                controller_print_unlock_flush(main->data->error.to.stream, &main->thread->lock.print);
+              }
+            }
+            else {
+              controller_entry_error_print(is_entry, main->data->error, cache->action, F_status_set_fine(status), "fll_execute_into", F_true, main->thread);
+            }
+
+            return F_status_set_error(F_execute);
+          }
+          else if (result != 0) {
+            if (main->data->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&main->thread->lock.print);
+
+              fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(main->data->error.to.stream, "%s%sExecution failed with return value of ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fprintf(main->data->error.to.stream, "%s%s%d%s", main->data->error.context.after->string, main->data->error.notable.before->string, result, main->data->error.notable.after->string);
+              fprintf(main->data->error.to.stream, "%s.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
+
+              controller_entry_error_print_cache(is_entry, main->data->error, cache->action);
+
+              controller_print_unlock_flush(main->data->error.to.stream, &main->thread->lock.print);
+            }
+
+            return F_status_set_error(F_execute);
+          }
+
+          return F_execute;
         }
         else if (entry_action->type == controller_entry_action_type_timeout) {
 
@@ -1286,10 +1359,6 @@ extern "C" {
           }
         }
       } // for
-
-      if (!controller_thread_is_enabled(is_entry, main->thread)) {
-        status = F_signal;
-      }
 
       if (status == F_child || status == F_signal) break;
 

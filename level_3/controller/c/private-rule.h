@@ -730,8 +730,8 @@ extern "C" {
  * Read the rule file, extracting all valid items.
  *
  * @param is_normal
- *   If TRUE, then this operates as an entry or control.
- *   If FALSE, then this operates as an exit.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param alias
  *   The string identifying the rule.
  *   This is constructed from the path parts to the file without the file extension and without the settings directory prefix.
@@ -832,8 +832,8 @@ extern "C" {
  * Wait until all currently running Rule processes are complete.
  *
  * @param is_normal
- *   If TRUE, then process as if this is a normal operation (entry and control).
- *   If FALSE, then process as if this is an exit operation.
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  *   This is ignored when caller is not NULL.
  * @param main
  *   The main data.
