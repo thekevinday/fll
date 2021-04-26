@@ -213,6 +213,8 @@ extern "C" {
     #define FL_status_string_eol_not           "F_eol_not"
     #define FL_status_string_eos               "F_eos"
     #define FL_status_string_eos_not           "F_eos_not"
+    #define FL_status_string_execute           "F_execute"
+    #define FL_status_string_execute_not       "F_execute_not"
     #define FL_status_string_exist             "F_exist"
     #define FL_status_string_exist_not         "F_exist_not"
     #define FL_status_string_failure           "F_failure"
@@ -382,6 +384,8 @@ extern "C" {
     #define FL_status_string_eol_not_length           9
     #define FL_status_string_eos_length               5
     #define FL_status_string_eos_not_length           9
+    #define FL_status_string_execute_length           9
+    #define FL_status_string_execute_not_length       13
     #define FL_status_string_exist_length             7
     #define FL_status_string_exist_not_length         11
     #define FL_status_string_failure_length           9

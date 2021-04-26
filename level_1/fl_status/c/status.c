@@ -362,6 +362,12 @@ extern "C" {
         case F_eos_not:
           *string = FL_status_string_eos_not;
           break;
+        case F_execute:
+          *string = FL_status_string_execute;
+          break;
+        case F_execute_not:
+          *string = FL_status_string_execute_not;
+          break;
         case F_exist:
           *string = FL_status_string_exist;
           break;

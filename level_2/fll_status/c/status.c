@@ -606,6 +606,16 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_execute, length, FL_status_string_execute_length) == F_equal_to) {
+        *code = F_execute;
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_execute_not, length, FL_status_string_execute_not_length) == F_equal_to) {
+        *code = F_execute_not;
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_exist, length, FL_status_string_exist_length) == F_equal_to) {
         *code = F_exist;
         return F_none;

@@ -193,6 +193,8 @@ extern "C" {
       F_eol_not,
       F_eos,
       F_eos_not,
+      F_execute,
+      F_execute_not,
       F_exist,
       F_exist_not,
       F_failure,
