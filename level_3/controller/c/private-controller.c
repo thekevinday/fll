@@ -747,7 +747,7 @@ extern "C" {
       return status;
     }
 
-    if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+    if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
       if (main->data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -781,7 +781,7 @@ extern "C" {
 
         if (F_status_is_error(entry_action->status)) {
           if (controller_entry_action_type_is_rule(entry_action->type)) {
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_found) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -851,7 +851,7 @@ extern "C" {
             }
           }
           else {
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_found) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -898,7 +898,7 @@ extern "C" {
 
         if (entry_action->type == controller_entry_action_type_ready) {
           if (entry_action->code & controller_entry_rule_code_wait) {
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -917,7 +917,7 @@ extern "C" {
           }
 
           if (main->setting->ready == controller_setting_ready_wait) {
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
               if (main->data->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -930,7 +930,7 @@ extern "C" {
               }
             }
 
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_none) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_none) {
               status = controller_perform_ready(is_entry, *main, cache);
 
               if (F_status_is_error(status)) return status;
@@ -938,7 +938,7 @@ extern "C" {
 
             main->setting->ready = controller_setting_ready_yes;
           }
-          else if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+          else if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
               f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -1002,7 +1002,7 @@ extern "C" {
             return status;
           }
 
-          if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+          if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
               f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -1059,7 +1059,7 @@ extern "C" {
 
           f_thread_unlock(&main->thread->lock.rule);
 
-          if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+          if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
               f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -1137,7 +1137,7 @@ extern "C" {
                 controller_print_unlock_flush(main->data->output.stream, &main->thread->lock.print);
               }
 
-              if (main->data->parameters[controller_parameter_test].result == f_console_result_none) {
+              if (main->data->parameters[controller_parameter_simulate].result == f_console_result_none) {
                 f_thread_unlock(&main->thread->lock.rule);
 
                 break;
@@ -1154,7 +1154,7 @@ extern "C" {
             options_force = 0;
             options_process = 0;
 
-            if (main->data->parameters[controller_parameter_test].result == f_console_result_found) {
+            if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found) {
               options_process |= controller_process_option_simulate;
             }
 
@@ -1184,13 +1184,13 @@ extern "C" {
               break;
             }
 
-            if (F_status_is_error(status) && main->data->parameters[controller_parameter_test].result == f_console_result_none && (entry_action->code & controller_entry_rule_code_require)) {
+            if (F_status_is_error(status) && main->data->parameters[controller_parameter_simulate].result == f_console_result_none && (entry_action->code & controller_entry_rule_code_require)) {
               return F_status_set_error(F_require);
             }
           }
         }
         else if (entry_action->type == controller_entry_action_type_execute) {
-          if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+          if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
             if (main->data->error.verbosity != f_console_verbosity_quiet) {
               f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -1212,7 +1212,7 @@ extern "C" {
             }
           }
 
-          if (main->data->parameters[controller_parameter_test].result == f_console_result_found) {
+          if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found) {
             return F_execute;
           }
 
@@ -1264,7 +1264,7 @@ extern "C" {
         }
         else if (entry_action->type == controller_entry_action_type_timeout) {
 
-          if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+          if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
             f_string_t code = "";
 
             if (entry_action->code == controller_entry_timeout_code_kill) {
@@ -1340,7 +1340,7 @@ extern "C" {
               main->setting->failsafe_enabled = F_true;
               main->setting->failsafe_item_id = entry_action->number;
 
-              if (main->data->parameters[controller_parameter_test].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
+              if (main->data->parameters[controller_parameter_simulate].result == f_console_result_found || main->data->error.verbosity == f_console_verbosity_verbose) {
                 if (main->data->error.verbosity != f_console_verbosity_quiet) {
                   f_thread_mutex_lock(&main->thread->lock.print);
 
@@ -1420,7 +1420,7 @@ extern "C" {
       }
     }
 
-    if ((main->data->parameters[controller_parameter_test].result == f_console_result_found && main->data->error.verbosity != f_console_verbosity_quiet) || main->data->error.verbosity == f_console_verbosity_verbose) {
+    if ((main->data->parameters[controller_parameter_simulate].result == f_console_result_found && main->data->error.verbosity != f_console_verbosity_quiet) || main->data->error.verbosity == f_console_verbosity_verbose) {
       f_thread_mutex_lock(&main->thread->lock.print);
 
       fprintf(main->data->output.stream, "%c", f_string_eol_s[0]);

@@ -18,7 +18,7 @@ extern "C" {
 
     if (main->thread->enabled != controller_thread_enabled) return 0;
 
-    const unsigned int interval = main->data->parameters[controller_parameter_test].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
+    const unsigned int interval = main->data->parameters[controller_parameter_simulate].result == f_console_result_found ? controller_thread_cleanup_interval_short : controller_thread_cleanup_interval_long;
 
     f_status_t status = F_none;
 
@@ -690,7 +690,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child) {
-      if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_simulate].result == f_console_result_found) {
 
         if (f_file_exists(entry->setting->path_pid.string) == F_true) {
           if (data->error.verbosity != f_console_verbosity_quiet) {
@@ -815,7 +815,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child && *status != F_file_found_not) {
-      if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found) {
+      if (data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_simulate].result == f_console_result_found) {
 
         *status = controller_process_entry(F_false, F_false, entry->main, cache);
 

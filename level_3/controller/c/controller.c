@@ -32,16 +32,16 @@ extern "C" {
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program can be interrupted.");
     fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
     fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(output, context, controller_short_test, controller_long_test, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in test mode, where nothing is actually run but is instead simulated.");
+    fll_program_print_help_option(output, context, controller_short_simulate, controller_long_simulate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Run as a simulation.");
     fll_program_print_help_option(output, context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
     fprintf(output.stream, "  When both the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_test);
-    fprintf(output.stream, " operation and the ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_simulate);
+    fprintf(output.stream, " parameter and the ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_validate);
-    fprintf(output.stream, " operation are specified, then additional information on each would be executed rule is printed.");
+    fprintf(output.stream, " parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.");
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     return F_none;

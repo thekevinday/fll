@@ -2125,7 +2125,7 @@ extern "C" {
 
                 options_process = 0;
 
-                if (main.data->parameters[controller_parameter_test].result == f_console_result_found) {
+                if (main.data->parameters[controller_parameter_simulate].result == f_console_result_found) {
                   options_process |= controller_process_option_simulate;
                 }
 
