@@ -1917,7 +1917,7 @@ extern "C" {
       return status;
     }
 
-    if ((process->options & controller_process_option_simulate) && main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+    if ((process->options & controller_process_option_simulate) && (process->options & controller_process_option_validate)) {
       controller_rule_validate(process->rule, process->action, process->options, main, &process->cache);
     }
 
@@ -2129,7 +2129,7 @@ extern "C" {
                   options_process |= controller_process_option_simulate;
                 }
 
-                if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
+                if (process->options & controller_process_option_validate) {
                   options_process |= controller_process_option_validate;
                 }
 
@@ -2252,7 +2252,7 @@ extern "C" {
       return F_signal;
     }
 
-    if ((process->options & controller_process_option_wait) && F_status_is_error_not(status) && main.data->parameters[controller_parameter_validate].result == f_console_result_none) {
+    if ((process->options & controller_process_option_wait) && F_status_is_error_not(status) && (process->options & controller_process_option_validate)) {
 
       status_lock = controller_rule_wait_all_process_type(process->type, main, F_false, process);
 

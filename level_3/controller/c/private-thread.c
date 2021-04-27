@@ -234,12 +234,13 @@ extern "C" {
           controller_thread_join(&thread.id_entry);
 
           status = thread.status;
+          thread.id_entry = 0;
         }
       }
     }
 
     // only make the rule and control threads available once any/all pre-processing and are completed.
-    if (F_status_is_error_not(status) && status != F_signal && status != F_child && thread.enabled == controller_thread_enabled) {
+    if (F_status_is_error_not(status) && status != F_signal && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled) {
 
       if (data->parameters[controller_parameter_validate].result == f_console_result_none) {
 
@@ -280,30 +281,12 @@ extern "C" {
       return F_child;
     }
 
-    if (F_status_is_error(status) || status == F_signal || !(data->parameters[controller_parameter_validate].result == f_console_result_none || data->parameters[controller_parameter_test].result == f_console_result_found)) {
+    if (F_status_is_error_not(status) && status != F_signal && status != F_failure && data->parameters[controller_parameter_validate].result == f_console_result_none && controller_thread_is_enabled(F_true, &thread)) {
 
-      if (main.data->parameters[controller_parameter_validate].result == f_console_result_found) {
-        const controller_main_entry_t entry = controller_macro_main_entry_t_initialize(&main, main.setting);
-
-        status = f_thread_create(0, &thread.id_entry, &controller_thread_exit, (void *) &entry);
-
-        if (F_status_is_error(status)) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            controller_error_print(data->error, F_status_set_fine(status), "f_thread_create", F_true, &thread);
-          }
-        }
-        else {
-          controller_thread_join(&thread.id_entry);
-
-          status = thread.status;
-        }
-      }
-    }
-    else {
-      if (data->parameters[controller_parameter_validate].result == f_console_result_none && setting->mode == controller_setting_mode_service) {
+      if (setting->mode == controller_setting_mode_service) {
         controller_thread_join(&thread.id_signal);
       }
-      else if (data->parameters[controller_parameter_validate].result == f_console_result_none && setting->mode == controller_setting_mode_program) {
+      else if (setting->mode == controller_setting_mode_program) {
         controller_rule_wait_all(F_true, main, F_false, 0);
       }
     }
@@ -732,6 +715,8 @@ extern "C" {
 
             if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->main->setting->failsafe_enabled) {
 
+              const uint8_t original_enabled = entry->main->thread->enabled;
+
               // restore operating mode so that the failsafe can execute.
               *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
 
@@ -759,6 +744,21 @@ extern "C" {
 
                   controller_print_unlock_flush(data->error.to.stream, &entry->main->thread->lock.print);
                 }
+
+                *status = F_status_set_error(F_failure);
+              }
+              else {
+
+                // restore operating mode to value prior to failsafe mode.
+                *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
+
+                if (F_status_is_error_not(*status)) {
+                  entry->main->thread->enabled = original_enabled;
+
+                  f_thread_mutex_unlock(&entry->main->thread->lock.alert);
+                }
+
+                *status = F_failure;
               }
             }
           }
@@ -824,6 +824,8 @@ extern "C" {
 
           if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->main->setting->failsafe_enabled) {
 
+            const uint8_t original_enabled = entry->main->thread->enabled;
+
             // restore operating mode so that the failsafe can execute.
             if (F_status_set_fine(*status) == F_execute) {
               *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
@@ -853,6 +855,21 @@ extern "C" {
 
                 controller_print_unlock_flush(data->error.to.stream, &entry->main->thread->lock.print);
               }
+
+              *status = F_status_set_error(F_failure);
+            }
+            else {
+
+              // restore operating mode to value prior to failsafe mode.
+              *status = f_thread_mutex_lock(&entry->main->thread->lock.alert);
+
+              if (F_status_is_error_not(*status)) {
+                entry->main->thread->enabled = original_enabled;
+
+                f_thread_mutex_unlock(&entry->main->thread->lock.alert);
+              }
+
+              *status = F_failure;
             }
           }
         }
