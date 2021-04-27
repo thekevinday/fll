@@ -5125,7 +5125,7 @@ extern "C" {
     fprintf(data->output.stream, "%c", f_string_eol_s[0]);
     fprintf(data->output.stream, "Rule %s%s%s {%c", data->context.set.title.before->string, rule.alias.used ? rule.alias.string : f_string_empty_s, data->context.set.title.after->string, f_string_eol_s[0]);
     fprintf(data->output.stream, "  %s%s%s %s%c", data->context.set.important.before->string, controller_string_name_s, data->context.set.important.after->string, rule.name.used ? rule.name.string : f_string_empty_s, f_string_eol_s[0]);
-    fprintf(data->output.stream, "  %s%s%s %s%c", data->context.set.important.before->string, controller_string_how_s, data->context.set.important.after->string, options & controller_process_option_asynchronous ? controller_string_asynchronous : controller_string_synchronous_s, f_string_eol_s[0]);
+    fprintf(data->output.stream, "  %s%s%s %s%c", data->context.set.important.before->string, controller_string_how_s, data->context.set.important.after->string, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
     fprintf(data->output.stream, "  %s%s%s %s%c", data->context.set.important.before->string, controller_string_wait_s, data->context.set.important.after->string, options & controller_process_option_wait ? controller_string_yes : controller_string_no_s, f_string_eol_s[0]);
 
     if (f_capability_supported()) {

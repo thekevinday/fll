@@ -1175,8 +1175,9 @@ extern "C" {
             if (entry_action->code & controller_entry_rule_code_asynchronous) {
               if (main->data->parameters[controller_parameter_validate].result != f_console_result_found) {
                 options_force |= controller_process_option_asynchronous;
-                options_process |= controller_process_option_asynchronous;
               }
+
+              options_process |= controller_process_option_asynchronous;
             }
 
             status = controller_rule_process_begin(options_force, alias_rule, controller_entry_action_type_to_rule_action_type(entry_action->type), options_process, is_entry ? controller_process_type_entry : controller_process_type_exit, stack, *main, *cache);
