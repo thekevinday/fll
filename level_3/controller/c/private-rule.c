@@ -1098,6 +1098,31 @@ extern "C" {
     int result = 0;
     pid_t id_child = 0;
 
+    status = controller_pids_increase(&process->childs);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(main.data->error, F_status_set_fine(status), "controller_pids_increase", F_true);
+
+      return status;
+    }
+
+    pid_t *child = 0;
+    f_string_dynamic_t *child_pid_file = 0;
+
+    {
+      f_array_length_t i = 0;
+
+      for (; i < process->childs.used && process->childs.array[i]; ++i) {
+        // do nothing
+      } // for
+
+      child = &process->childs.array[i];
+
+      if (i == process->childs.used) {
+        ++process->childs.used;
+      }
+    }
+
     if (options & controller_process_option_simulate) {
       if (main.data->error.verbosity != f_console_verbosity_quiet) {
         f_thread_mutex_lock(&main.thread->lock.print);
@@ -1153,7 +1178,7 @@ extern "C" {
       }
 
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
-      process->child = id_child;
+      *child = id_child;
 
       f_thread_unlock(&process->lock);
 
@@ -1198,7 +1223,7 @@ extern "C" {
       }
 
       // remove the pid now that waidpid() has returned.
-      process->child = 0;
+      *child = 0;
 
       f_thread_unlock(&process->lock);
 
@@ -1276,7 +1301,48 @@ extern "C" {
     int result = 0;
     pid_t id_child = 0;
 
-    process->path_pid.used = 0;
+    status = controller_pids_increase(&process->childs);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(main.data->error, F_status_set_fine(status), "controller_pids_increase", F_true);
+
+      return status;
+    }
+
+    status = f_string_dynamics_increase(&process->path_pids);
+
+    if (F_status_is_error(status)) {
+      fll_error_print(main.data->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+
+      return status;
+    }
+
+    pid_t *child = 0;
+    f_string_dynamic_t *child_pid_file = 0;
+
+    {
+      f_array_length_t i = 0;
+
+      for (; i < process->childs.used && process->childs.array[i]; ++i) {
+        // do nothing
+      } // for
+
+      child = &process->childs.array[i];
+
+      if (i == process->childs.used) {
+        ++process->childs.used;
+      }
+
+      for (i = 0; i < process->path_pids.used && process->path_pids.array[i].used; ++i) {
+        // do nothing
+      } // for
+
+      child_pid_file = &process->path_pids.array[i];
+
+      if (i == process->path_pids.used) {
+        ++process->path_pids.used;
+      }
+    }
 
     status = f_file_exists(pid_file.string);
 
@@ -1287,12 +1353,12 @@ extern "C" {
     }
 
     if (status == F_true) {
-      fll_error_file_print(main.data->error, F_file_found, "f_file_exists", F_true, pid_file.string, "create PID", fll_error_file_type_file);
+      fll_error_file_print(main.data->error, F_file_found, "f_file_exists", F_true, pid_file.string, "find", fll_error_file_type_file);
 
       return F_status_set_error(F_file_found);
     }
 
-    status = controller_string_dynamic_append_terminated(pid_file, &process->path_pid);
+    status = controller_string_dynamic_append_terminated(pid_file, child_pid_file);
 
     if (F_status_is_error(status)) {
       fll_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true);
@@ -1355,7 +1421,7 @@ extern "C" {
       }
 
       // assign the child process id to allow for the cancel process to send appropriate termination signals to the child process.
-      process->child = id_child;
+      *child = id_child;
 
       f_thread_unlock(&process->lock);
 
@@ -1400,7 +1466,7 @@ extern "C" {
       }
 
       // remove the pid now that waidpid() has returned.
-      process->child = 0;
+      *child = 0;
 
       f_thread_unlock(&process->lock);
 

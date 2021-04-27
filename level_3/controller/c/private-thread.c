@@ -59,12 +59,20 @@ extern "C" {
             continue;
           }
 
-          // if process has a pid file, then it is running in the background, only cleanup if the pid file no longer exists.
-          if (process->path_pid.used && f_file_exists(process->path_pid.string) == F_true) {
-            f_thread_unlock(&process->active);
-            f_thread_unlock(&process->lock);
+          // if process has a PID file, then it is running in the background, only cleanup if the PID file no longer exists.
+          if (process->path_pids.used) {
+            f_array_length_t j = 0;
 
-            continue;
+            for (; j < process->path_pids.used; ++j) {
+              if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) break;
+            } // for
+
+            if (j < process->path_pids.used) {
+              f_thread_unlock(&process->active);
+              f_thread_unlock(&process->lock);
+
+              continue;
+            }
           }
 
           f_thread_unlock(&process->lock);
@@ -103,10 +111,21 @@ extern "C" {
           controller_cache_delete_simple(&process->cache);
           f_type_array_lengths_resize(0, &process->stack);
 
-          // deallocate the pid file.
-          if (process->path_pid.used) {
-            process->path_pid.used = 0;
-            f_string_dynamic_resize(0, &process->path_pid);
+          // shrink the childs array.
+          if (process->childs.used) {
+            for (; process->childs.used; --process->childs.used) {
+              if (process->childs.array[process->childs.used]) break;
+            } // for
+
+            if (process->childs.used < process->childs.size) {
+              controller_pids_resize(process->childs.used, &process->childs);
+            }
+          }
+
+          // deallocate the PID files.
+          if (process->path_pids.used) {
+            process->path_pids.used = 0;
+            f_string_dynamics_resize(0, &process->path_pids);
           }
 
           // deallocate any rules in the space that is declared to be unused.
@@ -408,6 +427,7 @@ extern "C" {
     controller_process_t *process = 0;
 
     f_array_length_t i = 0;
+    f_array_length_t j = 0;
     pid_t pid = 0;
 
     // the sleep() function that is run inside the cleanup function must be interrupted via the f_thread_cancel().
@@ -437,39 +457,23 @@ extern "C" {
       // do not cancel exit processes, when not performing "execute" during exit.
       if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
-      if (process->child > 0) {
-        f_signal_send(F_signal_termination, process->child);
-      }
+      for (j = 0; j < process->childs.used; ++j) {
 
-      if (process->path_pid.used && f_file_exists(process->path_pid.string) == F_true) {
-        status = controller_file_pid_read(process->path_pid, &pid);
-
-        if (pid) {
-          f_signal_send(F_signal_termination, pid);
+        if (process->childs.array[j] > 0) {
+          f_signal_send(F_signal_termination, process->childs.array[j]);
         }
-      }
-    } // for
+      } // for
 
-    for (i = 0; i < main->thread->processs.used; ++i) {
+      for (j = 0; j < process->path_pids.used; ++j) {
 
-      if (!main->thread->processs.array[i]) continue;
-      if (caller && i == caller->id) continue;
+        if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) {
+          status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
-      process = main->thread->processs.array[i];
-
-      // do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
-
-      if (process->id_thread) {
-        controller_time(0, controller_thread_exit_process_cancel_wait, &time);
-
-        status = f_thread_join_timed(process->id_thread, time, 0);
-
-        if (status == F_none) {
-          process->child = 0;
-          process->id_thread = 0;
+          if (pid) {
+            f_signal_send(F_signal_termination, pid);
+          }
         }
-      }
+      } // for
     } // for
 
     for (i = 0; i < main->thread->processs.size && spent < controller_thread_exit_process_cancel_total; ++i) {
@@ -490,7 +494,11 @@ extern "C" {
         status = f_thread_join_timed(process->id_thread, time, 0);
 
         if (status == F_none) {
-          process->child = 0;
+          for (j = 0; j < process->childs.size; ++j) {
+            process->childs.array[j] = 0;
+          } // for
+
+          process->childs.used = 0;
           process->id_thread = 0;
         }
 
@@ -498,35 +506,33 @@ extern "C" {
 
       } while (status == F_time && spent < controller_thread_exit_process_cancel_total);
 
-      if (process->path_pid.used) {
-        for (; spent < controller_thread_exit_process_cancel_total; ++spent) {
+      if (process->path_pids.used) {
+        for (j = 0; j < process->path_pids.used; ++j) {
 
-          if (f_file_exists(process->path_pid.string) == F_true) {
-            status = controller_file_pid_read(process->path_pid, &pid);
+          for (; spent < controller_thread_exit_process_cancel_total; ++spent) {
 
-            if (pid) {
+            if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) {
+              status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
-              // a hackish way to determine if the pid exists while waiting.
-              if (getpgid(pid) >= 0) {
-                time.tv_sec = 0;
-                time.tv_nsec = controller_thread_exit_process_cancel_wait;
+              if (pid) {
 
-                nanosleep(&time, 0);
-              }
-              else {
-                f_file_remove(process->path_pid.string);
-                process->path_pid.used = 0;
+                // a hackish way to determine if the pid exists while waiting.
+                if (getpgid(pid) >= 0) {
+                  time.tv_sec = 0;
+                  time.tv_nsec = controller_thread_exit_process_cancel_wait;
 
-                break;
+                  nanosleep(&time, 0);
+                  continue;
+                }
+                else {
+                  f_file_remove(process->path_pids.array[j].string);
+                  process->path_pids.array[j].used = 0;
+                }
               }
             }
-            else {
-              break;
-            }
-          }
-          else {
+
             break;
-          }
+          } // for
         } // for
       }
     } // for
@@ -542,34 +548,48 @@ extern "C" {
       if (process->type == controller_process_type_exit && main->thread->enabled != controller_thread_enabled_exit_execute) continue;
 
       if (process->id_thread) {
+        if (process->childs.used) {
+          for (j = 0; j < process->childs.used; ++j) {
 
-        if (process->child > 0) {
-          f_signal_send(F_signal_kill, process->child);
+            if (process->childs.array[j] > 0) {
+              f_signal_send(F_signal_kill, process->childs.array[j]);
 
-          time.tv_sec = 0;
-          time.tv_nsec = controller_thread_exit_process_cancel_wait;
+              time.tv_sec = 0;
+              time.tv_nsec = controller_thread_exit_process_cancel_wait;
+
+              process->childs.array[j] = 0;
+            }
+          } // for
 
           nanosleep(&time, 0);
         }
 
         f_thread_join(process->id_thread, 0);
 
-        process->child = 0;
         process->id_thread = 0;
       }
 
-      if (process->path_pid.used) {
-        if (f_file_exists(process->path_pid.string) == F_true) {
-          status = controller_file_pid_read(process->path_pid, &pid);
+      for (j = 0; j < process->childs.size; ++j) {
+        process->childs.array[j] = 0;
+      } // for
+
+      process->childs.used = 0;
+
+      for (j = 0; j < process->path_pids.used; ++j) {
+
+        if (f_file_exists(process->path_pids.array[j].string) == F_true) {
+          status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
           if (pid) {
             f_signal_send(F_signal_kill, pid);
           }
 
-          f_file_remove(process->path_pid.string);
-          process->path_pid.used = 0;
+          f_file_remove(process->path_pids.array[j].string);
+          process->path_pids.array[j].used = 0;
         }
-      }
+      } // for
+
+      process->path_pids.used = 0;
     } // for
   }
 #endif // _di_controller_thread_process_cancel_

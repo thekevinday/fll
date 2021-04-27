@@ -314,6 +314,46 @@ extern "C" {
   }
 #endif // _di_controller_lock_write_process_type_
 
+#ifndef _di_controller_pids_increase_
+  f_status_t controller_pids_increase(controller_pids_t *pids) {
+
+    if (pids->used + 1 > pids->size) {
+      f_array_length_t size = pids->used + controller_default_allocation_step;
+
+      if (size > f_array_length_t_size) {
+        if (pids->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return controller_pids_resize(size, pids);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_controller_pids_increase_
+
+#ifndef _di_controller_pids_resize_
+  f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) {
+
+    f_status_t status = F_none;
+
+    status = f_memory_resize(pids->size, length, sizeof(controller_rule_t), (void **) & pids->array);
+
+    if (F_status_is_error_not(status)) {
+      pids->size = length;
+
+      if (pids->used > pids->size) {
+        pids->used = length;
+      }
+    }
+
+    return status;
+  }
+#endif // _di_controller_pids_resize_
+
 #ifndef _di_controller_print_unlock_flush_
   void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) {
 
@@ -343,9 +383,10 @@ extern "C" {
     controller_lock_delete_mutex(&process->wait_lock);
 
     controller_cache_delete_simple(&process->cache);
+    controller_pids_resize(0, &process->childs);
     controller_rule_delete_simple(&process->rule);
 
-    f_string_dynamic_resize(0, &process->path_pid);
+    f_string_dynamics_resize(0, &process->path_pids);
 
     f_macro_array_lengths_t_delete_simple(process->stack)
   }

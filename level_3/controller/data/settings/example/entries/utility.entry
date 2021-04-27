@@ -9,6 +9,7 @@ main:
 
   start utility sleeper_1
   start utility sleeper_2
+  start utility sleeper_3
 
 explode:
   start maintenance boom

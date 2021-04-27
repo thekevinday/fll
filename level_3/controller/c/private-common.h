@@ -878,6 +878,28 @@ extern "C" {
 #endif // _di_controller_with_defines_
 
 /**
+ * An array of PIDs.
+ *
+ * array: An array of rule PIDs.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_controller_pids_t_
+  typedef struct {
+    pid_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } controller_pids_t;
+
+  #define controller_pids_t_initialize { \
+    0, \
+    0, \
+    0, \
+  }
+#endif // _di_controller_pids_t_
+
+/**
  * A Rule Process.
  *
  * This refers to "process" as in the processing of a single rule for the given Rule ID and does not refer to "process" as in a CPU Process.
@@ -941,7 +963,6 @@ extern "C" {
     uint8_t action;
     uint8_t options;
     uint8_t type;
-    pid_t child;
 
     f_thread_id_t id_thread;
     f_thread_lock_t lock;
@@ -952,8 +973,9 @@ extern "C" {
     controller_cache_t cache;
     f_array_lengths_t stack;
 
-    f_string_dynamic_t path_pid;
+    f_string_dynamics_t path_pids;
 
+    controller_pids_t childs;
     controller_rule_t rule;
 
     void *main_data;
@@ -967,14 +989,14 @@ extern "C" {
     0, \
     0, \
     0, \
-    0, \
     f_thread_id_t_initialize, \
     f_thread_lock_t_initialize, \
     f_thread_lock_t_initialize, \
     f_thread_condition_t_initialize, \
     controller_cache_t_initialize, \
     f_array_lengths_t_initialize, \
-    f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    controller_pids_t_initialize, \
     controller_rule_t_initialize, \
     0, \
     0, \
@@ -1809,6 +1831,49 @@ extern "C" {
 #ifndef _di_controller_lock_write_process_type_
   extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
 #endif // _di_controller_lock_write_process_type_
+
+/**
+ * Increase the size of the pid array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param pids
+ *   The pid array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see controller_pids_resize()
+ */
+#ifndef _di_controller_pids_increase_
+  extern f_status_t controller_pids_increase(controller_pids_t *pids) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_rule_increase_
+
+/**
+ * Resize the pid array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param pids
+ *   The pid array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_memory_resize()
+ */
+#ifndef _di_controller_pids_resize_
+  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) f_gcc_attribute_visibility_internal;
+#endif // _di_controller_pids_resize_
 
 /**
  * Flush the stream buffer and then unlock the mutex.

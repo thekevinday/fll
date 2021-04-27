@@ -12,7 +12,7 @@ utility:
 
     main() {
       if [[ -f /tmp/sleeper_2.pid ]] ; then
-        echo "Failure: pid file '/tmp/sleeper_1.pid' already exists."
+        echo "Failure: pid file '/tmp/sleeper_2.pid' already exists."
         return 1
       fi
 
