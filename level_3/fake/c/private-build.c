@@ -444,7 +444,33 @@ extern "C" {
         return;
       }
 
-      *status = f_directory_create(directorys[i]->string, mode);
+      // @todo implement this in a common function and use across project for creating parent directories.
+      for (f_array_length_t j = 0; j < directorys[i]->used; ++j) {
+
+        if (directorys[i]->string[j] != f_path_separator_s[0]) continue;
+
+        directorys[i]->string[j] = 0;
+
+        *status = f_directory_exists(directorys[i]->string);
+
+        if (F_status_is_error(*status) || *status == F_false) {
+          directorys[i]->string[j] = f_path_separator_s[0];
+
+          break;
+        }
+
+        if (*status == F_file_found_not) {
+          *status = f_directory_create(directorys[i]->string, mode);
+        }
+
+        directorys[i]->string[j] = f_path_separator_s[0];
+
+        if (F_status_is_error(*status)) break;
+      } // for
+
+      if (F_status_is_fine(*status)) {
+        *status = f_directory_create(directorys[i]->string, mode);
+      }
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -2587,25 +2613,17 @@ extern "C" {
 
         char directory_headers[directory_headers_length + 1];
 
+        memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
+
         if (data_build.setting.path_headers.used) {
-          memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
           memcpy(directory_headers + data->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
-
-          directory_headers[directory_headers_length] = 0;
-
-          path_headers.string = directory_headers;
-          path_headers.used = directory_headers_length;
-          path_headers.size = directory_headers_length + 1;
         }
-        else {
-          memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
 
-          directory_headers[directory_headers_length] = 0;
+        directory_headers[directory_headers_length] = 0;
 
-          path_headers.string = directory_headers;
-          path_headers.used = directory_headers_length;
-          path_headers.size = directory_headers_length + 1;
-        }
+        path_headers.string = directory_headers;
+        path_headers.used = directory_headers_length;
+        path_headers.size = directory_headers_length + 1;
 
         fake_build_copy(*data, mode, "header files", *path_sources, path_headers, data_build.setting.build_sources_headers, stage.file_sources_headers, data_build.setting.path_headers_preserve ? path_sources_base_length : 0, &status);
       }
