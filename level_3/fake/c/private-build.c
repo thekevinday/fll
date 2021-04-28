@@ -49,7 +49,7 @@ extern "C" {
       if (F_status_is_error(*status)) break;
     } // for
 
-    if (data.path_work.used > 0) {
+    if (data.path_work.used) {
       f_array_length_t length = 0;
 
       if (F_status_is_error_not(*status)) {
@@ -393,7 +393,7 @@ extern "C" {
 
     char directory_headers[directory_headers_length + 1];
 
-    if (data_build.setting.path_headers.used > 0) {
+    if (data_build.setting.path_headers.used) {
       memcpy(directory_headers, data.path_build_includes.string, data.path_build_includes.used);
       memcpy(directory_headers + data.path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
 
@@ -1560,7 +1560,7 @@ extern "C" {
       f_array_length_t j = 0;
 
       // if any mode is specified, the entire defaults is replaced.
-      if (data.mode.used > 0) {
+      if (data.mode.used) {
         modes = &data.mode;
       }
 
@@ -2044,7 +2044,7 @@ extern "C" {
       };
 
       for (uint8_t i = 0; i < 3; i++) {
-        if (destinations[i]->used > 0) continue;
+        if (destinations[i]->used) continue;
 
         *status = f_string_append_assure(sources[i], lengths[i], destinations[i]);
 
@@ -2587,7 +2587,7 @@ extern "C" {
 
         char directory_headers[directory_headers_length + 1];
 
-        if (data_build.setting.path_headers.used > 0) {
+        if (data_build.setting.path_headers.used) {
           memcpy(directory_headers, data->path_build_includes.string, data->path_build_includes.used);
           memcpy(directory_headers + data->path_build_includes.used, data_build.setting.path_headers.string, data_build.setting.path_headers.used);
 
@@ -2724,7 +2724,7 @@ extern "C" {
     }
 
     // if project-specific library sources exist, then the -lproject_name needs to be added to the arguments.
-    if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used > 0) {
+    if (F_status_is_error_not(*status) && data_build.setting.build_sources_library.used) {
       f_array_length_t link_project_library_length = fake_build_parameter_library_link_file_length + data_build.setting.project_name.used;
 
       char link_project_library[link_project_library_length + 1];

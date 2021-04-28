@@ -388,7 +388,7 @@ extern "C" {
       } // for
     }
 
-    if (data->path_work.used > 0) {
+    if (data->path_work.used) {
       {
         f_string_dynamic_t * const parameters_value[] = {
           &data->path_work_includes,
@@ -1001,7 +1001,7 @@ extern "C" {
         return F_status_set_error(F_signal);
       }
 
-      if (parameters_value[i]->used > 0) {
+      if (parameters_value[i]->used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
         status = f_file_stat(parameters_value[i]->string, F_true, &directory_stat);

@@ -4521,7 +4521,7 @@ extern "C" {
         return;
       }
 
-      if (arguments.used > 0) {
+      if (arguments.used) {
         const f_string_t if_type_strings[] = {
           fake_make_operation_argument_if_defined,
           fake_make_operation_argument_if_equal,
