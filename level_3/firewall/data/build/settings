@@ -47,7 +47,7 @@ search_shared yes
 search_static yes
 
 #defines_all -D_di_libcap_ -D_di_thread_support_
-defines_all
+defines_all -D_libcap_legacy_only_
 defines_static
 defines_shared
 

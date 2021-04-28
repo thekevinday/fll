@@ -46,7 +46,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines_all
+defines_all -D_libcap_legacy_only_
 defines_static
 defines_shared
 
