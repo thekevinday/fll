@@ -843,6 +843,20 @@ bootstrap_operation_build() {
           fi
         fi
       done
+    elif [[ $path_headers_preserve == "yes" ]] ; then
+      for i in $sources_headers ; do
+        directory=$(dirname $i)
+
+        if [[ $directory == "." || $path_headers_preserve != "yes" ]] ; then
+          cp $verbose -f $path_c$i ${path_build}includes/$path_headers/ || failure=1
+        else
+          mkdir $verbose -p ${path_build}includes/$path_headers/$directory || failure=1
+
+          if [[ $failure == "" ]] ; then
+            cp $verbose -f $path_c$i ${path_build}includes/$path_headers/$i || failure=1
+          fi
+        fi
+      done
     else
       for i in $sources_headers ; do
         cp $verbose -f $path_c$i ${path_build}includes/$path_headers/ || failure=1
