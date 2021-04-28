@@ -88,7 +88,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
-          iki_write_delete_data(data);
+          iki_write_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -102,7 +102,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          iki_write_delete_data(data);
+          iki_write_data_delete(data);
           return status;
         }
 
@@ -126,14 +126,14 @@ extern "C" {
     if (data->parameters[iki_write_parameter_help].result == f_console_result_found) {
       iki_write_print_help(data->output, data->context);
 
-      iki_write_delete_data(data);
+      iki_write_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[iki_write_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, iki_write_version);
 
-      iki_write_delete_data(data);
+      iki_write_data_delete(data);
       return F_none;
     }
 
@@ -413,13 +413,13 @@ extern "C" {
       }
     }
 
-    iki_write_delete_data(data);
+    iki_write_data_delete(data);
     return status;
   }
 #endif // _di_iki_write_main_
 
-#ifndef _di_iki_write_delete_data_
-  f_status_t iki_write_delete_data(iki_write_data_t *data) {
+#ifndef _di_iki_write_data_delete_
+  f_status_t iki_write_data_delete(iki_write_data_t *data) {
 
     for (f_array_length_t i = 0; i < iki_write_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -434,7 +434,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_iki_write_delete_data_
+#endif // _di_iki_write_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -115,7 +115,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fss_extended_write_delete_data(data);
+          fss_extended_write_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -129,7 +129,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fss_extended_write_delete_data(data);
+          fss_extended_write_data_delete(data);
           return status;
         }
 
@@ -153,14 +153,14 @@ extern "C" {
     if (data->parameters[fss_extended_write_parameter_help].result == f_console_result_found) {
       fss_extended_write_print_help(data->output, data->context);
 
-      fss_extended_write_delete_data(data);
+      fss_extended_write_data_delete(data);
       return status;
     }
 
     if (data->parameters[fss_extended_write_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, fss_extended_write_version);
 
-      fss_extended_write_delete_data(data);
+      fss_extended_write_data_delete(data);
       return status;
     }
 
@@ -573,13 +573,13 @@ extern "C" {
     f_macro_string_dynamic_t_delete_simple(buffer);
     f_macro_string_dynamic_t_delete_simple(object);
     f_macro_string_dynamics_t_delete_simple(contents);
-    fss_extended_write_delete_data(data);
+    fss_extended_write_data_delete(data);
     return status;
   }
 #endif // _di_fss_extended_write_main_
 
-#ifndef _di_fss_extended_write_delete_data_
-  f_status_t fss_extended_write_delete_data(fss_extended_write_data_t *data) {
+#ifndef _di_fss_extended_write_data_delete_
+  f_status_t fss_extended_write_data_delete(fss_extended_write_data_t *data) {
 
     for (f_array_length_t i = 0; i < fss_extended_write_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -593,7 +593,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_extended_write_delete_data_
+#endif // _di_fss_extended_write_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -190,7 +190,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fss_basic_read_delete_data(data);
+          fss_basic_read_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -204,7 +204,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fss_basic_read_delete_data(data);
+          fss_basic_read_data_delete(data);
           return status;
         }
 
@@ -228,14 +228,14 @@ extern "C" {
     if (data->parameters[fss_basic_read_parameter_help].result == f_console_result_found) {
       fss_basic_read_print_help(data->output, data->context);
 
-      fss_basic_read_delete_data(data);
+      fss_basic_read_data_delete(data);
       return status;
     }
 
     if (data->parameters[fss_basic_read_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, fss_basic_read_version);
 
-      fss_basic_read_delete_data(data);
+      fss_basic_read_data_delete(data);
       return status;
     }
 
@@ -420,7 +420,7 @@ extern "C" {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
         }
 
-        fss_basic_read_delete_data(data);
+        fss_basic_read_data_delete(data);
         return F_none;
       }
 
@@ -528,13 +528,13 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    fss_basic_read_delete_data(data);
+    fss_basic_read_data_delete(data);
     return status;
   }
 #endif // _di_fss_basic_read_main_
 
-#ifndef _di_fss_basic_read_delete_data_
-  f_status_t fss_basic_read_delete_data(fss_basic_read_data_t *data) {
+#ifndef _di_fss_basic_read_data_delete_
+  f_status_t fss_basic_read_data_delete(fss_basic_read_data_t *data) {
 
     for (f_array_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -551,7 +551,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_basic_read_delete_data_
+#endif // _di_fss_basic_read_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

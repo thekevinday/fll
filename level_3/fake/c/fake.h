@@ -517,7 +517,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fake_delete_data() after executing this.
+ * Be sure to call fake_data_delete() after executing this.
  *
  * If data.signal is non-zero, then this blocks and handles the following signals:
  * - F_signal_abort
@@ -537,7 +537,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see fake_delete_data()
+ * @see fake_data_delete()
  */
 #ifndef _di_fake_main_
   extern f_status_t fake_main(const f_console_arguments_t arguments, fake_data_t *data);
@@ -558,9 +558,9 @@ extern "C" {
  *
  * @see fake_main()
  */
-#ifndef _di_fake_delete_data_
-  extern f_status_t fake_delete_data(fake_data_t *data);
-#endif // _di_fake_delete_data_
+#ifndef _di_fake_data_delete_
+  extern f_status_t fake_data_delete(fake_data_t *data);
+#endif // _di_fake_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

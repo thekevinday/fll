@@ -221,7 +221,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fss_basic_read_delete_data() after executing this.
+ * Be sure to call fss_basic_read_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -233,7 +233,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see fss_basic_read_delete_data()
+ * @see fss_basic_read_data_delete()
  */
 #ifndef _di_fss_basic_read_main_
   extern f_status_t fss_basic_read_main(const f_console_arguments_t arguments, fss_basic_read_data_t *data);
@@ -254,9 +254,9 @@ extern "C" {
  *
  * @see fss_basic_read_main()
  */
-#ifndef _di_fss_basic_read_delete_data_
-  extern f_status_t fss_basic_read_delete_data(fss_basic_read_data_t *data);
-#endif // _di_fss_basic_read_delete_data_
+#ifndef _di_fss_basic_read_data_delete_
+  extern f_status_t fss_basic_read_data_delete(fss_basic_read_data_t *data);
+#endif // _di_fss_basic_read_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

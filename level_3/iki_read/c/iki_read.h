@@ -236,7 +236,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call iki_read_delete_data() after executing this.
+ * Be sure to call iki_read_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -248,7 +248,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see iki_read_delete_data()
+ * @see iki_read_data_delete()
  */
 #ifndef _di_iki_read_main_
   extern f_status_t iki_read_main(const f_console_arguments_t arguments, iki_read_data_t *data);
@@ -269,9 +269,9 @@ extern "C" {
  *
  * @see iki_read_main()
  */
-#ifndef _di_iki_read_delete_data_
-  extern f_status_t iki_read_delete_data(iki_read_data_t *data);
-#endif // _di_iki_read_delete_data_
+#ifndef _di_iki_read_data_delete_
+  extern f_status_t iki_read_data_delete(iki_read_data_t *data);
+#endif // _di_iki_read_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

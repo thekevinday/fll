@@ -260,7 +260,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call byte_dump_delete_data() after executing this.
+ * Be sure to call byte_dump_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -271,7 +271,7 @@ extern "C" {
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see byte_dump_delete_data()
+ * @see byte_dump_data_delete()
  */
 #ifndef _di_byte_dump_main_
   extern f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_data_t *data);
@@ -292,9 +292,9 @@ extern "C" {
  *
  * @see byte_dump_main()
  */
-#ifndef _di_byte_dump_delete_data_
-  extern f_status_t byte_dump_delete_data(byte_dump_data_t *data);
-#endif // _di_byte_dump_delete_data_
+#ifndef _di_byte_dump_data_delete_
+  extern f_status_t byte_dump_data_delete(byte_dump_data_t *data);
+#endif // _di_byte_dump_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

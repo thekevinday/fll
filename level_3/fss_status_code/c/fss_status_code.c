@@ -65,7 +65,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fss_status_code_delete_data(data);
+          fss_status_code_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -79,7 +79,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fss_status_code_delete_data(data);
+          fss_status_code_data_delete(data);
           return status;
         }
 
@@ -103,14 +103,14 @@ extern "C" {
     if (data->parameters[fss_status_code_parameter_help].result == f_console_result_found) {
       fss_status_code_print_help(data->output, data->context);
 
-      fss_status_code_delete_data(data);
+      fss_status_code_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, fss_status_code_version);
 
-      fss_status_code_delete_data(data);
+      fss_status_code_data_delete(data);
       return F_none;
     }
 
@@ -122,7 +122,7 @@ extern "C" {
         f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_warning);
         f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-        fss_status_code_delete_data(data);
+        fss_status_code_data_delete(data);
         return F_status_set_error(status);
       }
       else if (data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
@@ -132,7 +132,7 @@ extern "C" {
         f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
         f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-        fss_status_code_delete_data(data);
+        fss_status_code_data_delete(data);
         return F_status_set_error(status);
       }
     }
@@ -143,14 +143,14 @@ extern "C" {
       f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
       f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-      fss_status_code_delete_data(data);
+      fss_status_code_data_delete(data);
       return F_status_set_error(status);
     }
 
     if (data->remaining.used == 0 && !data->process_pipe) {
       f_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify an error code.%c", fll_error_print_error, f_string_eol_s[0]);
 
-      fss_status_code_delete_data(data);
+      fss_status_code_data_delete(data);
       return F_status_set_error(F_parameter);
     }
 
@@ -204,13 +204,13 @@ extern "C" {
       }
     }
 
-    fss_status_code_delete_data(data);
+    fss_status_code_data_delete(data);
     return status;
   }
 #endif // _di_fss_status_code_main_
 
-#ifndef _di_fss_status_code_delete_data_
-  f_status_t fss_status_code_delete_data(fss_status_code_data_t *data) {
+#ifndef _di_fss_status_code_data_delete_
+  f_status_t fss_status_code_data_delete(fss_status_code_data_t *data) {
 
     for (f_array_length_t i = 0; i < fss_status_code_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -224,7 +224,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_status_code_delete_data_
+#endif // _di_fss_status_code_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

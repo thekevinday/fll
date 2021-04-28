@@ -171,7 +171,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fss_extended_list_write_delete_data() after executing this.
+ * Be sure to call fss_extended_list_write_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -183,7 +183,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see fss_extended_list_write_delete_data()
+ * @see fss_extended_list_write_data_delete()
  */
 #ifndef _di_fss_extended_list_write_main_
   extern f_status_t fss_extended_list_write_main(const f_console_arguments_t arguments, fss_extended_list_write_data_t *data);
@@ -204,9 +204,9 @@ extern "C" {
  *
  * @see fss_extended_list_write_main()
  */
-#ifndef _di_fss_extended_list_write_delete_data_
-  extern f_status_t fss_extended_list_write_delete_data(fss_extended_list_write_data_t *data);
-#endif // _di_fss_extended_list_write_delete_data_
+#ifndef _di_fss_extended_list_write_data_delete_
+  extern f_status_t fss_extended_list_write_data_delete(fss_extended_list_write_data_t *data);
+#endif // _di_fss_extended_list_write_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

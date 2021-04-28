@@ -133,7 +133,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-          fake_delete_data(data);
+          fake_data_delete(data);
           return status;
         }
       }
@@ -149,7 +149,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          fake_delete_data(data);
+          fake_data_delete(data);
           return status;
         }
 
@@ -255,14 +255,14 @@ extern "C" {
     if (data->parameters[fake_parameter_help].result == f_console_result_found) {
       fake_print_help(data->output, data->context);
 
-      fake_delete_data(data);
+      fake_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[fake_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, fake_version);
 
-      fake_delete_data(data);
+      fake_data_delete(data);
       return F_none;
     }
 
@@ -276,7 +276,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fake_delete_data(data);
+        fake_data_delete(data);
         return F_status_set_error(status);
       }
 
@@ -371,13 +371,13 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    fake_delete_data(data);
+    fake_data_delete(data);
     return status;
   }
 #endif // _di_fake_main_
 
-#ifndef _di_fake_delete_data_
-  f_status_t fake_delete_data(fake_data_t *data) {
+#ifndef _di_fake_data_delete_
+  f_status_t fake_data_delete(fake_data_t *data) {
 
     for (f_array_length_t i = 0; i < fake_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -446,7 +446,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fake_delete_data_
+#endif // _di_fake_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

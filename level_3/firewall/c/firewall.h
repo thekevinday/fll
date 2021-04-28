@@ -311,7 +311,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call firewall_delete_data() after executing this.
+ * Be sure to call firewall_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -323,7 +323,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see firewall_delete_data()
+ * @see firewall_data_delete()
  */
 #ifndef _di_firewall_main_
   extern f_status_t firewall_main(const f_console_arguments_t arguments, firewall_data_t *data);
@@ -344,9 +344,9 @@ extern "C" {
  *
  * @see firewall_main()
  */
-#ifndef _di_firewall_delete_data_
-  extern f_status_t firewall_delete_data(firewall_data_t *data);
-#endif // _di_firewall_delete_data_
+#ifndef _di_firewall_data_delete_
+  extern f_status_t firewall_data_delete(firewall_data_t *data);
+#endif // _di_firewall_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -69,7 +69,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
-          control_delete_data(data);
+          control_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -83,7 +83,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          control_delete_data(data);
+          control_data_delete(data);
           return status;
         }
 
@@ -107,14 +107,14 @@ extern "C" {
     if (data->parameters[control_parameter_help].result == f_console_result_found) {
       control_print_help(data->output, data->context);
 
-      control_delete_data(data);
+      control_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[control_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, control_version);
 
-      control_delete_data(data);
+      control_data_delete(data);
       return F_none;
     }
 
@@ -127,13 +127,13 @@ extern "C" {
       }
     }
 
-    control_delete_data(data);
+    control_data_delete(data);
     return status;
   }
 #endif // _di_control_main_
 
-#ifndef _di_control_delete_data_
-  f_status_t control_delete_data(control_data_t *data) {
+#ifndef _di_control_data_delete_
+  f_status_t control_data_delete(control_data_t *data) {
 
     for (f_array_length_t i = 0; i < control_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -147,7 +147,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_control_delete_data_
+#endif // _di_control_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

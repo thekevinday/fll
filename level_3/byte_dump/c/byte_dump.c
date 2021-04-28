@@ -110,7 +110,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -126,7 +126,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return status;
         }
 
@@ -155,7 +155,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -187,7 +187,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -208,14 +208,14 @@ extern "C" {
     if (data->parameters[byte_dump_parameter_help].result == f_console_result_found) {
       byte_dump_print_help(data->output, data->context);
 
-      byte_dump_delete_data(data);
+      byte_dump_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[byte_dump_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, byte_dump_version);
 
-      byte_dump_delete_data(data);
+      byte_dump_data_delete(data);
       return F_none;
     }
 
@@ -225,7 +225,7 @@ extern "C" {
         f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_width);
         f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
-        byte_dump_delete_data(data);
+        byte_dump_data_delete(data);
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
@@ -245,7 +245,7 @@ extern "C" {
           f_color_print(data->error.to.stream, data->context.set.notable, "251");
           f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -257,7 +257,7 @@ extern "C" {
         f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_first);
         f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
-        byte_dump_delete_data(data);
+        byte_dump_data_delete(data);
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
@@ -277,7 +277,7 @@ extern "C" {
           f_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
           f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -289,7 +289,7 @@ extern "C" {
         f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
         f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
 
-        byte_dump_delete_data(data);
+        byte_dump_data_delete(data);
         return F_status_set_error(status);
       }
       else if (data->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
@@ -309,7 +309,7 @@ extern "C" {
           f_color_print(data->error.to.stream, data->context.set.notable, "%llu", f_number_t_size_unsigned);
           f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -324,7 +324,7 @@ extern "C" {
           f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
           f_color_print(data->error.to.stream, data->context.set.error, "' value.%c", f_string_eol_s[0]);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return F_status_set_error(status);
         }
 
@@ -363,7 +363,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "byte_dump_file", F_true);
 
-          byte_dump_delete_data(data);
+          byte_dump_data_delete(data);
           return status;
         }
       }
@@ -389,7 +389,7 @@ extern "C" {
           if (missing_files != F_none) {
             status = F_status_set_error(missing_files);
 
-            byte_dump_delete_data(data);
+            byte_dump_data_delete(data);
             return status;
           }
         }
@@ -403,7 +403,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
 
-            byte_dump_delete_data(data);
+            byte_dump_data_delete(data);
             return status;
           }
 
@@ -437,7 +437,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments.argv[data->remaining.array[counter]], "process", fll_error_file_type_file);
 
-            byte_dump_delete_data(data);
+            byte_dump_data_delete(data);
             return status;
           }
         } // for
@@ -451,13 +451,13 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    byte_dump_delete_data(data);
+    byte_dump_data_delete(data);
     return status;
   }
 #endif // _di_byte_dump_main_
 
-#ifndef _di_byte_dump_delete_data_
-  f_status_t byte_dump_delete_data(byte_dump_data_t *data) {
+#ifndef _di_byte_dump_data_delete_
+  f_status_t byte_dump_data_delete(byte_dump_data_t *data) {
 
     for (f_array_length_t i = 0; i < byte_dump_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -471,7 +471,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_byte_dump_delete_data_
+#endif // _di_byte_dump_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

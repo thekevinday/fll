@@ -126,7 +126,7 @@ extern "C" {
             fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
-          iki_read_delete_data(data);
+          iki_read_data_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -142,7 +142,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          iki_read_delete_data(data);
+          iki_read_data_delete(data);
           return status;
         }
 
@@ -166,14 +166,14 @@ extern "C" {
     if (data->parameters[iki_read_parameter_help].result == f_console_result_found) {
       iki_read_print_help(data->output, data->context);
 
-      iki_read_delete_data(data);
+      iki_read_data_delete(data);
       return F_none;
     }
 
     if (data->parameters[iki_read_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, iki_read_version);
 
-      iki_read_delete_data(data);
+      iki_read_data_delete(data);
       return F_none;
     }
 
@@ -381,7 +381,7 @@ extern "C" {
           fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
         }
 
-        iki_read_delete_data(data);
+        iki_read_data_delete(data);
         return F_status_set_error(F_parameter);
       }
 
@@ -467,13 +467,13 @@ extern "C" {
       }
     }
 
-    iki_read_delete_data(data);
+    iki_read_data_delete(data);
     return status;
   }
 #endif // _di_iki_read_main_
 
-#ifndef _di_iki_read_delete_data_
-  f_status_t iki_read_delete_data(iki_read_data_t *data) {
+#ifndef _di_iki_read_data_delete_
+  f_status_t iki_read_data_delete(iki_read_data_t *data) {
 
     for (f_array_length_t i = 0; i < iki_read_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -488,7 +488,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_iki_read_delete_data_
+#endif // _di_iki_read_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

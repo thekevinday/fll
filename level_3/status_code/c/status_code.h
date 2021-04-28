@@ -144,7 +144,7 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call status_code_delete_data() after executing this.
+ * Be sure to call status_code_data_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
@@ -156,7 +156,7 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see status_code_delete_data()
+ * @see status_code_data_delete()
  */
 #ifndef _di_status_code_main_
   extern f_status_t status_code_main(const f_console_arguments_t arguments, status_code_data_t *data);
@@ -177,9 +177,9 @@ extern "C" {
  *
  * @see status_code_main()
  */
-#ifndef _di_status_code_delete_data_
-  extern f_status_t status_code_delete_data(status_code_data_t *data);
-#endif // _di_status_code_delete_data_
+#ifndef _di_status_code_data_delete_
+  extern f_status_t status_code_data_delete(status_code_data_t *data);
+#endif // _di_status_code_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"
