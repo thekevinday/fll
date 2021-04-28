@@ -39,6 +39,8 @@ extern "C" {
     typedef int cap_flag_value_t;
     typedef unsigned int cap_mode_t;
     typedef int cap_value_t;
+  #elif defined(_libcap_legacy_only_)
+    typedef unsigned int cap_mode_t;
   #endif // _di_libcap_
 
   typedef cap_t f_capability_t;
