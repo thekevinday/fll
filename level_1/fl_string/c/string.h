@@ -828,7 +828,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  extern f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 /**
@@ -857,7 +857,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_non_
-  extern f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_dynamic_seek_line_until_graph_non_
 
 /**
@@ -1000,7 +1000,7 @@ extern "C" {
  * @see f_utf_is_graph()
  */
 #ifndef _di_fl_string_seek_line_until_graph_
-  extern f_status_t fl_string_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_until_graph_
 
 /**
@@ -1029,7 +1029,7 @@ extern "C" {
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_seek_line_until_graph_non_
-  extern f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range);
+  extern f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range);
 #endif // _di_fl_string_seek_line_until_graph_non_
 
 /**

@@ -19,7 +19,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_embedded_list_write_error_parameter_same_times_print_
-  void fss_embedded_list_write_error_parameter_same_times_print(const fss_embedded_list_write_data_t data) f_gcc_attribute_visibility_internal;
+  void fss_embedded_list_write_error_parameter_same_times_print(const fss_embedded_list_write_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_error_parameter_same_times_print_
 
 /**
@@ -29,7 +29,7 @@ extern "C" {
  *   The program data.
  */
 #ifndef _di_fss_embedded_list_write_error_parameter_unsupported_eol_print_
-  void fss_embedded_list_write_error_parameter_unsupported_eol_print(const fss_embedded_list_write_data_t data) f_gcc_attribute_visibility_internal;
+  void fss_embedded_list_write_error_parameter_unsupported_eol_print(const fss_embedded_list_write_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_error_parameter_unsupported_eol_print_
 
 /**
@@ -43,7 +43,7 @@ extern "C" {
  *   The parameter name, such as "help" in "--help".
  */
 #ifndef _di_fss_embedded_list_write_error_parameter_value_missing_print_
-  void fss_embedded_list_write_error_parameter_value_missing_print(const fss_embedded_list_write_data_t data, const f_string_t symbol, const f_string_t parameter) f_gcc_attribute_visibility_internal;
+  void fss_embedded_list_write_error_parameter_value_missing_print(const fss_embedded_list_write_data_t data, const f_string_t symbol, const f_string_t parameter) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_error_parameter_value_missing_print_
 
 /**
@@ -73,7 +73,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_embedded_list_write_process_
-  extern f_status_t fss_embedded_list_write_process(const fss_embedded_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_write_process(const fss_embedded_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, const f_string_ranges_t *ignore, f_string_dynamic_t *buffer) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_process_
 
 /**
@@ -97,7 +97,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_embedded_list_write_process_pipe_
-  extern f_status_t fss_embedded_list_write_process_pipe(const fss_embedded_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_write_process_pipe(const fss_embedded_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer, f_string_ranges_t *ignore) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_process_pipe_
 
 /**
@@ -119,7 +119,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_fss_embedded_list_write_process_parameter_ignore_
-  extern f_status_t fss_embedded_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_embedded_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_embedded_list_write_process_parameter_ignore(const f_console_arguments_t arguments, const fss_embedded_list_write_data_t data, const f_array_lengths_t contents, const f_array_length_t location, f_string_ranges_t *ignore) f_attribute_visibility_internal;
 #endif // _di_fss_embedded_list_write_process_parameter_ignore_
 
 #ifdef __cplusplus

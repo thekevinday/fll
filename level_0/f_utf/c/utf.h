@@ -74,8 +74,8 @@ extern "C" {
  *   The number of steps to decrement the start position.
  *   The steps refer to characters and not integers.
  *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be sizeof(int8_t), which is 1.
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
+ *   (For ASCII each step would be sizeof(uint8_t), which is 1.
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(uint8_t)).
  *
  * @return
  *   F_none on success.
@@ -105,8 +105,8 @@ extern "C" {
  *   The number of steps to increment the start position.
  *   The steps refer to characters and not integers.
  *   Essentially this number is considered against the width of every character found.
- *   (For ASCII each step would be sizeof(int8_t), which is 1.
- *   (For UTF-8 character of width 3, each step would be (3 * sizeof(int8_t)).
+ *   (For ASCII each step would be sizeof(uint8_t), which is 1.
+ *   (For UTF-8 character of width 3, each step would be (3 * sizeof(uint8_t)).
  *
  * @return
  *   F_none on success.
@@ -644,14 +644,14 @@ extern "C" {
 #endif // _di_f_utf_character_is_zero_width_
 
 /**
- * Convert a specialized f_utf_character_t type to a int8_t, stored as a string (character buffer).
+ * Convert a specialized f_utf_character_t type to a uint8_t, stored as a string (character buffer).
  *
  * This will also convert ASCII characters stored in the utf_character array.
  *
  * @param utf_character
  *   The UTF-8 characterr to convert from.
  * @param character
- *   A int8_t representation of the UTF-8 character, stored as a string of width bytes.
+ *   A uint8_t representation of the UTF-8 character, stored as a string of width bytes.
  *   If width_max is 0, then this should not be allocated (set the pointer address to 0).
  * @param width_max
  *   The number of bytes the generated character represents.
@@ -1698,7 +1698,7 @@ extern "C" {
  *   F_utf (with error bit) if character is invalid UTF-8.
  */
 #ifndef _di_f_utf_string_seek_line_to_
-  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const int8_t seek_to, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range);
 #endif // _di_f_utf_string_seek_line_to_
 
 /**
@@ -1721,7 +1721,7 @@ extern "C" {
  *   F_utf (with error bit) if character is invalid UTF-8.
  */
 #ifndef _di_f_utf_string_seek_to_
-  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const int8_t seek_to, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range);
 #endif // _di_f_utf_string_seek_to_
 
 #ifdef __cplusplus

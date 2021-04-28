@@ -51,7 +51,7 @@ defines_all -D_libcap_legacy_only_
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -pthread
+flags_all -z now -g -fdiagnostics-color=always -pthread -Wno-logical-not-parentheses -Wno-logical-op-parentheses
 flags_shared
 flags_static
 flags_library -fPIC

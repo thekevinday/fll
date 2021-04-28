@@ -215,18 +215,18 @@ extern "C" {
 #endif // _di_f_cell_t_
 
 /**
- * GCC-specific features.
+ * Compiler-specific attribute visibility features.
  *
- * Use these macros for GCC-specific tweaks so that if GCC is not supported then they can be easily disabled.
+ * Use these macros for visibility-specific tweaks so that if these are not supported by any given compiler, then they can be easily disabled.
  *
- * f_gcc_attribute_visibility_internal provides a way to make some functions effectively private.
+ * f_attribute_visibility_internal provides a way to make some functions effectively private.
  */
-#ifndef _di_f_gcc_specific_
-  #define f_gcc_attribute_visibility_default   __attribute__((visibility("default")))
-  #define f_gcc_attribute_visibility_hidden    __attribute__((visibility("hidden")))
-  #define f_gcc_attribute_visibility_internal  __attribute__((visibility("internal")))
-  #define f_gcc_attribute_visibility_protected __attribute__((visibility("protected")))
-#endif // _di_f_gcc_specific_
+#ifndef _di_f_attribute_visibility_
+  #define f_attribute_visibility_hidden    __attribute__((visibility("hidden")))
+  #define f_attribute_visibility_internal  __attribute__((visibility("internal")))
+  #define f_attribute_visibility_protected __attribute__((visibility("protected")))
+  #define f_attribute_visibility_public    __attribute__((visibility("default")))
+#endif // _di_f_attribute_visibility_
 
 /**
  * A structure representing a set of modes intended to be used by file or directory operations.

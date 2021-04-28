@@ -259,7 +259,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
+  extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_dynamic_seek_line_to_char_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const int8_t seek_to_this);
+  extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_dynamic_seek_to_char_
 
 /**
@@ -417,7 +417,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_seek_line_to_char_
-  extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
+  extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_seek_line_to_char_
 
 /**
@@ -499,7 +499,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_seek_to_character_
-  extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const int8_t seek_to_this);
+  extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string__seek_to_character_
 
 #ifdef __cplusplus

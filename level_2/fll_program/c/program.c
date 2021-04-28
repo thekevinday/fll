@@ -68,14 +68,14 @@ extern "C" {
     fprintf(file.stream, "%c  ", f_string_eol_s[0]);
     f_color_print(file.stream, context.set.standout, name);
 
-    fprintf(file.stream, f_string_space_s);
+    fprintf(file.stream, "%s", f_string_space_s);
     f_color_print(file.stream, context.set.notable, "[");
 
     fprintf(file.stream, " options ");
     f_color_print(file.stream, context.set.notable, "]");
 
     if (parameters[0] != '\0') {
-      fprintf(file.stream, f_string_space_s);
+      fprintf(file.stream, "%s", f_string_space_s);
       f_color_print(file.stream, context.set.notable, "[");
 
       fprintf(file.stream, " %s ", parameters);

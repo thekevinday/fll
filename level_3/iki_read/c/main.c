@@ -1,6 +1,6 @@
 #include "iki_read.h"
 
-int main(const unsigned long argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
   iki_read_data_t data = iki_read_data_t_initialize;
 

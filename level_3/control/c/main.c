@@ -1,6 +1,6 @@
 #include "control.h"
 
-int main(const unsigned long argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
   control_data_t data = control_data_initialize;
 

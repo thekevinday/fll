@@ -140,7 +140,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_basic_read_main_preprocess_depth_
-  extern f_status_t fss_basic_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_main_preprocess_depth_
 
 /**
@@ -165,7 +165,7 @@ extern "C" {
  * @see fss_basic_read_main_preprocess_depth()
  */
 #ifndef _di_fss_basic_read_main_process_file_
-  extern f_status_t fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t file_name, const fss_basic_read_depths_t depths, f_fss_delimits_t *delimits) f_gcc_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t file_name, const fss_basic_read_depths_t depths, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_main_process_file_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  *   The program specific data.
  */
 #ifndef _di_fss_basic_read_print_object_end_
-  extern void fss_basic_read_print_object_end(const fss_basic_read_data_t data) f_gcc_attribute_visibility_internal;
+  extern void fss_basic_read_print_object_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_object_end_
 
 /**
@@ -185,7 +185,7 @@ extern "C" {
  *   The program specific data.
  */
 #ifndef _di_fss_basic_read_print_set_end_
-  extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_gcc_attribute_visibility_internal;
+  extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_set_end_
 
 #ifdef __cplusplus

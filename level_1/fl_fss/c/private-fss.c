@@ -232,7 +232,7 @@ extern "C" {
     }
 
     // handle quoted support.
-    int8_t quote_found = 0;
+    char quote_found = 0;
 
     if (quote) {
       *quote = 0;

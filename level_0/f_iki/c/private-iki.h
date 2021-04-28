@@ -37,7 +37,7 @@ extern "C" {
  * @see f_iki_content_partial_is()
  */
 #if !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
-  extern f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const uint8_t quote) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_iki_content_partial_is(const f_string_static_t buffer, const f_string_range_t range, const uint8_t quote) f_attribute_visibility_internal;
 #endif // !defined(_di_f_iki_content_is_) || !defined(_di_f_iki_content_partial_is_)
 
 /**
@@ -59,7 +59,7 @@ extern "C" {
  * @see f_iki_object_partial_is()
  */
 #if !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
-  extern f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) f_gcc_attribute_visibility_internal;
+  extern f_status_t private_f_iki_object_partial_is(const f_string_static_t buffer, const f_string_range_t range) f_attribute_visibility_internal;
 #endif // !defined(_di_f_iki_object_is_) || !defined(_di_f_iki_object_partial_is_)
 
 #ifdef __cplusplus

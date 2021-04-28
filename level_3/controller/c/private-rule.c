@@ -5208,7 +5208,7 @@ extern "C" {
       fprintf(data->output.stream, "%c", f_string_eol_s[0]);
     }
     else {
-      fprintf(data->output.stream, "  %s%s%s ", data->context.set.important.before->string, controller_string_capability_s, data->context.set.important.after->string, f_string_eol_s[0]);
+      fprintf(data->output.stream, "  %s%s%s ", data->context.set.important.before->string, controller_string_capability_s, data->context.set.important.after->string);
       fprintf(data->output.stream, "%s(unsupported)%s%c", data->context.set.warning.before->string, data->context.set.warning.after->string, f_string_eol_s[0]);
     }
 
@@ -5220,7 +5220,7 @@ extern "C" {
       for (i = 0; i < rule.control_group.groups.used; ++i) {
 
         if (rule.control_group.groups.array[i].used) {
-          fprintf(data->output.stream, f_string_space_s);
+          fprintf(data->output.stream, "%s", f_string_space_s);
           f_print_dynamic(data->output.stream, rule.control_group.groups.array[i]);
         }
       } // for

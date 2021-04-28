@@ -402,7 +402,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_line_to_
-  extern f_status_t f_string_seek_line_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+  extern f_status_t f_string_seek_line_to(const f_string_t string, const uint8_t seek_to, f_string_range_t *range);
 #endif // _di_f_string_seek_line_to_
 
 /**
@@ -426,7 +426,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_string_seek_to_
-  extern f_status_t f_string_seek_to(const f_string_t string, const int8_t seek_to, f_string_range_t *range);
+  extern f_status_t f_string_seek_to(const f_string_t string, const uint8_t seek_to, f_string_range_t *range);
 #endif // _di_f_string_seek_to_
 
 #ifdef __cplusplus

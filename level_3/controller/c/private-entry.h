@@ -21,7 +21,7 @@ extern "C" {
  *   The entry action whose parameters will be printed.
  */
 #ifndef _di_controller_entry_action_parameters_print_
-  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_action_parameters_print(FILE * const stream, const controller_entry_action_t action) f_attribute_visibility_internal;
 #endif // _di_controller_entry_action_parameters_print_
 
 /**
@@ -35,7 +35,7 @@ extern "C" {
  *    FALSE otherwise.
  */
 #ifndef _di_controller_entry_action_type_is_rule_
-  extern f_status_t controller_entry_action_type_is_rule(uint8_t type) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_action_type_is_rule(uint8_t type) f_attribute_visibility_internal;
 #endif // _di_controller_entry_action_type_is_rule_
 
 /**
@@ -49,7 +49,7 @@ extern "C" {
  *   The string with used == 0 if no match was found.
  */
 #ifndef _di_controller_entry_action_type_name_
-  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_gcc_attribute_visibility_internal;
+  extern f_string_static_t controller_entry_action_type_name(const uint8_t type) f_attribute_visibility_internal;
 #endif // _di_controller_entry_action_type_name_
 
 /**
@@ -63,7 +63,7 @@ extern "C" {
  *    FALSE otherwise.
  */
 #ifndef _di_controller_entry_action_type_to_rule_action_type_
-  extern uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) f_gcc_attribute_visibility_internal;
+  extern uint8_t controller_entry_action_type_to_rule_action_type(uint8_t type) f_attribute_visibility_internal;
 #endif // _di_controller_entry_action_type_to_rule_action_type_
 
 /**
@@ -85,7 +85,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_actions_increase_by_
-  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_increase_by(const f_array_length_t amount, controller_entry_actions_t *actions) f_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_increase_by_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  * @see fll_fss_extended_read()
  */
 #ifndef _di_controller_entry_actions_read_
-  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache, controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache, controller_entry_actions_t *actions) f_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_read_
 
 /**
@@ -153,7 +153,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_cache_
 
 /**
@@ -197,7 +197,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_entry_items_increase_by_
-  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_items_increase_by(const f_array_length_t amount, controller_entry_items_t *items) f_attribute_visibility_internal;
 #endif // _di_controller_entry_items_increase_by_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  * @see fll_fss_basic_list_read()
  */
 #ifndef _di_controller_entry_read_
-  extern f_status_t controller_entry_read(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_read(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_read_
 
 /**
@@ -260,7 +260,7 @@ extern "C" {
  *   A structure for containing and caching relevant data.
  */
 #ifndef _di_controller_entry_settings_read_
-  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_settings_read_
 
 #ifdef __cplusplus

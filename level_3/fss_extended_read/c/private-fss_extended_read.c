@@ -132,7 +132,7 @@ extern "C" {
             if (status_code == F_memory_not) {
               f_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
             }
-            else if (status_code == f_array_length_t_size) {
+            else if (status_code == F_string_too_large) {
               f_color_print(data.error.to.stream, data.context.set.error, "%sUnable to process '", fll_error_print_error);
               f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_trim);
               f_color_print(data.error.to.stream, data.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);

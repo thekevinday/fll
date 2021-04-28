@@ -215,13 +215,13 @@ extern "C" {
         fprintf(print.to.stream, "%s' due to %s", print.context.before->string, print.context.after->string);
 
         if (status == F_parameter) {
-          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Invalid Parameter", print.notable.after->string);
+          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Invalid Parameter", print.notable.after->string);
         }
         else if (status == F_deadlock) {
-          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Deadlock", print.notable.after->string);
+          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Deadlock", print.notable.after->string);
         }
         else if (status == F_resource_not) {
-          fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, "Too Many Locks", print.notable.after->string);
+          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Too Many Locks", print.notable.after->string);
         }
       }
 

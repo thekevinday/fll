@@ -72,7 +72,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     if (length >= firewall_chain_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain, length, firewall_chain_length) == F_equal_to) {
       if (chain == firewall_chain_custom_id) {
         // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
-        fprintf(f_type_warning, "%sAt line %i, the chain option is meaningle ss inside of a custom chain.", fll_error_print_warning, i);
+        fprintf(f_type_warning, "%sAt line %llu, the chain option is meaningle ss inside of a custom chain.", fll_error_print_warning, i);
         continue;
       }
 
@@ -283,13 +283,13 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     else if (length < firewall_rule_length || fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_rule, length, firewall_rule_length) == F_equal_to_not) {
       if (length > 0) {
         f_color_print_code(f_type_warning, data.context.warning);
-        fprintf(f_type_warning, "%sAt line %i, the object '", fll_error_print_warning, i);
+        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
         f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' is invalid");
         f_color_print_code(f_type_warning, data.context.reset);
       }
       else {
-        fprintf(f_type_warning, "%sAt line %i, the object is missing", fll_error_print_warning, i);
+        fprintf(f_type_warning, "%sAt line %llu, the object is missing", fll_error_print_warning, i);
       }
 
       fprintf(f_type_warning, "\n");
@@ -301,7 +301,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
 
       if (length > 0) {
         f_color_print_code(f_type_warning, data.context.warning);
-        fprintf(f_type_warning, "%sAt line %i, the object '", fll_error_print_warning, i);
+        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
         f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' has invalid content '");
         f_print(f_type_warning, local.buffer.string + local.rule_contents.array[i].array[0].start, firewall_macro_structure_size(local.rule_contents.array[i], 0));
@@ -310,7 +310,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         fprintf(f_type_warning, "\n");
       }
       else {
-        f_color_print(f_type_warning, data.context.set.warning, "%sAt line %i, the object has no content%c", fll_error_print_warning, i, f_string_eol_s[0]);
+        f_color_print(f_type_warning, data.context.set.warning, "%sAt line %llu, the object has no content%c", fll_error_print_warning, i, f_string_eol_s[0]);
       }
 
       continue;
@@ -553,7 +553,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         length = firewall_macro_structure_size(local.rule_objects, i);
 
         f_color_print_code(f_type_warning, data.context.warning);
-        fprintf(f_type_warning, "%sAt line %i, the object '", fll_error_print_warning, i);
+        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
         f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
         fprintf(f_type_warning, "' has no content");
         f_color_print_code(f_type_warning, data.context.reset);

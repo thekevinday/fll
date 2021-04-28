@@ -1463,7 +1463,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_cache_action_delete_simple_
-  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) f_gcc_attribute_visibility_internal;
+  extern void controller_cache_action_delete_simple(controller_cache_action_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_cache_action_delete_simple_
 
 /**
@@ -1481,7 +1481,7 @@ extern "C" {
  * @see f_string_rangess_resize()
  */
 #ifndef _di_controller_cache_delete_simple_
-  extern void controller_cache_delete_simple(controller_cache_t *cache) f_gcc_attribute_visibility_internal;
+  extern void controller_cache_delete_simple(controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_cache_delete_simple_
 
 /**
@@ -1493,7 +1493,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_entry_action_delete_simple_
-  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_action_delete_simple(controller_entry_action_t *action) f_attribute_visibility_internal;
 #endif // _di_controller_entry_action_delete_simple_
 
 /**
@@ -1506,7 +1506,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_actions_delete_simple_
-  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_actions_delete_simple(controller_entry_actions_t *actions) f_attribute_visibility_internal;
 #endif // _di_controller_entry_actions_delete_simple_
 
 /**
@@ -1518,7 +1518,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_entry_item_delete_simple_
-  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_item_delete_simple(controller_entry_item_t *item) f_attribute_visibility_internal;
 #endif // _di_controller_entry_item_delete_simple_
 
 /**
@@ -1531,7 +1531,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_entry_items_delete_simple_
-  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) f_gcc_attribute_visibility_internal;
+  extern void controller_entry_items_delete_simple(controller_entry_items_t *items) f_attribute_visibility_internal;
 #endif // _di_controller_entry_items_delete_simple_
 
 /**
@@ -1559,7 +1559,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_controller_error_file_print_
-  extern void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_error_file_print_
 
 /**
@@ -1578,7 +1578,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_controller_error_pid_bad_match_print_
-  extern void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_error_pid_bad_match_print_
 
 /**
@@ -1600,7 +1600,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_controller_error_print_
-  extern void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_error_print_
 
 /**
@@ -1619,7 +1619,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_lock_create_
-  extern f_status_t controller_lock_create(controller_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_create(controller_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_create_
 
 /**
@@ -1630,7 +1630,7 @@ extern "C" {
  *   Will be set to NULLif delete succeeded.
  */
 #ifndef _di_controller_lock_delete_mutex_
-  extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) f_gcc_attribute_visibility_internal;
+  extern void controller_lock_delete_mutex(f_thread_mutex_t *mutex) f_attribute_visibility_internal;
 #endif // _di_controller_lock_delete_mutex_
 
 /**
@@ -1641,7 +1641,7 @@ extern "C" {
  *   Will be set to NULL if delete succeeded.
  */
 #ifndef _di_controller_lock_delete_rw_
-  extern void controller_lock_delete_rw(f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern void controller_lock_delete_rw(f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_delete_rw_
 
 /**
@@ -1654,7 +1654,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_lock_delete_simple_
-  extern void controller_lock_delete_simple(controller_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern void controller_lock_delete_simple(controller_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_delete_simple_
 
 /**
@@ -1677,7 +1677,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_lock_error_critical_print_
-  extern void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_lock_error_critical_print_
 
 /**
@@ -1705,7 +1705,7 @@ extern "C" {
  * @see f_thread_lock_read_timed()
  */
 #ifndef _di_controller_lock_read_
-  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_read(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_read_
 
 /**
@@ -1729,7 +1729,7 @@ extern "C" {
  * @see controller_lock_read()
  */
 #ifndef _di_controller_lock_read_process_
-  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_read_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_read_process_
 
 /**
@@ -1753,7 +1753,7 @@ extern "C" {
  * @see controller_lock_read()
  */
 #ifndef _di_controller_lock_read_process_type_
-  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_read_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_read_process_type_
 
 /**
@@ -1781,7 +1781,7 @@ extern "C" {
  * @see f_thread_lock_write_timed()
  */
 #ifndef _di_controller_lock_write_
-  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_write(const bool is_normal, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_write_
 
 /**
@@ -1805,7 +1805,7 @@ extern "C" {
  * @see controller_lock_write_process_type()
  */
 #ifndef _di_controller_lock_write_process_
-  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_write_process(controller_process_t * const process, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_write_process_
 
 /**
@@ -1829,7 +1829,7 @@ extern "C" {
  * @see controller_lock_write()
  */
 #ifndef _di_controller_lock_write_process_type_
-  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_lock_write_process_type(const uint8_t type, controller_thread_t * const thread, f_thread_lock_t *lock) f_attribute_visibility_internal;
 #endif // _di_controller_lock_write_process_type_
 
 /**
@@ -1852,7 +1852,7 @@ extern "C" {
  * @see controller_pids_resize()
  */
 #ifndef _di_controller_pids_increase_
-  extern f_status_t controller_pids_increase(controller_pids_t *pids) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_pids_increase(controller_pids_t *pids) f_attribute_visibility_internal;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -1872,7 +1872,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_pids_resize_
-  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_pids_resize(const f_array_length_t length, controller_pids_t *pids) f_attribute_visibility_internal;
 #endif // _di_controller_pids_resize_
 
 /**
@@ -1889,7 +1889,7 @@ extern "C" {
  *   The print mutex to unlock.
  */
 #ifndef _di_controller_print_unlock_flush_
-  void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) f_gcc_attribute_visibility_internal;
+  void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) f_attribute_visibility_internal;
 #endif // _di_controller_print_unlock_flush_
 
 /**
@@ -1903,7 +1903,7 @@ extern "C" {
  * @see f_thread_mutex_delete()
  */
 #ifndef _di_controller_process_delete_simple_
-  extern void controller_process_delete_simple(controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern void controller_process_delete_simple(controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_process_delete_simple_
 
 /***
@@ -1925,7 +1925,7 @@ extern "C" {
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_process_wait_
 
 /**
@@ -1937,7 +1937,7 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_delete_simple_
-  extern void controller_processs_delete_simple(controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+  extern void controller_processs_delete_simple(controller_processs_t *processs) f_attribute_visibility_internal;
 #endif // _di_controller_processs_delete_simple_
 
 /**
@@ -1960,7 +1960,7 @@ extern "C" {
  * @see controller_processs_resize()
  */
 #ifndef _di_controller_processs_increase_
-  extern f_status_t controller_processs_increase(controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_processs_increase(controller_processs_t *processs) f_attribute_visibility_internal;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -1985,7 +1985,7 @@ extern "C" {
  * @see f_thread_lock_create()
  */
 #ifndef _di_controller_processs_resize_
-  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_processs_resize(const f_array_length_t length, controller_processs_t *processs) f_attribute_visibility_internal;
 #endif // _di_controller_processs_resize_
 
 /**
@@ -1997,7 +1997,7 @@ extern "C" {
  * @see f_string_dynamics_resize()
  */
 #ifndef _di_controller_rule_action_delete_simple_
-  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_action_delete_simple(controller_rule_action_t *action) f_attribute_visibility_internal;
 #endif // _di_controller_rule_action_delete_simple_
 
 /**
@@ -2010,7 +2010,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_actions_delete_simple_
-  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_actions_delete_simple(controller_rule_actions_t *actions) f_attribute_visibility_internal;
 #endif // _di_controller_rule_actions_delete_simple_
 
 /**
@@ -2032,7 +2032,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_delete_simple_
-  extern void controller_rule_delete_simple(controller_rule_t *rule) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_delete_simple(controller_rule_t *rule) f_attribute_visibility_internal;
 #endif // _di_controller_rule_delete_simple_
 
 /**
@@ -2044,7 +2044,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_item_delete_simple_
-  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_item_delete_simple(controller_rule_item_t *item) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_delete_simple_
 
 /**
@@ -2057,7 +2057,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_items_delete_simple_
-  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_items_delete_simple(controller_rule_items_t *items) f_attribute_visibility_internal;
 #endif // _di_controller_rule_items_delete_simple_
 
 /**
@@ -2069,7 +2069,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_rule_on_delete_simple_
-  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_on_delete_simple(controller_rule_on_t *on) f_attribute_visibility_internal;
 #endif // _di_controller_rule_on_delete_simple_
 
 /**
@@ -2082,7 +2082,7 @@ extern "C" {
  * @see f_memory_delete()
  */
 #ifndef _di_controller_rule_ons_delete_simple_
-  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+  extern void controller_rule_ons_delete_simple(controller_rule_ons_t *ons) f_attribute_visibility_internal;
 #endif // _di_controller_rule_ons_delete_simple_
 
 /**
@@ -2105,7 +2105,7 @@ extern "C" {
  * @see controller_rule_ons_resize()
  */
 #ifndef _di_controller_rule_ons_increase_
-  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) f_attribute_visibility_internal;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2125,7 +2125,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rule_ons_resize_
-  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rule_ons_resize(const f_array_length_t length, controller_rule_ons_t *ons) f_attribute_visibility_internal;
 #endif // _di_controller_rule_ons_resize_
 
 /**
@@ -2137,7 +2137,7 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_delete_simple_
-  extern void controller_rules_delete_simple(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+  extern void controller_rules_delete_simple(controller_rules_t *rules) f_attribute_visibility_internal;
 #endif // _di_controller_rules_delete_simple_
 
 /**
@@ -2160,7 +2160,7 @@ extern "C" {
  * @see controller_rules_resize()
  */
 #ifndef _di_controller_rules_increase_
-  extern f_status_t controller_rules_increase(controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rules_increase(controller_rules_t *rules) f_attribute_visibility_internal;
 #endif // _di_controller_rule_increase_
 
 /**
@@ -2180,7 +2180,7 @@ extern "C" {
  * @see f_memory_resize()
  */
 #ifndef _di_controller_rules_resize_
-  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) f_gcc_attribute_visibility_internal;
+  extern f_status_t controller_rules_resize(const f_array_length_t length, controller_rules_t *rules) f_attribute_visibility_internal;
 #endif // _di_controller_rules_resize_
 
 /**
@@ -2194,7 +2194,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_controller_setting_delete_simple_
-  extern void controller_setting_delete_simple(controller_setting_t *setting) f_gcc_attribute_visibility_internal;
+  extern void controller_setting_delete_simple(controller_setting_t *setting) f_attribute_visibility_internal;
 #endif // _di_controller_setting_delete_simple_
 
 /**
@@ -2207,7 +2207,7 @@ extern "C" {
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_thread_delete_simple_
-  extern void controller_thread_delete_simple(controller_thread_t *thread) f_gcc_attribute_visibility_internal;
+  extern void controller_thread_delete_simple(controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_thread_delete_simple_
 
 /**
@@ -2224,7 +2224,7 @@ extern "C" {
  *   The resulting current time.
  */
 #ifndef _di_controller_time_
-  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) f_gcc_attribute_visibility_internal;
+  void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) f_attribute_visibility_internal;
 #endif // _di_controller_time_
 
 #ifdef __cplusplus

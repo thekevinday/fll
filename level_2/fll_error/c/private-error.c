@@ -129,7 +129,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
         fprintf(print.to.stream, "%s%s(", print.context.before->string, print.prefix);
-        fprintf(print.to.stream, "%s%s%llu%s", print.context.after->string, print.notable.before->string, status, print.notable.after->string);
+        fprintf(print.to.stream, "%s%s%hu%s", print.context.after->string, print.notable.before->string, status, print.notable.after->string);
         fprintf(print.to.stream, "%s)", print.context.before->string);
 
         private_fll_error_print_function(print, function);

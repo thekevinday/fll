@@ -45,7 +45,7 @@ extern "C" {
       status = f_file_stream_open(path, 0, &file);
       if (F_status_is_error(status)) break;
 
-      fprintf(file.stream, "%llu", id);
+      fprintf(file.stream, "%d", id);
       fflush(file.stream);
 
       f_file_stream_close(F_true, &file);

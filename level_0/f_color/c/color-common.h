@@ -21,7 +21,7 @@ extern "C" {
 #endif // _di_f_color_max_size_
 
 #ifndef _di_f_color_types_t_
-  typedef uint8_t f_color_code_t;
+  typedef char f_color_code_t;
 
   #define f_color_code_none      0
   #define f_color_code_linux     1
@@ -95,9 +95,9 @@ extern "C" {
 
 #ifndef _di_f_color_format_t_
   typedef struct {
-    const int8_t *begin;
-    const int8_t *end;
-    const int8_t *medium;
+    const char *begin;
+    const char *end;
+    const char *medium;
   } f_color_format_t;
 
   #define f_color_format_t_initialize_linux     { f_color_string_begin_s, f_color_string_end_s, f_color_string_medium_s }
@@ -111,12 +111,12 @@ extern "C" {
   #define f_macro_color_format_t_set_linux(format) \
     format.begin = f_color_string_begin_s; \
     format.end = f_color_string_end_s; \
-    format.medium =  f_color_string_medium_s;
+    format.medium = f_color_string_medium_s;
 
   #define f_macro_color_format_t_set_xterminal(format) \
     format.begin = f_color_string_begin_s; \
     format.end = f_color_string_end_s; \
-    format.medium =  f_color_string_medium_s;
+    format.medium = f_color_string_medium_s;
 #endif // _di_f_color_format_t_
 
 /**
@@ -130,44 +130,44 @@ extern "C" {
  */
 #ifndef _di_f_color_t_
   typedef struct {
-    const int8_t *reset;
-    const int8_t *bold;
-    const int8_t *underline;
-    const int8_t *blink;
-    const int8_t *reverse;
-    const int8_t *conceal;
-    const int8_t *black;
-    const int8_t *red;
-    const int8_t *green;
-    const int8_t *yellow;
-    const int8_t *blue;
-    const int8_t *purple;
-    const int8_t *teal;
-    const int8_t *white;
-    const int8_t *black_bg;
-    const int8_t *red_bg;
-    const int8_t *green_bg;
-    const int8_t *yellow_bg;
-    const int8_t *blue_bg;
-    const int8_t *purple_bg;
-    const int8_t *teal_bg;
-    const int8_t *white_bg;
-    const int8_t *bright_black;
-    const int8_t *bright_red;
-    const int8_t *bright_green;
-    const int8_t *bright_yellow;
-    const int8_t *bright_blue;
-    const int8_t *bright_purple;
-    const int8_t *bright_teal;
-    const int8_t *bright_white;
-    const int8_t *bright_black_bg;
-    const int8_t *bright_red_bg;
-    const int8_t *bright_green_bg;
-    const int8_t *bright_yellow_bg;
-    const int8_t *bright_blue_bg;
-    const int8_t *bright_purple_bg;
-    const int8_t *bright_teal_bg;
-    const int8_t *bright_white_bg;
+    const char *reset;
+    const char *bold;
+    const char *underline;
+    const char *blink;
+    const char *reverse;
+    const char *conceal;
+    const char *black;
+    const char *red;
+    const char *green;
+    const char *yellow;
+    const char *blue;
+    const char *purple;
+    const char *teal;
+    const char *white;
+    const char *black_bg;
+    const char *red_bg;
+    const char *green_bg;
+    const char *yellow_bg;
+    const char *blue_bg;
+    const char *purple_bg;
+    const char *teal_bg;
+    const char *white_bg;
+    const char *bright_black;
+    const char *bright_red;
+    const char *bright_green;
+    const char *bright_yellow;
+    const char *bright_blue;
+    const char *bright_purple;
+    const char *bright_teal;
+    const char *bright_white;
+    const char *bright_black_bg;
+    const char *bright_red_bg;
+    const char *bright_green_bg;
+    const char *bright_yellow_bg;
+    const char *bright_blue_bg;
+    const char *bright_purple_bg;
+    const char *bright_teal_bg;
+    const char *bright_white_bg;
   } f_color_t;
 
   #define f_color_t_initialize_linux     { f_color_string_code_reset_s, f_color_string_code_bold_s, f_color_string_code_underline_s, f_color_string_code_blink_s, f_color_string_code_reverse_s, f_color_string_code_conceal_s, f_color_string_code_black_s, f_color_string_code_red_s, f_color_string_code_green_s, f_color_string_code_yellow_s, f_color_string_code_blue_s, f_color_string_code_purple_s, f_color_string_code_teal_s, f_color_string_code_white_s, f_color_string_code_black_bg_s, f_color_string_code_red_bg_s, f_color_string_code_green_bg_s, f_color_string_code_yellow_bg_s, f_color_string_code_blue_bg_s, f_color_string_code_purple_bg_s, f_color_string_code_teal_bg_s, f_color_string_code_white_bg_s, f_color_string_code_black_s, f_color_string_code_red_s, f_color_string_code_green_s, f_color_string_code_yellow_s, f_color_string_code_blue_s, f_color_string_code_purple_s, f_color_string_code_teal_s, f_color_string_code_white_s, f_color_string_code_black_bg_s, f_color_string_code_red_bg_s, f_color_string_code_green_bg_s, f_color_string_code_yellow_bg_s, f_color_string_code_blue_bg_s, f_color_string_code_purple_bg_s, f_color_string_code_teal_bg_s, f_color_string_code_white_bg_s }
@@ -281,7 +281,7 @@ extern "C" {
     color.bright_green = f_color_string_code_bright_green_s; \
     color.bright_yellow = f_color_string_code_bright_yellow_s; \
     color.bright_blue = f_color_string_code_bright_blue_s; \
-    color.bright_purple= f_color_string_code_bright_purple_s; \
+    color.bright_purple = f_color_string_code_bright_purple_s; \
     color.bright_teal = f_color_string_code_bright_teal_s; \
     color.bright_white = f_color_string_code_bright_white_s; \
     color.bright_black_bg = f_color_string_code_bright_black_bg_s; \

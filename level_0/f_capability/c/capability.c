@@ -1082,7 +1082,7 @@ extern "C" {
         if (!text) return F_status_set_error(F_parameter);
       #endif // _di_level_0_parameter_checking_
 
-      f_array_length_t length = 0;
+      ssize_t length = 0;
 
       char *result = cap_to_text(capability, &length);
 

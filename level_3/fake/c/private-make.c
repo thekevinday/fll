@@ -3596,7 +3596,7 @@ extern "C" {
         f_print_dynamic(data->output.stream, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
-          fprintf(data->output.stream, f_string_space_s);
+          fprintf(data->output.stream, "%s", f_string_space_s);
         }
       } // for
 

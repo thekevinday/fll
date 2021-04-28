@@ -1,6 +1,6 @@
 #include "controller.h"
 
-int main(const unsigned long argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
   controller_data_t data = controller_data_t_initialize;
   f_status_t status = F_none;

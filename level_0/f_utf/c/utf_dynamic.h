@@ -946,7 +946,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_seek_line_to_
-  extern f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const int8_t seek_to_this, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_dynamic_seek_line_to(const f_utf_string_static_t buffer, const char seek_to_this, f_utf_string_range_t *range);
 #endif // _di_f_utf_string_dynamic_seek_line_to_
 
 /**
@@ -973,7 +973,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_seek_to_
-  extern f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const int8_t seek_to_this, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_dynamic_seek_to(const f_utf_string_static_t buffer, const char seek_to_this, f_utf_string_range_t *range);
 #endif // _di_f_utf_string_dynamic_seek_to_
 
 /**

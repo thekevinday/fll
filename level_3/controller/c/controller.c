@@ -173,7 +173,7 @@ extern "C" {
       if (data->error.verbosity != f_console_verbosity_quiet) {
         fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
         fprintf(data->error.to.stream, "%s%sThe parameter '", data->error.context.before->string, data->error.prefix ? data->error.prefix : f_string_empty_s);
-        fprintf(data->error.to.stream, "%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_settings, data->error.notable.after->string);
+        fprintf(data->error.to.stream, "%s%s%s%s%s", data->error.context.after->string, data->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_settings, data->error.notable.after->string);
         fprintf(data->error.to.stream, "%s' was specified, but no value was given.%s%c", data->error.context.before->string, data->error.context.after->string, f_string_eol_s[0]);
       }
 

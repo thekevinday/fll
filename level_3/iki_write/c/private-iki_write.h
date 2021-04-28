@@ -34,7 +34,7 @@ extern "C" {
  *   F_failure (with error bit) for any othe failure.
  */
 #ifndef _di_iki_write_process_
-  extern f_status_t iki_write_process(const iki_write_data_t data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped) f_gcc_attribute_visibility_internal;
+  extern f_status_t iki_write_process(const iki_write_data_t data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, const uint8_t quote, f_string_dynamic_t *escaped) f_attribute_visibility_internal;
 #endif // _di_iki_write_process_
 
 #ifdef __cplusplus

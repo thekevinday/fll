@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_color_set_
-  f_status_t f_color_set(FILE *stream, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t f_color_set(FILE *stream, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (!stream) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -27,7 +27,7 @@ extern "C" {
 #endif // _di_f_color_set_
 
 #ifndef _di_f_color_set_to_
-  f_status_t f_color_set_to(const int id, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t f_color_set_to(const int id, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -49,7 +49,7 @@ extern "C" {
 #endif // _di_f_color_set_to_
 
 #ifndef _di_f_color_save_
-  f_status_t f_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const int8_t *color1, const int8_t *color2, const int8_t *color3, const int8_t *color4, const int8_t *color5) {
+  f_status_t f_color_save(f_string_dynamic_t *buffer, const f_color_format_t format, const char *color1, const char *color2, const char *color3, const char *color4, const char *color5) {
     #ifndef _di_level_1_parameter_checking_
       if (!buffer) return F_status_set_error(F_parameter);
       if (!color1) return F_status_set_error(F_parameter);
@@ -301,7 +301,7 @@ extern "C" {
 
     // switch to the appropriate terminal color mode
     {
-      int8_t *environment = getenv("TERM");
+      char *environment = getenv("TERM");
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
         f_macro_color_t_set_linux(context->list);

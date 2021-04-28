@@ -165,7 +165,7 @@ extern "C" {
     }
 
     if (status == F_file_flush) {
-      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, type_name);
+      fprintf(print.to.stream, "%s%sUnable to %s %s '", print.context.before->string, print.prefix, operation, type_name);
       fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name, print.notable.after->string);
       fprintf(print.to.stream, "%s', flush failed.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
 

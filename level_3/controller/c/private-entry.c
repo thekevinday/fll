@@ -21,7 +21,7 @@ extern "C" {
 
       if (index == action.parameters.used) break;
 
-      fprintf(stream, f_string_space_s);
+      fprintf(stream, "%s", f_string_space_s);
     } // for
   }
 #endif // _di_controller_entry_action_parameters_print_
@@ -376,7 +376,7 @@ extern "C" {
           fprintf(main.data->error.to.stream, "%s' requires ", main.data->error.context.before->string);
 
           if (at_least == at_most) {
-            fprintf(main.data->error.to.stream, "exactly ", main.data->error.context.before->string);
+            fprintf(main.data->error.to.stream, "exactly ");
           }
 
           fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, at_least, main.data->error.notable.after->string);
@@ -1154,7 +1154,7 @@ extern "C" {
             fprintf(main.data->error.to.stream, "%s%sThe %s item setting '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s' requires exactly ", main.data->error.context.before->string);
-            fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, 1, main.data->error.notable.after->string);
+            fprintf(main.data->error.to.stream, "%s%s%d%s", main.data->error.context.after->string, main.data->error.notable.before->string, 1, main.data->error.notable.after->string);
             fprintf(main.data->error.to.stream, "%s parameter.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
           }
 

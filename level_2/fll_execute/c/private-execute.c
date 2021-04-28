@@ -146,7 +146,7 @@ extern "C" {
     }
 
     if (as.id_groups) {
-      if (setgroups(as.id_groups->used, as.id_groups->array) == -1) {
+      if (setgroups(as.id_groups->used, (const gid_t *) as.id_groups->array) == -1) {
         *result = -1;
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {

@@ -90,32 +90,32 @@ extern "C" {
   #define f_utf_space_separator_line_length      3
   #define f_utf_space_separator_paragraph_length 3
 
-  extern const int8_t f_utf_space_em_s[];
-  extern const int8_t f_utf_space_em_quad_s[];
-  extern const int8_t f_utf_space_em_per_three_s[];
-  extern const int8_t f_utf_space_em_per_four_s[];
-  extern const int8_t f_utf_space_em_per_six_s[];
+  extern const uint8_t f_utf_space_em_s[];
+  extern const uint8_t f_utf_space_em_quad_s[];
+  extern const uint8_t f_utf_space_em_per_three_s[];
+  extern const uint8_t f_utf_space_em_per_four_s[];
+  extern const uint8_t f_utf_space_em_per_six_s[];
 
-  extern const int8_t f_utf_space_en_s[];
-  extern const int8_t f_utf_space_en_quad_s[];
+  extern const uint8_t f_utf_space_en_s[];
+  extern const uint8_t f_utf_space_en_quad_s[];
 
-  extern const int8_t f_utf_space_line_feed_reverse_s[];
-  extern const int8_t f_utf_space_line_next_s[];
+  extern const uint8_t f_utf_space_line_feed_reverse_s[];
+  extern const uint8_t f_utf_space_line_next_s[];
 
-  extern const int8_t f_utf_space_medium_mathematical_s[];
+  extern const uint8_t f_utf_space_medium_mathematical_s[];
 
-  extern const int8_t f_utf_space_no_break_s[];
-  extern const int8_t f_utf_space_no_break_narrow_s[];
+  extern const uint8_t f_utf_space_no_break_s[];
+  extern const uint8_t f_utf_space_no_break_narrow_s[];
 
-  extern const int8_t f_utf_space_ogham_s[];
-  extern const int8_t f_utf_space_figure_s[];
-  extern const int8_t f_utf_space_punctuation_s[];
-  extern const int8_t f_utf_space_thin_s[];
-  extern const int8_t f_utf_space_hair_s[];
-  extern const int8_t f_utf_space_ideographic_s[];
+  extern const uint8_t f_utf_space_ogham_s[];
+  extern const uint8_t f_utf_space_figure_s[];
+  extern const uint8_t f_utf_space_punctuation_s[];
+  extern const uint8_t f_utf_space_thin_s[];
+  extern const uint8_t f_utf_space_hair_s[];
+  extern const uint8_t f_utf_space_ideographic_s[];
 
-  extern const int8_t f_utf_space_separator_line_s[];
-  extern const int8_t f_utf_space_separator_paragraph_s[];
+  extern const uint8_t f_utf_space_separator_line_s[];
+  extern const uint8_t f_utf_space_separator_paragraph_s[];
 #endif // _di_f_utf_space_
 
 /**
@@ -136,13 +136,13 @@ extern "C" {
   #define f_utf_substitute_open_box_length            3
   #define f_utf_substitute_open_box_shouldered_length 3
 
-  extern const int8_t f_utf_substitute_symbol_blank_s[];
-  extern const int8_t f_utf_substitute_symbol_space_s[];
+  extern const uint8_t f_utf_substitute_symbol_blank_s[];
+  extern const uint8_t f_utf_substitute_symbol_space_s[];
 
-  extern const int8_t f_utf_substitute_middle_dot_s[];
+  extern const uint8_t f_utf_substitute_middle_dot_s[];
 
-  extern const int8_t f_utf_substitute_open_box_s[];
-  extern const int8_t f_utf_substitute_open_box_shouldered_s[];
+  extern const uint8_t f_utf_substitute_open_box_s[];
+  extern const uint8_t f_utf_substitute_open_box_shouldered_s[];
 #endif // _di_f_utf_substitute_
 
 /**
@@ -151,7 +151,7 @@ extern "C" {
  * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
  *
  * This "character" type is stored as a big-endian 4-byte integer (32-bits).
- * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (int8_t []) can be correctly processed.
+ * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (uint8_t []) can be correctly processed.
  *
  * The byte structure is intended to be read left to right.
  *
@@ -159,9 +159,9 @@ extern "C" {
  *
  * The f_macro_utf_character_t_mask_char_* are used to get a specific UTF-8 block as a single character range.
  *
- * The f_macro_utf_character_t_to_char_* are used to convert a f_utf_character_t into a int8_t, for a given 8-bit block.
+ * The f_macro_utf_character_t_to_char_* are used to convert a f_utf_character_t into a uint8_t, for a given 8-bit block.
  *
- * The f_macro_utf_character_t_from_char_* are used to convert a int8_t into part of a f_utf_character_t, for a given 8-bit block.
+ * The f_macro_utf_character_t_from_char_* are used to convert a uint8_t into part of a f_utf_character_t, for a given 8-bit block.
  *
  * The f_macro_utf_character_t_width is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width.
  * The f_macro_utf_character_t_width_is is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width_is.

@@ -1,6 +1,6 @@
 #include "iki_write.h"
 
-int main(const unsigned long argc, const f_string_t *argv) {
+int main(const int argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
   iki_write_data_t data = iki_write_data_t_initialize;
 

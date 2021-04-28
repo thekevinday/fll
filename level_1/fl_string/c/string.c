@@ -310,7 +310,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_to_utf_character_
 
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_
-  f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range) {
+  f_status_t fl_string_dynamic_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -355,7 +355,7 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_line_until_graph_
 
 #ifndef _di_fl_string_dynamic_seek_line_until_graph_non_
-  f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range) {
+  f_status_t fl_string_dynamic_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -543,7 +543,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_to_utf_character_
 
 #ifndef _di_fl_string_seek_line_until_graph_
-  f_status_t fl_string_seek_line_until_graph(const f_string_t string, const int8_t placeholder, f_string_range_t *range) {
+  f_status_t fl_string_seek_line_until_graph(const f_string_t string, const uint8_t placeholder, f_string_range_t *range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -586,7 +586,7 @@ extern "C" {
 #endif // _di_fl_string_seek_line_until_graph_
 
 #ifndef _di_fl_string_seek_line_until_graph_non_
-  f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const int8_t placeholder, f_string_range_t *range) {
+  f_status_t fl_string_seek_line_until_graph_non(const f_string_t string, const uint8_t placeholder, f_string_range_t *range) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

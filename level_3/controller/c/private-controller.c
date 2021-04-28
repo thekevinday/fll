@@ -193,7 +193,7 @@ extern "C" {
     status = f_file_stream_open(path.string, f_file_open_mode_truncate_s, &file);
     if (F_status_is_error(status)) return status;
 
-    fprintf(file.stream, "%llu%c", pid, f_string_eol_s[0]);
+    fprintf(file.stream, "%d%c", pid, f_string_eol_s[0]);
 
     f_file_stream_close(F_true, &file);
 
@@ -790,7 +790,7 @@ extern "C" {
                 fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_action.string, main->data->context.set.title.after->string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main->data->output.stream, f_string_space_s);
+                  fprintf(main->data->output.stream, "%s", f_string_space_s);
                   fprintf(main->data->output.stream, "%s", main->data->context.set.notable.before->string);
                   controller_entry_action_parameters_print(main->data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
                   fprintf(main->data->output.stream, "%s", main->data->context.set.notable.after->string);
@@ -810,7 +810,7 @@ extern "C" {
                 fprintf(main->data->error.to.stream, "%s%s%s", main->data->error.context.after->string, main->data->error.notable.before->string, cache->action.name_action.string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main->data->error.to.stream, f_string_space_s);
+                  fprintf(main->data->error.to.stream, "%s", f_string_space_s);
                   controller_entry_action_parameters_print(main->data->error.to.stream, entry_actions->array[cache->ats.array[at_j]]);
                 }
 
@@ -835,7 +835,7 @@ extern "C" {
               fprintf(main->data->warning.to.stream, "%s%s%s", main->data->warning.context.after->string, main->data->warning.notable.before->string, cache->action.name_action.string);
 
               if (entry_action->parameters.used) {
-                fprintf(main->data->warning.to.stream, f_string_space_s);
+                fprintf(main->data->warning.to.stream, "%s", f_string_space_s);
                 controller_entry_action_parameters_print(main->data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
               }
 
@@ -860,7 +860,7 @@ extern "C" {
                 fprintf(main->data->output.stream, "%s%s%s", main->data->context.set.title.before->string, cache->action.name_action.string, main->data->context.set.title.after->string);
 
                 if (entry_action->parameters.used) {
-                  fprintf(main->data->output.stream, f_string_space_s);
+                  fprintf(main->data->output.stream, "%s", f_string_space_s);
                   fprintf(main->data->output.stream, "%s", main->data->context.set.notable.before->string);
                   controller_entry_action_parameters_print(main->data->output.stream, entry_actions->array[cache->ats.array[at_j]]);
                   fprintf(main->data->output.stream, "%s", main->data->context.set.notable.after->string);
@@ -879,7 +879,7 @@ extern "C" {
               fprintf(main->data->warning.to.stream, "%s%s", main->data->warning.notable.before->string, cache->action.name_action.string);
 
               if (entry_action->parameters.used) {
-                fprintf(main->data->warning.to.stream, f_string_space_s);
+                fprintf(main->data->warning.to.stream, "%s", f_string_space_s);
                 controller_entry_action_parameters_print(main->data->warning.to.stream, entry_actions->array[cache->ats.array[at_j]]);
               }
 
@@ -1228,7 +1228,7 @@ extern "C" {
                 f_thread_mutex_lock(&main->thread->lock.print);
 
                 fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main->data->error.to.stream, "%s%sExecution failed, unable to find program or script ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fprintf(main->data->error.to.stream, "%s%sExecution failed, unable to find program or script ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s);
                 fprintf(main->data->error.to.stream, "%s%s%s%s", main->data->error.context.after->string, main->data->error.notable.before->string, entry_action->parameters.array[0].string, main->data->error.notable.after->string);
                 fprintf(main->data->error.to.stream, "%s.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 
@@ -1248,7 +1248,7 @@ extern "C" {
               f_thread_mutex_lock(&main->thread->lock.print);
 
               fprintf(main->data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main->data->error.to.stream, "%s%sExecution failed with return value of ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fprintf(main->data->error.to.stream, "%s%sExecution failed with return value of ", main->data->error.context.before->string, main->data->error.prefix ? main->data->error.prefix : f_string_empty_s);
               fprintf(main->data->error.to.stream, "%s%s%d%s", main->data->error.context.after->string, main->data->error.notable.before->string, result, main->data->error.notable.after->string);
               fprintf(main->data->error.to.stream, "%s.%s%c", main->data->error.context.before->string, main->data->error.context.after->string, f_string_eol_s[0]);
 

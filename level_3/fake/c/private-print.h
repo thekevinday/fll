@@ -41,7 +41,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_error_build_operation_file(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t operation, const f_string_t source, const f_string_t destination, const f_string_t how, const bool fallback) f_attribute_visibility_internal;
 #endif // _di_fake_print_error_operation_file_
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) f_gcc_attribute_visibility_internal;
+  extern bool fake_print_error_fss(const fake_data_t data, const f_status_t status, const f_string_t function, const f_string_t path_file, const f_string_range_t range, const bool fallback) f_attribute_visibility_internal;
 #endif // _di_fake_print_error_fss_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(const fake_data_t data, const f_string_t parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_missing_value(const fake_data_t data, const f_string_t parameter) f_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
@@ -89,7 +89,7 @@ extern "C" {
  *   The parameter name.
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(const fake_data_t data, const f_string_t parameter) f_gcc_attribute_visibility_internal;
+  extern void fake_print_error_parameter_too_many(const fake_data_t data, const f_string_t parameter) f_attribute_visibility_internal;
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -107,7 +107,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_message_section_operation_failed_
-  extern void fake_print_message_section_operation_failed(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_failed(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
@@ -125,7 +125,7 @@ extern "C" {
  *   The path that is outside of the project path.
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(const fake_data_t data, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_outside(const fake_data_t data, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   The path to the directory.
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(const fake_data_t data, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_stack_max(const fake_data_t data, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**
@@ -164,7 +164,7 @@ extern "C" {
  *   The max stack depth.
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  extern void fake_print_message_section_operation_stack_max(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_stack_max(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 /**
@@ -182,7 +182,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
-  extern void fake_print_message_section_operation_unknown(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_unknown(const fake_data_t data, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_unknown_
 
 /**
@@ -200,7 +200,7 @@ extern "C" {
  *   The name of the setting that has an invalid value.
  */
 #ifndef _di_fake_print_warning_settings_content_empty_
-  extern void fake_print_warning_settings_content_empty(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_settings_content_empty(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_t settings_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_warning_settings_content_empty_
 
 /**
@@ -220,7 +220,7 @@ extern "C" {
  *   The name of the setting that has an invalid value.
  */
 #ifndef _di_fake_print_warning_settings_content_invalid_
-  extern void fake_print_warning_settings_content_invalid(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_settings_content_invalid(const fake_data_t data, const f_string_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_range_t range_content, const f_string_t settings_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_warning_settings_content_invalid_
 
 /**
@@ -236,7 +236,7 @@ extern "C" {
  *   The name of the object.
  */
 #ifndef _di_fake_print_warning_settings_content_multiple_
-  extern void fake_print_warning_settings_content_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t name_object) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_settings_content_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t name_object) f_attribute_visibility_internal;
 #endif // _di_fake_print_warning_settings_content_multiple_
 
 /**
@@ -254,7 +254,7 @@ extern "C" {
  *   The name of the object.
  */
 #ifndef _di_fake_print_warning_settings_object_multiple_
-  extern void fake_print_warning_settings_object_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t label, const f_string_t name_object) f_gcc_attribute_visibility_internal;
+  extern void fake_print_warning_settings_object_multiple(const fake_data_t data, const f_string_t path_file, const f_string_t label, const f_string_t name_object) f_attribute_visibility_internal;
 #endif // _di_fake_print_warning_settings_object_multiple_
 
 #ifdef __cplusplus

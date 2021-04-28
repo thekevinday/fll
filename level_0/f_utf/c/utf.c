@@ -719,7 +719,7 @@ extern "C" {
 #ifndef _di_f_utf_is_big_endian_
   f_status_t f_utf_is_big_endian() {
     uint16_t test_int = (0x01 << 8) | 0x02;
-    int8_t test_char[2] = {0x01, 0x02};
+    uint8_t test_char[2] = {0x01, 0x02};
 
     if (!memcmp(&test_int, test_char, 2)) {
       return F_true;
@@ -1892,7 +1892,7 @@ extern "C" {
 #endif // _di_f_utf_string_seek_line_
 
 #ifndef _di_f_utf_string_seek_line_to_
-  f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const int8_t seek_to, f_utf_string_range_t *range) {
+  f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -1917,7 +1917,7 @@ extern "C" {
 #endif // _di_f_utf_string_seek_line_to_
 
 #ifndef _di_f_utf_string_seek_to_
-  f_status_t f_utf_string_seek_to(const f_utf_string_t string, const int8_t seek_to, f_utf_string_range_t *range) {
+  f_status_t f_utf_string_seek_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range) {
     #ifndef _di_level_0_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

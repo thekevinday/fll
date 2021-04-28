@@ -172,7 +172,7 @@ extern "C" {
       return F_none;
     }
     else if (f_macro_file_type_is_socket(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | (~f_file_type_mask) & mode.socket, source_stat.st_rdev);
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.socket), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -186,7 +186,7 @@ extern "C" {
       return F_none;
     }
     else if (f_macro_file_type_is_block(source_stat.st_mode) || f_macro_file_type_is_character(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | (~f_file_type_mask) & mode.block, source_stat.st_rdev);
+      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.block), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {

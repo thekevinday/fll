@@ -577,7 +577,7 @@ extern "C" {
         else if (byte_second == 0x9d) {
 
           // Mathematical Alphanumeric (Bold) Symbols: U+1D7CE to U+1D7D7.
-          if (bytes >= 0xd9f8e && bytes <= 0xd9f97) {
+          if (bytes >= 0x9f8e && bytes <= 0x9f97) {
             return F_true;
           }
 
@@ -1969,7 +1969,7 @@ extern "C" {
         return F_false;
       }
 
-      if (byte_first >= 0xe1 && byte_first <= 0xec || byte_first >= 0xee && byte_first <= 0xef) {
+      if ((byte_first >= 0xe1 && byte_first <= 0xec) || (byte_first >= 0xee && byte_first <= 0xef)) {
         if (byte_second >= 0x80 && byte_second <= 0xbf) {
           if (byte_third >= 0x80 && byte_third <= 0xbf) {
             return F_true;
