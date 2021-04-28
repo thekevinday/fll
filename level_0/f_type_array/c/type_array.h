@@ -14,11 +14,11 @@
 #define _F_type_array_h
 
 // fll-0 includes
-#include <level_0/type.h>
-#include <level_0/memory.h>
+#include <fll/level_0/type.h>
+#include <fll/level_0/memory.h>
 
 // fll-0 type_array includes
-#include <level_0/type_array-common.h>
+#include <fll/level_0/type_array-common.h>
 
 #ifdef __cplusplus
 extern "C" {

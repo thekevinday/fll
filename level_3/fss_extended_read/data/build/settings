@@ -31,7 +31,7 @@ build_script yes
 build_shared yes
 build_static no
 
-path_headers level_3
+path_headers program/fss_extended_read
 path_headers_preserve no
 path_library_script script
 path_library_shared shared

@@ -20,12 +20,12 @@
 #include <string.h>
 
 // fll-0 includes
-#include <level_0/type.h>
-#include <level_0/status.h>
+#include <fll/level_0/type.h>
+#include <fll/level_0/status.h>
 
 // fll-0 memory includes
-#include <level_0/memory-common.h>
-#include <level_0/memory_structure.h>
+#include <fll/level_0/memory-common.h>
+#include <fll/level_0/memory_structure.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -18,11 +18,11 @@
 #include <unistd.h>
 
 // fll-0 includes
-#include <level_0/type.h>
-#include <level_0/status.h>
+#include <fll/level_0/type.h>
+#include <fll/level_0/status.h>
 
 // fll-0 signal includes
-#include <level_0/signal-common.h>
+#include <fll/level_0/signal-common.h>
 
 #ifdef __cplusplus
 extern "C" {
