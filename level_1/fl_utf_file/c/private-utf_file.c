@@ -6,12 +6,12 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
-  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, uint8_t *width_last) {
+  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) {
+
     f_utf_character_t character = 0;
-    f_array_length_t i = 0;
     uint8_t increment_by = 0;
 
-    for (; i < size_read; i += increment_by) {
+    for (f_array_length_t i = 0; i < size_read; i += increment_by) {
       increment_by = 0;
 
       if (!*width) {

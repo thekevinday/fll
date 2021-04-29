@@ -33,13 +33,14 @@ extern "C" {
  * @param width_last
  *   The amount of width filled into buffer_char after executing this function.
  *   This may be something other than width when size_read is reached before the entire buffer_char is filled according to width.
+ *   A value of -1 designates that the last width has not been processed whereas a value of 0 designates that there is a last width and it is 0.
  *
  * @see fl_utf_file_read()
  * @see fl_utf_file_read_range()
  * @see fl_utf_file_read_until()
  */
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
-  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, uint8_t *width_last) f_attribute_visibility_internal;
+  void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
 
 /**
