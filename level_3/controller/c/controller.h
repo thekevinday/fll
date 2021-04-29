@@ -85,7 +85,7 @@ extern "C" {
 #ifndef _di_controller_version_
   #define controller_major_version "0"
   #define controller_minor_version "5"
-  #define controller_micro_version "3"
+  #define controller_micro_version "4"
   #define controller_version controller_major_version f_string_ascii_period controller_minor_version f_string_ascii_period controller_micro_version
 #endif // _di_controller_version_
 

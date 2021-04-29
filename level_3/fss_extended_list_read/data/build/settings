@@ -4,7 +4,7 @@ project_name fss_extended_list_read
 
 version_major 0
 version_minor 5
-version_micro 3
+version_micro 4
 version_target major
 
 environment

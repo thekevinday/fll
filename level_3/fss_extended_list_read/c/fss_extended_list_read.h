@@ -52,7 +52,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_version_
   #define fss_extended_list_read_major_version "0"
   #define fss_extended_list_read_minor_version "5"
-  #define fss_extended_list_read_micro_version "3"
+  #define fss_extended_list_read_micro_version "4"
   #define fss_extended_list_read_version fss_extended_list_read_major_version f_string_ascii_period fss_extended_list_read_minor_version f_string_ascii_period fss_extended_list_read_micro_version
 #endif // _di_fss_extended_list_read_version_
 

@@ -51,7 +51,7 @@ extern "C" {
 #ifndef _di_firewall_version_
   #define firewall_major_version "0"
   #define firewall_minor_version "5"
-  #define firewall_micro_version "3"
+  #define firewall_micro_version "4"
   #define firewall_version firewall_major_version f_string_ascii_period firewall_minor_version f_string_ascii_period firewall_micro_version
 #endif // _di_firewall_version_
 
