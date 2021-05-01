@@ -7,11 +7,12 @@ extern "C" {
 
 #ifndef _di_byte_dump_file_
   f_status_t byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, const f_file_t file) {
+
     f_status_t status = F_none;
 
     uint64_t position = 0;
-    uint8_t size = 0;
-    uint8_t byte = 0;
+    char byte = 0;
+    int byte_get = 0;
     uint8_t offset = 0;
 
     int8_t width_utf = -1;
@@ -34,9 +35,15 @@ extern "C" {
       cell.row = data.first / data.width;
       offset = data.first % data.width;
 
-      char skip[data.first];
+      // fseek() cannot be used on a PIPE, so read instead of seek.
+      if (file_name) {
+        byte_get = fseek(file.stream, data.first, SEEK_SET);
+      }
+      else {
+        char skip[data.first];
 
-      read(file.id, &skip, data.first);
+        byte_get = fread(skip, sizeof(char), data.first, file.stream);
+      }
     }
 
     memset(&character_array, 0, sizeof(f_utf_character_t) * data.width);
@@ -45,115 +52,123 @@ extern "C" {
     characters.size = data.width;
 
     // Record when a character is invalid.
-    uint8_t invalid[data.width];
-    memset(&invalid, 0, sizeof(uint8_t) * data.width);
+    char invalid[data.width];
+    memset(&invalid, 0, sizeof(char) * data.width);
 
-    while ((size = read(file.id, &byte, 1)) > 0) {
+    if (byte_get >= 0) {
+      for (;;) {
 
-      // Storing the next character is designated by width_utf == -1.
-      if (width_utf == -1) {
-        width_utf = f_macro_utf_byte_width_is(byte);
-        width_count = 0;
+        byte_get = getc(file.stream);
 
-        // The character is reset, the characters.used is to be reset.
-        if (character_reset) {
-          characters.used = 0;
-          character_reset = F_false;
-          memset(&invalid, 0, sizeof(uint8_t) * data.width);
+        if (byte_get < 0) break;
+
+        byte = (char) byte_get;
+
+        // Storing the next character is designated by width_utf == -1.
+        if (width_utf == -1) {
+          width_utf = f_macro_utf_byte_width_is(byte);
+          width_count = 0;
+
+          // The character is reset, the characters.used is to be reset.
+          if (character_reset) {
+            characters.used = 0;
+            character_reset = F_false;
+            memset(&invalid, 0, sizeof(uint8_t) * data.width);
+          }
+
+          character_current = characters.used;
+          ++characters.used;
+
+          invalid[character_current] = 0;
         }
 
-        character_current = characters.used;
-        characters.used++;
+        // When width_count == 0, then this is that start of a new character sequence.
+        if (!width_count) {
+          characters.string[character_current] = f_macro_utf_character_t_from_char_1(byte);
+          width_count = 1;
 
-        invalid[character_current] = 0;
-      }
-
-      // When width_count == 0, then this is that start of a new character sequence.
-      if (!width_count) {
-        characters.string[character_current] = f_macro_utf_character_t_from_char_1(byte);
-        width_count = 1;
-
-        // The first character in a UTF-8 sequence cannot have a width of 1.
-        if (width_utf == 1) {
-          found_invalid_utf = F_true;
-          invalid[character_current] = 1;
+          // The first character in a UTF-8 sequence cannot have a width of 1.
+          if (width_utf == 1) {
+            found_invalid_utf = F_true;
+            invalid[character_current] = 1;
+          }
+          // Process the UTF-8 character.
+          else if (width_utf > 1) {
+            continue;
+          }
         }
-        // Process the UTF-8 character.
-        else if (width_utf > 1) {
-          continue;
-        }
-      }
-      // Process a UTF-8 character fragment.
-      else if (width_count < width_utf) {
-        width_current = f_macro_utf_byte_width_is(byte);
+        // Process a UTF-8 character fragment.
+        else if (width_count < width_utf) {
+          width_current = f_macro_utf_byte_width_is(byte);
 
-        if (width_count == 1) {
-          characters.string[character_current] |= f_macro_utf_character_t_from_char_2(byte);
-        }
-        else if (width_count == 2) {
-          characters.string[character_current] |= f_macro_utf_character_t_from_char_3(byte);
-        }
-        else if (width_count == 3) {
-          characters.string[character_current] |= f_macro_utf_character_t_from_char_4(byte);
+          if (width_count == 1) {
+            characters.string[character_current] |= f_macro_utf_character_t_from_char_2(byte);
+          }
+          else if (width_count == 2) {
+            characters.string[character_current] |= f_macro_utf_character_t_from_char_3(byte);
+          }
+          else if (width_count == 3) {
+            characters.string[character_current] |= f_macro_utf_character_t_from_char_4(byte);
+          }
+
+          ++width_count;
+
+          // UTF-8 character fragments must have a width of 1 (and ASCII characters can only be the first character in a sequence).
+          if (width_current == 1) {
+
+            // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
+            if (width_count < width_utf) continue;
+          }
+          else {
+            found_invalid_utf = F_true;
+            invalid[character_current] = width_utf;
+          }
         }
 
-        width_count++;
-
-        // UTF-8 character fragments must have a width of 1 (and ASCII characters can only be the first character in a sequence).
-        if (width_current == 1) {
-
-          // Grab the next UTF-8 character fragment if the entire sequence is not collected yet.
-          if (width_count < width_utf) continue;
+        // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
+        if (!invalid[character_current] && width_utf > 1) {
+          if (f_utf_character_is_valid(characters.string[character_current]) == F_false) {
+            found_invalid_utf = F_true;
+            invalid[character_current] = width_utf;
+          }
         }
-        else {
-          found_invalid_utf = F_true;
-          invalid[character_current] = width_utf;
-        }
-      }
 
-      // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
-      if (!invalid[character_current] && width_utf > 1) {
-        if (f_utf_character_is_valid(characters.string[character_current]) == F_false) {
-          found_invalid_utf = F_true;
-          invalid[character_current] = width_utf;
-        }
-      }
-
-      if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
-        character_reset = F_true;
-      }
-
-      if (width_utf > 1) {
-        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
           character_reset = F_true;
         }
 
-        if (width_utf > 2) {
-          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+        if (width_utf > 1) {
+          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
             character_reset = F_true;
           }
 
-          if (width_utf > 3) {
-            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+          if (width_utf > 2) {
+            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
               character_reset = F_true;
             }
+
+            if (width_utf > 3) {
+              if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+                character_reset = F_true;
+              }
+            }
+          }
+
+          if (data.last) {
+            position += width_utf;
+
+            if (position >= data.last) break;
           }
         }
-
-        if (data.last) {
-          position += width_utf;
+        else if (data.last) {
+          ++position;
 
           if (position >= data.last) break;
         }
-      }
-      else if (data.last) {
-        position++;
 
-        if (position >= data.last) break;
-      }
-
-      width_utf = -1;
-    } // while
+        width_utf = -1;
+      } // for
+    }
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
     if (cell.column > 0 && cell.column < data.width) {
@@ -177,7 +192,7 @@ extern "C" {
           fprintf(data.output.stream, "    ");
         }
 
-        cell.column++;
+        ++cell.column;
 
         if (cell.column < data.width) {
           if (data.mode == byte_dump_mode_hexidecimal && cell.column % 8 == 0) {
@@ -213,17 +228,17 @@ extern "C" {
 
     if (found_invalid_utf) {
       f_color_print(data.error.to.stream, data.context.set.error, "Invalid UTF-8 codes were detected for file '");
-      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
+      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name ? file_name : "-");
       f_color_print(data.error.to.stream, data.context.set.error, "'.");
       fprintf(data.error.to.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
     }
 
-    if (size < 0) {
-      // @todo: determine what the error from read() is and display it.
+    if (ferror(file.stream)) {
+      // @todo: determine what the error is and display it.
       f_color_print(data.error.to.stream, data.context.set.error, "%sread() failed for '", fll_error_print_error);
-      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name);
+      f_color_print(data.error.to.stream, data.context.set.notable, "%s", file_name ? file_name : "-");
       f_color_print(data.error.to.stream, data.context.set.error, "'.");
-      fprintf(data.error.to.stream, "%c%x", f_string_eol_s[0], f_string_eol_s[0]);
+      fprintf(data.error.to.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 
       status = F_status_set_error(F_failure);
     }
@@ -235,8 +250,8 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], const uint8_t width_utf, const uint8_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) {
-    uint8_t byte = 0;
+  bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) {
+    char byte = 0;
 
     bool reset = F_false;
 
@@ -279,8 +294,8 @@ extern "C" {
             fprintf(data.output.stream, "    ");
           }
 
-          offset_to_print--;
-          cell->column++;
+          --offset_to_print;
+          ++cell->column;
 
           if (cell->column < data.width) {
             if (data.mode == byte_dump_mode_hexidecimal && cell->column % 8 == 0) {
@@ -383,7 +398,7 @@ extern "C" {
         }
       }
 
-      cell->column++;
+      ++cell->column;
     }
 
     if (cell->column == data.width) {
@@ -403,7 +418,7 @@ extern "C" {
       }
 
       cell->column = 0;
-      cell->row++;
+      ++cell->row;
 
       if (!bytes) {
         previous->bytes = 0;
@@ -435,7 +450,7 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], byte_dump_previous_t *previous, uint8_t *offset) {
+  void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) {
     uint8_t j = 0;
     uint8_t output = 0;
     uint8_t width_utf = 0;
@@ -447,8 +462,8 @@ extern "C" {
       if (data.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
         while (*offset > 0 && j < data.width) {
           fprintf(data.output.stream, "%s", f_string_ascii_period_s);
-          (*offset)--;
-          j++;
+          --(*offset);
+          ++j;
         } // while
       }
       else {
@@ -460,8 +475,8 @@ extern "C" {
 
         while (*offset > 0 && j < data.width) {
           f_color_print(data.output.stream, data.context.set.warning, "%s", placeholder);
-          (*offset)--;
-          j++;
+          --(*offset);
+          ++j;
         } // while
       }
     }
@@ -764,7 +779,7 @@ extern "C" {
           fprintf(data.output.stream, "%s", f_string_space_s);
         }
 
-        j++;
+        ++j;
 
         if (width_utf > 2 && j + 1 < data.width) {
           if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
@@ -782,7 +797,7 @@ extern "C" {
             fprintf(data.output.stream, "%s", f_string_space_s);
           }
 
-          j++;
+          ++j;
 
           if (width_utf > 3 && j + 1 < data.width) {
             if (data.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
@@ -800,7 +815,7 @@ extern "C" {
               fprintf(data.output.stream, "%s", f_string_space_s);
             }
 
-            j++;
+            ++j;
           }
         }
       }

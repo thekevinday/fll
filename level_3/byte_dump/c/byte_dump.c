@@ -328,6 +328,7 @@ extern "C" {
         f_file_t file = f_file_t_initialize;
 
         file.id = f_type_descriptor_input;
+        file.stream = f_type_input;
 
         printf("%c", f_string_eol_s[0]);
         f_color_print(data->output.stream, data->context.set.title, "Piped Byte Dump: (in ");
@@ -350,7 +351,7 @@ extern "C" {
 
         f_color_print(data->output.stream, data->context.set.title, ")%c", f_string_eol_s[0]);
 
-        status = byte_dump_file(*data, "-", file);
+        status = byte_dump_file(*data, 0, file);
 
         if (F_status_is_error(status)) {
           fll_error_print(data->error, F_status_set_fine(status), "byte_dump_file", F_true);
@@ -390,7 +391,7 @@ extern "C" {
 
         for (f_array_length_t counter = 0; counter < data->remaining.used; counter++) {
 
-          status = f_file_open(arguments.argv[data->remaining.array[counter]], 0, &file);
+          status = f_file_stream_open(arguments.argv[data->remaining.array[counter]], 0, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[counter]], "open", fll_error_file_type_file);
@@ -424,7 +425,7 @@ extern "C" {
 
           status = byte_dump_file(*data, arguments.argv[data->remaining.array[counter]], file);
 
-          f_file_close(&file.id);
+          f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(data->error, F_status_set_fine(status), "byte_dump_file", F_true, arguments.argv[data->remaining.array[counter]], "process", fll_error_file_type_file);

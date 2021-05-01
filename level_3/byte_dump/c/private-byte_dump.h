@@ -64,6 +64,7 @@ extern "C" {
  *   The name of the file.
  * @param file
  *   Data for the file to print.
+ *   Set to NULL if file is the STDIN pipe.
  *
  * @return
  *   F_none on success.
@@ -111,7 +112,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], const uint8_t width_utf, const uint8_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) f_attribute_visibility_internal;
+  extern bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) f_attribute_visibility_internal;
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -133,7 +134,7 @@ extern "C" {
  *   Will be reduced to 0 once used.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const uint8_t invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_attribute_visibility_internal;
+  extern void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_attribute_visibility_internal;
 #endif // _di_byte_dump_print_text_
 
 #ifdef __cplusplus
