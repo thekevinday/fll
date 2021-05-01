@@ -6,53 +6,53 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_list_write_error_parameter_same_times_print_
-  void fss_basic_list_write_error_parameter_same_times_print(const fss_basic_list_write_data_t data) {
+  void fss_basic_list_write_error_parameter_same_times_print(const fss_basic_list_write_main_t main) {
 
-    if (data.error.verbosity == f_console_verbosity_quiet) {
+    if (main.error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(data.error.to.stream, data.context.set.error, "%sMust specify both the '", fll_error_print_error);
-    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_object);
-    f_color_print(data.error.to.stream, data.context.set.error, "' parameter and the '");
-    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_content);
-    f_color_print(data.error.to.stream, data.context.set.error, "' parameter the same number of times when not specifying the ");
-    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_partial);
-    f_color_print(data.error.to.stream, data.context.set.error, "' parameter.%c", f_string_eol_s[0]);
+    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+    f_color_print(main.error.to.stream, main.context.set.error, "%sMust specify both the '", fll_error_print_error);
+    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_object);
+    f_color_print(main.error.to.stream, main.context.set.error, "' parameter and the '");
+    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_content);
+    f_color_print(main.error.to.stream, main.context.set.error, "' parameter the same number of times when not specifying the ");
+    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_list_write_long_partial);
+    f_color_print(main.error.to.stream, main.context.set.error, "' parameter.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_basic_list_write_error_parameter_same_times_print_
 
 #ifndef _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
-  void fss_basic_list_write_error_parameter_unsupported_eol_print(const fss_basic_list_write_data_t data) {
+  void fss_basic_list_write_error_parameter_unsupported_eol_print(const fss_basic_list_write_main_t main) {
 
-    if (data.error.verbosity == f_console_verbosity_quiet) {
+    if (main.error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(data.error.to.stream, data.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
-    f_color_print(data.error.to.stream, data.context.set.notable, "\\n");
-    f_color_print(data.error.to.stream, data.context.set.error, "' in objects.%c", f_string_eol_s[0]);
+    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+    f_color_print(main.error.to.stream, main.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
+    f_color_print(main.error.to.stream, main.context.set.notable, "\\n");
+    f_color_print(main.error.to.stream, main.context.set.error, "' in objects.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_basic_list_write_error_parameter_value_missing_print_
-  void fss_basic_list_write_error_parameter_value_missing_print(const fss_basic_list_write_data_t data, const f_string_t symbol, const f_string_t parameter) {
+  void fss_basic_list_write_error_parameter_value_missing_print(const fss_basic_list_write_main_t main, const f_string_t symbol, const f_string_t parameter) {
 
-    if (data.error.verbosity == f_console_verbosity_quiet) {
+    if (main.error.verbosity == f_console_verbosity_quiet) {
       return;
     }
 
-    fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(data.error.to.stream, data.context.set.error, "%sThe parameter '", fll_error_print_error);
-    f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", symbol, parameter);
-    f_color_print(data.error.to.stream, data.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+    f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
+    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", symbol, parameter);
+    f_color_print(main.error.to.stream, main.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
   }
 #endif // _di_fss_basic_list_write_error_parameter_value_missing_print_
 
 #ifndef _di_fss_basic_list_write_process_
-  f_status_t fss_basic_list_write_process(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
 
     f_string_range_t range = f_string_range_t_initialize;
@@ -70,7 +70,7 @@ extern "C" {
       }
 
       if (content) {
-        if (data.parameters[fss_basic_list_write_parameter_trim].result == f_console_result_found) {
+        if (main.parameters[fss_basic_list_write_parameter_trim].result == f_console_result_found) {
           complete = f_fss_complete_full_trim;
         }
         else {
@@ -81,13 +81,13 @@ extern "C" {
       status = fl_fss_basic_list_object_write_string(*object, complete, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
-        fss_basic_list_write_error_parameter_unsupported_eol_print(data);
+        fss_basic_list_write_error_parameter_unsupported_eol_print(main);
 
         return F_status_set_error(F_supported_not);
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
+        fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
         return status;
       }
     }
@@ -96,10 +96,10 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &data.prepend, &range, buffer);
+      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &main.prepend, &range, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
+        fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
         return status;
       }
     }
@@ -108,7 +108,7 @@ extern "C" {
       status = f_string_append(f_string_eol, 1, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data.error, F_status_set_fine(status), "f_string_append", F_true);
+        fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);
         return status;
       }
     }
@@ -121,7 +121,7 @@ extern "C" {
 #endif // _di_fss_basic_list_write_process_
 
 #ifndef _di_fss_basic_list_write_process_pipe_
-  f_status_t fss_basic_list_write_process_pipe(const fss_basic_list_write_data_t data, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_list_write_process_pipe(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 
@@ -151,7 +151,7 @@ extern "C" {
         status_pipe = f_file_read_block(input, &block);
 
         if (F_status_is_error(status_pipe)) {
-          fll_error_print(data.error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
+          fll_error_print(main.error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
 
           status_pipe = F_status_set_error(F_pipe);
           break;
@@ -175,7 +175,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
             break;
           }
         }
@@ -224,7 +224,7 @@ extern "C" {
             status = f_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+              fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
               break;
             }
           }
@@ -232,9 +232,9 @@ extern "C" {
           for (; range.start <= range.stop; range.start++) {
 
             if (block.string[range.start] == fss_basic_list_write_pipe_content_start) {
-              if (data.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-                f_color_print(data.error.to.stream, data.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+                f_color_print(main.error.to.stream, main.context.set.error, "%sThis standard only supports one content per object.%c", fll_error_print_error, f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_supported_not);
@@ -263,7 +263,7 @@ extern "C" {
       }
 
       if (state == 0x3) {
-        status = fss_basic_list_write_process(data, output, quote, &object, &content, buffer);
+        status = fss_basic_list_write_process(main, output, quote, &object, &content, buffer);
         if (F_status_is_error(status)) break;
 
         state = 0;
@@ -272,7 +272,7 @@ extern "C" {
 
     // if the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
-      status = fss_basic_list_write_process(data, output, quote, &object, &content, buffer);
+      status = fss_basic_list_write_process(main, output, quote, &object, &content, buffer);
     }
 
     f_macro_string_dynamic_t_delete_simple(block);

@@ -490,9 +490,9 @@ extern "C" {
 #endif // _di_controller_process_delete_simple_
 
 #ifndef _di_controller_process_wait_
-  f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) {
+  f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) {
 
-    if (!controller_thread_is_enabled_process(process, main.thread)) {
+    if (!controller_thread_is_enabled_process(process, global.thread)) {
       return F_signal;
     }
 
@@ -523,7 +523,7 @@ extern "C" {
 
       f_thread_mutex_unlock(&process->wait_lock);
 
-      if (!controller_thread_is_enabled_process(process, main.thread)) {
+      if (!controller_thread_is_enabled_process(process, global.thread)) {
         return F_signal;
       }
 
@@ -531,10 +531,10 @@ extern "C" {
         break;
       }
 
-      status_lock = controller_lock_read_process(process, main.thread, &process->lock);
+      status_lock = controller_lock_read_process(process, global.thread, &process->lock);
 
       if (status_lock == F_signal || F_status_is_error(status_lock)) {
-        controller_lock_error_critical_print(main.data->error, F_status_set_fine(status_lock), F_true, main.thread);
+        controller_lock_error_critical_print(global.main->error, F_status_set_fine(status_lock), F_true, global.thread);
 
         break;
       }
@@ -564,7 +564,7 @@ extern "C" {
         count++;
       }
 
-    } while (status == F_time && controller_thread_is_enabled_process(process, main.thread));
+    } while (status == F_time && controller_thread_is_enabled_process(process, global.thread));
 
     return status;
   }

@@ -34,30 +34,30 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_main_
-  f_status_t fss_status_code_main(const f_console_arguments_t arguments, fss_status_code_data_t *data) {
+  f_status_t fss_status_code_main(const f_console_arguments_t arguments, fss_status_code_main_t *main) {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fss_status_code_total_parameters);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fss_status_code_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { fss_status_code_parameter_no_color, fss_status_code_parameter_light, fss_status_code_parameter_dark };
         const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
-        if (data->context.set.error.before) {
-          data->error.context = data->context.set.error;
-          data->error.notable = data->context.set.notable;
+        if (main->context.set.error.before) {
+          main->error.context = main->context.set.error;
+          main->error.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
 
-          fll_program_parameter_process_empty(&data->context, sets);
+          fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          fss_status_code_data_delete(data);
+          fss_status_code_main_delete(main);
           return F_status_set_error(status);
         }
       }
@@ -71,92 +71,92 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fss_status_code_data_delete(data);
+          fss_status_code_main_delete(main);
           return status;
         }
 
         if (choice == fss_status_code_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
+          main->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_status_code_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
+          main->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_status_code_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
+          main->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_status_code_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
+          main->error.verbosity = f_console_verbosity_debug;
         }
       }
 
       status = F_none;
     }
 
-    if (data->parameters[fss_status_code_parameter_help].result == f_console_result_found) {
-      fss_status_code_print_help(data->output, data->context);
+    if (main->parameters[fss_status_code_parameter_help].result == f_console_result_found) {
+      fss_status_code_print_help(main->output, main->context);
 
-      fss_status_code_data_delete(data);
+      fss_status_code_main_delete(main);
       return F_none;
     }
 
-    if (data->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(data->output, fss_status_code_version);
+    if (main->parameters[fss_status_code_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(main->output, fss_status_code_version);
 
-      fss_status_code_data_delete(data);
+      fss_status_code_main_delete(main);
       return F_none;
     }
 
-    if (data->parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
-      if (data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found) {
-        f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_error);
-        f_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
-        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_warning);
-        f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+    if (main->parameters[fss_status_code_parameter_is_error].result == f_console_result_found) {
+      if (main->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found) {
+        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_error);
+        f_color_print(main->error.to.stream, main->context.set.error, "' cannot be used with the parameter ");
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_warning);
+        f_color_print(main->error.to.stream, main->context.set.error, ".%c", f_string_eol_s[0]);
 
-        fss_status_code_data_delete(data);
+        fss_status_code_main_delete(main);
         return F_status_set_error(status);
       }
-      else if (data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
-        f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_error);
-        f_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
-        f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
-        f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+      else if (main->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
+        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_error);
+        f_color_print(main->error.to.stream, main->context.set.error, "' cannot be used with the parameter ");
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
+        f_color_print(main->error.to.stream, main->context.set.error, ".%c", f_string_eol_s[0]);
 
-        fss_status_code_data_delete(data);
+        fss_status_code_main_delete(main);
         return F_status_set_error(status);
       }
     }
-    else if (data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found && data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
-      f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-      f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_warning);
-      f_color_print(data->error.to.stream, data->context.set.error, "' cannot be used with the parameter ");
-      f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
-      f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+    else if (main->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found && main->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
+      f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+      f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_warning);
+      f_color_print(main->error.to.stream, main->context.set.error, "' cannot be used with the parameter ");
+      f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_status_code_long_is_fine);
+      f_color_print(main->error.to.stream, main->context.set.error, ".%c", f_string_eol_s[0]);
 
-      fss_status_code_data_delete(data);
+      fss_status_code_main_delete(main);
       return F_status_set_error(status);
     }
 
-    if (data->remaining.used == 0 && !data->process_pipe) {
-      f_color_print(data->error.to.stream, data->context.set.error, "%sYou failed to specify an error code.%c", fll_error_print_error, f_string_eol_s[0]);
+    if (main->remaining.used == 0 && !main->process_pipe) {
+      f_color_print(main->error.to.stream, main->context.set.error, "%sYou failed to specify an error code.%c", fll_error_print_error, f_string_eol_s[0]);
 
-      fss_status_code_data_delete(data);
+      fss_status_code_main_delete(main);
       return F_status_set_error(F_parameter);
     }
 
     f_status_t status2 = F_none;
 
-    if (data->parameters[fss_status_code_parameter_is_error].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found || data->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
-      if (data->process_pipe) {
-        // @todo: call fss_status_code_process_check() here for all data from pipe that is space separated.
+    if (main->parameters[fss_status_code_parameter_is_error].result == f_console_result_found || main->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found || main->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
+      if (main->process_pipe) {
+        // @todo: call fss_status_code_process_check() here for all main from pipe that is space separated.
       }
 
-      if (data->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+      if (main->remaining.used > 0) {
+        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
 
-          status2 = fss_status_code_process_check(*data, arguments.argv[data->remaining.array[i]]);
+          status2 = fss_status_code_process_check(*main, arguments.argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -164,15 +164,15 @@ extern "C" {
         } // for
       }
     }
-    else if (data->parameters[fss_status_code_parameter_number].result == f_console_result_found) {
-      if (data->process_pipe) {
-        // @todo: call fss_status_code_process_number() here for all data from pipe that is space separated.
+    else if (main->parameters[fss_status_code_parameter_number].result == f_console_result_found) {
+      if (main->process_pipe) {
+        // @todo: call fss_status_code_process_number() here for all main from pipe that is space separated.
       }
 
-      if (data->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
+      if (main->remaining.used > 0) {
+        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
 
-          status2 = fss_status_code_process_number(*data, arguments.argv[data->remaining.array[i]]);
+          status2 = fss_status_code_process_number(*main, arguments.argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -181,13 +181,13 @@ extern "C" {
       }
     }
     else {
-      if (data->process_pipe) {
-        // @todo: call fss_status_code_process_normal() here for all data from pipe that is space separated.
+      if (main->process_pipe) {
+        // @todo: call fss_status_code_process_normal() here for all main from pipe that is space separated.
       }
 
-      if (data->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < data->remaining.used; i++) {
-          status2 = fss_status_code_process_normal(*data, arguments.argv[data->remaining.array[i]]);
+      if (main->remaining.used > 0) {
+        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+          status2 = fss_status_code_process_normal(*main, arguments.argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
             status = status2;
@@ -196,27 +196,27 @@ extern "C" {
       }
     }
 
-    fss_status_code_data_delete(data);
+    fss_status_code_main_delete(main);
     return status;
   }
 #endif // _di_fss_status_code_main_
 
-#ifndef _di_fss_status_code_data_delete_
-  f_status_t fss_status_code_data_delete(fss_status_code_data_t *data) {
+#ifndef _di_fss_status_code_main_delete_
+  f_status_t fss_status_code_main_delete(fss_status_code_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_status_code_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(main->context);
 
     return F_none;
   }
-#endif // _di_fss_status_code_data_delete_
+#endif // _di_fss_status_code_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

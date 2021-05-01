@@ -169,8 +169,8 @@ extern "C" {
  *
  * @param arguments
  *   The console arguments to pre-process.
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  * @param depths
  *   This stores the pre-processed depth parameters.
  *
@@ -180,7 +180,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_basic_read_depth_process_
-  extern f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_main_t main, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_depth_process_
 
 /**
@@ -206,8 +206,8 @@ extern "C" {
  *
  * @param arguments
  *   The console arguments passed to the program.
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
@@ -221,7 +221,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_basic_read_load_number_
-  extern f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_data_t data, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_main_t main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_load_number_
 
 /**
@@ -229,8 +229,8 @@ extern "C" {
  *
  * Only what is requested to print (Object, Content, both, or neither) will be printed, if there is something to print.
  *
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  * @param at
  *   The index in the Objects and Contents to print.
  * @param include_empty
@@ -245,47 +245,47 @@ extern "C" {
  *   This is a temporary parameter to be used until other structural changes are made and completed.
  */
 #ifndef _di_fss_basic_read_print_at_
-  extern void fss_basic_read_print_at(const fss_basic_read_data_t data, const f_array_length_t at, const bool include_empty, const f_fss_delimits_t delimits, const uint8_t print_this) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_at(const fss_basic_read_main_t main, const f_array_length_t at, const bool include_empty, const f_fss_delimits_t delimits, const uint8_t print_this) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_at_
 
 /**
  * Print the end of an object (which is essentially the start of a content).
  *
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_object_end_
-  extern void fss_basic_read_print_object_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_object_end(const fss_basic_read_main_t main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_object_end_
 
 /**
  * Print the number one and a newline.
  *
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_one_
-  extern void fss_basic_read_print_one(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_one(const fss_basic_read_main_t main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_one_
 
 /**
  * Print the end of an object/content set.
  *
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_set_end_
-  extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_set_end(const fss_basic_read_main_t main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_set_end_
 
 /**
  * Print the number zero and a newline.
  *
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_zero_
-  extern void fss_basic_read_print_zero(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_zero(const fss_basic_read_main_t main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_zero_
 
 /**
@@ -297,8 +297,8 @@ extern "C" {
  *   An array representing the ranges in which a given file exists in the buffer.
  * @param depths
  *   The processed depth parameters.
- * @param data
- *   The program specific data.
+ * @param main
+ *   The program specific main.
  * @param delimits
  *   An array of delimits detected during processing.
  *
@@ -310,7 +310,7 @@ extern "C" {
  * @see fss_basic_read_load_setting()
  */
 #ifndef _di_fss_basic_read_process_
-  extern f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_data_t *data, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_main_t *main, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_process_
 
 #ifdef __cplusplus

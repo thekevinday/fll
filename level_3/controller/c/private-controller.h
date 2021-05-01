@@ -93,8 +93,8 @@ extern "C" {
  *   The length of the prefix path.
  * @param path_suffix_length
  *   The length of the suffix path.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param cache
  *   The following within the cache is updated:
  *   - name_file: The partial path of the file is inserted.
@@ -118,7 +118,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_file_load_
-  extern f_status_t controller_file_load(const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_main_t main, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_file_load(const bool required, const f_string_t path_prefix, const f_string_static_t path_name, const f_string_t path_suffix, const f_array_length_t path_prefix_length, const f_array_length_t path_suffix_length, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_file_load_
 
 /**
@@ -281,8 +281,8 @@ extern "C" {
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param cache
  *   The cache.
  *
@@ -294,7 +294,7 @@ extern "C" {
  * @see controller_file_pid_create()
  */
 #ifndef _di_controller_perform_ready_
-  extern f_status_t controller_perform_ready(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_perform_ready(const bool is_entry, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_perform_ready_
 
 /**
@@ -303,8 +303,8 @@ extern "C" {
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -325,7 +325,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_preprocess_entry_
-  extern f_status_t controller_preprocess_entry(const bool is_entry, controller_main_t main, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_preprocess_entry(const bool is_entry, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_preprocess_entry_
 
 /**
@@ -337,8 +337,8 @@ extern "C" {
  * @param is_entry
  *   If TRUE, then this operate as an entry.
  *   If FALSE, then this operate as an exit.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param cache
  *   The main/global cache to use.
  *
@@ -359,7 +359,7 @@ extern "C" {
  * @see controller_string_dynamic_append_terminated()
  */
 #ifndef _di_controller_process_entry_
-  extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_main_t *main, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_global_t *global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
 
 /**
@@ -370,7 +370,7 @@ extern "C" {
  *
  * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
  *
- * This requires that a main.thread->lock.process lock be set on process->lock before being called.
+ * This requires that a global.thread->lock.process lock be set on process->lock before being called.
  *
  * @param is_normal
  *   If TRUE, then process as if this operates during a normal operation (entry and control).
@@ -379,8 +379,8 @@ extern "C" {
  *   The Rule Action to use.
  * @param alias
  *   The Rule alias to use.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param id
  *   (optional) The process ID when found or created.
  *   Set to NULL to not use.
@@ -389,7 +389,7 @@ extern "C" {
  *   F_none on success.
  *   F_found on success, but nothing was done because an existing process was found.
  *
- *   F_lock (with error bit) if failed to re-establish read lock on main.thread->lock.process while returning.
+ *   F_lock (with error bit) if failed to re-establish read lock on global.thread->lock.process while returning.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
@@ -403,7 +403,7 @@ extern "C" {
  * @see controller_lock_write()
  */
 #ifndef _di_controller_process_prepare_
-  extern f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_main_t main, f_array_length_t *id) f_attribute_visibility_internal;
+  extern f_status_t controller_process_prepare(const bool is_normal, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) f_attribute_visibility_internal;
 #endif // _di_controller_process_prepare_
 
 /**
@@ -414,7 +414,7 @@ extern "C" {
  *
  * If a process by the given Rule alias and Rule Action already exists, then nothing is done.
  *
- * This requires that a main.thread->lock.process lock be set on process->lock before being called.
+ * This requires that a global.thread->lock.process lock be set on process->lock before being called.
  *
  * @param type
  *   The process type to use when checking if thread is enabled.
@@ -422,8 +422,8 @@ extern "C" {
  *   The Rule Action to use.
  * @param alias
  *   The Rule alias to use.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param id
  *   (optional) The process ID when found or created.
  *   Set to NULL to not use.
@@ -436,7 +436,7 @@ extern "C" {
  * @see controller_process_prepare()
  */
 #ifndef _di_controller_process_prepare_process_type_
-  extern f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_main_t main, f_array_length_t *id) f_attribute_visibility_internal;
+  extern f_status_t controller_process_prepare_process_type(const uint8_t type, const uint8_t action, const f_string_static_t alias, const controller_global_t global, f_array_length_t *id) f_attribute_visibility_internal;
 #endif // _di_controller_process_prepare_process_type_
 
 /**

@@ -99,33 +99,33 @@ extern "C" {
 #endif // _di_fake_print_help_
 
 #ifndef _di_fake_main_
-  f_status_t fake_main(const f_console_arguments_t arguments, fake_data_t *data) {
+  f_status_t fake_main(const f_console_arguments_t arguments, fake_main_t *main) {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fake_total_parameters);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fake_total_parameters);
 
       // Load all parameters and identify priority of color parameters.
       {
         f_console_parameter_id_t ids[3] = { fake_parameter_no_color, fake_parameter_light, fake_parameter_dark };
         const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
-        if (data->context.set.error.before) {
-          data->error.context = data->context.set.error;
-          data->error.notable = data->context.set.notable;
+        if (main->context.set.error.before) {
+          main->error.context = main->context.set.error;
+          main->error.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
 
-          fll_program_parameter_process_empty(&data->context, sets);
+          fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
-          fake_data_delete(data);
+          fake_main_delete(main);
           return status;
         }
       }
@@ -139,34 +139,34 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
 
-          fake_data_delete(data);
+          fake_main_delete(main);
           return status;
         }
 
         if (choice == fake_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
+          main->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fake_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
+          main->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fake_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
+          main->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fake_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
+          main->error.verbosity = f_console_verbosity_debug;
         }
       }
 
       status = F_none;
     }
 
-    f_array_length_t operations_length = data->parameters[fake_parameter_operation_build].locations.used;
+    f_array_length_t operations_length = main->parameters[fake_parameter_operation_build].locations.used;
 
-    operations_length += data->parameters[fake_parameter_operation_clean].locations.used;
-    operations_length += data->parameters[fake_parameter_operation_make].locations.used;
-    operations_length += data->parameters[fake_parameter_operation_skeleton].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_clean].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_make].locations.used;
+    operations_length += main->parameters[fake_parameter_operation_skeleton].locations.used;
 
     uint8_t operations[operations_length];
     f_string_t operations_name = 0;
@@ -178,17 +178,17 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t k = 0;
 
-      for (; i < data->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
+      for (; i < main->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
 
         operations[locations_length] = fake_operation_build;
-        locations[locations_length] = data->parameters[fake_parameter_operation_build].locations.array[i];
+        locations[locations_length] = main->parameters[fake_parameter_operation_build].locations.array[i];
       } // for
 
-      for (i = 0; i < data->parameters[fake_parameter_operation_clean].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_clean].locations.used; i++) {
 
         for (j = 0; j < locations_length; j++) {
 
-          if (data->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -198,16 +198,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = data->parameters[fake_parameter_operation_clean].locations.array[i];
+        locations[j] = main->parameters[fake_parameter_operation_clean].locations.array[i];
         operations[j] = fake_operation_clean;
         locations_length++;
       } // for
 
-      for (i = 0; i < data->parameters[fake_parameter_operation_make].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_make].locations.used; i++) {
 
         for (j = 0; j < locations_length; j++) {
 
-          if (data->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -217,16 +217,16 @@ extern "C" {
           }
         } // for
 
-        locations[j] = data->parameters[fake_parameter_operation_make].locations.array[i];
+        locations[j] = main->parameters[fake_parameter_operation_make].locations.array[i];
         operations[j] = fake_operation_make;
         locations_length++;
       } // for
 
-      for (i = 0; i < data->parameters[fake_parameter_operation_skeleton].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton].locations.used; i++) {
 
         for (j = 0; j < locations_length; j++) {
 
-          if (data->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
+          if (main->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
             for (k = locations_length; k > j; k--) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
@@ -236,7 +236,7 @@ extern "C" {
           }
         } // for
 
-        locations[j] = data->parameters[fake_parameter_operation_skeleton].locations.array[i];
+        locations[j] = main->parameters[fake_parameter_operation_skeleton].locations.array[i];
         operations[j] = fake_operation_skeleton;
         locations_length++;
       } // for
@@ -244,99 +244,99 @@ extern "C" {
 
     status = F_none;
 
-    if (data->parameters[fake_parameter_help].result == f_console_result_found) {
-      fake_print_help(data->output, data->context);
+    if (main->parameters[fake_parameter_help].result == f_console_result_found) {
+      fake_print_help(main->output, main->context);
 
-      fake_data_delete(data);
+      fake_main_delete(main);
       return F_none;
     }
 
-    if (data->parameters[fake_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(data->output, fake_version);
+    if (main->parameters[fake_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(main->output, fake_version);
 
-      fake_data_delete(data);
+      fake_main_delete(main);
       return F_none;
     }
 
     if (operations_length) {
       bool validate_parameter_directories = F_true;
 
-      status = fake_process_console_parameters(arguments, data);
+      status = fake_process_console_parameters(arguments, main);
 
       if (F_status_is_error_not(status)) {
-        status = fake_path_generate(data);
+        status = fake_path_generate(main);
       }
 
       if (F_status_is_error(status)) {
-        fake_data_delete(data);
+        fake_main_delete(main);
         return F_status_set_error(status);
       }
 
       for (uint8_t i = 0; i < operations_length; i++) {
-        data->operation = operations[i];
+        main->operation = operations[i];
 
-        if (data->operation == fake_operation_build) {
+        if (main->operation == fake_operation_build) {
           operations_name = fake_other_operation_build;
         }
-        else if (data->operation == fake_operation_clean) {
+        else if (main->operation == fake_operation_clean) {
           operations_name = fake_other_operation_clean;
         }
-        else if (data->operation == fake_operation_make) {
+        else if (main->operation == fake_operation_make) {
           operations_name = fake_other_operation_make;
         }
-        else if (data->operation == fake_operation_skeleton) {
+        else if (main->operation == fake_operation_skeleton) {
           operations_name = fake_other_operation_skeleton;
         }
 
-        if (data->operation == fake_operation_build) {
+        if (main->operation == fake_operation_build) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *main);
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status) && status != F_signal) {
             f_string_static_t stub = f_string_static_t_initialize;
 
-            status = fake_build_operate(stub, data);
+            status = fake_build_operate(stub, main);
           }
         }
-        else if (data->operation == fake_operation_clean) {
+        else if (main->operation == fake_operation_clean) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *main);
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status) && status != F_signal) {
-            status = fake_clean_operate(*data);
+            status = fake_clean_operate(*main);
           }
         }
-        else if (data->operation == fake_operation_make) {
+        else if (main->operation == fake_operation_make) {
           if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(arguments, *data);
+            status = fake_validate_parameter_directories(arguments, *main);
             validate_parameter_directories = F_false;
           }
 
           if (F_status_is_error_not(status) && status != F_signal) {
-            status = fake_make_operate(data);
+            status = fake_make_operate(main);
 
             if (status == F_child) {
               break;
             }
           }
         }
-        else if (data->operation == fake_operation_skeleton) {
-          status = fake_skeleton_operate(*data);
+        else if (main->operation == fake_operation_skeleton) {
+          status = fake_skeleton_operate(*main);
         }
 
-        if (status == F_signal || status == F_child || fake_signal_received(*data)) {
+        if (status == F_signal || status == F_child || fake_signal_received(*main)) {
           break;
         }
         else if (F_status_is_error(status)) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->error.context, "%sThe operation '", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->error.notable, "%s", operations_name);
-            f_color_print(data->error.to.stream, data->error.context, "' failed.%c", f_string_eol_s[0]);
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->error.context, "%sThe operation '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->error.notable, "%s", operations_name);
+            f_color_print(main->error.to.stream, main->error.context, "' failed.%c", f_string_eol_s[0]);
           }
 
           break;
@@ -344,101 +344,101 @@ extern "C" {
       } // for
 
       // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-      if (data->error.verbosity != f_console_verbosity_quiet) {
+      if (main->error.verbosity != f_console_verbosity_quiet) {
         if (F_status_is_error(status) || status == F_signal) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
         }
         else if (status != F_child) {
-          fprintf(data->output.stream, "%cAll operations complete.%c%c", f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
+          fprintf(main->output.stream, "%cAll operations complete.%c%c", f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
         }
       }
     }
     else {
-      if (data->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(data->error.to.stream, data->error.context, "%sYou failed to specify an operation.%c", fll_error_print_error, f_string_eol_s[0]);
-        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+      if (main->error.verbosity != f_console_verbosity_quiet) {
+        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+        f_color_print(main->error.to.stream, main->error.context, "%sYou failed to specify an operation.%c", fll_error_print_error, f_string_eol_s[0]);
+        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
       }
 
       status = F_status_set_error(F_parameter);
     }
 
-    fake_data_delete(data);
+    fake_main_delete(main);
     return status;
   }
 #endif // _di_fake_main_
 
-#ifndef _di_fake_data_delete_
-  f_status_t fake_data_delete(fake_data_t *data) {
+#ifndef _di_fake_main_delete_
+  f_status_t fake_main_delete(fake_main_t *main) {
 
     for (f_array_length_t i = 0; i < fake_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_string_dynamics_t_delete_simple(data->define);
-    f_macro_string_dynamic_t_delete_simple(data->fakefile);
-    f_macro_string_dynamics_t_delete_simple(data->mode);
-    f_macro_string_dynamic_t_delete_simple(data->process);
-    f_macro_string_dynamic_t_delete_simple(data->settings);
+    f_macro_string_dynamics_t_delete_simple(main->define);
+    f_macro_string_dynamic_t_delete_simple(main->fakefile);
+    f_macro_string_dynamics_t_delete_simple(main->mode);
+    f_macro_string_dynamic_t_delete_simple(main->process);
+    f_macro_string_dynamic_t_delete_simple(main->settings);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_build);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_documents);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_includes);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_script);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_shared);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_libraries_static);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_objects);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_programs);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_script);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_shared);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_programs_static);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_settings);
-    f_macro_string_dynamic_t_delete_simple(data->path_build_stage);
-    f_macro_string_dynamic_t_delete_simple(data->path_work);
+    f_macro_string_dynamic_t_delete_simple(main->path_build);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_documents);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_includes);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_libraries);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_objects);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_programs);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_programs_script);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_programs_static);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_settings);
+    f_macro_string_dynamic_t_delete_simple(main->path_build_stage);
+    f_macro_string_dynamic_t_delete_simple(main->path_work);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_data);
-    f_macro_string_dynamic_t_delete_simple(data->path_data_build);
+    f_macro_string_dynamic_t_delete_simple(main->path_data);
+    f_macro_string_dynamic_t_delete_simple(main->path_data_build);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_data_settings);
+    f_macro_string_dynamic_t_delete_simple(main->path_data_settings);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_documents);
+    f_macro_string_dynamic_t_delete_simple(main->path_documents);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_licenses);
+    f_macro_string_dynamic_t_delete_simple(main->path_licenses);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_sources);
-    f_macro_string_dynamic_t_delete_simple(data->path_sources_bash);
-    f_macro_string_dynamic_t_delete_simple(data->path_sources_c);
-    f_macro_string_dynamic_t_delete_simple(data->path_sources_cpp);
-    f_macro_string_dynamic_t_delete_simple(data->path_sources_script);
+    f_macro_string_dynamic_t_delete_simple(main->path_sources);
+    f_macro_string_dynamic_t_delete_simple(main->path_sources_bash);
+    f_macro_string_dynamic_t_delete_simple(main->path_sources_c);
+    f_macro_string_dynamic_t_delete_simple(main->path_sources_cpp);
+    f_macro_string_dynamic_t_delete_simple(main->path_sources_script);
 
-    f_macro_string_dynamic_t_delete_simple(data->path_work);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_includes);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_script);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_shared);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_libraries_static);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_programs);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_script);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_shared);
-    f_macro_string_dynamic_t_delete_simple(data->path_work_programs_static);
+    f_macro_string_dynamic_t_delete_simple(main->path_work);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_includes);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_libraries);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_libraries_script);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_libraries_shared);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_libraries_static);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_programs);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_programs_script);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_programs_shared);
+    f_macro_string_dynamic_t_delete_simple(main->path_work_programs_static);
 
-    f_macro_string_dynamic_t_delete_simple(data->file_data_build_defines);
-    f_macro_string_dynamic_t_delete_simple(data->file_data_build_dependencies);
-    f_macro_string_dynamic_t_delete_simple(data->file_data_build_fakefile);
-    f_macro_string_dynamic_t_delete_simple(data->file_data_build_settings);
+    f_macro_string_dynamic_t_delete_simple(main->file_data_build_defines);
+    f_macro_string_dynamic_t_delete_simple(main->file_data_build_dependencies);
+    f_macro_string_dynamic_t_delete_simple(main->file_data_build_fakefile);
+    f_macro_string_dynamic_t_delete_simple(main->file_data_build_settings);
 
-    f_macro_string_dynamic_t_delete_simple(data->file_documents_readme);
+    f_macro_string_dynamic_t_delete_simple(main->file_documents_readme);
 
-    f_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(main->context);
 
     return F_none;
   }
-#endif // _di_fake_data_delete_
+#endif // _di_fake_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

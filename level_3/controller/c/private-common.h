@@ -449,8 +449,8 @@ extern "C" {
     fl_execute_as_t_initialize \
   }
 
-  #define controller_macro_execute_set_t_initialize(option, wait, environment, signals, data, as) { \
-    fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, data), \
+  #define controller_macro_execute_set_t_initialize(option, wait, environment, signals, main, as) { \
+    fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, main), \
     as, \
   }
 #endif // _di_controller_execute_set_t_
@@ -932,9 +932,9 @@ extern "C" {
  * cache:        The cache used in this process.
  * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
  * rule:         A copy of the rule actively being executed.
- * main_data:    Used for passing the controller_data_t data to the process thread (to populate controller_main_t).
- * main_setting: Used for passing the controller_setting_t data to the process thread (to populate controller_main_t).
- * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_main_t).
+ * main_data:    Used for passing the controller_main_t data to the process thread (to populate controller_global_t).
+ * main_setting: Used for passing the controller_setting_t data to the process thread (to populate controller_global_t).
+ * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_global_t).
  */
 #ifndef _di_controller_process_t_
   #define controller_process_option_asynchronous 0x1
@@ -1414,21 +1414,21 @@ extern "C" {
 /**
  * A wrapper used for passing a common set of all data, particularly for sharing between threads.
  *
- * data:    All standard program data.
+ * main:    The main program data.
  * setting: All loaded settings.
  * thread:  All thread related data.
  */
 #ifndef _di_controller_main_t_
   typedef struct {
-    controller_data_t *data;
+    controller_main_t *main;
     controller_setting_t *setting;
     controller_thread_t *thread;
-  } controller_main_t;
+  } controller_global_t;
 
-  #define controller_main_t_initialize { 0, 0, 0 }
+  #define controller_global_t_initialize { 0, 0, 0 }
 
-  #define controller_macro_main_t_initialize(data, setting, thread) { \
-    data, \
+  #define controller_macro_global_t_initialize(main, setting, thread) { \
+    main, \
     setting, \
     thread, \
   }
@@ -1437,19 +1437,19 @@ extern "C" {
 /**
  * A wrapper used for passing a set of entry processing and execution related data.
  *
- * main:    The main data.
+ * global:  All data globally shared.
  * setting: The setting data.
  */
 #ifndef _di_controller_main_entry_t_
   typedef struct {
-    controller_main_t *main;
+    controller_global_t *global;
     controller_setting_t *setting;
   } controller_main_entry_t;
 
   #define controller_main_entry_t_initialize { 0, 0 }
 
-  #define controller_macro_main_entry_t_initialize(main, setting) { \
-    main, \
+  #define controller_macro_main_entry_t_initialize(global, setting) { \
+    global, \
     setting, \
   }
 #endif // _di_controller_main_entry_t_
@@ -1909,8 +1909,8 @@ extern "C" {
 /***
  * Safely wait for a process, periodically checking to see if process completed or check if exiting.
  *
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  * @param process
  *   The process to wait on.
  *
@@ -1925,7 +1925,7 @@ extern "C" {
  * @see f_thread_condition_wait_timed()
  */
 #ifndef _di_controller_process_wait_
-  extern f_status_t controller_process_wait(const controller_main_t main, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_process_wait(const controller_global_t global, controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_process_wait_
 
 /**

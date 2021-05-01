@@ -168,7 +168,7 @@ extern "C" {
   #define controller_total_parameters 16
 #endif // _di_controller_defines_
 
-#ifndef _di_controller_data_t_
+#ifndef _di_controller_main_t_
   typedef struct {
     f_console_parameter_t parameters[controller_total_parameters];
 
@@ -185,9 +185,9 @@ extern "C" {
     f_signal_t signal;
 
     f_color_context_t context;
-  } controller_data_t;
+  } controller_main_t;
 
-  #define controller_data_t_initialize \
+  #define controller_main_t_initialize \
     { \
       controller_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
@@ -201,7 +201,7 @@ extern "C" {
       f_signal_t_initialize, \
       f_color_context_t_initialize, \
     }
-#endif // _di_controller_data_t_
+#endif // _di_controller_main_t_
 
 /**
  * Print help.
@@ -221,31 +221,31 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call controller_data_delete() after executing this.
+ * Be sure to call controller_main_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param data
- *   The program data.
+ * @param main
+ *   The program main.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see controller_data_delete()
+ * @see controller_main_delete()
  */
 #ifndef _di_controller_main_
-  extern f_status_t controller_main(const f_console_arguments_t arguments, controller_data_t *data);
+  extern f_status_t controller_main(const f_console_arguments_t arguments, controller_main_t *main);
 #endif // _di_controller_main_
 
 /**
- * Deallocate data.
+ * Deallocate main.
  *
  * Be sure to call this after executing controller_main().
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The program main.
  *
  * @return
  *   F_none on success.
@@ -254,9 +254,9 @@ extern "C" {
  *
  * @see controller_main()
  */
-#ifndef _di_controller_data_delete_
-  extern f_status_t controller_data_delete(controller_data_t *data);
-#endif // _di_controller_data_delete_
+#ifndef _di_controller_main_delete_
+  extern f_status_t controller_main_delete(controller_main_t *main);
+#endif // _di_controller_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

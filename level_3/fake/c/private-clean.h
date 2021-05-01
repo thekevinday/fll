@@ -15,8 +15,8 @@ extern "C" {
 /**
  * Execute the clean operation.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -24,7 +24,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_clean_operate_
-  extern f_status_t fake_clean_operate(const fake_data_t data) f_attribute_visibility_internal;
+  extern f_status_t fake_clean_operate(const fake_main_t main) f_attribute_visibility_internal;
 #endif // _di_fake_clean_operate_
 
 /**

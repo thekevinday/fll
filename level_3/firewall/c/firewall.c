@@ -56,7 +56,7 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_data_t *data) {
+  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_main_t *data) {
     f_status_t status = F_none;
 
     {
@@ -79,7 +79,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return F_status_set_error(status);
         }
       }
@@ -93,7 +93,7 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -117,14 +117,14 @@ extern "C" {
     if (data->parameters[firewall_parameter_help].result == f_console_result_found) {
       firewall_print_help(data->output, data->context);
 
-      firewall_data_delete(data);
+      firewall_main_delete(data);
       return F_none;
     }
 
     if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
       fll_program_print_version(data->output, firewall_version);
 
-      firewall_data_delete(data);
+      firewall_main_delete(data);
       return F_none;
     }
 
@@ -232,7 +232,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
           firewall_delete_local_data(&local);
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -374,7 +374,7 @@ extern "C" {
 
         f_macro_string_dynamics_t_delete_simple( parameters);
         firewall_delete_local_data(&local);
-        firewall_data_delete(data);
+        firewall_main_delete(data);
         return status;
       }
 
@@ -395,7 +395,7 @@ extern "C" {
         }
 
         firewall_delete_local_data(&local);
-        firewall_data_delete(data);
+        firewall_main_delete(data);
         return F_status_set_error(status);
       }
 
@@ -423,7 +423,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -455,7 +455,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
-              firewall_data_delete(data);
+              firewall_main_delete(data);
               return status;
             }
 
@@ -470,14 +470,14 @@ extern "C" {
             status = firewall_process_rules(&input, &local, data);
 
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return status;
           }
           else {
             f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform lock request because the lock instructions are missing from: %s.%c", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
 
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return F_status_set_error(F_data);
           }
         }
@@ -492,7 +492,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
-              firewall_data_delete(data);
+              firewall_main_delete(data);
               return status;
             }
 
@@ -509,7 +509,7 @@ extern "C" {
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
-              firewall_data_delete(data);
+              firewall_main_delete(data);
               return status;
             }
           }
@@ -517,7 +517,7 @@ extern "C" {
             f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform stop request because the lock instructions are missing from: %s.", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
 
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return F_status_set_error(F_data);
           }
         }
@@ -530,7 +530,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -543,7 +543,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return status;
           }
         }
@@ -552,7 +552,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -574,7 +574,7 @@ extern "C" {
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return status;
           }
 
@@ -594,7 +594,7 @@ extern "C" {
             if (F_status_is_error(status)) {
               f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
               firewall_delete_local_data(&local);
-              firewall_data_delete(data);
+              firewall_main_delete(data);
               return status;
             }
 
@@ -620,7 +620,7 @@ extern "C" {
               continue;
             }
 
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return F_status_set_error(status);
           }
 
@@ -628,7 +628,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return status;
           }
 
@@ -650,7 +650,7 @@ extern "C" {
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
-              firewall_data_delete(data);
+              firewall_main_delete(data);
               return status;
             }
           } // for
@@ -662,7 +662,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -672,7 +672,7 @@ extern "C" {
           f_status_t status2 = F_none;
 
           firewall_macro_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
-          firewall_data_delete(data);
+          firewall_main_delete(data);
           return status;
         }
 
@@ -694,7 +694,7 @@ extern "C" {
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
-            firewall_data_delete(data);
+            firewall_main_delete(data);
             return status;
           }
 
@@ -710,13 +710,13 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    firewall_data_delete(data);
+    firewall_main_delete(data);
     return status;
   }
 #endif // _di_firewall_main_
 
-#ifndef _di_firewall_data_delete_
-  f_status_t firewall_data_delete(firewall_data_t *data) {
+#ifndef _di_firewall_main_delete_
+  f_status_t firewall_main_delete(firewall_main_t *data) {
 
     for (f_array_length_t i = 0; i < firewall_total_parameters; i++) {
       f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
@@ -732,7 +732,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_firewall_data_delete_
+#endif // _di_firewall_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

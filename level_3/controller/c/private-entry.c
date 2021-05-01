@@ -192,7 +192,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_increase_by_
 
 #ifndef _di_controller_entry_actions_read_
-  f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache, controller_entry_actions_t *actions) {
+  f_status_t controller_entry_actions_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache, controller_entry_actions_t *actions) {
     f_status_t status = F_none;
     f_status_t status_action = F_none;
 
@@ -220,7 +220,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, main.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, global.thread);
 
       return status;
     }
@@ -228,7 +228,7 @@ extern "C" {
     status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
 
       return status;
     }
@@ -238,7 +238,7 @@ extern "C" {
     status = controller_entry_actions_increase_by(cache->object_actions.used, actions);
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_entry_actions_increase_by", F_true, main.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_actions_increase_by", F_true, global.thread);
 
       return status;
     }
@@ -268,7 +268,7 @@ extern "C" {
       status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
+        controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
         break;
       }
 
@@ -277,7 +277,7 @@ extern "C" {
       status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, main.thread);
+        controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, global.thread);
         break;
       }
 
@@ -327,14 +327,14 @@ extern "C" {
         actions->array[actions->used].type = controller_entry_action_type_timeout;
       }
       else {
-        if (main.data->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(main.data->warning.to.stream, "%s%sUnknown %s item action '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-          fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
-          f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
-          fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
-          fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+          fprintf(global.main->warning.to.stream, "%s%sUnknown %s item action '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+          fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
+          f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+          fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
+          fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
-          controller_entry_error_print_cache(is_entry, main.data->warning, cache->action);
+          controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
         }
 
         continue;
@@ -369,29 +369,29 @@ extern "C" {
       if (cache->content_actions.array[i].used < at_least || cache->content_actions.array[i].used > at_most) {
         action->status = F_status_set_error(F_parameter);
 
-        if (main.data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main.data->error.to.stream, "%s%sThe %s item action '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-          fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string, main.data->error.notable.after->string);
-          fprintf(main.data->error.to.stream, "%s' requires ", main.data->error.context.before->string);
+        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(global.main->error.to.stream, "%s%sThe %s item action '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+          fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->action.name_action.string, global.main->error.notable.after->string);
+          fprintf(global.main->error.to.stream, "%s' requires ", global.main->error.context.before->string);
 
           if (at_least == at_most) {
-            fprintf(main.data->error.to.stream, "exactly ");
+            fprintf(global.main->error.to.stream, "exactly ");
           }
 
-          fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, at_least, main.data->error.notable.after->string);
+          fprintf(global.main->error.to.stream, "%s%s%llu%s", global.main->error.context.after->string, global.main->error.notable.before->string, at_least, global.main->error.notable.after->string);
 
           if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
-            fprintf(main.data->error.to.stream, "%s or more parameters.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+            fprintf(global.main->error.to.stream, "%s or more parameters.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
           }
           else {
             if (at_least == at_most) {
-              fprintf(main.data->error.to.stream, "%s parameters.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(global.main->error.to.stream, "%s parameters.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
             }
             else {
-              fprintf(main.data->error.to.stream, "%s to ", main.data->error.context.before->string);
-              fprintf(main.data->error.to.stream, "%s%s%llu%s", main.data->error.context.after->string, main.data->error.notable.before->string, at_most, main.data->error.notable.after->string);
-              fprintf(main.data->error.to.stream, "%s parameters.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(global.main->error.to.stream, "%s to ", global.main->error.context.before->string);
+              fprintf(global.main->error.to.stream, "%s%s%llu%s", global.main->error.context.after->string, global.main->error.notable.before->string, at_most, global.main->error.notable.after->string);
+              fprintf(global.main->error.to.stream, "%s parameters.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
             }
           }
         }
@@ -412,7 +412,7 @@ extern "C" {
         status = f_string_dynamics_increase_by(allocate, &action->parameters);
 
         if (F_status_is_error(status)) {
-          controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, main.thread);
+          controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, global.thread);
 
           action->status = status;
 
@@ -430,7 +430,7 @@ extern "C" {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_file, cache->content_actions.array[i].array[j], &action->parameters.array[j]);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, main.thread);
+            controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, global.thread);
 
             action->status = status;
 
@@ -452,7 +452,7 @@ extern "C" {
               status = fll_path_canonical(action->parameters.array[0].string, &cache->buffer_path);
 
               if (F_status_is_error(status)) {
-                controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, main.thread);
+                controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_path_canonical", F_true, global.thread);
 
                 action->status = status;
 
@@ -473,9 +473,9 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->error.to.stream, "%s%sThe %s item action must not have an empty string for a path (the first parameter).%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, main.data->error.context.after->string, f_string_eol_s[0]);
+              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(global.main->error.to.stream, "%s%sThe %s item action must not have an empty string for a path (the first parameter).%s%c", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -485,7 +485,7 @@ extern "C" {
               status = f_file_name_base(action->parameters.array[1].string, action->parameters.array[1].used, &cache->buffer_path);
 
               if (F_status_is_error(status)) {
-                controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_file_name_base", F_true, main.thread);
+                controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_file_name_base", F_true, global.thread);
 
                 if (F_status_set_fine(status) == F_memory_not) {
                   status_action = status;
@@ -501,11 +501,11 @@ extern "C" {
               else {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
 
-                  if (main.data->error.verbosity != f_console_verbosity_quiet) {
+                  if (global.main->error.verbosity != f_console_verbosity_quiet) {
                     status = f_string_dynamic_terminate_after(&cache->buffer_path);
 
                     if (F_status_is_error(status)) {
-                      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, main.thread);
+                      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
 
                       action->status = status;
 
@@ -516,12 +516,12 @@ extern "C" {
                       break;
                     }
 
-                    fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                    fprintf(main.data->error.to.stream, "%s%sThe %s item action second parameter '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                    fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[1].string, main.data->error.notable.after->string);
-                    fprintf(main.data->error.to.stream, "%s' must be a base path name, such as '", main.data->error.context.before->string);
-                    fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->buffer_path.string, main.data->error.notable.after->string);
-                    fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                    fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                    fprintf(global.main->error.to.stream, "%s%sThe %s item action second parameter '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                    fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[1].string, global.main->error.notable.after->string);
+                    fprintf(global.main->error.to.stream, "%s' must be a base path name, such as '", global.main->error.context.before->string);
+                    fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->buffer_path.string, global.main->error.notable.after->string);
+                    fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                   }
 
                   action->status = F_status_set_error(F_parameter);
@@ -539,9 +539,9 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->error.to.stream, "%s%sThe %s item action must not have an empty string for a rule name (the second parameter).%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, main.data->error.context.after->string, f_string_eol_s[0]);
+              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(global.main->error.to.stream, "%s%sThe %s item action must not have an empty string for a rule name (the second parameter).%s%c", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -565,17 +565,17 @@ extern "C" {
                   }
                 }
 
-                if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(main.data->error.to.stream, "%s%sThe %s item action third parameter (and beyond) must be one of '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_asynchronous_s, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s', '", main.data->error.context.before->string);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_require_s, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s', or '", main.data->error.context.before->string);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_wait_s, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s' but instead has '", main.data->error.context.before->string);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[j].string, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(global.main->error.to.stream, "%s%sThe %s item action third parameter (and beyond) must be one of '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_asynchronous_s, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s', '", global.main->error.context.before->string);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_require_s, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s', or '", global.main->error.context.before->string);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_wait_s, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[j].string, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
             } // for
@@ -588,11 +588,11 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->error.to.stream, "%s%sThe %s item action may not specify the reserved item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_main_s, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(global.main->error.to.stream, "%s%sThe %s item action may not specify the reserved item '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_main_s, global.main->error.notable.after->string);
+                fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
               }
             }
           }
@@ -614,17 +614,17 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->error.to.stream, "%s%sThe %s item action must have one of '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_kill_s, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s', '", main.data->error.context.before->string);
-                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_start_s, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s', or '", main.data->error.context.before->string);
-                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_stop_s, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s' but instead has '", main.data->error.context.before->string);
-                fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[0].string, main.data->error.notable.after->string);
-                fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(global.main->error.to.stream, "%s%sThe %s item action must have one of '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_kill_s, global.main->error.notable.after->string);
+                fprintf(global.main->error.to.stream, "%s', '", global.main->error.context.before->string);
+                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_start_s, global.main->error.notable.after->string);
+                fprintf(global.main->error.to.stream, "%s', or '", global.main->error.context.before->string);
+                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_stop_s, global.main->error.notable.after->string);
+                fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
+                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+                fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
               }
             }
 
@@ -644,17 +644,17 @@ extern "C" {
                 }
 
                 if (F_status_set_fine(status) == F_memory_not) {
-                  controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, main.thread);
+                  controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, global.thread);
 
                   status_action = status;
                   break;
                 }
 
-                if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(main.data->error.to.stream, "%s%sThe %s item action parameter '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[1].string, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s' is not a valid supported number.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(global.main->error.to.stream, "%s%sThe %s item action parameter '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[1].string, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s' is not a valid supported number.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
             }
@@ -667,13 +667,13 @@ extern "C" {
               else {
                 action->status = F_status_set_error(F_supported_not);
 
-                if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(main.data->error.to.stream, "%s%sThe %s item action may only have '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_wait_s, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s' but instead has '", main.data->error.context.before->string);
-                  fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[0].string, main.data->error.notable.after->string);
-                  fprintf(main.data->error.to.stream, "%s'.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                  fprintf(global.main->error.to.stream, "%s%sThe %s item action may only have '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_wait_s, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
+                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+                  fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
             }
@@ -758,11 +758,11 @@ extern "C" {
 #endif // _di_controller_entry_items_increase_by_
 
 #ifndef _di_controller_entry_read_
-  f_status_t controller_entry_read(const bool is_entry, controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_entry_read(const bool is_entry, controller_global_t global, controller_cache_t *cache) {
 
     f_status_t status = F_none;
 
-    controller_entry_t *entry = is_entry ? &main.setting->entry : &main.setting->exit;
+    controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
 
     entry->status = F_known_not;
     entry->items.used = 0;
@@ -803,10 +803,10 @@ extern "C" {
     cache->action.name_item.used = 0;
 
     if (is_entry) {
-      status = controller_file_load(F_true, controller_string_entries_s, main.setting->name_entry, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, main, cache);
+      status = controller_file_load(F_true, controller_string_entries_s, global.setting->name_entry, controller_string_entry_s, controller_string_entries_length, controller_string_entry_length, global, cache);
     }
     else {
-      status = controller_file_load(F_false, controller_string_exits_s, main.setting->name_entry, controller_string_exit_s, controller_string_exits_length, controller_string_exit_length, main, cache);
+      status = controller_file_load(F_false, controller_string_exits_s, global.setting->name_entry, controller_string_exit_s, controller_string_exits_length, controller_string_exit_length, global, cache);
 
       if (status == F_file_found_not) {
         return F_file_found_not;
@@ -820,24 +820,24 @@ extern "C" {
         status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
-          controller_error_print(main.data->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, main.thread);
+          controller_error_print(global.main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, global.thread);
         }
         else {
           status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
+            controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
           }
         }
       }
       else {
-        if (main.data->error.verbosity != f_console_verbosity_quiet) {
-          f_thread_mutex_lock(&main.thread->lock.print);
+        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          f_thread_mutex_lock(&global.thread->lock.print);
 
-          fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main.data->error.to.stream, "%s%sThe %s file is empty.%s%c", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, main.data->error.context.after->string, f_string_eol_s[0]);
+          fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+          fprintf(global.main->error.to.stream, "%s%sThe %s file is empty.%s%c", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context.after->string, f_string_eol_s[0]);
 
-          controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
+          controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
         }
 
         status = F_status_set_error(F_data_not);
@@ -848,7 +848,7 @@ extern "C" {
       status = controller_entry_items_increase_by(cache->object_items.used, &entry->items);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
+        controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, global.thread);
       }
       else {
 
@@ -861,7 +861,7 @@ extern "C" {
         f_array_length_t i = 0;
         f_array_length_t j = 0;
 
-        for (; i < cache->object_items.used && controller_thread_is_enabled(is_entry, main.thread); ++i) {
+        for (; i < cache->object_items.used && controller_thread_is_enabled(is_entry, global.thread); ++i) {
 
           if (code & 0x2) {
             code -= 0x2;
@@ -889,21 +889,21 @@ extern "C" {
           status = controller_entry_items_increase_by(controller_default_allocation_step, &entry->items);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, main.thread);
+            controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, global.thread);
             break;
           }
 
           status = controller_string_dynamic_partial_append_terminated(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true, main.thread);
+            controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_partial_append_terminated", F_true, global.thread);
             break;
           }
 
           status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
+            controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
             break;
           }
 
@@ -912,17 +912,17 @@ extern "C" {
           for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 
             if (fl_string_dynamic_compare(entry->items.array[j].name, cache->action.name_item) == F_equal_to) {
-              if (main.data->warning.verbosity == f_console_verbosity_debug) {
-                f_thread_mutex_lock(&main.thread->lock.print);
+              if (global.main->warning.verbosity == f_console_verbosity_debug) {
+                f_thread_mutex_lock(&global.thread->lock.print);
 
-                fprintf(main.data->warning.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main.data->warning.to.stream, "%s%sIgnoring duplicate %s item '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fprintf(main.data->warning.to.stream, "%s%s%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string, cache->action.name_file.string, main.data->warning.notable.after->string);
-                fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+                fprintf(global.main->warning.to.stream, "%c", f_string_eol_s[0]);
+                fprintf(global.main->warning.to.stream, "%s%sIgnoring duplicate %s item '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fprintf(global.main->warning.to.stream, "%s%s%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string, cache->action.name_file.string, global.main->warning.notable.after->string);
+                fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
-                controller_entry_error_print_cache(is_entry, main.data->warning, cache->action);
+                controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
 
-                controller_print_unlock_flush(main.data->warning.to.stream, &main.thread->lock.print);
+                controller_print_unlock_flush(global.main->warning.to.stream, &global.thread->lock.print);
               }
 
               code |= 0x2;
@@ -944,7 +944,7 @@ extern "C" {
             }
           }
           else if (fl_string_dynamic_compare_string(controller_string_setting_s, cache->action.name_item, controller_string_setting_length) == F_equal_to) {
-            status = controller_entry_settings_read(is_entry, *range, main, cache);
+            status = controller_entry_settings_read(is_entry, *range, global, cache);
 
             continue;
           }
@@ -965,19 +965,19 @@ extern "C" {
           status = controller_string_dynamic_append_terminated(cache->action.name_item, &entry->items.array[at].name);
 
           if (F_status_is_error(status)) {
-            controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+            controller_error_print(global.main->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, global.thread);
 
             break;
           }
 
-          status = controller_entry_actions_read(is_entry, *range, main, cache, &entry->items.array[at].actions);
+          status = controller_entry_actions_read(is_entry, *range, global, cache, &entry->items.array[at].actions);
 
           if (F_status_is_error(status)) {
-            f_thread_mutex_lock(&main.thread->lock.print);
+            f_thread_mutex_lock(&global.thread->lock.print);
 
-            controller_entry_error_print_cache(is_entry, main.data->error, cache->action);
+            controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
-            controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
+            controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -994,15 +994,15 @@ extern "C" {
           cache->action.name_item.used = 0;
 
           if (!(code & 0x1)) {
-            if (main.data->error.verbosity != f_console_verbosity_quiet) {
-              f_thread_mutex_lock(&main.thread->lock.print);
+            if (global.main->error.verbosity != f_console_verbosity_quiet) {
+              f_thread_mutex_lock(&global.thread->lock.print);
 
-              fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-              fprintf(main.data->error.to.stream, "%s%sThe required %s item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-              fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, controller_string_main_s, main.data->error.notable.after->string);
-              fprintf(main.data->error.to.stream, "%s' was not found.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+              fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+              fprintf(global.main->error.to.stream, "%s%sThe required %s item '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_main_s, global.main->error.notable.after->string);
+              fprintf(global.main->error.to.stream, "%s' was not found.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
-              controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
+              controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
             }
 
             status = F_status_set_error(F_found_not);
@@ -1020,7 +1020,7 @@ extern "C" {
 
               for (j = 0; j < entry->items.array[i].actions.used; ++j) {
 
-                if (!controller_thread_is_enabled(is_entry, main.thread)) {
+                if (!controller_thread_is_enabled(is_entry, global.thread)) {
                   return F_signal;
                 }
 
@@ -1052,21 +1052,21 @@ extern "C" {
                     status = controller_string_dynamic_append_terminated(entry->items.array[i].name, &cache->action.name_item);
 
                     if (F_status_is_error(status)) {
-                      controller_error_print(main.data->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, main.thread);
+                      controller_error_print(global.main->error, F_status_set_fine(status), "controller_string_dynamic_append_terminated", F_true, global.thread);
                       break;
                     }
 
-                    if (main.data->error.verbosity != f_console_verbosity_quiet) {
-                      f_thread_mutex_lock(&main.thread->lock.print);
+                    if (global.main->error.verbosity != f_console_verbosity_quiet) {
+                      f_thread_mutex_lock(&global.thread->lock.print);
 
-                      fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-                      fprintf(main.data->error.to.stream, "%s%sThe required %s item '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                      fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, action->parameters.array[0].string, main.data->error.notable.after->string);
-                      fprintf(main.data->error.to.stream, "%s' does not exist.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+                      fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+                      fprintf(global.main->error.to.stream, "%s%sThe required %s item '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+                      fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+                      fprintf(global.main->error.to.stream, "%s' does not exist.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
-                      controller_entry_error_print_cache(is_entry, main.data->error, cache->action);
+                      controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
-                      controller_print_unlock_flush(main.data->error.to.stream, &main.thread->lock.print);
+                      controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
                     }
 
                     action->number = 0;
@@ -1087,7 +1087,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print_cache(is_entry, main.data->error, cache->action);
+      controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
       entry->status = controller_status_simplify_error(F_status_set_fine(status));
     }
@@ -1100,7 +1100,7 @@ extern "C" {
 #endif // _di_controller_entry_read_
 
 #ifndef _di_controller_entry_settings_read_
-  f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_main_t main, controller_cache_t *cache) {
+  f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) {
     f_status_t status = F_none;
 
     {
@@ -1110,7 +1110,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, main.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, global.thread);
 
       return status;
     }
@@ -1118,7 +1118,7 @@ extern "C" {
     status = fl_fss_apply_delimit(cache->delimits, &cache->buffer_file);
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, main.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
 
       return status;
     }
@@ -1134,7 +1134,7 @@ extern "C" {
       status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, main.thread);
+        controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
         break;
       }
 
@@ -1143,56 +1143,56 @@ extern "C" {
       status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_entry_error_print(is_entry, main.data->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, main.thread);
+        controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_string_dynamic_rip_nulless_terminated", F_true, global.thread);
         break;
       }
 
       if (is_entry && fl_string_dynamic_compare_string(controller_string_mode_s, cache->action.name_action, controller_string_mode_length) == F_equal_to) {
         if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
-          if (main.data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(main.data->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(main.data->error.to.stream, "%s%sThe %s item setting '", main.data->error.context.before->string, main.data->error.prefix ? main.data->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-            fprintf(main.data->error.to.stream, "%s%s%s%s", main.data->error.context.after->string, main.data->error.notable.before->string, cache->action.name_action.string, main.data->error.notable.after->string);
-            fprintf(main.data->error.to.stream, "%s' requires exactly ", main.data->error.context.before->string);
-            fprintf(main.data->error.to.stream, "%s%s%d%s", main.data->error.context.after->string, main.data->error.notable.before->string, 1, main.data->error.notable.after->string);
-            fprintf(main.data->error.to.stream, "%s parameter.%s%c", main.data->error.context.before->string, main.data->error.context.after->string, f_string_eol_s[0]);
+          if (global.main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
+            fprintf(global.main->error.to.stream, "%s%sThe %s item setting '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+            fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->action.name_action.string, global.main->error.notable.after->string);
+            fprintf(global.main->error.to.stream, "%s' requires exactly ", global.main->error.context.before->string);
+            fprintf(global.main->error.to.stream, "%s%s%d%s", global.main->error.context.after->string, global.main->error.notable.before->string, 1, global.main->error.notable.after->string);
+            fprintf(global.main->error.to.stream, "%s parameter.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
           }
 
           continue;
         }
 
         if (fl_string_dynamic_partial_compare_string(controller_string_service_s, cache->buffer_file, controller_string_service_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          main.setting->mode = controller_setting_mode_service;
+          global.setting->mode = controller_setting_mode_service;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_string_program_s, cache->buffer_file, controller_string_program_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
-          main.setting->mode = controller_setting_mode_program;
+          global.setting->mode = controller_setting_mode_program;
         }
         else {
-          if (main.data->warning.verbosity == f_console_verbosity_debug) {
-            fprintf(main.data->warning.to.stream, "%s%sUnknown %s item setting value '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-            fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
-            f_print_dynamic_partial(main.data->warning.to.stream, cache->buffer_file, cache->content_actions.array[i].array[0]);
-            fprintf(main.data->warning.to.stream, "%s%s for %s item setting '", main.data->warning.notable.after->string, main.data->warning.context.before->string, is_entry ? controller_string_entry_s : controller_string_exit_s);
-            fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
-            f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
-            fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
-            fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+          if (global.main->warning.verbosity == f_console_verbosity_debug) {
+            fprintf(global.main->warning.to.stream, "%s%sUnknown %s item setting value '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+            fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
+            f_print_dynamic_partial(global.main->warning.to.stream, cache->buffer_file, cache->content_actions.array[i].array[0]);
+            fprintf(global.main->warning.to.stream, "%s%s for %s item setting '", global.main->warning.notable.after->string, global.main->warning.context.before->string, is_entry ? controller_string_entry_s : controller_string_exit_s);
+            fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
+            f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+            fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
+            fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
-            controller_entry_error_print_cache(is_entry, main.data->warning, cache->action);
+            controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
           }
 
           continue;
         }
       }
       else {
-        if (main.data->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(main.data->warning.to.stream, "%s%sUnknown %s item setting '", main.data->warning.context.before->string, main.data->warning.prefix ? main.data->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-          fprintf(main.data->warning.to.stream, "%s%s", main.data->warning.context.after->string, main.data->warning.notable.before->string);
-          f_print_dynamic(main.data->warning.to.stream, cache->action.name_action);
-          fprintf(main.data->warning.to.stream, "%s", main.data->warning.notable.after->string);
-          fprintf(main.data->warning.to.stream, "%s'.%s%c", main.data->warning.context.before->string, main.data->warning.context.after->string, f_string_eol_s[0]);
+        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+          fprintf(global.main->warning.to.stream, "%s%sUnknown %s item setting '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+          fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
+          f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+          fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
+          fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
-          controller_entry_error_print_cache(is_entry, main.data->warning, cache->action);
+          controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
         }
 
         continue;

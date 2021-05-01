@@ -10,37 +10,37 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_clean_operate_
-  f_status_t fake_clean_operate(const fake_data_t data) {
+  f_status_t fake_clean_operate(const fake_main_t main) {
     f_status_t status = F_none;
 
-    if (data.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(data.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(data.output.stream, data.context.set.important, "Deleting all files within build directory '");
-      f_color_print(data.output.stream, data.context.set.notable, "%s", data.path_build.string);
-      f_color_print(data.output.stream, data.context.set.important, "'.%c", f_string_eol_s[0]);
+    if (main.error.verbosity != f_console_verbosity_quiet) {
+      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      f_color_print(main.output.stream, main.context.set.important, "Deleting all files within build directory '");
+      f_color_print(main.output.stream, main.context.set.notable, "%s", main.path_build.string);
+      f_color_print(main.output.stream, main.context.set.important, "'.%c", f_string_eol_s[0]);
     }
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(main)) {
       return F_signal;
     }
 
-    if (data.error.verbosity == f_console_verbosity_verbose) {
-      status = f_directory_remove_custom(data.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
+    if (main.error.verbosity == f_console_verbosity_verbose) {
+      status = f_directory_remove_custom(main.path_build.string, f_directory_descriptors_max, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data.path_build.string, f_directory_descriptors_max, F_true);
+      status = f_directory_remove(main.path_build.string, f_directory_descriptors_max, F_true);
     }
 
     if (F_status_set_fine(status) == F_file_found_not) {
-      if (data.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(data.output.stream, "The build directory '%s' does not exist.%c", data.path_build.string, f_string_eol_s[0]);
+      if (main.error.verbosity == f_console_verbosity_verbose) {
+        fprintf(main.output.stream, "The build directory '%s' does not exist.%c", main.path_build.string, f_string_eol_s[0]);
       }
 
       status = F_none;
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data.error, F_status_set_fine(status), "f_directory_remove", F_true, data.path_build.string, "remove", fll_error_file_type_directory);
+      fll_error_file_print(main.error, F_status_set_fine(status), "f_directory_remove", F_true, main.path_build.string, "remove", fll_error_file_type_directory);
       return status;
     }
 

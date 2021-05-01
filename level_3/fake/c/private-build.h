@@ -340,7 +340,7 @@ extern "C" {
     f_string_maps_t_initialize, \
   }
 
-  #define fake_macro_build_data_delete_simple(build) \
+  #define fake_macro_build_main_delete_simple(build) \
     fake_macro_build_setting_t_delete_simple(build.setting) \
     f_macro_string_maps_t_delete_simple(build.environment);
 #endif // _di_fake_build_data_t_
@@ -388,8 +388,8 @@ extern "C" {
 /**
  * Add the standard arguments for building a library/program.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   The build data.
  * @param is_shared
@@ -406,14 +406,14 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(const fake_data_t data, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_arguments_standard_add(const fake_main_t main, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
- * Copy over the data setting files.
+ * Copy over the main setting files.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param mode
  *   The modes for each file type.
  * @param label
@@ -444,14 +444,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(const fake_data_t data, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_copy(const fake_main_t main, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_copy_
 
 /**
  * Create all of the base directories inside the build directory.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   The build data.
  * @param mode
@@ -467,16 +467,16 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_skeleton_
-  extern void fake_build_skeleton(const fake_data_t data, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_skeleton(const fake_main_t main, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_skeleton_
 
 /**
  * Execute the Pre-Process or Post-pocess build script.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
- *   All build related data.
+ *   All build related main.
  * @param process_script
  *   The setting_data file name fo the appropriate process script.
  *   This is expected to be either setting.process_pre or setting.process_post.
@@ -492,14 +492,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern int fake_build_execute_process_script(const fake_data_t data, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_execute_process_script(const fake_main_t main, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_execute_process_script_
 
 /**
  * Get the file name without the extension and without the path parts.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param path
  *   The file path to get the file name from.
  * @param name
@@ -511,14 +511,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_get_file_name_without_extension_
-  extern f_status_t fake_build_get_file_name_without_extension(const fake_data_t data, const f_string_static_t path, f_string_dynamic_t *name);
+  extern f_status_t fake_build_get_file_name_without_extension(const fake_main_t main, const f_string_static_t path, f_string_dynamic_t *name);
 #endif // _di_fake_build_get_file_name_without_extension_
 
 /**
  * Build the script libraries.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -535,14 +535,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_libraries_script_
-  extern int fake_build_libraries_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_libraries_script(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_libraries_script_
 
 /**
  * Build the shared libraries.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -559,14 +559,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_shared_
-  extern int fake_build_library_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_library_shared(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_library_shared_
 
 /**
  * Build the static libraries.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -583,14 +583,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_library_static_
-  extern int fake_build_library_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_library_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_library_static_
 
 /**
  * Find the build setting file, load it, validate it, and process it.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
@@ -606,14 +606,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(const fake_data_t data, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_load_setting(const fake_main_t main, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_
 
 /**
  * Assign build setting defaults.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param path_file
  *   The path to the buffer.
  * @param buffer
@@ -630,14 +630,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_defaults_
-  extern void fake_build_load_setting_defaults(const fake_data_t data, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_load_setting_defaults(const fake_main_t main, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_defaults_
 
 /**
  * Load and process the setting buffer.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param path_file
  *   The path to the buffer.
  * @param buffer
@@ -658,14 +658,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(const fake_data_t data, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_load_setting_process(const fake_main_t main, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_load_setting_process_
 
 /**
  * Load the environment used when executing commands.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param environment
@@ -679,14 +679,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(const fake_data_t data, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_load_environment(const fake_main_t main, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_load_environment_
 
 /**
  * Load the stage file paths.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param settings_file
  *   The path to the settings file.
  * @param stage
@@ -700,14 +700,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_stage_
-  extern void fake_build_load_stage(const fake_data_t data, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_load_stage(const fake_main_t main, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_load_stage_
 
 /**
  * Build the static objects.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -724,7 +724,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_objects_static_
-  extern int fake_build_objects_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_objects_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_objects_static_
 
 /**
@@ -733,8 +733,8 @@ extern "C" {
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -742,14 +742,14 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(const f_string_static_t setting_file, fake_data_t *data) f_attribute_visibility_internal;
+  extern f_status_t fake_build_operate(const f_string_static_t setting_file, fake_main_t *main) f_attribute_visibility_internal;
 #endif // _di_fake_build_operate_
 
 /**
  * Build the script programs.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -766,14 +766,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_programs_script_
-  extern int fake_build_programs_script(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_programs_script(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_programs_script_
 
 /**
  * Build the shared programs.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -790,14 +790,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_program_shared_
-  extern int fake_build_program_shared(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_program_shared(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_program_shared_
 
 /**
  * Build the static programs.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param data_build
  *   All build related data.
  * @param mode
@@ -814,14 +814,14 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_program_static_
-  extern int fake_build_program_static(const fake_data_t data, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
+  extern int fake_build_program_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_program_static_
 
 /**
  * Touch the given build stage file, but only if there are no current errors in status.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param file
  *   The file path to touch.
  * @param status
@@ -830,7 +830,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(const fake_data_t data, const f_string_dynamic_t file, f_status_t *status) f_attribute_visibility_internal;
+  extern void fake_build_touch(const fake_main_t main, const f_string_dynamic_t file, f_status_t *status) f_attribute_visibility_internal;
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

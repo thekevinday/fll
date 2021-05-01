@@ -94,7 +94,7 @@ extern "C" {
     fll_error_print_t warning;
 
     f_color_context_t context;
-  } control_data_t;
+  } control_main_t;
 
   #define control_data_initialize \
     { \
@@ -126,31 +126,31 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call control_data_delete() after executing this.
+ * Be sure to call control_main_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param data
- *   The program data.
+ * @param main
+ *   The program main.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see control_data_delete()
+ * @see control_main_delete()
  */
 #ifndef _di_control_main_
-  extern f_status_t control_main(const f_console_arguments_t arguments, control_data_t *data);
+  extern f_status_t control_main(const f_console_arguments_t arguments, control_main_t *main);
 #endif // _di_control_main_
 
 /**
- * Deallocate data.
+ * Deallocate main.
  *
  * Be sure to call this after executing control_main().
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The program main.
  *
  * @return
  *   F_none on success.
@@ -159,9 +159,9 @@ extern "C" {
  *
  * @see control_main()
  */
-#ifndef _di_control_data_delete_
-  extern f_status_t control_data_delete(control_data_t *data);
-#endif // _di_control_data_delete_
+#ifndef _di_control_main_delete_
+  extern f_status_t control_main_delete(control_main_t *main);
+#endif // _di_control_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

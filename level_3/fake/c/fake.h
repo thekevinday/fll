@@ -368,7 +368,7 @@ extern "C" {
   #define fake_total_parameters 28
 #endif // _di_fake_defines_
 
-#ifndef _di_fake_data_t_
+#ifndef _di_fake_main_t_
   typedef struct {
     f_console_parameter_t parameters[fake_total_parameters];
 
@@ -438,9 +438,9 @@ extern "C" {
     f_string_dynamic_t file_documents_readme;
 
     f_color_context_t context;
-  } fake_data_t;
+  } fake_main_t;
 
-  #define fake_data_t_initialize \
+  #define fake_main_t_initialize \
     { \
       fake_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
@@ -497,7 +497,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }
-#endif // _di_fake_data_t_
+#endif // _di_fake_main_t_
 
 /**
  * Print help.
@@ -517,9 +517,9 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call fake_data_delete() after executing this.
+ * Be sure to call fake_main_delete() after executing this.
  *
- * If data.signal is non-zero, then this blocks and handles the following signals:
+ * If main.signal is non-zero, then this blocks and handles the following signals:
  * - F_signal_abort
  * - F_signal_hangup
  * - F_signal_interrupt
@@ -528,8 +528,8 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -537,19 +537,19 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see fake_data_delete()
+ * @see fake_main_delete()
  */
 #ifndef _di_fake_main_
-  extern f_status_t fake_main(const f_console_arguments_t arguments, fake_data_t *data);
+  extern f_status_t fake_main(const f_console_arguments_t arguments, fake_main_t *main);
 #endif // _di_fake_main_
 
 /**
- * Deallocate data.
+ * Deallocate main.
  *
  * Be sure to call this after executing fake_main().
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -558,9 +558,9 @@ extern "C" {
  *
  * @see fake_main()
  */
-#ifndef _di_fake_data_delete_
-  extern f_status_t fake_data_delete(fake_data_t *data);
-#endif // _di_fake_data_delete_
+#ifndef _di_fake_main_delete_
+  extern f_status_t fake_main_delete(fake_main_t *main);
+#endif // _di_fake_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

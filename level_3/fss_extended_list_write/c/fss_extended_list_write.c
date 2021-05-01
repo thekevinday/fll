@@ -92,30 +92,30 @@ extern "C" {
 #endif // _di_fss_extended_list_write_print_help_
 
 #ifndef _di_fss_extended_list_write_main_
-  f_status_t fss_extended_list_write_main(const f_console_arguments_t arguments, fss_extended_list_write_data_t *data) {
+  f_status_t fss_extended_list_write_main(const f_console_arguments_t arguments, fss_extended_list_write_main_t *main) {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, fss_extended_list_write_total_parameters);
+      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fss_extended_list_write_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { fss_extended_list_write_parameter_no_color, fss_extended_list_write_parameter_light, fss_extended_list_write_parameter_dark };
         const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
-        if (data->context.set.error.before) {
-          data->error.context = data->context.set.error;
-          data->error.notable = data->context.set.notable;
+        if (main->context.set.error.before) {
+          main->error.context = main->context.set.error;
+          main->error.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
 
-          fll_program_parameter_process_empty(&data->context, sets);
+          fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          fss_extended_list_write_data_delete(data);
+          fss_extended_list_write_main_delete(main);
           return F_status_set_error(status);
         }
       }
@@ -129,38 +129,38 @@ extern "C" {
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          fss_extended_list_write_data_delete(data);
+          fss_extended_list_write_main_delete(main);
           return status;
         }
 
         if (choice == fss_extended_list_write_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
+          main->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_extended_list_write_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
+          main->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_extended_list_write_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
+          main->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_extended_list_write_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
+          main->error.verbosity = f_console_verbosity_debug;
         }
       }
 
       status = F_none;
     }
 
-    if (data->parameters[fss_extended_list_write_parameter_help].result == f_console_result_found) {
-      fss_extended_list_write_print_help(data->output, data->context);
+    if (main->parameters[fss_extended_list_write_parameter_help].result == f_console_result_found) {
+      fss_extended_list_write_print_help(main->output, main->context);
 
-      fss_extended_list_write_data_delete(data);
+      fss_extended_list_write_main_delete(main);
       return status;
     }
 
-    if (data->parameters[fss_extended_list_write_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(data->output, fss_extended_list_write_version);
+    if (main->parameters[fss_extended_list_write_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(main->output, fss_extended_list_write_version);
 
-      fss_extended_list_write_data_delete(data);
+      fss_extended_list_write_main_delete(main);
       return status;
     }
 
@@ -171,61 +171,61 @@ extern "C" {
     output.flag = f_file_flag_create | f_file_flag_write_only | f_file_flag_append;
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_additional) {
-        if (data->parameters[fss_extended_list_write_parameter_file].values.used > 1) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_file);
-            f_color_print(data->error.to.stream, data->context.set.error, "' may only be specified once.%c", f_string_eol_s[0]);
+      if (main->parameters[fss_extended_list_write_parameter_file].result == f_console_result_additional) {
+        if (main->parameters[fss_extended_list_write_parameter_file].values.used > 1) {
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_file);
+            f_color_print(main->error.to.stream, main->context.set.error, "' may only be specified once.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
         }
         else {
-          const f_array_length_t location = data->parameters[fss_extended_list_write_parameter_file].values.array[0];
+          const f_array_length_t location = main->parameters[fss_extended_list_write_parameter_file].values.array[0];
 
           output.id = -1;
           output.stream = 0;
           status = f_file_stream_open(arguments.argv[location], 0, &output);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
           }
         }
       }
-      else if (data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_found) {
-        fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable_s, fss_extended_list_write_long_file);
+      else if (main->parameters[fss_extended_list_write_parameter_file].result == f_console_result_found) {
+        fss_extended_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_list_write_long_file);
         status = F_status_set_error(F_parameter);
       }
     }
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[fss_extended_list_write_parameter_object].locations.used || data->parameters[fss_extended_list_write_parameter_content].locations.used) {
-        if (data->parameters[fss_extended_list_write_parameter_object].locations.used) {
-          if (data->parameters[fss_extended_list_write_parameter_object].locations.used != data->parameters[fss_extended_list_write_parameter_object].values.used) {
-            fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
+      if (main->parameters[fss_extended_list_write_parameter_object].locations.used || main->parameters[fss_extended_list_write_parameter_content].locations.used) {
+        if (main->parameters[fss_extended_list_write_parameter_object].locations.used) {
+          if (main->parameters[fss_extended_list_write_parameter_object].locations.used != main->parameters[fss_extended_list_write_parameter_object].values.used) {
+            fss_extended_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
             status = F_status_set_error(F_parameter);
           }
-          else if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].values.used) {
-            fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
+          else if (main->parameters[fss_extended_list_write_parameter_content].locations.used != main->parameters[fss_extended_list_write_parameter_content].values.used) {
+            fss_extended_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
             status = F_status_set_error(F_parameter);
           }
-          else if (data->parameters[fss_extended_list_write_parameter_object].locations.used != data->parameters[fss_extended_list_write_parameter_content].locations.used && data->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_none) {
-            fss_extended_list_write_error_parameter_same_times_print(*data);
+          else if (main->parameters[fss_extended_list_write_parameter_object].locations.used != main->parameters[fss_extended_list_write_parameter_content].locations.used && main->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_none) {
+            fss_extended_list_write_error_parameter_same_times_print(*main);
             status = F_status_set_error(F_parameter);
           }
-          else if (data->parameters[fss_extended_list_write_parameter_content].locations.used && data->parameters[fss_extended_list_write_parameter_partial].locations.used) {
-            if (data->parameters[fss_extended_list_write_parameter_content].result == f_console_result_additional) {
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                f_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
-                f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_partial);
-                f_color_print(data->error.to.stream, data->context.set.error, "' parameter only allows either the '");
-                f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
-                f_color_print(data->error.to.stream, data->context.set.error, "' parameter or the '");
-                f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
-                f_color_print(data->error.to.stream, data->context.set.error, "' parameter, but not both.%c", f_string_eol_s[0]);
+          else if (main->parameters[fss_extended_list_write_parameter_content].locations.used && main->parameters[fss_extended_list_write_parameter_partial].locations.used) {
+            if (main->parameters[fss_extended_list_write_parameter_content].result == f_console_result_additional) {
+              if (main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+                f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_partial);
+                f_color_print(main->error.to.stream, main->context.set.error, "' parameter only allows either the '");
+                f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
+                f_color_print(main->error.to.stream, main->context.set.error, "' parameter or the '");
+                f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
+                f_color_print(main->error.to.stream, main->context.set.error, "' parameter, but not both.%c", f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_parameter);
@@ -233,26 +233,26 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            if (data->parameters[fss_extended_list_write_parameter_content].result == f_console_result_additional) {
+            if (main->parameters[fss_extended_list_write_parameter_content].result == f_console_result_additional) {
               f_array_length_t location_object = 0;
               f_array_length_t location_content = 0;
               f_array_length_t location_sub_object = 0;
               f_array_length_t location_sub_content = 0;
 
-              for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].locations.used; i++) {
-                location_object = data->parameters[fss_extended_list_write_parameter_object].locations.array[i];
-                location_content = data->parameters[fss_extended_list_write_parameter_content].locations.array[i];
-                location_sub_object = data->parameters[fss_extended_list_write_parameter_object].locations_sub.array[i];
-                location_sub_content = data->parameters[fss_extended_list_write_parameter_content].locations_sub.array[i];
+              for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].locations.used; i++) {
+                location_object = main->parameters[fss_extended_list_write_parameter_object].locations.array[i];
+                location_content = main->parameters[fss_extended_list_write_parameter_content].locations.array[i];
+                location_sub_object = main->parameters[fss_extended_list_write_parameter_object].locations_sub.array[i];
+                location_sub_content = main->parameters[fss_extended_list_write_parameter_content].locations_sub.array[i];
 
                 if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-                  if (data->error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                    f_color_print(data->error.to.stream, data->context.set.error, "%sEach ", fll_error_print_error);
-                    f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
-                    f_color_print(data->error.to.stream, data->context.set.error, "' parameter must be specified before a '");
-                    f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
-                    f_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+                  if (main->error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                    f_color_print(main->error.to.stream, main->context.set.error, "%sEach ", fll_error_print_error);
+                    f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
+                    f_color_print(main->error.to.stream, main->context.set.error, "' parameter must be specified before a '");
+                    f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
+                    f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
                   }
 
                   status = F_status_set_error(F_parameter);
@@ -262,37 +262,37 @@ extern "C" {
             }
           }
         }
-        else if (data->parameters[fss_extended_list_write_parameter_content].locations.used) {
-          if (data->parameters[fss_extended_list_write_parameter_content].locations.used != data->parameters[fss_extended_list_write_parameter_content].values.used) {
-            fss_extended_list_write_error_parameter_value_missing_print(*data, f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
+        else if (main->parameters[fss_extended_list_write_parameter_content].locations.used) {
+          if (main->parameters[fss_extended_list_write_parameter_content].locations.used != main->parameters[fss_extended_list_write_parameter_content].values.used) {
+            fss_extended_list_write_error_parameter_value_missing_print(*main, f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
             status = F_status_set_error(F_parameter);
           }
-          else if (!data->parameters[fss_extended_list_write_parameter_partial].locations.used) {
-            fss_extended_list_write_error_parameter_same_times_print(*data);
+          else if (!main->parameters[fss_extended_list_write_parameter_partial].locations.used) {
+            fss_extended_list_write_error_parameter_same_times_print(*main);
             status = F_status_set_error(F_parameter);
           }
         }
       }
-      else if (!data->process_pipe) {
-        if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sThis requires either piped data or the use of the '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
-          f_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
-          f_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+      else if (!main->process_pipe) {
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThis requires either piped main or the use of the '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_object);
+          f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_content);
+          f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
       }
 
-      if (F_status_is_error_not(status) && data->process_pipe) {
-        if (data->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_partial);
-            f_color_print(data->error.to.stream, data->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol_s[0]);
+      if (F_status_is_error_not(status) && main->process_pipe) {
+        if (main->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_partial);
+            f_color_print(main->error.to.stream, main->context.set.error, "' parameter cannot be used when processing a pipe.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -301,38 +301,38 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[fss_extended_list_write_parameter_prepend].result == f_console_result_found) {
-        if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
-          f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+      if (main->parameters[fss_extended_list_write_parameter_prepend].result == f_console_result_found) {
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
+          f_color_print(main->error.to.stream, main->context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
       }
-      else if (data->parameters[fss_extended_list_write_parameter_prepend].result == f_console_result_additional) {
-        const f_array_length_t index = data->parameters[fss_extended_list_write_parameter_prepend].values.array[data->parameters[fss_extended_list_write_parameter_prepend].values.used - 1];
+      else if (main->parameters[fss_extended_list_write_parameter_prepend].result == f_console_result_additional) {
+        const f_array_length_t index = main->parameters[fss_extended_list_write_parameter_prepend].values.array[main->parameters[fss_extended_list_write_parameter_prepend].values.used - 1];
         const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
 
         if (length) {
           f_string_range_t range = f_macro_string_range_t_initialize(length);
 
-          data->prepend.string = arguments.argv[index];
-          data->prepend.used = length;
-          data->prepend.size = length;
+          main->prepend.string = arguments.argv[index];
+          main->prepend.used = length;
+          main->prepend.size = length;
 
           for (; range.start < length; range.start++) {
 
-            status = f_fss_is_space(data->prepend, range);
+            status = f_fss_is_space(main->prepend, range);
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
-              if (data->error.verbosity != f_console_verbosity_quiet) {
-                fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                f_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
-                f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
-                f_color_print(data->error.to.stream, data->context.set.error, "' must only contain whitespace.%c", f_string_eol_s[0]);
+              if (main->error.verbosity != f_console_verbosity_quiet) {
+                fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
+                f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
+                f_color_print(main->error.to.stream, main->context.set.error, "' must only contain whitespace.%c", f_string_eol_s[0]);
               }
 
               status = F_status_set_error(F_parameter);
@@ -341,11 +341,11 @@ extern "C" {
           } // for
         }
         else {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
-            f_color_print(data->error.to.stream, data->context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend);
+            f_color_print(main->error.to.stream, main->context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
           }
 
           status = F_status_set_error(F_parameter);
@@ -354,25 +354,25 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_found) {
-        if (data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore);
-          f_color_print(data->error.to.stream, data->context.set.error, "' was specified, but no values were given.%c", f_string_eol_s[0]);
+      if (main->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_found) {
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore);
+          f_color_print(main->error.to.stream, main->context.set.error, "' was specified, but no values were given.%c", f_string_eol_s[0]);
         }
 
         status = F_status_set_error(F_parameter);
       }
-      else if (data->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_additional) {
-        const f_array_length_t total_locations = data->parameters[fss_extended_list_write_parameter_ignore].locations.used;
-        const f_array_length_t total_arguments = data->parameters[fss_extended_list_write_parameter_ignore].values.used;
+      else if (main->parameters[fss_extended_list_write_parameter_ignore].result == f_console_result_additional) {
+        const f_array_length_t total_locations = main->parameters[fss_extended_list_write_parameter_ignore].locations.used;
+        const f_array_length_t total_arguments = main->parameters[fss_extended_list_write_parameter_ignore].values.used;
 
         if (total_locations * 2 > total_arguments) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore);
-          f_color_print(data->error.to.stream, data->context.set.error, "' requires two values.%c", f_string_eol_s[0]);
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore);
+          f_color_print(main->error.to.stream, main->context.set.error, "' requires two values.%c", f_string_eol_s[0]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -382,14 +382,14 @@ extern "C" {
     f_fss_quote_t quote = f_fss_delimit_quote_double;
 
     if (F_status_is_error_not(status)) {
-      if (data->parameters[fss_extended_list_write_parameter_double].result == f_console_result_found) {
-        if (data->parameters[fss_extended_list_write_parameter_single].result == f_console_result_found) {
-          if (data->parameters[fss_extended_list_write_parameter_double].location < data->parameters[fss_extended_list_write_parameter_single].location) {
+      if (main->parameters[fss_extended_list_write_parameter_double].result == f_console_result_found) {
+        if (main->parameters[fss_extended_list_write_parameter_single].result == f_console_result_found) {
+          if (main->parameters[fss_extended_list_write_parameter_double].location < main->parameters[fss_extended_list_write_parameter_single].location) {
             quote = f_fss_delimit_quote_single;
           }
         }
       }
-      else if (data->parameters[fss_extended_list_write_parameter_single].result == f_console_result_found) {
+      else if (main->parameters[fss_extended_list_write_parameter_single].result == f_console_result_found) {
         quote = f_fss_delimit_quote_single;
       }
     }
@@ -402,15 +402,15 @@ extern "C" {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
       f_string_ranges_t ignore = f_string_ranges_t_initialize;
 
-      if (data->process_pipe) {
-        status = fss_extended_list_write_process_pipe(*data, output, quote, &buffer, &ignore);
+      if (main->process_pipe) {
+        status = fss_extended_list_write_process_pipe(*main, output, quote, &buffer, &ignore);
 
         if (F_status_is_error(status)) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->context.set.notable, "input pipe");
-            f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sWhile processing the ", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "input pipe");
+            f_color_print(main->error.to.stream, main->context.set.error, ".%c", f_string_eol_s[0]);
           }
         }
 
@@ -418,65 +418,65 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        if (data->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
+        if (main->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
 
-          if (data->parameters[fss_extended_list_write_parameter_object].result == f_console_result_additional) {
-            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
+          if (main->parameters[fss_extended_list_write_parameter_object].result == f_console_result_additional) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
 
-              object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].values.array[i]];
+              object.string = arguments.argv[main->parameters[fss_extended_list_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
               object.size = object.used;
 
-              status = fss_extended_list_write_process(*data, output, quote, &object, 0, 0, &buffer);
+              status = fss_extended_list_write_process(*main, output, quote, &object, 0, 0, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
           else {
-            for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_content].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_content].values.used; i++) {
 
-              status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
+              status = fss_extended_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
               if (F_status_is_error(status)) break;
 
-              content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].values.array[i]];
+              content.string = arguments.argv[main->parameters[fss_extended_list_write_parameter_content].values.array[i]];
               content.used = strnlen(content.string, f_console_parameter_size);
               content.size = content.used;
 
-              status = fss_extended_list_write_process(*data, output, quote, 0, &content, &ignore, &buffer);
+              status = fss_extended_list_write_process(*main, output, quote, 0, &content, &ignore, &buffer);
               if (F_status_is_error(status)) break;
             } // for
           }
         }
         else {
-          for (f_array_length_t i = 0; i < data->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
+          for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
 
-            status = fss_extended_list_write_process_parameter_ignore(arguments, *data, data->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
+            status = fss_extended_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
             if (F_status_is_error(status)) break;
 
-            object.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_object].values.array[i]];
+            object.string = arguments.argv[main->parameters[fss_extended_list_write_parameter_object].values.array[i]];
             object.used = strnlen(object.string, f_console_parameter_size);
             object.size = object.used;
 
-            content.string = arguments.argv[data->parameters[fss_extended_list_write_parameter_content].values.array[i]];
+            content.string = arguments.argv[main->parameters[fss_extended_list_write_parameter_content].values.array[i]];
             content.used = strnlen(content.string, f_console_parameter_size);
             content.size = content.used;
 
-            status = fss_extended_list_write_process(*data, output, quote, &object, &content, &ignore, &buffer);
+            status = fss_extended_list_write_process(*main, output, quote, &object, &content, &ignore, &buffer);
             if (F_status_is_error(status)) break;
           } // for
         }
 
         if (F_status_is_error(status)) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data->error.to.stream, data->context.set.error, "%sWhile processing the ", fll_error_print_error);
-            f_color_print(data->error.to.stream, data->context.set.notable, "input arguments");
-            f_color_print(data->error.to.stream, data->context.set.error, ".%c", f_string_eol_s[0]);
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sWhile processing the ", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "input arguments");
+            f_color_print(main->error.to.stream, main->context.set.error, ".%c", f_string_eol_s[0]);
           }
         }
-        else if (data->error.verbosity != f_console_verbosity_quiet && data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_none) {
+        else if (main->error.verbosity != f_console_verbosity_quiet && main->parameters[fss_extended_list_write_parameter_file].result == f_console_result_none) {
 
           // ensure there is always a newline at the end, unless in quiet mode.
-          fprintf(data->output.stream, "%c", f_string_eol_s[0]);
+          fprintf(main->output.stream, "%c", f_string_eol_s[0]);
         }
       }
 
@@ -493,43 +493,43 @@ extern "C" {
       content.size = 0;
     }
 
-    if (data->parameters[fss_extended_list_write_parameter_file].result == f_console_result_additional) {
+    if (main->parameters[fss_extended_list_write_parameter_file].result == f_console_result_additional) {
       if (output.id != -1) {
         f_file_stream_close(F_true, &output);
       }
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (data->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 
     f_macro_string_dynamic_t_delete_simple(buffer);
     f_macro_string_dynamic_t_delete_simple(object);
     f_macro_string_dynamic_t_delete_simple(content);
-    fss_extended_list_write_data_delete(data);
+    fss_extended_list_write_main_delete(main);
     return status;
   }
 #endif // _di_fss_extended_list_write_main_
 
-#ifndef _di_fss_extended_list_write_data_delete_
-  f_status_t fss_extended_list_write_data_delete(fss_extended_list_write_data_t *data) {
+#ifndef _di_fss_extended_list_write_main_delete_
+  f_status_t fss_extended_list_write_main_delete(fss_extended_list_write_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_extended_list_write_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(data->remaining);
+    f_macro_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(data->context);
+    f_macro_color_context_t_delete_simple(main->context);
 
     return F_none;
   }
-#endif // _di_fss_extended_list_write_data_delete_
+#endif // _di_fss_extended_list_write_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

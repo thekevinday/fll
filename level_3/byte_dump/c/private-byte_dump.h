@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * A data structure for character row and column position (cell).
+ * A main structure for character row and column position (cell).
  *
  * column: The column position associated with the character cell.
  * row:    The row position associated with the character cell.
@@ -32,9 +32,9 @@ extern "C" {
 #endif // _di_byte_dump_cell_t_
 
 /**
- * A data structure for character data that overflowed from a previous line.
+ * A main structure for character main that overflowed from a previous line.
  *
- * UTF-8 Characters bytes may overflow beyond the data.width.
+ * UTF-8 Characters bytes may overflow beyond the main.width.
  * These overflowed bytes should still have placeholders printed in the next text-mode print.
  *
  * bytes: The number of previous bytes that overflowed from the previous line.
@@ -58,8 +58,8 @@ extern "C" {
 /**
  * Dump the contents of the file to standard out.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param file_name
  *   The name of the file.
  * @param file
@@ -71,14 +71,14 @@ extern "C" {
  *   F_failure (with error bit) on failure, usually when read() fails.
  */
 #ifndef _di_byte_dump_file_
-  extern f_status_t byte_dump_file(const byte_dump_data_t data, const f_string_t file_name, const f_file_t file) f_attribute_visibility_internal;
+  extern f_status_t byte_dump_file(const byte_dump_main_t main, const f_string_t file_name, const f_file_t file) f_attribute_visibility_internal;
 #endif // _di_byte_dump_file_
 
 /**
  * Print a single character hex code and if the width is reached properly terminate the line.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param characters
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
@@ -91,9 +91,9 @@ extern "C" {
  *   The UTF-8 character byte block to print, going from left to right first byte is 1, second byte is 2, etc...
  *   A value of 1 is used for ASCII.
  * @param previous
- *   The overflow data from the previous line.
+ *   The overflow main from the previous line.
  * @param cell
- *   The data fragment data such that:
+ *   The main fragment main such that:
  *   - column:
  *     The current column that the character is being printed on.
  *     This value is incremented to represent that the character is printed.
@@ -112,7 +112,7 @@ extern "C" {
  * @see byte_dump_print_text()
  */
 #ifndef _di_byte_dump_print_character_fragment_
-  extern bool byte_dump_print_character_fragment(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) f_attribute_visibility_internal;
+  extern bool byte_dump_print_character_fragment(const byte_dump_main_t main, const f_utf_string_static_t characters, const char invalid[], const uint8_t width_utf, const char byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, uint8_t *offset) f_attribute_visibility_internal;
 #endif // _di_byte_dump_print_character_fragment_
 
 /**
@@ -120,21 +120,21 @@ extern "C" {
  *
  * This should be called only when text mode is enabled.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  * @param characters
  *   An array of UTF-8 and ASCII characters.
  * @param invalid
  *   An array designating if a given character at the array index is invalid or not.
  *   The values represent the number of bytes in which the invalid character is expected to take up.
  * @param previous
- *   The overflow data from the previous line.
+ *   The overflow main from the previous line.
  * @param offset
  *   The offset to apply before printing column cells for the row.
  *   Will be reduced to 0 once used.
  */
 #ifndef _di_byte_dump_print_text_
-  extern void byte_dump_print_text(const byte_dump_data_t data, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_attribute_visibility_internal;
+  extern void byte_dump_print_text(const byte_dump_main_t main, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) f_attribute_visibility_internal;
 #endif // _di_byte_dump_print_text_
 
 #ifdef __cplusplus

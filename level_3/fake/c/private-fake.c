@@ -9,25 +9,25 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_execute_
-  int fake_execute(const fake_data_t data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+  int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
     if (F_status_is_error(*status)) return 1;
 
-    if (data.error.verbosity == f_console_verbosity_verbose) {
-      fprintf(data.output.stream, "%s", program.string);
+    if (main.error.verbosity == f_console_verbosity_verbose) {
+      fprintf(main.output.stream, "%s", program.string);
 
       for (f_array_length_t i = 0; i < arguments.used; i++) {
         if (!arguments.array[i].used) continue;
 
-        fprintf(data.output.stream, " %s", arguments.array[i].string);
+        fprintf(main.output.stream, " %s", arguments.array[i].string);
       } // for
 
-      fprintf(data.output.stream, "%c", f_string_eol_s[0]);
+      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
 
       // flush to stdout before executing command.
-      fflush(data.output.stream);
+      fflush(main.output.stream);
     }
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
       return 0;
     }
@@ -45,7 +45,7 @@ extern "C" {
 
       *status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
 
-      if (fake_signal_received(data)) {
+      if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
         return 0;
       }
@@ -65,15 +65,15 @@ extern "C" {
       return_code = 1;
 
       if (F_status_set_fine(*status) == F_file_found_not) {
-        if (data.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data.error.to.stream, data.context.set.error, "%sFailed to find program '", fll_error_print_error);
-          f_color_print(data.error.to.stream, data.context.set.notable, "%s", program.used ? program.string : f_string_empty_s);
-          f_color_print(data.error.to.stream, data.context.set.error, "' for executing.%c", f_string_eol_s[0]);
+        if (main.error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to find program '", fll_error_print_error);
+          f_color_print(main.error.to.stream, main.context.set.notable, "%s", program.used ? program.string : f_string_empty_s);
+          f_color_print(main.error.to.stream, main.context.set.error, "' for executing.%c", f_string_eol_s[0]);
         }
       }
       else {
-        fll_error_print(data.error, F_status_set_fine(*status), "fll_execute_program", F_true);
+        fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_program", F_true);
       }
     }
 
@@ -82,12 +82,12 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(const fake_data_t data, const f_string_t path_file, f_string_dynamic_t *buffer) {
+  f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) {
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(main)) {
       return F_status_set_error(F_signal);
     }
 
@@ -108,7 +108,7 @@ extern "C" {
            f_macro_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
+            fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
             f_macro_string_dynamic_t_delete_simple((*buffer));
             return status;
@@ -121,7 +121,7 @@ extern "C" {
       name_function = "f_file_open";
       status = f_file_stream_open(path_file, 0, &file);
 
-      if (fake_signal_received(data)) {
+      if (fake_signal_received(main)) {
         if (file.id) {
           f_file_stream_close(F_true, &file);
         }
@@ -141,7 +141,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
+      fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
       f_macro_string_dynamic_t_delete_simple((*buffer));
     }
@@ -151,15 +151,15 @@ extern "C" {
 #endif // _di_fake_file_buffer_
 
 #ifndef _di_fake_path_generate_
-  f_status_t fake_path_generate(fake_data_t *data) {
+  f_status_t fake_path_generate(fake_main_t *main) {
     f_status_t status = F_none;
     uint8_t i = 0;
 
     {
       const f_string_dynamic_t *parameters_source[] = {
-        &data->path_build,
-        &data->path_data,
-        &data->path_sources,
+        &main->path_build,
+        &main->path_data,
+        &main->path_sources,
       };
 
       const uint8_t parameters_length[] = {
@@ -169,25 +169,25 @@ extern "C" {
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
-        &data->path_build_documents,
-        &data->path_build_includes,
-        &data->path_build_libraries,
-        &data->path_build_objects,
-        &data->path_build_programs,
-        &data->path_build_settings,
-        &data->path_build_stage,
+        &main->path_build_documents,
+        &main->path_build_includes,
+        &main->path_build_libraries,
+        &main->path_build_objects,
+        &main->path_build_programs,
+        &main->path_build_settings,
+        &main->path_build_stage,
       };
 
       f_string_dynamic_t *parameters_value_1[] = {
-        &data->path_data_build,
-        &data->path_data_settings,
+        &main->path_data_build,
+        &main->path_data_settings,
       };
 
       f_string_dynamic_t *parameters_value_2[] = {
-        &data->path_sources_bash,
-        &data->path_sources_c,
-        &data->path_sources_cpp,
-        &data->path_sources_script,
+        &main->path_sources_bash,
+        &main->path_sources_c,
+        &main->path_sources_cpp,
+        &main->path_sources_script,
       };
 
       f_string_dynamic_t **const parameters_value[] = {
@@ -197,10 +197,10 @@ extern "C" {
       };
 
       for (i = 0; i < 3; i++) {
-        status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
+        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
@@ -244,28 +244,28 @@ extern "C" {
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &data->path_build_documents,
-        &data->path_build_includes,
-        &data->path_build_libraries,
-        &data->path_build_objects,
-        &data->path_build_programs,
-        &data->path_build_settings,
-        &data->path_build_stage,
-        &data->path_data_build,
-        &data->path_data_settings,
-        &data->path_documents,
-        &data->path_licenses,
-        &data->path_sources_bash,
-        &data->path_sources_c,
-        &data->path_sources_cpp,
-        &data->path_sources_script,
+        &main->path_build_documents,
+        &main->path_build_includes,
+        &main->path_build_libraries,
+        &main->path_build_objects,
+        &main->path_build_programs,
+        &main->path_build_settings,
+        &main->path_build_stage,
+        &main->path_data_build,
+        &main->path_data_settings,
+        &main->path_documents,
+        &main->path_licenses,
+        &main->path_sources_bash,
+        &main->path_sources_c,
+        &main->path_sources_cpp,
+        &main->path_sources_script,
       };
 
       for (i = 0; i < 15; i++) {
         status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
           return status;
         }
       } // for
@@ -273,10 +273,10 @@ extern "C" {
 
     {
       const f_string_dynamic_t *parameters_source[] = {
-        &data->path_build_libraries,
-        &data->path_build_programs,
-        &data->path_data_build,
-        &data->path_documents,
+        &main->path_build_libraries,
+        &main->path_build_programs,
+        &main->path_data_build,
+        &main->path_documents,
       };
 
       const uint8_t parameters_length[] = {
@@ -287,26 +287,26 @@ extern "C" {
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
-        &data->path_build_libraries_script,
-        &data->path_build_libraries_shared,
-        &data->path_build_libraries_static,
+        &main->path_build_libraries_script,
+        &main->path_build_libraries_shared,
+        &main->path_build_libraries_static,
       };
 
       f_string_dynamic_t *parameters_value_1[] = {
-        &data->path_build_programs_script,
-        &data->path_build_programs_shared,
-        &data->path_build_programs_static,
+        &main->path_build_programs_script,
+        &main->path_build_programs_shared,
+        &main->path_build_programs_static,
       };
 
       f_string_dynamic_t *parameters_value_2[] = {
-        &data->file_data_build_defines,
-        &data->file_data_build_dependencies,
-        &data->file_data_build_fakefile,
-        &data->file_data_build_settings,
+        &main->file_data_build_defines,
+        &main->file_data_build_dependencies,
+        &main->file_data_build_fakefile,
+        &main->file_data_build_settings,
       };
 
       f_string_dynamic_t *parameters_value_3[] = {
-        &data->file_documents_readme,
+        &main->file_documents_readme,
       };
 
       f_string_dynamic_t **const parameters_value[] = {
@@ -317,22 +317,22 @@ extern "C" {
       };
 
       for (i = 0; i < 4; i++) {
-        status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
+        status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
           return status;
         }
       } // for
     }
 
     // When custom fakefile or settings are used and they are paths to a file, remove the default path.
-    if (f_path_is(data->fakefile.string, data->fakefile.used)) {
-      data->file_data_build_fakefile.used = 0;
+    if (f_path_is(main->fakefile.string, main->fakefile.used)) {
+      main->file_data_build_fakefile.used = 0;
     }
 
-    if (f_path_is(data->settings.string, data->settings.used)) {
-      data->file_data_build_settings.used = 0;
+    if (f_path_is(main->settings.string, main->settings.used)) {
+      main->file_data_build_settings.used = 0;
     }
 
     {
@@ -345,8 +345,8 @@ extern "C" {
         fake_path_part_static,
         fake_file_defines,
         fake_file_dependencies,
-        data->fakefile.string,
-        data->settings.string,
+        main->fakefile.string,
+        main->settings.string,
         fake_file_readme,
       };
 
@@ -359,48 +359,48 @@ extern "C" {
         fake_path_part_static_length,
         fake_file_defines_length,
         fake_file_dependencies_length,
-        data->fakefile.used,
-        data->settings.used,
+        main->fakefile.used,
+        main->settings.used,
         fake_file_readme_length,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &data->path_build_libraries_script,
-        &data->path_build_libraries_shared,
-        &data->path_build_libraries_static,
-        &data->path_build_programs_script,
-        &data->path_build_programs_shared,
-        &data->path_build_programs_static,
-        &data->file_data_build_defines,
-        &data->file_data_build_dependencies,
-        &data->file_data_build_fakefile,
-        &data->file_data_build_settings,
-        &data->file_documents_readme,
+        &main->path_build_libraries_script,
+        &main->path_build_libraries_shared,
+        &main->path_build_libraries_static,
+        &main->path_build_programs_script,
+        &main->path_build_programs_shared,
+        &main->path_build_programs_static,
+        &main->file_data_build_defines,
+        &main->file_data_build_dependencies,
+        &main->file_data_build_fakefile,
+        &main->file_data_build_settings,
+        &main->file_documents_readme,
       };
 
       for (i = 0; i < 11; i++) {
         status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
           return status;
         }
       } // for
     }
 
-    if (data->path_work.used) {
+    if (main->path_work.used) {
       {
         f_string_dynamic_t * const parameters_value[] = {
-          &data->path_work_includes,
-          &data->path_work_libraries,
-          &data->path_work_programs,
+          &main->path_work_includes,
+          &main->path_work_libraries,
+          &main->path_work_programs,
         };
 
         for (i = 0; i < 3; i++) {
-          status = f_string_dynamic_append_nulless(data->path_work, parameters_value[i]);
+          status = f_string_dynamic_append_nulless(main->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
             return status;
           }
         } // for
@@ -420,16 +420,16 @@ extern "C" {
         };
 
         f_string_dynamic_t * const parameters_value[] = {
-          &data->path_work_includes,
-          &data->path_work_libraries,
-          &data->path_work_programs,
+          &main->path_work_includes,
+          &main->path_work_libraries,
+          &main->path_work_programs,
         };
 
         for (i = 0; i < 3; i++) {
           status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -437,8 +437,8 @@ extern "C" {
 
       {
         const f_string_dynamic_t *parameters_source[] = {
-          &data->path_work_libraries,
-          &data->path_work_programs,
+          &main->path_work_libraries,
+          &main->path_work_programs,
         };
 
         const uint8_t parameters_length[] = {
@@ -447,15 +447,15 @@ extern "C" {
         };
 
         f_string_dynamic_t *parameters_value_0[] = {
-          &data->path_work_libraries_script,
-          &data->path_work_libraries_shared,
-          &data->path_work_libraries_static,
+          &main->path_work_libraries_script,
+          &main->path_work_libraries_shared,
+          &main->path_work_libraries_static,
         };
 
         f_string_dynamic_t *parameters_value_1[] = {
-          &data->path_work_programs_script,
-          &data->path_work_programs_shared,
-          &data->path_work_programs_static,
+          &main->path_work_programs_script,
+          &main->path_work_programs_shared,
+          &main->path_work_programs_static,
         };
 
         f_string_dynamic_t **const parameters_value[] = {
@@ -464,10 +464,10 @@ extern "C" {
         };
 
         for (i = 0; i < 2; i++) {
-          status = fake_path_generate_string_dynamic(data, *parameters_source[i], parameters_value[i], parameters_length[i]);
+          status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
             return status;
           }
         } // for
@@ -493,19 +493,19 @@ extern "C" {
         };
 
         f_string_dynamic_t * const parameters_value[] = {
-          &data->path_work_libraries_script,
-          &data->path_work_libraries_shared,
-          &data->path_work_libraries_static,
-          &data->path_work_programs_script,
-          &data->path_work_programs_shared,
-          &data->path_work_programs_static,
+          &main->path_work_libraries_script,
+          &main->path_work_libraries_shared,
+          &main->path_work_libraries_static,
+          &main->path_work_programs_script,
+          &main->path_work_programs_shared,
+          &main->path_work_programs_static,
         };
 
         for (i = 0; i < 6; i++) {
           status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
             return status;
           }
         } // for
@@ -514,40 +514,40 @@ extern "C" {
 
     {
       f_string_dynamic_t * const parameters_value[] = {
-        &data->path_build_documents,
-        &data->path_build_includes,
-        &data->path_build_libraries,
-        &data->path_build_libraries_script,
-        &data->path_build_libraries_shared,
-        &data->path_build_libraries_static,
-        &data->path_build_objects,
-        &data->path_build_programs,
-        &data->path_build_programs_script,
-        &data->path_build_programs_shared,
-        &data->path_build_programs_static,
-        &data->path_build_settings,
-        &data->path_build_stage,
-        &data->path_data_build,
-        &data->path_data_settings,
-        &data->path_licenses,
-        &data->path_sources_bash,
-        &data->path_sources_c,
-        &data->path_sources_cpp,
-        &data->path_sources_script,
-        &data->path_work_includes,
-        &data->path_work_libraries,
-        &data->path_work_libraries_script,
-        &data->path_work_libraries_shared,
-        &data->path_work_libraries_static,
-        &data->path_work_programs,
-        &data->path_work_programs_script,
-        &data->path_work_programs_shared,
-        &data->path_work_programs_static,
-        &data->file_data_build_defines,
-        &data->file_data_build_dependencies,
-        &data->file_data_build_fakefile,
-        &data->file_data_build_settings,
-        &data->file_documents_readme,
+        &main->path_build_documents,
+        &main->path_build_includes,
+        &main->path_build_libraries,
+        &main->path_build_libraries_script,
+        &main->path_build_libraries_shared,
+        &main->path_build_libraries_static,
+        &main->path_build_objects,
+        &main->path_build_programs,
+        &main->path_build_programs_script,
+        &main->path_build_programs_shared,
+        &main->path_build_programs_static,
+        &main->path_build_settings,
+        &main->path_build_stage,
+        &main->path_data_build,
+        &main->path_data_settings,
+        &main->path_licenses,
+        &main->path_sources_bash,
+        &main->path_sources_c,
+        &main->path_sources_cpp,
+        &main->path_sources_script,
+        &main->path_work_includes,
+        &main->path_work_libraries,
+        &main->path_work_libraries_script,
+        &main->path_work_libraries_shared,
+        &main->path_work_libraries_static,
+        &main->path_work_programs,
+        &main->path_work_programs_script,
+        &main->path_work_programs_shared,
+        &main->path_work_programs_static,
+        &main->file_data_build_defines,
+        &main->file_data_build_dependencies,
+        &main->file_data_build_fakefile,
+        &main->file_data_build_settings,
+        &main->file_documents_readme,
       };
 
       for (i = 0; i < 34; i++) {
@@ -556,7 +556,7 @@ extern "C" {
         status = f_string_dynamic_terminate_after(parameters_value[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
           return status;
         }
       } // for
@@ -567,7 +567,7 @@ extern "C" {
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_status_t fake_path_generate_string_dynamic(fake_data_t *data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+  f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
     f_status_t status = F_none;
 
     for (uint8_t i = 0; i < length; i++) {
@@ -580,7 +580,7 @@ extern "C" {
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifndef _di_fake_process_console_parameters_
-  f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_data_t *data) {
+  f_status_t fake_process_console_parameters(const f_console_arguments_t arguments, fake_main_t *main) {
     f_status_t status = F_none;
 
     // @todo move as many of the inline error printing code into more general functions where possible to provide more accurate error reporting.
@@ -611,9 +611,9 @@ extern "C" {
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &data->fakefile,
-        &data->process,
-        &data->settings,
+        &main->fakefile,
+        &main->process,
+        &main->settings,
       };
 
       bool parameters_validate_word[] = {
@@ -624,17 +624,17 @@ extern "C" {
 
       for (uint8_t i = 0; i < 3; i++) {
 
-        if (data->parameters[parameters_id[i]].result == f_console_result_found) {
-          fake_print_error_parameter_missing_value(*data, parameters_name[i]);
+        if (main->parameters[parameters_id[i]].result == f_console_result_found) {
+          fake_print_error_parameter_missing_value(*main, parameters_name[i]);
           return F_status_set_error(F_parameter);
         }
-        else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
-          if (data->parameters[parameters_id[i]].locations.used > 1) {
-            fake_print_error_parameter_too_many(*data, parameters_name[i]);
+        else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
+          if (main->parameters[parameters_id[i]].locations.used > 1) {
+            fake_print_error_parameter_too_many(*main, parameters_name[i]);
             return F_status_set_error(F_parameter);
           }
 
-          f_array_length_t location = data->parameters[parameters_id[i]].values.array[0];
+          f_array_length_t location = main->parameters[parameters_id[i]].values.array[0];
           f_array_length_t length = strnlen(arguments.argv[location], f_console_parameter_size);
 
           if (length > 0) {
@@ -648,24 +648,24 @@ extern "C" {
                 status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
 
                 if (F_status_is_error(status)) {
-                  if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                    f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-                    f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_process);
-                    f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+                  if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                    f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
+                    f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_process);
+                    f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
                   }
 
                   return status;
                 }
 
                 if (status == F_false) {
-                  if (data->error.verbosity != f_console_verbosity_quiet) {
-                    fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                    f_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
-                    f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_process);
-                    f_color_print(data->error.to.stream, data->context.set.error, "' parameters value '");
-                    f_color_print(data->error.to.stream, data->context.set.notable, "%s", arguments.argv[location]);
-                    f_color_print(data->error.to.stream, data->context.set.error, "' contains non-word, non-dash, and non-plus characters.%c", f_string_eol_s[0]);
+                  if (main->error.verbosity != f_console_verbosity_quiet) {
+                    fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                    f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+                    f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_process);
+                    f_color_print(main->error.to.stream, main->context.set.error, "' parameters value '");
+                    f_color_print(main->error.to.stream, main->context.set.notable, "%s", arguments.argv[location]);
+                    f_color_print(main->error.to.stream, main->context.set.error, "' contains non-word, non-dash, and non-plus characters.%c", f_string_eol_s[0]);
                   }
 
                   return F_status_set_error(F_parameter);
@@ -677,15 +677,15 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
-                if (data->error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-                  f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-                  f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
-                  f_color_print(data->error.to.stream, data->context.set.error, "' is too long.%c", f_string_eol_s[0]);
+                if (main->error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+                  f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+                  f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
+                  f_color_print(main->error.to.stream, main->context.set.error, "' is too long.%c", f_string_eol_s[0]);
                 }
               }
               else {
-                fll_error_print(data->error, F_status_set_fine(status), "f_string_append", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
               }
 
               return status;
@@ -696,11 +696,11 @@ extern "C" {
           }
 
           if (length == 0 || status == F_data_not) {
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sThe parameter '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
-              f_color_print(data->error.to.stream, data->context.set.error, "' must not be empty and must not contain only whitespace.%c", f_string_eol_s[0]);
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
+              f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty and must not contain only whitespace.%c", f_string_eol_s[0]);
             }
           }
         }
@@ -708,7 +708,7 @@ extern "C" {
           f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->error, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
             return status;
           }
 
@@ -718,8 +718,8 @@ extern "C" {
       } // for
     }
 
-    if (data->parameters[fake_parameter_define].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*data, fake_long_define);
+    if (main->parameters[fake_parameter_define].result == f_console_result_found) {
+      fake_print_error_parameter_missing_value(*main, fake_long_define);
       return F_status_set_error(F_parameter);
     }
 
@@ -753,32 +753,32 @@ extern "C" {
       };
 
       f_string_dynamic_t * const parameters_value[] = {
-        &data->path_build,
-        &data->path_data,
-        &data->path_sources,
-        &data->path_work,
+        &main->path_build,
+        &main->path_data,
+        &main->path_sources,
+        &main->path_work,
       };
 
       for (uint8_t i = 0; i < 4; i++) {
 
-        if (data->parameters[parameters_id[i]].result == f_console_result_found) {
-          fake_print_error_parameter_missing_value(*data, parameters_name[i]);
+        if (main->parameters[parameters_id[i]].result == f_console_result_found) {
+          fake_print_error_parameter_missing_value(*main, parameters_name[i]);
           return F_status_set_error(F_parameter);
         }
-        else if (data->parameters[parameters_id[i]].result == f_console_result_additional) {
-          if (data->parameters[parameters_id[i]].values.used > 1) {
-            fake_print_error_parameter_too_many(*data, parameters_name[i]);
+        else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
+          if (main->parameters[parameters_id[i]].values.used > 1) {
+            fake_print_error_parameter_too_many(*main, parameters_name[i]);
             return F_status_set_error(F_parameter);
           }
 
-          status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[data->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
+          status = fl_console_parameter_to_string_dynamic_directory(arguments.argv[main->parameters[parameters_id[i]].values.array[0]], parameters_value[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(data->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process parameter '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
-              f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+            if (fll_error_print(main->error, F_status_set_fine(status), "fl_console_parameter_to_string_dynamic_directory", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process parameter '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
+              f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
             }
 
             return status;
@@ -788,11 +788,11 @@ extern "C" {
            f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(data->error, F_status_set_fine(status), " f_macro_string_dynamic_t_resize", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to load default for the parameter '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
-              f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+            if (fll_error_print(main->error, F_status_set_fine(status), " f_macro_string_dynamic_t_resize", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to load default for the parameter '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
+              f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
             }
 
             return status;
@@ -804,15 +804,15 @@ extern "C" {
       } // for
     }
 
-    if (data->parameters[fake_parameter_define].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_define].values, &data->define);
+    if (main->parameters[fake_parameter_define].result == f_console_result_additional) {
+      status = fll_program_parameter_additional_rip(arguments.argv, main->parameters[fake_parameter_define].values, &main->define);
 
       if (F_status_is_error(status)) {
-        if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
-          f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
+          f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
         }
 
         return status;
@@ -822,33 +822,33 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t width_max = 0;
 
-      for (; i < data->define.used; i++) {
+      for (; i < main->define.used; i++) {
 
-        for (j = 0; j < data->define.array[i].used; j++) {
+        for (j = 0; j < main->define.array[i].used; j++) {
 
-          width_max = data->define.array[i].used - j;
+          width_max = main->define.array[i].used - j;
 
-          status = f_utf_is_word(data->define.array[i].string + j, width_max, F_false);
+          status = f_utf_is_word(main->define.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
-              f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+            if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
+              f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
             }
 
             return status;
           }
 
           if (status == F_false) {
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
-              f_color_print(data->error.to.stream, data->context.set.error, "' parameters value '");
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s", data->define.array[i].string);
-              f_color_print(data->error.to.stream, data->context.set.error, "' contains non-word characters.%c", f_string_eol_s[0]);
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
+              f_color_print(main->error.to.stream, main->context.set.error, "' parameters value '");
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s", main->define.array[i].string);
+              f_color_print(main->error.to.stream, main->context.set.error, "' contains non-word characters.%c", f_string_eol_s[0]);
             }
 
             return F_status_set_error(F_parameter);
@@ -857,19 +857,19 @@ extern "C" {
       } // for
     }
 
-    if (data->parameters[fake_parameter_mode].result == f_console_result_found) {
-      fake_print_error_parameter_missing_value(*data, fake_long_mode);
+    if (main->parameters[fake_parameter_mode].result == f_console_result_found) {
+      fake_print_error_parameter_missing_value(*main, fake_long_mode);
       return F_status_set_error(F_parameter);
     }
-    else if (data->parameters[fake_parameter_mode].result == f_console_result_additional) {
-      status = fll_program_parameter_additional_rip(arguments.argv, data->parameters[fake_parameter_mode].values, &data->mode);
+    else if (main->parameters[fake_parameter_mode].result == f_console_result_additional) {
+      status = fll_program_parameter_additional_rip(arguments.argv, main->parameters[fake_parameter_mode].values, &main->mode);
 
       if (F_status_is_error(status)) {
-        if (fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
-          f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+        if (fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
+          f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
         }
 
         return status;
@@ -879,33 +879,33 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t width_max = 0;
 
-      for (; i < data->mode.used; i++) {
+      for (; i < main->mode.used; i++) {
 
-        for (j = 0; j < data->mode.array[i].used; j++) {
+        for (j = 0; j < main->mode.array[i].used; j++) {
 
-          width_max = data->mode.array[i].used - j;
+          width_max = main->mode.array[i].used - j;
 
-          status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);
+          status = f_utf_is_word_dash_plus(main->mode.array[i].string + j, width_max, F_false);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(data->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
-              f_color_print(data->error.to.stream, data->context.set.error, "'.%c", f_string_eol_s[0]);
+            if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
+              f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
             }
 
             return status;
           }
 
           if (status == F_false) {
-            if (data->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(data->error.to.stream, data->context.set.error, "%sThe '", fll_error_print_error);
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
-              f_color_print(data->error.to.stream, data->context.set.error, "' parameters value '");
-              f_color_print(data->error.to.stream, data->context.set.notable, "%s", data->mode.array[i].string);
-              f_color_print(data->error.to.stream, data->context.set.error, "' contains non-word, non-dash, and non-plus characters.%c", f_string_eol_s[0]);
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
+              f_color_print(main->error.to.stream, main->context.set.error, "' parameters value '");
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s", main->mode.array[i].string);
+              f_color_print(main->error.to.stream, main->context.set.error, "' contains non-word, non-dash, and non-plus characters.%c", f_string_eol_s[0]);
             }
 
             return F_status_set_error(F_parameter);
@@ -919,9 +919,9 @@ extern "C" {
 #endif // _di_fake_process_console_parameters_
 
 #ifndef _di_fake_signal_read_
-  f_status_t fake_signal_received(const fake_data_t data) {
+  f_status_t fake_signal_received(const fake_main_t main) {
 
-    if (!data.signal.id) {
+    if (!main.signal.id) {
       return F_false;
     }
 
@@ -931,7 +931,7 @@ extern "C" {
 
     memset(&information, 0, sizeof(struct signalfd_siginfo));
 
-    status = f_signal_read(data.signal, &information);
+    status = f_signal_read(main.signal, &information);
 
     if (status == F_signal) {
       switch (information.ssi_signo) {
@@ -941,10 +941,10 @@ extern "C" {
         case F_signal_quit:
         case F_signal_termination:
 
-          if (data.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(data.error.to.stream, data.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
-            fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
+          if (main.error.verbosity != f_console_verbosity_quiet) {
+            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main.error.to.stream, main.context.set.error, "ALERT: An appropriate exit signal has been received, now aborting.");
+            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
           }
 
           return F_true;
@@ -956,9 +956,9 @@ extern "C" {
 #endif // _di_fake_signal_read_
 
 #ifndef _di_fake_validate_directories_
-  f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_data_t data) {
+  f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) {
 
-    if (fake_signal_received(data)) {
+    if (fake_signal_received(main)) {
       return F_signal;
     }
 
@@ -981,9 +981,9 @@ extern "C" {
     };
 
     const f_string_dynamic_t *parameters_value[] = {
-      &data.path_build,
-      &data.path_data,
-      &data.path_work,
+      &main.path_build,
+      &main.path_data,
+      &main.path_work,
     };
 
     const bool parameters_required[] = {
@@ -997,7 +997,7 @@ extern "C" {
 
     for (uint8_t i = 0; i < 3; i++) {
 
-      if (fake_signal_received(data)) {
+      if (fake_signal_received(main)) {
         return F_status_set_error(F_signal);
       }
 
@@ -1010,17 +1010,17 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(data.error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory);
+            fll_error_file_print(main.error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i]->string, "access", fll_error_file_type_directory);
 
             return status;
           }
         }
       }
       else if (parameters_required[i]) {
-        fprintf(data.error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(data.error.to.stream, data.context.set.error, "%sNo valid path for the (required) directory parameter '", fll_error_print_error);
-        f_color_print(data.error.to.stream, data.context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
-        f_color_print(data.error.to.stream, data.context.set.error, "' was found.%c", f_string_eol_s[0]);
+        fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+        f_color_print(main.error.to.stream, main.context.set.error, "%sNo valid path for the (required) directory parameter '", fll_error_print_error);
+        f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);
+        f_color_print(main.error.to.stream, main.context.set.error, "' was found.%c", f_string_eol_s[0]);
 
         return F_status_set_error(F_directory_found_not);
       }

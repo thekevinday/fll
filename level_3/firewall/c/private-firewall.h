@@ -85,7 +85,7 @@ typedef struct {
   (structure.array[index].stop - structure.array[index].start) + 1
 
 // TODO: temporarily added, convert this to a function below.
-// TODO: also report: f_color_print(data.error.to.stream, data.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol_s[0]);
+// TODO: also report: f_color_print(main.error.to.stream, main.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol_s[0]);
 #define firewall_macro_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used == arguments.size) { \
     f_macro_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
@@ -105,15 +105,15 @@ typedef struct {
  *
  * @param local
  *   Local firewall settings.
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_data_t data) f_attribute_visibility_internal;
+f_status_t firewall_perform_commands(const firewall_local_data_t local, const firewall_main_t main) f_attribute_visibility_internal;
 
 /**
  * Create custom chains.
@@ -122,41 +122,41 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
  *   firewall chains.
  * @param local
  *   Local firewall settings.
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_data_t *data) f_attribute_visibility_internal;
+f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
 
 /**
  * Deallocate chains.
  *
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_delete_chains(const firewall_data_t data) f_attribute_visibility_internal;
+f_status_t firewall_delete_chains(const firewall_main_t main) f_attribute_visibility_internal;
 
 /**
  * Lock the firewall.
  *
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_default_lock(const firewall_data_t data) f_attribute_visibility_internal;
+f_status_t firewall_default_lock(const firewall_main_t main) f_attribute_visibility_internal;
 
 /**
  * Buffer firewall rules.
@@ -168,15 +168,15 @@ f_status_t firewall_default_lock(const firewall_data_t data) f_attribute_visibil
  *   FALSE otherwise (more are errors returned when not optional).
  * @param local
  *   Local firewall settings.
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_data_t *data) f_attribute_visibility_internal;
+f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
 
 /**
  * Process buffered rules.
@@ -185,18 +185,18 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
  *   The current position within the buffer and the stop point.
  * @param local
  *   Local firewall settings.
- * @param data
- *   Firewall data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_data_t *data) f_attribute_visibility_internal;
+f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_main_t *main) f_attribute_visibility_internal;
 
 /**
- * Delete allocated data.
+ * Delete allocated local data.
  *
  * @param local
  *   Local firewall settings.

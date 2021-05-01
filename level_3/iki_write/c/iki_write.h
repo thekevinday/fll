@@ -8,7 +8,7 @@
  * This is the IKI Write program.
  *
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the iki_write_data_t.
+ * This program processes files or other input in fss format and stores the results in the iki_write_main_t.
  *
  * This processes in accordance to the IKI specification.
  */
@@ -116,7 +116,7 @@ extern "C" {
   #define iki_write_total_parameters 14
 #endif // _di_iki_write_defines_
 
-#ifndef _di_iki_write_data_t_
+#ifndef _di_iki_write_main_t_
   typedef struct {
     f_console_parameter_t parameters[iki_write_total_parameters];
 
@@ -129,9 +129,9 @@ extern "C" {
     f_string_dynamic_t buffer;
 
     f_color_context_t context;
-  } iki_write_data_t;
+  } iki_write_main_t;
 
-  #define iki_write_data_t_initialize \
+  #define iki_write_main_t_initialize \
     { \
       iki_write_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
@@ -141,7 +141,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_color_context_t_initialize, \
     }
-#endif // _di_iki_write_data_t_
+#endif // _di_iki_write_main_t_
 
 /**
  * Print help.
@@ -161,31 +161,31 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call iki_write_data_delete() after executing this.
+ * Be sure to call iki_write_main_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see iki_write_data_delete()
+ * @see iki_write_main_delete()
  */
 #ifndef _di_iki_write_main_
-  extern f_status_t iki_write_main(const f_console_arguments_t arguments, iki_write_data_t *data);
+  extern f_status_t iki_write_main(const f_console_arguments_t arguments, iki_write_main_t *main);
 #endif // _di_iki_write_main_
 
 /**
- * Deallocate data.
+ * Deallocate main.
  *
  * Be sure to call this after executing iki_write_main().
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -194,9 +194,9 @@ extern "C" {
  *
  * @see iki_write_main()
  */
-#ifndef _di_iki_write_data_delete_
-  extern f_status_t iki_write_data_delete(iki_write_data_t *data);
-#endif // _di_iki_write_data_delete_
+#ifndef _di_iki_write_main_delete_
+  extern f_status_t iki_write_main_delete(iki_write_main_t *main);
+#endif // _di_iki_write_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"

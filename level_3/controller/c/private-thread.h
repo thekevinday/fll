@@ -17,7 +17,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_main_t.
+ *   Must be of type controller_global_t.
  *
  * @return
  *   0, always.
@@ -31,7 +31,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_main_t.
+ *   Must be of type controller_global_t.
  *
  * @return
  *   0, always.
@@ -96,8 +96,8 @@ extern "C" {
 /**
  * Start all threads, wait on threads, and handle requests.
  *
- * @param data
- *   The controller data.
+ * @param main
+ *   The main data.
  * @param setting
  *   The controller settings data.
  *
@@ -109,7 +109,7 @@ extern "C" {
  *   F_failure (with error bit) on any failure.
  */
 #ifndef _di_controller_thread_main_
-  extern f_status_t controller_thread_main(controller_data_t *data, controller_setting_t *setting) f_attribute_visibility_internal;
+  extern f_status_t controller_thread_main(controller_main_t *main, controller_setting_t *setting) f_attribute_visibility_internal;
 #endif // _di_controller_thread_main_
 
 /**
@@ -171,24 +171,24 @@ extern "C" {
  *   If controller_thread_cancel_signal, then this was called from within the signal handling thread, so do not cancel the signal thread.
  *   If controller_thread_cancel_call, then this was not called from within the signal handling thread, so cancel the signal thread.
  *   If controller_thread_cancel_execute, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
- * @param main
- *   The main thread data.
+ * @param global
+ *   The global thread data.
  * @param caller
  *   (optional) The process that is calling the cancel so that this process itself does not get cancelled.
  *   Set to NULL to not use.
  */
 #ifndef _di_controller_thread_process_cancel_
-  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_main_t *main, controller_process_t *caller) f_attribute_visibility_internal;
+  extern void controller_thread_process_cancel(const bool is_normal, const uint8_t by, controller_global_t *global, controller_process_t *caller) f_attribute_visibility_internal;
 #endif // _di_controller_thread_process_cancel_
 
 /**
  * Process the Exit file, if applicable.
  *
- * @param main
- *   The main thread data.
+ * @param global
+ *   The global thread data.
  */
 #ifndef _di_controller_thread_process_exit_
-  extern void controller_thread_process_exit(controller_main_t *main) f_attribute_visibility_internal;
+  extern void controller_thread_process_exit(controller_global_t *global) f_attribute_visibility_internal;
 #endif // _di_controller_thread_process_exit_
 
 /**
@@ -260,7 +260,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_main_t.
+ *   Must be of type controller_global_t.
  *
  * @return
  *   0, always.
@@ -277,11 +277,11 @@ extern "C" {
  * @param is_normal
  *   If TRUE, then process as if this operates during a normal operation (entry and control).
  *   If FALSE, then process as if this operates during a an exit operation.
- * @param main
- *   The main data.
+ * @param global
+ *   The global data.
  */
 #ifndef _di_controller_thread_signal_
-  extern void controller_thread_signal(const bool is_normal, controller_main_t *main) f_attribute_visibility_internal;
+  extern void controller_thread_signal(const bool is_normal, controller_global_t *global) f_attribute_visibility_internal;
 #endif // _di_controller_thread_signal_
 
 /**
@@ -291,7 +291,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_main_t.
+ *   Must be of type controller_global_t.
  *
  * @return
  *   0, always.
@@ -309,7 +309,7 @@ extern "C" {
  *
  * @param arguments
  *   The thread arguments.
- *   Must be of type controller_main_t.
+ *   Must be of type controller_global_t.
  *
  * @return
  *   0, always.

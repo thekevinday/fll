@@ -2,13 +2,13 @@
 
 int main(const int argc, const f_string_t *argv) {
   const f_console_arguments_t arguments = { argc, argv };
-  fss_extended_list_write_data_t data = fss_extended_list_write_data_t_initialize;
+  fss_extended_list_write_main_t main = fss_extended_list_write_main_t_initialize;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = F_true;
+    main.process_pipe = F_true;
   }
 
-  const f_status_t status = fss_extended_list_write_main(arguments, &data);
+  const f_status_t status = fss_extended_list_write_main(arguments, &main);
 
   // flush output pipes before closing.
   fflush(f_type_output);

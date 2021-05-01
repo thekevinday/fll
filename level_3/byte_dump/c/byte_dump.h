@@ -207,7 +207,7 @@ extern "C" {
   #define byte_dump_total_parameters 22
 #endif // _di_byte_dump_defines_
 
-#ifndef _di_byte_dump_data_t_
+#ifndef _di_byte_dump_main_t_
   typedef struct {
     f_console_parameter_t parameters[byte_dump_total_parameters];
 
@@ -224,9 +224,9 @@ extern "C" {
     uint8_t presentation;
 
     f_color_context_t context;
-  } byte_dump_data_t;
+  } byte_dump_main_t;
 
-  #define byte_dump_data_t_initialize \
+  #define byte_dump_main_t_initialize \
     { \
       byte_dump_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
@@ -240,7 +240,7 @@ extern "C" {
       byte_dump_presentation_normal, \
       f_color_context_t_initialize, \
     }
-#endif // _di_byte_dump_data_t_
+#endif // _di_byte_dump_main_t_
 
 /**
  * Print help.
@@ -260,30 +260,30 @@ extern "C" {
 /**
  * Execute main program.
  *
- * Be sure to call byte_dump_data_delete() after executing this.
+ * Be sure to call byte_dump_main_delete() after executing this.
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
  *   Status codes (with error bit) are returned on any problem.
  *
- * @see byte_dump_data_delete()
+ * @see byte_dump_main_delete()
  */
 #ifndef _di_byte_dump_main_
-  extern f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_data_t *data);
+  extern f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_main_t *main);
 #endif // _di_byte_dump_main_
 
 /**
- * Deallocate data.
+ * Deallocate main.
  *
  * Be sure to call this after executing byte_dump_main().
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -292,9 +292,9 @@ extern "C" {
  *
  * @see byte_dump_main()
  */
-#ifndef _di_byte_dump_data_delete_
-  extern f_status_t byte_dump_data_delete(byte_dump_data_t *data);
-#endif // _di_byte_dump_data_delete_
+#ifndef _di_byte_dump_main_delete_
+  extern f_status_t byte_dump_main_delete(byte_dump_main_t *main);
+#endif // _di_byte_dump_main_delete_
 
 #ifdef __cplusplus
 } // extern "C"
