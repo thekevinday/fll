@@ -272,18 +272,6 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
-        if (F_status_is_error_not(status) && data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-          f_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_line);
-          f_color_print(data->error.to.stream, data->context.set.error, "' parameter with the '");
-          f_color_print(data->error.to.stream, data->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_total);
-          f_color_print(data->error.to.stream, data->context.set.error, "' parameter.%c", f_string_eol_s[0]);
-
-          status = F_status_set_error(F_parameter);
-        }
-      }
-
       if (data->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
         if (F_status_is_error_not(status) && data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           f_color_print(data->error.to.stream, data->context.set.error, "%sCannot specify the '", fll_error_print_error);

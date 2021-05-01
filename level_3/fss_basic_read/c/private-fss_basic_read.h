@@ -225,6 +225,30 @@ extern "C" {
 #endif // _di_fss_basic_read_load_number_
 
 /**
+ * Print the Object and Content at the given position.
+ *
+ * Only what is requested to print (Object, Content, both, or neither) will be printed, if there is something to print.
+ *
+ * @param data
+ *   The program specific data.
+ * @param at
+ *   The index in the Objects and Contents to print.
+ * @param include_empty
+ *   If TRUE, empty Content is printed.
+ *   If FALSE, empty Content is ignored.
+ * @param delimits
+ *   The delimits in the objects and contents.
+ * @param print_this
+ *   Set bit 0x1 for printing Object.
+ *   Set bit 0x2 for printing Content.
+ *
+ *   This is a temporary parameter to be used until other structural changes are made and completed.
+ */
+#ifndef _di_fss_basic_read_print_at_
+  extern void fss_basic_read_print_at(const fss_basic_read_data_t data, const f_array_length_t at, const bool include_empty, const f_fss_delimits_t delimits, const uint8_t print_this) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_print_at_
+
+/**
  * Print the end of an object (which is essentially the start of a content).
  *
  * @param data
@@ -235,6 +259,16 @@ extern "C" {
 #endif // _di_fss_basic_read_print_object_end_
 
 /**
+ * Print the number one and a newline.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_basic_read_print_one_
+  extern void fss_basic_read_print_one(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_print_one_
+
+/**
  * Print the end of an object/content set.
  *
  * @param data
@@ -243,6 +277,16 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_set_end_
   extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_set_end_
+
+/**
+ * Print the number zero and a newline.
+ *
+ * @param data
+ *   The program specific data.
+ */
+#ifndef _di_fss_basic_read_print_zero_
+  extern void fss_basic_read_print_zero(const fss_basic_read_data_t data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_print_zero_
 
 /**
  * Perform the basic read processing on the buffer.

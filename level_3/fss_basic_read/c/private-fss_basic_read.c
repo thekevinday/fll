@@ -207,6 +207,42 @@ extern "C" {
   }
 #endif // _di_fss_basic_read_load_number_
 
+#ifndef _di_fss_basic_read_print_at_
+  void fss_basic_read_print_at(const fss_basic_read_data_t data, const f_array_length_t at, const bool include_empty, const f_fss_delimits_t delimits, const uint8_t print_this) {
+
+    if (at >= data.contents.used) {
+      return;
+    }
+
+    if (data.contents.array[at].used || include_empty) {
+
+      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
+
+      if (data.parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
+        print_object = &fl_print_trim_except_dynamic_partial;
+      }
+
+      const f_array_lengths_t except_none = f_array_lengths_t_initialize;
+
+      if (data.parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
+        print_object(data.output.stream, data.buffer, data.objects.array[at], delimits);
+
+        if (print_this & 0x2) {
+          fss_basic_read_print_object_end(data);
+        }
+      }
+
+      if ((print_this & 0x2) && data.contents.array[at].used) {
+        f_print_except_dynamic_partial(data.output.stream, data.buffer, data.contents.array[at].array[0], delimits);
+      }
+
+      if ((print_this & 0x1) || (print_this & 0x2) && (data.contents.array[at].used || include_empty)) {
+        fss_basic_read_print_set_end(data);
+      }
+    }
+  }
+#endif // _di_fss_basic_read_print_at_
+
 #ifndef _di_fss_basic_read_print_object_end_
   void fss_basic_read_print_object_end(const fss_basic_read_data_t data) {
 
@@ -218,6 +254,12 @@ extern "C" {
     }
   }
 #endif // _di_fss_basic_read_print_object_end_
+
+#ifndef _di_fss_basic_read_print_one_
+  void fss_basic_read_print_one(const fss_basic_read_data_t data) {
+    fprintf(data.output.stream, "1%c", f_string_eol_s[0]);
+  }
+#endif // _di_fss_basic_read_print_one_
 
 #ifndef _di_fss_basic_read_print_set_end_
   void fss_basic_read_print_set_end(const fss_basic_read_data_t data) {
@@ -231,8 +273,14 @@ extern "C" {
   }
 #endif // _di_fss_basic_read_print_set_end_
 
+#ifndef _di_fss_basic_read_print_zero_
+  void fss_basic_read_print_zero(const fss_basic_read_data_t data) {
+    fprintf(data.output.stream, "0%c", f_string_eol_s[0]);
+  }
+#endif // _di_fss_basic_read_print_zero_
+
 #ifndef _di_fss_basic_read_process_
-  f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_data_t *data, f_fss_delimits_t *delimits)  {
+  f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_data_t *data, f_fss_delimits_t *delimits) {
 
     f_status_t status = F_none;
 
@@ -241,6 +289,14 @@ extern "C" {
     bool include_empty = F_false;
     f_number_unsigned_t select = 0;
     f_number_unsigned_t line = 0;
+
+    // @todo after changes to data, create a private data object for processing and using this and similar.
+    // 0x1 = print object, 0x2 = print content.
+    uint8_t print_this = data->parameters[fss_basic_read_parameter_object].result == f_console_result_found;
+
+    if (!print_this || data->parameters[fss_basic_read_parameter_content].result == f_console_result_found) {
+      print_this |= 0x2;
+    }
 
     if (data->delimit_mode == fss_basic_read_delimit_mode_none || (data->delimit_depth && (data->delimit_mode == fss_basic_read_delimit_mode_depth || data->delimit_mode == fss_basic_read_delimit_mode_depth_greater))) {
       delimited = F_false;
@@ -251,21 +307,19 @@ extern "C" {
     }
 
     status = fss_basic_read_load_number(arguments, *data, fss_basic_read_parameter_select, fss_basic_read_long_select, &select);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      status = fss_basic_read_load_number(arguments, *data, fss_basic_read_parameter_line, fss_basic_read_long_line, &line);
-    }
-
-    if (F_status_is_error(status)) {
-      fll_error_print(data->error, F_status_set_fine(status), "fss_basic_read_load_setting_number", F_true);
-
-      return status;
-    }
+    status = fss_basic_read_load_number(arguments, *data, fss_basic_read_parameter_line, fss_basic_read_long_line, &line);
+    if (F_status_is_error(status)) return status;
 
     if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
 
       // This standard does not support multiple content groups.
-      if (select > 0) {
+      if (select) {
+        if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+          fss_basic_read_print_zero(*data);
+        }
+
         return F_none;
       }
     }
@@ -283,12 +337,8 @@ extern "C" {
         fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_basic_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
-        f_macro_fss_contents_t_delete_simple(data->contents);
-        f_macro_fss_objects_t_delete_simple(data->objects);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
-
         if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-          fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
+          fss_basic_read_print_zero(*data);
 
           return F_none;
         }
@@ -329,89 +379,10 @@ extern "C" {
       memset(names, 1, sizeof(bool) * data->objects.used);
     }
 
-    if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
-      if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-        if (depths.array[0].index_at > 0) {
-          if (depths.array[0].value_at < data->objects.used && names[depths.array[0].value_at]) {
-            fprintf(data->output.stream, "1%c", f_string_eol_s[0]);
-          }
-          else {
-            fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
-          }
-        }
-        else if (depths.array[0].index_name > 0) {
-          f_array_length_t total = 0;
-
-          for (i = 0; i < data->objects.used; i++) {
-            if (!names[i]) continue;
-
-            total++;
-          } // for
-
-          fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
-        }
-        else {
-          fprintf(data->output.stream, "%llu%c", data->objects.used, f_string_eol_s[0]);
-        }
-
-        return F_none;
-      }
-
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
-
-      if (data->parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
-        print_object = &fl_print_trim_except_dynamic_partial;
-      }
-
-      if (depths.array[0].index_at > 0) {
-        f_array_length_t at = 0;
-
-        for (; i < data->objects.used; i++) {
-
-          if (names[i]) {
-            if (at == depths.array[0].value_at) {
-              print_object(data->output.stream, data->buffer, data->objects.array[i], delimited ? *delimits : except_none);
-
-              if (data->parameters[fss_basic_read_parameter_content].result == f_console_result_found) {
-                if (data->contents.array[i].used) {
-                  fss_basic_read_print_object_end(*data);
-                  f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-                }
-              }
-
-              fss_basic_read_print_set_end(*data);
-              break;
-            }
-
-            at++;
-          }
-        } // for
-
-        return F_none;
-      }
-
-      for (i = 0; i < data->objects.used; i++) {
-        if (!names[i]) continue;
-
-        print_object(data->output.stream, data->buffer, data->objects.array[i], delimited ? *delimits : except_none);
-
-        if (data->parameters[fss_basic_read_parameter_content].result == f_console_result_found) {
-          if (data->contents.array[i].used) {
-            fss_basic_read_print_object_end(*data);
-            f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-          }
-        }
-
-        fss_basic_read_print_set_end(*data);
-      } // for
-
-      return F_none;
-    }
-
-    if (depths.array[0].index_at > 0) {
+    if (depths.array[0].index_at) {
       if (depths.array[0].value_at >= data->objects.used) {
         if (names[depths.array[0].value_at] && data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-          fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
+          fss_basic_read_print_zero(*data);
         }
 
         return F_none;
@@ -427,40 +398,40 @@ extern "C" {
 
       for (; i < data->objects.used; i++) {
 
-        if (names[i]) {
-          if (at == depths.array[0].value_at) {
+        if (!names[i]) continue;
+
+        if (at == depths.array[0].value_at) {
+          if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
+
+            // This standard only supports one Content per Object so when using "--at", the only valid line is line 0.
             if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-              if (!data->contents.array[i].used) {
-                fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
+              if (line) {
+                fss_basic_read_print_one(*data);
               }
               else {
-                fprintf(data->output.stream, "1%c", f_string_eol_s[0]);
+                fss_basic_read_print_zero(*data);
               }
             }
-            else if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
-              if (data->contents.array[i].used > 0) {
-                f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-                fss_basic_read_print_set_end(*data);
-              }
-              else if (include_empty) {
-                fss_basic_read_print_set_end(*data);
-              }
+            else if (!line) {
+              fss_basic_read_print_at(*data, i, include_empty, delimited ? *delimits : except_none, print_this);
+            }
+          }
+          else if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+            if (!data->contents.array[i].used) {
+              fss_basic_read_print_zero(*data);
             }
             else {
-              if (data->contents.array[i].used > 0) {
-                f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-                fss_basic_read_print_set_end(*data);
-              }
-              else if (include_empty) {
-                fss_basic_read_print_set_end(*data);
-              }
+              fss_basic_read_print_one(*data);
             }
-
-            break;
+          }
+          else {
+            fss_basic_read_print_at(*data, i, include_empty, delimited ? *delimits : except_none, print_this);
           }
 
-          at++;
+          break;
         }
+
+        at++;
       } // for
 
       return F_none;
@@ -470,16 +441,28 @@ extern "C" {
       f_array_length_t total = 0;
 
       for (i = 0; i < data->objects.used; i++) {
+
         if (!names[i]) continue;
 
-        if (!data->contents.array[i].used && !include_empty) {
+        if (!(data->contents.array[i].used || include_empty)) {
           continue;
         }
 
         total++;
       } // for
 
-      fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
+      if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
+        if (line < total) {
+          fss_basic_read_print_one(*data);
+        }
+        else {
+          fss_basic_read_print_zero(*data);
+        }
+      }
+      else {
+        fprintf(data->output.stream, "%llu%c", total, f_string_eol_s[0]);
+      }
+
       return F_none;
     }
 
@@ -487,6 +470,7 @@ extern "C" {
       f_array_length_t line_current = 0;
 
       for (i = 0; i < data->contents.used; i++) {
+
         if (!names[i]) continue;
 
         if (!data->contents.array[i].used) {
@@ -503,8 +487,7 @@ extern "C" {
         }
 
         if (line_current == line) {
-          f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-          fss_basic_read_print_set_end(*data);
+          fss_basic_read_print_at(*data, i, include_empty, delimited ? *delimits : except_none, print_this);
 
           break;
         }
@@ -516,18 +499,10 @@ extern "C" {
     }
 
     for (i = 0; i < data->contents.used; i++) {
+
       if (!names[i]) continue;
 
-      if (!data->contents.array[i].used) {
-        if (include_empty) {
-          fss_basic_read_print_set_end(*data);
-        }
-
-        continue;
-      }
-
-      f_print_except_dynamic_partial(data->output.stream, data->buffer, data->contents.array[i].array[0], delimited ? *delimits : except_none);
-      fss_basic_read_print_set_end(*data);
+      fss_basic_read_print_at(*data, i, include_empty, delimited ? *delimits : except_none, print_this);
     } // for
 
     return F_none;
