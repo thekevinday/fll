@@ -1,4 +1,5 @@
 #include "fake.h"
+#include "private-common.h"
 #include "private-fake.h"
 #include "private-build.h"
 #include "private-make.h"

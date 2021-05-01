@@ -1,4 +1,5 @@
 #include "fss_embedded_list_write.h"
+#include "private-common.h"
 #include "private-fss_embedded_list_write.h"
 
 #ifdef __cplusplus

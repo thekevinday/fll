@@ -1,4 +1,5 @@
 #include "fss_status_code.h"
+#include "private-common.h"
 #include "private-fss_status_code.h"
 
 #ifdef __cplusplus

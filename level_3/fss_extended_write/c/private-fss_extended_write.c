@@ -1,4 +1,5 @@
 #include "fss_extended_write.h"
+#include "private-common.h"
 #include "private-fss_extended_write.h"
 
 #ifdef __cplusplus

@@ -1,4 +1,5 @@
 #include "iki_write.h"
+#include "private-common.h"
 #include "private-iki_write.h"
 
 #ifdef __cplusplus

@@ -5,6 +5,7 @@
  * Licenses: lgplv2.1
  */
 #include "firewall.h"
+#include "private-common.h"
 #include "private-firewall.h"
 
 #ifdef __cplusplus

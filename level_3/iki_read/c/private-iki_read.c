@@ -1,4 +1,5 @@
 #include "iki_read.h"
+#include "private-common.h"
 #include "private-iki_read.h"
 
 #ifdef __cplusplus

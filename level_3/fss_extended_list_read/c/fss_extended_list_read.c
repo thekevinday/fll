@@ -1,4 +1,5 @@
 #include "fss_extended_list_read.h"
+#include "private-common.h"
 #include "private-fss_extended_list_read.h"
 
 #ifdef __cplusplus

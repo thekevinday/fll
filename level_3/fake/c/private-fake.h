@@ -12,16 +12,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_common_
-  #define fake_common_initial_buffer_max 131072 // 128k max default initial buffer size.
-
-  #define fake_common_setting_bool_yes "yes"
-  #define fake_common_setting_bool_no  "no"
-
-  #define fake_common_setting_bool_yes_length 3
-  #define fake_common_setting_bool_no_length  2
-#endif // _di_fake_common_
-
 /**
  * Execute the given command and arguments.
  *
