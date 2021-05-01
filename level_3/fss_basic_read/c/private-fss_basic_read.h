@@ -27,7 +27,17 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   Errors (with error bit) from: f_string_append().
+ *   Errors (with error bit) from: fl_string_rip().
+ *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *
+ *   Errors (with error bit) from: fss_basic_read_depths_resize().
+ *
+ * @see f_string_append()
+ * @see fl_string_rip()
+ * @see fl_conversion_string_to_number_unsigned()
+ *
+ * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_depth_process_
   extern f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_main_t main, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
@@ -54,6 +64,8 @@ extern "C" {
 /**
  * Load a given number parameter.
  *
+ * This will print an error message on error.
+ *
  * @param arguments
  *   The console arguments passed to the program.
  * @param main
@@ -68,7 +80,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
+ *
+ * @see fl_conversion_string_to_number_unsigned()
+ *
+ * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_load_number_
   extern f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_main_t main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
@@ -141,6 +157,8 @@ extern "C" {
 /**
  * Perform the basic read processing on the buffer.
  *
+ * This will print an error message on error.
+ *
  * @param arguments
  *   The console arguments passed to the program.
  * @param files
@@ -155,7 +173,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   Errors (with error bit) from: fll_fss_basic_read()
+ *
+ *   Errors (with error bit) from: fss_basic_read_load_setting()
+ *
+ * @see fll_fss_basic_read()
  *
  * @see fss_basic_read_load_setting()
  */

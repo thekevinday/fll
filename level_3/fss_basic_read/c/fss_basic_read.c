@@ -348,22 +348,18 @@ extern "C" {
 
       if (F_status_is_error_not(status)) {
         status = fss_basic_read_depth_process(arguments, *main, &depths);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fss_basic_read_depth_process", F_true);
-        }
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
       if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
-        macro_fss_basic_read_depths_t_delete_simple(depths);
-        macro_f_fss_delimits_t_delete_simple(delimits);
-
         if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
         }
 
+        fss_basic_read_depths_resize(0, &depths);
+        macro_f_fss_delimits_t_delete_simple(delimits);
         fss_basic_read_main_delete(main);
+
         return F_none;
       }
 
@@ -372,7 +368,8 @@ extern "C" {
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
         f_color_print(main->error.to.stream, main->context.set.error, "' parameter requires a positive number.%c", f_string_eol_s[0]);
 
-        macro_fss_basic_read_depths_t_delete_simple(depths);
+        fss_basic_read_depths_resize(0, &depths);
+
         status = F_status_set_error(F_parameter);
       }
 
@@ -468,7 +465,7 @@ extern "C" {
       macro_f_fss_objects_t_delete_simple(main->objects);
       macro_f_string_dynamic_t_delete_simple(main->buffer);
 
-      macro_fss_basic_read_depths_t_delete_simple(depths);
+      fss_basic_read_depths_resize(0, &depths);
       macro_f_fss_delimits_t_delete_simple(delimits);
     }
     else {

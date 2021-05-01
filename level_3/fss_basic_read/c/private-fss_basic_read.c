@@ -18,12 +18,14 @@ extern "C" {
         depth_size = main.parameters[fss_basic_read_parameter_depth].values.used;
       }
 
-      macro_fss_basic_read_depths_t_resize(status, (*depths), depth_size);
+      if (depth_size > depths->size) {
+        status = fss_basic_read_depths_resize(depth_size, depths);
 
-      if (F_status_is_error(status)) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+        if (F_status_is_error(status)) {
+          fll_error_print(main.error, F_status_set_fine(status), "fss_basic_read_depths_resize", F_true);
 
-        return status;
+          return status;
+        }
       }
 
       depths->used = depth_size;
@@ -54,6 +56,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_depth, arguments.argv[position_depth]);
+
           return status;
         }
       }
@@ -104,38 +107,17 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            f_status_t status_code = F_status_set_fine(status);
-
-            // @todo: move error printing into common function.
-            if (status_code == F_memory_not) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-            }
-            else if (status_code == F_string_too_large) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to process '", fll_error_print_error);
-              f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_trim);
-              f_color_print(main.error.to.stream, main.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
-            }
-            else {
-              f_string_t function = "f_string_append";
-
-              if (main.parameters[fss_basic_read_parameter_trim].result == f_console_result_found) {
-                function = "fl_string_rip";
-              }
-
-              f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (", fll_error_print_error);
-              f_color_print(main.error.to.stream, main.context.set.notable, "%u", status_code);
-              f_color_print(main.error.to.stream, main.context.set.error, ") has occurred while calling ");
-              f_color_print(main.error.to.stream, main.context.set.notable, "%s()", function);
-              f_color_print(main.error.to.stream, main.context.set.error, ".%c", f_string_eol_s[0]);
-            }
+            fll_error_print(main.error, F_status_set_fine(status), main.parameters[fss_basic_read_parameter_trim].result == f_console_result_found ? "fl_string_rip" : "f_string_append", F_true);
 
             return status;
           }
 
           if (!depths->array[i].value_name.used) {
-            f_color_print(main.error.to.stream, main.context.set.error, "%sThe '", fll_error_print_error);
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
-            f_color_print(main.error.to.stream, main.context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+            if (main.error.verbosity != f_console_verbosity_quiet) {
+              f_color_print(main.error.to.stream, main.context.set.error, "%sThe '", fll_error_print_error);
+              f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
+              f_color_print(main.error.to.stream, main.context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+            }
 
             return F_status_set_error(F_parameter);
           }
@@ -148,22 +130,26 @@ extern "C" {
       for (f_array_length_t j = i + 1; j < depths->used; j++) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe value '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may only be specified once for the parameter '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          if (main.error.verbosity != f_console_verbosity_quiet) {
+            f_color_print(main.error.to.stream, main.context.set.error, "%sThe value '", fll_error_print_error);
+            f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
+            f_color_print(main.error.to.stream, main.context.set.error, "' may only be specified once for the parameter '");
+            f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
+            f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          }
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may not have the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' before the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[j].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          if (main.error.verbosity != f_console_verbosity_quiet) {
+            f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
+            f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
+            f_color_print(main.error.to.stream, main.context.set.error, "' may not have the value '");
+            f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
+            f_color_print(main.error.to.stream, main.context.set.error, "' before the value '");
+            f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[j].depth);
+            f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          }
 
           return F_status_set_error(F_parameter);
         }
