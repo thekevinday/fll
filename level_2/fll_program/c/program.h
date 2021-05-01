@@ -207,6 +207,21 @@ extern "C" {
 #endif // _di_fll_program_parameter_process_
 
 /**
+ * Set the provided context to empty along with all additional color sets.
+ *
+ * This will allow for safe usage of the color context and color sets to be safely processed when colors are disabled.
+ *
+ * @param context
+ *   The primary color context to assign.
+ * @param sets
+ *   (optional) A NULL terminated array representing additional sets to assign as empty.
+ *   Set to NULL to not use.
+ */
+#ifndef _di_fll_program_parameter_process_empty_
+  extern void fll_program_parameter_process_empty(f_color_context_t *context, f_color_set_t *sets[]);
+#endif // _di_fll_program_parameter_process_empty_
+
+/**
  * Allocate new strings from all of the provided locations.
  *
  * These new strings are appended onto the destination.

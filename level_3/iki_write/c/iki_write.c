@@ -69,17 +69,9 @@ extern "C" {
           data->error.notable = data->context.set.notable;
         }
         else {
-          data->context.set.warning = f_color_set_empty_s;
-          data->context.set.error = f_color_set_empty_s;
-          data->context.set.title = f_color_set_empty_s;
-          data->context.set.notable = f_color_set_empty_s;
-          data->context.set.important = f_color_set_empty_s;
-          data->context.set.standout = f_color_set_empty_s;
-          data->context.set.normal = f_color_set_empty_s;
-          data->context.set.normal_reset = f_color_set_empty_s;
+          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, 0 };
 
-          data->error.context = f_color_set_empty_s;
-          data->error.notable = f_color_set_empty_s;
+          fll_program_parameter_process_empty(&data->context, sets);
         }
 
         if (F_status_is_error(status)) {
