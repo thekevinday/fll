@@ -262,7 +262,7 @@ extern "C" {
     if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_t_width(seek_to_this);
+    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
 
     f_status_t status = F_none;
 
@@ -272,7 +272,7 @@ extern "C" {
 
     while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -328,7 +328,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
       if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -372,7 +372,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
       if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -407,7 +407,7 @@ extern "C" {
     if (!string) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_t_width(seek_to_this);
+    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
 
     f_status_t status = F_none;
 
@@ -417,7 +417,7 @@ extern "C" {
 
     while (range->start <= range->stop) {
       width_max = (range->stop - range->start) + 1;
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -499,7 +499,7 @@ extern "C" {
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_t_width(seek_to);
+    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
 
     f_status_t status = F_none;
 
@@ -510,7 +510,7 @@ extern "C" {
     for (; range->start <= range->stop; range->start += width) {
       width_max = (range->stop - range->start) + 1;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -559,7 +559,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
       if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -605,7 +605,7 @@ extern "C" {
 
       if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
@@ -639,7 +639,7 @@ extern "C" {
 
     if (range->start > range->stop) return F_data_not_stop;
 
-    const unsigned short seek_width = f_macro_utf_character_t_width(seek_to);
+    const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
 
     f_status_t status = F_none;
 
@@ -650,7 +650,7 @@ extern "C" {
     for (; range->start <= range->stop; range->start += width) {
       width_max = (range->stop - range->start) + 1;
 
-      width = f_macro_utf_byte_width_is(string[range->start]);
+      width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;

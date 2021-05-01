@@ -34,7 +34,7 @@ extern "C" {
     if (source.used > destination->size) {
       f_status_t status = F_none;
 
-      f_macro_memory_structure_resize(status, (*destination), f_limit_set_t, source.used)
+      macro_f_memory_structure_resize(status, (*destination), f_limit_set_t, source.used)
       if (F_status_is_error(status)) return status;
     }
 
@@ -58,7 +58,7 @@ extern "C" {
     if (source.used > destination->size) {
       f_status_t status = F_none;
 
-      f_macro_memory_structure_resize(status, (*destination), f_limit_value_t, source.used)
+      macro_f_memory_structure_resize(status, (*destination), f_limit_value_t, source.used)
       if (F_status_is_error(status)) return status;
     }
 

@@ -21,7 +21,7 @@ extern "C" {
       }
     }
 
-    f_file_t file = f_macro_file_t_initialize2(0, -1, f_file_flag_write_only);
+    f_file_t file = macro_f_file_t_initialize2(0, -1, f_file_flag_write_only);
     f_status_t status = F_none;
     f_array_length_t length = 0;
 

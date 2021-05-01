@@ -25,9 +25,9 @@ extern "C" {
   #define f_thread_attribute_t_initialize { 0 }
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_attribute_t_clear(attribute) attribute.__align = 0;
+  #define macro_f_thread_attribute_t_clear(attribute) attribute.__align = 0;
 
-  #define f_macro_thread_attribute_t_delete_simple(attribute) f_thread_attribute_delete(&attribute);
+  #define macro_f_thread_attribute_t_delete_simple(attribute) f_thread_attribute_delete(&attribute);
 #endif // _di_f_thread_attribute_t_
 
 /**
@@ -47,18 +47,18 @@ extern "C" {
 
   #define f_thread_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
+  #define macro_f_thread_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
-  #define f_macro_thread_attributes_t_resize(status, attributes, length) status = f_thread_attributes_resize(length, &attributes);
-  #define f_macro_thread_attributes_t_adjust(status, attributes, length) status = f_thread_attributes_adjust(length, &attributes);
+  #define macro_f_thread_attributes_t_resize(status, attributes, length) status = f_thread_attributes_resize(length, &attributes);
+  #define macro_f_thread_attributes_t_adjust(status, attributes, length) status = f_thread_attributes_adjust(length, &attributes);
 
-  #define f_macro_thread_attributes_t_delete_simple(attributes)  f_thread_attributes_resize(0, &attributes);
-  #define f_macro_thread_attributes_t_destroy_simple(attributes) f_thread_attributes_adjust(0, &attributes);
+  #define macro_f_thread_attributes_t_delete_simple(attributes)  f_thread_attributes_resize(0, &attributes);
+  #define macro_f_thread_attributes_t_destroy_simple(attributes) f_thread_attributes_adjust(0, &attributes);
 
-  #define f_macro_thread_attributes_t_increase(status, attributes)            status = f_thread_attributes_increase(attributes);
-  #define f_macro_thread_attributes_t_increase_by(status, attributes, amount) status = f_thread_attributes_increase_by(amount, attributes);
-  #define f_macro_thread_attributes_t_decrease_by(status, attributes, amount) status = f_thread_attributes_decrease_by(amount, attributes);
-  #define f_macro_thread_attributes_t_decimate_by(status, attributes, amount) status = f_thread_attributes_decimate_by(amount, attributes);
+  #define macro_f_thread_attributes_t_increase(status, attributes)            status = f_thread_attributes_increase(attributes);
+  #define macro_f_thread_attributes_t_increase_by(status, attributes, amount) status = f_thread_attributes_increase_by(amount, attributes);
+  #define macro_f_thread_attributes_t_decrease_by(status, attributes, amount) status = f_thread_attributes_decrease_by(amount, attributes);
+  #define macro_f_thread_attributes_t_decimate_by(status, attributes, amount) status = f_thread_attributes_decimate_by(amount, attributes);
 #endif // _di_f_thread_attributes_t_
 
 /**
@@ -69,9 +69,9 @@ extern "C" {
 
   #define f_thread_barrier_t_initialize { 0 }
 
-  #define f_macro_thread_barrier_t_clear(barrier) barrier = 0;
+  #define macro_f_thread_barrier_t_clear(barrier) barrier = 0;
 
-  #define f_macro_thread_barrier_t_delete_simple(barrier) f_thread_barrier_delete(&barrier);
+  #define macro_f_thread_barrier_t_delete_simple(barrier) f_thread_barrier_delete(&barrier);
 #endif // _di_f_thread_barrier_t_
 
 /**
@@ -91,18 +91,18 @@ extern "C" {
 
   #define f_thread_barriers_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_barriers_t_clear(barriers) f_macro_memory_structure_clear(barriers)
+  #define macro_f_thread_barriers_t_clear(barriers) macro_f_memory_structure_clear(barriers)
 
-  #define f_macro_thread_barriers_t_resize(status, barriers, length) status = f_thread_barriers_resize(length, &barriers);
-  #define f_macro_thread_barriers_t_adjust(status, barriers, length) status = f_thread_barriers_adjust(length, &barriers);
+  #define macro_f_thread_barriers_t_resize(status, barriers, length) status = f_thread_barriers_resize(length, &barriers);
+  #define macro_f_thread_barriers_t_adjust(status, barriers, length) status = f_thread_barriers_adjust(length, &barriers);
 
-  #define f_macro_thread_barriers_t_delete_simple(barriers)  f_thread_barriers_resize(0, &barriers);
-  #define f_macro_thread_barriers_t_destroy_simple(barriers) f_thread_barriers_adjust(0, &barriers);
+  #define macro_f_thread_barriers_t_delete_simple(barriers)  f_thread_barriers_resize(0, &barriers);
+  #define macro_f_thread_barriers_t_destroy_simple(barriers) f_thread_barriers_adjust(0, &barriers);
 
-  #define f_macro_thread_barriers_t_increase(status, barriers)            status = f_thread_barriers_increase(barriers);
-  #define f_macro_thread_barriers_t_increase_by(status, barriers, amount) status = f_thread_barriers_increase_by(amount, barriers);
-  #define f_macro_thread_barriers_t_decrease_by(status, barriers, amount) status = f_thread_barriers_decrease_by(amount, barriers);
-  #define f_macro_thread_barriers_t_decimate_by(status, barriers, amount) status = f_thread_barriers_decimate_by(amount, barriers);
+  #define macro_f_thread_barriers_t_increase(status, barriers)            status = f_thread_barriers_increase(barriers);
+  #define macro_f_thread_barriers_t_increase_by(status, barriers, amount) status = f_thread_barriers_increase_by(amount, barriers);
+  #define macro_f_thread_barriers_t_decrease_by(status, barriers, amount) status = f_thread_barriers_decrease_by(amount, barriers);
+  #define macro_f_thread_barriers_t_decimate_by(status, barriers, amount) status = f_thread_barriers_decimate_by(amount, barriers);
 #endif // _di_f_thread_barriers_t_
 
 /**
@@ -114,9 +114,9 @@ extern "C" {
   #define f_thread_barrier_attribute_t_initialize { 0 }
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_barrier_attribute_t_clear(attribute) attribute.__align = 0;
+  #define macro_f_thread_barrier_attribute_t_clear(attribute) attribute.__align = 0;
 
-  #define f_macro_thread_barrier_attribute_t_delete_simple(attribute) f_thread_barrier_attribute_delete(&attribute);
+  #define macro_f_thread_barrier_attribute_t_delete_simple(attribute) f_thread_barrier_attribute_delete(&attribute);
 #endif // _di_f_thread_barrier_attribute_t_
 
 /**
@@ -136,18 +136,18 @@ extern "C" {
 
   #define f_thread_barrier_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_barrier_attributes_t_clear(barrier_attributes) f_macro_memory_structure_clear(barrier_attributes)
+  #define macro_f_thread_barrier_attributes_t_clear(barrier_attributes) macro_f_memory_structure_clear(barrier_attributes)
 
-  #define f_macro_thread_barrier_attributes_t_resize(status, barrier_attributes, length) status = f_thread_barrier_attributes_resize(length, &barrier_attributes);
-  #define f_macro_thread_barrier_attributes_t_adjust(status, barrier_attributes, length) status = f_thread_barrier_attributes_adjust(length, &barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_resize(status, barrier_attributes, length) status = f_thread_barrier_attributes_resize(length, &barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_adjust(status, barrier_attributes, length) status = f_thread_barrier_attributes_adjust(length, &barrier_attributes);
 
-  #define f_macro_thread_barrier_attributes_t_delete_simple(barrier_attributes)  f_thread_barrier_attributes_resize(0, &barrier_attributes);
-  #define f_macro_thread_barrier_attributes_t_destroy_simple(barrier_attributes) f_thread_barrier_attributes_adjust(0, &barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_delete_simple(barrier_attributes)  f_thread_barrier_attributes_resize(0, &barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_destroy_simple(barrier_attributes) f_thread_barrier_attributes_adjust(0, &barrier_attributes);
 
-  #define f_macro_thread_barrier_attributes_t_increase(status, barrier_attributes)            status = f_thread_barrier_attributes_increase(barrier_attributes);
-  #define f_macro_thread_barrier_attributes_t_increase_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_increase_by(amount, barrier_attributes);
-  #define f_macro_thread_barrier_attributes_t_decrease_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decrease_by(amount, barrier_attributes);
-  #define f_macro_thread_barrier_attributes_t_decimate_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decimate_by(amount, barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_increase(status, barrier_attributes)            status = f_thread_barrier_attributes_increase(barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_increase_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_increase_by(amount, barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_decrease_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decrease_by(amount, barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_decimate_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decimate_by(amount, barrier_attributes);
 #endif // _di_f_thread_barrier_attributes_t_
 
 /**
@@ -161,7 +161,7 @@ extern "C" {
 
   #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER
 
-  #define f_macro_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
+  #define macro_f_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
 #endif // _di_f_thread_condition_t_
 
 /**
@@ -181,18 +181,18 @@ extern "C" {
 
   #define f_thread_conditions_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_conditions_t_clear(conditions) f_macro_memory_structure_clear(conditions)
+  #define macro_f_thread_conditions_t_clear(conditions) macro_f_memory_structure_clear(conditions)
 
-  #define f_macro_thread_conditions_t_resize(status, conditions, length) status = f_thread_conditions_resize(length, &conditions);
-  #define f_macro_thread_conditions_t_adjust(status, conditions, length) status = f_thread_conditions_adjust(length, &conditions);
+  #define macro_f_thread_conditions_t_resize(status, conditions, length) status = f_thread_conditions_resize(length, &conditions);
+  #define macro_f_thread_conditions_t_adjust(status, conditions, length) status = f_thread_conditions_adjust(length, &conditions);
 
-  #define f_macro_thread_conditions_t_delete_simple(conditions)  f_thread_conditions_resize(0, &conditions);
-  #define f_macro_thread_conditions_t_destroy_simple(conditions) f_thread_conditions_adjust(0, &conditions);
+  #define macro_f_thread_conditions_t_delete_simple(conditions)  f_thread_conditions_resize(0, &conditions);
+  #define macro_f_thread_conditions_t_destroy_simple(conditions) f_thread_conditions_adjust(0, &conditions);
 
-  #define f_macro_thread_conditions_t_increase(status, conditions)            status = f_thread_conditions_increase(conditions);
-  #define f_macro_thread_conditions_t_increase_by(status, conditions, amount) status = f_thread_conditions_increase_by(amount, conditions);
-  #define f_macro_thread_conditions_t_decrease_by(status, conditions, amount) status = f_thread_conditions_decrease_by(amount, conditions);
-  #define f_macro_thread_conditions_t_decimate_by(status, conditions, amount) status = f_thread_conditions_decimate_by(amount, conditions);
+  #define macro_f_thread_conditions_t_increase(status, conditions)            status = f_thread_conditions_increase(conditions);
+  #define macro_f_thread_conditions_t_increase_by(status, conditions, amount) status = f_thread_conditions_increase_by(amount, conditions);
+  #define macro_f_thread_conditions_t_decrease_by(status, conditions, amount) status = f_thread_conditions_decrease_by(amount, conditions);
+  #define macro_f_thread_conditions_t_decimate_by(status, conditions, amount) status = f_thread_conditions_decimate_by(amount, conditions);
 #endif // _di_f_thread_conditions_t_
 
 /**
@@ -204,9 +204,9 @@ extern "C" {
   #define f_thread_condition_attribute_t_initialize { 0 };
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_condition_attribute_t_clear(attribute) attribute.__align = 0;
+  #define macro_f_thread_condition_attribute_t_clear(attribute) attribute.__align = 0;
 
-  #define f_macro_thread_condition_attribute_t_delete_simple(attribute) f_thread_condition_attribute_delete(&attribute);
+  #define macro_f_thread_condition_attribute_t_delete_simple(attribute) f_thread_condition_attribute_delete(&attribute);
 #endif // _di_f_thread_condition_attribute_t_
 
 /**
@@ -226,18 +226,18 @@ extern "C" {
 
   #define f_thread_condition_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_condition_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
+  #define macro_f_thread_condition_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
-  #define f_macro_thread_condition_attributes_t_resize(status, attributes, length) status = f_thread_condition_attributes_resize(length, &attributes);
-  #define f_macro_thread_condition_attributes_t_adjust(status, attributes, length) status = f_thread_condition_attributes_adjust(length, &attributes);
+  #define macro_f_thread_condition_attributes_t_resize(status, attributes, length) status = f_thread_condition_attributes_resize(length, &attributes);
+  #define macro_f_thread_condition_attributes_t_adjust(status, attributes, length) status = f_thread_condition_attributes_adjust(length, &attributes);
 
-  #define f_macro_thread_condition_attributes_t_delete_simple(attributes)  f_thread_condition_attributes_resize(0, &condition_attributes);
-  #define f_macro_thread_condition_attributes_t_destroy_simple(attributes) f_thread_condition_attributes_adjust(0, &condition_attributes);
+  #define macro_f_thread_condition_attributes_t_delete_simple(attributes)  f_thread_condition_attributes_resize(0, &condition_attributes);
+  #define macro_f_thread_condition_attributes_t_destroy_simple(attributes) f_thread_condition_attributes_adjust(0, &condition_attributes);
 
-  #define f_macro_thread_condition_attributes_t_increase(status, attributes)            status = f_thread_condition_attributes_increase(attributes);
-  #define f_macro_thread_condition_attributes_t_increase_by(status, attributes, amount) status = f_thread_condition_attributes_increase_by(amount, attributes);
-  #define f_macro_thread_condition_attributes_t_decrease_by(status, attributes, amount) status = f_thread_condition_attributes_decrease_by(amount, attributes);
-  #define f_macro_thread_condition_attributes_t_decimate_by(status, attributes, amount) status = f_thread_condition_attributes_decimate_by(amount, attributes);
+  #define macro_f_thread_condition_attributes_t_increase(status, attributes)            status = f_thread_condition_attributes_increase(attributes);
+  #define macro_f_thread_condition_attributes_t_increase_by(status, attributes, amount) status = f_thread_condition_attributes_increase_by(amount, attributes);
+  #define macro_f_thread_condition_attributes_t_decrease_by(status, attributes, amount) status = f_thread_condition_attributes_decrease_by(amount, attributes);
+  #define macro_f_thread_condition_attributes_t_decimate_by(status, attributes, amount) status = f_thread_condition_attributes_decimate_by(amount, attributes);
 #endif // _di_f_thread_condition_attributes_t_
 
 /**
@@ -248,7 +248,7 @@ extern "C" {
 
   #define f_thread_id_t_initialize 0
 
-  #define f_macro_thread_id_t_clear(id) id = 0;
+  #define macro_f_thread_id_t_clear(id) id = 0;
 #endif // _di_f_thread_id_t_
 
 /**
@@ -268,16 +268,16 @@ extern "C" {
 
   #define f_thread_ids_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_ids_t_resize(status, ids, length) f_macro_memory_structure_resize(status, ids, f_thread_id_t, length)
-  #define f_macro_thread_ids_t_adjust(status, ids, length) f_macro_memory_structure_adjust(status, ids, f_thread_id_t, length)
+  #define macro_f_thread_ids_t_resize(status, ids, length) macro_f_memory_structure_resize(status, ids, f_thread_id_t, length)
+  #define macro_f_thread_ids_t_adjust(status, ids, length) macro_f_memory_structure_adjust(status, ids, f_thread_id_t, length)
 
-  #define f_macro_thread_ids_t_delete_simple(ids)  f_macro_memory_structure_delete_simple(ids, f_thread_id_t)
-  #define f_macro_thread_ids_t_destroy_simple(ids) f_macro_memory_structure_destroy_simple(ids, f_thread_id_t)
+  #define macro_f_thread_ids_t_delete_simple(ids)  macro_f_memory_structure_delete_simple(ids, f_thread_id_t)
+  #define macro_f_thread_ids_t_destroy_simple(ids) macro_f_memory_structure_destroy_simple(ids, f_thread_id_t)
 
-  #define f_macro_thread_ids_t_increase(status, ids)            f_macro_memory_structure_increase(status, ids, f_thread_id_t)
-  #define f_macro_thread_ids_t_increase_by(status, ids, amount) f_macro_memory_structure_increase_by(status, ids, f_thread_id_t, amount)
-  #define f_macro_thread_ids_t_decrease_by(status, ids, amount) f_macro_memory_structure_decrease_by(status, ids, f_thread_id_t, amount)
-  #define f_macro_thread_ids_t_decimate_by(status, ids, amount) f_macro_memory_structure_decimate_by(status, ids, f_thread_id_t, amount)
+  #define macro_f_thread_ids_t_increase(status, ids)            macro_f_memory_structure_increase(status, ids, f_thread_id_t)
+  #define macro_f_thread_ids_t_increase_by(status, ids, amount) macro_f_memory_structure_increase_by(status, ids, f_thread_id_t, amount)
+  #define macro_f_thread_ids_t_decrease_by(status, ids, amount) macro_f_memory_structure_decrease_by(status, ids, f_thread_id_t, amount)
+  #define macro_f_thread_ids_t_decimate_by(status, ids, amount) macro_f_memory_structure_decimate_by(status, ids, f_thread_id_t, amount)
 #endif // _di_f_thread_ids_t_
 
 /**
@@ -288,9 +288,9 @@ extern "C" {
 
   #define f_thread_key_t_initialize 0
 
-  #define f_macro_thread_key_t_clear(key) key = 0;
+  #define macro_f_thread_key_t_clear(key) key = 0;
 
-  #define f_macro_thread_key_t_delete_simple(key) f_thread_key_delete(&key);
+  #define macro_f_thread_key_t_delete_simple(key) f_thread_key_delete(&key);
 #endif // _di_f_thread_key_t_
 
 /**
@@ -310,18 +310,18 @@ extern "C" {
 
   #define f_thread_keys_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_keys_t_clear(keys) f_macro_memory_structure_clear(keys)
+  #define macro_f_thread_keys_t_clear(keys) macro_f_memory_structure_clear(keys)
 
-  #define f_macro_thread_keys_t_resize(status, keys, length) status = f_thread_keys_resize(length, &keys);
-  #define f_macro_thread_keys_t_adjust(status, keys, length) status = f_thread_keys_adjust(length, &keys);
+  #define macro_f_thread_keys_t_resize(status, keys, length) status = f_thread_keys_resize(length, &keys);
+  #define macro_f_thread_keys_t_adjust(status, keys, length) status = f_thread_keys_adjust(length, &keys);
 
-  #define f_macro_thread_keys_t_delete_simple(keys)  f_thread_keys_resize(0, &keys);
-  #define f_macro_thread_keys_t_destroy_simple(keys) f_thread_keys_adjust(0, &keys);
+  #define macro_f_thread_keys_t_delete_simple(keys)  f_thread_keys_resize(0, &keys);
+  #define macro_f_thread_keys_t_destroy_simple(keys) f_thread_keys_adjust(0, &keys);
 
-  #define f_macro_thread_keys_t_increase(status, keys)            status = f_thread_keys_increase(keys);
-  #define f_macro_thread_keys_t_increase_by(status, keys, amount) status = f_thread_keys_increase_by(amount, keys);
-  #define f_macro_thread_keys_t_decrease_by(status, keys, amount) status = f_thread_keys_decrease_by(amount, keys);
-  #define f_macro_thread_keys_t_decimate_by(status, keys, amount) status = f_thread_keys_decimate_by(amount, keys);
+  #define macro_f_thread_keys_t_increase(status, keys)            status = f_thread_keys_increase(keys);
+  #define macro_f_thread_keys_t_increase_by(status, keys, amount) status = f_thread_keys_increase_by(amount, keys);
+  #define macro_f_thread_keys_t_decrease_by(status, keys, amount) status = f_thread_keys_decrease_by(amount, keys);
+  #define macro_f_thread_keys_t_decimate_by(status, keys, amount) status = f_thread_keys_decimate_by(amount, keys);
 #endif // _di_f_thread_keys_t_
 
 /**
@@ -335,7 +335,7 @@ extern "C" {
 
   #define f_thread_lock_t_initialize PTHREAD_RWLOCK_INITIALIZER
 
-  #define f_macro_thread_lock_t_delete_simple(lock) f_thread_lock_delete(&lock);
+  #define macro_f_thread_lock_t_delete_simple(lock) f_thread_lock_delete(&lock);
 #endif // _di_f_thread_lock_t_
 
 /**
@@ -355,16 +355,16 @@ extern "C" {
 
   #define f_thread_locks_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_locks_t_resize(status, locks, length) f_macro_memory_structure_resize(status, locks, f_thread_lock_t, length)
-  #define f_macro_thread_locks_t_adjust(status, locks, length) f_macro_memory_structure_adjust(status, locks, f_thread_lock_t, length)
+  #define macro_f_thread_locks_t_resize(status, locks, length) macro_f_memory_structure_resize(status, locks, f_thread_lock_t, length)
+  #define macro_f_thread_locks_t_adjust(status, locks, length) macro_f_memory_structure_adjust(status, locks, f_thread_lock_t, length)
 
-  #define f_macro_thread_locks_t_delete_simple(locks)  f_macro_memory_structure_delete_simple(locks, f_thread_lock_t)
-  #define f_macro_thread_locks_t_destroy_simple(locks) f_macro_memory_structure_destroy_simple(locks, f_thread_lock_t)
+  #define macro_f_thread_locks_t_delete_simple(locks)  macro_f_memory_structure_delete_simple(locks, f_thread_lock_t)
+  #define macro_f_thread_locks_t_destroy_simple(locks) macro_f_memory_structure_destroy_simple(locks, f_thread_lock_t)
 
-  #define f_macro_thread_locks_t_increase(status, locks)            f_macro_memory_structure_increase(status, locks, f_thread_lock_t)
-  #define f_macro_thread_locks_t_increase_by(status, locks, amount) f_macro_memory_structure_increase_by(status, locks, f_thread_lock_t, amount)
-  #define f_macro_thread_locks_t_decrease_by(status, locks, amount) f_macro_memory_structure_decrease_by(status, locks, f_thread_lock_t, amount)
-  #define f_macro_thread_locks_t_decimate_by(status, locks, amount) f_macro_memory_structure_decimate_by(status, locks, f_thread_lock_t, amount)
+  #define macro_f_thread_locks_t_increase(status, locks)            macro_f_memory_structure_increase(status, locks, f_thread_lock_t)
+  #define macro_f_thread_locks_t_increase_by(status, locks, amount) macro_f_memory_structure_increase_by(status, locks, f_thread_lock_t, amount)
+  #define macro_f_thread_locks_t_decrease_by(status, locks, amount) macro_f_memory_structure_decrease_by(status, locks, f_thread_lock_t, amount)
+  #define macro_f_thread_locks_t_decimate_by(status, locks, amount) macro_f_memory_structure_decimate_by(status, locks, f_thread_lock_t, amount)
 #endif // _di_f_thread_locks_t_
 
 /**
@@ -376,9 +376,9 @@ extern "C" {
   #define f_thread_lock_attribute_t_initialize { 0 }
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_lock_attribute_t_clear(attribute) attribute.__align = 0;
+  #define macro_f_thread_lock_attribute_t_clear(attribute) attribute.__align = 0;
 
-  #define f_macro_thread_lock_attribute_t_delete_simple(attribute) f_thread_lock_attribute_delete(&attribute);
+  #define macro_f_thread_lock_attribute_t_delete_simple(attribute) f_thread_lock_attribute_delete(&attribute);
 #endif // _di_f_thread_lock_attribute_t_
 
 /**
@@ -398,18 +398,18 @@ extern "C" {
 
   #define f_thread_lock_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_lock_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
+  #define macro_f_thread_lock_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
-  #define f_macro_thread_lock_attributes_t_resize(status, attributes, length) status = f_thread_lock_attributes_resize(length, &attributes);
-  #define f_macro_thread_lock_attributes_t_adjust(status, attributes, length) status = f_thread_lock_attributes_adjust(length, &attributes);
+  #define macro_f_thread_lock_attributes_t_resize(status, attributes, length) status = f_thread_lock_attributes_resize(length, &attributes);
+  #define macro_f_thread_lock_attributes_t_adjust(status, attributes, length) status = f_thread_lock_attributes_adjust(length, &attributes);
 
-  #define f_macro_thread_lock_attributes_t_delete_simple(attributes)  f_thread_lock_attributes_resize(0, &attributes);
-  #define f_macro_thread_lock_attributes_t_destroy_simple(attributes) f_thread_lock_attributes_adjust(0, &attributes);
+  #define macro_f_thread_lock_attributes_t_delete_simple(attributes)  f_thread_lock_attributes_resize(0, &attributes);
+  #define macro_f_thread_lock_attributes_t_destroy_simple(attributes) f_thread_lock_attributes_adjust(0, &attributes);
 
-  #define f_macro_thread_lock_attributes_t_increase(status, attributes)            status = f_thread_lock_attributes_increase(attributes);
-  #define f_macro_thread_lock_attributes_t_increase_by(status, attributes, amount) status = f_thread_lock_attributes_increase_by(amount, attributes);
-  #define f_macro_thread_lock_attributes_t_decrease_by(status, attributes, amount) status = f_thread_lock_attributes_decrease_by(amount, attributes);
-  #define f_macro_thread_lock_attributes_t_decimate_by(status, attributes, amount) status = f_thread_lock_attributes_decimate_by(amount, attributes);
+  #define macro_f_thread_lock_attributes_t_increase(status, attributes)            status = f_thread_lock_attributes_increase(attributes);
+  #define macro_f_thread_lock_attributes_t_increase_by(status, attributes, amount) status = f_thread_lock_attributes_increase_by(amount, attributes);
+  #define macro_f_thread_lock_attributes_t_decrease_by(status, attributes, amount) status = f_thread_lock_attributes_decrease_by(amount, attributes);
+  #define macro_f_thread_lock_attributes_t_decimate_by(status, attributes, amount) status = f_thread_lock_attributes_decimate_by(amount, attributes);
 #endif // _di_f_thread_lock_attributes_t_
 
 /**
@@ -425,7 +425,7 @@ extern "C" {
 
   #define f_thread_mutex_t_initialize PTHREAD_MUTEX_INITIALIZER
 
-  #define f_macro_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
+  #define macro_f_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
 #endif // _di_f_thread_mutex_t_
 
 /**
@@ -445,18 +445,18 @@ extern "C" {
 
   #define f_thread_mutexs_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_mutexs_t_clear(mutexs) f_macro_memory_structure_clear(mutexs)
+  #define macro_f_thread_mutexs_t_clear(mutexs) macro_f_memory_structure_clear(mutexs)
 
-  #define f_macro_thread_mutexs_t_resize(status, mutexs, length) status = f_thread_mutexs_resize(length, &mutexs);
-  #define f_macro_thread_mutexs_t_adjust(status, mutexs, length) status = f_thread_mutexs_adjust(length, &mutexs);
+  #define macro_f_thread_mutexs_t_resize(status, mutexs, length) status = f_thread_mutexs_resize(length, &mutexs);
+  #define macro_f_thread_mutexs_t_adjust(status, mutexs, length) status = f_thread_mutexs_adjust(length, &mutexs);
 
-  #define f_macro_thread_mutexs_t_delete_simple(mutexs)  f_thread_mutexs_resize(0, &mutexs);
-  #define f_macro_thread_mutexs_t_destroy_simple(mutexs) f_thread_mutexs_adjust(0, &mutexs);
+  #define macro_f_thread_mutexs_t_delete_simple(mutexs)  f_thread_mutexs_resize(0, &mutexs);
+  #define macro_f_thread_mutexs_t_destroy_simple(mutexs) f_thread_mutexs_adjust(0, &mutexs);
 
-  #define f_macro_thread_mutexs_t_increase(status, mutexs)            status = f_thread_mutexs_increase(mutexs);
-  #define f_macro_thread_mutexs_t_increase_by(status, mutexs, amount) status = f_thread_mutexs_increase_by(amount, mutexs);
-  #define f_macro_thread_mutexs_t_decrease_by(status, mutexs, amount) status = f_thread_mutexs_decrease_by(amount, mutexs);
-  #define f_macro_thread_mutexs_t_decimate_by(status, mutexs, amount) status = f_thread_mutexs_decimate_by(amount, mutexs);
+  #define macro_f_thread_mutexs_t_increase(status, mutexs)            status = f_thread_mutexs_increase(mutexs);
+  #define macro_f_thread_mutexs_t_increase_by(status, mutexs, amount) status = f_thread_mutexs_increase_by(amount, mutexs);
+  #define macro_f_thread_mutexs_t_decrease_by(status, mutexs, amount) status = f_thread_mutexs_decrease_by(amount, mutexs);
+  #define macro_f_thread_mutexs_t_decimate_by(status, mutexs, amount) status = f_thread_mutexs_decimate_by(amount, mutexs);
 #endif // _di_f_thread_mutexs_t_
 
 /**
@@ -468,9 +468,9 @@ extern "C" {
   #define f_thread_mutex_attribute_t_initialize { 0 }
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
-  #define f_macro_thread_mutex_attribute_t_clear(attribute) attribute.__align = 0;
+  #define macro_f_thread_mutex_attribute_t_clear(attribute) attribute.__align = 0;
 
-  #define f_macro_thread_mutex_attribute_t_delete_simple(attribute) f_thread_mutex_attribute_delete(&attribute);
+  #define macro_f_thread_mutex_attribute_t_delete_simple(attribute) f_thread_mutex_attribute_delete(&attribute);
 #endif // _di_f_thread_mutex_attribute_t_
 
 /**
@@ -490,18 +490,18 @@ extern "C" {
 
   #define f_thread_mutex_attributes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_mutex_attributes_t_clear(attributes) f_macro_memory_structure_clear(attributes)
+  #define macro_f_thread_mutex_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 
-  #define f_macro_thread_mutex_attributes_t_resize(status, attributes, length) status = f_thread_mutex_attributes_resize(length, &attributes);
-  #define f_macro_thread_mutex_attributes_t_adjust(status, attributes, length) status = f_thread_mutex_attributes_adjust(length, &attributes);
+  #define macro_f_thread_mutex_attributes_t_resize(status, attributes, length) status = f_thread_mutex_attributes_resize(length, &attributes);
+  #define macro_f_thread_mutex_attributes_t_adjust(status, attributes, length) status = f_thread_mutex_attributes_adjust(length, &attributes);
 
-  #define f_macro_thread_mutex_attributes_t_delete_simple(attributes)  f_thread_mutex_attributes_resize(0, &attributes);
-  #define f_macro_thread_mutex_attributes_t_destroy_simple(attributes) f_thread_mutex_attributes_adjust(0, &attributes);
+  #define macro_f_thread_mutex_attributes_t_delete_simple(attributes)  f_thread_mutex_attributes_resize(0, &attributes);
+  #define macro_f_thread_mutex_attributes_t_destroy_simple(attributes) f_thread_mutex_attributes_adjust(0, &attributes);
 
-  #define f_macro_thread_mutex_attributes_t_increase(status, attributes)            status = f_thread_mutex_attributes_increase(attributes);
-  #define f_macro_thread_mutex_attributes_t_increase_by(status, attributes, amount) status = f_thread_mutex_attributes_increase_by(amount, attributes);
-  #define f_macro_thread_mutex_attributes_t_decrease_by(status, attributes, amount) status = f_thread_mutex_attributes_decrease_by(amount, attributes);
-  #define f_macro_thread_mutex_attributes_t_decimate_by(status, attributes, amount) status = f_thread_mutex_attributes_decimate_by(amount, attributes);
+  #define macro_f_thread_mutex_attributes_t_increase(status, attributes)            status = f_thread_mutex_attributes_increase(attributes);
+  #define macro_f_thread_mutex_attributes_t_increase_by(status, attributes, amount) status = f_thread_mutex_attributes_increase_by(amount, attributes);
+  #define macro_f_thread_mutex_attributes_t_decrease_by(status, attributes, amount) status = f_thread_mutex_attributes_decrease_by(amount, attributes);
+  #define macro_f_thread_mutex_attributes_t_decimate_by(status, attributes, amount) status = f_thread_mutex_attributes_decimate_by(amount, attributes);
 #endif // _di_f_thread_mutex_attributes_t_
 
 /**
@@ -532,16 +532,16 @@ extern "C" {
 
   #define f_thread_onces_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_onces_t_resize(status, onces, length) f_macro_memory_structure_resize(status, onces, f_thread_once_t, length)
-  #define f_macro_thread_onces_t_adjust(status, onces, length) f_macro_memory_structure_adjust(status, onces, f_thread_once_t, length)
+  #define macro_f_thread_onces_t_resize(status, onces, length) macro_f_memory_structure_resize(status, onces, f_thread_once_t, length)
+  #define macro_f_thread_onces_t_adjust(status, onces, length) macro_f_memory_structure_adjust(status, onces, f_thread_once_t, length)
 
-  #define f_macro_thread_onces_t_delete_simple(onces)  f_macro_memory_structure_delete_simple(onces, f_thread_once_t)
-  #define f_macro_thread_onces_t_destroy_simple(onces) f_macro_memory_structure_destroy_simple(onces, f_thread_once_t)
+  #define macro_f_thread_onces_t_delete_simple(onces)  macro_f_memory_structure_delete_simple(onces, f_thread_once_t)
+  #define macro_f_thread_onces_t_destroy_simple(onces) macro_f_memory_structure_destroy_simple(onces, f_thread_once_t)
 
-  #define f_macro_thread_onces_t_increase(status, onces)            f_macro_memory_structure_increase(status, onces, f_thread_once_t)
-  #define f_macro_thread_onces_t_increase_by(status, onces, amount) f_macro_memory_structure_increase_by(status, onces, f_thread_once_t, amount)
-  #define f_macro_thread_onces_t_decrease_by(status, onces, amount) f_macro_memory_structure_decrease_by(status, onces, f_thread_once_t, amount)
-  #define f_macro_thread_onces_t_decimate_by(status, onces, amount) f_macro_memory_structure_decimate_by(status, onces, f_thread_once_t, amount)
+  #define macro_f_thread_onces_t_increase(status, onces)            macro_f_memory_structure_increase(status, onces, f_thread_once_t)
+  #define macro_f_thread_onces_t_increase_by(status, onces, amount) macro_f_memory_structure_increase_by(status, onces, f_thread_once_t, amount)
+  #define macro_f_thread_onces_t_decrease_by(status, onces, amount) macro_f_memory_structure_decrease_by(status, onces, f_thread_once_t, amount)
+  #define macro_f_thread_onces_t_decimate_by(status, onces, amount) macro_f_memory_structure_decimate_by(status, onces, f_thread_once_t, amount)
 #endif // _di_f_thread_onces_t_
 
 /**
@@ -556,7 +556,7 @@ extern "C" {
 
   #define f_thread_semaphore_t_initialize 0
 
-  #define f_macro_thread_semaphore_t_delete_simple(semaphore) f_thread_semaphore_delete(&semaphore);
+  #define macro_f_thread_semaphore_t_delete_simple(semaphore) f_thread_semaphore_delete(&semaphore);
 #endif // _di_f_thread_semaphore_t_
 
 /**
@@ -576,18 +576,18 @@ extern "C" {
 
   #define f_thread_semaphores_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_semaphores_t_clear(semaphores) f_macro_memory_structure_clear(semaphores)
+  #define macro_f_thread_semaphores_t_clear(semaphores) macro_f_memory_structure_clear(semaphores)
 
-  #define f_macro_thread_semaphores_t_resize(status, semaphores, length) status = f_thread_semaphores_resize(length, &semaphores);
-  #define f_macro_thread_semaphores_t_adjust(status, semaphores, length) status = f_thread_semaphores_adjust(length, &semaphores);
+  #define macro_f_thread_semaphores_t_resize(status, semaphores, length) status = f_thread_semaphores_resize(length, &semaphores);
+  #define macro_f_thread_semaphores_t_adjust(status, semaphores, length) status = f_thread_semaphores_adjust(length, &semaphores);
 
-  #define f_macro_thread_semaphores_t_delete_simple(semaphores)  f_thread_semaphores_resize(0, &semaphores);
-  #define f_macro_thread_semaphores_t_destroy_simple(semaphores) f_thread_semaphores_adjust(0, &semaphores);
+  #define macro_f_thread_semaphores_t_delete_simple(semaphores)  f_thread_semaphores_resize(0, &semaphores);
+  #define macro_f_thread_semaphores_t_destroy_simple(semaphores) f_thread_semaphores_adjust(0, &semaphores);
 
-  #define f_macro_thread_semaphores_t_increase(status, semaphores)            status = f_thread_semaphores_increase(semaphores);
-  #define f_macro_thread_semaphores_t_increase_by(status, semaphores, amount) status = f_thread_semaphores_increase_by(amount, semaphores);
-  #define f_macro_thread_semaphores_t_decrease_by(status, semaphores, amount) status = f_thread_semaphores_decrease_by(amount, semaphores);
-  #define f_macro_thread_semaphores_t_decimate_by(status, semaphores, amount) status = f_thread_semaphores_decimate_by(amount, semaphores);
+  #define macro_f_thread_semaphores_t_increase(status, semaphores)            status = f_thread_semaphores_increase(semaphores);
+  #define macro_f_thread_semaphores_t_increase_by(status, semaphores, amount) status = f_thread_semaphores_increase_by(amount, semaphores);
+  #define macro_f_thread_semaphores_t_decrease_by(status, semaphores, amount) status = f_thread_semaphores_decrease_by(amount, semaphores);
+  #define macro_f_thread_semaphores_t_decimate_by(status, semaphores, amount) status = f_thread_semaphores_decimate_by(amount, semaphores);
 #endif // _di_f_thread_semaphores_t_
 
 /**
@@ -606,11 +606,11 @@ extern "C" {
 
   #define f_thread_set_t_initialize { f_thread_attribute_t_initialize, f_thread_id_t_initialize, 0 }
 
-  #define f_macro_thread_set_t_clear(thread) \
-    f_macro_thread_attribute_t_clear(thread.attribute) \
-    f_macro_thread_id_t_clear(thread.id)
+  #define macro_f_thread_set_t_clear(thread) \
+    macro_f_thread_attribute_t_clear(thread.attribute) \
+    macro_f_thread_id_t_clear(thread.id)
 
-  #define f_macro_thread_set_t_delete_simple(set) f_macro_thread_attribute_t_delete_simple(set.attribute)
+  #define macro_f_thread_set_t_delete_simple(set) macro_f_thread_attribute_t_delete_simple(set.attribute)
 #endif // _di_f_thread_set_t_
 
 /**
@@ -630,18 +630,18 @@ extern "C" {
 
   #define f_thread_sets_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_sets_t_clear(sets) f_macro_memory_structure_clear(sets)
+  #define macro_f_thread_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
 
-  #define f_macro_thread_sets_t_resize(status, sets, length) status = f_thread_sets_resize(length, &sets);
-  #define f_macro_thread_sets_t_adjust(status, sets, length) status = f_thread_sets_adjust(length, &sets);
+  #define macro_f_thread_sets_t_resize(status, sets, length) status = f_thread_sets_resize(length, &sets);
+  #define macro_f_thread_sets_t_adjust(status, sets, length) status = f_thread_sets_adjust(length, &sets);
 
-  #define f_macro_thread_sets_t_delete_simple(sets)  f_thread_sets_resize(0, &sets);
-  #define f_macro_thread_sets_t_destroy_simple(sets) f_thread_sets_adjust(0, &sets);
+  #define macro_f_thread_sets_t_delete_simple(sets)  f_thread_sets_resize(0, &sets);
+  #define macro_f_thread_sets_t_destroy_simple(sets) f_thread_sets_adjust(0, &sets);
 
-  #define f_macro_thread_sets_t_increase(status, sets)            status = f_thread_sets_increase(sets);
-  #define f_macro_thread_sets_t_increase_by(status, sets, amount) status = f_thread_sets_increase_by(amount, sets);
-  #define f_macro_thread_sets_t_decrease_by(status, sets, amount) status = f_thread_sets_decrease_by(amount, sets);
-  #define f_macro_thread_sets_t_decimate_by(status, sets, amount) status = f_thread_sets_decimate_by(amount, sets);
+  #define macro_f_thread_sets_t_increase(status, sets)            status = f_thread_sets_increase(sets);
+  #define macro_f_thread_sets_t_increase_by(status, sets, amount) status = f_thread_sets_increase_by(amount, sets);
+  #define macro_f_thread_sets_t_decrease_by(status, sets, amount) status = f_thread_sets_decrease_by(amount, sets);
+  #define macro_f_thread_sets_t_decimate_by(status, sets, amount) status = f_thread_sets_decimate_by(amount, sets);
 #endif // _di_f_thread_sets_t_
 
 /**
@@ -654,7 +654,7 @@ extern "C" {
 
   #define f_thread_spin_t_initialize ((pthread_spinlock_t) 0xFFFFFFFF)
 
-  #define f_macro_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
+  #define macro_f_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
 #endif // _di_f_thread_spin_t_
 
 /**
@@ -674,18 +674,18 @@ extern "C" {
 
   #define f_thread_spins_t_initialize { 0, 0, 0 }
 
-  #define f_macro_thread_spins_t_clear(spins) f_macro_memory_structure_clear(spins)
+  #define macro_f_thread_spins_t_clear(spins) macro_f_memory_structure_clear(spins)
 
-  #define f_macro_thread_spins_t_resize(status, spins, length) status = f_thread_spins_resize(length, &spins);
-  #define f_macro_thread_spins_t_adjust(status, spins, length) status = f_thread_spins_adjust(length, &spins);
+  #define macro_f_thread_spins_t_resize(status, spins, length) status = f_thread_spins_resize(length, &spins);
+  #define macro_f_thread_spins_t_adjust(status, spins, length) status = f_thread_spins_adjust(length, &spins);
 
-  #define f_macro_thread_spins_t_delete_simple(spins)  f_thread_spins_resize(0, &spins);
-  #define f_macro_thread_spins_t_destroy_simple(spins) f_thread_spins_adjust(0, &spins);
+  #define macro_f_thread_spins_t_delete_simple(spins)  f_thread_spins_resize(0, &spins);
+  #define macro_f_thread_spins_t_destroy_simple(spins) f_thread_spins_adjust(0, &spins);
 
-  #define f_macro_thread_spins_t_increase(status, spins)            status = f_thread_spins_increase(spins);
-  #define f_macro_thread_spins_t_increase_by(status, spins, amount) status = f_thread_spins_increase_by(amount, spins);
-  #define f_macro_thread_spins_t_decrease_by(status, spins, amount) status = f_thread_spins_decrease_by(amount, spins);
-  #define f_macro_thread_spins_t_decimate_by(status, spins, amount) status = f_thread_spins_decimate_by(amount, spins);
+  #define macro_f_thread_spins_t_increase(status, spins)            status = f_thread_spins_increase(spins);
+  #define macro_f_thread_spins_t_increase_by(status, spins, amount) status = f_thread_spins_increase_by(amount, spins);
+  #define macro_f_thread_spins_t_decrease_by(status, spins, amount) status = f_thread_spins_decrease_by(amount, spins);
+  #define macro_f_thread_spins_t_decimate_by(status, spins, amount) status = f_thread_spins_decimate_by(amount, spins);
 #endif // _di_f_thread_spins_t_
 
 #ifdef __cplusplus

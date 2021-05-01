@@ -54,18 +54,18 @@ extern "C" {
 
   #define f_string_quantitys_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_quantitys_t_clear(quantitys) f_macro_memory_structure_clear(quantitys)
+  #define macro_f_string_quantitys_t_clear(quantitys) macro_f_memory_structure_clear(quantitys)
 
-  #define f_macro_string_quantitys_t_resize(status, quantitys, length) status = f_string_quantitys_resize(length, &quantitys);
-  #define f_macro_string_quantitys_t_adjust(status, quantitys, length) status = f_string_quantitys_adjust(length, &quantitys);
+  #define macro_f_string_quantitys_t_resize(status, quantitys, length) status = f_string_quantitys_resize(length, &quantitys);
+  #define macro_f_string_quantitys_t_adjust(status, quantitys, length) status = f_string_quantitys_adjust(length, &quantitys);
 
-  #define f_macro_string_quantitys_t_delete_simple(quantitys)  f_string_quantitys_resize(0, &quantitys);
-  #define f_macro_string_quantitys_t_destroy_simple(quantitys) f_string_quantitys_adjust(0, &quantitys);
+  #define macro_f_string_quantitys_t_delete_simple(quantitys)  f_string_quantitys_resize(0, &quantitys);
+  #define macro_f_string_quantitys_t_destroy_simple(quantitys) f_string_quantitys_adjust(0, &quantitys);
 
-  #define f_macro_string_quantitys_t_increase(status, quantitys)            status = f_string_quantitys_increase(&quantitys);
-  #define f_macro_string_quantitys_t_increase_by(status, quantitys, amount) status = f_string_quantitys_increase_by(amount, &quantitys);
-  #define f_macro_string_quantitys_t_decrease_by(status, quantitys, amount) status = f_string_quantitys_decrease_by(amount, &quantitys);
-  #define f_macro_string_quantitys_t_decimate_by(status, quantitys, amount) status = f_string_quantitys_decimate_by(amount, &quantitys);
+  #define macro_f_string_quantitys_t_increase(status, quantitys)            status = f_string_quantitys_increase(&quantitys);
+  #define macro_f_string_quantitys_t_increase_by(status, quantitys, amount) status = f_string_quantitys_increase_by(amount, &quantitys);
+  #define macro_f_string_quantitys_t_decrease_by(status, quantitys, amount) status = f_string_quantitys_decrease_by(amount, &quantitys);
+  #define macro_f_string_quantitys_t_decimate_by(status, quantitys, amount) status = f_string_quantitys_decimate_by(amount, &quantitys);
 #endif // _di_f_string_quantitys_t_
 
 /**
@@ -85,18 +85,18 @@ extern "C" {
 
   #define f_string_quantityss_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_quantityss_t_clear(quantityss) f_macro_memory_structures_clear(quantityss)
+  #define macro_f_string_quantityss_t_clear(quantityss) macro_f_memory_structures_clear(quantityss)
 
-  #define f_macro_string_quantityss_t_resize(status, quantityss, length) status = f_string_quantityss_resize(length, &quantityss);
-  #define f_macro_string_quantityss_t_adjust(status, quantityss, length) status = f_string_quantityss_adjust(length, &quantityss);
+  #define macro_f_string_quantityss_t_resize(status, quantityss, length) status = f_string_quantityss_resize(length, &quantityss);
+  #define macro_f_string_quantityss_t_adjust(status, quantityss, length) status = f_string_quantityss_adjust(length, &quantityss);
 
-  #define f_macro_string_quantityss_t_delete_simple(quantityss)  f_string_quantityss_resize(0, &quantityss);
-  #define f_macro_string_quantityss_t_destroy_simple(quantityss) f_string_quantityss_adjust(0, &quantityss);
+  #define macro_f_string_quantityss_t_delete_simple(quantityss)  f_string_quantityss_resize(0, &quantityss);
+  #define macro_f_string_quantityss_t_destroy_simple(quantityss) f_string_quantityss_adjust(0, &quantityss);
 
-  #define f_macro_string_quantityss_t_increase(status, quantityss)            status = f_string_quantityss_increase(&quantityss);
-  #define f_macro_string_quantityss_t_increase_by(status, quantityss, amount) status = f_string_quantityss_increase_by(amount, &quantityss);
-  #define f_macro_string_quantityss_t_decrease_by(status, quantityss, amount) status = f_string_quantityss_decrease_by(amount, &quantityss);
-  #define f_macro_string_quantityss_t_decimate_by(status, quantityss, amount) status = f_string_quantityss_decimate_by(amount, &quantityss);
+  #define macro_f_string_quantityss_t_increase(status, quantityss)            status = f_string_quantityss_increase(&quantityss);
+  #define macro_f_string_quantityss_t_increase_by(status, quantityss, amount) status = f_string_quantityss_increase_by(amount, &quantityss);
+  #define macro_f_string_quantityss_t_decrease_by(status, quantityss, amount) status = f_string_quantityss_decrease_by(amount, &quantityss);
+  #define macro_f_string_quantityss_t_decimate_by(status, quantityss, amount) status = f_string_quantityss_decimate_by(amount, &quantityss);
 #endif // _di_f_string_quantityss_t_
 
 /**

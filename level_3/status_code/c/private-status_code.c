@@ -48,7 +48,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(value));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(value));
 
       f_number_unsigned_t number = 0;
 
@@ -127,7 +127,7 @@ extern "C" {
 
 #ifndef _di_status_code_convert_number_
   f_status_t status_code_convert_number(const status_code_main_t main, const f_string_t value, f_number_unsigned_t *number) {
-    const f_string_range_t range = f_macro_string_range_t_initialize(strlen(value));
+    const f_string_range_t range = macro_f_string_range_t_initialize(strlen(value));
 
     f_status_t status = fl_conversion_string_to_number_unsigned(value, range, number);
 

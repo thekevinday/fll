@@ -163,11 +163,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fss_basic_read_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_basic_read_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
@@ -191,7 +191,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { fss_basic_read_parameter_verbosity_quiet, fss_basic_read_parameter_verbosity_normal, fss_basic_read_parameter_verbosity_verbose, fss_basic_read_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -325,7 +325,7 @@ extern "C" {
               length--;
             }
 
-            f_string_range_t range = f_macro_string_range_t_initialize(length);
+            f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // ignore leading plus sign.
             if (arguments.argv[location][0] == '+') {
@@ -355,8 +355,8 @@ extern "C" {
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
       if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
-        fss_basic_read_macro_depths_t_delete_simple(depths);
-        f_macro_fss_delimits_t_delete_simple(delimits);
+        macro_fss_basic_read_depths_t_delete_simple(depths);
+        macro_f_fss_delimits_t_delete_simple(delimits);
 
         if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
@@ -371,7 +371,7 @@ extern "C" {
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
         f_color_print(main->error.to.stream, main->context.set.error, "' parameter requires a positive number.%c", f_string_eol_s[0]);
 
-        fss_basic_read_macro_depths_t_delete_simple(depths);
+        macro_fss_basic_read_depths_t_delete_simple(depths);
         status = F_status_set_error(F_parameter);
       }
 
@@ -384,7 +384,7 @@ extern "C" {
         files.size += main->remaining.used;
 
         for (f_array_length_t i = 0; i < files.used; ++i) {
-          f_macro_string_range_t_clear(files.array[i].range);
+          macro_f_string_range_t_clear(files.array[i].range);
         } // for
       }
 
@@ -463,12 +463,12 @@ extern "C" {
         status = fss_basic_read_process(arguments, files, depths, main, &delimits);
       }
 
-      f_macro_fss_contents_t_delete_simple(main->contents);
-      f_macro_fss_objects_t_delete_simple(main->objects);
-      f_macro_string_dynamic_t_delete_simple(main->buffer);
+      macro_f_fss_contents_t_delete_simple(main->contents);
+      macro_f_fss_objects_t_delete_simple(main->objects);
+      macro_f_string_dynamic_t_delete_simple(main->buffer);
 
-      fss_basic_read_macro_depths_t_delete_simple(depths);
-      f_macro_fss_delimits_t_delete_simple(delimits);
+      macro_fss_basic_read_depths_t_delete_simple(depths);
+      macro_f_fss_delimits_t_delete_simple(delimits);
     }
     else {
       f_color_print(main->error.to.stream, main->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol_s[0]);
@@ -484,17 +484,17 @@ extern "C" {
   f_status_t fss_basic_read_main_delete(fss_basic_read_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_fss_contents_t_delete_simple(main->contents);
-    f_macro_fss_objects_t_delete_simple(main->objects);
-    f_macro_string_dynamic_t_delete_simple(main->buffer);
-    f_macro_array_lengths_t_delete_simple(main->remaining);
+    macro_f_fss_contents_t_delete_simple(main->contents);
+    macro_f_fss_objects_t_delete_simple(main->objects);
+    macro_f_string_dynamic_t_delete_simple(main->buffer);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

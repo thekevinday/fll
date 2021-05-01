@@ -163,11 +163,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fss_embedded_list_read_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_embedded_list_read_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { fss_embedded_list_read_parameter_no_color, fss_embedded_list_read_parameter_light, fss_embedded_list_read_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
@@ -191,7 +191,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { fss_embedded_list_read_parameter_verbosity_quiet, fss_embedded_list_read_parameter_verbosity_normal, fss_embedded_list_read_parameter_verbosity_verbose, fss_embedded_list_read_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -337,7 +337,7 @@ extern "C" {
               length--;
             }
 
-            f_string_range_t range = f_macro_string_range_t_initialize(length);
+            f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // ignore leading plus sign.
             if (arguments.argv[location][0] == '+') {
@@ -396,8 +396,8 @@ extern "C" {
         }
 
         // Clear buffers before continuing.
-        f_macro_fss_nest_t_delete_simple(main->nest);
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_fss_nest_t_delete_simple(main->nest);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
       }
 
       if (F_status_is_error_not(status) && main->remaining.used > 0) {
@@ -450,20 +450,20 @@ extern "C" {
           }
 
           // Clear buffers before repeating the loop.
-          f_macro_fss_nest_t_delete_simple(main->nest);
-          f_macro_string_dynamic_t_delete_simple(main->buffer);
+          macro_f_fss_nest_t_delete_simple(main->nest);
+          macro_f_string_dynamic_t_delete_simple(main->buffer);
         } // for
 
         if (F_status_is_error(status)) {
-          f_macro_fss_nest_t_delete_simple(main->nest);
-          f_macro_string_dynamic_t_delete_simple(main->buffer);
+          macro_f_fss_nest_t_delete_simple(main->nest);
+          macro_f_string_dynamic_t_delete_simple(main->buffer);
         }
       }
 
-      fss_embedded_list_read_macro_depths_t_delete_simple(depths);
-      f_macro_fss_delimits_t_delete_simple(objects_delimits);
-      f_macro_fss_delimits_t_delete_simple(contents_delimits);
-      f_macro_fss_comments_t_delete_simple(comments);
+      macro_fss_embedded_list_read_depths_t_delete_simple(depths);
+      macro_f_fss_delimits_t_delete_simple(objects_delimits);
+      macro_f_fss_delimits_t_delete_simple(contents_delimits);
+      macro_f_fss_comments_t_delete_simple(comments);
     }
     else {
       f_color_print(main->error.to.stream, main->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol_s[0]);
@@ -479,17 +479,17 @@ extern "C" {
   f_status_t fss_embedded_list_read_main_delete(fss_embedded_list_read_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_embedded_list_read_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_fss_nest_t_delete_simple(main->nest);
+    macro_f_fss_nest_t_delete_simple(main->nest);
 
-    f_macro_string_dynamic_t_delete_simple(main->buffer);
-    f_macro_array_lengths_t_delete_simple(main->remaining);
+    macro_f_string_dynamic_t_delete_simple(main->buffer);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

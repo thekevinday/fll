@@ -255,7 +255,7 @@ extern "C" {
 
   #define f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value) { symbol_short, symbol_long, symbol_other, has_values, type_value, f_console_result_none, 0, 0, f_array_lengths_t_initialize, f_array_lengths_t_initialize, f_array_lengths_t_initialize }
 
-  #define f_macro_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, has_values, type_value, result, location, location_sub, locations, locations_sub, values) { symbol_short, symbol_long, symbol_other, has_values, type_value, result, total, location, location_sub, locations, locations_sub, values }
 #endif // _di_f_console_parameter_t_
 
 /**
@@ -276,7 +276,7 @@ extern "C" {
 
   #define f_console_parameters_t_initialize { 0, 0 }
 
-  #define f_macro_console_parameters_t_initialize(parameters, length) { parameters, length }
+  #define macro_f_console_parameters_t_initialize(parameters, length) { parameters, length }
 #endif // _di_f_console_parameters_t_
 
 /**
@@ -299,7 +299,7 @@ extern "C" {
 
   #define f_console_parameter_ids_t_initialize { 0, 0 }
 
-  #define f_macro_console_parameter_ids_t_initialize(id, used) { id, used }
+  #define macro_f_console_parameter_ids_t_initialize(id, used) { id, used }
 #endif // _di_f_console_parameter_id_t_
 
 /**
@@ -318,7 +318,7 @@ extern "C" {
 
   #define f_console_arguments_t_initialize { 0, 0 }
 
-  #define f_macro_console_arguments_t_initialize(argc, argv) { argc, argv }
+  #define macro_f_console_arguments_t_initialize(argc, argv) { argc, argv }
 #endif // _di_f_console_arguments_t_
 
 #ifdef __cplusplus

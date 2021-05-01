@@ -17,7 +17,7 @@ extern "C" {
       status = f_string_append(source, length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        macro_f_string_dynamic_t_delete_simple(argument);
         return status;
       }
     }
@@ -25,7 +25,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      macro_f_string_dynamic_t_delete_simple(argument);
       return status;
     }
 
@@ -78,13 +78,13 @@ extern "C" {
     arguments->array[arguments->used].used = argument.used;
     arguments->array[arguments->used++].size = argument.size;
 
-    f_macro_string_dynamic_t_clear(argument);
+    macro_f_string_dynamic_t_clear(argument);
 
     if (value_length) {
       status = f_string_append(value, value_length, &argument);
 
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(argument);
+        macro_f_string_dynamic_t_delete_simple(argument);
 
         return status;
       }
@@ -93,7 +93,7 @@ extern "C" {
     status = f_string_dynamic_terminate(&argument);
 
     if (F_status_is_error(status)) {
-      f_macro_string_dynamic_t_delete_simple(argument);
+      macro_f_string_dynamic_t_delete_simple(argument);
 
       return status;
     }
@@ -285,7 +285,7 @@ extern "C" {
         {
           char string_result[2] = { '0', 0 };
 
-          const f_file_t file = f_macro_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+          const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
 
           f_string_static_t buffer = f_string_static_t_initialize;
 
@@ -345,7 +345,7 @@ extern "C" {
       response.used = 0;
       response.size = 2;
 
-      const f_file_t file = f_macro_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
 
       f_file_read_block(file, &response);
 
@@ -446,7 +446,7 @@ extern "C" {
       {
         char string_result[2] = { '0', 0 };
 
-        const f_file_t file = f_macro_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
+        const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], f_file_flag_write_only);
 
         f_status_t status = F_none;
 
@@ -517,7 +517,7 @@ extern "C" {
       response.used = 0;
       response.size = 2;
 
-      const f_file_t file = f_macro_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], f_file_flag_read_only, 1, 1);
 
       f_file_read_block(file, &response);
 

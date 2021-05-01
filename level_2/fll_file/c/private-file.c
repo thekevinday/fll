@@ -21,7 +21,7 @@ extern "C" {
     status = fl_directory_list(path, 0, 0, F_false, &listing);
 
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_t_delete_simple(listing);
+      macro_f_directory_listing_t_delete_simple(listing);
       return status;
     }
 
@@ -60,11 +60,11 @@ extern "C" {
           status = f_file_mode_set(path_sub, mode);
         } // for
 
-        f_macro_string_dynamics_t_delete_simple((*list[i]));
+        macro_f_string_dynamics_t_delete_simple((*list[i]));
       } // for
     }
 
-    f_macro_string_dynamics_t_delete_simple(listing.unknown);
+    macro_f_string_dynamics_t_delete_simple(listing.unknown);
 
     for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
 
@@ -92,7 +92,7 @@ extern "C" {
       }
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.directory);
+    macro_f_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) {
       return status;
@@ -118,7 +118,7 @@ extern "C" {
     status = fl_directory_list(path, 0, 0, F_false, &listing);
 
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_t_delete_simple(listing);
+      macro_f_directory_listing_t_delete_simple(listing);
       return status;
     }
 
@@ -157,7 +157,7 @@ extern "C" {
           status = f_file_role_change(path_sub, uid, gid, dereference);
         } // for
 
-        f_macro_string_dynamics_t_delete_simple((*list[i]));
+        macro_f_string_dynamics_t_delete_simple((*list[i]));
       } // for
     }
 
@@ -187,7 +187,7 @@ extern "C" {
       }
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.directory);
+    macro_f_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) {
       return status;

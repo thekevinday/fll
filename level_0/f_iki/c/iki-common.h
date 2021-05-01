@@ -87,13 +87,13 @@ extern "C" {
 
   #define f_iki_variable_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_variable_t_clear(variable) f_macro_string_ranges_t_clear(variable)
+  #define macro_f_iki_variable_t_clear(variable) macro_f_string_ranges_t_clear(variable)
 
-  #define f_macro_iki_variable_t_resize(status, variable, new_length) f_macro_string_ranges_t_resize(status, variable, new_length)
-  #define f_macro_iki_variable_t_adjust(status, variable, new_length) f_macro_string_ranges_t_adjust(status, variable, new_length)
+  #define macro_f_iki_variable_t_resize(status, variable, new_length) macro_f_string_ranges_t_resize(status, variable, new_length)
+  #define macro_f_iki_variable_t_adjust(status, variable, new_length) macro_f_string_ranges_t_adjust(status, variable, new_length)
 
-  #define f_macro_iki_variable_t_delete_simple(variable)  f_macro_string_ranges_t_delete_simple(variable)
-  #define f_macro_iki_variable_t_destroy_simple(variable) f_macro_string_ranges_t_destroy_simple(variable)
+  #define macro_f_iki_variable_t_delete_simple(variable)  macro_f_string_ranges_t_delete_simple(variable)
+  #define macro_f_iki_variable_t_destroy_simple(variable) macro_f_string_ranges_t_destroy_simple(variable)
 #endif // _di_iki_variable_t_
 
 /**
@@ -108,13 +108,13 @@ extern "C" {
 
   #define f_iki_vocabulary_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_vocabulary_t_clear(vocabulary) f_macro_string_ranges_t_clear(vocabulary)
+  #define macro_f_iki_vocabulary_t_clear(vocabulary) macro_f_string_ranges_t_clear(vocabulary)
 
-  #define f_macro_iki_vocabulary_t_resize(status, vocabulary, new_length) f_macro_string_ranges_t_resize(status, vocabulary, new_length)
-  #define f_macro_iki_vocabulary_t_adjust(status, vocabulary, new_length) f_macro_string_ranges_t_adjust(status, vocabulary, new_length)
+  #define macro_f_iki_vocabulary_t_resize(status, vocabulary, new_length) macro_f_string_ranges_t_resize(status, vocabulary, new_length)
+  #define macro_f_iki_vocabulary_t_adjust(status, vocabulary, new_length) macro_f_string_ranges_t_adjust(status, vocabulary, new_length)
 
-  #define f_macro_iki_vocabulary_t_delete_simple(vocabulary)  f_macro_string_ranges_t_delete_simple(vocabulary)
-  #define f_macro_iki_vocabulary_t_destroy_simple(vocabulary) f_macro_string_ranges_t_destroy_simple(vocabulary)
+  #define macro_f_iki_vocabulary_t_delete_simple(vocabulary)  macro_f_string_ranges_t_delete_simple(vocabulary)
+  #define macro_f_iki_vocabulary_t_destroy_simple(vocabulary) macro_f_string_ranges_t_destroy_simple(vocabulary)
 #endif // _di_iki_vocabulary_t_
 
 /**
@@ -129,13 +129,13 @@ extern "C" {
 
   #define f_iki_vocabularys_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_iki_vocabularys_t_clear(content) f_macro_string_rangess_t_clear(content)
+  #define macro_f_iki_vocabularys_t_clear(content) macro_f_string_rangess_t_clear(content)
 
-  #define f_macro_iki_vocabularys_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
-  #define f_macro_iki_vocabularys_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+  #define macro_f_iki_vocabularys_t_resize(status, content, new_length) macro_f_string_rangess_t_resize(status, content, new_length)
+  #define macro_f_iki_vocabularys_t_adjust(status, content, new_length) macro_f_string_rangess_t_adjust(status, content, new_length)
 
-  #define f_macro_iki_vocabularys_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
-  #define f_macro_iki_vocabularys_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
+  #define macro_f_iki_vocabularys_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
+  #define macro_f_iki_vocabularys_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
 #endif // _di_iki_vocabularys_t_
 
 /**
@@ -152,13 +152,13 @@ extern "C" {
 
   #define f_iki_content_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_iki_content_t_clear(content) f_macro_string_ranges_t_clear(content)
+  #define macro_f_iki_content_t_clear(content) macro_f_string_ranges_t_clear(content)
 
-  #define f_macro_iki_content_t_resize(status, content, new_length) f_macro_string_ranges_t_resize(status, content, new_length)
-  #define f_macro_iki_content_t_adjust(status, content, new_length) f_macro_string_ranges_t_adjust(status, content, new_length)
+  #define macro_f_iki_content_t_resize(status, content, new_length) macro_f_string_ranges_t_resize(status, content, new_length)
+  #define macro_f_iki_content_t_adjust(status, content, new_length) macro_f_string_ranges_t_adjust(status, content, new_length)
 
-  #define f_macro_iki_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
-  #define f_macro_iki_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
+  #define macro_f_iki_content_t_delete_simple(content)  macro_f_string_ranges_t_delete_simple(content)
+  #define macro_f_iki_content_t_destroy_simple(content) macro_f_string_ranges_t_destroy_simple(content)
 #endif // _di_iki_content_t_
 
 /**
@@ -173,13 +173,13 @@ extern "C" {
 
   #define f_iki_contents_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_iki_contents_t_clear(content) f_macro_string_rangess_t_clear(content)
+  #define macro_f_iki_contents_t_clear(content) macro_f_string_rangess_t_clear(content)
 
-  #define f_macro_iki_contents_t_resize(status, content, new_length) f_macro_string_rangess_t_resize(status, content, new_length)
-  #define f_macro_iki_contents_t_adjust(status, content, new_length) f_macro_string_rangess_t_adjust(status, content, new_length)
+  #define macro_f_iki_contents_t_resize(status, content, new_length) macro_f_string_rangess_t_resize(status, content, new_length)
+  #define macro_f_iki_contents_t_adjust(status, content, new_length) macro_f_string_rangess_t_adjust(status, content, new_length)
 
-  #define f_macro_iki_contents_t_delete_simple(content)  f_macro_string_rangess_t_delete_simple(content)
-  #define f_macro_iki_contents_t_destroy_simple(content) f_macro_string_rangess_t_destroy_simple(content)
+  #define macro_f_iki_contents_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
+  #define macro_f_iki_contents_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
 #endif // _di_iki_contents_t_
 
 /**
@@ -197,8 +197,8 @@ extern "C" {
  * status:   The return status to use.
  * delimits: The delimit array to conditionally reallocate.
  */
-#ifndef _di_f_macro_iki_allocate_delimits_if_necessary_
-  #define f_macro_iki_allocate_delimits_if_necessary(status, delimits) \
+#ifndef _di_macro_f_iki_allocate_delimits_if_necessary_
+  #define macro_f_iki_allocate_delimits_if_necessary(status, delimits) \
     status = F_none; \
     if (delimits.used == delimits.size) { \
       if (delimits.used + f_iki_default_allocation_step > f_array_length_t_size) { \
@@ -206,14 +206,14 @@ extern "C" {
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
-          f_macro_array_lengths_t_resize(status, delimits, delimits.size + 1); \
+          macro_f_array_lengths_t_resize(status, delimits, delimits.size + 1); \
         } \
       } \
       else { \
-        f_macro_array_lengths_t_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
+        macro_f_array_lengths_t_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
       } \
     }
-#endif // _di_f_macro_iki_allocate_delimits_if_necessary_
+#endif // _di_macro_f_iki_allocate_delimits_if_necessary_
 
 /**
  * Reallocate delimits array if necessary for appending a new ranges.
@@ -221,8 +221,8 @@ extern "C" {
  * status: The return status to use.
  * ranges: The delimit array to conditionally reallocate.
  */
-#ifndef _di_f_macro_iki_allocate_ranges_if_necessary_
-  #define f_macro_iki_allocate_ranges_if_necessary(status, ranges) \
+#ifndef _di_macro_f_iki_allocate_ranges_if_necessary_
+  #define macro_f_iki_allocate_ranges_if_necessary(status, ranges) \
     status = F_none; \
     if (ranges.used == ranges.size) { \
       if (ranges.used + f_iki_default_allocation_step > f_array_length_t_size) { \
@@ -230,14 +230,14 @@ extern "C" {
           status = F_status_set_error(F_string_too_large); \
         } \
         else { \
-          f_macro_string_ranges_t_resize(status, ranges, ranges.size + 1); \
+          macro_f_string_ranges_t_resize(status, ranges, ranges.size + 1); \
         } \
       } \
       else { \
-        f_macro_string_ranges_t_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
+        macro_f_string_ranges_t_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
       } \
     }
-#endif // _di_f_macro_iki_allocate_ranges_if_necessary_
+#endif // _di_macro_f_iki_allocate_ranges_if_necessary_
 
 /**
  * Determine what the max width is based on the buffer and the range.
@@ -246,13 +246,13 @@ extern "C" {
  * range:     (A pointer) The range within that buffer to determine against.
  * width_max: The determined width max.
  */
-#ifndef _di_f_macro_iki_determine_width_max_
-  #define f_macro_iki_determine_width_max(buffer, range, width_max) \
+#ifndef _di_macro_f_iki_determine_width_max_
+  #define macro_f_iki_determine_width_max(buffer, range, width_max) \
     width_max = (range->stop - range->start) + 1; \
     if (width_max > buffer->used - range->start) { \
       width_max = buffer->used - range->start; \
     }
-#endif // _di_f_macro_iki_determine_width_max_
+#endif // _di_macro_f_iki_determine_width_max_
 
 /**
  * Seek until whitespace is found or not found.
@@ -265,21 +265,21 @@ extern "C" {
  * width_max: The width_max variable to use fo calculating width_max.
  * condition: Set to TRUE to seek until whitespace is found and FALSE to seek until non-whitespace.
  */
-#ifndef _di_f_macro_iki_seek_whitespace_
-  #define f_macro_iki_seek_whitespace(status, buffer, range, width_max, condition) \
+#ifndef _di_macro_f_iki_seek_whitespace_
+  #define macro_f_iki_seek_whitespace(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
       if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
         range->start++; \
         continue; \
       } \
-      f_macro_iki_determine_width_max(buffer, range, width_max); \
+      macro_f_iki_determine_width_max(buffer, range, width_max); \
       status = f_utf_is_whitespace(buffer->string + range->start, width_max); \
       if (status == condition) break; \
       else if (F_status_is_error(status)) break; \
       status = f_utf_buffer_increment(*buffer, range, 1); \
       if (F_status_is_error(status)) break; \
     }
-#endif // _di_f_macro_iki_seek_whitespace_
+#endif // _di_macro_f_iki_seek_whitespace_
 
 /**
  * Seek until a word, dash, or plus is found or not found.
@@ -292,21 +292,21 @@ extern "C" {
  * width_max: The width_max variable to use fo calculating width_max.
  * condition: Set to TRUE to seek until a word character, dash character, or plus character is found and FALSE to seek until the opposite is found.
  */
-#ifndef _di_f_macro_iki_seek_word_dash_plus_
-  #define f_macro_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
+#ifndef _di_macro_f_iki_seek_word_dash_plus_
+  #define macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
       if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
         range->start++; \
         continue; \
       } \
-      f_macro_iki_determine_width_max(buffer, range, width_max); \
+      macro_f_iki_determine_width_max(buffer, range, width_max); \
       status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false); \
       if (status == condition) break; \
       else if (F_status_is_error(status)) break; \
       status = f_utf_buffer_increment(*buffer, range, 1); \
       if (F_status_is_error(status)) break; \
     }
-#endif // _di_f_macro_iki_seek_word_dash_plus_
+#endif // _di_macro_f_iki_seek_word_dash_plus_
 
 #ifdef __cplusplus
 } // extern "C"

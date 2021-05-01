@@ -39,7 +39,7 @@ extern "C" {
     f_iki_content_t content = f_iki_content_t_initialize;
 
     if (main->parameters[iki_read_parameter_whole].result == f_console_result_found) {
-      f_string_range_t buffer_range = f_macro_string_range_t_initialize(main->buffer.used);
+      f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
 
       status = iki_read_process_at(arguments, file_name, main, &buffer_range);
 
@@ -66,7 +66,7 @@ extern "C" {
       status = iki_read_process_buffer_total(arguments, file_name, main, &variable, &vocabulary, &content);
     }
     else {
-      f_string_range_t buffer_range = f_macro_string_range_t_initialize(main->buffer.used);
+      f_string_range_t buffer_range = macro_f_string_range_t_initialize(main->buffer.used);
 
       status = iki_read_process_at(arguments, file_name, main, &buffer_range);
 
@@ -90,9 +90,9 @@ extern "C" {
       }
     }
 
-    f_macro_iki_variable_t_delete_simple(variable);
-    f_macro_iki_vocabulary_t_delete_simple(vocabulary);
-    f_macro_iki_content_t_delete_simple(content);
+    macro_f_iki_variable_t_delete_simple(variable);
+    macro_f_iki_vocabulary_t_delete_simple(vocabulary);
+    macro_f_iki_content_t_delete_simple(content);
 
     return status;
   }
@@ -124,7 +124,7 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
         for (f_array_length_t i = 0; i < variable->used; i++) {
-          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
         return status;
@@ -150,10 +150,10 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
           for (f_array_length_t i = 0; i < variable->used; i++) {
-            iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+            macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
-          f_macro_string_dynamic_t_delete_simple(name);
+          macro_f_string_dynamic_t_delete_simple(name);
           return status;
         }
 
@@ -178,7 +178,7 @@ extern "C" {
         } // for
       } // for
 
-      f_macro_string_dynamic_t_delete_simple(name);
+      macro_f_string_dynamic_t_delete_simple(name);
 
       if (unmatched) status = F_data_not;
       else status = F_none;
@@ -206,7 +206,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < variable->used; i++) {
-      iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+      macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
     return status;
@@ -243,7 +243,7 @@ extern "C" {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
         for (f_array_length_t i = 0; i < variable->used; i++) {
-          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
         return status;
@@ -279,7 +279,7 @@ extern "C" {
         } // for
 
         if (name_missed) {
-          f_macro_memory_structure_macro_increment(status, names, 1, f_iki_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, names, 1, f_iki_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "iki_read_process_buffer_ranges_whole", F_true);
@@ -299,10 +299,10 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         for (i = 0; i < variable->used; i++) {
-          iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+          macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
-        f_macro_string_dynamics_t_delete_simple(names);
+        macro_f_string_dynamics_t_delete_simple(names);
         return status;
       }
     }
@@ -380,10 +380,10 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < variable->used; i++) {
-      iki_read_macro_substitutions_t_delete_simple(substitutionss[i]);
+      macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(names);
+    macro_f_string_dynamics_t_delete_simple(names);
     return F_none;
   }
 #endif // _di_iki_read_process_buffer_ranges_whole_
@@ -391,7 +391,7 @@ extern "C" {
 #ifndef _di_iki_read_process_buffer_total_
   f_status_t iki_read_process_buffer_total(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
     f_status_t status = F_none;
-    f_string_range_t range = f_macro_string_range_t_initialize(main->buffer.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(main->buffer.used);
 
     status = iki_read_process_at(arguments, file_name, main, &range);
 
@@ -434,7 +434,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
-          f_macro_string_dynamic_t_delete_simple(name);
+          macro_f_string_dynamic_t_delete_simple(name);
           return status;
         }
 
@@ -447,7 +447,7 @@ extern "C" {
         } // for
       } // for
 
-      f_macro_string_dynamic_t_delete_simple(name);
+      macro_f_string_dynamic_t_delete_simple(name);
     }
     else {
       total = variable->used;
@@ -488,7 +488,7 @@ extern "C" {
         status = fl_string_compare(arguments.argv[index], main->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
         if (status == F_equal_to) {
-          f_macro_memory_structure_macro_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, iki_read_macro_substitutions_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, substitutionss[j], 1, f_iki_default_allocation_step, macro_iki_read_substitutions_t_resize, F_array_too_large);
           if (F_status_is_error(status)) return status;
 
           index = parameter->values.array[i + 1];

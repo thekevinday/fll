@@ -88,11 +88,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, fss_basic_write_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, fss_basic_write_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { fss_basic_write_parameter_no_color, fss_basic_write_parameter_light, fss_basic_write_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
@@ -116,7 +116,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { fss_basic_write_parameter_verbosity_quiet, fss_basic_write_parameter_verbosity_normal, fss_basic_write_parameter_verbosity_verbose, fss_basic_write_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -309,8 +309,8 @@ extern "C" {
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
         if (length) {
-          f_string_range_t range = f_macro_string_range_t_initialize(length);
-          const f_string_static_t prepend = f_macro_string_static_t_initialize(arguments.argv[index], length);
+          f_string_range_t range = macro_f_string_range_t_initialize(length);
+          const f_string_static_t prepend = macro_f_string_static_t_initialize(arguments.argv[index], length);
 
           for (; range.start < length; range.start++) {
 
@@ -463,7 +463,7 @@ extern "C" {
         }
       }
 
-      f_macro_string_dynamic_t_delete_simple(escaped);
+      macro_f_string_dynamic_t_delete_simple(escaped);
 
       // object and content, though being a "dynamic" type, is being used statically, so clear them up to avoid invalid free().
       object.string = 0;
@@ -488,9 +488,9 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(buffer);
-    f_macro_string_dynamic_t_delete_simple(object);
-    f_macro_string_dynamic_t_delete_simple(content);
+    macro_f_string_dynamic_t_delete_simple(buffer);
+    macro_f_string_dynamic_t_delete_simple(object);
+    macro_f_string_dynamic_t_delete_simple(content);
     fss_basic_write_main_delete(main);
     return status;
   }
@@ -500,14 +500,14 @@ extern "C" {
   f_status_t fss_basic_write_main_delete(fss_basic_write_main_t *main) {
 
     for (f_array_length_t i = 0; i < fss_basic_write_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(main->remaining);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

@@ -29,18 +29,18 @@ extern "C" {
  *
  * The fseek() function parameters can be confusing, so provide a hopefully more readibly code via these macros.
  *
- * The f_macro_file_seek_begin() sets the file pointer from this many bytes from the beginning of the file.
- * The f_macro_file_seek_data() sets the file pointer from this many bytes from the end of the file, relative to the next data.
- * The f_macro_file_seek_end() sets the file pointer from this many bytes from the end of the file.
- * The f_macro_file_seek_hole() sets the file pointer from this many bytes from the end of the file, relative to the next hole.
- * The f_macro_file_seek_to() sets the file pointer from this many bytes relative to the current position.
+ * The macro_f_file_seek_begin() sets the file pointer from this many bytes from the beginning of the file.
+ * The macro_f_file_seek_data() sets the file pointer from this many bytes from the end of the file, relative to the next data.
+ * The macro_f_file_seek_end() sets the file pointer from this many bytes from the end of the file.
+ * The macro_f_file_seek_hole() sets the file pointer from this many bytes from the end of the file, relative to the next hole.
+ * The macro_f_file_seek_to() sets the file pointer from this many bytes relative to the current position.
  */
 #ifndef _di_f_file_seeks_
-  #define f_macro_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)
-  #define f_macro_file_seek_data(file, bytes)  fseek(file, bytes, SEEK_DATA)
-  #define f_macro_file_seek_end(file)          fseek(file, bytes, SEEK_END)
-  #define f_macro_file_seek_hole(file, bytes)  fseek(file, bytes, SEEK_HOLE)
-  #define f_macro_file_seek_to(file, bytes)    fseek(file, bytes, SEEK_CUR)
+  #define macro_f_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)
+  #define macro_f_file_seek_data(file, bytes)  fseek(file, bytes, SEEK_DATA)
+  #define macro_f_file_seek_end(file)          fseek(file, bytes, SEEK_END)
+  #define macro_f_file_seek_hole(file, bytes)  fseek(file, bytes, SEEK_HOLE)
+  #define macro_f_file_seek_to(file, bytes)    fseek(file, bytes, SEEK_CUR)
 #endif // _di_f_file_seeks_
 
 /**
@@ -75,29 +75,29 @@ extern "C" {
   #define f_file_type_name_regular_length   7
   #define f_file_type_name_socket_length    6
 
-  #define f_macro_file_type_get(mode) (f_file_type_mask & mode)
+  #define macro_f_file_type_get(mode) (f_file_type_mask & mode)
 
-  #define f_macro_file_type_is_block(mode)     f_macro_file_type_get(mode) == f_file_type_block
-  #define f_macro_file_type_is_character(mode) f_macro_file_type_get(mode) == f_file_type_character
-  #define f_macro_file_type_is_directory(mode) f_macro_file_type_get(mode) == f_file_type_directory
-  #define f_macro_file_type_is_fifo(mode)      f_macro_file_type_get(mode) == f_file_type_fifo
-  #define f_macro_file_type_is_link(mode)      f_macro_file_type_get(mode) == f_file_type_link
-  #define f_macro_file_type_is_regular(mode)   f_macro_file_type_get(mode) == f_file_type_regular
-  #define f_macro_file_type_is_socket(mode)    f_macro_file_type_get(mode) == f_file_type_socket
+  #define macro_f_file_type_is_block(mode)     macro_f_file_type_get(mode) == f_file_type_block
+  #define macro_f_file_type_is_character(mode) macro_f_file_type_get(mode) == f_file_type_character
+  #define macro_f_file_type_is_directory(mode) macro_f_file_type_get(mode) == f_file_type_directory
+  #define macro_f_file_type_is_fifo(mode)      macro_f_file_type_get(mode) == f_file_type_fifo
+  #define macro_f_file_type_is_link(mode)      macro_f_file_type_get(mode) == f_file_type_link
+  #define macro_f_file_type_is_regular(mode)   macro_f_file_type_get(mode) == f_file_type_regular
+  #define macro_f_file_type_is_socket(mode)    macro_f_file_type_get(mode) == f_file_type_socket
 
-  #define f_macro_file_open_mode_append        "a"
-  #define f_macro_file_open_mode_read          "r"
-  #define f_macro_file_open_mode_read_append   "a+"
-  #define f_macro_file_open_mode_read_truncate "w+"
-  #define f_macro_file_open_mode_read_write    "r+"
-  #define f_macro_file_open_mode_truncate      "w"
+  #define macro_f_file_open_mode_append        "a"
+  #define macro_f_file_open_mode_read          "r"
+  #define macro_f_file_open_mode_read_append   "a+"
+  #define macro_f_file_open_mode_read_truncate "w+"
+  #define macro_f_file_open_mode_read_write    "r+"
+  #define macro_f_file_open_mode_truncate      "w"
 
-  #define f_macro_file_open_mode_append_length        1
-  #define f_macro_file_open_mode_read_length          1
-  #define f_macro_file_open_mode_read_append_length   2
-  #define f_macro_file_open_mode_read_truncate_length 2
-  #define f_macro_file_open_mode_read_write_length    2
-  #define f_macro_file_open_mode_truncate_length      1
+  #define macro_f_file_open_mode_append_length        1
+  #define macro_f_file_open_mode_read_length          1
+  #define macro_f_file_open_mode_read_append_length   2
+  #define macro_f_file_open_mode_read_truncate_length 2
+  #define macro_f_file_open_mode_read_write_length    2
+  #define macro_f_file_open_mode_truncate_length      1
 
   extern const f_string_t f_file_type_name_blocks;
   extern const f_string_t f_file_type_name_character_s;
@@ -134,17 +134,17 @@ extern "C" {
 
   #define f_file_t_initialize { 0, -1, f_file_flag_read_only, f_file_default_read_size, f_file_default_write_size }
 
-  #define f_macro_file_t_initialize(stream, id, flag, read_size, write_size) { stream, id, flag, read_size, write_size }
-  #define f_macro_file_t_initialize2(stream, id, flag) { stream, id, flag, f_file_default_read_size, f_file_default_write_size }
+  #define macro_f_file_t_initialize(stream, id, flag, read_size, write_size) { stream, id, flag, read_size, write_size }
+  #define macro_f_file_t_initialize2(stream, id, flag) { stream, id, flag, f_file_default_read_size, f_file_default_write_size }
 
-  #define f_macro_file_t_clear(file) \
+  #define macro_f_file_t_clear(file) \
     file.stream = 0; \
     file.id = -1; \
     file.flag = 0; \
     file.size_read = 0; \
     file.size_write = 0;
 
-  #define f_macro_file_t_reset(file) \
+  #define macro_f_file_t_reset(file) \
     file.stream = 0; \
     file.id = -1; \
     file.flag = f_file_flag_read_only; \

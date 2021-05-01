@@ -16,7 +16,7 @@ extern "C" {
     unsigned short width = 0;
 
     for (; i < serialize.used; i += width) {
-      width = f_macro_utf_byte_width(serialize.string[i]);
+      width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0]) {
         if (current == index) {

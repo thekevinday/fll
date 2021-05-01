@@ -185,12 +185,12 @@ extern "C" {
       fprintf(main.output.stream, "%c", f_string_eol_s[0]);
     }
 
-     f_macro_string_dynamic_t_resize(*status, path_source, source.used);
+     macro_f_string_dynamic_t_resize(*status, path_source, source.used);
 
     if (F_status_is_error(*status)) {
-      fll_error_print(main.error, F_status_set_fine(*status), " f_macro_string_dynamic_t_resize", F_true);
+      fll_error_print(main.error, F_status_set_fine(*status), " macro_f_string_dynamic_t_resize", F_true);
 
-      f_macro_string_dynamic_t_delete_simple(path_source);
+      macro_f_string_dynamic_t_delete_simple(path_source);
       return;
     }
 
@@ -368,10 +368,10 @@ extern "C" {
       *status = F_none;
     } // for
 
-    f_macro_directory_statuss_t_delete_simple(failures);
-    f_macro_string_dynamic_t_delete_simple(path_source);
-    f_macro_string_dynamic_t_delete_simple(destination_file);
-    f_macro_string_dynamic_t_delete_simple(destination_directory);
+    macro_f_directory_statuss_t_delete_simple(failures);
+    macro_f_string_dynamic_t_delete_simple(path_source);
+    macro_f_string_dynamic_t_delete_simple(destination_file);
+    macro_f_string_dynamic_t_delete_simple(destination_directory);
 
     if (F_status_is_error_not(*status)) {
       fake_build_touch(main, file_stage, status);
@@ -542,7 +542,7 @@ extern "C" {
     if (F_status_is_error(*status)) {
       fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
       return 0;
     }
 
@@ -562,8 +562,8 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_mash", F_true);
 
-          f_macro_string_dynamic_t_delete_simple(defines);
-          f_macro_string_dynamics_t_delete_simple(arguments);
+          macro_f_string_dynamic_t_delete_simple(defines);
+          macro_f_string_dynamics_t_delete_simple(arguments);
           return 0;
         }
 
@@ -572,8 +572,8 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_terminate_after", F_true);
 
-          f_macro_string_dynamic_t_delete_simple(defines);
-          f_macro_string_dynamics_t_delete_simple(arguments);
+          macro_f_string_dynamic_t_delete_simple(defines);
+          macro_f_string_dynamics_t_delete_simple(arguments);
           return 0;
         }
       }
@@ -640,12 +640,12 @@ extern "C" {
 
       *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_prefix_length, parameters_name, parameters_name_length, parameters_value, parameters_value_length, 7, &arguments);
 
-      f_macro_string_dynamic_t_delete_simple(defines);
+      macro_f_string_dynamic_t_delete_simple(defines);
 
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add_parameter_set", F_true);
 
-        f_macro_string_dynamics_t_delete_simple(arguments);
+        macro_f_string_dynamics_t_delete_simple(arguments);
         return 0;
       }
     }
@@ -672,8 +672,8 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), function, F_true);
 
-        f_macro_string_dynamic_t_delete_simple(path);
-        f_macro_string_dynamics_t_delete_simple(arguments);
+        macro_f_string_dynamic_t_delete_simple(path);
+        macro_f_string_dynamics_t_delete_simple(arguments);
         return 0;
       }
     }
@@ -683,8 +683,8 @@ extern "C" {
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
 
-      f_macro_string_dynamic_t_delete_simple(path);
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamic_t_delete_simple(path);
+      macro_f_string_dynamics_t_delete_simple(arguments);
     }
     else {
       // child processes should receive all signals, without blocking.
@@ -692,11 +692,11 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(fl_execute_parameter_option_path, 0, &data_build.environment, &signals, 0);
+      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(fl_execute_parameter_option_path, 0, &data_build.environment, &signals, 0);
 
       *status = fll_execute_program(path.string, arguments, &parameter, 0, (void *) &return_code);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
@@ -722,7 +722,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(path);
+    macro_f_string_dynamic_t_delete_simple(path);
 
     return return_code;
   }
@@ -819,7 +819,7 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-        f_macro_string_dynamics_t_delete_simple(arguments);
+        macro_f_string_dynamics_t_delete_simple(arguments);
         return 0;
       }
     }
@@ -958,7 +958,7 @@ extern "C" {
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-        f_macro_string_dynamics_t_delete_simple(arguments);
+        macro_f_string_dynamics_t_delete_simple(arguments);
         return 0;
       }
     }
@@ -966,7 +966,7 @@ extern "C" {
     {
       const int result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
 
       if (F_status_is_error(*status)) {
         return 0;
@@ -1215,9 +1215,9 @@ extern "C" {
       result = fake_execute(main, data_build.environment, data_build.setting.build_indexer, arguments, status);
     }
 
-    f_macro_string_dynamic_t_delete_simple(file_name);
-    f_macro_string_dynamic_t_delete_simple(source_path);
-    f_macro_string_dynamics_t_delete_simple(arguments);
+    macro_f_string_dynamic_t_delete_simple(file_name);
+    macro_f_string_dynamic_t_delete_simple(source_path);
+    macro_f_string_dynamics_t_delete_simple(arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);
@@ -1324,7 +1324,7 @@ extern "C" {
         *status = F_status_set_error(F_signal);
       }
       else if (F_status_is_error_not(*status)) {
-        f_string_range_t range = f_macro_string_range_t_initialize(buffer.used);
+        f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         *status = fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0);
@@ -1343,12 +1343,12 @@ extern "C" {
           }
         }
 
-        f_macro_fss_delimits_t_delete_simple(delimits);
+        macro_f_fss_delimits_t_delete_simple(delimits);
       }
 
-      f_macro_string_dynamic_t_delete_simple(buffer);
-      f_macro_fss_objects_t_delete_simple(objects);
-      f_macro_fss_contents_t_delete_simple(contents);
+      macro_f_string_dynamic_t_delete_simple(buffer);
+      macro_f_fss_objects_t_delete_simple(objects);
+      macro_f_fss_contents_t_delete_simple(contents);
     }
 
     // error when required settings are not specified.
@@ -1625,10 +1625,10 @@ extern "C" {
 
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
-          f_macro_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
+          macro_f_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
 
           if (F_status_is_error(*status)) {
-            function = " f_macro_string_dynamic_t_resize";
+            function = " macro_f_string_dynamic_t_resize";
             break;
           }
 
@@ -1648,7 +1648,7 @@ extern "C" {
         }
 
         for (j = 0; j < fake_build_setting_total; j++) {
-          f_macro_string_dynamic_t_delete_simple(settings_mode_name_dynamic[j]);
+          macro_f_string_dynamic_t_delete_simple(settings_mode_name_dynamic[j]);
         } // for
 
         if (F_status_is_error(*status)) break;
@@ -2011,33 +2011,33 @@ extern "C" {
       } // for
     }
 
-    f_macro_string_dynamics_t_delete_simple(build_compiler);
-    f_macro_string_dynamics_t_delete_simple(build_indexer);
-    f_macro_string_dynamics_t_delete_simple(build_language);
-    f_macro_string_dynamics_t_delete_simple(build_script);
-    f_macro_string_dynamics_t_delete_simple(build_shared);
-    f_macro_string_dynamics_t_delete_simple(build_static);
-    f_macro_string_dynamics_t_delete_simple(path_headers);
-    f_macro_string_dynamics_t_delete_simple(path_headers_preserve);
-    f_macro_string_dynamics_t_delete_simple(path_language);
-    f_macro_string_dynamics_t_delete_simple(path_library_script);
-    f_macro_string_dynamics_t_delete_simple(path_library_shared);
-    f_macro_string_dynamics_t_delete_simple(path_library_static);
-    f_macro_string_dynamics_t_delete_simple(path_program_script);
-    f_macro_string_dynamics_t_delete_simple(path_program_shared);
-    f_macro_string_dynamics_t_delete_simple(path_program_static);
-    f_macro_string_dynamics_t_delete_simple(path_sources);
-    f_macro_string_dynamics_t_delete_simple(path_standard);
-    f_macro_string_dynamics_t_delete_simple(process_post);
-    f_macro_string_dynamics_t_delete_simple(process_pre);
-    f_macro_string_dynamics_t_delete_simple(project_name);
-    f_macro_string_dynamics_t_delete_simple(search_exclusive);
-    f_macro_string_dynamics_t_delete_simple(search_shared);
-    f_macro_string_dynamics_t_delete_simple(search_static);
-    f_macro_string_dynamics_t_delete_simple(version_major);
-    f_macro_string_dynamics_t_delete_simple(version_micro);
-    f_macro_string_dynamics_t_delete_simple(version_minor);
-    f_macro_string_dynamics_t_delete_simple(version_target);
+    macro_f_string_dynamics_t_delete_simple(build_compiler);
+    macro_f_string_dynamics_t_delete_simple(build_indexer);
+    macro_f_string_dynamics_t_delete_simple(build_language);
+    macro_f_string_dynamics_t_delete_simple(build_script);
+    macro_f_string_dynamics_t_delete_simple(build_shared);
+    macro_f_string_dynamics_t_delete_simple(build_static);
+    macro_f_string_dynamics_t_delete_simple(path_headers);
+    macro_f_string_dynamics_t_delete_simple(path_headers_preserve);
+    macro_f_string_dynamics_t_delete_simple(path_language);
+    macro_f_string_dynamics_t_delete_simple(path_library_script);
+    macro_f_string_dynamics_t_delete_simple(path_library_shared);
+    macro_f_string_dynamics_t_delete_simple(path_library_static);
+    macro_f_string_dynamics_t_delete_simple(path_program_script);
+    macro_f_string_dynamics_t_delete_simple(path_program_shared);
+    macro_f_string_dynamics_t_delete_simple(path_program_static);
+    macro_f_string_dynamics_t_delete_simple(path_sources);
+    macro_f_string_dynamics_t_delete_simple(path_standard);
+    macro_f_string_dynamics_t_delete_simple(process_post);
+    macro_f_string_dynamics_t_delete_simple(process_pre);
+    macro_f_string_dynamics_t_delete_simple(project_name);
+    macro_f_string_dynamics_t_delete_simple(search_exclusive);
+    macro_f_string_dynamics_t_delete_simple(search_shared);
+    macro_f_string_dynamics_t_delete_simple(search_static);
+    macro_f_string_dynamics_t_delete_simple(version_major);
+    macro_f_string_dynamics_t_delete_simple(version_micro);
+    macro_f_string_dynamics_t_delete_simple(version_minor);
+    macro_f_string_dynamics_t_delete_simple(version_target);
   }
 #endif // _di_fake_build_load_setting_process_
 
@@ -2335,7 +2335,7 @@ extern "C" {
       }
     } // for
 
-    f_macro_string_dynamic_t_delete_simple(settings_file_base);
+    macro_f_string_dynamic_t_delete_simple(settings_file_base);
   }
 #endif // _di_fake_build_load_stage_
 
@@ -2522,14 +2522,14 @@ extern "C" {
 
       result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
 
       if (F_status_is_error(*status) || *status == F_child) break;
     } // for
 
-    f_macro_string_dynamic_t_delete_simple(file_name);
-    f_macro_string_dynamic_t_delete_simple(destination_path);
-    f_macro_string_dynamics_t_delete_simple(arguments);
+    macro_f_string_dynamic_t_delete_simple(file_name);
+    macro_f_string_dynamic_t_delete_simple(destination_path);
+    macro_f_string_dynamics_t_delete_simple(arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);
@@ -2552,7 +2552,7 @@ extern "C" {
     fake_build_data_t data_build = fake_build_data_t_initialize;
     fake_build_stage_t stage = fake_build_stage_t_initialize;
 
-    f_macro_mode_t_set_default_umask(mode, main->umask);
+    macro_f_mode_t_set_default_umask(mode, main->umask);
 
     fake_build_load_setting(*main, setting_file, &data_build.setting, &status);
 
@@ -2649,8 +2649,8 @@ extern "C" {
 
     fake_build_execute_process_script(*main, data_build, data_build.setting.process_post, stage.file_process_post, &status);
 
-    fake_macro_build_main_delete_simple(data_build);
-    fake_macro_build_stage_t_delete_simple(stage);
+    macro_fake_build_main_delete_simple(data_build);
+    macro_fake_build_stage_t_delete_simple(stage);
 
     // signal is set with error code only to prevent further execution above, return without the error bit set.
     if (status == F_status_set_error(F_signal)) {
@@ -2759,13 +2759,13 @@ extern "C" {
     if (F_status_is_error(*status)) {
       fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
       return 0;
     }
 
     int result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-    f_macro_string_dynamics_t_delete_simple(arguments);
+    macro_f_string_dynamics_t_delete_simple(arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);
@@ -2877,13 +2877,13 @@ extern "C" {
     if (F_status_is_error(*status)) {
       fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
-      f_macro_string_dynamics_t_delete_simple(arguments);
+      macro_f_string_dynamics_t_delete_simple(arguments);
       return 0;
     }
 
     int result = fake_execute(main, data_build.environment, data_build.setting.build_compiler, arguments, status);
 
-    f_macro_string_dynamics_t_delete_simple(arguments);
+    macro_f_string_dynamics_t_delete_simple(arguments);
 
     if (F_status_is_error_not(*status) && *status != F_child) {
       fake_build_touch(main, file_stage, status);
@@ -2899,7 +2899,7 @@ extern "C" {
 
     f_mode_t mode = f_mode_t_initialize;
 
-    f_macro_mode_t_set_default_umask(mode, main.umask);
+    macro_f_mode_t_set_default_umask(mode, main.umask);
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);

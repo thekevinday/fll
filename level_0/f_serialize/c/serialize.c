@@ -14,7 +14,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (serialize->used + value.used + 1 >= serialize->size) {
-      f_macro_string_dynamic_t_resize(status, (*serialize), serialize->size + value.used + 1);
+      macro_f_string_dynamic_t_resize(status, (*serialize), serialize->size + value.used + 1);
       if (F_status_is_error(status)) return status;
     }
 
@@ -47,10 +47,10 @@ extern "C" {
     uint8_t width = 0;
 
     while (i < serialize.used) {
-      width = f_macro_utf_byte_width(serialize.string[i]);
+      width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*strings), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*strings), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -69,8 +69,8 @@ extern "C" {
           }
 
           if (total > strings->array[strings->used].size) {
-            f_macro_string_dynamic_t_clear(strings->array[strings->used])
-            f_macro_string_dynamic_t_resize(status, strings->array[strings->used], total)
+            macro_f_string_dynamic_t_clear(strings->array[strings->used])
+            macro_f_string_dynamic_t_resize(status, strings->array[strings->used], total)
             if (F_status_is_error(status)) return status;
 
             strings->array[strings->used].size = total;
@@ -114,10 +114,10 @@ extern "C" {
     uint8_t width = 0;
 
     for (; i < serialize.used; i += width) {
-      width = f_macro_utf_byte_width(serialize.string[i]);
+      width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
-        f_macro_memory_structure_macro_increment(status, (*locations), 1, f_memory_default_allocation_step, f_macro_string_ranges_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*locations), 1, f_memory_default_allocation_step, macro_f_string_ranges_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -185,7 +185,7 @@ extern "C" {
     if (total >= dynamic->size) {
       f_status_t status_allocation = F_none;
 
-      f_macro_string_dynamic_t_resize(status_allocation, (*dynamic), total);
+      macro_f_string_dynamic_t_resize(status_allocation, (*dynamic), total);
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 

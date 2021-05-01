@@ -38,22 +38,22 @@ extern "C" {
 
   #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotess_t_initialize }
 
-  #define f_macro_fss_named_t_clear(named) \
-    f_macro_fss_object_t_clear(named.name) \
-    f_macro_fss_objects_t_clear(named.objects) \
-    f_macro_fss_contents_t_clear(named.contents) \
-    f_macro_fss_quotess_t_clear(named.quotess)
+  #define macro_f_fss_named_t_clear(named) \
+    macro_f_fss_object_t_clear(named.name) \
+    macro_f_fss_objects_t_clear(named.objects) \
+    macro_f_fss_contents_t_clear(named.contents) \
+    macro_f_fss_quotess_t_clear(named.quotess)
 
-  #define f_macro_fss_named_t_resize(status, named, length) status = f_fss_named_resize(length, &named);
-  #define f_macro_fss_named_t_adjust(status, named, length) status = f_fss_named_adjust(length, &named);
+  #define macro_f_fss_named_t_resize(status, named, length) status = f_fss_named_resize(length, &named);
+  #define macro_f_fss_named_t_adjust(status, named, length) status = f_fss_named_adjust(length, &named);
 
-  #define f_macro_fss_named_t_delete_simple(named)  f_fss_named_resize(0, &named);
-  #define f_macro_fss_named_t_destroy_simple(named) f_fss_named_adjust(0, &named);
+  #define macro_f_fss_named_t_delete_simple(named)  f_fss_named_resize(0, &named);
+  #define macro_f_fss_named_t_destroy_simple(named) f_fss_named_adjust(0, &named);
 
-  #define f_macro_fss_named_t_increase(status, named)            status = f_fss_named_increase(&named);
-  #define f_macro_fss_named_t_increase_by(status, named, amount) status = f_fss_named_increase_by(amount, &named);
-  #define f_macro_fss_named_t_decrease_by(status, named, amount) status = f_fss_named_decrease_by(amount, &named);
-  #define f_macro_fss_named_t_decimate_by(status, named, amount) status = f_fss_named_decimate_by(amount, &named);
+  #define macro_f_fss_named_t_increase(status, named)            status = f_fss_named_increase(&named);
+  #define macro_f_fss_named_t_increase_by(status, named, amount) status = f_fss_named_increase_by(amount, &named);
+  #define macro_f_fss_named_t_decrease_by(status, named, amount) status = f_fss_named_decrease_by(amount, &named);
+  #define macro_f_fss_named_t_decimate_by(status, named, amount) status = f_fss_named_decimate_by(amount, &named);
 #endif // _di_f_fss_named_t_
 
 /**
@@ -73,18 +73,18 @@ extern "C" {
 
   #define f_fss_nameds_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_nameds_t_clear(nameds) f_macro_memory_structure_clear(nameds);
+  #define macro_f_fss_nameds_t_clear(nameds) macro_f_memory_structure_clear(nameds);
 
-  #define f_macro_fss_nameds_t_resize(status, nameds, length) status = f_fss_nameds_resize(length, &nameds);
-  #define f_macro_fss_nameds_t_adjust(status, nameds, length) status = f_fss_nameds_adjust(length, &nameds);
+  #define macro_f_fss_nameds_t_resize(status, nameds, length) status = f_fss_nameds_resize(length, &nameds);
+  #define macro_f_fss_nameds_t_adjust(status, nameds, length) status = f_fss_nameds_adjust(length, &nameds);
 
-  #define f_macro_fss_nameds_t_delete_simple(nameds)  f_fss_nameds_resize(0, &nameds);
-  #define f_macro_fss_nameds_t_destroy_simple(nameds) f_fss_nameds_adjust(0, &nameds);
+  #define macro_f_fss_nameds_t_delete_simple(nameds)  f_fss_nameds_resize(0, &nameds);
+  #define macro_f_fss_nameds_t_destroy_simple(nameds) f_fss_nameds_adjust(0, &nameds);
 
-  #define f_macro_fss_nameds_t_increase(status, nameds)            status = f_fss_nameds_increase(&nameds);
-  #define f_macro_fss_nameds_t_increase_by(status, nameds, amount) status = f_fss_nameds_increase_by(amount, &nameds);
-  #define f_macro_fss_nameds_t_decrease_by(status, nameds, amount) status = f_fss_nameds_decrease_by(amount, &nameds);
-  #define f_macro_fss_nameds_t_decimate_by(status, nameds, amount) status = f_fss_nameds_decimate_by(amount, &nameds);
+  #define macro_f_fss_nameds_t_increase(status, nameds)            status = f_fss_nameds_increase(&nameds);
+  #define macro_f_fss_nameds_t_increase_by(status, nameds, amount) status = f_fss_nameds_increase_by(amount, &nameds);
+  #define macro_f_fss_nameds_t_decrease_by(status, nameds, amount) status = f_fss_nameds_decrease_by(amount, &nameds);
+  #define macro_f_fss_nameds_t_decimate_by(status, nameds, amount) status = f_fss_nameds_decimate_by(amount, &nameds);
 #endif // _di_fss_nameds_t_
 
 /**

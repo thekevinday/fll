@@ -50,7 +50,7 @@ extern "C" {
 #endif // _di_f_color_strings_s_
 
 #ifndef _di_f_color_set_string_empty_s_
-  const f_color_set_t f_color_set_empty_s = f_macro_color_set_t_initialize(&f_string_static_empty_s, &f_string_static_empty_s);
+  const f_color_set_t f_color_set_empty_s = macro_f_color_set_t_initialize(&f_string_static_empty_s, &f_string_static_empty_s);
 #endif // _di_f_color_set_string_empty_s_
 
 #ifdef __cplusplus

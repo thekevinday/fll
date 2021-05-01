@@ -268,10 +268,10 @@ extern "C" {
                         break;
                       }
 
-                      f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
+                      macro_f_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
                     }
                     else {
-                      f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
+                      macro_f_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
                     }
 
                     if (F_status_is_error(status)) {
@@ -314,9 +314,9 @@ extern "C" {
       status = fss_extended_list_write_process(main, output, quote, &object, &content, ignore, buffer);
     }
 
-    f_macro_string_dynamic_t_delete_simple(block);
-    f_macro_string_dynamic_t_delete_simple(object);
-    f_macro_string_dynamic_t_delete_simple(content);
+    macro_f_string_dynamic_t_delete_simple(block);
+    macro_f_string_dynamic_t_delete_simple(object);
+    macro_f_string_dynamic_t_delete_simple(content);
     return status;
   }
 #endif // _di_fss_extended_list_write_process_pipe_
@@ -349,10 +349,10 @@ extern "C" {
             return F_status_set_error(F_string_too_large);
           }
 
-          f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
+          macro_f_string_ranges_t_resize(status, (*ignore), ignore->size + 1);
         }
         else {
-          f_macro_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
+          macro_f_string_ranges_t_resize(status, (*ignore), ignore->size + f_fss_default_allocation_step);
         }
 
         if (F_status_is_error(status)) {

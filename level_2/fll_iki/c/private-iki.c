@@ -11,7 +11,7 @@ extern "C" {
 
     // ensure escaped is at least the same size as content.
     if (content.used > escaped->size) {
-      f_macro_string_dynamic_t_resize(status, (*escaped), content.used);
+      macro_f_string_dynamic_t_resize(status, (*escaped), content.used);
       if (F_status_is_error(status)) return status;
     }
 
@@ -75,7 +75,7 @@ extern "C" {
 
     // ensure escaped is at least the same size as content.
     if (content.used > unescaped->size) {
-      f_macro_string_dynamic_t_resize(status, (*unescaped), content.used);
+      macro_f_string_dynamic_t_resize(status, (*unescaped), content.used);
       if (F_status_is_error(status)) return status;
     }
 

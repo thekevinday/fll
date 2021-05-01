@@ -192,9 +192,9 @@ extern "C" {
       controller_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
-      f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+      macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
-      fll_macro_error_print_t_initialize_warning(), \
+      macro_fll_error_print_t_initialize_warning(), \
       0, \
       0, \
       0, \

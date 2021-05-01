@@ -27,7 +27,7 @@ extern "C" {
 
   #define f_limit_value_t_initialize { 0, 0 }
 
-  #define f_macro_limit_value_t_clear(value) \
+  #define macro_f_limit_value_t_clear(value) \
     value.rlim_cur = 0; \
     value.rlim_max = 0;
 #endif // _di_f_limit_value_t_
@@ -49,18 +49,18 @@ extern "C" {
 
   #define f_limit_values_t_initialize { 0, 0, 0 }
 
-  #define f_macro_limit_values_t_clear(values) f_macro_memory_structure_clear(values)
+  #define macro_f_limit_values_t_clear(values) macro_f_memory_structure_clear(values)
 
-  #define f_macro_limit_values_t_resize(status, values, length) f_macro_memory_structure_resize(status, values, f_limit_value_t, length)
-  #define f_macro_limit_values_t_adjust(status, values, length) f_macro_memory_structure_adjust(status, values, f_limit_value_t, length)
+  #define macro_f_limit_values_t_resize(status, values, length) macro_f_memory_structure_resize(status, values, f_limit_value_t, length)
+  #define macro_f_limit_values_t_adjust(status, values, length) macro_f_memory_structure_adjust(status, values, f_limit_value_t, length)
 
-  #define f_macro_limit_values_t_delete_simple(values)  f_macro_memory_structure_delete_simple(values, f_limit_value_t)
-  #define f_macro_limit_values_t_destroy_simple(values) f_macro_memory_structure_destroy_simple(values, f_limit_value_t)
+  #define macro_f_limit_values_t_delete_simple(values)  macro_f_memory_structure_delete_simple(values, f_limit_value_t)
+  #define macro_f_limit_values_t_destroy_simple(values) macro_f_memory_structure_destroy_simple(values, f_limit_value_t)
 
-  #define f_macro_limit_values_t_increase(status, values)            f_macro_memory_structure_increase(status, values, f_limit_value_t)
-  #define f_macro_limit_values_t_increase_by(status, values, amount) f_macro_memory_structure_increase_by(status, values, f_limit_value_t, amount)
-  #define f_macro_limit_values_t_decrease_by(status, values, amount) f_macro_memory_structure_decrease_by(status, values, f_limit_value_t, amount)
-  #define f_macro_limit_values_t_decimate_by(status, values, amount) f_macro_memory_structure_decimate_by(status, values, f_limit_value_t, amount)
+  #define macro_f_limit_values_t_increase(status, values)            macro_f_memory_structure_increase(status, values, f_limit_value_t)
+  #define macro_f_limit_values_t_increase_by(status, values, amount) macro_f_memory_structure_increase_by(status, values, f_limit_value_t, amount)
+  #define macro_f_limit_values_t_decrease_by(status, values, amount) macro_f_memory_structure_decrease_by(status, values, f_limit_value_t, amount)
+  #define macro_f_limit_values_t_decimate_by(status, values, amount) macro_f_memory_structure_decimate_by(status, values, f_limit_value_t, amount)
 #endif // _di_f_limit_values_t_
 
 /**
@@ -77,7 +77,7 @@ extern "C" {
 
   #define f_limit_set_t_initialize { 0, 0 }
 
-  #define f_macro_limit_set_t_clear(set) \
+  #define macro_f_limit_set_t_clear(set) \
     set.type = 0; \
     set.value = 0;
 #endif // _di_f_limit_set_t_
@@ -99,18 +99,18 @@ extern "C" {
 
   #define f_limit_sets_t_initialize { 0, 0, 0 }
 
-  #define f_macro_limit_sets_t_clear(sets) f_macro_memory_structure_clear(sets)
+  #define macro_f_limit_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
 
-  #define f_macro_limit_sets_t_resize(status, sets, length) f_macro_memory_structure_resize(status, sets, f_limit_set_t, length)
-  #define f_macro_limit_sets_t_adjust(status, sets, length) f_macro_memory_structure_adjust(status, sets, f_limit_set_t, length)
+  #define macro_f_limit_sets_t_resize(status, sets, length) macro_f_memory_structure_resize(status, sets, f_limit_set_t, length)
+  #define macro_f_limit_sets_t_adjust(status, sets, length) macro_f_memory_structure_adjust(status, sets, f_limit_set_t, length)
 
-  #define f_macro_limit_sets_t_delete_simple(sets)  f_macro_memory_structure_delete_simple(sets, f_limit_set_t)
-  #define f_macro_limit_sets_t_destroy_simple(sets) f_macro_memory_structure_destroy_simple(sets, f_limit_set_t)
+  #define macro_f_limit_sets_t_delete_simple(sets)  macro_f_memory_structure_delete_simple(sets, f_limit_set_t)
+  #define macro_f_limit_sets_t_destroy_simple(sets) macro_f_memory_structure_destroy_simple(sets, f_limit_set_t)
 
-  #define f_macro_limit_sets_t_increase(status, sets)            f_macro_memory_structure_increase(status, sets, f_limit_set_t)
-  #define f_macro_limit_sets_t_increase_by(status, sets, amount) f_macro_memory_structure_increase_by(status, sets, f_limit_set_t, amount)
-  #define f_macro_limit_sets_t_decrease_by(status, sets, amount) f_macro_memory_structure_decrease_by(status, sets, f_limit_set_t, amount)
-  #define f_macro_limit_sets_t_decimate_by(status, sets, amount) f_macro_memory_structure_decimate_by(status, sets, f_limit_set_t, amount)
+  #define macro_f_limit_sets_t_increase(status, sets)            macro_f_memory_structure_increase(status, sets, f_limit_set_t)
+  #define macro_f_limit_sets_t_increase_by(status, sets, amount) macro_f_memory_structure_increase_by(status, sets, f_limit_set_t, amount)
+  #define macro_f_limit_sets_t_decrease_by(status, sets, amount) macro_f_memory_structure_decrease_by(status, sets, f_limit_set_t, amount)
+  #define macro_f_limit_sets_t_decimate_by(status, sets, amount) macro_f_memory_structure_decimate_by(status, sets, f_limit_set_t, amount)
 #endif // _di_f_limit_sets_t_
 
 #ifdef __cplusplus

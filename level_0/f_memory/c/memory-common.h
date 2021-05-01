@@ -48,12 +48,12 @@ extern "C" {
  *
  * structure: the structure to operate on.
  */
-#ifndef _di_f_macro_memory_structure_clear_
-  #define f_macro_memory_structure_clear(structure) \
+#ifndef _di_macro_f_memory_structure_clear_
+  #define macro_f_memory_structure_clear(structure) \
     structure.array = 0; \
     structure.size = 0; \
     structure.used = 0;
-#endif // _di_f_macro_memory_structure_clear_
+#endif // _di_macro_f_memory_structure_clear_
 
 /**
  * Resize a generic memory structure.
@@ -63,10 +63,10 @@ extern "C" {
  * type:      the structure type.
  * length:    the new size of the array.
  */
-#ifndef _di_f_macro_memory_structure_resize_
-  #define f_macro_memory_structure_resize(status, structure, type, length) \
+#ifndef _di_macro_f_memory_structure_resize_
+  #define macro_f_memory_structure_resize(status, structure, type, length) \
     status = f_memory_structure_resize(length, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_resize_
+#endif // _di_macro_f_memory_structure_resize_
 
 /**
  * Adjust a generic memory structure.
@@ -76,10 +76,10 @@ extern "C" {
  * type:      the structure type.
  * length:    the new size of the array.
  */
-#ifndef _di_f_macro_memory_structure_adjust_
-  #define f_macro_memory_structure_adjust(status, structure, type, length) \
+#ifndef _di_macro_f_memory_structure_adjust_
+  #define macro_f_memory_structure_adjust(status, structure, type, length) \
     status = f_memory_structure_adjust(length, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_adjust_
+#endif // _di_macro_f_memory_structure_adjust_
 
 /**
  * Delete a generic memory structure.
@@ -88,10 +88,10 @@ extern "C" {
  * structure: the structure to operate on.
  * type:      the structure type.
  */
-#ifndef _di_f_macro_memory_structure_delete_
-  #define f_macro_memory_structure_delete(status, structure, type) \
+#ifndef _di_macro_f_memory_structure_delete_
+  #define macro_f_memory_structure_delete(status, structure, type) \
     status = f_memory_structure_resize(0, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_delete_
+#endif // _di_macro_f_memory_structure_delete_
 
 /**
  * Destroy a generic memory structure.
@@ -100,10 +100,10 @@ extern "C" {
  * structure: the structure to operate on.
  * type:      the structure type.
  */
-#ifndef _di_f_macro_memory_structure_destroy_
-  #define f_macro_memory_structure_destroy(status, structure, type) \
+#ifndef _di_macro_f_memory_structure_destroy_
+  #define macro_f_memory_structure_destroy(status, structure, type) \
     status = f_memory_structure_adjust(0, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_destroy_
+#endif // _di_macro_f_memory_structure_destroy_
 
 /**
  * Delete a generic memory structure.
@@ -111,10 +111,10 @@ extern "C" {
  * structure: the structure to operate on.
  * type:      the structure type.
  */
-#ifndef _di_f_macro_memory_structure_delete_simple_
-  #define f_macro_memory_structure_delete_simple(structure, type) \
+#ifndef _di_macro_f_memory_structure_delete_simple_
+  #define macro_f_memory_structure_delete_simple(structure, type) \
     f_memory_structure_resize(0, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_delete_simple_
+#endif // _di_macro_f_memory_structure_delete_simple_
 
 /**
  * Destroy a generic memory structure.
@@ -122,10 +122,10 @@ extern "C" {
  * structure: the structure to operate on.
  * type:      the structure type.
  */
-#ifndef _di_f_macro_memory_structure_destroy_simple_
-  #define f_macro_memory_structure_destroy_simple(structure, type) \
+#ifndef _di_macro_f_memory_structure_destroy_simple_
+  #define macro_f_memory_structure_destroy_simple(structure, type) \
     f_memory_structure_adjust(0, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_destroy_simple_
+#endif // _di_macro_f_memory_structure_destroy_simple_
 
 /**
  * Increase a generic memory structure.
@@ -134,10 +134,10 @@ extern "C" {
  * structure: the structure to operate on.
  * type:      the structure type.
  */
-#ifndef _di_f_macro_memory_structure_increase_
-  #define f_macro_memory_structure_increase(status, structure, type) \
+#ifndef _di_macro_f_memory_structure_increase_
+  #define macro_f_memory_structure_increase(status, structure, type) \
     status = f_memory_structure_increase(sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_increase_
+#endif // _di_macro_f_memory_structure_increase_
 
 /**
  * Increase a generic memory structure by some amount.
@@ -147,10 +147,10 @@ extern "C" {
  * type:      the structure type.
  * amount:    the amount to increase the size of the array by.
  */
-#ifndef _di_f_macro_memory_structure_increase_by_
-  #define f_macro_memory_structure_increase_by(status, structure, type, amount) \
+#ifndef _di_macro_f_memory_structure_increase_by_
+  #define macro_f_memory_structure_increase_by(status, structure, type, amount) \
     status = f_memory_structure_increase_by(amount, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_increase_by_
+#endif // _di_macro_f_memory_structure_increase_by_
 
 /**
  * Decrease a generic memory structure by some amount.
@@ -160,10 +160,10 @@ extern "C" {
  * type:      the structure type.
  * amount:    the amount to decrease the size of the array by.
  */
-#ifndef _di_f_macro_memory_structure_decrease_by_
-  #define f_macro_memory_structure_decrease_by(status, structure, type, amount) \
+#ifndef _di_macro_f_memory_structure_decrease_by_
+  #define macro_f_memory_structure_decrease_by(status, structure, type, amount) \
     status = f_memory_structure_decrease_by(amount, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_decrease_by_
+#endif // _di_macro_f_memory_structure_decrease_by_
 
 /**
  * Decimate a generic memory structure by some amount.
@@ -173,10 +173,10 @@ extern "C" {
  * type:      the structure type.
  * amount:    the amount to decimate the size of the array by.
  */
-#ifndef _di_f_macro_memory_structure_decimate_by_
-  #define f_macro_memory_structure_decimate_by(status, structure, type, amount) \
+#ifndef _di_macro_f_memory_structure_decimate_by_
+  #define macro_f_memory_structure_decimate_by(status, structure, type, amount) \
     status = f_memory_structure_decimate_by(amount, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
-#endif // _di_f_macro_memory_structure_decimate_by_
+#endif // _di_macro_f_memory_structure_decimate_by_
 
 /**
  * Reset a generic memory stuctures to 0 (clear all values).
@@ -185,12 +185,12 @@ extern "C" {
  *
  * structures: the structures to operate on.
  */
-#ifndef _di_f_macro_memory_structures_clear_
-  #define f_macro_memory_structures_clear(structures) \
+#ifndef _di_macro_f_memory_structures_clear_
+  #define macro_f_memory_structures_clear(structures) \
     structures.array = 0; \
     structures.size = 0; \
     structures.used = 0;
-#endif // _di_f_macro_memory_structures_clear_
+#endif // _di_macro_f_memory_structures_clear_
 
 /**
  * Resize a generic memory structures.
@@ -202,15 +202,15 @@ extern "C" {
  * length:         the new size of the array.
  * type_length:    the data type of the length variable type.
  */
-#ifndef _di_f_macro_memory_structures_resize_
-  #define f_macro_memory_structures_resize(status, structures, type_structure, type_structures, length, type_length) \
+#ifndef _di_macro_f_memory_structures_resize_
+  #define macro_f_memory_structures_resize(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
     for (register type_length _macro__i = length; _macro__i < structures.size; ++_macro__i) { \
       status = f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
       if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_resize(0, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_resize_
+#endif // _di_macro_f_memory_structures_resize_
 
 /**
  * Adjust a generic memory structures.
@@ -222,15 +222,15 @@ extern "C" {
  * length:         the new size of the array.
  * type_length:    the data type of the length variable type.
  */
-#ifndef _di_f_macro_memory_structures_adjust_
-  #define f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, length, type_length) \
+#ifndef _di_macro_f_memory_structures_adjust_
+  #define macro_f_memory_structures_adjust(status, structures, type_structure, type_structures, length, type_length) \
     status = F_none; \
     for (register type_length _macro__i = length; _macro__i < structures.size; ++_macro__i) { \
       status = f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[_macro__i].array, &structures.array[_macro__i].used, &structures.array[_macro__i].size); \
       if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_adjust(0, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_adjust_
+#endif // _di_macro_f_memory_structures_adjust_
 
 /**
  * Delete a generic memory structures.
@@ -240,8 +240,8 @@ extern "C" {
  * type_stucture:  the structure type.
  * type_stuctures: the structures type.
  */
-#ifndef _di_f_macro_memory_structures_delete_
-  #define f_macro_memory_structures_delete(status, structures, type_structure, type_structures) \
+#ifndef _di_macro_f_memory_structures_delete_
+  #define macro_f_memory_structures_delete(status, structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
       structures.used--; \
@@ -249,7 +249,7 @@ extern "C" {
       if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_resize(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_delete_
+#endif // _di_macro_f_memory_structures_delete_
 
 /**
  * Destroy a generic memory structures.
@@ -259,8 +259,8 @@ extern "C" {
  * type_stucture:  the structure type.
  * type_stuctures: the structures type.
  */
-#ifndef _di_f_macro_memory_structures_destroy_
-  #define f_macro_memory_structures_destroy(status, structures, type_structure, type_structures) \
+#ifndef _di_macro_f_memory_structures_destroy_
+  #define macro_f_memory_structures_destroy(status, structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
       structures.used--; \
@@ -268,7 +268,7 @@ extern "C" {
       if (F_status_is_error(status)) break; \
     } \
     if (F_status_is_error_not(status)) status = f_memory_structure_adjust(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_destroy_
+#endif // _di_macro_f_memory_structures_destroy_
 
 /**
  * Delete a generic memory structures.
@@ -277,15 +277,15 @@ extern "C" {
  * type_stucture:  the structure type.
  * type_stuctures: the structures type.
  */
-#ifndef _di_f_macro_memory_structures_delete_simple_
-  #define f_macro_memory_structures_delete_simple(structures, type_structure, type_structures) \
+#ifndef _di_macro_f_memory_structures_delete_simple_
+  #define macro_f_memory_structures_delete_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
       structures.used--; \
       f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
     } \
     f_memory_structure_resize(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_delete_simple_
+#endif // _di_macro_f_memory_structures_delete_simple_
 
 /**
  * Destroy a generic memory structures.
@@ -294,15 +294,15 @@ extern "C" {
  * type_stucture:  the structure type.
  * type_stuctures: the structures type.
  */
-#ifndef _di_f_macro_memory_structures_destroy_simple_
-  #define f_macro_memory_structures_destroy_simple(structures, type_structure, type_structures) \
+#ifndef _di_macro_f_memory_structures_destroy_simple_
+  #define macro_f_memory_structures_destroy_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
       structures.used--; \
       f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
     } \
     f_memory_structure_adjust(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_destroy_simple_
+#endif // _di_macro_f_memory_structures_destroy_simple_
 
 /**
  * Increase a generic memory structures by 1.
@@ -314,10 +314,10 @@ extern "C" {
  * type_stuctures: the structures type.
  * type_length:    the data type of the length variable type.
  */
-#ifndef _di_f_macro_memory_structures_increase_
-  #define f_macro_memory_structures_increase(status, structures, type_structures, type_length) \
+#ifndef _di_macro_f_memory_structures_increase_
+  #define macro_f_memory_structures_increase(status, structures, type_structures, type_length) \
     status = f_memory_structure_increase(sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_increase_
+#endif // _di_macro_f_memory_structures_increase_
 
 /**
  * Increase a generic memory structures by the given amount.
@@ -330,10 +330,10 @@ extern "C" {
  * type_length:    the data type of the length variable type.
  * amount:         the amount to increase by.
  */
-#ifndef _di_f_macro_memory_structures_increase_by_
-  #define f_macro_memory_structures_increase_by(status, structures, type_structures, type_length, amount) \
+#ifndef _di_macro_f_memory_structures_increase_by_
+  #define macro_f_memory_structures_increase_by(status, structures, type_structures, type_length, amount) \
     status = f_memory_structure_increase_by(amount, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_increase_by_
+#endif // _di_macro_f_memory_structures_increase_by_
 
 /**
  * Decrease a generic memory structures by the given amount.
@@ -345,13 +345,13 @@ extern "C" {
  * type_length:    the data type of the length variable type.
  * amount:         the amount to decrease by.
  */
-#ifndef _di_f_macro_memory_structures_decrease_by_
-  #define f_macro_memory_structures_decrease_by(status, structures, type_structure, type_structures, type_length, amount) \
+#ifndef _di_macro_f_memory_structures_decrease_by_
+  #define macro_f_memory_structures_decrease_by(status, structures, type_structure, type_structures, type_length, amount) \
     if (amount && structures.size) { \
-      f_macro_memory_structures_resize(status, structures, type_structure, type_structures, (amount < structures.size ? structures.size - amount : 0), type_length); \
+      macro_f_memory_structures_resize(status, structures, type_structure, type_structures, (amount < structures.size ? structures.size - amount : 0), type_length); \
     } \
     status = f_memory_structure_decrease_by(amount, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_decrease_by_
+#endif // _di_macro_f_memory_structures_decrease_by_
 
 /**
  * Decimate a generic memory structures by the given amount.
@@ -363,13 +363,13 @@ extern "C" {
  * type_length:    the data type of the length variable type.
  * amount:         the amount to decimate by.
  */
-#ifndef _di_f_macro_memory_structures_decimate_by_
-  #define f_macro_memory_structures_decimate_by(status, structures, type_structure, type_structures, type_length, amount) \
+#ifndef _di_macro_f_memory_structures_decimate_by_
+  #define macro_f_memory_structures_decimate_by(status, structures, type_structure, type_structures, type_length, amount) \
     if (amount && structures.size) { \
-      f_macro_memory_structures_adjust(status, structures, type_structure, type_structures, (amount < structures.size ? structures.size - amount : 0), type_length); \
+      macro_f_memory_structures_adjust(status, structures, type_structure, type_structures, (amount < structures.size ? structures.size - amount : 0), type_length); \
     } \
     status = f_memory_structure_decimate_by(amount, sizeof(type_structures), (void **) &structures.array, &structures.used, &structures.size);
-#endif // _di_f_macro_memory_structures_decimate_by_
+#endif // _di_macro_f_memory_structures_decimate_by_
 
 /**
  * Provide a macro for calling other macros for incrementing a buffer.
@@ -387,8 +387,8 @@ extern "C" {
  * macro_resize:    the resize structure macro to call that excepts the exact arguments: (status, structure, length).
  * error_too_large: the error status to return when f_array_length_t_size would be exceeded.
  */
-#ifndef _di_f_macro_memory_structure_macro_increment_
-  #define f_macro_memory_structure_macro_increment(status, structure, step, step_default, macro_resize, error_too_large) \
+#ifndef _di_macro_f_memory_structure_increment_
+  #define macro_f_memory_structure_increment(status, structure, step, step_default, macro_resize, error_too_large) \
     if (structure.used + step > structure.size) { \
       if (structure.used + step_default > f_array_length_t_size) { \
         if (structure.used + step > f_array_length_t_size) { \
@@ -402,7 +402,7 @@ extern "C" {
         macro_resize(status, structure, structure.size + step_default); \
       } \
     }
-#endif // _di_f_macro_memory_structure_macro_increment_
+#endif // _di_macro_f_memory_structure_increment_
 
 #ifdef __cplusplus
 } // extern "C"

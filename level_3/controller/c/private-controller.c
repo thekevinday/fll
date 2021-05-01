@@ -49,7 +49,7 @@ extern "C" {
     cache->action.name_file.used = 0;
     cache->buffer_file.used = 0;
 
-    f_macro_time_spec_t_clear(cache->timestamp);
+    macro_f_time_spec_t_clear(cache->timestamp);
 
     status = f_string_append(path_prefix, path_prefix_length, &cache->action.name_file);
 
@@ -176,7 +176,7 @@ extern "C" {
         status = f_directory_exists(path_directory.string);
       }
 
-      f_macro_string_dynamic_t_delete_simple(path_directory)
+      macro_f_string_dynamic_t_delete_simple(path_directory)
 
       if (F_status_is_error(status)) return status;
 
@@ -227,7 +227,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = f_macro_string_range_t_initialize(pid_buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -247,7 +247,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(pid_buffer);
+    macro_f_string_dynamic_t_delete_simple(pid_buffer);
 
     return status;
   }
@@ -280,7 +280,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = f_macro_string_range_t_initialize(pid_buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -297,7 +297,7 @@ extern "C" {
       }
     }
 
-    f_macro_string_dynamic_t_delete_simple(pid_buffer);
+    macro_f_string_dynamic_t_delete_simple(pid_buffer);
 
     return status;
   }
@@ -479,10 +479,10 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, global.thread);
+      controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
 
       return status;
     }
@@ -583,10 +583,10 @@ extern "C" {
 
               if (error_has) break;
 
-              f_macro_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
+              macro_f_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
 
               if (F_status_is_error(status2)) {
-                controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "f_macro_array_lengths_t_increase_by", F_true, global.thread);
+                controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
 
                 return status2;
               }
@@ -723,10 +723,10 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, global->thread);
+      controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);
 
       return status;
     }
@@ -971,10 +971,10 @@ extern "C" {
             return F_status_is_error(F_critical);
           }
 
-          f_macro_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+          macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, global->thread);
+            controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);
 
             return status;
           }
@@ -1039,7 +1039,7 @@ extern "C" {
 
           const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
           char id_rule_name[id_rule_length + 1];
-          const f_string_static_t alias_rule = f_macro_string_static_t_initialize(id_rule_name, id_rule_length);
+          const f_string_static_t alias_rule = macro_f_string_static_t_initialize(id_rule_name, id_rule_length);
 
           memcpy(id_rule_name, entry_action->parameters.array[0].string, entry_action->parameters.array[0].used);
           memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, entry_action->parameters.array[1].used);
@@ -1583,7 +1583,7 @@ extern "C" {
       if (status == F_false) return F_false;
     }
 
-    for (f_array_length_t i = f_macro_utf_byte_width(name.string[0]); i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
+    for (f_array_length_t i = macro_f_utf_byte_width(name.string[0]); i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
 
       if (name.string[i] == '_') continue;
 
@@ -1604,7 +1604,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < name.used; i += f_macro_utf_byte_width(name.string[i])) {
+    for (f_array_length_t i = 0; i < name.used; i += macro_f_utf_byte_width(name.string[i])) {
 
       status = f_utf_is_graph(name.string, name.used);
 

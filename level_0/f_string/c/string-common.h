@@ -34,13 +34,13 @@ extern "C" {
 
   #define f_string_t_initialize 0
 
-  #define f_macro_string_t_clear(string) string = 0;
+  #define macro_f_string_t_clear(string) string = 0;
 
-  #define f_macro_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_string_t), (void **) & string);
-  #define f_macro_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_string_t), (void **) & string);
+  #define macro_f_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_string_t), (void **) & string);
+  #define macro_f_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_string_t), (void **) & string);
 
-  #define f_macro_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_string_t), (void **) & string);
-  #define f_macro_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
+  #define macro_f_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_string_t), (void **) & string);
+  #define macro_f_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
 #endif // _di_f_string_t_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
 
   #define f_string_constant_t_initialize 0
 
-  #define f_macro_string_constant_t_clear(string) string = 0;
+  #define macro_f_string_constant_t_clear(string) string = 0;
 #endif // _di_f_string_t_
 
 /**

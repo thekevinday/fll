@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_string_static_empty_s_
-  const f_string_static_t f_string_static_empty_s = f_macro_string_static_t_initialize("", 0);
+  const f_string_static_t f_string_static_empty_s = macro_f_string_static_t_initialize("", 0);
 #endif // _di_f_string_static_empty_s_
 
 #ifndef _di_f_string_dynamic_adjust_

@@ -32,7 +32,7 @@ extern "C" {
 
   #define f_utf_string_triple_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamic_t_initialize, f_utf_string_dynamic_t_initialize }
 
-  #define f_macro_utf_string_triple_t_clear(triple) \
+  #define macro_f_utf_string_triple_t_clear(triple) \
     triple.one.array = 0; \
     triple.one.size = 0; \
     triple.one.used = 0; \
@@ -43,15 +43,15 @@ extern "C" {
     triple.three.size = 0; \
     triple.three.used = 0;
 
-  #define f_macro_utf_string_triple_t_delete_simple(triple) \
-    f_macro_utf_string_dynamic_t_delete_simple(triple.one) \
-    f_macro_utf_string_dynamic_t_delete_simple(triple.two) \
-    f_macro_utf_string_dynamic_t_delete_simple(triple.three)
+  #define macro_f_utf_string_triple_t_delete_simple(triple) \
+    macro_f_utf_string_dynamic_t_delete_simple(triple.one) \
+    macro_f_utf_string_dynamic_t_delete_simple(triple.two) \
+    macro_f_utf_string_dynamic_t_delete_simple(triple.three)
 
-  #define f_macro_utf_string_triple_t_destroy_simple(triple) \
-    f_macro_utf_string_dynamic_t_destroy_simple(triple.one) \
-    f_macro_utf_string_dynamic_t_destroy_simple(triple.two) \
-    f_macro_utf_string_dynamic_t_destroy_simple(triple.three)
+  #define macro_f_utf_string_triple_t_destroy_simple(triple) \
+    macro_f_utf_string_dynamic_t_destroy_simple(triple.one) \
+    macro_f_utf_string_dynamic_t_destroy_simple(triple.two) \
+    macro_f_utf_string_dynamic_t_destroy_simple(triple.three)
 #endif // _di_f_utf_string_triple_t_
 
 /**
@@ -71,18 +71,18 @@ extern "C" {
 
   #define f_utf_string_triples_t_initialize f_utf_string_statics_t_initialize
 
-  #define f_macro_utf_string_triples_t_clear(triples) f_macro_memory_structure_clear(triples)
+  #define macro_f_utf_string_triples_t_clear(triples) macro_f_memory_structure_clear(triples)
 
-  #define f_macro_utf_string_triples_t_resize(status, triples, length) status = f_utf_string_triples_resize(length, &triples);
-  #define f_macro_utf_string_triples_t_adjust(status, triples, length) status = f_utf_string_triples_adjust(length, &triples);
+  #define macro_f_utf_string_triples_t_resize(status, triples, length) status = f_utf_string_triples_resize(length, &triples);
+  #define macro_f_utf_string_triples_t_adjust(status, triples, length) status = f_utf_string_triples_adjust(length, &triples);
 
-  #define f_macro_utf_string_triples_t_delete_simple(triples)  f_utf_string_triples_resize(0, &triples);
-  #define f_macro_utf_string_triples_t_destroy_simple(triples) f_utf_string_triples_adjust(0, &triples);
+  #define macro_f_utf_string_triples_t_delete_simple(triples)  f_utf_string_triples_resize(0, &triples);
+  #define macro_f_utf_string_triples_t_destroy_simple(triples) f_utf_string_triples_adjust(0, &triples);
 
-  #define f_macro_utf_string_triples_t_increase(status, triples)            status = f_utf_string_triples_increase(triples);
-  #define f_macro_utf_string_triples_t_increase_by(status, triples, amount) status = f_utf_string_triples_increase_by(amount, triples);
-  #define f_macro_utf_string_triples_t_decrease_by(status, triples, amount) status = f_utf_string_triples_decrease_by(amount, triples);
-  #define f_macro_utf_string_triples_t_decimate_by(status, triples, amount) status = f_utf_string_triples_decimate_by(amount, triples);
+  #define macro_f_utf_string_triples_t_increase(status, triples)            status = f_utf_string_triples_increase(triples);
+  #define macro_f_utf_string_triples_t_increase_by(status, triples, amount) status = f_utf_string_triples_increase_by(amount, triples);
+  #define macro_f_utf_string_triples_t_decrease_by(status, triples, amount) status = f_utf_string_triples_decrease_by(amount, triples);
+  #define macro_f_utf_string_triples_t_decimate_by(status, triples, amount) status = f_utf_string_triples_decimate_by(amount, triples);
 #endif // _di_f_utf_string_triples_t_
 
 /**

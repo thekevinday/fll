@@ -41,7 +41,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = fl_macro_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
+      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
       *status = fll_execute_program(program.string, arguments, &parameter, 0, (void *) &return_code);
 
@@ -105,12 +105,12 @@ extern "C" {
             size_file = fake_common_initial_buffer_max;
           }
 
-           f_macro_string_dynamic_t_resize((status), (*buffer), size_file);
+           macro_f_string_dynamic_t_resize((status), (*buffer), size_file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "allocate buffer size for", fll_error_file_type_file);
 
-            f_macro_string_dynamic_t_delete_simple((*buffer));
+            macro_f_string_dynamic_t_delete_simple((*buffer));
             return status;
           }
         }
@@ -143,7 +143,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(main.error, F_status_set_fine(status), name_function, F_true, path_file, "read", fll_error_file_type_file);
 
-      f_macro_string_dynamic_t_delete_simple((*buffer));
+      macro_f_string_dynamic_t_delete_simple((*buffer));
     }
 
     return status;
@@ -705,10 +705,10 @@ extern "C" {
           }
         }
         else if (parameter_default_lengths[i] > 0) {
-          f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
+          macro_f_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_macro_string_dynamic_t_resize", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "macro_f_string_dynamic_t_resize", F_true);
             return status;
           }
 
@@ -785,10 +785,10 @@ extern "C" {
           }
         }
         else if (parameter_default_lengths[i] > 0) {
-           f_macro_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
+           macro_f_string_dynamic_t_resize(status, (*parameters_value[i]), parameter_default_lengths[i]);
 
           if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), " f_macro_string_dynamic_t_resize", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
+            if (fll_error_print(main->error, F_status_set_fine(status), " macro_f_string_dynamic_t_resize", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
               fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
               f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to load default for the parameter '", fll_error_print_error);
               f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameters_name[i]);

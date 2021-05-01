@@ -154,10 +154,10 @@ extern "C" {
       f_string_static_t_initialize, \
     }
 
-  #define iki_read_macro_substitution_t_initialize(replace, with) \
+  #define macro_iki_read_substitution_t_initialize(replace, with) \
     { \
-      f_macro_string_static_t_initialize(replace), \
-      f_macro_string_static_t_initialize(with), \
+      macro_f_string_static_t_initialize(replace), \
+      macro_f_string_static_t_initialize(with), \
     }
 #endif // _di_iki_read_substitution_t_
 
@@ -171,13 +171,13 @@ extern "C" {
 
   #define iki_read_substitutions_t_initialize { 0, 0, 0 }
 
-  #define iki_read_macro_substitutions_t_clear(replacements) f_macro_memory_structure_clear(replacements)
+  #define macro_iki_read_substitutions_t_clear(replacements) macro_f_memory_structure_clear(replacements)
 
-  #define iki_read_macro_substitutions_t_delete_simple(replacements)  f_macro_memory_structure_delete_simple(replacements, iki_read_substitution_t)
-  #define iki_read_macro_substitutions_t_destroy_simple(replacements) f_macro_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
+  #define macro_iki_read_substitutions_t_delete_simple(replacements)  macro_f_memory_structure_delete_simple(replacements, iki_read_substitution_t)
+  #define macro_iki_read_substitutions_t_destroy_simple(replacements) macro_f_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
 
-  #define iki_read_macro_substitutions_t_resize(status, replacements, length) f_macro_memory_structure_resize(status, replacements, iki_read_substitution_t, length)
-  #define iki_read_macro_substitutions_t_adjust(status, replacements, length) f_macro_memory_structure_adjust(status, replacements, iki_read_substitution_t, length)
+  #define macro_iki_read_substitutions_t_resize(status, replacements, length) macro_f_memory_structure_resize(status, replacements, iki_read_substitution_t, length)
+  #define macro_iki_read_substitutions_t_adjust(status, replacements, length) macro_f_memory_structure_adjust(status, replacements, iki_read_substitution_t, length)
 #endif // _di_iki_read_substitutions_t_
 
 #ifndef _di_iki_read_main_t_
@@ -207,7 +207,7 @@ extern "C" {
       iki_read_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
-      f_macro_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
+      macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       0, \
       0, \

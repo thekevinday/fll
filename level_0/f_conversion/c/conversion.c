@@ -214,7 +214,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (!number) {
-      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
+      macro_f_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
       destination->string[destination->used] = f_string_ascii_0_s[0];
@@ -239,10 +239,10 @@ extern "C" {
     } // for
 
     if (negative) {
-      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 2);
+      macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total + 2);
     }
     else {
-      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
+      macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
     }
 
     if (F_status_is_error(status)) return status;
@@ -335,7 +335,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (!number) {
-      f_macro_string_dynamic_t_resize(status, (*destination), destination->used + 2);
+      macro_f_string_dynamic_t_resize(status, (*destination), destination->used + 2);
       if (F_status_is_error(status)) return status;
 
       destination->string[destination->used] = f_string_ascii_0_s[0];
@@ -351,7 +351,7 @@ extern "C" {
       work /= base;
     } // for
 
-    f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
+    macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
     if (F_status_is_error(status)) return status;
 
     f_number_unsigned_t current = number;

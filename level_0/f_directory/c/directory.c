@@ -151,12 +151,12 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        f_macro_memory_structure_macro_increment(status, (*names), 1, f_directory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*names), 1, f_directory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) break;
       }
 
-      f_macro_string_dynamic_t_clear(names->array[names->used])
-      f_macro_string_dynamic_t_resize(status, names->array[names->used], size);
+      macro_f_string_dynamic_t_clear(names->array[names->used])
+      macro_f_string_dynamic_t_resize(status, names->array[names->used], size);
       if (F_status_is_error(status)) break;
 
       memcpy(names->array[names->used].string, listing[i]->d_name, size);

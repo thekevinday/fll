@@ -13,7 +13,7 @@ extern "C" {
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
 
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_t_delete_simple(listing);
+      macro_f_directory_listing_t_delete_simple(listing);
       return status;
     }
 
@@ -42,7 +42,7 @@ extern "C" {
           status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
         } // for
 
-        f_macro_string_dynamics_t_delete_simple((*list[i]));
+        macro_f_string_dynamics_t_delete_simple((*list[i]));
       } // for
     }
 
@@ -122,7 +122,7 @@ extern "C" {
       }
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.directory);
+    macro_f_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
@@ -158,7 +158,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -178,7 +178,7 @@ extern "C" {
           size = source.used + file.used + 1;
         }
 
-        f_macro_directory_status_t_resize(status, failure, size + 1);
+        macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_source, size);
@@ -192,7 +192,7 @@ extern "C" {
           size = destination.used + file.used + 1;
         }
 
-        f_macro_directory_status_t_resize(status, failure, size + 1);
+        macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_destination, size);
@@ -224,7 +224,7 @@ extern "C" {
     status = private_fl_directory_list(source.string, 0, 0, F_false, &listing);
 
     if (F_status_is_error(status)) {
-      f_macro_directory_listing_t_delete_simple(listing);
+      macro_f_directory_listing_t_delete_simple(listing);
       return status;
     }
 
@@ -252,7 +252,7 @@ extern "C" {
           status = private_fl_directory_copy_file(list[i]->array[j], source, destination, mode, recurse);
         } // for
 
-        f_macro_string_dynamics_t_delete_simple((*list[i]));
+        macro_f_string_dynamics_t_delete_simple((*list[i]));
       } // for
     }
 
@@ -318,7 +318,7 @@ extern "C" {
       }
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(listing.directory);
+    macro_f_string_dynamics_t_delete_simple(listing.directory);
 
     if (F_status_is_error(status)) return status;
 
@@ -354,7 +354,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      f_macro_memory_structure_macro_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, f_macro_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -375,7 +375,7 @@ extern "C" {
           size = source.used + file.used + 1;
         }
 
-        f_macro_directory_status_t_resize(status, failure, size + 1);
+        macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_source, size);
@@ -389,7 +389,7 @@ extern "C" {
           size = destination.used + file.used + 1;
         }
 
-        f_macro_directory_status_t_resize(status, failure, size + 1);
+        macro_f_directory_status_t_resize(status, failure, size + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(failure.path.string, path_destination, size);
@@ -493,7 +493,7 @@ extern "C" {
       status = f_file_stat_at(parent_fd, entity[i]->d_name, dereference ? 0 : AT_SYMLINK_NOFOLLOW, &file_stat);
       if (F_status_is_error(status)) break;
 
-      mode = f_macro_file_type_get(file_stat.st_mode);
+      mode = macro_f_file_type_get(file_stat.st_mode);
 
       if (mode == f_file_type_block) {
         names = &listing->block;
@@ -521,12 +521,12 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        f_macro_string_dynamics_t_resize(status, (*names), names->size + f_directory_default_allocation_step);
+        macro_f_string_dynamics_t_resize(status, (*names), names->size + f_directory_default_allocation_step);
         if (F_status_is_error(status)) break;
       }
 
-      f_macro_string_dynamic_t_clear(names->array[names->used])
-      f_macro_string_dynamic_t_resize(status, names->array[names->used], size);
+      macro_f_string_dynamic_t_clear(names->array[names->used])
+      macro_f_string_dynamic_t_resize(status, names->array[names->used], size);
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
@@ -539,7 +539,7 @@ extern "C" {
         if (total > names->array[names->used].size) {
           f_status_t status = F_none;
 
-          f_macro_string_dynamics_t_resize(status, (*names), total);
+          macro_f_string_dynamics_t_resize(status, (*names), total);
           if (F_status_is_error(status)) break;
         }
 
@@ -743,7 +743,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*destination), destination->used + total);
+        macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total);
         if (F_status_is_error(status)) return status;
       }
     }

@@ -65,30 +65,30 @@ typedef struct {
     0, \
   }
 
-#define firewall_macro_delete_fss_buffers(status, buffer, objects, contents) \
-  f_macro_string_dynamic_t_delete_simple(buffer); \
-  f_macro_fss_objects_t_delete_simple(objects); \
-  f_macro_fss_contents_t_delete_simple(contents);
+#define macro_firewall_delete_fss_buffers(status, buffer, objects, contents) \
+  macro_f_string_dynamic_t_delete_simple(buffer); \
+  macro_f_fss_objects_t_delete_simple(objects); \
+  macro_f_fss_contents_t_delete_simple(contents);
 
-#define firewall_macro_concat_string(destination, source, length) \
+#define macro_firewall_concat_string(destination, source, length) \
   memcpy((void *)(destination), source, length);
 
-#define firewall_macro_rule_contents_has_incorrect_items(index, total_items) \
+#define macro_firewall_rule_contents_has_incorrect_items(index, total_items) \
   local.rule_contents.array[index].used <= 0 || local.rule_contents.array[index].used > total_items
 
 // the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
-#define firewall_macro_string_dynamic_size(structure, index) \
+#define macro_firewall_string_dynamic_size(structure, index) \
   (structure.string[index].stop - structure.string[index].start) + 1
 
 // the buffer start to stop points are inclusive such that the size is ((stop - start) + 1).
-#define firewall_macro_structure_size(structure, index) \
+#define macro_firewall_structure_size(structure, index) \
   (structure.array[index].stop - structure.array[index].start) + 1
 
 // TODO: temporarily added, convert this to a function below.
 // TODO: also report: f_color_print(main.error.to.stream, main.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol_s[0]);
-#define firewall_macro_append_argument_to_arguments(status, arguments, argument) \
+#define macro_firewall_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used == arguments.size) { \
-    f_macro_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
+    macro_f_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \
     \
     if (F_status_is_error(status)) break; \
   } \
@@ -98,7 +98,7 @@ typedef struct {
   arguments.array[arguments.used].used   = argument.used; \
   arguments.used++; \
   \
-  f_macro_string_dynamic_t_clear(argument);
+  macro_f_string_dynamic_t_clear(argument);
 
 /**
  * Perform commands.

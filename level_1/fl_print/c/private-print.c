@@ -40,7 +40,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      i += f_macro_utf_byte_width(string[i]);
+      i += macro_f_utf_byte_width(string[i]);
     } // while
 
     while (i < stop) {
@@ -68,7 +68,7 @@ extern "C" {
       }
 
       if (status == F_true) {
-        j = i + f_macro_utf_byte_width(string[i]);
+        j = i + macro_f_utf_byte_width(string[i]);
 
         if (j == stop) return F_none;
 
@@ -113,7 +113,7 @@ extern "C" {
             break;
           }
 
-          j += f_macro_utf_byte_width(string[j]);
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
         if (status == F_true) break;
@@ -121,7 +121,7 @@ extern "C" {
 
       if (!fputc(string[i], output)) return F_status_set_error(F_output);
 
-      i += f_macro_utf_byte_width(string[i]);
+      i += macro_f_utf_byte_width(string[i]);
     } // while
 
     return F_none;
@@ -238,7 +238,7 @@ extern "C" {
     f_status_t status = F_none;
     uint8_t width_max = 0;
 
-    for (; i < length; i += f_macro_utf_byte_width(string[i])) {
+    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
 
       width_max = (length - i) + 1;
       status = f_utf_is_whitespace(string + i, width_max);
@@ -254,7 +254,7 @@ extern "C" {
       if (status == F_false) break;
     } // for
 
-    for (; i < length; i += f_macro_utf_byte_width(string[i])) {
+    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
       if (!string[i]) continue;
 
       width_max = (length - i) + 1;
@@ -269,11 +269,11 @@ extern "C" {
       }
 
       if (status == F_true) {
-        j = i + f_macro_utf_byte_width(string[i]);
+        j = i + macro_f_utf_byte_width(string[i]);
 
         if (j == length) return F_none;
 
-        for (; j < length; j += f_macro_utf_byte_width(string[j])) {
+        for (; j < length; j += macro_f_utf_byte_width(string[j])) {
 
           width_max = (length - j) + 1;
           status = f_utf_is_whitespace(string + j, width_max);

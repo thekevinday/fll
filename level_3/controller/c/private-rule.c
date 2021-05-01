@@ -461,7 +461,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // delete the third party structures.
-    f_macro_control_group_t_delete_simple(destination->control_group)
+    macro_f_control_group_t_delete_simple(destination->control_group)
     f_capability_delete(&destination->capability);
 
     for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size; ++i) {
@@ -825,7 +825,7 @@ extern "C" {
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
 
-    controller_execute_set_t execute_set = controller_macro_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
+    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     if (process->rule.affinity.used) {
       execute_set.as.affinity = &process->rule.affinity;
@@ -1056,7 +1056,7 @@ extern "C" {
        }
     } // for
 
-    f_macro_string_maps_t_delete_simple(environment);
+    macro_f_string_maps_t_delete_simple(environment);
 
     // lock failed, attempt to re-establish lock before returning.
     if (F_status_set_fine(status) == F_lock) {
@@ -1146,9 +1146,9 @@ extern "C" {
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       usleep(controller_thread_simulation_timeout);
 
-      const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
+      const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
@@ -1389,9 +1389,9 @@ extern "C" {
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
       usleep(controller_thread_simulation_timeout);
 
-      const f_string_static_t simulated_program = f_macro_string_static_t_initialize(f_string_empty_s, 0);
+      const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = fl_macro_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
@@ -1596,7 +1596,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
     f_array_length_t last = 0;
 
     uint8_t type = 0;
@@ -2155,7 +2155,7 @@ extern "C" {
             memcpy(alias_other_buffer, global.setting->rules.array[id_rule].alias.string, sizeof(char) * global.setting->rules.array[id_rule].alias.used);
             alias_other_buffer[global.setting->rules.array[id_rule].alias.used] = 0;
 
-            const f_string_static_t alias_other = f_macro_string_static_t_initialize(alias_other_buffer, global.setting->rules.array[id_rule].alias.used);
+            const f_string_static_t alias_other = macro_f_string_static_t_initialize(alias_other_buffer, global.setting->rules.array[id_rule].alias.used);
 
             f_thread_unlock(&global.thread->lock.rule);
 
@@ -2562,8 +2562,8 @@ extern "C" {
     process->options = options;
     process->type = type;
 
-    f_macro_time_spec_t_clear(process->cache.timestamp)
-    f_macro_string_range_t_clear(process->cache.range_action)
+    macro_f_time_spec_t_clear(process->cache.timestamp)
+    macro_f_string_range_t_clear(process->cache.range_action)
 
     process->cache.ats.used = 0;
     process->cache.stack.used = 0;
@@ -2689,7 +2689,7 @@ extern "C" {
 
     f_status_t status_lock = F_none;
 
-    controller_global_t global = controller_macro_global_t_initialize((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
+    controller_global_t global = macro_controller_global_t_initialize((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
     // the process and active locks shall be held for the duration of this processing (aside from switching between read to/from write).
     if (options_force & controller_process_option_asynchronous) {
@@ -2989,7 +2989,7 @@ extern "C" {
     rule->user = 0;
     rule->nice = 0;
 
-    f_macro_time_spec_t_clear(rule->timestamp);
+    macro_f_time_spec_t_clear(rule->timestamp);
 
     rule->alias.used = 0;
     rule->name.used = 0;
@@ -3015,7 +3015,7 @@ extern "C" {
     rule->control_group.path.used = 0;
     rule->control_group.groups.used = 0;
 
-    f_macro_control_group_t_clear(rule->control_group);
+    macro_f_control_group_t_clear(rule->control_group);
 
     rule->groups.used = 0;
     rule->limits.used = 0;
@@ -3077,7 +3077,7 @@ extern "C" {
       rule->timestamp = cache->timestamp;
 
       if (cache->buffer_file.used) {
-        f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
@@ -3234,7 +3234,7 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
-    f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
     status = fll_fss_extended_read(cache->buffer_item, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
@@ -3484,12 +3484,12 @@ extern "C" {
             }
 
             if (F_status_is_error_not(status)) {
-              f_macro_int32s_t_resize(status, rule->affinity, size);
+              macro_f_int32s_t_resize(status, rule->affinity, size);
             }
           }
 
           if (F_status_is_error(status)) {
-            controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_macro_int32s_t_resize", F_true, F_false, global.thread);
+            controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "macro_f_int32s_t_resize", F_true, F_false, global.thread);
             break;
           }
 
@@ -3940,7 +3940,7 @@ extern "C" {
 
         if (F_status_is_error(status)) continue;
 
-        f_macro_limit_sets_t_increase(status, rule->limits);
+        macro_f_limit_sets_t_increase(status, rule->limits);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_limit_sets_increase", F_true, F_false, global.thread);
@@ -4640,10 +4640,10 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          f_macro_array_lengths_t_increase_by(status, rule->groups, controller_default_allocation_step)
+          macro_f_array_lengths_t_increase_by(status, rule->groups, controller_default_allocation_step)
 
           if (F_status_is_error(status)) {
-            controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_macro_array_lengths_t_increase_by", F_true, F_false, global.thread);
+            controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, F_false, global.thread);
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;

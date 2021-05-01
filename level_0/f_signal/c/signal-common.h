@@ -32,7 +32,7 @@ extern "C" {
 
   #define f_signal_t_initialize {0, 0, { 0 } }
 
-  #define f_macro_signal_t_initialize(flags, id, set) { flags, id, set }
+  #define macro_f_signal_t_initialize(flags, id, set) { flags, id, set }
 #endif // _di_f_signal_t_
 
 /**
@@ -49,7 +49,7 @@ extern "C" {
 
   #define f_signal_how_t_initialize { { 0 } , { 0 } }
 
-  #define f_macro_signal_how_t_initialize(block, block_not) { block, block_not }
+  #define macro_f_signal_how_t_initialize(block, block_not) { block, block_not }
 #endif // _di_f_signal_how_t_
 
 #ifdef __cplusplus

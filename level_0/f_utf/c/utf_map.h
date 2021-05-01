@@ -30,17 +30,17 @@ extern "C" {
 
   #define f_utf_string_map_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamic_t_initialize }
 
-  #define f_macro_utf_string_map_t_clear(map) \
-    f_macro_utf_string_dynamic_t_clear(map.name) \
-    f_macro_utf_string_dynamic_t_clear(map.value)
+  #define macro_f_utf_string_map_t_clear(map) \
+    macro_f_utf_string_dynamic_t_clear(map.name) \
+    macro_f_utf_string_dynamic_t_clear(map.value)
 
-  #define f_macro_utf_string_map_t_delete_simple(map) \
-    f_macro_utf_string_dynamic_t_delete_simple(map.name) \
-    f_macro_utf_string_dynamic_t_delete_simple(map.value)
+  #define macro_f_utf_string_map_t_delete_simple(map) \
+    macro_f_utf_string_dynamic_t_delete_simple(map.name) \
+    macro_f_utf_string_dynamic_t_delete_simple(map.value)
 
-  #define f_macro_utf_string_map_t_destroy_simple(map) \
-    f_macro_utf_string_dynamic_t_destroy_simple(map.name) \
-    f_macro_utf_string_dynamic_t_destroy_simple(map.value)
+  #define macro_f_utf_string_map_t_destroy_simple(map) \
+    macro_f_utf_string_dynamic_t_destroy_simple(map.name) \
+    macro_f_utf_string_dynamic_t_destroy_simple(map.value)
 #endif // _di_f_utf_string_map_t_
 
 /**
@@ -60,18 +60,18 @@ extern "C" {
 
   #define f_utf_string_maps_t_initialize f_utf_string_statics_t_initialize
 
-  #define f_macro_utf_string_maps_t_clear(maps) f_macro_memory_structure_clear(maps)
+  #define macro_f_utf_string_maps_t_clear(maps) macro_f_memory_structure_clear(maps)
 
-  #define f_macro_utf_string_maps_t_resize(status, maps, length) status = f_utf_string_maps_resize(length, &maps);
-  #define f_macro_utf_string_maps_t_adjust(status, maps, length) status = f_utf_string_maps_adjust(length, &maps);
+  #define macro_f_utf_string_maps_t_resize(status, maps, length) status = f_utf_string_maps_resize(length, &maps);
+  #define macro_f_utf_string_maps_t_adjust(status, maps, length) status = f_utf_string_maps_adjust(length, &maps);
 
-  #define f_macro_utf_string_maps_t_delete_simple(maps)  f_utf_string_maps_resize(0, &maps);
-  #define f_macro_utf_string_maps_t_destroy_simple(maps) f_utf_string_maps_adjust(0, &maps);
+  #define macro_f_utf_string_maps_t_delete_simple(maps)  f_utf_string_maps_resize(0, &maps);
+  #define macro_f_utf_string_maps_t_destroy_simple(maps) f_utf_string_maps_adjust(0, &maps);
 
-  #define f_macro_utf_string_maps_t_increase(status, maps)            status = f_utf_string_maps_increase(maps);
-  #define f_macro_utf_string_maps_t_increase_by(status, maps, amount) status = f_utf_string_maps_increase_by(amount, maps);
-  #define f_macro_utf_string_maps_t_decrease_by(status, maps, amount) status = f_utf_string_maps_decrease_by(amount, maps);
-  #define f_macro_utf_string_maps_t_decimate_by(status, maps, amount) status = f_utf_string_maps_decimate_by(amount, maps);
+  #define macro_f_utf_string_maps_t_increase(status, maps)            status = f_utf_string_maps_increase(maps);
+  #define macro_f_utf_string_maps_t_increase_by(status, maps, amount) status = f_utf_string_maps_increase_by(amount, maps);
+  #define macro_f_utf_string_maps_t_decrease_by(status, maps, amount) status = f_utf_string_maps_decrease_by(amount, maps);
+  #define macro_f_utf_string_maps_t_decimate_by(status, maps, amount) status = f_utf_string_maps_decimate_by(amount, maps);
 #endif // _di_f_utf_string_maps_t_
 
 /**
@@ -88,17 +88,17 @@ extern "C" {
 
   #define f_utf_string_map_multi_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamics_t_initialize }
 
-  #define f_macro_utf_string_map_multi_t_clear(map) \
-    f_macro_utf_string_dynamic_t_clear(map.name) \
-    f_macro_utf_string_dynamics_t_clear(map.value)
+  #define macro_f_utf_string_map_multi_t_clear(map) \
+    macro_f_utf_string_dynamic_t_clear(map.name) \
+    macro_f_utf_string_dynamics_t_clear(map.value)
 
-  #define f_macro_utf_string_map_multi_t_delete_simple(map) \
-    f_macro_utf_string_dynamic_t_delete_simple(map.name) \
-    f_macro_utf_string_dynamics_t_delete_simple(map.value)
+  #define macro_f_utf_string_map_multi_t_delete_simple(map) \
+    macro_f_utf_string_dynamic_t_delete_simple(map.name) \
+    macro_f_utf_string_dynamics_t_delete_simple(map.value)
 
-  #define f_macro_utf_string_map_multi_t_destroy_simple(map) \
-    f_macro_utf_string_dynamic_t_destroy_simple(map.name) \
-    f_macro_utf_string_dynamics_t_destroy_simple(map.value)
+  #define macro_f_utf_string_map_multi_t_destroy_simple(map) \
+    macro_f_utf_string_dynamic_t_destroy_simple(map.name) \
+    macro_f_utf_string_dynamics_t_destroy_simple(map.value)
 #endif // _di_f_utf_string_map_multi_t_
 
 /**
@@ -118,18 +118,18 @@ extern "C" {
 
   #define f_utf_string_map_multis_t_initialize f_utf_string_statics_t_initialize
 
-  #define f_macro_utf_string_map_multis_t_clear(map_multis) f_macro_memory_structure_clear(map_multis)
+  #define macro_f_utf_string_map_multis_t_clear(map_multis) macro_f_memory_structure_clear(map_multis)
 
-  #define f_macro_utf_string_map_multis_t_resize(status, map_multis, length) status = f_utf_string_map_multis_resize(length, &map_multis);
-  #define f_macro_utf_string_map_multis_t_adjust(status, map_multis, length) status = f_utf_string_map_multis_adjust(length, &map_multis);
+  #define macro_f_utf_string_map_multis_t_resize(status, map_multis, length) status = f_utf_string_map_multis_resize(length, &map_multis);
+  #define macro_f_utf_string_map_multis_t_adjust(status, map_multis, length) status = f_utf_string_map_multis_adjust(length, &map_multis);
 
-  #define f_macro_utf_string_map_multis_t_delete_simple(map_multis)  f_utf_string_map_multis_resize(0, &map_multis);
-  #define f_macro_utf_string_map_multis_t_destroy_simple(map_multis) f_utf_string_map_multis_adjust(0, &map_multis);
+  #define macro_f_utf_string_map_multis_t_delete_simple(map_multis)  f_utf_string_map_multis_resize(0, &map_multis);
+  #define macro_f_utf_string_map_multis_t_destroy_simple(map_multis) f_utf_string_map_multis_adjust(0, &map_multis);
 
-  #define f_macro_utf_string_map_multis_t_increase(status, map_multis)            status = f_utf_string_map_multis_increase(&map_multis);
-  #define f_macro_utf_string_map_multis_t_increase_by(status, map_multis, amount) status = f_utf_string_map_multis_increase_by(amount, &map_multis);
-  #define f_macro_utf_string_map_multis_t_decrease_by(status, map_multis, amount) status = f_utf_string_map_multis_decrease_by(amount, &map_multis);
-  #define f_macro_utf_string_map_multis_t_decimate_by(status, map_multis, amount) status = f_utf_string_map_multis_decimate_by(amount, &map_multis);
+  #define macro_f_utf_string_map_multis_t_increase(status, map_multis)            status = f_utf_string_map_multis_increase(&map_multis);
+  #define macro_f_utf_string_map_multis_t_increase_by(status, map_multis, amount) status = f_utf_string_map_multis_increase_by(amount, &map_multis);
+  #define macro_f_utf_string_map_multis_t_decrease_by(status, map_multis, amount) status = f_utf_string_map_multis_decrease_by(amount, &map_multis);
+  #define macro_f_utf_string_map_multis_t_decimate_by(status, map_multis, amount) status = f_utf_string_map_multis_decimate_by(amount, &map_multis);
 #endif // _di_f_utf_string_map_multis_t_
 
 /**

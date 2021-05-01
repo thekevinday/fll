@@ -21,10 +21,10 @@ extern "C" {
 
     do {
       if (objects->used == objects->size) {
-        f_macro_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
+        macro_f_fss_objects_t_resize(status2, (*objects), objects->used + f_fss_default_allocation_step);
         if (F_status_is_error(status)) return status;
 
-        f_macro_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
+        macro_f_fss_contents_t_resize(status2, (*contents), contents->used + f_fss_default_allocation_step);
         if (F_status_is_error(status)) return status;
       }
 
@@ -36,7 +36,7 @@ extern "C" {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
             objects->used++;
 
-            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+            macro_f_fss_content_t_increase(status2, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
             contents->used++;
@@ -71,7 +71,7 @@ extern "C" {
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
 
-          f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+          macro_f_fss_content_t_increase(status2, contents->array[contents->used])
           if (F_status_is_error(status2)) return status2;
 
           break;
@@ -132,7 +132,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = 0;
-    f_string_range_t range = f_macro_string_range_t_initialize(object.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
     status = fl_fss_extended_list_object_write_string(object, f_fss_complete_full, &range, destination);
 

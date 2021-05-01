@@ -66,7 +66,7 @@ extern "C" {
 
         // Storing the next character is designated by width_utf == -1.
         if (width_utf == -1) {
-          width_utf = f_macro_utf_byte_width_is(byte);
+          width_utf = macro_f_utf_byte_width_is(byte);
           width_count = 0;
 
           // The character is reset, the characters.used is to be reset.
@@ -84,7 +84,7 @@ extern "C" {
 
         // When width_count == 0, then this is that start of a new character sequence.
         if (!width_count) {
-          characters.string[character_current] = f_macro_utf_character_t_from_char_1(byte);
+          characters.string[character_current] = macro_f_utf_character_t_from_char_1(byte);
           width_count = 1;
 
           // The first character in a UTF-8 sequence cannot have a width of 1.
@@ -99,16 +99,16 @@ extern "C" {
         }
         // Process a UTF-8 character fragment.
         else if (width_count < width_utf) {
-          width_current = f_macro_utf_byte_width_is(byte);
+          width_current = macro_f_utf_byte_width_is(byte);
 
           if (width_count == 1) {
-            characters.string[character_current] |= f_macro_utf_character_t_from_char_2(byte);
+            characters.string[character_current] |= macro_f_utf_character_t_from_char_2(byte);
           }
           else if (width_count == 2) {
-            characters.string[character_current] |= f_macro_utf_character_t_from_char_3(byte);
+            characters.string[character_current] |= macro_f_utf_character_t_from_char_3(byte);
           }
           else if (width_count == 3) {
-            characters.string[character_current] |= f_macro_utf_character_t_from_char_4(byte);
+            characters.string[character_current] |= macro_f_utf_character_t_from_char_4(byte);
           }
 
           ++width_count;
@@ -258,16 +258,16 @@ extern "C" {
     f_array_length_t character_current = characters.used - 1;
 
     if (byte_current == 1) {
-      byte = f_macro_utf_character_t_to_char_1(characters.string[character_current]);
+      byte = macro_f_utf_character_t_to_char_1(characters.string[character_current]);
     }
     else if (byte_current == 2) {
-      byte = f_macro_utf_character_t_to_char_2(characters.string[character_current]);
+      byte = macro_f_utf_character_t_to_char_2(characters.string[character_current]);
     }
     else if (byte_current == 3) {
-      byte = f_macro_utf_character_t_to_char_3(characters.string[character_current]);
+      byte = macro_f_utf_character_t_to_char_3(characters.string[character_current]);
     }
     else if (byte_current == 4) {
-      byte = f_macro_utf_character_t_to_char_4(characters.string[character_current]);
+      byte = macro_f_utf_character_t_to_char_4(characters.string[character_current]);
     }
 
     if (!cell->column) {
@@ -522,8 +522,8 @@ extern "C" {
 
     for (uint8_t i = 0; i < characters.used && j < main.width; i++, j++) {
 
-      output = f_macro_utf_character_t_to_char_1(characters.string[i]);
-      width_utf = f_macro_utf_byte_width_is(output);
+      output = macro_f_utf_character_t_to_char_1(characters.string[i]);
+      width_utf = macro_f_utf_byte_width_is(output);
 
       if (invalid[i]) {
         f_color_print(main.output.stream, main.context.set.error, "%s", byte_dump_character_incomplete);
@@ -710,15 +710,15 @@ extern "C" {
         fprintf(main.output.stream, "%c", (uint8_t) output);
 
         if (width_utf > 1) {
-          output = f_macro_utf_character_t_to_char_2(characters.string[i]);
+          output = macro_f_utf_character_t_to_char_2(characters.string[i]);
           fprintf(main.output.stream, "%c", (uint8_t) output);
 
           if (width_utf > 2) {
-            output = f_macro_utf_character_t_to_char_3(characters.string[i]);
+            output = macro_f_utf_character_t_to_char_3(characters.string[i]);
             fprintf(main.output.stream, "%c", (uint8_t) output);
 
             if (width_utf > 3) {
-              output = f_macro_utf_character_t_to_char_4(characters.string[i]);
+              output = macro_f_utf_character_t_to_char_4(characters.string[i]);
               fprintf(main.output.stream, "%c", (uint8_t) output);
             }
           }

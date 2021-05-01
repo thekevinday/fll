@@ -52,18 +52,18 @@ extern "C" {
 
   #define f_control_group_t_initialize { F_false, f_string_dynamic_t_initialize, f_string_dynamics_t_initialize }
 
-  #define f_macro_control_group_t_clear(control) \
+  #define macro_f_control_group_t_clear(control) \
     control.as_new = F_false; \
-    f_macro_string_dynamic_t_clear(control.path); \
-    f_macro_string_dynamics_t_clear(control.groups);
+    macro_f_string_dynamic_t_clear(control.path); \
+    macro_f_string_dynamics_t_clear(control.groups);
 
-  #define f_macro_control_group_t_delete_simple(control) \
-    f_macro_string_dynamic_t_delete_simple(control.path); \
-    f_macro_string_dynamics_t_delete_simple(control.groups);
+  #define macro_f_control_group_t_delete_simple(control) \
+    macro_f_string_dynamic_t_delete_simple(control.path); \
+    macro_f_string_dynamics_t_delete_simple(control.groups);
 
-  #define f_macro_control_group_t_destroy_simple(control) \
-    f_macro_string_dynamic_t_destroy_simple(control.path); \
-    f_macro_string_dynamics_t_destroy_simple(control.groups);
+  #define macro_f_control_group_t_destroy_simple(control) \
+    macro_f_string_dynamic_t_destroy_simple(control.path); \
+    macro_f_string_dynamics_t_destroy_simple(control.groups);
 #endif // _di_f_control_group_t_
 
 #ifdef __cplusplus

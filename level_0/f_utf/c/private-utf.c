@@ -146,7 +146,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_ascii(const f_utf_character_t character, const uint8_t width) {
 
     if (!width) {
-      const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+      const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
         return F_true;
@@ -284,7 +284,7 @@ extern "C" {
     }
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     if (width == 3) {
       uint16_t bytes = (uint16_t) ((character & 0x00ffff00) >> 8);
@@ -467,7 +467,7 @@ extern "C" {
     }
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_second = f_macro_utf_character_t_to_char_2(character);
+    const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
     if (width == 4) {
       uint16_t bytes = (uint16_t) ((character & 0xffff0000) >> 16);
@@ -636,7 +636,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     if (width == 2) {
 
@@ -1182,9 +1182,9 @@ extern "C" {
     }
 
     // reduce the number of checks by grouping checks by byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
-    const uint8_t byte_second = f_macro_utf_character_t_to_char_2(character);
-    const uint8_t byte_third = f_macro_utf_character_t_to_char_3(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
+    const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
+    const uint8_t byte_third = macro_f_utf_character_t_to_char_3(character);
 
     if (width == 3) {
       if (byte_first >= 0xe0 && byte_first <= 0xef) {
@@ -1200,7 +1200,7 @@ extern "C" {
       return F_false;
     }
 
-    const uint8_t byte_fourth = f_macro_utf_character_t_to_char_4(character);
+    const uint8_t byte_fourth = macro_f_utf_character_t_to_char_4(character);
 
     if (width == 4) {
       if (byte_first == 0xf3) {
@@ -1236,7 +1236,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_punctuation(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     if (width == 2) {
 
@@ -1661,7 +1661,7 @@ extern "C" {
       }
     }
     else if (width == 4) {
-      uint8_t byte_second = f_macro_utf_character_t_to_char_2(character);
+      uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
       if (byte_first == 0xf0) {
         if (byte_second == 0x90) {
@@ -1903,7 +1903,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     // @todo: handle all Unicode "symbol".
 
@@ -1915,7 +1915,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     // @todo: Basic Multilingual Plane
     // @todo: handle all unassigned UTF-8 spaces.
@@ -1934,7 +1934,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_valid(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     if (!width) {
       if (byte_first >= 0x00 && byte_first <= 0x7f) {
@@ -1944,7 +1944,7 @@ extern "C" {
       return F_false;
     }
 
-    const uint8_t byte_second = f_macro_utf_character_t_to_char_2(character);
+    const uint8_t byte_second = macro_f_utf_character_t_to_char_2(character);
 
     if (width == 2) {
       if (byte_first >= 0xc2 && byte_first <= 0xdf) {
@@ -1956,7 +1956,7 @@ extern "C" {
       return F_false;
     }
 
-    const uint8_t byte_third = f_macro_utf_character_t_to_char_3(character);
+    const uint8_t byte_third = macro_f_utf_character_t_to_char_3(character);
 
     if (width == 3) {
       if (byte_first == 0xe0) {
@@ -1990,7 +1990,7 @@ extern "C" {
       }
     }
 
-    const uint8_t byte_fourth = f_macro_utf_character_t_to_char_4(character);
+    const uint8_t byte_fourth = macro_f_utf_character_t_to_char_4(character);
 
     if (width == 4) {
       if (byte_first == 0xf0) {
@@ -2045,7 +2045,7 @@ extern "C" {
     else if (width == 3) {
 
       // reduce the number of checks by grouping checks by first byte.
-      const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+      const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
       if (byte_first == 0xe2) {
 
@@ -2109,7 +2109,7 @@ extern "C" {
     if (width == 3) {
 
       // reduce the number of checks by grouping checks by first byte.
-      const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+      const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
       if (byte_first == 0xe2) {
 
@@ -2184,7 +2184,7 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_zero_width_) || !defined(_di_f_utf_is_zero_width_)
   f_status_t private_f_utf_character_is_zero_width(const f_utf_character_t character, const uint8_t width) {
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = f_macro_utf_character_t_to_char_1(character);
+    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     if (byte_first == 0xe1) {
 

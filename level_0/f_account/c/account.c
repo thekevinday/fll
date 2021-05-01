@@ -379,7 +379,7 @@ extern "C" {
 
         const f_array_length_t name_length = strnlen(password.pw_name, length);
 
-        f_macro_string_dynamic_t_resize(status, (*name), name_length + 1);
+        macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
         if (F_status_is_error(status)) return status;
 
         memcpy(name->string, password.pw_name, name_length);
@@ -414,7 +414,7 @@ extern "C" {
 
     const f_array_length_t name_length = strnlen(password.pw_name, length);
 
-    f_macro_string_dynamic_t_resize(status, (*name), name_length + 1);
+    macro_f_string_dynamic_t_resize(status, (*name), name_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(name->string, password.pw_name, name_length);

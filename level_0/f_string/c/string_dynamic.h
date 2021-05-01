@@ -24,7 +24,7 @@ extern "C" {
  *
  * The f_string_static_t type should never be directly allocated or deallocated.
  *
- * A special f_macro_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
+ * A special macro_f_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
  *
  * string: the string.
  * size:   total amount of space available.
@@ -40,12 +40,12 @@ extern "C" {
 
   #define f_string_static_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_static_t_clear(string_static) \
+  #define macro_f_string_static_t_clear(string_static) \
     string_static.string = 0; \
     string_static.size = 0; \
     string_static.used = 0;
 
-  #define f_macro_string_static_t_initialize(string, length) { string, length, length }
+  #define macro_f_string_static_t_initialize(string, length) { string, length, length }
 #endif // _di_f_string_static_t_
 
 /**
@@ -65,18 +65,18 @@ extern "C" {
 
   #define f_string_dynamic_t_initialize f_string_static_t_initialize
 
-  #define f_macro_string_dynamic_t_clear(dynamic) f_macro_string_static_t_clear(dynamic)
+  #define macro_f_string_dynamic_t_clear(dynamic) macro_f_string_static_t_clear(dynamic)
 
-  #define f_macro_string_dynamic_t_resize(status, dynamic, length) status = f_string_dynamic_resize(length, &dynamic);
-  #define f_macro_string_dynamic_t_adjust(status, dynamic, length) status = f_string_dynamic_adjust(length, &dynamic);
+  #define macro_f_string_dynamic_t_resize(status, dynamic, length) status = f_string_dynamic_resize(length, &dynamic);
+  #define macro_f_string_dynamic_t_adjust(status, dynamic, length) status = f_string_dynamic_adjust(length, &dynamic);
 
-  #define f_macro_string_dynamic_t_delete_simple(dynamic)  f_string_dynamic_resize(0, &dynamic);
-  #define f_macro_string_dynamic_t_destroy_simple(dynamic) f_string_dynamic_adjust(0, &dynamic);
+  #define macro_f_string_dynamic_t_delete_simple(dynamic)  f_string_dynamic_resize(0, &dynamic);
+  #define macro_f_string_dynamic_t_destroy_simple(dynamic) f_string_dynamic_adjust(0, &dynamic);
 
-  #define f_macro_string_dynamic_t_increase(status, dynamic)            status = f_string_dynamic_increase(&dynamic);
-  #define f_macro_string_dynamic_t_increase_by(status, dynamic, amount) status = f_string_dynamic_increase_by(amount, &dynamic);
-  #define f_macro_string_dynamic_t_decrease_by(status, dynamic, amount) status = f_string_dynamic_decrease_by(amount, &dynamic);
-  #define f_macro_string_dynamic_t_decimate_by(status, dynamic, amount) status = f_string_dynamic_decimate_by(amount, &dynamic);
+  #define macro_f_string_dynamic_t_increase(status, dynamic)            status = f_string_dynamic_increase(&dynamic);
+  #define macro_f_string_dynamic_t_increase_by(status, dynamic, amount) status = f_string_dynamic_increase_by(amount, &dynamic);
+  #define macro_f_string_dynamic_t_decrease_by(status, dynamic, amount) status = f_string_dynamic_decrease_by(amount, &dynamic);
+  #define macro_f_string_dynamic_t_decimate_by(status, dynamic, amount) status = f_string_dynamic_decimate_by(amount, &dynamic);
 #endif // _di_f_string_dynamic_t_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
 
   #define f_string_statics_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_statics_t_clear(statics) \
+  #define macro_f_string_statics_t_clear(statics) \
     statics.array = 0; \
     statics.size = 0; \
     statics.used = 0;
@@ -114,18 +114,18 @@ extern "C" {
 
   #define f_string_dynamics_t_initialize f_string_statics_t_initialize
 
-  #define f_macro_string_dynamics_t_clear(dynamics) f_macro_string_statics_t_clear(dynamics)
+  #define macro_f_string_dynamics_t_clear(dynamics) macro_f_string_statics_t_clear(dynamics)
 
-  #define f_macro_string_dynamics_t_resize(status, dynamics, length) status = f_string_dynamics_resize(length, &dynamics);
-  #define f_macro_string_dynamics_t_adjust(status, dynamics, length) status = f_string_dynamics_adjust(length, &dynamics);
+  #define macro_f_string_dynamics_t_resize(status, dynamics, length) status = f_string_dynamics_resize(length, &dynamics);
+  #define macro_f_string_dynamics_t_adjust(status, dynamics, length) status = f_string_dynamics_adjust(length, &dynamics);
 
-  #define f_macro_string_dynamics_t_delete_simple(dynamics)  f_string_dynamics_resize(0, &dynamics);
-  #define f_macro_string_dynamics_t_destroy_simple(dynamics) f_string_dynamics_adjust(0, &dynamics);
+  #define macro_f_string_dynamics_t_delete_simple(dynamics)  f_string_dynamics_resize(0, &dynamics);
+  #define macro_f_string_dynamics_t_destroy_simple(dynamics) f_string_dynamics_adjust(0, &dynamics);
 
-  #define f_macro_string_dynamics_t_increase(status, dynamics)            status = f_string_dynamics_increase(&dynamics);
-  #define f_macro_string_dynamics_t_increase_by(status, dynamics, amount) status = f_string_dynamics_increase_by(amount, &dynamics);
-  #define f_macro_string_dynamics_t_decrease_by(status, dynamics, amount) status = f_string_dynamics_decrease_by(amount, &dynamics);
-  #define f_macro_string_dynamics_t_decimate_by(status, dynamics, amount) status = f_string_dynamics_decimate_by(amount, &dynamics);
+  #define macro_f_string_dynamics_t_increase(status, dynamics)            status = f_string_dynamics_increase(&dynamics);
+  #define macro_f_string_dynamics_t_increase_by(status, dynamics, amount) status = f_string_dynamics_increase_by(amount, &dynamics);
+  #define macro_f_string_dynamics_t_decrease_by(status, dynamics, amount) status = f_string_dynamics_decrease_by(amount, &dynamics);
+  #define macro_f_string_dynamics_t_decimate_by(status, dynamics, amount) status = f_string_dynamics_decimate_by(amount, &dynamics);
 #endif // _di_f_string_dynamics_t_
 
 #ifndef _di_f_string_static_empty_s_

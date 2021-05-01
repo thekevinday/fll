@@ -35,18 +35,18 @@ extern "C" {
 
   #define f_fss_delimits_t_initialize f_array_lengths_t_initialize
 
-  #define f_macro_fss_delimits_t_clear(delimits) f_macro_array_lengths_t_clear(delimits)
+  #define macro_f_fss_delimits_t_clear(delimits) macro_f_array_lengths_t_clear(delimits)
 
-  #define f_macro_fss_delimits_t_resize(status, delimits, length) f_macro_array_lengths_t_resize(status, delimits, length)
-  #define f_macro_fss_delimits_t_adjust(status, delimits, length) f_macro_array_lengths_t_adjust(status, delimits, length)
+  #define macro_f_fss_delimits_t_resize(status, delimits, length) macro_f_array_lengths_t_resize(status, delimits, length)
+  #define macro_f_fss_delimits_t_adjust(status, delimits, length) macro_f_array_lengths_t_adjust(status, delimits, length)
 
-  #define f_macro_fss_delimits_t_delete_simple(delimits)  f_macro_array_lengths_t_delete_simple(delimits)
-  #define f_macro_fss_delimits_t_destroy_simple(delimits) f_macro_array_lengths_t_destroy_simple(delimits)
+  #define macro_f_fss_delimits_t_delete_simple(delimits)  macro_f_array_lengths_t_delete_simple(delimits)
+  #define macro_f_fss_delimits_t_destroy_simple(delimits) macro_f_array_lengths_t_destroy_simple(delimits)
 
-  #define f_macro_fss_delimits_t_increase(status, delimits)            f_macro_array_lengths_t_increase(status, delimits)
-  #define f_macro_fss_delimits_t_increase_by(status, delimits, amount) f_macro_array_lengths_t_increase_by(status, delimits, amount)
-  #define f_macro_fss_delimits_t_decrease_by(status, delimits, amount) f_macro_array_lengths_t_decrease_by(status, delimits, amount)
-  #define f_macro_fss_delimits_t_decimate_by(status, delimits, amount) f_macro_array_lengths_t_decimate_by(status, delimits, amount)
+  #define macro_f_fss_delimits_t_increase(status, delimits)            macro_f_array_lengths_t_increase(status, delimits)
+  #define macro_f_fss_delimits_t_increase_by(status, delimits, amount) macro_f_array_lengths_t_increase_by(status, delimits, amount)
+  #define macro_f_fss_delimits_t_decrease_by(status, delimits, amount) macro_f_array_lengths_t_decrease_by(status, delimits, amount)
+  #define macro_f_fss_delimits_t_decimate_by(status, delimits, amount) macro_f_array_lengths_t_decimate_by(status, delimits, amount)
 #endif // _di_f_fss_delimits_t_
 
 /**
@@ -61,18 +61,18 @@ extern "C" {
 
   #define f_fss_delimitss_t_initialize f_array_lengthss_t_initialize
 
-  #define f_macro_fss_delimitss_t_clear(delimitss) f_macro_array_lengthss_t_clear(delimitss)
+  #define macro_f_fss_delimitss_t_clear(delimitss) macro_f_array_lengthss_t_clear(delimitss)
 
-  #define f_macro_fss_delimitss_t_resize(status, delimitss, length) f_macro_array_lengthss_t_resize(status, delimitss, length)
-  #define f_macro_fss_delimitss_t_adjust(status, delimitss, length) f_macro_array_lengthss_t_adjust(status, delimitss, length)
+  #define macro_f_fss_delimitss_t_resize(status, delimitss, length) macro_f_array_lengthss_t_resize(status, delimitss, length)
+  #define macro_f_fss_delimitss_t_adjust(status, delimitss, length) macro_f_array_lengthss_t_adjust(status, delimitss, length)
 
-  #define f_macro_fss_delimitss_t_delete_simple(delimitss)  f_macro_array_lengthss_t_delete_simple(delimitss)
-  #define f_macro_fss_delimitss_t_destroy_simple(delimitss) f_macro_array_lengthss_t_destroy_simple(delimitss)
+  #define macro_f_fss_delimitss_t_delete_simple(delimitss)  macro_f_array_lengthss_t_delete_simple(delimitss)
+  #define macro_f_fss_delimitss_t_destroy_simple(delimitss) macro_f_array_lengthss_t_destroy_simple(delimitss)
 
-  #define f_macro_fss_delimitss_t_increase(status, delimitss)            f_macro_array_lengthss_t_increase(status, delimitss)
-  #define f_macro_fss_delimitss_t_increase_by(status, delimitss, amount) f_macro_array_lengthss_t_increase_by(status, delimitss, amount)
-  #define f_macro_fss_delimitss_t_decrease_by(status, delimitss, amount) f_macro_array_lengthss_t_decrease_by(status, delimitss, amount)
-  #define f_macro_fss_delimitss_t_decimate_by(status, delimitss, amount) f_macro_array_lengthss_t_decimate_by(status, delimitss, amount)
+  #define macro_f_fss_delimitss_t_increase(status, delimitss)            macro_f_array_lengthss_t_increase(status, delimitss)
+  #define macro_f_fss_delimitss_t_increase_by(status, delimitss, amount) macro_f_array_lengthss_t_increase_by(status, delimitss, amount)
+  #define macro_f_fss_delimitss_t_decrease_by(status, delimitss, amount) macro_f_array_lengthss_t_decrease_by(status, delimitss, amount)
+  #define macro_f_fss_delimitss_t_decimate_by(status, delimitss, amount) macro_f_array_lengthss_t_decimate_by(status, delimitss, amount)
 #endif // _di_f_fss_delimitss_t_
 
 #ifdef __cplusplus

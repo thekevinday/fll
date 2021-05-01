@@ -28,10 +28,10 @@ extern "C" {
  * The f_utf_byte_1 is specifically used only on UTF-8 fragments.
  * For example, with the 2-byte-wide UTF-8 character '1100x xxxx 10yy yyyy', the 8-byte block '10yy yyyy' would be a fragment.
  *
- * The f_macro_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
+ * The macro_f_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
  *
- * The f_macro_utf_byte_width macro determines a width of the character.
- * The f_macro_utf_byte_width_is is identical to f_macro_utf_byte_width, except it returns 0 when character is not UTF-8.
+ * The macro_f_utf_byte_width macro determines a width of the character.
+ * The macro_f_utf_byte_width_is is identical to macro_f_utf_byte_width, except it returns 0 when character is not UTF-8.
  */
 #ifndef _di_f_utf_byte_
   #define f_utf_byte_1 0x80 // 1000 0000
@@ -44,15 +44,15 @@ extern "C" {
   #define f_utf_byte_off_3 0xf0 // 1111 0000
   #define f_utf_byte_off_4 0xf8 // 1111 1000
 
-  #define f_macro_utf_byte_is(character) ((character) & f_utf_byte_1)
+  #define macro_f_utf_byte_is(character) ((character) & f_utf_byte_1)
 
-  #define f_macro_utf_byte_is_1(character) (((character) & f_utf_byte_off_1) == f_utf_byte_1) // (10xx xxxx & 1100 0000) == 1000 0000
-  #define f_macro_utf_byte_is_2(character) (((character) & f_utf_byte_off_2) == f_utf_byte_2) // (110x xxxx & 1110 0000) == 1100 0000
-  #define f_macro_utf_byte_is_3(character) (((character) & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
-  #define f_macro_utf_byte_is_4(character) (((character) & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
+  #define macro_f_utf_byte_is_1(character) (((character) & f_utf_byte_off_1) == f_utf_byte_1) // (10xx xxxx & 1100 0000) == 1000 0000
+  #define macro_f_utf_byte_is_2(character) (((character) & f_utf_byte_off_2) == f_utf_byte_2) // (110x xxxx & 1110 0000) == 1100 0000
+  #define macro_f_utf_byte_is_3(character) (((character) & f_utf_byte_off_3) == f_utf_byte_3) // (1110 xxxx & 1111 0000) == 1110 0000
+  #define macro_f_utf_byte_is_4(character) (((character) & f_utf_byte_off_4) == f_utf_byte_4) // (1111 0xxx & 1111 1000) == 1111 0000
 
-  #define f_macro_utf_byte_width(character)    ((!f_macro_utf_byte_is(character) || f_macro_utf_byte_is_1(character)) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4)))
-  #define f_macro_utf_byte_width_is(character) (f_macro_utf_byte_is(character) ? (f_macro_utf_byte_is_1(character) ? 1 : (f_macro_utf_byte_is_2(character) ? 2 : (f_macro_utf_byte_is_3(character) ? 3 : 4))) : 0)
+  #define macro_f_utf_byte_width(character)    ((!macro_f_utf_byte_is(character) || macro_f_utf_byte_is_1(character)) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4)))
+  #define macro_f_utf_byte_width_is(character) (macro_f_utf_byte_is(character) ? (macro_f_utf_byte_is_1(character) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4))) : 0)
 #endif // _di_f_utf_byte_
 
 /**
@@ -155,16 +155,16 @@ extern "C" {
  *
  * The byte structure is intended to be read left to right.
  *
- * The f_macro_utf_character_t_mask_byte_* are used to get the entire character set fo a given width.
+ * The macro_f_utf_character_t_mask_byte_* are used to get the entire character set fo a given width.
  *
- * The f_macro_utf_character_t_mask_char_* are used to get a specific UTF-8 block as a single character range.
+ * The macro_f_utf_character_t_mask_char_* are used to get a specific UTF-8 block as a single character range.
  *
- * The f_macro_utf_character_t_to_char_* are used to convert a f_utf_character_t into a uint8_t, for a given 8-bit block.
+ * The macro_f_utf_character_t_to_char_* are used to convert a f_utf_character_t into a uint8_t, for a given 8-bit block.
  *
- * The f_macro_utf_character_t_from_char_* are used to convert a uint8_t into part of a f_utf_character_t, for a given 8-bit block.
+ * The macro_f_utf_character_t_from_char_* are used to convert a uint8_t into part of a f_utf_character_t, for a given 8-bit block.
  *
- * The f_macro_utf_character_t_width is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width.
- * The f_macro_utf_character_t_width_is is used to determine the width of the UTF-8 character based on f_macro_utf_byte_width_is.
+ * The macro_f_utf_character_t_width is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width.
+ * The macro_f_utf_character_t_width_is is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width_is.
  *
  * @see f_utf_is_big_endian()
  */
@@ -181,18 +181,18 @@ extern "C" {
   #define f_utf_character_mask_char_3 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
   #define f_utf_character_mask_char_4 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define f_macro_utf_character_t_to_char_1(character) (((character) & f_utf_character_mask_char_1) >> 24) // grab first byte.
-  #define f_macro_utf_character_t_to_char_2(character) (((character) & f_utf_character_mask_char_2) >> 16) // grab second byte.
-  #define f_macro_utf_character_t_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8)  // grab third byte.
-  #define f_macro_utf_character_t_to_char_4(character) ((character) & f_utf_character_mask_char_4)         // grab fourth byte.
+  #define macro_f_utf_character_t_to_char_1(character) (((character) & f_utf_character_mask_char_1) >> 24) // grab first byte.
+  #define macro_f_utf_character_t_to_char_2(character) (((character) & f_utf_character_mask_char_2) >> 16) // grab second byte.
+  #define macro_f_utf_character_t_to_char_3(character) (((character) & f_utf_character_mask_char_3) >> 8)  // grab third byte.
+  #define macro_f_utf_character_t_to_char_4(character) ((character) & f_utf_character_mask_char_4)         // grab fourth byte.
 
-  #define f_macro_utf_character_t_from_char_1(character) (((character) << 24) & f_utf_character_mask_char_1) // shift to first byte.
-  #define f_macro_utf_character_t_from_char_2(character) (((character) << 16) & f_utf_character_mask_char_2) // shift to second byte.
-  #define f_macro_utf_character_t_from_char_3(character) (((character) << 8) & f_utf_character_mask_char_3)  // shift to third byte.
-  #define f_macro_utf_character_t_from_char_4(character) ((character) & f_utf_character_mask_char_4)         // shift to fourth byte.
+  #define macro_f_utf_character_t_from_char_1(character) (((character) << 24) & f_utf_character_mask_char_1) // shift to first byte.
+  #define macro_f_utf_character_t_from_char_2(character) (((character) << 16) & f_utf_character_mask_char_2) // shift to second byte.
+  #define macro_f_utf_character_t_from_char_3(character) (((character) << 8) & f_utf_character_mask_char_3)  // shift to third byte.
+  #define macro_f_utf_character_t_from_char_4(character) ((character) & f_utf_character_mask_char_4)         // shift to fourth byte.
 
-  #define f_macro_utf_character_t_width(character)    (f_macro_utf_byte_width(f_macro_utf_character_t_to_char_1(character)))
-  #define f_macro_utf_character_t_width_is(character) (f_macro_utf_byte_width_is(f_macro_utf_character_t_to_char_1(character)))
+  #define macro_f_utf_character_t_width(character)    (macro_f_utf_byte_width(macro_f_utf_character_t_to_char_1(character)))
+  #define macro_f_utf_character_t_width_is(character) (macro_f_utf_byte_width_is(macro_f_utf_character_t_to_char_1(character)))
 #endif // _di_f_utf_character_t_
 
 #ifndef _di_f_utf_character_t_codes_
@@ -211,13 +211,13 @@ extern "C" {
 
   #define f_utf_string_t_initialize 0
 
-  #define f_macro_utf_string_t_clear(string) string = 0;
+  #define macro_f_utf_string_t_clear(string) string = 0;
 
-  #define f_macro_utf_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
-  #define f_macro_utf_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
+  #define macro_f_utf_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
+  #define macro_f_utf_string_t_adjust(status, string, length_old, length_new) status = f_memory_adjust(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
 
-  #define f_macro_utf_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_utf_string_t), (void **) & string);
-  #define f_macro_utf_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_utf_string_t), (void **) & string);
+  #define macro_f_utf_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_utf_string_t), (void **) & string);
+  #define macro_f_utf_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_utf_string_t), (void **) & string);
 #endif // _di_f_utf_string_t_
 
 #ifdef __cplusplus

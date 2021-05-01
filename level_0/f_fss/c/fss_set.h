@@ -33,20 +33,20 @@ extern "C" {
 
   #define f_fss_set_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize }
 
-  #define f_macro_fss_set_t_clear(set) \
-    f_macro_fss_objects_t_clear(set.objects) \
-    f_macro_fss_contents_t_clear(set.contents)
+  #define macro_f_fss_set_t_clear(set) \
+    macro_f_fss_objects_t_clear(set.objects) \
+    macro_f_fss_contents_t_clear(set.contents)
 
-  #define f_macro_fss_set_t_resize(status, set, length) status = f_fss_set_resize(length, &set);
-  #define f_macro_fss_set_t_adjust(status, set, length) status = f_fss_set_adjust(length, &set);
+  #define macro_f_fss_set_t_resize(status, set, length) status = f_fss_set_resize(length, &set);
+  #define macro_f_fss_set_t_adjust(status, set, length) status = f_fss_set_adjust(length, &set);
 
-  #define f_macro_fss_set_t_delete_simple(set)  f_fss_set_resize(0, &set);
-  #define f_macro_fss_set_t_destroy_simple(set) f_fss_set_adjust(0, &set);
+  #define macro_f_fss_set_t_delete_simple(set)  f_fss_set_resize(0, &set);
+  #define macro_f_fss_set_t_destroy_simple(set) f_fss_set_adjust(0, &set);
 
-  #define f_macro_fss_set_t_increase(status, set)            status = f_fss_set_increase(&set);
-  #define f_macro_fss_set_t_increase_by(status, set, amount) status = f_fss_set_increase_by(amount, &set);
-  #define f_macro_fss_set_t_decrease_by(status, set, amount) status = f_fss_set_decrease_by(amount, &set);
-  #define f_macro_fss_set_t_decimate_by(status, set, amount) status = f_fss_set_decimate_by(amount, &set);
+  #define macro_f_fss_set_t_increase(status, set)            status = f_fss_set_increase(&set);
+  #define macro_f_fss_set_t_increase_by(status, set, amount) status = f_fss_set_increase_by(amount, &set);
+  #define macro_f_fss_set_t_decrease_by(status, set, amount) status = f_fss_set_decrease_by(amount, &set);
+  #define macro_f_fss_set_t_decimate_by(status, set, amount) status = f_fss_set_decimate_by(amount, &set);
 #endif // _di_f_fss_set_t_
 
 /**
@@ -66,18 +66,18 @@ extern "C" {
 
   #define f_fss_sets_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_sets_t_clear(sets) f_macro_memory_structure_t_clear(set.objects)
+  #define macro_f_fss_sets_t_clear(sets) macro_f_memory_structure_t_clear(set.objects)
 
-  #define f_macro_fss_sets_t_resize(status, sets, length) status = f_fss_sets_resize(length, &sets);
-  #define f_macro_fss_sets_t_adjust(status, sets, length) status = f_fss_sets_adjust(length, &sets);
+  #define macro_f_fss_sets_t_resize(status, sets, length) status = f_fss_sets_resize(length, &sets);
+  #define macro_f_fss_sets_t_adjust(status, sets, length) status = f_fss_sets_adjust(length, &sets);
 
-  #define f_macro_fss_sets_t_delete_simple(sets)  f_fss_sets_resize(0, &sets);
-  #define f_macro_fss_sets_t_destroy_simple(sets) f_fss_sets_adjust(0, &sets);
+  #define macro_f_fss_sets_t_delete_simple(sets)  f_fss_sets_resize(0, &sets);
+  #define macro_f_fss_sets_t_destroy_simple(sets) f_fss_sets_adjust(0, &sets);
 
-  #define f_macro_fss_sets_t_increase(status, sets)            status = f_fss_sets_increase(&sets);
-  #define f_macro_fss_sets_t_increase_by(status, sets, amount) status = f_fss_sets_increase_by(amount, &sets);
-  #define f_macro_fss_sets_t_decrease_by(status, sets, amount) status = f_fss_sets_decrease_by(amount, &sets);
-  #define f_macro_fss_sets_t_decimate_by(status, sets, amount) status = f_fss_sets_decimate_by(amount, &sets);
+  #define macro_f_fss_sets_t_increase(status, sets)            status = f_fss_sets_increase(&sets);
+  #define macro_f_fss_sets_t_increase_by(status, sets, amount) status = f_fss_sets_increase_by(amount, &sets);
+  #define macro_f_fss_sets_t_decrease_by(status, sets, amount) status = f_fss_sets_decrease_by(amount, &sets);
+  #define macro_f_fss_sets_t_decimate_by(status, sets, amount) status = f_fss_sets_decimate_by(amount, &sets);
 #endif // _di_f_fss_sets_t_
 
 /**
@@ -102,22 +102,22 @@ extern "C" {
 
   #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotes_t_initialize, f_fss_quotess_t_initialize }
 
-  #define f_macro_fss_set_quote_t_clear(set) \
-    f_macro_fss_objects_t_clear(set.objects) \
-    f_macro_fss_contents_t_clear(set.contents) \
-    f_macro_fss_quotes_t_clear(set.objects_quote) \
-    f_macro_fss_quotess_t_clear(set.contents_quote)
+  #define macro_f_fss_set_quote_t_clear(set) \
+    macro_f_fss_objects_t_clear(set.objects) \
+    macro_f_fss_contents_t_clear(set.contents) \
+    macro_f_fss_quotes_t_clear(set.objects_quote) \
+    macro_f_fss_quotess_t_clear(set.contents_quote)
 
-  #define f_macro_fss_set_quote_t_resize(status, set_quote, length) status = f_fss_set_quote_resize(length, &set_quote);
-  #define f_macro_fss_set_quote_t_adjust(status, set_quote, length) status = f_fss_set_quote_adjust(length, &set_quote);
+  #define macro_f_fss_set_quote_t_resize(status, set_quote, length) status = f_fss_set_quote_resize(length, &set_quote);
+  #define macro_f_fss_set_quote_t_adjust(status, set_quote, length) status = f_fss_set_quote_adjust(length, &set_quote);
 
-  #define f_macro_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_resize(0, &set_quote);
-  #define f_macro_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_adjust(0, &set_quote);
+  #define macro_f_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_resize(0, &set_quote);
+  #define macro_f_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_adjust(0, &set_quote);
 
-  #define f_macro_fss_set_quote_t_increase(status, set_quote)            status = f_fss_set_quote_increase(&set_quote);
-  #define f_macro_fss_set_quote_t_increase_by(status, set_quote, amount) status = f_fss_set_quote_increase_by(amount, &set_quote);
-  #define f_macro_fss_set_quote_t_decrease_by(status, set_quote, amount) status = f_fss_set_quote_decrease_by(amount, &set_quote);
-  #define f_macro_fss_set_quote_t_decimate_by(status, set_quote, amount) status = f_fss_set_quote_decimate_by(amount, &set_quote);
+  #define macro_f_fss_set_quote_t_increase(status, set_quote)            status = f_fss_set_quote_increase(&set_quote);
+  #define macro_f_fss_set_quote_t_increase_by(status, set_quote, amount) status = f_fss_set_quote_increase_by(amount, &set_quote);
+  #define macro_f_fss_set_quote_t_decrease_by(status, set_quote, amount) status = f_fss_set_quote_decrease_by(amount, &set_quote);
+  #define macro_f_fss_set_quote_t_decimate_by(status, set_quote, amount) status = f_fss_set_quote_decimate_by(amount, &set_quote);
 #endif // _di_f_fss_set_quote_t_
 
 /**
@@ -137,18 +137,18 @@ extern "C" {
 
   #define f_fss_set_quotes_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_set_quotes_t_clear(nameds) f_macro_memory_structure_clear(nameds)
+  #define macro_f_fss_set_quotes_t_clear(nameds) macro_f_memory_structure_clear(nameds)
 
-  #define f_macro_fss_set_quotes_t_resize(status, set_quotes, length) status = f_fss_set_quotes_resize(length, &set_quotes);
-  #define f_macro_fss_set_quotes_t_adjust(status, set_quotes, length) status = f_fss_set_quotes_adjust(length, &set_quotes);
+  #define macro_f_fss_set_quotes_t_resize(status, set_quotes, length) status = f_fss_set_quotes_resize(length, &set_quotes);
+  #define macro_f_fss_set_quotes_t_adjust(status, set_quotes, length) status = f_fss_set_quotes_adjust(length, &set_quotes);
 
-  #define f_macro_fss_set_quotes_t_delete_simple(set_quotes)  f_fss_set_quotes_resize(0, &set_quotes);
-  #define f_macro_fss_set_quotes_t_destroy_simple(set_quotes) f_fss_set_quotes_adjust(0, &set_quotes);
+  #define macro_f_fss_set_quotes_t_delete_simple(set_quotes)  f_fss_set_quotes_resize(0, &set_quotes);
+  #define macro_f_fss_set_quotes_t_destroy_simple(set_quotes) f_fss_set_quotes_adjust(0, &set_quotes);
 
-  #define f_macro_fss_set_quotes_t_increase(status, set_quotes)            status = f_fss_set_quotes_increase(&set_quotes);
-  #define f_macro_fss_set_quotes_t_increase_by(status, set_quotes, amount) status = f_fss_set_quotes_increase_by(amount, &set_quotes);
-  #define f_macro_fss_set_quotes_t_decrease_by(status, set_quotes, amount) status = f_fss_set_quotes_decrease_by(amount, &set_quotes);
-  #define f_macro_fss_set_quotes_t_decimate_by(status, set_quotes, amount) status = f_fss_set_quotes_decimate_by(amount, &set_quotes);
+  #define macro_f_fss_set_quotes_t_increase(status, set_quotes)            status = f_fss_set_quotes_increase(&set_quotes);
+  #define macro_f_fss_set_quotes_t_increase_by(status, set_quotes, amount) status = f_fss_set_quotes_increase_by(amount, &set_quotes);
+  #define macro_f_fss_set_quotes_t_decrease_by(status, set_quotes, amount) status = f_fss_set_quotes_decrease_by(amount, &set_quotes);
+  #define macro_f_fss_set_quotes_t_decimate_by(status, set_quotes, amount) status = f_fss_set_quotes_decimate_by(amount, &set_quotes);
 #endif // _di_fss_set_quotes_t_
 
 /**

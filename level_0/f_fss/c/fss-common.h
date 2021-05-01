@@ -182,18 +182,18 @@ extern "C" {
 
   #define f_fss_headers_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_headers_t_clear(headers) f_macro_memory_structure_clear(headers)
+  #define macro_f_fss_headers_t_clear(headers) macro_f_memory_structure_clear(headers)
 
-  #define f_macro_fss_headers_t_resize(status, headers, length) f_macro_memory_structure_resize(status, headers, f_fss_header_t, length)
-  #define f_macro_fss_headers_t_adjust(status, headers, length) f_macro_memory_structure_adjust(status, headers, f_fss_header_t, length)
+  #define macro_f_fss_headers_t_resize(status, headers, length) macro_f_memory_structure_resize(status, headers, f_fss_header_t, length)
+  #define macro_f_fss_headers_t_adjust(status, headers, length) macro_f_memory_structure_adjust(status, headers, f_fss_header_t, length)
 
-  #define f_macro_fss_headers_t_delete_simple(headers)  f_macro_memory_structure_delete_simple(headers, f_fss_header_t)
-  #define f_macro_fss_headers_t_destroy_simple(headers) f_macro_memory_structure_destroy_simple(headers, f_fss_header_t)
+  #define macro_f_fss_headers_t_delete_simple(headers)  macro_f_memory_structure_delete_simple(headers, f_fss_header_t)
+  #define macro_f_fss_headers_t_destroy_simple(headers) macro_f_memory_structure_destroy_simple(headers, f_fss_header_t)
 
-  #define f_macro_fss_headers_t_increase(status, headers)            f_macro_memory_structure_increase(status, headers, f_fss_header_t)
-  #define f_macro_fss_headers_t_increase_by(status, headers, amount) f_macro_memory_structure_increase_by(status, headers, f_fss_header_t, amount)
-  #define f_macro_fss_headers_t_decrease_by(status, headers, amount) f_macro_memory_structure_decrease_by(status, headers, f_fss_header_t, amount)
-  #define f_macro_fss_headers_t_decimate_by(status, headers, amount) f_macro_memory_structure_decimate_by(status, headers, f_fss_header_t, amount)
+  #define macro_f_fss_headers_t_increase(status, headers)            macro_f_memory_structure_increase(status, headers, f_fss_header_t)
+  #define macro_f_fss_headers_t_increase_by(status, headers, amount) macro_f_memory_structure_increase_by(status, headers, f_fss_header_t, amount)
+  #define macro_f_fss_headers_t_decrease_by(status, headers, amount) macro_f_memory_structure_decrease_by(status, headers, f_fss_header_t, amount)
+  #define macro_f_fss_headers_t_decimate_by(status, headers, amount) macro_f_memory_structure_decimate_by(status, headers, f_fss_header_t, amount)
 #endif // _di_f_fss_headers_t_
 
 /**
@@ -204,7 +204,7 @@ extern "C" {
 
   #define f_fss_object_t_initialize f_string_range_t_initialize
 
-  #define f_macro_fss_object_t_clear(object) f_macro_string_range_t_clear(object)
+  #define macro_f_fss_object_t_clear(object) macro_f_string_range_t_clear(object)
 #endif // _di_fss_object_t_
 
 /**
@@ -219,18 +219,18 @@ extern "C" {
 
   #define f_fss_objects_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_objects_t_clear(objects) f_macro_string_ranges_t_clear(objects)
+  #define macro_f_fss_objects_t_clear(objects) macro_f_string_ranges_t_clear(objects)
 
-  #define f_macro_fss_objects_t_resize(status, objects, length) f_macro_string_ranges_t_resize(status, objects, length)
-  #define f_macro_fss_objects_t_adjust(status, objects, length) f_macro_string_ranges_t_adjust(status, objects, length)
+  #define macro_f_fss_objects_t_resize(status, objects, length) macro_f_string_ranges_t_resize(status, objects, length)
+  #define macro_f_fss_objects_t_adjust(status, objects, length) macro_f_string_ranges_t_adjust(status, objects, length)
 
-  #define f_macro_fss_objects_t_delete_simple(objects)  f_macro_string_ranges_t_delete_simple(objects)
-  #define f_macro_fss_objects_t_destroy_simple(objects) f_macro_string_ranges_t_destroy_simple(objects)
+  #define macro_f_fss_objects_t_delete_simple(objects)  macro_f_string_ranges_t_delete_simple(objects)
+  #define macro_f_fss_objects_t_destroy_simple(objects) macro_f_string_ranges_t_destroy_simple(objects)
 
-  #define f_macro_fss_objects_t_increase(status, objects)            f_macro_string_ranges_t_increase(status, objects)
-  #define f_macro_fss_objects_t_increase_by(status, objects, amount) f_macro_string_ranges_t_increase_by(status, objects, amount)
-  #define f_macro_fss_objects_t_decrease_by(status, objects, amount) f_macro_string_ranges_t_decrease_by(status, objects, amount)
-  #define f_macro_fss_objects_t_decimate_by(status, objects, amount) f_macro_string_ranges_t_decimate_by(status, objects, amount)
+  #define macro_f_fss_objects_t_increase(status, objects)            macro_f_string_ranges_t_increase(status, objects)
+  #define macro_f_fss_objects_t_increase_by(status, objects, amount) macro_f_string_ranges_t_increase_by(status, objects, amount)
+  #define macro_f_fss_objects_t_decrease_by(status, objects, amount) macro_f_string_ranges_t_decrease_by(status, objects, amount)
+  #define macro_f_fss_objects_t_decimate_by(status, objects, amount) macro_f_string_ranges_t_decimate_by(status, objects, amount)
 #endif // _di_fss_objects_t_
 
 /**
@@ -247,18 +247,18 @@ extern "C" {
 
   #define f_fss_content_t_initialize f_string_ranges_t_initialize
 
-  #define f_macro_fss_content_t_clear(content) f_macro_string_ranges_t_clear(content)
+  #define macro_f_fss_content_t_clear(content) macro_f_string_ranges_t_clear(content)
 
-  #define f_macro_fss_content_t_resize(status, content, length) f_macro_string_ranges_t_resize(status, content, length)
-  #define f_macro_fss_content_t_adjust(status, content, length) f_macro_string_ranges_t_adjust(status, content, length)
+  #define macro_f_fss_content_t_resize(status, content, length) macro_f_string_ranges_t_resize(status, content, length)
+  #define macro_f_fss_content_t_adjust(status, content, length) macro_f_string_ranges_t_adjust(status, content, length)
 
-  #define f_macro_fss_content_t_delete_simple(content)  f_macro_string_ranges_t_delete_simple(content)
-  #define f_macro_fss_content_t_destroy_simple(content) f_macro_string_ranges_t_destroy_simple(content)
+  #define macro_f_fss_content_t_delete_simple(content)  macro_f_string_ranges_t_delete_simple(content)
+  #define macro_f_fss_content_t_destroy_simple(content) macro_f_string_ranges_t_destroy_simple(content)
 
-  #define f_macro_fss_content_t_increase(status, content)            f_macro_string_ranges_t_increase(status, content)
-  #define f_macro_fss_content_t_increase_by(status, content, amount) f_macro_string_ranges_t_increase_by(status, content, amount)
-  #define f_macro_fss_content_t_decrease_by(status, content, amount) f_macro_string_ranges_t_decrease_by(status, content, amount)
-  #define f_macro_fss_content_t_decimate_by(status, content, amount) f_macro_string_ranges_t_decimate_by(status, content, amount)
+  #define macro_f_fss_content_t_increase(status, content)            macro_f_string_ranges_t_increase(status, content)
+  #define macro_f_fss_content_t_increase_by(status, content, amount) macro_f_string_ranges_t_increase_by(status, content, amount)
+  #define macro_f_fss_content_t_decrease_by(status, content, amount) macro_f_string_ranges_t_decrease_by(status, content, amount)
+  #define macro_f_fss_content_t_decimate_by(status, content, amount) macro_f_string_ranges_t_decimate_by(status, content, amount)
 #endif // _di_fss_content_
 
 /**
@@ -273,18 +273,18 @@ extern "C" {
 
   #define f_fss_contents_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_fss_contents_t_clear(contents) f_macro_string_rangess_t_clear(contents)
+  #define macro_f_fss_contents_t_clear(contents) macro_f_string_rangess_t_clear(contents)
 
-  #define f_macro_fss_contents_t_resize(status, contents, length) f_macro_string_rangess_t_resize(status, contents, length)
-  #define f_macro_fss_contents_t_adjust(status, contents, length) f_macro_string_rangess_t_adjust(status, contents, length)
+  #define macro_f_fss_contents_t_resize(status, contents, length) macro_f_string_rangess_t_resize(status, contents, length)
+  #define macro_f_fss_contents_t_adjust(status, contents, length) macro_f_string_rangess_t_adjust(status, contents, length)
 
-  #define f_macro_fss_contents_t_delete_simple(contents)  f_macro_string_rangess_t_delete_simple(contents)
-  #define f_macro_fss_contents_t_destroy_simple(contents) f_macro_string_rangess_t_destroy_simple(contents)
+  #define macro_f_fss_contents_t_delete_simple(contents)  macro_f_string_rangess_t_delete_simple(contents)
+  #define macro_f_fss_contents_t_destroy_simple(contents) macro_f_string_rangess_t_destroy_simple(contents)
 
-  #define f_macro_fss_contents_t_increase(status, contents)            f_macro_string_rangess_t_increase(status, contents)
-  #define f_macro_fss_contents_t_increase_by(status, contents, amount) f_macro_string_rangess_t_increase_by(status, contents, amount)
-  #define f_macro_fss_contents_t_decrease_by(status, contents, amount) f_macro_string_rangess_t_decrease_by(status, contents, amount)
-  #define f_macro_fss_contents_t_decimate_by(status, contents, amount) f_macro_string_rangess_t_decimate_by(status, contents, amount)
+  #define macro_f_fss_contents_t_increase(status, contents)            macro_f_string_rangess_t_increase(status, contents)
+  #define macro_f_fss_contents_t_increase_by(status, contents, amount) macro_f_string_rangess_t_increase_by(status, contents, amount)
+  #define macro_f_fss_contents_t_decrease_by(status, contents, amount) macro_f_string_rangess_t_decrease_by(status, contents, amount)
+  #define macro_f_fss_contents_t_decimate_by(status, contents, amount) macro_f_string_rangess_t_decimate_by(status, contents, amount)
 #endif // _di_f_fss_contents_t_
 
 #ifdef __cplusplus

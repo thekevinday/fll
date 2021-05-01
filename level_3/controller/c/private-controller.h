@@ -313,14 +313,14 @@ extern "C" {
  *   F_recurse (with error bit) on a recursion error.
  *   F_valid_not (with error bit) on invalid entry item, entry item action, or entry item action value.
  *
- *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
+ *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_terminate_after().
  *
  *   This will detect and report all errors, but only the first error is returned.
  *   Memory related errors return immediately.
 
- * @see f_macro_array_lengths_t_increase_by()
+ * @see macro_f_array_lengths_t_increase_by()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_terminate_after()
  */
@@ -350,11 +350,11 @@ extern "C" {
  *   F_critical (with error bit) on any critical error.
  *   F_execute (with error bit) if the "execute" Item Action failed.
  *
- *   Errors (with error bit) from: f_macro_array_lengths_t_increase_by().
+ *   Errors (with error bit) from: macro_f_array_lengths_t_increase_by().
  *   Errors (with error bit) from: controller_perform_ready().
  *   Errors (with error bit) from: controller_string_dynamic_append_terminated().
  *
- * @see f_macro_array_lengths_t_increase_by()
+ * @see macro_f_array_lengths_t_increase_by()
  * @see controller_perform_ready()
  * @see controller_string_dynamic_append_terminated()
  */

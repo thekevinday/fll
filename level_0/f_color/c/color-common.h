@@ -103,17 +103,17 @@ extern "C" {
   #define f_color_format_t_initialize_linux     { f_color_string_begin_s, f_color_string_end_s, f_color_string_medium_s }
   #define f_color_format_t_initialize_xterminal { f_color_string_begin_s, f_color_string_end_s, f_color_string_medium_s }
 
-  #define f_macro_color_format_t_clear(format) \
+  #define macro_f_color_format_t_clear(format) \
     format.begin = 0; \
     format.end = 0; \
     format.medium = 0;
 
-  #define f_macro_color_format_t_set_linux(format) \
+  #define macro_f_color_format_t_set_linux(format) \
     format.begin = f_color_string_begin_s; \
     format.end = f_color_string_end_s; \
     format.medium = f_color_string_medium_s;
 
-  #define f_macro_color_format_t_set_xterminal(format) \
+  #define macro_f_color_format_t_set_xterminal(format) \
     format.begin = f_color_string_begin_s; \
     format.end = f_color_string_end_s; \
     format.medium = f_color_string_medium_s;
@@ -173,7 +173,7 @@ extern "C" {
   #define f_color_t_initialize_linux     { f_color_string_code_reset_s, f_color_string_code_bold_s, f_color_string_code_underline_s, f_color_string_code_blink_s, f_color_string_code_reverse_s, f_color_string_code_conceal_s, f_color_string_code_black_s, f_color_string_code_red_s, f_color_string_code_green_s, f_color_string_code_yellow_s, f_color_string_code_blue_s, f_color_string_code_purple_s, f_color_string_code_teal_s, f_color_string_code_white_s, f_color_string_code_black_bg_s, f_color_string_code_red_bg_s, f_color_string_code_green_bg_s, f_color_string_code_yellow_bg_s, f_color_string_code_blue_bg_s, f_color_string_code_purple_bg_s, f_color_string_code_teal_bg_s, f_color_string_code_white_bg_s, f_color_string_code_black_s, f_color_string_code_red_s, f_color_string_code_green_s, f_color_string_code_yellow_s, f_color_string_code_blue_s, f_color_string_code_purple_s, f_color_string_code_teal_s, f_color_string_code_white_s, f_color_string_code_black_bg_s, f_color_string_code_red_bg_s, f_color_string_code_green_bg_s, f_color_string_code_yellow_bg_s, f_color_string_code_blue_bg_s, f_color_string_code_purple_bg_s, f_color_string_code_teal_bg_s, f_color_string_code_white_bg_s }
   #define f_color_t_initialize_xterminal { f_color_string_code_reset_s, f_color_string_code_bold_s, f_color_string_code_underline_s, f_color_string_code_blink_s, f_color_string_code_reverse_s, f_color_string_code_conceal_s, f_color_string_code_black_s, f_color_string_code_red_s, f_color_string_code_green_s, f_color_string_code_yellow_s, f_color_string_code_blue_s, f_color_string_code_purple_s, f_color_string_code_teal_s, f_color_string_code_white_s, f_color_string_code_black_bg_s, f_color_string_code_red_bg_s, f_color_string_code_green_bg_s, f_color_string_code_yellow_bg_s, f_color_string_code_blue_bg_s, f_color_string_code_purple_bg_s, f_color_string_code_teal_bg_s, f_color_string_code_white_bg_s, f_color_string_code_bright_black_s, f_color_string_code_bright_red_s, f_color_string_code_bright_green_s, f_color_string_code_bright_yellow_s, f_color_string_code_bright_blue_s, f_color_string_code_bright_purple_s, f_color_string_code_bright_teal_s, f_color_string_code_bright_white_s, f_color_string_code_bright_black_bg_s, f_color_string_code_bright_red_bg_s, f_color_string_code_bright_green_bg_s, f_color_string_code_bright_yellow_bg_s, f_color_string_code_bright_blue_bg_s, f_color_string_code_bright_purple_bg_s, f_color_string_code_bright_teal_bg_s, f_color_string_code_bright_white_bg_s }
 
-  #define f_macro_color_t_clear(color) \
+  #define macro_f_color_t_clear(color) \
     color.reset = 0; \
     color.bold = 0; \
     color.underline = 0; \
@@ -213,7 +213,7 @@ extern "C" {
     color.bright_teal_bg = 0; \
     color.bright_white_bg = 0;
 
-  #define f_macro_color_t_set_linux(color) \
+  #define macro_f_color_t_set_linux(color) \
     color.reset = f_color_string_code_reset_s; \
     color.bold = f_color_string_code_bold_s; \
     color.underline = f_color_string_code_underline_s; \
@@ -253,7 +253,7 @@ extern "C" {
     color.bright_teal_bg = f_color_string_code_teal_bg_s; \
     color.bright_white_bg = f_color_string_code_white_bg_s;
 
-  #define f_macro_color_t_set_xterminal(color) \
+  #define macro_f_color_t_set_xterminal(color) \
     color.reset = f_color_string_code_reset_s; \
     color.bold = f_color_string_code_bold_s; \
     color.underline = f_color_string_code_underline_s; \
@@ -311,9 +311,9 @@ extern "C" {
 
   #define f_color_set_t_initialize { 0, 0 }
 
-  #define f_macro_color_set_t_initialize(before, after) { before, after }
+  #define macro_f_color_set_t_initialize(before, after) { before, after }
 
-  #define f_macro_color_set_t_clear(set) \
+  #define macro_f_color_set_t_clear(set) \
     set.before = 0; \
     set.after = 0;
 #endif // _di_f_color_set_t_
@@ -353,17 +353,17 @@ extern "C" {
 
   #define f_color_set_context_t_initialize { f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize }
 
-  #define f_macro_color_set_context_t_initialize(warning, error, title, notable, important, standout, normal, normal_reset) { warning, error, title, notable, important, standout, normal, normal_reset }
+  #define macro_f_color_set_context_t_initialize(warning, error, title, notable, important, standout, normal, normal_reset) { warning, error, title, notable, important, standout, normal, normal_reset }
 
-  #define f_macro_color_set_context_t_clear(set) \
-    f_macro_color_set_t_clear(set.warning) \
-    f_macro_color_set_t_clear(set.error) \
-    f_macro_color_set_t_clear(set.title) \
-    f_macro_color_set_t_clear(set.notable) \
-    f_macro_color_set_t_clear(set.important) \
-    f_macro_color_set_t_clear(set.standout) \
-    f_macro_color_set_t_clear(set.normal) \
-    f_macro_color_set_t_clear(set.normal_reset)
+  #define macro_f_color_set_context_t_clear(set) \
+    macro_f_color_set_t_clear(set.warning) \
+    macro_f_color_set_t_clear(set.error) \
+    macro_f_color_set_t_clear(set.title) \
+    macro_f_color_set_t_clear(set.notable) \
+    macro_f_color_set_t_clear(set.important) \
+    macro_f_color_set_t_clear(set.standout) \
+    macro_f_color_set_t_clear(set.normal) \
+    macro_f_color_set_t_clear(set.normal_reset)
 
 #endif // _di_f_color_set_context_t_
 
@@ -404,53 +404,53 @@ extern "C" {
 
   #define f_color_context_t_initialize { f_color_t_initialize_linux, f_color_format_t_initialize_linux, f_color_mode_none, f_color_set_context_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
-  #define f_macro_color_context_t_clear(context) \
-    f_macro_color_t_clear(context.list) \
-    f_macro_color_format_t_clear(context.format) \
+  #define macro_f_color_context_t_clear(context) \
+    macro_f_color_t_clear(context.list) \
+    macro_f_color_format_t_clear(context.format) \
     context.mode = f_color_mode_none; \
-    f_macro_color_set_context_t_clear(context.set) \
-    f_macro_string_dynamic_t_clear(context.error) \
-    f_macro_string_dynamic_t_clear(context.title) \
-    f_macro_string_dynamic_t_clear(context.notable) \
-    f_macro_string_dynamic_t_clear(context.important) \
-    f_macro_string_dynamic_t_clear(context.standout) \
-    f_macro_string_dynamic_t_clear(context.normal) \
-    f_macro_string_dynamic_t_clear(context.normal_reset)
+    macro_f_color_set_context_t_clear(context.set) \
+    macro_f_string_dynamic_t_clear(context.error) \
+    macro_f_string_dynamic_t_clear(context.title) \
+    macro_f_string_dynamic_t_clear(context.notable) \
+    macro_f_string_dynamic_t_clear(context.important) \
+    macro_f_string_dynamic_t_clear(context.standout) \
+    macro_f_string_dynamic_t_clear(context.normal) \
+    macro_f_string_dynamic_t_clear(context.normal_reset)
 
-  #define f_macro_color_context_t_new(status, context) \
-     f_macro_string_dynamic_t_resize(status, context.reset, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.warning, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.error, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.title, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.notable, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.important, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.standout, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.normal, f_color_max_size + 1) \
-    if (F_status_is_error_not(status)) f_macro_string_dynamic_t_resize(status, context.normal_reset, f_color_max_size + 1)
+  #define macro_f_color_context_t_new(status, context) \
+     macro_f_string_dynamic_t_resize(status, context.reset, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.notable, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.important, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.standout, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal, f_color_max_size + 1) \
+    if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.normal_reset, f_color_max_size + 1)
 
-  #define f_macro_color_context_t_delete_simple(context) \
-    f_macro_string_dynamic_t_delete_simple(context.reset) \
-    f_macro_string_dynamic_t_delete_simple(context.warning) \
-    f_macro_string_dynamic_t_delete_simple(context.error) \
-    f_macro_string_dynamic_t_delete_simple(context.title) \
-    f_macro_string_dynamic_t_delete_simple(context.notable) \
-    f_macro_string_dynamic_t_delete_simple(context.important) \
-    f_macro_string_dynamic_t_delete_simple(context.standout) \
-    f_macro_string_dynamic_t_delete_simple(context.normal) \
-    f_macro_string_dynamic_t_delete_simple(context.normal_reset) \
-    f_macro_color_context_t_clear(context)
+  #define macro_f_color_context_t_delete_simple(context) \
+    macro_f_string_dynamic_t_delete_simple(context.reset) \
+    macro_f_string_dynamic_t_delete_simple(context.warning) \
+    macro_f_string_dynamic_t_delete_simple(context.error) \
+    macro_f_string_dynamic_t_delete_simple(context.title) \
+    macro_f_string_dynamic_t_delete_simple(context.notable) \
+    macro_f_string_dynamic_t_delete_simple(context.important) \
+    macro_f_string_dynamic_t_delete_simple(context.standout) \
+    macro_f_string_dynamic_t_delete_simple(context.normal) \
+    macro_f_string_dynamic_t_delete_simple(context.normal_reset) \
+    macro_f_color_context_t_clear(context)
 
-  #define f_macro_color_context_t_destroy_simple(context, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.reset) \
-    f_macro_string_dynamic_t_destroy_simple(context.warning, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.error, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.title, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.notable, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.important, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.standout, size) \
-    f_macro_string_dynamic_t_destroy_simple(context.normal) \
-    f_macro_string_dynamic_t_destroy_simple(context.normal_reset) \
-    f_macro_color_context_t_clear(context)
+  #define macro_f_color_context_t_destroy_simple(context, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.reset) \
+    macro_f_string_dynamic_t_destroy_simple(context.warning, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.error, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.title, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.notable, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.important, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.standout, size) \
+    macro_f_string_dynamic_t_destroy_simple(context.normal) \
+    macro_f_string_dynamic_t_destroy_simple(context.normal_reset) \
+    macro_f_color_context_t_clear(context)
 #endif // _di_f_color__context_t_
 
 #ifdef __cplusplus

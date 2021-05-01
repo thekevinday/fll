@@ -392,7 +392,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
+      macro_f_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
       if (F_status_is_error(status)) return status;
     }
 
@@ -428,7 +428,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
+      macro_f_string_dynamic_t_resize(status, (*target), link_stat.st_size + 1);
       if (F_status_is_error(status)) return status;
     }
 

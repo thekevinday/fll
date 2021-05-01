@@ -10,7 +10,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < items->size; ++i) {
-      f_macro_fss_item_t_adjust(status, items->array[i], 0)
+      macro_f_fss_item_t_adjust(status, items->array[i], 0)
     } // for
 
     status = f_memory_adjust(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
@@ -32,7 +32,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < items->size; ++i) {
-      f_macro_fss_item_t_resize(status, items->array[i], 0)
+      macro_f_fss_item_t_resize(status, items->array[i], 0)
     } // for
 
     status = f_memory_resize(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
@@ -53,13 +53,13 @@ extern "C" {
   f_status_t private_f_fss_named_adjust(const f_array_length_t length, f_fss_named_t *named) {
     f_status_t status = F_none;
 
-    f_macro_string_ranges_t_adjust(status, named->objects, length)
+    macro_f_string_ranges_t_adjust(status, named->objects, length)
     if (F_status_is_error(status)) return status;
 
-    f_macro_string_rangess_t_adjust(status, named->contents, length)
+    macro_f_string_rangess_t_adjust(status, named->contents, length)
     if (F_status_is_error(status)) return status;
 
-    f_macro_uint8ss_t_adjust(status, named->quotess, length)
+    macro_f_uint8ss_t_adjust(status, named->quotess, length)
 
     return status;
   }
@@ -69,13 +69,13 @@ extern "C" {
   f_status_t private_f_fss_named_resize(const f_array_length_t length, f_fss_named_t *named) {
     f_status_t status = F_none;
 
-    f_macro_string_ranges_t_resize(status, named->objects, length)
+    macro_f_string_ranges_t_resize(status, named->objects, length)
     if (F_status_is_error(status)) return status;
 
-    f_macro_string_rangess_t_resize(status, named->contents, length)
+    macro_f_string_rangess_t_resize(status, named->contents, length)
     if (F_status_is_error(status)) return status;
 
-    f_macro_uint8ss_t_resize(status, named->quotess, length)
+    macro_f_uint8ss_t_resize(status, named->quotess, length)
 
     return status;
   }
@@ -223,10 +223,10 @@ extern "C" {
   f_status_t private_f_fss_set_adjust(const f_array_length_t length, f_fss_set_t *set) {
     f_status_t status = F_none;
 
-    f_macro_fss_objects_t_adjust(status, set->objects, length);
+    macro_f_fss_objects_t_adjust(status, set->objects, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_contents_t_adjust(status, set->contents, length);
+    macro_f_fss_contents_t_adjust(status, set->contents, length);
 
     return status;
   }
@@ -236,10 +236,10 @@ extern "C" {
   f_status_t private_f_fss_set_resize(const f_array_length_t length, f_fss_set_t *set) {
     f_status_t status = F_none;
 
-    f_macro_fss_objects_t_resize(status, set->objects, length);
+    macro_f_fss_objects_t_resize(status, set->objects, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_contents_t_resize(status, set->contents, length);
+    macro_f_fss_contents_t_resize(status, set->contents, length);
 
     return status;
   }
@@ -249,16 +249,16 @@ extern "C" {
   f_status_t private_f_fss_set_quote_adjust(const f_array_length_t length, f_fss_set_quote_t *set_quote) {
     f_status_t status = F_none;
 
-    f_macro_fss_objects_t_adjust(status, set_quote->objects, length);
+    macro_f_fss_objects_t_adjust(status, set_quote->objects, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_contents_t_adjust(status, set_quote->contents, length);
+    macro_f_fss_contents_t_adjust(status, set_quote->contents, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_quotes_t_adjust(status, set_quote->objects_quote, length);
+    macro_f_fss_quotes_t_adjust(status, set_quote->objects_quote, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_quotess_t_adjust(status, set_quote->contents_quote, length);
+    macro_f_fss_quotess_t_adjust(status, set_quote->contents_quote, length);
 
     return status;
   }
@@ -268,16 +268,16 @@ extern "C" {
   f_status_t private_f_fss_set_quote_resize(const f_array_length_t length, f_fss_set_quote_t *set_quote) {
     f_status_t status = F_none;
 
-    f_macro_fss_objects_t_resize(status, set_quote->objects, length);
+    macro_f_fss_objects_t_resize(status, set_quote->objects, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_contents_t_resize(status, set_quote->contents, length);
+    macro_f_fss_contents_t_resize(status, set_quote->contents, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_quotes_t_resize(status, set_quote->objects_quote, length);
+    macro_f_fss_quotes_t_resize(status, set_quote->objects_quote, length);
     if (F_status_is_error(status)) return status;
 
-    f_macro_fss_quotess_t_resize(status, set_quote->contents_quote, length);
+    macro_f_fss_quotess_t_resize(status, set_quote->contents_quote, length);
 
     return status;
   }
@@ -289,16 +289,16 @@ extern "C" {
 
     for (f_array_length_t i = length; i < set_quotes->size; ++i) {
 
-      f_macro_fss_objects_t_adjust(status, set_quotes->array[i].objects, 0);
+      macro_f_fss_objects_t_adjust(status, set_quotes->array[i].objects, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_contents_t_adjust(status, set_quotes->array[i].contents, 0);
+      macro_f_fss_contents_t_adjust(status, set_quotes->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_quotes_t_adjust(status, set_quotes->array[i].objects_quote, 0);
+      macro_f_fss_quotes_t_adjust(status, set_quotes->array[i].objects_quote, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_quotess_t_adjust(status, set_quotes->array[i].contents_quote, 0);
+      macro_f_fss_quotess_t_adjust(status, set_quotes->array[i].contents_quote, 0);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -322,16 +322,16 @@ extern "C" {
 
     for (f_array_length_t i = length; i < set_quotes->size; ++i) {
 
-      f_macro_fss_objects_t_resize(status, set_quotes->array[i].objects, 0);
+      macro_f_fss_objects_t_resize(status, set_quotes->array[i].objects, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_contents_t_resize(status, set_quotes->array[i].contents, 0);
+      macro_f_fss_contents_t_resize(status, set_quotes->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_quotes_t_resize(status, set_quotes->array[i].objects_quote, 0);
+      macro_f_fss_quotes_t_resize(status, set_quotes->array[i].objects_quote, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_quotess_t_resize(status, set_quotes->array[i].contents_quote, 0);
+      macro_f_fss_quotess_t_resize(status, set_quotes->array[i].contents_quote, 0);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -355,10 +355,10 @@ extern "C" {
 
     for (f_array_length_t i = length; i < sets->size; ++i) {
 
-      f_macro_fss_objects_t_adjust(status, sets->array[i].objects, 0);
+      macro_f_fss_objects_t_adjust(status, sets->array[i].objects, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_contents_t_adjust(status, sets->array[i].contents, 0);
+      macro_f_fss_contents_t_adjust(status, sets->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -382,10 +382,10 @@ extern "C" {
 
     for (f_array_length_t i = length; i < sets->size; ++i) {
 
-      f_macro_fss_objects_t_resize(status, sets->array[i].objects, 0);
+      macro_f_fss_objects_t_resize(status, sets->array[i].objects, 0);
       if (F_status_is_error(status)) return status;
 
-      f_macro_fss_contents_t_resize(status, sets->array[i].contents, 0);
+      macro_f_fss_contents_t_resize(status, sets->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
     } // for
 

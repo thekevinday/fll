@@ -71,13 +71,13 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_macro_string_dynamics_t_resize().
+ *   Errors (with error bit) from: macro_f_string_dynamics_t_resize().
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_delete().
  *   Errors (with error bit) from: f_string_dynamic_terminate().
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *
- * @see f_macro_string_dynamics_t_resize()
+ * @see macro_f_string_dynamics_t_resize()
  * @see f_string_append()
  * @see f_string_dynamic_delete()
  * @see f_string_dynamic_terminate()
@@ -456,7 +456,7 @@ extern "C" {
  *   Errors (with error bit) from: f_environment_get().
  *   Errors (with error bit) from: f_file_exists().
  *   Errors (with error bit) from: f_limit_process().
- *   Errors (with error bit) from: f_macro_string_dynamics_t_delete().
+ *   Errors (with error bit) from: macro_f_string_dynamics_t_delete().
  *   Errors (with error bit) from: f_signal_mask().
  *   Errors (with error bit) from: f_thread_signal_mask().
  *   Errors (with error bit) from: fl_environment_path_explode_dynamic().

@@ -27,38 +27,38 @@ extern "C" {
 #endif // _di_control_print_help_
 
 #ifndef _di_control_main_
-  f_status_t control_main(const f_console_arguments_t arguments, control_main_t *data) {
+  f_status_t control_main(const f_console_arguments_t arguments, control_main_t *main) {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, control_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, control_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { control_parameter_no_color, control_parameter_light, control_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
-        if (data->context.set.error.before) {
-          data->error.context = data->context.set.error;
-          data->error.notable = data->context.set.notable;
+        if (main->context.set.error.before) {
+          main->error.context = main->context.set.error;
+          main->error.notable = main->context.set.notable;
 
-          data->warning.context = data->context.set.warning;
-          data->warning.notable = data->context.set.notable;
+          main->warning.context = main->context.set.warning;
+          main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, &data->warning.context, &data->warning.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-          fll_program_parameter_process_empty(&data->context, sets);
+          fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          if (data->error.verbosity != f_console_verbosity_quiet) {
-            fll_error_print(data->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
           }
 
-          control_main_delete(data);
+          control_main_delete(main);
           return F_status_set_error(status);
         }
       }
@@ -67,72 +67,72 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { control_parameter_verbosity_quiet, control_parameter_verbosity_normal, control_parameter_verbosity_verbose, control_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          control_main_delete(data);
+          control_main_delete(main);
           return status;
         }
 
         if (choice == control_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
+          main->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == control_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
+          main->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == control_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
+          main->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == control_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
+          main->error.verbosity = f_console_verbosity_debug;
         }
       }
 
       status = F_none;
     }
 
-    if (data->parameters[control_parameter_help].result == f_console_result_found) {
-      control_print_help(data->output, data->context);
+    if (main->parameters[control_parameter_help].result == f_console_result_found) {
+      control_print_help(main->output, main->context);
 
-      control_main_delete(data);
+      control_main_delete(main);
       return F_none;
     }
 
-    if (data->parameters[control_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(data->output, control_version);
+    if (main->parameters[control_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(main->output, control_version);
 
-      control_main_delete(data);
+      control_main_delete(main);
       return F_none;
     }
 
     // @todo
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (data->error.verbosity != f_console_verbosity_quiet) {
+    if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(data->error.to.stream, "%c", f_string_eol_s[0]);
+        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
       }
     }
 
-    control_main_delete(data);
+    control_main_delete(main);
     return status;
   }
 #endif // _di_control_main_
 
 #ifndef _di_control_main_delete_
-  f_status_t control_main_delete(control_main_t *data) {
+  f_status_t control_main_delete(control_main_t *main) {
 
     for (f_array_length_t i = 0; i < control_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(data->remaining);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(data->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

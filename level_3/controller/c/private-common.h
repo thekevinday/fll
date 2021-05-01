@@ -360,13 +360,13 @@ extern "C" {
     f_string_dynamic_t_initialize, \
   }
 
-  #define controller_macro_cache_action_t_clear(cache) \
+  #define macro_controller_cache_action_t_clear(cache) \
     cache.line_action = 0; \
     cache.line_item = 0; \
-    f_macro_string_dynamic_t_clear(cache.name_action) \
-    f_macro_string_dynamic_t_clear(cache.name_file) \
-    f_macro_string_dynamic_t_clear(cache.name_item) \
-    f_macro_string_dynamic_t_clear(cache.generic)
+    macro_f_string_dynamic_t_clear(cache.name_action) \
+    macro_f_string_dynamic_t_clear(cache.name_file) \
+    macro_f_string_dynamic_t_clear(cache.name_item) \
+    macro_f_string_dynamic_t_clear(cache.generic)
 #endif // _di_controller_cache_action_t_
 
 /**
@@ -449,8 +449,8 @@ extern "C" {
     fl_execute_as_t_initialize \
   }
 
-  #define controller_macro_execute_set_t_initialize(option, wait, environment, signals, main, as) { \
-    fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, main), \
+  #define macro_controller_execute_set_t_initialize(option, wait, environment, signals, main, as) { \
+    macro_fl_execute_parameter_t_initialize(option, wait, environment, signals, main), \
     as, \
   }
 #endif // _di_controller_execute_set_t_
@@ -1180,7 +1180,7 @@ extern "C" {
     0, \
   }
 
-  #define controller_macro_entry_items_t_clear(items) \
+  #define macro_controller_entry_items_t_clear(items) \
     items.array = 0; \
     items.size = 0; \
     items.used = 0;
@@ -1427,7 +1427,7 @@ extern "C" {
 
   #define controller_global_t_initialize { 0, 0, 0 }
 
-  #define controller_macro_global_t_initialize(main, setting, thread) { \
+  #define macro_controller_global_t_initialize(main, setting, thread) { \
     main, \
     setting, \
     thread, \
@@ -1448,7 +1448,7 @@ extern "C" {
 
   #define controller_main_entry_t_initialize { 0, 0 }
 
-  #define controller_macro_main_entry_t_initialize(global, setting) { \
+  #define macro_controller_main_entry_t_initialize(global, setting) { \
     global, \
     setting, \
   }
@@ -1472,8 +1472,8 @@ extern "C" {
  * @param cache
  *   The cache to deallocate.
  *
- * @see f_macro_array_lengths_t_delete_simple()
- * @see f_macro_fss_delimits_t_delete_simple()
+ * @see macro_f_array_lengths_t_delete_simple()
+ * @see macro_f_fss_delimits_t_delete_simple()
  *
  * @see controller_cache_action_delete_simple()
  * @see f_string_dynamic_resize()
@@ -2019,13 +2019,13 @@ extern "C" {
  * @param rule
  *   The rule to deallocate.
  *
- * @see f_macro_control_group_t_delete_simple()
- * @see f_macro_int32s_t_delete_simple()
- * @see f_macro_limit_sets_t_delete_simple()
- * @see f_macro_string_dynamics_t_delete_simple()
- * @see f_macro_string_maps_t_delete_simple()
- * @see f_macro_thread_condition_t_delete_simple()
- * @see f_macro_thread_mutex_t_delete_simple()
+ * @see macro_f_control_group_t_delete_simple()
+ * @see macro_f_int32s_t_delete_simple()
+ * @see macro_f_limit_sets_t_delete_simple()
+ * @see macro_f_string_dynamics_t_delete_simple()
+ * @see macro_f_string_maps_t_delete_simple()
+ * @see macro_f_thread_condition_t_delete_simple()
+ * @see macro_f_thread_mutex_t_delete_simple()
  *
  * @see controller_rule_items_delete_simple()
  * @see f_capability_delete()

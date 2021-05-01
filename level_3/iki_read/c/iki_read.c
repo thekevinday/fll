@@ -93,11 +93,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, iki_read_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, iki_read_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { iki_read_parameter_no_color, iki_read_parameter_light, iki_read_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
@@ -127,7 +127,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { iki_read_parameter_verbosity_quiet, iki_read_parameter_verbosity_normal, iki_read_parameter_verbosity_verbose, iki_read_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -182,7 +182,7 @@ extern "C" {
       }
       else if (main->parameters[iki_read_parameter_at].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[iki_read_parameter_at].values.array[main->parameters[iki_read_parameter_at].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -222,7 +222,7 @@ extern "C" {
       }
       else if (main->parameters[iki_read_parameter_line].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[iki_read_parameter_line].values.array[main->parameters[iki_read_parameter_line].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -392,7 +392,7 @@ extern "C" {
         }
 
         // Clear buffers before continuing.
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
       }
 
       if (F_status_is_fine(status) && main->remaining.used > 0) {
@@ -401,7 +401,7 @@ extern "C" {
         f_file_t file = f_file_t_initialize;
 
         for (; i < main->remaining.used; i++) {
-          f_macro_file_t_reset(file);
+          macro_f_file_t_reset(file);
           total = 0;
 
           status = f_file_open(arguments.argv[main->remaining.array[i]], 0, &file);
@@ -439,7 +439,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           // Clear buffers before repeating the loop.
-          f_macro_string_dynamic_t_delete_simple(main->buffer);
+          macro_f_string_dynamic_t_delete_simple(main->buffer);
         } // for
       }
     }
@@ -468,15 +468,15 @@ extern "C" {
   f_status_t iki_read_main_delete(iki_read_main_t *main) {
 
     for (f_array_length_t i = 0; i < iki_read_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(main->remaining);
-    f_macro_string_dynamic_t_delete_simple(main->buffer);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
+    macro_f_string_dynamic_t_delete_simple(main->buffer);
 
-    f_macro_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

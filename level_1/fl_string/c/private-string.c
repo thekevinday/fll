@@ -137,7 +137,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      width = f_macro_utf_byte_width(string1[i1]);
+      width = macro_f_utf_byte_width(string1[i1]);
     } // for
 
     // skip past leading whitespace in string2.
@@ -167,7 +167,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      width = f_macro_utf_byte_width(string2[i2]);
+      width = macro_f_utf_byte_width(string2[i2]);
     } // for
 
     f_array_length_t last1 = i1;
@@ -206,7 +206,7 @@ extern "C" {
           return status;
         }
 
-        width = f_macro_utf_byte_width(string1[j]);
+        width = macro_f_utf_byte_width(string1[j]);
 
         if (status == F_false) {
           last1 = j;
@@ -241,7 +241,7 @@ extern "C" {
           return status;
         }
 
-        width = f_macro_utf_byte_width(string2[j]);
+        width = macro_f_utf_byte_width(string2[j]);
 
         if (status == F_false) {
           last2 = j;
@@ -340,7 +340,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      width = f_macro_utf_byte_width(string1[i1]);
+      width = macro_f_utf_byte_width(string1[i1]);
     } // for
 
     // skip past leading whitespace in string2.
@@ -363,7 +363,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      width = f_macro_utf_byte_width(string2[i2]);
+      width = macro_f_utf_byte_width(string2[i2]);
     } // for
 
     f_array_length_t last1 = i1;
@@ -392,7 +392,7 @@ extern "C" {
           return status;
         }
 
-        width = f_macro_utf_byte_width(string1[j]);
+        width = macro_f_utf_byte_width(string1[j]);
 
         if (status == F_false) {
           last1 = j;
@@ -418,7 +418,7 @@ extern "C" {
           return status;
         }
 
-        width = f_macro_utf_byte_width(string2[j]);
+        width = macro_f_utf_byte_width(string2[j]);
 
         if (status == F_false) {
           last2 = j;
@@ -484,7 +484,7 @@ extern "C" {
 
       if (status == F_false) break;
 
-      width = f_macro_utf_byte_width(source[*start]);
+      width = macro_f_utf_byte_width(source[*start]);
     } // for
 
     for (; *stop > *start; (*stop)--) {
@@ -499,7 +499,7 @@ extern "C" {
       // go left until either width is 0 (ascii, or > 1) to determine the character.
       for (;;) {
 
-        width = f_macro_utf_byte_width_is(source[*stop]);
+        width = macro_f_utf_byte_width_is(source[*stop]);
 
         if (width == 1) {
           (*stop)--;

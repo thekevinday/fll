@@ -629,7 +629,7 @@ extern "C" {
             }
 
             if (action->status == F_none) {
-              const f_string_range_t range = f_macro_string_range_t_initialize(action->parameters.array[1].used);
+              const f_string_range_t range = macro_f_string_range_t_initialize(action->parameters.array[1].used);
 
               status = fl_conversion_string_to_number_unsigned(action->parameters.array[1].string, range, &action->number);
 
@@ -770,7 +770,7 @@ extern "C" {
     cache->action.line_action = 0;
     cache->action.line_item = 0;
 
-    f_macro_time_spec_t_clear(cache->timestamp);
+    macro_f_time_spec_t_clear(cache->timestamp);
 
     cache->comments.used = 0;
     cache->delimits.used = 0;
@@ -815,7 +815,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
-        f_string_range_t range = f_macro_string_range_t_initialize(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 

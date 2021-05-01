@@ -35,18 +35,18 @@ extern "C" {
 
   #define f_fss_comments_t_initialize f_string_ranges_t_initialize
 
-  #define f_fss_comments_t_clear(comments) f_macro_string_ranges_t_clear(comments)
+  #define f_fss_comments_t_clear(comments) macro_f_string_ranges_t_clear(comments)
 
-  #define f_macro_fss_comments_t_resize(status, comments, length) f_macro_string_ranges_t_resize(status, comments, length)
-  #define f_macro_fss_comments_t_adjust(status, comments, length) f_macro_string_ranges_t_adjust(status, comments, length)
+  #define macro_f_fss_comments_t_resize(status, comments, length) macro_f_string_ranges_t_resize(status, comments, length)
+  #define macro_f_fss_comments_t_adjust(status, comments, length) macro_f_string_ranges_t_adjust(status, comments, length)
 
-  #define f_macro_fss_comments_t_delete_simple(comments)  f_macro_string_ranges_t_delete_simple(comments)
-  #define f_macro_fss_comments_t_destroy_simple(comments) f_macro_string_ranges_t_destroy_simple(comments)
+  #define macro_f_fss_comments_t_delete_simple(comments)  macro_f_string_ranges_t_delete_simple(comments)
+  #define macro_f_fss_comments_t_destroy_simple(comments) macro_f_string_ranges_t_destroy_simple(comments)
 
-  #define f_macro_fss_comments_t_increase(status, comments)            f_macro_string_ranges_t_increase(status, comments)
-  #define f_macro_fss_comments_t_increase_by(status, comments, amount) f_macro_string_ranges_t_increase_by(status, comments, amount)
-  #define f_macro_fss_comments_t_decrease_by(status, comments, amount) f_macro_string_ranges_t_decrease_by(status, comments, amount)
-  #define f_macro_fss_comments_t_decimate_by(status, comments, amount) f_macro_string_ranges_t_decimate_by(status, comments, amount)
+  #define macro_f_fss_comments_t_increase(status, comments)            macro_f_string_ranges_t_increase(status, comments)
+  #define macro_f_fss_comments_t_increase_by(status, comments, amount) macro_f_string_ranges_t_increase_by(status, comments, amount)
+  #define macro_f_fss_comments_t_decrease_by(status, comments, amount) macro_f_string_ranges_t_decrease_by(status, comments, amount)
+  #define macro_f_fss_comments_t_decimate_by(status, comments, amount) macro_f_string_ranges_t_decimate_by(status, comments, amount)
 #endif // _di_f_fss_comments_t_
 
 /**
@@ -61,18 +61,18 @@ extern "C" {
 
   #define f_fss_commentss_t_initialize f_string_rangess_t_initialize
 
-  #define f_macro_fss_commentss_t_clear(commentss) f_macro_string_rangess_t_clear(commentss)
+  #define macro_f_fss_commentss_t_clear(commentss) macro_f_string_rangess_t_clear(commentss)
 
-  #define f_macro_fss_commentss_t_resize(status, commentss, length) f_macro_string_rangess_t_resize(status, commentss, length)
-  #define f_macro_fss_commentss_t_adjust(status, commentss, length) f_macro_string_rangess_t_adjust(status, commentss, length)
+  #define macro_f_fss_commentss_t_resize(status, commentss, length) macro_f_string_rangess_t_resize(status, commentss, length)
+  #define macro_f_fss_commentss_t_adjust(status, commentss, length) macro_f_string_rangess_t_adjust(status, commentss, length)
 
-  #define f_macro_fss_commentss_t_delete_simple(commentss)  f_macro_string_rangess_t_delete_simple(commentss)
-  #define f_macro_fss_commentss_t_destroy_simple(commentss) f_macro_string_rangess_t_destroy_simple(commentss)
+  #define macro_f_fss_commentss_t_delete_simple(commentss)  macro_f_string_rangess_t_delete_simple(commentss)
+  #define macro_f_fss_commentss_t_destroy_simple(commentss) macro_f_string_rangess_t_destroy_simple(commentss)
 
-  #define f_macro_fss_commentss_t_increase(status, commentss)            f_macro_string_rangess_t_increase(status, commentss)
-  #define f_macro_fss_commentss_t_increase_by(status, commentss, amount) f_macro_string_rangess_t_increase_by(status, commentss, amount)
-  #define f_macro_fss_commentss_t_decrease_by(status, commentss, amount) f_macro_string_rangess_t_decrease_by(status, commentss, amount)
-  #define f_macro_fss_commentss_t_decimate_by(status, commentss, amount) f_macro_string_rangess_t_decimate_by(status, commentss, amount)
+  #define macro_f_fss_commentss_t_increase(status, commentss)            macro_f_string_rangess_t_increase(status, commentss)
+  #define macro_f_fss_commentss_t_increase_by(status, commentss, amount) macro_f_string_rangess_t_increase_by(status, commentss, amount)
+  #define macro_f_fss_commentss_t_decrease_by(status, commentss, amount) macro_f_string_rangess_t_decrease_by(status, commentss, amount)
+  #define macro_f_fss_commentss_t_decimate_by(status, commentss, amount) macro_f_string_rangess_t_decimate_by(status, commentss, amount)
 #endif // _di_f_fss_commentss_t_
 
 #ifdef __cplusplus

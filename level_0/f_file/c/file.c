@@ -43,7 +43,7 @@ extern "C" {
     status = private_f_file_stat(source, F_false, &source_stat);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
+    if (macro_f_file_type_is_regular(source_stat.st_mode)) {
       status = private_f_file_create(destination, source_stat.st_mode, exclusive);
       if (F_status_is_error(status)) return status;
 
@@ -59,7 +59,7 @@ extern "C" {
 
       return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
     }
-    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
+    else if (macro_f_file_type_is_link(source_stat.st_mode)) {
       status = private_f_file_link(destination, source);
       if (F_status_set_fine(status) == F_file_found) {
         if (exclusive) return status;
@@ -110,7 +110,7 @@ extern "C" {
     status = private_f_file_stat(source, F_false, &source_stat);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_is_regular(source_stat.st_mode)) {
+    if (macro_f_file_type_is_regular(source_stat.st_mode)) {
 
       status = private_f_file_create(destination, (~f_file_type_mask) & mode.regular, exclusive);
       if (F_status_is_error(status)) return status;
@@ -122,7 +122,7 @@ extern "C" {
 
       return private_f_file_copy_content(source, destination, size_block == 0 ? f_file_default_read_size : size_block);
     }
-    else if (f_macro_file_type_is_directory(source_stat.st_mode)) {
+    else if (macro_f_file_type_is_directory(source_stat.st_mode)) {
       status = private_f_file_create_directory(destination, (~f_file_type_mask) & mode.directory);
 
       if (F_status_is_error(status)) {
@@ -136,18 +136,18 @@ extern "C" {
 
       return F_none;
     }
-    else if (f_macro_file_type_is_link(source_stat.st_mode)) {
+    else if (macro_f_file_type_is_link(source_stat.st_mode)) {
       f_string_dynamic_t target = f_string_dynamic_t_initialize;
 
       status = private_f_file_link_read(source, source_stat, &target);
       if (F_status_is_error(status)) {
-        f_macro_string_dynamic_t_delete_simple(target);
+        macro_f_string_dynamic_t_delete_simple(target);
         return status;
       }
 
       status = private_f_file_link(target.string, destination);
 
-      f_macro_string_dynamic_t_delete_simple(target);
+      macro_f_string_dynamic_t_delete_simple(target);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -157,7 +157,7 @@ extern "C" {
 
       return F_none;
     }
-    else if (f_macro_file_type_is_fifo(source_stat.st_mode)) {
+    else if (macro_f_file_type_is_fifo(source_stat.st_mode)) {
       status = private_f_file_create_fifo(destination, (~f_file_type_mask) & mode.fifo);
 
       if (F_status_is_error(status)) {
@@ -171,8 +171,8 @@ extern "C" {
 
       return F_none;
     }
-    else if (f_macro_file_type_is_socket(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.socket), source_stat.st_rdev);
+    else if (macro_f_file_type_is_socket(source_stat.st_mode)) {
+      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.socket), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -185,8 +185,8 @@ extern "C" {
 
       return F_none;
     }
-    else if (f_macro_file_type_is_block(source_stat.st_mode) || f_macro_file_type_is_character(source_stat.st_mode)) {
-      status = private_f_file_create_node(destination, f_macro_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.block), source_stat.st_rdev);
+    else if (macro_f_file_type_is_block(source_stat.st_mode) || macro_f_file_type_is_character(source_stat.st_mode)) {
+      status = private_f_file_create_node(destination, macro_f_file_type_get(source_stat.st_mode) | ((~f_file_type_mask) & mode.block), source_stat.st_rdev);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) != F_file_found || exclusive) {
@@ -231,7 +231,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
 
-    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+    if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
     }
 
@@ -247,7 +247,7 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+    if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
     }
 
@@ -283,7 +283,7 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+    if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
     }
 
@@ -297,7 +297,7 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!f_macro_file_type_is_fifo(mode) && !f_macro_file_type_is_character(mode) && !f_macro_file_type_is_block(mode)) {
+    if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
     }
 
@@ -404,7 +404,7 @@ extern "C" {
     f_status_t status = private_f_file_stat(path, dereference, &stat_file);
     if (F_status_is_error(status)) return status;
 
-    if (f_macro_file_type_get(stat_file.st_mode) == type) return F_true;
+    if (macro_f_file_type_get(stat_file.st_mode) == type) return F_true;
 
     return F_false;
   }
@@ -1310,7 +1310,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_resize(status, (*name_base), name_base->used + size);
+      macro_f_string_dynamic_t_resize(status, (*name_base), name_base->used + size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1346,7 +1346,7 @@ extern "C" {
 
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_resize(status, (*name_directory), name_directory->used + size);
+      macro_f_string_dynamic_t_resize(status, (*name_directory), name_directory->used + size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1419,7 +1419,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
+        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
         if (F_status_is_error(status)) return status;
       }
 
@@ -1467,7 +1467,7 @@ extern "C" {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
+      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1525,7 +1525,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
+        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
         if (F_status_is_error(status)) return status;
       }
 
@@ -1980,7 +1980,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
+        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
         if (F_status_is_error(status)) return status;
 
         memset(buffer->string + buffer->used, 0, sizeof(file.size_read));
@@ -2029,7 +2029,7 @@ extern "C" {
         return F_status_set_error(F_string_too_large);
       }
 
-      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
+      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
       if (F_status_is_error(status)) return status;
     }
 
@@ -2084,7 +2084,7 @@ extern "C" {
           return F_status_set_error(F_string_too_large);
         }
 
-        f_macro_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
+        macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
         if (F_status_is_error(status)) return status;
       }
 
@@ -2441,7 +2441,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    *type = f_macro_file_type_get(stat_file.st_mode);
+    *type = macro_f_file_type_get(stat_file.st_mode);
 
     return F_none;
   }
@@ -2472,7 +2472,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    *type = f_macro_file_type_get(stat_file.st_mode);
+    *type = macro_f_file_type_get(stat_file.st_mode);
 
     return F_none;
   }

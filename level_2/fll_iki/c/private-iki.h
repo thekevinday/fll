@@ -35,7 +35,7 @@ extern "C" {
  *   F_none on success.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: macro_f_string_dynamic_t_resize().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #if !defined(_di_fll_iki_content_escape_) || !defined(_di_fll_iki_content_partial_escape_)
@@ -63,7 +63,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_syntax (with error bit) if the given string is invalid, such as having an undelimited quote.
  *
- *   Errors (with error bit) from: f_macro_string_dynamic_t_resize().
+ *   Errors (with error bit) from: macro_f_string_dynamic_t_resize().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #if !defined(_di_fll_iki_content_escape_un_) || !defined(_di_fll_iki_content_partial_escape_un_)

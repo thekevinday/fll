@@ -23,14 +23,14 @@ extern "C" {
 
     do {
       if (objects->used == objects->size) {
-        f_macro_fss_objects_t_increase(status2, (*objects))
+        macro_f_fss_objects_t_increase(status2, (*objects))
         if (F_status_is_error(status2)) return status2;
 
-        f_macro_fss_contents_t_increase(status2, (*contents))
+        macro_f_fss_contents_t_increase(status2, (*contents))
         if (F_status_is_error(status2)) return status2;
 
         if (objects_quoted) {
-          f_macro_fss_quotes_t_increase(status2, (*objects_quoted))
+          macro_f_fss_quotes_t_increase(status2, (*objects_quoted))
           if (F_status_is_error(status2)) return status2;
         }
       }
@@ -51,7 +51,7 @@ extern "C" {
               objects_quoted->used++;
             }
 
-            f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+            macro_f_fss_content_t_increase(status2, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
             contents->used++;
@@ -86,7 +86,7 @@ extern "C" {
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
 
-          f_macro_fss_content_t_increase(status2, contents->array[contents->used])
+          macro_f_fss_content_t_increase(status2, contents->array[contents->used])
           if (F_status_is_error(status2)) return status2;
 
           break;
@@ -154,7 +154,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = 0;
-    f_string_range_t range = f_macro_string_range_t_initialize(object.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
     status = fl_fss_basic_object_write_string(object, quote, f_fss_complete_full, &range, destination);
 

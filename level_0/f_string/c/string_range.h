@@ -23,7 +23,7 @@ extern "C" {
  * Therefore, a range from 0 to 0 would be include position 0.
  * Set start to some value larger than stop to designate that there is no range (such as start = 1, stop = 0).
  *
- * A special f_macro_string_range_t_initialize() is provided for the special purpose of easily initialize a static string range.
+ * A special macro_f_string_range_t_initialize() is provided for the special purpose of easily initialize a static string range.
  *
  * start: the start position.
  * stop:  the stop position.
@@ -36,9 +36,9 @@ extern "C" {
 
   #define f_string_range_t_initialize { 1, 0 }
 
-  #define f_macro_string_range_t_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
+  #define macro_f_string_range_t_initialize(length) { length ? 0 : 1, length ? length - 1 : 0 }
 
-  #define f_macro_string_range_t_clear(range) \
+  #define macro_f_string_range_t_clear(range) \
     range.start = 1; \
     range.stop = 0;
 #endif // _di_f_string_range_t_
@@ -60,18 +60,18 @@ extern "C" {
 
   #define f_string_ranges_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_ranges_t_clear(ranges) f_macro_memory_structure_clear(ranges)
+  #define macro_f_string_ranges_t_clear(ranges) macro_f_memory_structure_clear(ranges)
 
-  #define f_macro_string_ranges_t_resize(status, ranges, length) status = f_string_ranges_resize(length, &ranges);
-  #define f_macro_string_ranges_t_adjust(status, ranges, length) status = f_string_ranges_adjust(length, &ranges);
+  #define macro_f_string_ranges_t_resize(status, ranges, length) status = f_string_ranges_resize(length, &ranges);
+  #define macro_f_string_ranges_t_adjust(status, ranges, length) status = f_string_ranges_adjust(length, &ranges);
 
-  #define f_macro_string_ranges_t_delete_simple(ranges)  f_string_ranges_resize(0, &ranges);
-  #define f_macro_string_ranges_t_destroy_simple(ranges) f_string_ranges_adjust(0, &ranges);
+  #define macro_f_string_ranges_t_delete_simple(ranges)  f_string_ranges_resize(0, &ranges);
+  #define macro_f_string_ranges_t_destroy_simple(ranges) f_string_ranges_adjust(0, &ranges);
 
-  #define f_macro_string_ranges_t_increase(status, ranges)            status = f_string_ranges_increase(&ranges);
-  #define f_macro_string_ranges_t_increase_by(status, ranges, amount) status = f_string_ranges_increase_by(amount, &ranges);
-  #define f_macro_string_ranges_t_decrease_by(status, ranges, amount) status = f_string_ranges_decrease_by(amount, &ranges);
-  #define f_macro_string_ranges_t_decimate_by(status, ranges, amount) status = f_string_ranges_decimate_by(amount, &ranges);
+  #define macro_f_string_ranges_t_increase(status, ranges)            status = f_string_ranges_increase(&ranges);
+  #define macro_f_string_ranges_t_increase_by(status, ranges, amount) status = f_string_ranges_increase_by(amount, &ranges);
+  #define macro_f_string_ranges_t_decrease_by(status, ranges, amount) status = f_string_ranges_decrease_by(amount, &ranges);
+  #define macro_f_string_ranges_t_decimate_by(status, ranges, amount) status = f_string_ranges_decimate_by(amount, &ranges);
 #endif // _di_f_string_ranges_t_
 
 /**
@@ -91,18 +91,18 @@ extern "C" {
 
   #define f_string_rangess_t_initialize { 0, 0, 0 }
 
-  #define f_macro_string_rangess_t_clear(rangess) f_macro_memory_structures_clear(rangess)
+  #define macro_f_string_rangess_t_clear(rangess) macro_f_memory_structures_clear(rangess)
 
-  #define f_macro_string_rangess_t_resize(status, rangess, length) status = f_string_rangess_resize(length, &rangess);
-  #define f_macro_string_rangess_t_adjust(status, rangess, length) status = f_string_rangess_adjust(length, &rangess);
+  #define macro_f_string_rangess_t_resize(status, rangess, length) status = f_string_rangess_resize(length, &rangess);
+  #define macro_f_string_rangess_t_adjust(status, rangess, length) status = f_string_rangess_adjust(length, &rangess);
 
-  #define f_macro_string_rangess_t_delete_simple(rangess)  f_string_rangess_resize(0, &rangess);
-  #define f_macro_string_rangess_t_destroy_simple(rangess) f_string_rangess_adjust(0, &rangess);
+  #define macro_f_string_rangess_t_delete_simple(rangess)  f_string_rangess_resize(0, &rangess);
+  #define macro_f_string_rangess_t_destroy_simple(rangess) f_string_rangess_adjust(0, &rangess);
 
-  #define f_macro_string_rangess_t_increase(status, rangess)            status = f_string_rangess_increase(&rangess);
-  #define f_macro_string_rangess_t_increase_by(status, rangess, amount) status = f_string_rangess_increase_by(amount, &rangess);
-  #define f_macro_string_rangess_t_decrease_by(status, rangess, amount) status = f_string_rangess_decrease_by(amount, &rangess);
-  #define f_macro_string_rangess_t_decimate_by(status, rangess, amount) status = f_string_rangess_decimate_by(amount, &rangess);
+  #define macro_f_string_rangess_t_increase(status, rangess)            status = f_string_rangess_increase(&rangess);
+  #define macro_f_string_rangess_t_increase_by(status, rangess, amount) status = f_string_rangess_increase_by(amount, &rangess);
+  #define macro_f_string_rangess_t_decrease_by(status, rangess, amount) status = f_string_rangess_decrease_by(amount, &rangess);
+  #define macro_f_string_rangess_t_decimate_by(status, rangess, amount) status = f_string_rangess_decimate_by(amount, &rangess);
 #endif // _di_f_string_rangess_t_
 
 /**

@@ -80,12 +80,12 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(main->parameters, byte_dump_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, byte_dump_total_parameters);
 
       // Identify priority of color parameters.
       {
         f_console_parameter_id_t ids[3] = { byte_dump_parameter_no_color, byte_dump_parameter_light, byte_dump_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
@@ -111,7 +111,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[4] = { byte_dump_parameter_verbosity_quiet, byte_dump_parameter_verbosity_normal, byte_dump_parameter_verbosity_verbose, byte_dump_parameter_verbosity_debug };
         f_console_parameter_id_t choice = 0;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -140,7 +140,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[5] = { byte_dump_parameter_hexidecimal, byte_dump_parameter_duodecimal, byte_dump_parameter_octal, byte_dump_parameter_binary, byte_dump_parameter_decimal };
         f_console_parameter_id_t choice = byte_dump_parameter_hexidecimal;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 5);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -172,7 +172,7 @@ extern "C" {
       {
         f_console_parameter_id_t ids[3] = { byte_dump_parameter_normal, byte_dump_parameter_simple, byte_dump_parameter_classic };
         f_console_parameter_id_t choice = byte_dump_parameter_normal;
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
@@ -222,7 +222,7 @@ extern "C" {
       }
       else if (main->parameters[byte_dump_parameter_width].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_width].values.array[main->parameters[byte_dump_parameter_width].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -254,7 +254,7 @@ extern "C" {
       }
       else if (main->parameters[byte_dump_parameter_first].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_first].values.array[main->parameters[byte_dump_parameter_first].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -286,7 +286,7 @@ extern "C" {
       }
       else if (main->parameters[byte_dump_parameter_last].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[byte_dump_parameter_last].values.array[main->parameters[byte_dump_parameter_last].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         f_number_unsigned_t number = 0;
 
@@ -453,14 +453,14 @@ extern "C" {
   f_status_t byte_dump_main_delete(byte_dump_main_t *main) {
 
     for (f_array_length_t i = 0; i < byte_dump_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(main->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_array_lengths_t_delete_simple(main->remaining);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
 
-    f_macro_color_context_t_delete_simple(main->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

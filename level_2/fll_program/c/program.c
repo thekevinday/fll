@@ -120,7 +120,7 @@ extern "C" {
     if (decision != choices.id[0]) {
       f_status_t allocation_status = F_none;
 
-      f_macro_color_context_t_new(allocation_status, (*context));
+      macro_f_color_context_t_new(allocation_status, (*context));
       if (F_status_is_error(status)) return status;
 
       status = f_color_load_context(context, decision == choices.id[1]);
@@ -179,7 +179,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          f_macro_memory_structure_macro_increment(status, (*destination), 1, f_memory_default_allocation_step, f_macro_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, (*destination), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
           if (F_status_is_error(status)) break;
 
           destination->array[destination->used] = ripped;
@@ -252,7 +252,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          f_macro_string_dynamics_t_increase(status, (*destination));
+          macro_f_string_dynamics_t_increase(status, (*destination));
           if (F_status_is_error(status)) return status;
 
           destination->array[destination->used] = ripped;
@@ -291,7 +291,7 @@ extern "C" {
         status = fl_string_rip(argv[values.array[i]], length, &ripped);
 
         if (F_status_is_error(status)) {
-          f_macro_string_dynamic_t_delete_simple(ripped);
+          macro_f_string_dynamic_t_delete_simple(ripped);
           return status;
         }
 
@@ -299,7 +299,7 @@ extern "C" {
           status = f_string_dynamic_mash(glue, glue_length, ripped, destination);
 
           if (F_status_is_error(status)) {
-            f_macro_string_dynamic_t_delete_simple(ripped)
+            macro_f_string_dynamic_t_delete_simple(ripped)
             return F_status_set_error(F_string_too_large);
           }
         }
@@ -307,7 +307,7 @@ extern "C" {
     } // for
 
     if (ripped.size) {
-      f_macro_string_dynamic_t_delete_simple(ripped)
+      macro_f_string_dynamic_t_delete_simple(ripped)
     }
 
     if (status == F_none && start == destination->used) {

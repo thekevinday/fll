@@ -72,7 +72,7 @@ extern "C" {
     if (buffer->size - buffer->used - 1 < string_size) {
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_resize(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
+      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->used + string_size + 1); // the additional 1 is the EOS
 
       if (F_status_is_error(status)) {
         return status;
@@ -304,38 +304,38 @@ extern "C" {
       char *environment = getenv("TERM");
 
       if (!environment || strncmp(environment, "linux", 6) == 0) {
-        f_macro_color_t_set_linux(context->list);
+        macro_f_color_t_set_linux(context->list);
       }
       else {
-        f_macro_color_t_set_xterminal(context->list);
+        macro_f_color_t_set_xterminal(context->list);
       }
     }
 
-    status = fl_macro_color_save_1(&context->reset, context->format, context->list.reset);
+    status = macro_fl_color_save_1(&context->reset, context->format, context->list.reset);
 
     if (F_status_is_error_not(status)) {
-      status = fl_macro_color_save_1(&context->warning, context->format, context->list.yellow);
+      status = macro_fl_color_save_1(&context->warning, context->format, context->list.yellow);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_macro_color_save_2(&context->error, context->format, context->list.bold, context->list.red);
+      status = macro_fl_color_save_2(&context->error, context->format, context->list.bold, context->list.red);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_macro_color_save_1(&context->notable, context->format, context->list.bold);
+      status = macro_fl_color_save_1(&context->notable, context->format, context->list.bold);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fl_macro_color_save_1(&context->standout,  context->format, context->list.purple);
+      status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
     }
 
     if (use_light_colors) {
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_2(&context->title, context->format, context->list.bold, context->list.blue);
+        status = macro_fl_color_save_2(&context->title, context->format, context->list.bold, context->list.blue);
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_1(&context->important, context->format, context->list.blue);
+        status = macro_fl_color_save_1(&context->important, context->format, context->list.blue);
       }
 
       if (F_status_is_error_not(status)) {
@@ -343,16 +343,16 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_1(&context->standout,  context->format, context->list.purple);
+        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.purple);
       }
     }
     else {
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_2(&context->title, context->format, context->list.bold, context->list.yellow);
+        status = macro_fl_color_save_2(&context->title, context->format, context->list.bold, context->list.yellow);
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_2(&context->important, context->format, context->list.bold, context->list.green);
+        status = macro_fl_color_save_2(&context->important, context->format, context->list.bold, context->list.green);
       }
 
       if (F_status_is_error_not(status)) {
@@ -360,7 +360,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_macro_color_save_1(&context->standout,  context->format, context->list.green);
+        status = macro_fl_color_save_1(&context->standout,  context->format, context->list.green);
       }
     }
 

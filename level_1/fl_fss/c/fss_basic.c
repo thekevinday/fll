@@ -51,7 +51,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    f_macro_fss_content_t_increase(status, (*found))
+    macro_f_fss_content_t_increase(status, (*found))
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;

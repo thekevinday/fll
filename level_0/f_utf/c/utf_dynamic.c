@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_utf_string_static_empty_s_
-  const f_utf_string_static_t f_utf_string_static_empty_s = f_macro_utf_string_static_t_initialize(0, 0);
+  const f_utf_string_static_t f_utf_string_static_empty_s = macro_f_utf_string_static_t_initialize(0, 0);
 #endif // _di_f_utf_string_static_empty_s_
 
 #ifndef _di_f_utf_string_dynamic_adjust_
@@ -672,7 +672,7 @@ extern "C" {
 
     while (buffer.string[range->start] != f_utf_character_t_eol) {
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -697,7 +697,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -724,7 +724,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_this) {
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 

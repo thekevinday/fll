@@ -20,7 +20,7 @@ extern "C" {
     bool found_data = F_false;
 
     if (!nest->used) {
-      f_macro_fss_nest_t_resize(status2, (*nest), f_fss_default_allocation_step);
+      macro_f_fss_nest_t_resize(status2, (*nest), f_fss_default_allocation_step);
       if (F_status_is_error(status2)) return status2;
     }
     else {
@@ -30,7 +30,7 @@ extern "C" {
     do {
       do {
         if (nest->depth[0].used == nest->depth[0].size) {
-          f_macro_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
+          macro_f_fss_items_t_resize(status2, nest->depth[0], nest->depth[0].used + f_fss_default_allocation_step);
           if (F_status_is_error(status)) return status;
         }
 
@@ -120,7 +120,7 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = 0;
-    f_string_range_t range = f_macro_string_range_t_initialize(object.used);
+    f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
     status = fl_fss_embedded_list_object_write_string(object, f_fss_complete_full, &range, destination);
 

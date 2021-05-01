@@ -41,21 +41,21 @@ extern "C" {
 
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
-  #define f_macro_fss_item_t_clear(item) \
-    f_macro_fss_object_t_clear(item.object); \
-    f_macro_fss_content_t_clear(item.content); \
+  #define macro_f_fss_item_t_clear(item) \
+    macro_f_fss_object_t_clear(item.object); \
+    macro_f_fss_content_t_clear(item.content); \
     item.parent = 0;
 
-  #define f_macro_fss_item_t_resize(status, item, length) f_macro_fss_content_t_resize(status, item.content, length)
-  #define f_macro_fss_item_t_adjust(status, item, length) f_macro_fss_content_t_adjust(status, item.content, length)
+  #define macro_f_fss_item_t_resize(status, item, length) macro_f_fss_content_t_resize(status, item.content, length)
+  #define macro_f_fss_item_t_adjust(status, item, length) macro_f_fss_content_t_adjust(status, item.content, length)
 
-  #define f_macro_fss_item_t_delete_simple(item)  f_macro_fss_content_t_delete_simple(item.content)
-  #define f_macro_fss_item_t_destroy_simple(item) f_macro_fss_content_t_destroy_simple(item.content)
+  #define macro_f_fss_item_t_delete_simple(item)  macro_f_fss_content_t_delete_simple(item.content)
+  #define macro_f_fss_item_t_destroy_simple(item) macro_f_fss_content_t_destroy_simple(item.content)
 
-  #define f_macro_fss_item_t_increase(status, item)            f_macro_fss_content_t_increase(status, item.content)
-  #define f_macro_fss_item_t_increase_by(status, item, amount) f_macro_fss_content_t_increase_by(status, item.content, amount)
-  #define f_macro_fss_item_t_decrease_by(status, item, amount) f_macro_fss_content_t_decrease_by(status, item.content, amount)
-  #define f_macro_fss_item_t_decimate_by(status, item, amount) f_macro_fss_content_t_decimate_by(status, item.content, amount)
+  #define macro_f_fss_item_t_increase(status, item)            macro_f_fss_content_t_increase(status, item.content)
+  #define macro_f_fss_item_t_increase_by(status, item, amount) macro_f_fss_content_t_increase_by(status, item.content, amount)
+  #define macro_f_fss_item_t_decrease_by(status, item, amount) macro_f_fss_content_t_decrease_by(status, item.content, amount)
+  #define macro_f_fss_item_t_decimate_by(status, item, amount) macro_f_fss_content_t_decimate_by(status, item.content, amount)
 #endif // _di_fss_item_t_
 
 /**
@@ -96,18 +96,18 @@ extern "C" {
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_items_t_clear(items) f_macro_memory_structure_clear(items)
+  #define macro_f_fss_items_t_clear(items) macro_f_memory_structure_clear(items)
 
-  #define f_macro_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
-  #define f_macro_fss_items_t_adjust(status, items, length) status = f_fss_items_adjust(length, &items);
+  #define macro_f_fss_items_t_resize(status, items, length) status = f_fss_items_resize(length, &items);
+  #define macro_f_fss_items_t_adjust(status, items, length) status = f_fss_items_adjust(length, &items);
 
-  #define f_macro_fss_items_t_delete_simple(items)  f_fss_items_resize(0, &items);
-  #define f_macro_fss_items_t_destroy_simple(items) f_fss_items_adjust(0, &items);
+  #define macro_f_fss_items_t_delete_simple(items)  f_fss_items_resize(0, &items);
+  #define macro_f_fss_items_t_destroy_simple(items) f_fss_items_adjust(0, &items);
 
-  #define f_macro_fss_items_t_increase(status, items)            status = f_fss_items_increase(&items);
-  #define f_macro_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
-  #define f_macro_fss_items_t_decrease_by(status, items, amount) status = f_fss_items_decrease_by(amount, &items);
-  #define f_macro_fss_items_t_decimate_by(status, items, amount) status = f_fss_items_decimate_by(amount, &items);
+  #define macro_f_fss_items_t_increase(status, items)            status = f_fss_items_increase(&items);
+  #define macro_f_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
+  #define macro_f_fss_items_t_decrease_by(status, items, amount) status = f_fss_items_decrease_by(amount, &items);
+  #define macro_f_fss_items_t_decimate_by(status, items, amount) status = f_fss_items_decimate_by(amount, &items);
 #endif // _di_fss_items_t_
 
 /**
@@ -132,18 +132,18 @@ extern "C" {
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_nest_t_clear(nest) f_macro_memory_structures_clear(nest)
+  #define macro_f_fss_nest_t_clear(nest) macro_f_memory_structures_clear(nest)
 
-  #define f_macro_fss_nest_t_resize(status, nest, length) status = f_fss_nest_resize(length, &nest);
-  #define f_macro_fss_nest_t_adjust(status, nest, length) status = f_fss_nest_adjust(length, &nest);
+  #define macro_f_fss_nest_t_resize(status, nest, length) status = f_fss_nest_resize(length, &nest);
+  #define macro_f_fss_nest_t_adjust(status, nest, length) status = f_fss_nest_adjust(length, &nest);
 
-  #define f_macro_fss_nest_t_delete_simple(nest)  f_fss_nest_resize(0, &nest);
-  #define f_macro_fss_nest_t_destroy_simple(nest) f_fss_nest_adjust(0, &nest);
+  #define macro_f_fss_nest_t_delete_simple(nest)  f_fss_nest_resize(0, &nest);
+  #define macro_f_fss_nest_t_destroy_simple(nest) f_fss_nest_adjust(0, &nest);
 
-  #define f_macro_fss_nest_t_increase(status, nest)            status = f_fss_nest_increase(&nest);
-  #define f_macro_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
-  #define f_macro_fss_nest_t_decrease_by(status, nest, amount) status = f_fss_nest_decrease_by(amount, &nest);
-  #define f_macro_fss_nest_t_decimate_by(status, nest, amount) status = f_fss_nest_decimate_by(amount, &nest);
+  #define macro_f_fss_nest_t_increase(status, nest)            status = f_fss_nest_increase(&nest);
+  #define macro_f_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
+  #define macro_f_fss_nest_t_decrease_by(status, nest, amount) status = f_fss_nest_decrease_by(amount, &nest);
+  #define macro_f_fss_nest_t_decimate_by(status, nest, amount) status = f_fss_nest_decimate_by(amount, &nest);
 #endif // _di_fss_nest_t_
 
 /**
@@ -163,18 +163,18 @@ extern "C" {
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
 
-  #define f_macro_fss_nests_t_clear(nests) f_macro_memory_structures_clear(nests)
+  #define macro_f_fss_nests_t_clear(nests) macro_f_memory_structures_clear(nests)
 
-  #define f_macro_fss_nests_t_resize(status, nests, length) status = f_fss_nests_resize(length, &nests);
-  #define f_macro_fss_nests_t_adjust(status, nests, length) status = f_fss_nests_adjust(length, &nests);
+  #define macro_f_fss_nests_t_resize(status, nests, length) status = f_fss_nests_resize(length, &nests);
+  #define macro_f_fss_nests_t_adjust(status, nests, length) status = f_fss_nests_adjust(length, &nests);
 
-  #define f_macro_fss_nests_t_delete_simple(nests)  f_fss_nests_resize(0, &nests);
-  #define f_macro_fss_nests_t_destroy_simple(nests) f_fss_nests_adjust(0, &nests);
+  #define macro_f_fss_nests_t_delete_simple(nests)  f_fss_nests_resize(0, &nests);
+  #define macro_f_fss_nests_t_destroy_simple(nests) f_fss_nests_adjust(0, &nests);
 
-  #define f_macro_fss_nests_t_increase(status, nests)            status = f_fss_nests_increase(&nests);
-  #define f_macro_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
-  #define f_macro_fss_nests_t_decrease_by(status, nests, amount) status = f_fss_nests_decrease_by(amount, &nests);
-  #define f_macro_fss_nests_t_decimate_by(status, nests, amount) status = f_fss_nests_decimate_by(amount, &nests);
+  #define macro_f_fss_nests_t_increase(status, nests)            status = f_fss_nests_increase(&nests);
+  #define macro_f_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
+  #define macro_f_fss_nests_t_decrease_by(status, nests, amount) status = f_fss_nests_decrease_by(amount, &nests);
+  #define macro_f_fss_nests_t_decimate_by(status, nests, amount) status = f_fss_nests_decimate_by(amount, &nests);
 #endif // _di_fss_nests_t_
 
 /**

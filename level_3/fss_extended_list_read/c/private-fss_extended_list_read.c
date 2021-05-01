@@ -16,7 +16,7 @@ extern "C" {
         depth_size = main.parameters[fss_extended_list_read_parameter_depth].values.used;
       }
 
-      fss_extended_list_read_macro_depths_t_resize(status, (*depths), depth_size);
+      macro_fss_extended_list_read_depths_t_resize(status, (*depths), depth_size);
 
       if (F_status_is_error(status)) {
         f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
@@ -36,7 +36,7 @@ extern "C" {
       depths->array[i].index_name = 0;
       depths->array[i].value_at = 0;
 
-      f_macro_string_dynamic_t_clear(depths->array[i].value_name);
+      macro_f_string_dynamic_t_clear(depths->array[i].value_name);
 
       if (!main.parameters[fss_extended_list_read_parameter_depth].values.used) {
         position_depth = 0;
@@ -44,7 +44,7 @@ extern "C" {
       else {
         position_depth = main.parameters[fss_extended_list_read_parameter_depth].values.array[i];
 
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[position_depth]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[position_depth]));
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], range, &depths->array[i].depth);
 
@@ -67,7 +67,7 @@ extern "C" {
 
           depths->array[i].index_at = main.parameters[fss_extended_list_read_parameter_at].values.array[position_at];
 
-          const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], range, &depths->array[i].value_at);
 
@@ -182,7 +182,7 @@ extern "C" {
     }
 
     {
-      f_string_range_t input = f_macro_string_range_t_initialize(main->buffer.used);
+      f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
 
       delimits->used = 0;
       comments->used = 0;
@@ -194,9 +194,9 @@ extern "C" {
         fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_list_read", F_true, filename, "process", fll_error_file_type_file);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
-        f_macro_fss_contents_t_delete_simple(main->contents);
-        f_macro_fss_objects_t_delete_simple(main->objects);
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_fss_contents_t_delete_simple(main->contents);
+        macro_f_fss_objects_t_delete_simple(main->objects);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         if (main->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
           fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
@@ -207,9 +207,9 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        f_macro_fss_contents_t_delete_simple(main->contents);
-        f_macro_fss_objects_t_delete_simple(main->objects);
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_fss_contents_t_delete_simple(main->contents);
+        macro_f_fss_objects_t_delete_simple(main->objects);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         return status;
       }
@@ -229,7 +229,7 @@ extern "C" {
 
     if (main->parameters[fss_extended_list_read_parameter_select].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[fss_extended_list_read_parameter_select].values.array[main->parameters[fss_extended_list_read_parameter_select].values.used - 1];
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
 
@@ -248,7 +248,7 @@ extern "C" {
 
     if (main->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[fss_extended_list_read_parameter_line].values.array[main->parameters[fss_extended_list_read_parameter_line].values.used - 1];
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
 

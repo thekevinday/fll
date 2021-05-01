@@ -18,7 +18,7 @@ extern "C" {
     // account home directory.
     f_array_length_t string_length = strnlen(password.pw_dir, password_length);
 
-    f_macro_string_dynamic_t_resize(status, account->home, string_length + 1);
+    macro_f_string_dynamic_t_resize(status, account->home, string_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->home.string, password.pw_dir, string_length);
@@ -30,7 +30,7 @@ extern "C" {
     // account label (gecos).
     string_length = strnlen(password.pw_gecos, password_length);
 
-    f_macro_string_dynamic_t_resize(status, account->label, string_length + 1);
+    macro_f_string_dynamic_t_resize(status, account->label, string_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->label.string, password.pw_gecos, string_length);
@@ -42,7 +42,7 @@ extern "C" {
     // account name.
     string_length = strnlen(password.pw_name, password_length);
 
-    f_macro_string_dynamic_t_resize(status, account->name, string_length + 1);
+    macro_f_string_dynamic_t_resize(status, account->name, string_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->name.string, password.pw_name, string_length);
@@ -54,7 +54,7 @@ extern "C" {
     // account password directory.
     string_length = strnlen(password.pw_passwd, password_length);
 
-    f_macro_string_dynamic_t_resize(status, account->password, string_length + 1);
+    macro_f_string_dynamic_t_resize(status, account->password, string_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->password.string, password.pw_passwd, string_length);
@@ -66,7 +66,7 @@ extern "C" {
     // account shell directory.
     string_length = strnlen(password.pw_shell, password_length);
 
-    f_macro_string_dynamic_t_resize(status, account->shell, string_length + 1);
+    macro_f_string_dynamic_t_resize(status, account->shell, string_length + 1);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->shell.string, password.pw_shell, string_length);

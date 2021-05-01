@@ -23,7 +23,7 @@ extern "C" {
       if (value->used + size > value->size) {
         f_status_t status = F_none;
 
-        f_macro_string_dynamic_t_resize(status, (*value), size);
+        macro_f_string_dynamic_t_resize(status, (*value), size);
         if (F_status_is_error(status)) return status;
       }
 

@@ -56,30 +56,30 @@ extern "C" {
 #endif // _di_firewall_print_help_
 
 #ifndef _di_firewall_main_
-  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_main_t *data) {
+  f_status_t firewall_main(const f_console_arguments_t arguments, firewall_main_t *main) {
     f_status_t status = F_none;
 
     {
-      const f_console_parameters_t parameters = f_macro_console_parameters_t_initialize(data->parameters, firewall_total_parameters);
+      const f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(main->parameters, firewall_total_parameters);
 
       {
         f_console_parameter_id_t ids[3] = { firewall_parameter_no_color, firewall_parameter_light, firewall_parameter_dark };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 3);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &data->remaining, &data->context);
+        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
-        if (data->context.set.error.before) {
-          data->error.context = data->context.set.error;
-          data->error.notable = data->context.set.notable;
+        if (main->context.set.error.before) {
+          main->error.context = main->context.set.error;
+          main->error.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &data->error.context, &data->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
 
-          fll_program_parameter_process_empty(&data->context, sets);
+          fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return F_status_set_error(status);
         }
       }
@@ -87,44 +87,44 @@ extern "C" {
       // Identify priority of verbosity related parameters.
       {
         f_console_parameter_id_t ids[4] = { firewall_parameter_verbosity_quiet, firewall_parameter_verbosity_normal, firewall_parameter_verbosity_verbose, firewall_parameter_verbosity_debug };
-        const f_console_parameter_ids_t choices = f_macro_console_parameter_ids_t_initialize(ids, 4);
+        const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
         f_console_parameter_id_t choice = 0;
 
         status = f_console_parameter_prioritize_right(parameters, choices, &choice);
 
         if (F_status_is_error(status)) {
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
         if (choice == firewall_parameter_verbosity_quiet) {
-          data->error.verbosity = f_console_verbosity_quiet;
+          main->error.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == firewall_parameter_verbosity_normal) {
-          data->error.verbosity = f_console_verbosity_normal;
+          main->error.verbosity = f_console_verbosity_normal;
         }
         else if (choice == firewall_parameter_verbosity_verbose) {
-          data->error.verbosity = f_console_verbosity_verbose;
+          main->error.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == firewall_parameter_verbosity_debug) {
-          data->error.verbosity = f_console_verbosity_debug;
+          main->error.verbosity = f_console_verbosity_debug;
         }
       }
 
       status = F_none;
     }
 
-    if (data->parameters[firewall_parameter_help].result == f_console_result_found) {
-      firewall_print_help(data->output, data->context);
+    if (main->parameters[firewall_parameter_help].result == f_console_result_found) {
+      firewall_print_help(main->output, main->context);
 
-      firewall_main_delete(data);
+      firewall_main_delete(main);
       return F_none;
     }
 
-    if (data->parameters[firewall_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(data->output, firewall_version);
+    if (main->parameters[firewall_parameter_version].result == f_console_result_found) {
+      fll_program_print_version(main->output, firewall_version);
 
-      firewall_main_delete(data);
+      firewall_main_delete(main);
       return F_none;
     }
 
@@ -132,14 +132,14 @@ extern "C" {
     bool found_command = F_false;
     unsigned int command = 0;
 
-    if (data->parameters[firewall_parameter_command_start].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_start].result == f_console_result_found) {
       command = firewall_parameter_command_start;
       found_command = F_true;
     }
 
-    if (data->parameters[firewall_parameter_command_stop].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_stop].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_stop].values.array[0]) {
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_stop].values.array[0]) {
           command = firewall_parameter_command_stop;
         }
       }
@@ -149,9 +149,9 @@ extern "C" {
       }
     }
 
-    if (data->parameters[firewall_parameter_command_restart].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_restart].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_restart].values.array[0]) {
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_restart].values.array[0]) {
           command = firewall_parameter_command_restart;
         }
       }
@@ -161,9 +161,9 @@ extern "C" {
       }
     }
 
-    if (data->parameters[firewall_parameter_command_lock].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_lock].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_lock].values.array[0]) {
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_lock].values.array[0]) {
           command = firewall_parameter_command_lock;
         }
       }
@@ -173,9 +173,9 @@ extern "C" {
       }
     }
 
-    if (data->parameters[firewall_parameter_command_show].result == f_console_result_found) {
+    if (main->parameters[firewall_parameter_command_show].result == f_console_result_found) {
       if (found_command) {
-        if (data->parameters[command].values.array[0] > data->parameters[firewall_parameter_command_show].values.array[0]) {
+        if (main->parameters[command].values.array[0] > main->parameters[firewall_parameter_command_show].values.array[0]) {
           command = firewall_parameter_command_show;
         }
       }
@@ -199,19 +199,19 @@ extern "C" {
         f_string_dynamics_t parameters = f_string_dynamics_t_initialize;
         int return_code = 0;
 
-        if (data->remaining.used > 0) {
+        if (main->remaining.used > 0) {
           show_nat = F_false;
           show_mangle = F_false;
           show_ports = F_false;
 
           f_array_length_t counter = 0;
 
-          for (; counter < data->remaining.used; counter++) {
+          for (; counter < main->remaining.used; counter++) {
 
-            if (strncmp("nat", arguments.argv[data->remaining.array[counter]], 4) != 0) {
-              if (strncmp("mangle",  arguments.argv[data->remaining.array[counter]], 7) != 0) {
-                if (strncmp("ports",  arguments.argv[data->remaining.array[counter]], 6) != 0) {
-                  f_color_print(f_type_warning, data->context.set.warning, "%s'%s' is not a valid show option%c", fll_error_print_warning, arguments.argv[data->remaining.array[counter]], f_string_eol_s[0]);
+            if (strncmp("nat", arguments.argv[main->remaining.array[counter]], 4) != 0) {
+              if (strncmp("mangle",  arguments.argv[main->remaining.array[counter]], 7) != 0) {
+                if (strncmp("ports",  arguments.argv[main->remaining.array[counter]], 6) != 0) {
+                  f_color_print(f_type_warning, main->context.set.warning, "%s'%s' is not a valid show option%c", fll_error_print_warning, arguments.argv[main->remaining.array[counter]], f_string_eol_s[0]);
                 }
                 else {
                   show_ports = F_true;
@@ -227,20 +227,20 @@ extern "C" {
           } // for
         }
 
-        f_macro_string_dynamics_t_resize(status, parameters, 7);
+        macro_f_string_dynamics_t_resize(status, parameters, 7);
 
         if (F_status_is_error(status)) {
-          f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
           firewall_delete_local_data(&local);
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
         if (show_nat) {
-          f_color_print(data->output.stream, data->context.set.standout, "=========================== ");
-          f_color_print(data->output.stream, data->context.set.title, "NAT");
-          f_color_print(data->output.stream, data->context.set.standout, " ============================%c", f_string_eol_s[0]);
-          fflush(data->output.stream);
+          f_color_print(main->output.stream, main->context.set.standout, "=========================== ");
+          f_color_print(main->output.stream, main->context.set.title, "NAT");
+          f_color_print(main->output.stream, main->context.set.standout, " ============================%c", f_string_eol_s[0]);
+          fflush(main->output.stream);
 
           parameters.used = 6;
 
@@ -265,15 +265,15 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(data->output.stream, "\n");
-          fflush(data->output.stream);
+          fprintf(main->output.stream, "\n");
+          fflush(main->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
-          f_color_print(data->output.stream, data->context.set.standout, "========================== ");
-          f_color_print(data->output.stream, data->context.set.title, "MANGLE");
-          f_color_print(data->output.stream, data->context.set.standout, " ==========================%c", f_string_eol_s[0]);
-          fflush(data->output.stream);
+          f_color_print(main->output.stream, main->context.set.standout, "========================== ");
+          f_color_print(main->output.stream, main->context.set.title, "MANGLE");
+          f_color_print(main->output.stream, main->context.set.standout, " ==========================%c", f_string_eol_s[0]);
+          fflush(main->output.stream);
 
           parameters.used = 6;
 
@@ -298,15 +298,15 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(data->output.stream, "\n");
-          fflush(data->output.stream);
+          fprintf(main->output.stream, "\n");
+          fflush(main->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
-          f_color_print(data->output.stream, data->context.set.standout, "========================== ");
-          f_color_print(data->output.stream, data->context.set.title, "FILTER");
-          f_color_print(data->output.stream, data->context.set.standout, " ==========================%c", f_string_eol_s[0]);
-          fflush(data->output.stream);
+          f_color_print(main->output.stream, main->context.set.standout, "========================== ");
+          f_color_print(main->output.stream, main->context.set.title, "FILTER");
+          f_color_print(main->output.stream, main->context.set.standout, " ==========================%c", f_string_eol_s[0]);
+          fflush(main->output.stream);
 
           parameters.used = 4;
 
@@ -327,30 +327,30 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(data->output.stream, "\n");
-          fflush(data->output.stream);
+          fprintf(main->output.stream, "\n");
+          fflush(main->output.stream);
         }
 
         if (F_status_is_error(status)) {
           status = F_status_set_fine(status);
 
           if (status == F_memory_not) {
-            f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
           }
           else {
-            f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol_s[0]);
             fprintf(f_type_error, "  ");
 
             f_array_length_t i = 0;
 
-            f_color_print_code(f_type_error, data->context.error);
+            f_color_print_code(f_type_error, main->context.error);
 
             fprintf(f_type_error, "%s ", firewall_tool_iptables);
             for (; i < parameters.used; i++) {
               fprintf(f_type_error, "%s ", parameters.array[i].string);
             } // for
 
-            f_color_print_code(f_type_error, data->context.reset);
+            f_color_print_code(f_type_error, main->context.reset);
             fprintf(f_type_error, "\n");
           }
 
@@ -372,30 +372,30 @@ extern "C" {
         parameters.array[5].used = 0;
         parameters.array[6].used = 0;
 
-        f_macro_string_dynamics_t_delete_simple( parameters);
+        macro_f_string_dynamics_t_delete_simple( parameters);
         firewall_delete_local_data(&local);
-        firewall_main_delete(data);
+        firewall_main_delete(main);
         return status;
       }
 
       // load all network devices
-      status = f_directory_list((f_string_t) network_devices, 0, alphasort, &data->devices);
+      status = f_directory_list((f_string_t) network_devices, 0, alphasort, &main->devices);
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
 
         if (status == F_memory_not) {
-          f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
         }
         else if (status == F_data_not) {
-          f_color_print(data->error.to.stream, data->context.set.error, "%sCould not find any network devices%c", fll_error_print_error, f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sCould not find any network devices%c", fll_error_print_error, f_string_eol_s[0]);
         }
         else if (status == F_failure) {
-          f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to read the device directory '%s'%c", fll_error_print_error, network_devices, f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to read the device directory '%s'%c", fll_error_print_error, network_devices, f_string_eol_s[0]);
         }
 
         firewall_delete_local_data(&local);
-        firewall_main_delete(data);
+        firewall_main_delete(main);
         return F_status_set_error(status);
       }
 
@@ -403,27 +403,27 @@ extern "C" {
       {
         f_array_length_t i = 0;
 
-        for (; i < data->devices.used; i++) {
-          if (fl_string_compare((f_string_t) firewall_device_loop, data->devices.array[i].string, firewall_device_loop_length + 1, data->devices.array[i].used) == F_equal_to) {
-            f_string_dynamic_t swap_string = data->devices.array[i];
+        for (; i < main->devices.used; i++) {
+          if (fl_string_compare((f_string_t) firewall_device_loop, main->devices.array[i].string, firewall_device_loop_length + 1, main->devices.array[i].used) == F_equal_to) {
+            f_string_dynamic_t swap_string = main->devices.array[i];
 
-            data->devices.used--;
+            main->devices.used--;
 
-            for (; i < data->devices.used; i++) {
-              data->devices.array[i] = data->devices.array[i+1];
+            for (; i < main->devices.used; i++) {
+              main->devices.array[i] = main->devices.array[i+1];
             } // for
 
-            data->devices.array[data->devices.used] = swap_string;
+            main->devices.array[main->devices.used] = swap_string;
           }
         } // for
       }
 
       if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart || command == firewall_parameter_command_lock) {
-        status = firewall_buffer_rules(network_path firewall_file_other, F_false, &local, data);
+        status = firewall_buffer_rules(network_path firewall_file_other, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
@@ -447,15 +447,15 @@ extern "C" {
 
         if (command == firewall_parameter_command_lock) {
           if (reserved.has_lock) {
-            status = firewall_delete_chains(*data);
+            status = firewall_delete_chains(*main);
 
             if (F_status_is_error_not(status)) {
-              status = firewall_default_lock(*data);
+              status = firewall_default_lock(*main);
             }
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
-              firewall_main_delete(data);
+              firewall_main_delete(main);
               return status;
             }
 
@@ -467,32 +467,32 @@ extern "C" {
             input.start = local.chain_contents.array[reserved.lock_at].array[0].start;
             input.stop = local.chain_contents.array[reserved.lock_at].array[0].stop;
 
-            status = firewall_process_rules(&input, &local, data);
+            status = firewall_process_rules(&input, &local, main);
 
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return status;
           }
           else {
-            f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform lock request because the lock instructions are missing from: %s.%c", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform lock request because the lock instructions are missing from: %s.%c", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
 
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return F_status_set_error(F_data);
           }
         }
 
         if (command == firewall_parameter_command_stop || command == firewall_parameter_command_restart) {
           if (reserved.has_stop) {
-            status = firewall_delete_chains(*data);
+            status = firewall_delete_chains(*main);
 
             if (F_status_is_error_not(status)) {
-              status = firewall_default_lock(*data);
+              status = firewall_default_lock(*main);
             }
 
             if (F_status_is_error(status)) {
               firewall_delete_local_data(&local);
-              firewall_main_delete(data);
+              firewall_main_delete(main);
               return status;
             }
 
@@ -505,19 +505,19 @@ extern "C" {
             input.start = local.chain_contents.array[reserved.stop_at].array[0].start;
             input.stop = local.chain_contents.array[reserved.stop_at].array[0].stop;
 
-            status = firewall_process_rules(&input, &local, data);
+            status = firewall_process_rules(&input, &local, main);
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
-              firewall_main_delete(data);
+              firewall_main_delete(main);
               return status;
             }
           }
           else {
-            f_color_print(data->error.to.stream, data->context.set.error, "%sFailed to perform stop request because the lock instructions are missing from: %s.", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
+            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform stop request because the lock instructions are missing from: %s.", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
 
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return F_status_set_error(F_data);
           }
         }
@@ -526,33 +526,33 @@ extern "C" {
       }
 
       if (command == firewall_parameter_command_start || command == firewall_parameter_command_restart) {
-        status = firewall_buffer_rules(network_path firewall_file_first, F_false, &local, data);
+        status = firewall_buffer_rules(network_path firewall_file_first, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
         if (command == firewall_parameter_command_start) {
-          status = firewall_delete_chains(*data);
+          status = firewall_delete_chains(*main);
 
           if (F_status_is_error_not(status)) {
-            status = firewall_default_lock(*data);
+            status = firewall_default_lock(*main);
           }
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return status;
           }
         }
 
-        status = firewall_create_custom_chains(&reserved, &local, data);
+        status = firewall_create_custom_chains(&reserved, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
@@ -570,11 +570,11 @@ extern "C" {
           local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
           local.chain = i;
 
-          status = firewall_process_rules(&input, &local, data);
+          status = firewall_process_rules(&input, &local, main);
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return status;
           }
 
@@ -583,31 +583,31 @@ extern "C" {
 
         firewall_delete_local_data(&local);
 
-        for (i = 0; i < data->devices.used; i++) {
+        for (i = 0; i < main->devices.used; i++) {
           local.device = i;
 
           {
             f_string_dynamic_t file_path = f_string_dynamic_t_initialize;
 
-            f_macro_string_dynamic_t_resize(status, file_path, network_path_length + data->devices.array[i].used + firewall_file_suffix_length + 1);
+            macro_f_string_dynamic_t_resize(status, file_path, network_path_length + main->devices.array[i].used + firewall_file_suffix_length + 1);
 
             if (F_status_is_error(status)) {
-              f_color_print(data->error.to.stream, data->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+              f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
               firewall_delete_local_data(&local);
-              firewall_main_delete(data);
+              firewall_main_delete(main);
               return status;
             }
 
             memcpy((void *)file_path.string, network_path, network_path_length);
-            memcpy((void *)(file_path.string + network_path_length), data->devices.array[i].string, data->devices.array[i].used);
-            memcpy((void *)(file_path.string + network_path_length + data->devices.array[i].used), firewall_file_suffix, firewall_file_suffix_length);
+            memcpy((void *)(file_path.string + network_path_length), main->devices.array[i].string, main->devices.array[i].used);
+            memcpy((void *)(file_path.string + network_path_length + main->devices.array[i].used), firewall_file_suffix, firewall_file_suffix_length);
 
-            file_path.used = network_path_length + data->devices.array[i].used + firewall_file_suffix_length;
+            file_path.used = network_path_length + main->devices.array[i].used + firewall_file_suffix_length;
             file_path.string[file_path.used] = 0;
 
-            status = firewall_buffer_rules(file_path.string, F_true, &local, data);
+            status = firewall_buffer_rules(file_path.string, F_true, &local, main);
 
-            f_macro_string_dynamic_t_delete_simple(file_path);
+            macro_f_string_dynamic_t_delete_simple(file_path);
           }
 
           if (F_status_is_error(status)) {
@@ -620,15 +620,15 @@ extern "C" {
               continue;
             }
 
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return F_status_set_error(status);
           }
 
-          status = firewall_create_custom_chains(&reserved, &local, data);
+          status = firewall_create_custom_chains(&reserved, &local, main);
 
           if (F_status_is_error(status)) {
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return status;
           }
 
@@ -646,11 +646,11 @@ extern "C" {
             local.is_main = reserved.has_main && j == reserved.main_at ? F_true : F_false;
             local.chain = j;
 
-            status = firewall_process_rules(&input, &local, data);
+            status = firewall_process_rules(&input, &local, main);
 
             if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
               firewall_delete_local_data(&local);
-              firewall_main_delete(data);
+              firewall_main_delete(main);
               return status;
             }
           } // for
@@ -658,21 +658,21 @@ extern "C" {
           firewall_delete_local_data(&local);
         } // for
 
-        status = firewall_buffer_rules(network_path firewall_file_last, F_false, &local, data);
+        status = firewall_buffer_rules(network_path firewall_file_last, F_false, &local, main);
 
         if (F_status_is_error(status)) {
           firewall_delete_local_data(&local);
-          firewall_main_delete(data);
+          firewall_main_delete(main);
           return status;
         }
 
-        status = firewall_create_custom_chains(&reserved, &local, data);
+        status = firewall_create_custom_chains(&reserved, &local, main);
 
         if (F_status_is_error(status)) {
           f_status_t status2 = F_none;
 
-          firewall_macro_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
-          firewall_main_delete(data);
+          macro_firewall_delete_fss_buffers(status2, local.buffer, local.chain_objects, local.chain_contents)
+          firewall_main_delete(main);
           return status;
         }
 
@@ -690,11 +690,11 @@ extern "C" {
           local.is_main = reserved.has_main && i == reserved.main_at ? F_true : F_false;
           local.chain = i;
 
-          status = firewall_process_rules(&input, &local, data);
+          status = firewall_process_rules(&input, &local, main);
 
           if (F_status_is_error(status) || command == firewall_parameter_command_stop) {
             firewall_delete_local_data(&local);
-            firewall_main_delete(data);
+            firewall_main_delete(main);
             return status;
           }
 
@@ -706,29 +706,29 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      f_color_print(data->error.to.stream, data->context.set.error, "%sYou did not pass a command%c", fll_error_print_error, f_string_eol_s[0]);
+      f_color_print(main->error.to.stream, main->context.set.error, "%sYou did not pass a command%c", fll_error_print_error, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 
-    firewall_main_delete(data);
+    firewall_main_delete(main);
     return status;
   }
 #endif // _di_firewall_main_
 
 #ifndef _di_firewall_main_delete_
-  f_status_t firewall_main_delete(firewall_main_t *data) {
+  f_status_t firewall_main_delete(firewall_main_t *main) {
 
     for (f_array_length_t i = 0; i < firewall_total_parameters; i++) {
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].locations_sub);
-      f_macro_array_lengths_t_delete_simple(data->parameters[i].values);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
+      macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    f_macro_string_dynamics_t_delete_simple(data->chains);
-    f_macro_array_lengths_t_delete_simple(data->remaining);
-    f_macro_string_dynamics_t_delete_simple(data->devices);
+    macro_f_string_dynamics_t_delete_simple(main->chains);
+    macro_f_array_lengths_t_delete_simple(main->remaining);
+    macro_f_string_dynamics_t_delete_simple(main->devices);
 
-    f_macro_color_context_t_delete_simple(data->context);
+    macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
   }

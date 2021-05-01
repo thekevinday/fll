@@ -72,10 +72,10 @@ extern "C" {
       if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
 
         if (found->used + 1 > found->size) {
-          f_macro_string_ranges_t_increase(status_allocate, (*found));
+          macro_f_string_ranges_t_increase(status_allocate, (*found));
 
           if (F_status_is_fine(status_allocate) && quotes) {
-            f_macro_fss_quotes_t_resize(status_allocate, (*quotes), found->size);
+            macro_f_fss_quotes_t_resize(status_allocate, (*quotes), found->size);
           }
 
           if (F_status_is_error(status_allocate)) {

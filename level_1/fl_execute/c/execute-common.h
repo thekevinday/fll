@@ -50,9 +50,9 @@ extern "C" {
 
   #define fl_execute_parameter_t_initialize { 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_parameter_t_initialize(option, wait, environment, signals, data) { option, wait, environment, signals, data }
+  #define macro_fl_execute_parameter_t_initialize(option, wait, environment, signals, data) { option, wait, environment, signals, data }
 
-  #define fl_macro_execute_parameter_t_clear(set) \
+  #define macro_fl_execute_parameter_t_clear(set) \
     set.option = 0; \
     set.wait = 0; \
     set.environment = 0; \
@@ -94,9 +94,9 @@ extern "C" {
 
   #define fl_execute_as_t_initialize { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
-  #define fl_macro_execute_as_t_initialize(nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler) { nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler }
+  #define macro_fl_execute_as_t_initialize(nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler) { nice, id_user, id_group, affinity, capability, control_group, id_groups, limits, scheduler }
 
-  #define fl_macro_execute_as_t_clear(as) \
+  #define macro_fl_execute_as_t_clear(as) \
     as.nice = 0; \
     as.id_user = 0; \
     as.id_group = 0; \

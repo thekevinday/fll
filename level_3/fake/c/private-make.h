@@ -37,8 +37,8 @@ extern "C" {
     f_string_map_multis_t_initialize, \
   }
 
-  #define fake_macro_make_setting_t_delete_simple(setting) \
-    f_macro_string_map_multis_t_delete_simple(setting.parameter)
+  #define macro_fake_make_setting_t_delete_simple(setting) \
+    macro_f_string_map_multis_t_delete_simple(setting.parameter)
 
   #define fake_make_setting_compiler    "compiler"
   #define fake_make_setting_define      "define"
@@ -316,18 +316,18 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
-  #define fake_macro_make_parameter_delete_simple(parameter) \
-    f_macro_string_dynamics_t_delete_simple(parameter.build); \
-    f_macro_string_dynamics_t_delete_simple(parameter.color); \
-    f_macro_string_dynamics_t_delete_simple(parameter.data); \
-    f_macro_string_dynamics_t_delete_simple(parameter.define); \
-    f_macro_string_dynamics_t_delete_simple(parameter.fakefile); \
-    f_macro_string_dynamics_t_delete_simple(parameter.mode); \
-    f_macro_string_dynamics_t_delete_simple(parameter.process); \
-    f_macro_string_dynamics_t_delete_simple(parameter.settings); \
-    f_macro_string_dynamics_t_delete_simple(parameter.sources); \
-    f_macro_string_dynamics_t_delete_simple(parameter.verbosity); \
-    f_macro_string_dynamics_t_delete_simple(parameter.work);
+  #define macro_fake_make_parameter_delete_simple(parameter) \
+    macro_f_string_dynamics_t_delete_simple(parameter.build); \
+    macro_f_string_dynamics_t_delete_simple(parameter.color); \
+    macro_f_string_dynamics_t_delete_simple(parameter.data); \
+    macro_f_string_dynamics_t_delete_simple(parameter.define); \
+    macro_f_string_dynamics_t_delete_simple(parameter.fakefile); \
+    macro_f_string_dynamics_t_delete_simple(parameter.mode); \
+    macro_f_string_dynamics_t_delete_simple(parameter.process); \
+    macro_f_string_dynamics_t_delete_simple(parameter.settings); \
+    macro_f_string_dynamics_t_delete_simple(parameter.sources); \
+    macro_f_string_dynamics_t_delete_simple(parameter.verbosity); \
+    macro_f_string_dynamics_t_delete_simple(parameter.work);
 #endif // _di_fake_make_parameter_t_
 
 #ifndef _di_fake_make_path_t_
@@ -344,8 +344,8 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
-  #define fake_macro_make_path_delete_simple(path) \
-    f_macro_string_dynamics_t_delete_simple(path.stack);
+  #define macro_fake_make_path_delete_simple(path) \
+    macro_f_string_dynamics_t_delete_simple(path.stack);
 #endif // _di_fake_make_path_t_
 
 #ifndef _di_fake_make_data_t_
@@ -381,15 +381,15 @@ extern "C" {
     0, \
   }
 
-  #define fake_macro_make_data_t_delete_simple(structure) \
-    fake_macro_build_setting_t_delete_simple(structure.setting_build) \
-    fake_macro_make_setting_t_delete_simple(structure.setting_make) \
-    f_macro_string_maps_t_delete_simple(structure.environment); \
-    fake_macro_make_parameter_delete_simple(structure.parameter) \
-    fake_macro_make_path_delete_simple(structure.path) \
-    f_macro_fss_nameds_t_delete_simple(structure.fakefile) \
-    f_macro_string_dynamic_t_delete_simple(structure.buffer); \
-    f_macro_string_dynamic_t_delete_simple(structure.path_cache);
+  #define macro_fake_make_data_t_delete_simple(structure) \
+    macro_fake_build_setting_t_delete_simple(structure.setting_build) \
+    macro_fake_make_setting_t_delete_simple(structure.setting_make) \
+    macro_f_string_maps_t_delete_simple(structure.environment); \
+    macro_fake_make_parameter_delete_simple(structure.parameter) \
+    macro_fake_make_path_delete_simple(structure.path) \
+    macro_f_fss_nameds_t_delete_simple(structure.fakefile) \
+    macro_f_string_dynamic_t_delete_simple(structure.buffer); \
+    macro_f_string_dynamic_t_delete_simple(structure.path_cache);
 #endif // _di_fake_make_data_t_
 
 /**

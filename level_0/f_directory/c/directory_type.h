@@ -48,25 +48,25 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
-  #define f_macro_directory_listing_t_delete_simple(listing) \
-    f_macro_string_dynamics_t_delete_simple(listing.block) \
-    f_macro_string_dynamics_t_delete_simple(listing.character) \
-    f_macro_string_dynamics_t_delete_simple(listing.directory) \
-    f_macro_string_dynamics_t_delete_simple(listing.regular) \
-    f_macro_string_dynamics_t_delete_simple(listing.link) \
-    f_macro_string_dynamics_t_delete_simple(listing.fifo) \
-    f_macro_string_dynamics_t_delete_simple(listing.socket) \
-    f_macro_string_dynamics_t_delete_simple(listing.unknown)
+  #define macro_f_directory_listing_t_delete_simple(listing) \
+    macro_f_string_dynamics_t_delete_simple(listing.block) \
+    macro_f_string_dynamics_t_delete_simple(listing.character) \
+    macro_f_string_dynamics_t_delete_simple(listing.directory) \
+    macro_f_string_dynamics_t_delete_simple(listing.regular) \
+    macro_f_string_dynamics_t_delete_simple(listing.link) \
+    macro_f_string_dynamics_t_delete_simple(listing.fifo) \
+    macro_f_string_dynamics_t_delete_simple(listing.socket) \
+    macro_f_string_dynamics_t_delete_simple(listing.unknown)
 
-  #define f_macro_directory_listing_t_destroy_simple(listing) \
-    f_macro_string_dynamics_t_destroy_simple(listing.block) \
-    f_macro_string_dynamics_t_destroy_simple(listing.character) \
-    f_macro_string_dynamics_t_destroy_simple(listing.directory) \
-    f_macro_string_dynamics_t_destroy_simple(listing.regular) \
-    f_macro_string_dynamics_t_destroy_simple(listing.link) \
-    f_macro_string_dynamics_t_destroy_simple(listing.fifo) \
-    f_macro_string_dynamics_t_destroy_simple(listing.socket) \
-    f_macro_string_dynamics_t_destroy_simple(listing.unknown)
+  #define macro_f_directory_listing_t_destroy_simple(listing) \
+    macro_f_string_dynamics_t_destroy_simple(listing.block) \
+    macro_f_string_dynamics_t_destroy_simple(listing.character) \
+    macro_f_string_dynamics_t_destroy_simple(listing.directory) \
+    macro_f_string_dynamics_t_destroy_simple(listing.regular) \
+    macro_f_string_dynamics_t_destroy_simple(listing.link) \
+    macro_f_string_dynamics_t_destroy_simple(listing.fifo) \
+    macro_f_string_dynamics_t_destroy_simple(listing.socket) \
+    macro_f_string_dynamics_t_destroy_simple(listing.unknown)
 #endif // _di_f_directory_listing_t_
 
 /**
@@ -85,20 +85,20 @@ extern "C" {
 
   #define f_directory_status_t_initialize { 0, f_string_dynamic_t_initialize }
 
-  #define f_macro_directory_status_t_clear(directory) \
+  #define macro_f_directory_status_t_clear(directory) \
     directory.status = 0; \
-    f_macro_string_dynamic_t_clear(directory.path);
+    macro_f_string_dynamic_t_clear(directory.path);
 
-  #define f_macro_directory_status_t_resize(status, statuses, new_length) f_macro_string_dynamic_t_resize(status, statuses.path, new_length)
-  #define f_macro_directory_status_t_adjust(status, statuses, new_length) f_macro_string_dynamic_t_adjust(status, statuses.path, new_length)
+  #define macro_f_directory_status_t_resize(status, statuses, new_length) macro_f_string_dynamic_t_resize(status, statuses.path, new_length)
+  #define macro_f_directory_status_t_adjust(status, statuses, new_length) macro_f_string_dynamic_t_adjust(status, statuses.path, new_length)
 
-  #define f_macro_directory_status_t_delete_simple(statuses)  f_macro_string_dynamic_t_delete_simple(statuses.path)
-  #define f_macro_directory_status_t_destroy_simple(statuses) f_macro_string_dynamic_t_destroy_simple(statuses.path)
+  #define macro_f_directory_status_t_delete_simple(statuses)  macro_f_string_dynamic_t_delete_simple(statuses.path)
+  #define macro_f_directory_status_t_destroy_simple(statuses) macro_f_string_dynamic_t_destroy_simple(statuses.path)
 
-  #define f_macro_directory_status_t_increase(status, values)            f_macro_string_dynamic_t_increase(status, values)
-  #define f_macro_directory_status_t_increase_by(status, values, amount) f_macro_string_dynamic_t_increase_by(status, values, amount)
-  #define f_macro_directory_status_t_decrease_by(status, values, amount) f_macro_string_dynamic_t_decrease_by(status, values, amount)
-  #define f_macro_directory_status_t_decimate_by(status, values, amount) f_macro_string_dynamic_t_decimate_by(status, values, amount)
+  #define macro_f_directory_status_t_increase(status, values)            macro_f_string_dynamic_t_increase(status, values)
+  #define macro_f_directory_status_t_increase_by(status, values, amount) macro_f_string_dynamic_t_increase_by(status, values, amount)
+  #define macro_f_directory_status_t_decrease_by(status, values, amount) macro_f_string_dynamic_t_decrease_by(status, values, amount)
+  #define macro_f_directory_status_t_decimate_by(status, values, amount) macro_f_string_dynamic_t_decimate_by(status, values, amount)
 #endif // _di_f_directory_status_t_
 
 /**
@@ -117,13 +117,13 @@ extern "C" {
 
   #define f_directory_statuss_t_initialize { 0, 0, 0 }
 
-  #define f_macro_directory_statuss_t_clear(structures) f_macro_memory_structures_clear(structures)
+  #define macro_f_directory_statuss_t_clear(structures) macro_f_memory_structures_clear(structures)
 
-  #define f_macro_directory_statuss_t_resize(status, structures, new_length) \
+  #define macro_f_directory_statuss_t_resize(status, structures, new_length) \
     status = F_none; \
     if (new_length < structures.size) { \
       for (register f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; ++_macro__i) { \
-        f_macro_directory_status_t_resize(status, structures.array[_macro__i], 0); \
+        macro_f_directory_status_t_resize(status, structures.array[_macro__i], 0); \
         if (F_status_is_error(status)) break; \
       } \
     } \
@@ -133,11 +133,11 @@ extern "C" {
       if (structures.used > structures.size) structures.used = new_length; \
     }
 
-  #define f_macro_directory_statuss_t_adjust(status, structures, new_length) \
+  #define macro_f_directory_statuss_t_adjust(status, structures, new_length) \
     status = F_none; \
     if (new_length < structures.size) { \
       for (register f_array_length_t _macro__i = structures.size - new_length; _macro__i < structures.size; ++_macro__i) { \
-        f_macro_directory_status_t_adjust(status, structures.array[_macro__i], 0); \
+        macro_f_directory_status_t_adjust(status, structures.array[_macro__i], 0); \
         if (F_status_is_error(status)) break; \
       } \
     } \
@@ -147,11 +147,11 @@ extern "C" {
       if (structures.used > structures.size) structures.used = new_length; \
     }
 
-  #define f_macro_directory_statuss_t_delete_simple(structures) \
+  #define macro_f_directory_statuss_t_delete_simple(structures) \
     structures.used = structures.size; \
     while (structures.used > 0) { \
       structures.used--; \
-      f_macro_directory_status_t_delete_simple(structures.array[structures.used]); \
+      macro_f_directory_status_t_delete_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \
       if (f_memory_resize(structures.size, 0, sizeof(f_directory_status_t), (void **) & structures.array)) { \
@@ -159,11 +159,11 @@ extern "C" {
       } \
     }
 
-  #define f_macro_directory_statuss_t_destroy_simple(structures) \
+  #define macro_f_directory_statuss_t_destroy_simple(structures) \
     structures.used = structures.size; \
     while (structures.used > 0) { \
       structures.used--; \
-      f_macro_directory_status_t_destroy_simple(structures.array[structures.used]); \
+      macro_f_directory_status_t_destroy_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \
       if (f_memory_adjust(structures.size, 0, sizeof(f_directory_status_t), (void **) & structures.array)) { \

@@ -83,7 +83,7 @@ extern "C" {
           slash_count++;
         } // for
 
-        private_fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
+        private_macro_fl_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
         if (buffer.string[range->start] == f_fss_basic_list_open) {
           graph_first = F_false;
@@ -105,14 +105,14 @@ extern "C" {
             if (F_status_is_error(status)) break;
           } // while
 
-          private_fl_macro_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
+          private_macro_fl_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
 
           if (buffer.string[range->start] == f_fss_eol) {
             start = range->start;
 
             range->start = slash_first;
 
-            f_macro_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
+            macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
             if (F_status_is_error(status)) break;
 
             if (slash_count % 2 == 0) {
@@ -149,7 +149,7 @@ extern "C" {
           graph_first = F_false;
 
           // comments may only have whitespace before the '#', therefore only the first slash needs to be delimited.
-          f_macro_fss_delimits_t_increase(status, (*delimits));
+          macro_f_fss_delimits_t_increase(status, (*delimits));
           if (F_status_is_error(status)) break;
 
           delimits->array[delimits->used++] = slash_first;
@@ -181,7 +181,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
         } // while
 
-        private_fl_macro_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
+        private_macro_fl_fss_object_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
         if (buffer.string[range->start] == f_fss_eol) {
           found->stop = stop;
@@ -245,9 +245,9 @@ extern "C" {
     f_status_t status = f_fss_skip_past_delimit(buffer, range);
     if (F_status_is_error(status)) return status;
 
-    private_fl_macro_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
+    private_macro_fl_fss_content_with_comments_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, F_none_eos, F_none_stop);
 
-    f_macro_fss_content_t_increase(status, (*found))
+    macro_f_fss_content_t_increase(status, (*found))
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;
@@ -265,7 +265,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_eol) {
         if (graph_first == 0x2) {
-          f_macro_fss_delimits_t_increase(status, (*delimits));
+          macro_f_fss_delimits_t_increase(status, (*delimits));
           if (F_status_is_error(status)) break;
 
           delimits->array[delimits->used++] = comment_delimit;
@@ -324,7 +324,7 @@ extern "C" {
               return FL_fss_found_content;
             }
 
-            f_macro_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
+            macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
             if (F_status_is_error(status)) break;
 
             while (slash_count > 0) {
@@ -344,7 +344,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             if (graph_first == 0x2) {
-              f_macro_fss_delimits_t_increase(status, (*delimits));
+              macro_f_fss_delimits_t_increase(status, (*delimits));
               if (F_status_is_error(status)) break;
 
               delimits->array[delimits->used++] = comment_delimit;
@@ -401,7 +401,7 @@ extern "C" {
 
         if (buffer.string[range->start] == f_fss_eol) {
           if (graph_first == 0x2) {
-            f_macro_fss_delimits_t_increase(status, (*delimits));
+            macro_f_fss_delimits_t_increase(status, (*delimits));
             if (F_status_is_error(status)) break;
 
             delimits->array[delimits->used++] = comment_delimit;
@@ -420,7 +420,7 @@ extern "C" {
         status = f_fss_seek_to_eol(buffer, range);
         if (F_status_is_error(status)) break;
 
-        f_macro_fss_comments_t_increase(status, (*comments))
+        macro_f_fss_comments_t_increase(status, (*comments))
         if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {
@@ -456,7 +456,7 @@ extern "C" {
 
     found->array[found->used++].stop = range->start - 1;
 
-    private_fl_macro_fss_content_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
+    private_macro_fl_fss_content_return_on_overflow_delimited((buffer), (*range), (*found), F_none_eos, F_none_stop);
 
     return FL_fss_found_content;
   }
@@ -533,7 +533,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (status == F_true) {
-          width = f_macro_utf_byte_width(object.string[range->start]);
+          width = macro_f_utf_byte_width(object.string[range->start]);
 
           status = f_string_dynamic_increase_by(width, destination);
           if (F_status_is_error(status)) break;
@@ -595,7 +595,7 @@ extern "C" {
           break;
         }
 
-        width = f_macro_utf_byte_width(object.string[range->start]);
+        width = macro_f_utf_byte_width(object.string[range->start]);
 
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
@@ -820,7 +820,7 @@ extern "C" {
           do_prepend = F_true;
         }
 
-        width = f_macro_utf_byte_width(content.string[range->start]);
+        width = macro_f_utf_byte_width(content.string[range->start]);
 
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;

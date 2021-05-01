@@ -212,7 +212,7 @@ extern "C" {
         break;
       }
 
-      utf_width = f_macro_utf_byte_width_is(buffer->string[position]);
+      utf_width = macro_f_utf_byte_width_is(buffer->string[position]);
 
       if (utf_width > 1) {
 
@@ -324,7 +324,7 @@ extern "C" {
         }
       }
 
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = macro_f_utf_byte_width_is(buffer.string[range->start]);
 
       if (!width) {
         width = 1;
@@ -407,7 +407,7 @@ extern "C" {
             next_width_max = 0;
             next = range->start + 1;
 
-            for (; next < buffer.used && next <= range->stop; next += f_macro_utf_byte_width_is(buffer.string[next])) {
+            for (; next < buffer.used && next <= range->stop; next += macro_f_utf_byte_width_is(buffer.string[next])) {
               next_width_max = (range->stop - next) + 1;
 
               status = f_utf_is_graph(buffer.string + next, width_max);
@@ -453,7 +453,7 @@ extern "C" {
         }
       }
 
-      width = f_macro_utf_byte_width_is(buffer.string[range->start]);
+      width = macro_f_utf_byte_width_is(buffer.string[range->start]);
 
       if (!width) {
         width = 1;

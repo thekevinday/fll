@@ -78,8 +78,8 @@ extern "C" {
     if (length + 1 > path->size) {
       f_status_t status = F_none;
 
-      f_macro_string_dynamic_t_clear((*path))
-      f_macro_string_dynamic_t_resize(status, (*path), length + 1)
+      macro_f_string_dynamic_t_clear((*path))
+      macro_f_string_dynamic_t_resize(status, (*path), length + 1)
       if (F_status_is_error(status)) return status;
     }
 

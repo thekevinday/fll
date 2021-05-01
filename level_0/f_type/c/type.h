@@ -209,7 +209,7 @@ extern "C" {
 
   #define f_cell_t_initialize { 0, 0 }
 
-  #define f_macro_cell_t_clear(cell) \
+  #define macro_f_cell_t_clear(cell) \
     cell.row = 0; \
     cell.column = 0;
 #endif // _di_f_cell_t_
@@ -254,7 +254,7 @@ extern "C" {
     0, \
   }
 
-  #define f_macro_mode_t_set_default(mode) \
+  #define macro_f_mode_t_set_default(mode) \
     mode.block = f_file_mode_all_rw; \
     mode.character = f_file_mode_all_rw; \
     mode.directory = f_file_mode_all_rwx; \
@@ -264,7 +264,7 @@ extern "C" {
     mode.socket = f_file_mode_all_rw; \
     mode.unknown = f_file_mode_all_rw;
 
-  #define f_macro_mode_t_set_default_umask(mode, mask) \
+  #define macro_f_mode_t_set_default_umask(mode, mask) \
     mode.block = f_file_mode_all_rw & ~mask; \
     mode.character = f_file_mode_all_rw & ~mask; \
     mode.directory = f_file_mode_all_rwx & ~mask; \
@@ -274,7 +274,7 @@ extern "C" {
     mode.socket = f_file_mode_all_rw & ~mask; \
     mode.unknown = f_file_mode_all_rw & ~mask;
 
-  #define f_macro_mode_t_set_all(mode, value) \
+  #define macro_f_mode_t_set_all(mode, value) \
     mode.block = value; \
     mode.character = value; \
     mode.directory = value; \
@@ -284,12 +284,12 @@ extern "C" {
     mode.socket = value; \
     mode.unknown = value;
 
-  #define f_macro_mode_t_set_common(mode, value_directory, value_file, value_link) \
+  #define macro_f_mode_t_set_common(mode, value_directory, value_file, value_link) \
     mode.directory = value_directory; \
     mode.regular = value_file; \
     mode.link = value_link;
 
-  #define f_macro_mode_t_set_uncommon(mode, value_block, value_character, value_fifo, value_socket, value_unknown) \
+  #define macro_f_mode_t_set_uncommon(mode, value_block, value_character, value_fifo, value_socket, value_unknown) \
     mode.block = value_block; \
     mode.character = value_character; \
     mode.fifo = value_fifo; \
@@ -311,7 +311,7 @@ extern "C" {
 
   #define f_time_spec_t_initialize { 0, 0 }
 
-  #define f_macro_time_spec_t_clear(spec) \
+  #define macro_f_time_spec_t_clear(spec) \
     spec.seconds = 0; \
     spec.nanoseconds = 0;
 #endif // _di_f_time_spec_t_
@@ -363,7 +363,7 @@ extern "C" {
 
   #define f_date_t_initialize { 0, 0 }
 
-  #define f_macro_date_t_clear(date) \
+  #define macro_f_date_t_clear(date) \
     date.year = 0; \
     date.time = 0;
 #endif // _di_f_date_t_

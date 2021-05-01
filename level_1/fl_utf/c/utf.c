@@ -93,7 +93,7 @@ extern "C" {
 
     f_utf_character_t seek_to_character = seek_to_this << 24;
 
-    if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -105,7 +105,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -129,7 +129,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -140,7 +140,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -166,7 +166,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -177,7 +177,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -203,14 +203,14 @@ extern "C" {
 
     f_utf_character_t seek_to_character = seek_to_this << 24;
 
-    if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+    if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
     while (buffer.string[range->start] != seek_to_character) {
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(buffer.string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -274,7 +274,7 @@ extern "C" {
 
     for (; range->start <= range->stop; range->start++) {
 
-      if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -296,7 +296,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
+    if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -307,7 +307,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -330,7 +330,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (f_macro_utf_character_t_width_is(string[range->start]) == 1) return F_status_set_error(F_utf);
+    if (macro_f_utf_character_t_width_is(string[range->start]) == 1) return F_status_set_error(F_utf);
 
     while (string[range->start] == placeholder || (status = f_utf_character_is_graph(string[range->start])) == F_true) {
 
@@ -339,7 +339,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
 
@@ -362,7 +362,7 @@ extern "C" {
 
     const f_utf_character_t seek_to_character = seek_to_this << 24;
 
-    if (f_macro_utf_character_t_width_is(string[0]) == 1) {
+    if (macro_f_utf_character_t_width_is(string[0]) == 1) {
       return F_status_set_error(F_utf);
     }
 
@@ -374,7 +374,7 @@ extern "C" {
 
       range->start++;
 
-      if (f_macro_utf_character_t_width_is(string[range->start]) == 1) {
+      if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
       }
     } // while

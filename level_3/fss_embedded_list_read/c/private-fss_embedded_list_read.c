@@ -102,7 +102,7 @@ extern "C" {
         i = main.parameters[fss_embedded_list_read_parameter_depth].values.used + 1;
       }
 
-      fss_embedded_list_read_macro_depths_t_resize(status, (*depths), i);
+      macro_fss_embedded_list_read_depths_t_resize(status, (*depths), i);
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);
@@ -123,7 +123,7 @@ extern "C" {
       for (i = 0; i < values_total; ++i) {
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth || values_type[i] == fss_embedded_list_read_parameter_at) {
-          const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[values_order[i]]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[values_order[i]]));
 
           status = fl_conversion_string_to_number_unsigned(arguments.argv[values_order[i]], range, &number);
 
@@ -220,7 +220,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_string_range_t input = f_macro_string_range_t_initialize(main->buffer.used);
+      f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
 
       objects_delimits->used = 0;
       contents_delimits->used = 0;
@@ -233,8 +233,8 @@ extern "C" {
         fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_embedded_list_read", F_true, filename, "process", fll_error_file_type_file);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
-        f_macro_fss_nest_t_delete_simple(main->nest);
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_fss_nest_t_delete_simple(main->nest);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
           fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
@@ -245,8 +245,8 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        f_macro_fss_nest_t_delete_simple(main->nest);
-        f_macro_string_dynamic_t_delete_simple(main->buffer);
+        macro_f_fss_nest_t_delete_simple(main->nest);
+        macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         return status;
       }
@@ -277,7 +277,7 @@ extern "C" {
 
       if (main->parameters[fss_embedded_list_read_parameter_select].result == f_console_result_additional) {
         const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_select].values.array[main->parameters[fss_embedded_list_read_parameter_select].values.used - 1];
-        const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
 
@@ -297,7 +297,7 @@ extern "C" {
 
     if (main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[fss_embedded_list_read_parameter_line].values.array[main->parameters[fss_embedded_list_read_parameter_line].values.used - 1];
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
+      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
 
       status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
 

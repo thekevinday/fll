@@ -52,28 +52,28 @@ extern "C" {
 
   #define f_account_t_initialize { 0, 0, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize, f_string_dynamic_t_initialize }
 
-  #define f_macro_account_t_clear(account) \
+  #define macro_f_account_t_clear(account) \
     account.id_user = 0; \
     account.id_group = 0; \
-    f_macro_account_t_clear(account.home); \
-    f_macro_account_t_clear(account.label); \
-    f_macro_account_t_clear(account.name); \
-    f_macro_account_t_clear(account.password); \
-    f_macro_account_t_clear(account.shell);
+    macro_f_account_t_clear(account.home); \
+    macro_f_account_t_clear(account.label); \
+    macro_f_account_t_clear(account.name); \
+    macro_f_account_t_clear(account.password); \
+    macro_f_account_t_clear(account.shell);
 
-  #define f_macro_account_t_delete_simple(account) \
-    f_macro_string_dynamic_t_delete_simple(account.home); \
-    f_macro_string_dynamic_t_delete_simple(account.label); \
-    f_macro_string_dynamic_t_delete_simple(account.name); \
-    f_macro_string_dynamic_t_delete_simple(account.password); \
-    f_macro_string_dynamic_t_delete_simple(account.shell);
+  #define macro_f_account_t_delete_simple(account) \
+    macro_f_string_dynamic_t_delete_simple(account.home); \
+    macro_f_string_dynamic_t_delete_simple(account.label); \
+    macro_f_string_dynamic_t_delete_simple(account.name); \
+    macro_f_string_dynamic_t_delete_simple(account.password); \
+    macro_f_string_dynamic_t_delete_simple(account.shell);
 
-  #define f_macro_account_t_destroy_simple(account) \
-    f_macro_string_dynamic_t_destroy_simple(account.home); \
-    f_macro_string_dynamic_t_destroy_simple(account.label); \
-    f_macro_string_dynamic_t_destroy_simple(account.name); \
-    f_macro_string_dynamic_t_destroy_simple(account.password); \
-    f_macro_string_dynamic_t_destroy_simple(account.shell);
+  #define macro_f_account_t_destroy_simple(account) \
+    macro_f_string_dynamic_t_destroy_simple(account.home); \
+    macro_f_string_dynamic_t_destroy_simple(account.label); \
+    macro_f_string_dynamic_t_destroy_simple(account.name); \
+    macro_f_string_dynamic_t_destroy_simple(account.password); \
+    macro_f_string_dynamic_t_destroy_simple(account.shell);
 #endif // _di_f_account_t_
 
 /**
@@ -93,18 +93,18 @@ extern "C" {
 
   #define f_accounts_t_initialize { 0, 0, 0 }
 
-  #define f_macro_accounts_t_clear(accounts) f_macro_memory_structure_clear(accounts)
+  #define macro_f_accounts_t_clear(accounts) macro_f_memory_structure_clear(accounts)
 
-  #define f_macro_string_accounts_t_resize(status, accounts, length) f_macro_memory_structure_resize(status, values, sizeof(f_account_t), length)
-  #define f_macro_string_accounts_t_adjust(status, accounts, length) f_macro_memory_structure_adjust(status, values, sizeof(f_account_t), length)
+  #define macro_f_string_accounts_t_resize(status, accounts, length) macro_f_memory_structure_resize(status, values, sizeof(f_account_t), length)
+  #define macro_f_string_accounts_t_adjust(status, accounts, length) macro_f_memory_structure_adjust(status, values, sizeof(f_account_t), length)
 
-  #define f_macro_string_accounts_t_delete_simple(accounts)  f_macro_memory_structure_delete_simple(values, sizeof(f_account_t), 0)
-  #define f_macro_string_accounts_t_destroy_simple(accounts) f_macro_memory_structure_destroy_simple(values, sizeof(f_account_t), 0)
+  #define macro_f_string_accounts_t_delete_simple(accounts)  macro_f_memory_structure_delete_simple(values, sizeof(f_account_t), 0)
+  #define macro_f_string_accounts_t_destroy_simple(accounts) macro_f_memory_structure_destroy_simple(values, sizeof(f_account_t), 0)
 
-  #define f_macro_string_accounts_t_increase(status, values)            f_macro_memory_structure_increase(status, values, f_account_t)
-  #define f_macro_string_accounts_t_increase_by(status, values, amount) f_macro_memory_structure_increase_by(status, values, f_account_t, amount)
-  #define f_macro_string_accounts_t_decrease_by(status, values, amount) f_macro_memory_structure_decrease_by(status, values, f_account_t, amount)
-  #define f_macro_string_accounts_t_decimate_by(status, values, amount) f_macro_memory_structure_decimate_by(status, values, f_account_t, amount)
+  #define macro_f_string_accounts_t_increase(status, values)            macro_f_memory_structure_increase(status, values, f_account_t)
+  #define macro_f_string_accounts_t_increase_by(status, values, amount) macro_f_memory_structure_increase_by(status, values, f_account_t, amount)
+  #define macro_f_string_accounts_t_decrease_by(status, values, amount) macro_f_memory_structure_decrease_by(status, values, f_account_t, amount)
+  #define macro_f_string_accounts_t_decimate_by(status, values, amount) macro_f_memory_structure_decimate_by(status, values, f_account_t, amount)
 #endif // _di_f_accounts_t_
 
 #ifdef __cplusplus

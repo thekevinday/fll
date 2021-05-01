@@ -577,7 +577,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = range.start; i <= range.stop; i++) {
-      width = f_macro_utf_byte_width_is(string[i]);
+      width = macro_f_utf_byte_width_is(string[i]);
 
       if (!width) {
         if (isspace(string[i])) {
@@ -733,7 +733,7 @@ extern "C" {
     int8_t sign_found = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; i++) {
-      width = f_macro_utf_byte_width_is(string[i]);
+      width = macro_f_utf_byte_width_is(string[i]);
 
       if (!width) {
         if (isspace(string[i])) {

@@ -81,10 +81,10 @@ extern "C" {
       if (needs_value.used > 0) {
         i = needs_value.array[0];
 
-        f_macro_array_lengths_t_increase(status, parameters.parameter[i].values)
+        macro_f_array_lengths_t_increase(status, parameters.parameter[i].values)
 
         if (F_status_is_error(status)) {
-          f_macro_array_lengths_t_delete_simple(needs_value);
+          macro_f_array_lengths_t_delete_simple(needs_value);
           return status;
         }
 
@@ -149,7 +149,7 @@ extern "C" {
             if (result == console_short) {
               if (!parameters.parameter[i].symbol_short) continue;
 
-              width = f_macro_utf_byte_width_is(arguments.argv[location][sub_location]);
+              width = macro_f_utf_byte_width_is(arguments.argv[location][sub_location]);
               if (width > 0) {
                 increment_by = width;
               }
@@ -165,7 +165,7 @@ extern "C" {
                 status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
 
                 if (F_status_is_error(status)) {
-                  f_macro_array_lengths_t_delete_simple(needs_value);
+                  macro_f_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -174,7 +174,7 @@ extern "C" {
                 status = f_utf_char_to_character((f_string_t) parameters.parameter[i].symbol_short, width_max, &character_console_utf);
 
                 if (F_status_is_error(status)) {
-                  f_macro_array_lengths_t_delete_simple(needs_value);
+                  macro_f_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
 
@@ -196,17 +196,17 @@ extern "C" {
               continue;
             }
 
-            f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations)
+            macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations)
 
             if (F_status_is_error(status)) {
-              f_macro_array_lengths_t_delete_simple(needs_value);
+              macro_f_array_lengths_t_delete_simple(needs_value);
               return status;
             }
 
-            f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+            macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
 
             if (F_status_is_error(status)) {
-              f_macro_array_lengths_t_delete_simple(needs_value);
+              macro_f_array_lengths_t_delete_simple(needs_value);
               return status;
             }
 
@@ -226,10 +226,10 @@ extern "C" {
 
             if (parameters.parameter[i].has_values) {
               if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
-                f_macro_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
+                macro_f_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
                 if (F_status_is_error(status)) {
-                  f_macro_array_lengths_t_delete_simple(needs_value);
+                  macro_f_array_lengths_t_delete_simple(needs_value);
                   return status;
                 }
               }
@@ -256,17 +256,17 @@ extern "C" {
 
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, argument_length + 1) != 0) continue;
 
-          f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations)
+          macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations)
 
           if (F_status_is_error(status)) {
-            f_macro_array_lengths_t_delete_simple(needs_value);
+            macro_f_array_lengths_t_delete_simple(needs_value);
             return status;
           }
 
-          f_macro_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+          macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
 
           if (F_status_is_error(status)) {
-            f_macro_array_lengths_t_delete_simple(needs_value);
+            macro_f_array_lengths_t_delete_simple(needs_value);
             return status;
           }
 
@@ -279,10 +279,10 @@ extern "C" {
 
           if (parameters.parameter[i].has_values) {
             if (needs_value.used + parameters.parameter[i].has_values > needs_value.size) {
-              f_macro_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
+              macro_f_array_lengths_t_resize(status, needs_value, needs_value.used + parameters.parameter[i].has_values);
 
               if (F_status_is_error(status)) {
-                f_macro_array_lengths_t_delete_simple(needs_value);
+                macro_f_array_lengths_t_delete_simple(needs_value);
                 return status;
               }
             }
@@ -300,9 +300,9 @@ extern "C" {
 
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
-            f_macro_memory_structure_macro_increment(status, (*remaining), 1, f_memory_default_allocation_step, f_macro_array_lengths_t_resize, F_array_too_large);
+            macro_f_memory_structure_increment(status, (*remaining), 1, f_memory_default_allocation_step, macro_f_array_lengths_t_resize, F_array_too_large);
             if (F_status_is_error(status)) {
-              f_macro_array_lengths_t_delete_simple(needs_value);
+              macro_f_array_lengths_t_delete_simple(needs_value);
               return status;
             }
           }
@@ -321,7 +321,7 @@ extern "C" {
       status = F_none;
     }
 
-    f_macro_array_lengths_t_delete_simple(needs_value);
+    macro_f_array_lengths_t_delete_simple(needs_value);
 
     return status;
   }

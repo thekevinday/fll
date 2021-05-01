@@ -118,9 +118,9 @@ extern "C" {
 #ifndef _di_controller_cache_delete_simple_
   void controller_cache_delete_simple(controller_cache_t *cache) {
 
-    f_macro_array_lengths_t_delete_simple(cache->ats)
-    f_macro_array_lengths_t_delete_simple(cache->stack)
-    f_macro_fss_delimits_t_delete_simple(cache->delimits)
+    macro_f_array_lengths_t_delete_simple(cache->ats)
+    macro_f_array_lengths_t_delete_simple(cache->stack)
+    macro_f_fss_delimits_t_delete_simple(cache->delimits)
 
     f_string_dynamic_resize(0, &cache->buffer_file);
     f_string_dynamic_resize(0, &cache->buffer_item);
@@ -485,7 +485,7 @@ extern "C" {
 
     f_string_dynamics_resize(0, &process->path_pids);
 
-    f_macro_array_lengths_t_delete_simple(process->stack)
+    macro_f_array_lengths_t_delete_simple(process->stack)
   }
 #endif // _di_controller_process_delete_simple_
 
@@ -698,10 +698,10 @@ extern "C" {
 
     f_string_dynamics_resize(0, &rule->environment);
 
-    f_macro_int32s_t_delete_simple(rule->affinity)
-    f_macro_control_group_t_delete_simple(rule->control_group)
-    f_macro_int32s_t_delete_simple(rule->groups)
-    f_macro_limit_sets_t_delete_simple(rule->limits)
+    macro_f_int32s_t_delete_simple(rule->affinity)
+    macro_f_control_group_t_delete_simple(rule->control_group)
+    macro_f_int32s_t_delete_simple(rule->groups)
+    macro_f_limit_sets_t_delete_simple(rule->limits)
 
     if (rule->capability) {
       f_capability_delete(&rule->capability);
