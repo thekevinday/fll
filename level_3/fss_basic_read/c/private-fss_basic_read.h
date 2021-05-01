@@ -123,7 +123,47 @@ extern "C" {
 #endif // _di_fss_basic_read_depths_t_
 
 /**
- * Pre-process the parameters, parsing out and handling the depth and depth related parameters.
+ * A structure for designating where within the buffer a particular file exists, using a statically allocated array.
+ *
+ * name: The name of the file representing the range. Set string to NULL to represent the STDIN pipe.
+ */
+#ifndef _di_fss_basic_read_file_t_
+  typedef struct {
+    f_string_t name;
+    f_string_range_t range;
+  } fss_basic_read_file_t;
+
+  #define fss_basic_read_file_t_initialize \
+    { \
+      f_string_t_initialize, \
+      f_string_range_t_initialize, \
+    }
+#endif // _di_fss_basic_read_file_t_
+
+/**
+ * An array of depth parameters.
+ *
+ * This is intended to be defined and used statically allocated and as such no dynamic allocation or dynamic deallocation methods are provided.
+ *
+ * The STDIN pipe is reserved for index 0 and as such size and used must be initialized to 1.
+ *
+ * array: The array of depths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_fss_basic_read_files_t_
+  typedef struct {
+    fss_basic_read_file_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } fss_basic_read_files_t;
+
+  #define fss_basic_read_files_t_initialize { 0, 1, 1 }
+#endif // _di_fss_basic_read_files_t_
+
+/**
+ * Process the parameters, parsing out and handling the depth and depth related parameters.
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
  *
@@ -139,34 +179,50 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fss_basic_read_main_preprocess_depth_
-  extern f_status_t fss_basic_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
-#endif // _di_fss_basic_read_main_preprocess_depth_
+#ifndef _di_fss_basic_read_depth_process_
+  extern f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_depth_process_
 
 /**
- * Process a given file.
+ * Get the name of the file the given position represents within the buffer.
+ *
+ * @param at
+ *   The position within the buffer.
+ * @param files
+ *   The representation of files and their respective ranges within the buffer.
+ *
+ * @return
+ *   A string with the name when found.
+ *   NULL is returned if the range represents the STDIN pipe.
+ *
+ *   On failure to identify, an empty string is returned.
+ */
+#ifndef _di_fss_basic_read_file_identify_
+  extern f_string_t fss_basic_read_file_identify(const f_array_length_t at, const fss_basic_read_files_t files) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_file_identify_
+
+/**
+ * Load a given number parameter.
  *
  * @param arguments
  *   The console arguments passed to the program.
  * @param data
  *   The program specific data.
- * @param file_name
- *   The name of the file being processed.
- * @param depths
- *   The processed depth parameters.
- * @param delimits
- *   An array of delimits detected during processing.
+ * @param parameter
+ *   An ID representing the parameter.
+ * @param name
+ *   The parameter name to print on error.
+ * @param number
+ *   The location to store the loaded number.
  *
  * @return
  *   F_none on success.
  *
  *   Status codes (with error bit) are returned on any problem.
- *
- * @see fss_basic_read_main_preprocess_depth()
  */
-#ifndef _di_fss_basic_read_main_process_file_
-  extern f_status_t fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t file_name, const fss_basic_read_depths_t depths, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
-#endif // _di_fss_basic_read_main_process_file_
+#ifndef _di_fss_basic_read_load_number_
+  extern f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_data_t data, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_load_number_
 
 /**
  * Print the end of an object (which is essentially the start of a content).
@@ -187,6 +243,31 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_set_end_
   extern void fss_basic_read_print_set_end(const fss_basic_read_data_t data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_set_end_
+
+/**
+ * Perform the basic read processing on the buffer.
+ *
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param files
+ *   An array representing the ranges in which a given file exists in the buffer.
+ * @param depths
+ *   The processed depth parameters.
+ * @param data
+ *   The program specific data.
+ * @param delimits
+ *   An array of delimits detected during processing.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see fss_basic_read_load_setting()
+ */
+#ifndef _di_fss_basic_read_process_
+  extern f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_data_t *data, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_
 
 #ifdef __cplusplus
 } // extern "C"

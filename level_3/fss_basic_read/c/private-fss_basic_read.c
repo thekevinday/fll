@@ -5,8 +5,9 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_basic_read_main_preprocess_depth_
-  f_status_t fss_basic_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) {
+#ifndef _di_fss_basic_read_depth_process_
+  f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_data_t data, fss_basic_read_depths_t *depths) {
+
     f_status_t status = F_none;
 
     {
@@ -20,6 +21,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         f_color_print(data.error.to.stream, data.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+
         return status;
       }
 
@@ -31,6 +33,7 @@ extern "C" {
     f_array_length_t position_name = 0;
 
     for (f_array_length_t i = 0; i < depths->used; i++) {
+
       depths->array[i].depth = 0;
       depths->array[i].index_at = 0;
       depths->array[i].index_name = 0;
@@ -73,6 +76,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_at, arguments.argv[depths->array[i].index_at]);
+
             return status;
           }
         } // for
@@ -167,18 +171,103 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_basic_read_main_preprocess_depth_
+#endif // _di_fss_basic_read_depth_process_
 
-#ifndef _di_fss_basic_read_main_process_file_
-  f_status_t fss_basic_read_main_process_file(const f_console_arguments_t arguments, fss_basic_read_data_t *data, const f_string_t filename, const fss_basic_read_depths_t depths, f_fss_delimits_t *delimits) {
+#ifndef _di_fss_basic_read_file_identify_
+  f_string_t fss_basic_read_file_identify(const f_array_length_t at, const fss_basic_read_files_t files) {
+
+    for (f_array_length_t i = 0; i < files.used; ++i) {
+
+      if (at >= files.array[i].range.start && at <= files.array[i].range.stop) {
+        return files.array[i].name;
+      }
+    } // for
+
+    return "";
+  }
+#endif // _di_fss_basic_read_file_identify_
+
+#ifndef _di_fss_basic_read_load_number_
+  f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_data_t data, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) {
+
+    if (data.parameters[parameter].result == f_console_result_additional) {
+      const f_array_length_t index = data.parameters[parameter].values.array[data.parameters[parameter].values.used - 1];
+      const f_string_range_t range = f_macro_string_range_t_initialize(strnlen(arguments.argv[index], f_console_parameter_size));
+
+      const f_status_t status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, number);
+
+      if (F_status_is_error(status)) {
+        fll_error_parameter_integer_print(data.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, arguments.argv[index]);
+
+        return status;
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_basic_read_load_number_
+
+#ifndef _di_fss_basic_read_print_object_end_
+  void fss_basic_read_print_object_end(const fss_basic_read_data_t data) {
+
+    if (data.parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_basic_read_pipe_content_start);
+    }
+    else {
+      fprintf(data.output.stream, "%c", f_fss_space);
+    }
+  }
+#endif // _di_fss_basic_read_print_object_end_
+
+#ifndef _di_fss_basic_read_print_set_end_
+  void fss_basic_read_print_set_end(const fss_basic_read_data_t data) {
+
+    if (data.parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(data.output.stream, "%c", fss_basic_read_pipe_content_end);
+    }
+    else {
+      fprintf(data.output.stream, "%c", f_fss_eol);
+    }
+  }
+#endif // _di_fss_basic_read_print_set_end_
+
+#ifndef _di_fss_basic_read_process_
+  f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_data_t *data, f_fss_delimits_t *delimits)  {
+
     f_status_t status = F_none;
 
     const f_array_lengths_t except_none = f_array_lengths_t_initialize;
     bool delimited = F_true;
+    bool include_empty = F_false;
+    f_number_unsigned_t select = 0;
+    f_number_unsigned_t line = 0;
 
-    // for this standard, delimits would always be applied, except for when delimit_depth is greater than 0.
     if (data->delimit_mode == fss_basic_read_delimit_mode_none || (data->delimit_depth && (data->delimit_mode == fss_basic_read_delimit_mode_depth || data->delimit_mode == fss_basic_read_delimit_mode_depth_greater))) {
       delimited = F_false;
+    }
+
+    if (data->parameters[fss_basic_read_parameter_empty].result == f_console_result_found) {
+      include_empty = F_true;
+    }
+
+    status = fss_basic_read_load_number(arguments, *data, fss_basic_read_parameter_select, fss_basic_read_long_select, &select);
+
+    if (F_status_is_error_not(status)) {
+      status = fss_basic_read_load_number(arguments, *data, fss_basic_read_parameter_line, fss_basic_read_long_line, &line);
+    }
+
+    if (F_status_is_error(status)) {
+      fll_error_print(data->error, F_status_set_fine(status), "fss_basic_read_load_setting_number", F_true);
+
+      return status;
+    }
+
+    if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
+
+      // This standard does not support multiple content groups.
+      if (select > 0) {
+        return F_none;
+      }
     }
 
     {
@@ -189,8 +278,9 @@ extern "C" {
       status = fll_fss_basic_read(data->buffer, &input, &data->objects, &data->contents, 0, delimits, 0);
 
       if (F_status_is_error(status)) {
-        // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
-        fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_basic_read", F_true, filename, "process", fll_error_file_type_file);
+        const f_string_t file_name = fss_basic_read_file_identify(input.start, files);
+
+        fll_error_file_print(data->error, F_status_set_fine(status), "fll_fss_basic_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
         f_macro_fss_contents_t_delete_simple(data->contents);
@@ -199,6 +289,7 @@ extern "C" {
 
         if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
+
           return F_none;
         }
 
@@ -206,43 +297,6 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        f_macro_fss_contents_t_delete_simple(data->contents);
-        f_macro_fss_objects_t_delete_simple(data->objects);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
-
-        return status;
-      }
-    }
-
-    f_number_unsigned_t select = 0;
-
-    if (data->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {
-      const f_array_length_t index = data->parameters[fss_basic_read_parameter_select].values.array[data->parameters[fss_basic_read_parameter_select].values.used - 1];
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
-
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
-
-      if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_select, arguments.argv[index]);
-        return status;
-      }
-
-      // This standard does not support multiple content groups.
-      if (select > 0) {
-        return F_none;
-      }
-    }
-
-    f_array_length_t line = 0;
-
-    if (data->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
-      const f_array_length_t index = data->parameters[fss_basic_read_parameter_line].values.array[data->parameters[fss_basic_read_parameter_line].values.used - 1];
-      const f_string_range_t range = f_macro_string_range_t_initialize(strlen(arguments.argv[index]));
-
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
-
-      if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(data->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_line, arguments.argv[index]);
         return status;
       }
     }
@@ -273,12 +327,6 @@ extern "C" {
     }
     else {
       memset(names, 1, sizeof(bool) * data->objects.used);
-    }
-
-    bool include_empty = 0;
-
-    if (data->parameters[fss_basic_read_parameter_empty].result == f_console_result_found) {
-      include_empty = 1;
     }
 
     if (data->parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
@@ -484,31 +532,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_basic_read_main_process_file_
-
-#ifndef _di_fss_basic_read_print_object_end_
-  void fss_basic_read_print_object_end(const fss_basic_read_data_t data) {
-
-    if (data.parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_basic_read_pipe_content_start);
-    }
-    else {
-      fprintf(data.output.stream, "%c", f_fss_space);
-    }
-  }
-#endif // _di_fss_basic_read_print_object_end_
-
-#ifndef _di_fss_basic_read_print_set_end_
-  void fss_basic_read_print_set_end(const fss_basic_read_data_t data) {
-
-    if (data.parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(data.output.stream, "%c", fss_basic_read_pipe_content_end);
-    }
-    else {
-      fprintf(data.output.stream, "%c", f_fss_eol);
-    }
-  }
-#endif // _di_fss_basic_read_print_set_end_
+#endif // _di_fss_basic_read_process_
 
 #ifdef __cplusplus
 } // extern "C"

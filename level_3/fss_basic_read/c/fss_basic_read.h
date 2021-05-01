@@ -178,7 +178,6 @@ extern "C" {
     f_string_dynamic_t buffer;
     f_fss_objects_t objects;
     f_fss_contents_t contents;
-    f_string_quantity_t quantity;
 
     uint8_t delimit_mode;
     f_array_length_t delimit_depth;
@@ -196,7 +195,6 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_fss_objects_t_initialize, \
       f_fss_contents_t_initialize, \
-      f_string_quantity_t_initialize, \
       fss_basic_read_delimit_mode_all, \
       0, \
       f_color_context_t_initialize, \

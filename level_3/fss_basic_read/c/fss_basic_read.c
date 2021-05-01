@@ -353,17 +353,15 @@ extern "C" {
         }
       }
 
+      f_file_t file = f_file_t_initialize;
       fss_basic_read_depths_t depths = fss_basic_read_depths_t_initialize;
-
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-      f_array_length_t original_size = data->quantity.total;
-
       if (F_status_is_error_not(status)) {
-        status = fss_basic_read_main_preprocess_depth(arguments, *data, &depths);
+        status = fss_basic_read_depth_process(arguments, *data, &depths);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->error, F_status_set_fine(status), "fss_basic_read_main_preprocess_depth", F_true);
+          fll_error_print(data->error, F_status_set_fine(status), "fss_basic_read_depth_process", F_true);
         }
       }
 
@@ -389,92 +387,97 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
+      // Provide a range designating where within the buffer a particular file exists, using a statically allocated array. @fixme make this a structure with
+      fss_basic_read_file_t files_array[data->remaining.used + 1];
+      fss_basic_read_files_t files = fss_basic_read_files_t_initialize;
+
+      if (F_status_is_error_not(status)) {
+        files.array = files_array;
+        files.size += data->remaining.used;
+
+        for (f_array_length_t i = 0; i < files.used; ++i) {
+          f_macro_string_range_t_clear(files.array[i].range);
+        } // for
+      }
+
       if (F_status_is_error_not(status) && data->process_pipe) {
-        f_file_t file = f_file_t_initialize;
-
         file.id = f_type_descriptor_input;
+        file.stream = f_type_input;
 
-        status = f_file_read(file, &data->buffer);
+        files.array[0].name = 0;
+        files.array[0].range.start = 0;
+
+        status = f_file_stream_read(file, 1, &data->buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read", F_true, "-", "read", fll_error_file_type_pipe);
+          fll_error_file_print(data->error, F_status_set_fine(status), "f_file_stream_read", F_true, "-", "read", fll_error_file_type_pipe);
         }
-        else {
-          status = fss_basic_read_main_process_file(arguments, data, "-", depths, &delimits);
+        else if (data->buffer.used) {
+          files.array[0].range.stop = data->buffer.used - 1;
+
+          // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
+          // Guarantee that a newline exists at the end of the buffer.
+          status = f_string_append_assure(f_string_eol_s, 1, &data->buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_read_main_process_file", F_true, "-", "read", fll_error_file_type_pipe);
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
           }
         }
-
-        // Clear buffers before continuing.
-        f_macro_fss_contents_t_delete_simple(data->contents);
-        f_macro_fss_objects_t_delete_simple(data->objects);
-        f_macro_string_dynamic_t_delete_simple(data->buffer);
+        else {
+          files.array[0].range.start = 1;
+        }
       }
 
       if (F_status_is_error_not(status) && data->remaining.used > 0) {
         for (f_array_length_t i = 0; i < data->remaining.used; i++) {
-          f_file_t file = f_file_t_initialize;
 
-          status = f_file_open(arguments.argv[data->remaining.array[i]], 0, &file);
+          files.array[files.used].range.start = data->buffer.used;
+          file.stream = 0;
+          file.id = -1;
 
-          data->quantity.total = original_size;
+          status = f_file_stream_open(arguments.argv[data->remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_open", F_true, arguments.argv[data->remaining.array[i]], "open", fll_error_file_type_file);
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[data->remaining.array[i]], "open", fll_error_file_type_file);
+
+            f_file_stream_close(F_true, &file);
             break;
           }
 
-          if (!data->quantity.total) {
-            status = f_file_size_by_id(file.id, &data->quantity.total);
-
-            if (F_status_is_error(status)) {
-              fll_error_file_print(data->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
-
-              f_file_stream_close(F_true, &file);
-              break;
-            }
-
-            // Skip past empty files.
-            if (!data->quantity.total) {
-              if (data->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-                fprintf(data->output.stream, "0%c", f_string_eol_s[0]);
-              }
-
-              f_file_stream_close(F_true, &file);
-              continue;
-            }
-          }
-
-          status = f_file_read_until(file, data->quantity.total, &data->buffer);
+          status = f_file_stream_read(file, 1, &data->buffer);
 
           f_file_stream_close(F_true, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_read_until", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
+            fll_error_file_print(data->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
+
             break;
           }
+          else if (data->buffer.used > files.array[files.used].range.start) {
+            files.array[files.used].name = arguments.argv[data->remaining.array[i]];
+            files.array[files.used++].range.stop = data->buffer.used - 1;
 
-          status = fss_basic_read_main_process_file(arguments, data, arguments.argv[data->remaining.array[i]], depths, &delimits);
+            // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
+            // Guarantee that a newline exists at the end of the buffer.
+            status = f_string_append_assure(f_string_eol_s, 1, &data->buffer);
 
-          if (F_status_is_error(status)) {
-            fll_error_file_print(data->error, F_status_set_fine(status), "fss_basic_read_main_process_file", F_true, arguments.argv[data->remaining.array[i]], "read", fll_error_file_type_file);
-            break;
+            if (F_status_is_error(status)) {
+              fll_error_file_print(data->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
+            }
           }
-
-          // Clear buffers before repeating the loop.
-          f_macro_fss_contents_t_delete_simple(data->contents);
-          f_macro_fss_objects_t_delete_simple(data->objects);
-          f_macro_string_dynamic_t_delete_simple(data->buffer);
+          else {
+            files.array[files.used].range.start = 1;
+          }
         } // for
-
-        if (F_status_is_error(status)) {
-          f_macro_fss_contents_t_delete_simple(data->contents);
-          f_macro_fss_objects_t_delete_simple(data->objects);
-          f_macro_string_dynamic_t_delete_simple(data->buffer);
-        }
       }
+
+      if (F_status_is_error_not(status)) {
+        status = fss_basic_read_process(arguments, files, depths, data, &delimits);
+      }
+
+      f_macro_fss_contents_t_delete_simple(data->contents);
+      f_macro_fss_objects_t_delete_simple(data->objects);
+      f_macro_string_dynamic_t_delete_simple(data->buffer);
 
       fss_basic_read_macro_depths_t_delete_simple(depths);
       f_macro_fss_delimits_t_delete_simple(delimits);
