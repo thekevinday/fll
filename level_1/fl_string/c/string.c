@@ -210,18 +210,30 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     f_array_length_t begin = range.start;
     f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
 
-    if (F_status_is_error(status)) return status;
-    if (status == F_data_not) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (status == F_data_not) {
+      return status;
+    }
+
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return f_string_append(source.string + begin, (end - begin) + 1, destination);
   }
@@ -236,18 +248,30 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     f_array_length_t begin = range.start;
     f_array_length_t end = range.stop;
 
     const f_status_t status = private_fl_string_rip_find_range(source.string, &begin, &end);
 
-    if (F_status_is_error(status)) return status;
-    if (status == F_data_not) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (status == F_data_not) {
+      return status;
+    }
+
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return f_string_append_nulless(source.string + begin, (end - begin) + 1, destination);
   }
@@ -259,8 +283,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string) return F_data_not;
-    if (range->start > range->stop) return F_data_not_stop;
+    if (!string) {
+      return F_data_not;
+    }
+
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
 
@@ -277,10 +306,14 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+        if (string[range->start] == f_string_eol_s[0]) {
+          return F_none_eol;
+        }
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to_this) {
+            return F_none;
+          }
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -288,21 +321,30 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
 
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
-          if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          if (character == seek_to_this) {
+            return F_none;
+          }
         }
       }
 
       range->start += width;
 
-      if (range->start >= range->stop) return F_none_stop;
+      if (range->start >= range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none_eos;
@@ -315,8 +357,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string) return F_data_not;
-    if (range->start > range->stop) return F_data_not_stop;
+    if (!string) {
+      return F_data_not;
+    }
+
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -325,30 +372,42 @@ extern "C" {
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
 
-      if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+      if (F_status_is_error(status)) {
+        return status;
+      }
+
+      if (string[range->start] == f_string_eol_s[0]) {
+        return F_none_eol;
+      }
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
       }
-      // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
+
+        // Do not operate on UTF-8 fragments that are not the first byte of the character.
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
       }
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return F_none;
   }
@@ -360,8 +419,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string) return F_data_not;
-    if (range->start > range->stop) return F_data_not_stop;
+    if (!string) {
+      return F_data_not;
+    }
+
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -369,30 +433,43 @@ extern "C" {
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
-      if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+
+      if (F_status_is_error(status)) {
+        return status;
+      }
+
+      if (string[range->start] == f_string_eol_s[0]) {
+        return F_none_eol;
+      }
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
       }
-      // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
+
+        // Do not operate on UTF-8 fragments that are not the first byte of the character.
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
       }
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return F_none;
   }
@@ -404,8 +481,13 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string) return F_data_not;
-    if (range->start > range->stop) return F_data_not_stop;
+    if (!string) {
+      return F_data_not;
+    }
+
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     const unsigned short seek_width = macro_f_utf_character_t_width(seek_to_this);
 
@@ -416,6 +498,7 @@ extern "C" {
     f_array_length_t width_max = 0;
 
     while (range->start <= range->stop) {
+
       width_max = (range->stop - range->start) + 1;
       width = macro_f_utf_byte_width_is(string[range->start]);
 
@@ -423,7 +506,9 @@ extern "C" {
         width = 1;
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to_this) return F_none;
+          if (string[range->start] == seek_to_this) {
+            return F_none;
+          }
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -431,20 +516,30 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
+
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
-          if (F_status_is_error(status)) return status;
-          if (character == seek_to_this) return F_none;
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          if (character == seek_to_this) {
+            return F_none;
+          }
         }
       }
 
       range->start += width;
 
-      if (range->start >= range->stop) return F_none_stop;
+      if (range->start >= range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none_eos;
@@ -457,15 +552,22 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     f_array_length_t begin = 0;
     f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
-    if (F_status_is_error(status)) return status;
-    if (status == F_data_not) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    if (status == F_data_not) {
+      return status;
+    }
 
     return f_string_append(source + begin, (end - begin) + 1, destination);
   }
@@ -477,15 +579,22 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     f_array_length_t begin = 0;
     f_array_length_t end = length - 1;
 
     const f_status_t status = private_fl_string_rip_find_range(source, &begin, &end);
 
-    if (F_status_is_error(status)) return status;
-    if (status == F_data_not) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    if (status == F_data_not) {
+      return status;
+    }
 
     return f_string_append_nulless(source + begin, (end - begin) + 1, destination);
   }
@@ -497,17 +606,19 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
 
     f_status_t status = F_none;
 
     unsigned short width = 0;
-
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
     for (; range->start <= range->stop; range->start += width) {
+
       width_max = (range->stop - range->start) + 1;
 
       width = macro_f_utf_byte_width_is(string[range->start]);
@@ -515,10 +626,14 @@ extern "C" {
       if (!width) {
         width = 1;
 
-        if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+        if (string[range->start] == f_string_eol_s[0]) {
+          return F_none_eol;
+        }
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to) return F_none;
+          if (string[range->start] == seek_to) {
+            return F_none;
+          }
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -526,14 +641,22 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_eos);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_eos);
+        }
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
+
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
-          if (F_status_is_error(status)) return status;
-          if (character == seek_to) return F_none;
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          if (character == seek_to) {
+            return F_none;
+          }
         }
       }
     } // for
@@ -548,7 +671,9 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -556,30 +681,43 @@ extern "C" {
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_graph(string + range->start, width_max)) == F_false) {
-      if (F_status_is_error(status)) return status;
-      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+
+      if (F_status_is_error(status)) {
+        return status;
+      }
+
+      if (string[range->start] == f_string_eol_s[0]) {
+        return F_none_eol;
+      }
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
       }
-      // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
+
+        // Do not operate on UTF-8 fragments that are not the first byte of the character.
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
       }
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return F_none;
   }
@@ -591,7 +729,9 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -599,33 +739,43 @@ extern "C" {
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
     while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
+
       if (F_status_is_error(status)) {
         return status;
       }
 
-      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
+      if (string[range->start] == f_string_eol_s[0]) {
+        return F_none_eol;
+      }
 
       width = macro_f_utf_byte_width_is(string[range->start]);
 
       if (!width) {
         width = 1;
       }
-      // Do not operate on UTF-8 fragments that are not the first byte of the character.
       else if (width == 1) {
+
+        // Do not operate on UTF-8 fragments that are not the first byte of the character.
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
       }
 
       range->start += width;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
 
       width_max = (range->stop - range->start) + 1;
     } // while
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return F_none;
   }
@@ -637,17 +787,19 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     const unsigned short seek_width = macro_f_utf_character_t_width(seek_to);
 
     f_status_t status = F_none;
 
     unsigned short width = 0;
-
     f_array_length_t width_max = 0;
 
     for (; range->start <= range->stop; range->start += width) {
+
       width_max = (range->stop - range->start) + 1;
 
       width = macro_f_utf_byte_width_is(string[range->start]);
@@ -656,7 +808,9 @@ extern "C" {
         width = 1;
 
         if (seek_width == width) {
-          if (string[range->start] == seek_to) return F_none;
+          if (string[range->start] == seek_to) {
+            return F_none;
+          }
         }
       }
       // Do not operate on UTF-8 fragments that are not the first byte of the character.
@@ -664,14 +818,22 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width > range->stop) {
+          return F_status_set_error(F_complete_not_utf_stop);
+        }
 
         if (width == seek_width) {
           f_utf_character_t character = 0;
+
           status = f_utf_char_to_character(string + range->start, width_max, &character);
 
-          if (F_status_is_error(status)) return status;
-          if (character == seek_to) return F_none;
+          if (F_status_is_error(status)) {
+            return status;
+          }
+
+          if (character == seek_to) {
+            return F_none;
+          }
         }
       }
     } // for

@@ -28,7 +28,9 @@ extern "C" {
  * @return
  *   F_none on success
  *   FL_fss_header_not if no header is found.
+ *
  *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
+ *
  *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
  *
  *   Errors (with error bit) from: fl_conversion_string_to_hexidecimal_unsigned().

@@ -16,6 +16,7 @@ extern "C" {
     unsigned short width = 0;
 
     for (; i < serialize.used; i += width) {
+
       width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0]) {
@@ -35,7 +36,7 @@ extern "C" {
         }
 
         start = i + width;
-        current++;
+        ++current;
       }
       else if (i == serialize.used) {
         if (current == index) {
@@ -46,7 +47,9 @@ extern "C" {
         return F_none_eos;
       }
 
-      if (i + width > serialize.used) return F_status_set_error(F_complete_not_utf_eos);
+      if (i + width > serialize.used) {
+        return F_status_set_error(F_complete_not_utf_eos);
+      }
     } // for
 
     return F_data_not_eos;

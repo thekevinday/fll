@@ -46,6 +46,7 @@ extern "C" {
  * @return
  *   F_true if there is piped data.
  *   F_false if there is no piped data.
+ *
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()
@@ -60,6 +61,7 @@ extern "C" {
  * @return
  *   F_true if there is piped data.
  *   F_false if there is no piped data.
+ *
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()
@@ -76,6 +78,7 @@ extern "C" {
  * @return
  *   F_false if there is no piped data.
  *   F_true if there is piped data.
+ *
  *   F_file_stat (with error bit) on stat() error.
  *
  * @see fstat()

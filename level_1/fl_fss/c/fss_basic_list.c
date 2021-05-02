@@ -22,7 +22,7 @@ extern "C" {
     if (status == F_none_eol) {
 
       // move the start position to after the EOL.
-      range->start++;
+      ++range->start;
 
       return FL_fss_found_object_not;
     }
@@ -53,7 +53,7 @@ extern "C" {
       }
 
       // move the start position to after the EOL.
-      range->start++;
+      ++range->start;
 
       return FL_fss_found_object_not;
     }
@@ -80,7 +80,7 @@ extern "C" {
             break;
           }
 
-          slash_count++;
+          ++slash_count;
         } // for
 
         private_macro_fl_fss_object_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, F_data_not_eos, F_data_not_stop);
@@ -121,16 +121,17 @@ extern "C" {
                 if (buffer.string[range->start] == f_fss_delimit_slash) {
                   if (slash_count % 2 == 1) {
                     delimits->array[delimits->used] = range->start;
-                    delimits->used++;
+                    ++delimits->used;
                   }
 
-                  slash_count--;
+                  --slash_count;
                 }
 
                 status = f_utf_buffer_increment(buffer, range, 1);
 
                 if (F_status_is_error(status)) {
                   delimits->used = delimits_used;
+
                   return status;
                 }
               } // while
@@ -142,6 +143,7 @@ extern "C" {
             }
 
             range->start = start + 1;
+
             return FL_fss_found_object_not;
           }
         }
@@ -153,7 +155,7 @@ extern "C" {
           if (F_status_is_error(status)) break;
 
           delimits->array[delimits->used++] = slash_first;
-          range->start++;
+          ++range->start;
         }
         else {
           graph_first = F_false;
@@ -209,6 +211,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
+
       return status;
     }
 
@@ -224,7 +227,7 @@ extern "C" {
     status = f_fss_seek_to_eol(buffer, range);
 
     // move the start position to after the EOL.
-    range->start++;
+    ++range->start;
 
     return FL_fss_found_object_not;
   }
@@ -273,7 +276,8 @@ extern "C" {
 
         newline_last = range->start;
         graph_first = 0x1;
-        range->start++;
+        ++range->start;
+
         continue;
       }
 
@@ -281,7 +285,7 @@ extern "C" {
         slash_first = range->start;
         slash_count = 1;
 
-        for (range->start++; range->start <= range->stop && range->start < buffer.used; range->start++) {
+        for (++range->start; range->start <= range->stop && range->start < buffer.used; ++range->start) {
 
           if (buffer.string[range->start] == f_fss_delimit_placeholder) {
             continue;
@@ -289,14 +293,14 @@ extern "C" {
             break;
           }
 
-          slash_count++;
+          ++slash_count;
         } // for
 
         if (range->start > range->stop || range->start >= buffer.used) break;
 
         if (buffer.string[range->start] == f_fss_basic_list_open) {
           graph_first = 0x0;
-          range->start++;
+          ++range->start;
 
           while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -334,7 +338,7 @@ extern "C" {
                   delimits->array[delimits->used++] = range->start;
                 }
 
-                slash_count--;
+                --slash_count;
               }
 
               status = f_utf_buffer_increment(buffer, range, 1);
@@ -357,14 +361,14 @@ extern "C" {
         else if (graph_first == 0x1 && buffer.string[range->start] == f_fss_comment) {
           graph_first = 0x2;
           comment_delimit = slash_first;
-          range->start++;
+          ++range->start;
         }
 
         continue;
       }
 
       if (buffer.string[range->start] == f_fss_basic_list_open) {
-        range->start++;
+        ++range->start;
         graph_first = 0x0;
 
         while (range->start <= range->stop && range->start < buffer.used) {
@@ -424,7 +428,7 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= buffer.used) {
-          range->start--;
+          --range->start;
         }
         else {
           newline_last = range->start;
@@ -451,6 +455,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
       comments->used = comments_used;
+
       return status;
     }
 
@@ -538,7 +543,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(width, destination);
           if (F_status_is_error(status)) break;
 
-          for (i = 0; i < width; i++) {
+          for (i = 0; i < width; ++i) {
             destination->string[destination->used++] = object.string[range->start + i];
           } // for
         }
@@ -550,6 +555,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       destination->used = used_start;
+
       return status;
     }
 
@@ -566,7 +572,7 @@ extern "C" {
             break;
           }
 
-          slash_count++;
+          ++slash_count;
         } // for
 
         if (F_status_is_error(status)) break;
@@ -600,7 +606,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
-        for (i = 0; i < width; i++) {
+        for (i = 0; i < width; ++i) {
           destination->string[destination->used++] = object.string[range->start + i];
         } // for
       }
@@ -611,6 +617,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       destination->used = used_start;
+
       return status;
     }
 
@@ -620,6 +627,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           destination->used = used_start;
+
           return status;
         }
       }
@@ -628,6 +636,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
+
         return status;
       }
 
@@ -825,7 +834,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(width, destination);
         if (F_status_is_error(status)) break;
 
-        for (i = 0; i < width; i++) {
+        for (i = 0; i < width; ++i) {
           destination->string[destination->used++] = content.string[range->start + i];
         } // for
       }
@@ -836,6 +845,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       destination->used = used_start;
+
       return status;
     }
 

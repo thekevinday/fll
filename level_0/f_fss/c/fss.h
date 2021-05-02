@@ -48,6 +48,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_apply_delimit_
@@ -68,6 +69,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_fss_apply_delimit_between_
@@ -90,6 +92,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_
@@ -114,6 +117,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_range_
@@ -133,6 +137,7 @@ extern "C" {
  * @return
  *   F_true if the character in the buffer is a graph character.
  *   F_false if the character in the buffer is not a graph character.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_graph().
@@ -156,6 +161,7 @@ extern "C" {
  * @return
  *   F_true if the character in the buffer is a space character.
  *   F_false if the character in the buffer is not a space character.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_control().
@@ -181,6 +187,7 @@ extern "C" {
  * @return
  *   F_true if the character in the buffer is a space character.
  *   F_false if the character in the buffer is not a space character.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_control().
@@ -205,6 +212,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_seek_to_eol_
@@ -227,6 +235,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
  */
@@ -247,6 +256,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_skip_past_delimit_
@@ -270,6 +280,7 @@ extern "C" {
  *   F_none_eol on success and EOL was reached.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
+ *
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment was found.
  *   F_complete_not_utf_eos (with error bit) if unable to get entire UTF-8 sequence due to EOS.
  *   F_complete_not_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.
@@ -304,6 +315,7 @@ extern "C" {
  *   F_none_eol on success and EOL was reached.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
+ *
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment was found.
  *   F_complete_not_utf_eos (with error bit) if unable to get entire UTF-8 sequence due to EOS.
  *   F_complete_not_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.

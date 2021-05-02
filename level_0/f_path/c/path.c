@@ -98,7 +98,7 @@ extern "C" {
       return F_false;
     }
 
-    for (f_array_length_t i = 0; i < length; i++) {
+    for (f_array_length_t i = 0; i < length; ++i) {
 
       if (path[i] == f_path_separator_s[0]) {
         return F_true;

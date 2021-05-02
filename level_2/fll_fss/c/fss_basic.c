@@ -108,8 +108,13 @@ extern "C" {
 
         // If at least some valid object was found, then return F_none equivelents.
         if (objects->used > initial_used) {
-          if (status == F_data_not_eos) return F_none_eos;
-          if (status == F_data_not_stop) return F_none_stop;
+          if (status == F_data_not_eos) {
+            return F_none_eos;
+          }
+
+          if (status == F_data_not_stop) {
+            return F_none_stop;
+          }
         }
 
         return status;
@@ -141,6 +146,7 @@ extern "C" {
       if (objects_quoted) {
         objects_quoted->used++;
       }
+
     } while (range->start < f_array_length_t_size);
 
     return F_status_is_error(F_number_overflow);

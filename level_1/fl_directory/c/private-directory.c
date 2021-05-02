@@ -7,6 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_clone_)
   f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -36,9 +37,9 @@ extern "C" {
       uint8_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < 7; i++) {
+      for (; i < 7; ++i) {
 
-        for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+        for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
           status = private_fl_directory_clone_file(list[i]->array[j], source, destination, role, recurse);
         } // for
 
@@ -46,7 +47,8 @@ extern "C" {
       } // for
     }
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+
       f_string_static_t source_sub = f_string_static_t_initialize;
       f_string_static_t destination_sub = f_string_static_t_initialize;
 
@@ -124,9 +126,13 @@ extern "C" {
 
     macro_f_string_dynamics_t_delete_simple(listing.directory);
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
-    if (recurse.failures && failures_used < recurse.failures->used) return F_failure;
+    if (recurse.failures && failures_used < recurse.failures->used) {
+      return F_failure;
+    }
 
     return F_none;
   }
@@ -134,6 +140,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_clone_file_)
   f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const bool role, const fl_directory_recurse_t recurse) {
+
     char path_source[source.used + file.used + 2];
     char path_destination[destination.used + file.used + 2];
 
@@ -203,7 +210,7 @@ extern "C" {
       recurse.failures->array[recurse.failures->used].path.used = size;
       recurse.failures->array[recurse.failures->used].path.size = size + 1;
       recurse.failures->array[recurse.failures->used].status = status_failure;
-      recurse.failures->used++;
+      ++recurse.failures->used;
 
       return F_failure;
     }
@@ -218,6 +225,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_copy_)
   f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+
     f_status_t status = F_none;
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -225,6 +233,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_directory_listing_t_delete_simple(listing);
+
       return status;
     }
 
@@ -247,8 +256,9 @@ extern "C" {
       uint8_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < 7; i++) {
-        for (j = 0; F_status_is_fine(status) && j < list[i]->used; j++) {
+      for (; i < 7; ++i) {
+
+        for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
           status = private_fl_directory_copy_file(list[i]->array[j], source, destination, mode, recurse);
         } // for
 
@@ -256,7 +266,8 @@ extern "C" {
       } // for
     }
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; i++) {
+    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+
       f_string_static_t source_sub = f_string_static_t_initialize;
       f_string_static_t destination_sub = f_string_static_t_initialize;
 
@@ -320,9 +331,13 @@ extern "C" {
 
     macro_f_string_dynamics_t_delete_simple(listing.directory);
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
-    if (recurse.failures && failures_used < recurse.failures->used) return F_failure;
+    if (recurse.failures && failures_used < recurse.failures->used) {
+      return F_failure;
+    }
 
     return F_none;
   }
@@ -350,7 +365,9 @@ extern "C" {
         return F_status_set_error(status);
       }
 
-      if (!recurse.failures) return F_failure;
+      if (!recurse.failures) {
+        return F_failure;
+      }
 
       const f_status_t status_failure = status;
 
@@ -400,7 +417,7 @@ extern "C" {
       recurse.failures->array[recurse.failures->used].path.used = size;
       recurse.failures->array[recurse.failures->used].path.size = size + 1;
       recurse.failures->array[recurse.failures->used].status = status_failure;
-      recurse.failures->used++;
+      ++recurse.failures->used;
 
       return F_failure;
     }
@@ -415,6 +432,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_list_)
   f_status_t private_fl_directory_list(const f_string_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t *listing) {
+
     struct dirent **entity = 0;
 
     f_array_length_t size = 0;
@@ -468,8 +486,12 @@ extern "C" {
     if (length == -1) {
       closedir(parent);
 
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-      else return F_status_set_error(F_failure);
+      if (errno == ENOMEM) {
+        return F_status_set_error(F_memory_not);
+      }
+      else {
+        return F_status_set_error(F_failure);
+      }
     }
 
     f_string_dynamics_t *names = 0;
@@ -478,13 +500,14 @@ extern "C" {
     int mode = 0;
     size_t i = 0;
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
 
       size = strnlen(entity[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(entity[i]->d_name, "..", 3) || !strncmp(entity[i]->d_name, ".", 2)) {
         f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
+
         continue;
       }
 
@@ -549,14 +572,14 @@ extern "C" {
 
       memcpy(names->array[names->used].string, entity[i]->d_name, size);
       names->array[names->used].used = size;
-      names->used++;
+      ++names->used;
 
       f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
     } // for
 
     closedir(parent);
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
       f_memory_resize(1, 0, sizeof(char *), (void **) & entity[i]);
     } // for
 
@@ -571,6 +594,7 @@ extern "C" {
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
   f_status_t private_fl_directory_path_push(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
+
     bool terminated_null = F_false;
     bool separator_prepend = F_false;
     bool separator_append = F_false;
@@ -589,10 +613,11 @@ extern "C" {
           terminated_null = F_true;
           total = 1;
 
-          destination->used--;
+          --destination->used;
         }
 
-        for (i = destination->used - 1; i > 0; i--) {
+        for (i = destination->used - 1; i > 0; --i) {
+
           if (!destination->string[i]) continue;
 
           status = f_utf_is_control(destination->string + i, destination->used - i);
@@ -606,7 +631,8 @@ extern "C" {
 
           if (destination->string[i] == f_path_separator_s[0]) {
             if (i - 1 > 0) {
-              for (j = i - 1; j > 0; j--) {
+              for (j = i - 1; j > 0; --j) {
+
                 if (!destination->string[j]) continue;
 
                 status = f_utf_is_control(destination->string + j, destination->used - j);
@@ -629,7 +655,7 @@ extern "C" {
           }
           else {
             separator_prepend = F_true;
-            total++;
+            ++total;
           }
 
           break;
@@ -638,12 +664,12 @@ extern "C" {
         if (destination->used > 0 && !i) {
           if (destination->string[0] != 0 && destination->string[0] != f_path_separator_s[0]) {
             separator_prepend = F_true;
-            total++;
+            ++total;
           }
         }
       }
 
-      for (i = length - 1; i > 0; i--) {
+      for (i = length - 1; i > 0; --i) {
         if (!source[i]) continue;
 
         status = f_utf_is_control(source + i, length - i);
@@ -657,11 +683,12 @@ extern "C" {
 
         if (source[i] == f_path_separator_s[0]) {
           if (!separator_prepend && destination->used > 0) {
-            destination->used--;
+            --destination->used;
           }
 
           if (i - 1 > 0) {
-            for (j = i - 1; j > 0; j--) {
+            for (j = i - 1; j > 0; --j) {
+
               if (!source[j]) continue;
 
               status = f_utf_is_control(source + j, length - j);
@@ -684,7 +711,7 @@ extern "C" {
         }
         else {
           separator_append = F_true;
-          total++;
+          ++total;
         }
 
         break;
@@ -692,10 +719,11 @@ extern "C" {
 
       if (!i && source[0] != f_path_separator_s[0]) {
         separator_append = F_true;
-        total++;
+        ++total;
       }
 
-      for (i = 0; i < length_truncated; i++) {
+      for (i = 0; i < length_truncated; ++i) {
+
         if (!source[i]) continue;
 
         status = f_utf_is_control(source + i, length - i);
@@ -711,7 +739,8 @@ extern "C" {
 
         if (source[0] == f_path_separator_s[0]) {
           if (i + 1 < length_truncated) {
-            for (j = i + 1; j < length_truncated; j++) {
+            for (j = i + 1; j < length_truncated; ++j) {
+
               if (!source[j]) continue;
 
               status = f_utf_is_control(source + j, length - j);
@@ -750,8 +779,8 @@ extern "C" {
 
     if (separator_prepend) {
       destination->string[destination->used] = f_path_separator_s[0];
-      destination->used++;
-      total--;
+      ++destination->used;
+      --total;
     }
 
     if (length_truncated - start > 0) {

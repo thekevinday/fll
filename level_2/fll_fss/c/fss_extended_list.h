@@ -57,6 +57,8 @@ extern "C" {
  *   F_data_not_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
+ *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
@@ -68,7 +70,6 @@ extern "C" {
  *   F_terminated_not_nest_stop (with error bit) if stop location is reached while inside a nested list before a closing bracket is found (object was found).
  *   F_terminated_not_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
- *   FL_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
  *
  *   Errors (with error bit) from: fl_fss_extended_list_content_read().
  *   Errors (with error bit) from: fl_fss_extended_list_object_read().
@@ -101,6 +102,7 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
+ *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.

@@ -29,6 +29,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_input_output (with error bit) on I/O error.

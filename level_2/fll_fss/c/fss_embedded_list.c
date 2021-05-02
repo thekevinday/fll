@@ -64,13 +64,13 @@ extern "C" {
           found_data = F_true;
 
           status = fl_fss_embedded_list_content_read(buffer, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
-
           break;
         }
         else if (status == FL_fss_found_object_content_not) {
           found_data = F_true;
           break;
         }
+
       } while (status == FL_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
@@ -80,8 +80,13 @@ extern "C" {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_not_eos) return F_none_eos;
-          if (status == F_data_not_stop) return F_none_stop;
+          if (status == F_data_not_eos) {
+            return F_none_eos;
+          }
+
+          if (status == F_data_not_stop) {
+            return F_none_stop;
+          }
         }
 
         return status;
@@ -90,8 +95,13 @@ extern "C" {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_not_eos) return F_none_eos;
-          if (status == F_data_not_stop) return F_none_stop;
+          if (status == F_data_not_eos) {
+            return F_none_eos;
+          }
+
+          if (status == F_data_not_stop) {
+            return F_none_stop;
+          }
         }
 
         return status;
@@ -99,14 +109,16 @@ extern "C" {
       else if (status != FL_fss_found_object && status != FL_fss_found_content && status != FL_fss_found_content_not && status != FL_fss_found_object_content_not) {
         return status;
       }
-      // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
       else if (range->start >= range->stop || range->start >= buffer.used) {
+
+        // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (range->start >= buffer.used) {
           return F_none_eos;
         }
 
         return F_none_stop;
       }
+
     } while (range->start < f_array_length_t_size);
 
     return F_status_is_error(F_number_overflow);

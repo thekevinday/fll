@@ -79,9 +79,9 @@ extern "C" {
 /**
  * An array of accounts.
  *
- * array: the array of accounts.
- * size: total amount of space available.
- * used: total number of space used.
+ * array: The array of accounts.
+ * size:  Total amount of space available.
+ * used:  Total number of space used.
  */
 #ifndef _di_f_accounts_t_
   typedef struct {

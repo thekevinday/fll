@@ -36,9 +36,9 @@ extern "C" {
 /**
  * An array of f_fss_quote_t.
  *
- * array: the array of fss quote.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of fss quote.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_quotes_t_
   typedef f_uint8s_t f_fss_quotes_t;
@@ -62,9 +62,9 @@ extern "C" {
 /**
  * An array of f_fss_quotes_t.
  *
- * array: the array of fss quotes.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of fss quotes.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_quotess_t_
   typedef f_uint8ss_t f_fss_quotess_t;

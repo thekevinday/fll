@@ -31,6 +31,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_exist_not if name does not exist.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
@@ -57,6 +58,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_valid_not (with error bit) if name is an invalid string.
  *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.
@@ -77,6 +79,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_valid_not (with error bit) if name is an invalid string.
  *   F_memory_not (with error bit) on out of memory.
  *   F_failure (with error bit) on any other error.

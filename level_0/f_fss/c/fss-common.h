@@ -104,13 +104,13 @@ extern "C" {
  *
  * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
- * none:         disable completeness.
- * end:          complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
- * full:         complete and add terminating EOL, where applicable.
- * full_trim:    complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
- * next:         complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
- * partial:      complete, but do not add terminating EOL, where applicable.
- * partial_trim: complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
+ * none:         Disable completeness.
+ * end:          Complete as if this is the final piece of a set (such as FSS-0001, adding terminating EOL).
+ * full:         Complete and add terminating EOL, where applicable.
+ * full_trim:    Complete and add terminating EOL but remove any leading or trailing whitespace, where applicable.
+ * next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
+ * partial:      Complete, but do not add terminating EOL, where applicable.
+ * partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
  */
 #ifndef _di_f_fss_complete_
   enum {
@@ -152,7 +152,7 @@ extern "C" {
  *
  * @todo change this to use a range instead if a length to support multiple sub-headers.
  *
- * type:   the kind of fss file is this.
+ * type:   The kind of fss file is this.
  * length: Total length of the header.
  */
 #ifndef _di_f_fss_header_t_

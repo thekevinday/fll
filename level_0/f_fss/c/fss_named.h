@@ -59,9 +59,9 @@ extern "C" {
 /**
  * This holds an array of f_fss_named_t.
  *
- * array: an array of f_fss_named_t.
- * size: Total amount of allocated space.
- * used: Total number of allocated spaces used.
+ * array: An array of f_fss_named_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_nameds_t_
   typedef struct {

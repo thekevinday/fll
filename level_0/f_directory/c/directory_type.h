@@ -74,8 +74,8 @@ extern "C" {
  *
  * The allocation macros apply to the path.
  *
- * status: the status code.
- * path: the dynamically allocated path associated with the status code.
+ * status: The status code.
+ * path:   The dynamically allocated path associated with the status code.
  */
 #ifndef _di_f_directory_status_t_
   typedef struct {

@@ -31,6 +31,7 @@ extern "C" {
       if (!path[0]) {
         return F_none;
       }
+
       at = 0;
     }
 
@@ -43,6 +44,7 @@ extern "C" {
         if (!previous_1 || previous_1 == f_path_separator_s[0]) {
           previous_1 = f_path_separator_current_s[0];
           previous_2 = 0;
+
           continue;
         }
 
@@ -62,6 +64,7 @@ extern "C" {
         if (previous_1 == f_path_separator_s[0]) {
           size_chunk = 0;
           position = 0;
+
           continue;
         }
 

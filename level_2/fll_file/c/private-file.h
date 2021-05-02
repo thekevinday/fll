@@ -31,6 +31,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_directory (with error bit) on invalid directory.
@@ -69,6 +70,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.

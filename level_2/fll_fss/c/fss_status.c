@@ -18,7 +18,9 @@ extern "C" {
     }
 
     // Numbers are not valid status code strings.
-    if ((status = f_conversion_character_is_decimal(string[0])) == F_true) {
+    status = f_conversion_character_is_decimal(string[0]);
+
+    if (status == F_true) {
       return F_status_set_error(F_data);
     }
 
@@ -29,11 +31,13 @@ extern "C" {
     #ifndef _di_fll_fss_status_error_
       if (fl_string_compare(string, fll_fss_status_string_format, length, fll_fss_status_string_format_length) == F_equal_to) {
         *code = FL_fss_format;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_format_eos, length, fll_fss_status_string_format_eos_length) == F_equal_to) {
         *code = FL_fss_format_eos;
+
         return F_none;
       }
     #endif // _di_fll_fss_status_error_
@@ -41,21 +45,25 @@ extern "C" {
     #ifndef _di_fll_fss_status_warning_
       if (fl_string_compare(string, fll_fss_status_string_header_not, length, fll_fss_status_string_header_not_length) == F_equal_to) {
         *code = FL_fss_header_not;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_accepted_invalid, length, fll_fss_status_string_accepted_invalid_length) == F_equal_to) {
         *code = FL_fss_accepted_invalid;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_header_not_eos, length, fll_fss_status_string_header_not_eos_length) == F_equal_to) {
         *code = FL_fss_header_not_eos;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_accepted_invalid_eos, length, fll_fss_status_string_accepted_invalid_eos_length) == F_equal_to) {
         *code = FL_fss_accepted_invalid_eos;
+
         return F_none;
       }
     #endif // _di_fll_fss_status_warning_
@@ -63,26 +71,31 @@ extern "C" {
     #ifndef _di_fll_fss_status_success_
       if (fl_string_compare(string, fll_fss_status_string_found_object, length, fll_fss_status_string_found_object_length) == F_equal_to) {
         *code = FL_fss_found_object;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_found_content, length, fll_fss_status_string_found_content_length) == F_equal_to) {
         *code = FL_fss_found_content;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_found_object_not, length, fll_fss_status_string_found_object_not_length) == F_equal_to) {
         *code = FL_fss_found_object_not;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_found_content_not, length, fll_fss_status_string_found_content_not_length) == F_equal_to) {
         *code = FL_fss_found_content_not;
+
         return F_none;
       }
 
       if (fl_string_compare(string, fll_fss_status_string_found_object_content_not, length, fll_fss_status_string_found_object_content_not_length) == F_equal_to) {
         *code = FL_fss_found_object_content_not;
+
         return F_none;
       }
     #endif // _di_fll_fss_status_success_
@@ -90,17 +103,20 @@ extern "C" {
     #ifndef _di_fll_fss_status_codes_
       if (fl_string_compare(string, fll_fss_status_string_found_comment, length, fll_fss_status_string_found_comment_length) == F_equal_to) {
         *code = FL_fss_found_object;
+
         return F_none;
       }
     #endif // _di_fll_fss_status_codes_
 
     if (fl_string_compare(string, fll_fss_status_string_status_code_first, length, fll_fss_status_string_status_code_first_length) == F_equal_to) {
       *code = FL_fss_status_code_first;
+
       return F_none;
     }
 
     if (fl_string_compare(string, fll_fss_status_string_status_code_last, length, fll_fss_status_string_status_code_last_length) == F_equal_to) {
       *code = FL_fss_status_code_last;
+
       return F_none;
     }
 

@@ -11,7 +11,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) return F_data_not;
+    if (!string || !length) {
+      return F_data_not;
+    }
 
     return private_f_print(output, string, length);
   }
@@ -23,7 +25,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_f_print(output, buffer.string, buffer.used);
   }
@@ -35,7 +39,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -53,7 +59,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || length == 0) return F_data_not;
+    if (!string || length == 0) {
+      return F_data_not;
+    }
 
     return private_f_print_except(output, string, 0, length, except);
   }
@@ -77,7 +85,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -95,7 +105,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || length == 0) return F_data_not;
+    if (!string || length == 0) {
+      return F_data_not;
+    }
 
     return private_f_print_to(id, string, length);
   }
@@ -107,7 +119,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_f_print_to(id, buffer.string, buffer.used);
   }
@@ -119,7 +133,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -137,7 +153,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || length == 0) return F_data_not;
+    if (!string || length == 0) {
+      return F_data_not;
+    }
 
     return private_f_print_to_except(id, string, 0, length, except);
   }
@@ -149,7 +167,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_f_print_to_except(id, buffer.string, 0, buffer.used, except);
   }
@@ -161,7 +181,9 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 

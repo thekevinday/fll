@@ -947,6 +947,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_data (with error bit) if there status is unknown.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

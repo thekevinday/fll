@@ -30,15 +30,17 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       environment->array[environment->used].name.used = 0;
+
       return status;
     }
 
     if (status == F_data_not || status == F_exist_not) {
       environment->array[environment->used].name.used = 0;
+
       return status;
     }
 
-    environment->used++;
+    ++environment->used;
 
     return F_none;
   }
@@ -69,15 +71,17 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         environment->array[environment->used].name.used = 0;
+
         return status;
       }
 
       if (status == F_data_not || status == F_exist_not) {
         environment->array[environment->used].name.used = 0;
+
         continue;
       }
 
-      environment->used++;
+      ++environment->used;
     } // for
 
     return F_none;
@@ -102,7 +106,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       macro_f_string_dynamic_t_clear(paths->array[paths->used]);
-      paths->used++;
+      ++paths->used;
 
       return F_none;
     }
@@ -111,7 +115,7 @@ extern "C" {
     f_array_length_t first = 0;
     f_array_length_t total = 0;
 
-    for (i = 0; i <= length; i++) {
+    for (i = 0; i <= length; ++i) {
 
       if (i == length || path[i] == f_path_separator_variable_s[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
@@ -119,7 +123,7 @@ extern "C" {
 
         if (!i) {
           macro_f_string_dynamic_t_clear(paths->array[paths->used]);
-          paths->used++;
+          ++paths->used;
 
           first = 1;
           continue;
@@ -178,7 +182,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
 
       macro_f_string_dynamic_t_clear(paths->array[paths->used]);
-      paths->used++;
+      ++paths->used;
 
       return F_none;
     }
@@ -190,7 +194,7 @@ extern "C" {
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
-    for (i = 0; i <= path.used; i++) {
+    for (i = 0; i <= path.used; ++i) {
 
       if (i == path.used || path.string[i] == f_path_separator_variable_s[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
@@ -198,7 +202,7 @@ extern "C" {
 
         if (!i) {
           macro_f_string_dynamic_t_clear(paths->array[paths->used]);
-          paths->used++;
+          ++paths->used;
 
           first = 1;
           continue;
@@ -211,11 +215,12 @@ extern "C" {
           macro_f_string_dynamic_t_resize(status, part, total)
           if (F_status_is_error(status)) return status;
 
-          for (j = 0; j < total; j++) {
+          for (j = 0; j < total; ++j) {
+
             if (!path.string[first + j]) continue;
 
             part.string[part.used] = path.string[first + j];
-            part.used++;
+            ++part.used;
           } // for
 
           if (part.string[part.used - 1] != f_path_separator_s[0]) {
@@ -223,7 +228,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
 
             part.string[part.used] = f_path_separator_s[0];
-            part.used++;
+            ++part.used;
           }
         }
 
@@ -270,8 +275,8 @@ extern "C" {
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
-    for (; i > 0; i--) {
-      j--;
+    // @fixme i is unsgned, it will never be less than 0!
+    for (; i > 0; --i, --j) {
 
       if (!j || path[j] == f_path_separator_variable_s[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
@@ -347,13 +352,14 @@ extern "C" {
     f_status_t status = F_none;
 
     if (!path.used) {
+
       // When PATH is "", this is actually a valid search path for PWD.
       // Therefore append an equivalent representation of PWD (string used length is 0).
       macro_f_memory_structure_increment(status, (*paths), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       macro_f_string_dynamic_t_clear(paths->array[paths->used]);
-      paths->used++;
+      ++paths->used;
 
       return F_none;
     }
@@ -366,8 +372,8 @@ extern "C" {
 
     f_string_dynamic_t part = f_string_dynamic_t_initialize;
 
-    for (; i > 0; i--) {
-      j--;
+    // @fixme i is unsgned, it will never be less than 0!
+    for (; i > 0; --i, --j) {
 
       if (!j || path.string[j] == f_path_separator_variable_s[0]) {
         macro_f_memory_structure_increment(status, (*paths), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
@@ -381,11 +387,12 @@ extern "C" {
             macro_f_string_dynamic_t_resize(status, part, total)
             if (F_status_is_error(status)) return status;
 
-            for (k = 0; k < total; k++) {
+            for (k = 0; k < total; ++k) {
+
               if (!path.string[i + k]) continue;
 
               part.string[part.used] = path.string[i + k];
-              part.used++;
+              ++part.used;
             } // for
 
             if (part.string[part.used - 1] != f_path_separator_s[0]) {
@@ -393,13 +400,14 @@ extern "C" {
               if (F_status_is_error(status)) return status;
 
               part.string[part.used] = f_path_separator_s[0];
-              part.used++;
+              ++part.used;
             }
           }
 
           last = j;
         }
         else if (!j) {
+
           // when j = 0, the total is actually the entire length to max.
           total = last - j;
 
@@ -407,11 +415,11 @@ extern "C" {
           macro_f_string_dynamic_t_resize(status, part, total)
           if (F_status_is_error(status)) return status;
 
-          for (k = 0; k < total; k++) {
+          for (k = 0; k < total; ++k) {
             if (!path.string[i + k]) continue;
 
             part.string[part.used] = path.string[i + k];
-            part.used++;
+            ++part.used;
           } // for
 
           if (part.string[part.used - 1] != f_path_separator_s[0]) {

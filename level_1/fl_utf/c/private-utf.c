@@ -7,6 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
   f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -38,6 +39,7 @@ extern "C" {
 
 #if !defined(_di_fl_utf_string_compare_trim_) || !defined(_di_fl_utf_string_dynamic_compare_trim_) || !defined(_di_fl_utf_string_dynamic_partial_compare_trim_)
   f_status_t private_fl_utf_string_compare_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -53,6 +55,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(string1[i1]);
 
       if (F_status_is_error(status)) {
+
         // ignore possibly invalid UTF-8 codes.
         if (F_status_set_fine(status) != F_maybe) {
           return status;
@@ -72,6 +75,7 @@ extern "C" {
       status = f_utf_character_is_whitespace(string2[i2]);
 
       if (F_status_is_error(status)) {
+
         // ignore possibly invalid UTF-8 codes.
         if (F_status_set_fine(status) != F_maybe) {
           return status;
@@ -88,9 +92,10 @@ extern "C" {
       // size1 and size2 are to represent to total number of characters after trim.
       f_array_length_t size1 = 0;
       f_array_length_t size2 = 0;
+      f_array_length_t j = 0;
 
       // determine where the last non-whitespace is in string1.
-      for (f_array_length_t j = i1; j < stop1; j++) {
+      for (j = i1; j < stop1; j++) {
 
         // skip past NULL in string1.
         while (j < stop1 && !string1[j]) j++;
@@ -112,7 +117,7 @@ extern "C" {
       } // for
 
       // determine where the last non-whitespace is in string2.
-      for (f_array_length_t j = i2; j < stop2; j++) {
+      for (j = i2; j < stop2; j++) {
 
         // skip past NULL in string2.
         while (j < stop2 && !string2[j]) j++;
@@ -121,6 +126,7 @@ extern "C" {
         status = f_utf_character_is_whitespace(string2[j]);
 
         if (F_status_is_error(status)) {
+
           // ignore possibly invalid UTF-8 codes.
           if (F_status_set_fine(status) != F_maybe) {
             return status;
@@ -133,7 +139,9 @@ extern "C" {
         }
       } // for
 
-      if (size1 != size2) return F_equal_to_not;
+      if (size1 != size2) {
+        return F_equal_to_not;
+      }
     }
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
@@ -219,7 +227,9 @@ extern "C" {
         return status;
       }
 
-      if (status == F_true) return F_data_not;
+      if (status == F_true) {
+        return F_data_not;
+      }
     }
 
     return F_none;

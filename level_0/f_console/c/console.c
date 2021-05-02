@@ -14,6 +14,7 @@ extern "C" {
 
     if (!length) {
       *result = f_console_none;
+
       return F_data_not;
     }
 
@@ -85,6 +86,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           macro_f_array_lengths_t_delete_simple(needs_value);
+
           return status;
         }
 
@@ -98,7 +100,7 @@ extern "C" {
           needs_value.array[i] = needs_value.array[i + 1];
         } // for
 
-        location++;
+        ++location;
         continue;
       }
 
@@ -140,7 +142,7 @@ extern "C" {
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
         while (sub_location < argument_length) {
 
-          for (i = 0; i < parameters.used; i++) {
+          for (i = 0; i < parameters.used; ++i) {
 
             if (parameters.parameter[i].type != console_type) {
               continue;
@@ -166,6 +168,7 @@ extern "C" {
 
                 if (F_status_is_error(status)) {
                   macro_f_array_lengths_t_delete_simple(needs_value);
+
                   return status;
                 }
 
@@ -175,6 +178,7 @@ extern "C" {
 
                 if (F_status_is_error(status)) {
                   macro_f_array_lengths_t_delete_simple(needs_value);
+
                   return status;
                 }
 
@@ -200,6 +204,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(needs_value);
+
               return status;
             }
 
@@ -207,6 +212,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(needs_value);
+
               return status;
             }
 
@@ -230,11 +236,12 @@ extern "C" {
 
                 if (F_status_is_error(status)) {
                   macro_f_array_lengths_t_delete_simple(needs_value);
+
                   return status;
                 }
               }
 
-              for (values = 0; values < parameters.parameter[i].has_values; values++) {
+              for (values = 0; values < parameters.parameter[i].has_values; ++values) {
                 needs_value.array[needs_value.used++] = i;
               } // for
             }
@@ -248,7 +255,7 @@ extern "C" {
       else {
         found = F_false;
 
-        for (i = 0; i < parameters.used; i++) {
+        for (i = 0; i < parameters.used; ++i) {
 
           if (parameters.parameter[i].type != f_console_type_other) continue;
 
@@ -260,6 +267,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(needs_value);
+
             return status;
           }
 
@@ -267,6 +275,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(needs_value);
+
             return status;
           }
 
@@ -283,11 +292,12 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 macro_f_array_lengths_t_delete_simple(needs_value);
+
                 return status;
               }
             }
 
-            for (values = 0; values < parameters.parameter[i].has_values; values++) {
+            for (values = 0; values < parameters.parameter[i].has_values; ++values) {
               needs_value.array[needs_value.used++] = i;
             } // for
           }
@@ -311,7 +321,7 @@ extern "C" {
         }
       }
 
-      location++;
+      ++location;
     } // while
 
     if (needs_value.used > 0) {
@@ -334,16 +344,23 @@ extern "C" {
       if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) return F_data_not;
-    if (!parameters.used) return F_data_not;
+    if (!choices.used) {
+      return F_data_not;
+    }
+
+    if (!parameters.used) {
+      return F_data_not;
+    }
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
     f_console_parameter_id_t priority = 0;
 
-    for (f_array_length_t i = 0; i < choices.used; i++) {
+    for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
+      if (choices.id[i] > parameters.used) {
+        return F_status_set_error(F_parameter);
+      }
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
         if (parameters.parameter[choices.id[i]].location < location) {
@@ -376,16 +393,23 @@ extern "C" {
       if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) return F_data_not;
-    if (!parameters.used) return F_data_not;
+    if (!choices.used) {
+      return F_data_not;
+    }
+
+    if (!parameters.used) {
+      return F_data_not;
+    }
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
     f_console_parameter_id_t priority = 0;
 
-    for (f_array_length_t i = 0; i < choices.used; i++) {
+    for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
+      if (choices.id[i] > parameters.used) {
+        return F_status_set_error(F_parameter);
+      }
 
       if (parameters.parameter[choices.id[i]].result == f_console_result_found) {
         if (parameters.parameter[choices.id[i]].location > location) {

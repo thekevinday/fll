@@ -26,7 +26,8 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    for (f_array_length_t i = 0; i < delimits.used; i++) {
+    for (f_array_length_t i = 0; i < delimits.used; ++i) {
+
       if (delimits.array[i] < buffer->used) {
         buffer->string[delimits.array[i]] = f_fss_delimit_placeholder;
       }
@@ -42,7 +43,8 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    for (f_array_length_t i = 0; i < delimits.used; i++) {
+    for (f_array_length_t i = 0; i < delimits.used; ++i) {
+
       if (delimits.array[i] < buffer->used && delimits.array[i] >= range.start && delimits.array[i] <= range.stop) {
         buffer->string[delimits.array[i]] = f_fss_delimit_placeholder;
       }
@@ -62,14 +64,15 @@ extern "C" {
       return F_none;
     }
 
-    for (f_array_length_t i = before; i > 0; i--) {
+    for (f_array_length_t i = before; i > 0; --i) {
+
       if (buffer.string[i] == f_fss_eol) {
-        (*line)++;
+        ++(*line);
       }
     } // for
 
     if (buffer.string[0] == f_fss_eol) {
-      (*line)++;
+      ++(*line);
     }
 
     return F_none;
@@ -86,14 +89,15 @@ extern "C" {
       return F_none;
     }
 
-    for (f_array_length_t i = before; i > range.start; i--) {
+    for (f_array_length_t i = before; i > range.start; --i) {
+
       if (buffer.string[i] == f_fss_eol) {
-        (*line)++;
+        ++(*line);
       }
     } // for
 
     if (buffer.string[range.start] == f_fss_eol) {
-      (*line)++;
+      ++(*line);
     }
 
     return F_none;
@@ -173,7 +177,8 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    for (;; range->start++) {
+    for (;; ++range->start) {
+
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
       if (buffer.string[range->start] == f_fss_eol) break;
@@ -204,7 +209,7 @@ extern "C" {
     while (position < buffer->used && position <= range.stop) {
 
       if (buffer->string[position] == f_fss_delimit_placeholder) {
-        distance++;
+        ++distance;
       }
 
       // do not waste time trying to process what is only going to be replaced with a delimit placeholder.
@@ -225,8 +230,8 @@ extern "C" {
           while (utf_width) {
 
             buffer->string[position] = buffer->string[position + distance];
-            utf_width--;
-            position++;
+            --utf_width;
+            ++position;
           } // while
         }
       }
@@ -237,7 +242,7 @@ extern "C" {
           buffer->string[position] = buffer->string[position + distance];
         }
 
-        position++;
+        ++position;
       }
     }
 
@@ -245,7 +250,7 @@ extern "C" {
       while (position < buffer->used + distance && position <= range.stop) {
 
         buffer->string[position] = f_fss_delimit_placeholder;
-        position++;
+        ++position;
       }
     }
 
@@ -259,7 +264,8 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    for (;; range->start++) {
+    for (;; ++range->start) {
+
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
       if (buffer.string[range->start] != f_fss_delimit_placeholder) break;
@@ -299,7 +305,7 @@ extern "C" {
       }
 
       if (buffer.string[range->start] == f_fss_delimit_placeholder) {
-        range->start++;
+        ++range->start;
 
         if (range->start >= buffer.used) {
           return F_none_eos;
@@ -490,7 +496,9 @@ extern "C" {
       }
     } // for
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     return F_none;
   }

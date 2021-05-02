@@ -31,6 +31,7 @@ extern "C" {
 
 #if !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
   f_status_t private_f_file_copy_content(const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) {
+
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
 
@@ -76,6 +77,7 @@ extern "C" {
 
 #if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
   f_status_t private_f_file_copy_content_at(const int at_id, const f_string_t source, const f_string_t destination, const f_number_unsigned_t size_block) {
+
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
 
@@ -121,6 +123,7 @@ extern "C" {
 
 #if !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_create(const f_string_t path, const mode_t mode, const bool exclusive) {
+
     f_file_t file = f_file_t_initialize;
 
     file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
@@ -141,6 +144,7 @@ extern "C" {
 
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
   f_status_t private_f_file_create_at(const int at_id, const f_string_t path, const mode_t mode, const bool exclusive) {
+
     f_file_t file = f_file_t_initialize;
 
     file.flag = f_file_flag_close_execute | f_file_flag_create | f_file_flag_write_only;
@@ -384,6 +388,7 @@ extern "C" {
 
 #if !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_link_read(const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
       if (link_stat.st_size + 1 > f_array_length_t_size) {
@@ -420,6 +425,7 @@ extern "C" {
 
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
   f_status_t private_f_file_link_read_at(const int at_id, const f_string_t path, const struct stat link_stat, f_string_dynamic_t *target) {
+
     // create a NULL terminated string based on file stat.
     if (link_stat.st_size + 1 > target->size) {
       if (link_stat.st_size + 1 > f_array_length_t_size) {
@@ -579,6 +585,7 @@ extern "C" {
 
 #if !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_role_change(const f_string_t path, const uid_t uid, const gid_t gid, const bool dereference) {
+
     int result = 0;
 
     if (dereference) {
@@ -628,6 +635,7 @@ extern "C" {
 
 #if !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
   f_status_t private_f_file_role_change_at(const int at_id, const f_string_t path, const uid_t uid, const gid_t gid, const int flag) {
+
     int result = 0;
 
     if (uid != -1) {
@@ -705,6 +713,7 @@ extern "C" {
 
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
   f_status_t private_f_file_stat_by_id(const int id, struct stat *file_stat) {
+
     const int result = fstat(id, file_stat);
 
     if (result < 0) {
@@ -754,6 +763,7 @@ extern "C" {
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
   f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) {
+
     *written = 0;
 
     f_status_t status = F_none;
@@ -803,6 +813,7 @@ extern "C" {
 
 #if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
   f_status_t private_f_file_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) {
+
     *written = 0;
 
     f_status_t status = F_none;

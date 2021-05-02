@@ -21,7 +21,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not;
+    if (!source.used) {
+      return F_data_not;
+    }
 
     f_status_t status = F_none;
 

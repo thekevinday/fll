@@ -20,11 +20,11 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
-          digits++;
+          ++digits;
 
           if (negative) {
             if (digits > f_conversion_digits_binary_signed) {
@@ -80,11 +80,11 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
-          digits++;
+          ++digits;
 
           if (digits > f_conversion_digits_binary_unsigned) {
             return F_status_set_error(F_number_overflow);
@@ -124,12 +124,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (negative) {
             if (digits > f_conversion_digits_decimal_signed) {
@@ -189,12 +189,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (digits > f_conversion_digits_decimal_unsigned) {
             if ((converted * 10) + digit > f_number_t_size_unsigned || (converted * 10) + digit < converted) {
@@ -236,7 +236,7 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
@@ -301,12 +301,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (digits > f_conversion_digits_duodecimal_unsigned) {
             if ((converted * 12) + digit > f_number_t_size_unsigned || (converted * 12) + digit < converted) {
@@ -348,12 +348,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (negative) {
             if (digits > f_conversion_digits_hexidecimal_signed) {
@@ -413,12 +413,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (digits > f_conversion_digits_hexidecimal_unsigned) {
             if ((converted << 4) + digit > f_number_t_size_unsigned || (converted << 4) + digit < converted) {
@@ -460,12 +460,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (negative) {
             if (digits > f_conversion_digits_octal_signed) {
@@ -525,12 +525,12 @@ extern "C" {
     f_number_unsigned_t digit = 0;
     f_number_unsigned_t converted = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (digits > f_conversion_digits_octal_unsigned) {
             if ((converted << 3) + digit > f_number_t_size_unsigned || (converted << 3) + digit < converted) {
@@ -576,13 +576,15 @@ extern "C" {
     f_array_length_t offset = 0;
     f_status_t status = F_none;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
       width = macro_f_utf_byte_width_is(string[i]);
 
       if (!width) {
         if (isspace(string[i])) {
           if (!mode && !vector) {
-            offset++;
+            ++offset;
+
             continue;
           }
 
@@ -597,6 +599,7 @@ extern "C" {
 
           if (status == F_true) {
             offset = i + 1;
+
             continue;
           }
 
@@ -654,7 +657,7 @@ extern "C" {
       if (string[i] == 0x2b) {
         if (!mode && !vector) {
           vector = 1;
-          offset++;
+          ++offset;
         }
         else {
           return F_status_set_error(F_number);
@@ -665,7 +668,7 @@ extern "C" {
       if (string[i] == 0x2d) {
         if (!mode && !vector) {
           vector = -1;
-          offset++;
+          ++offset;
         }
         else {
           return F_status_set_error(F_number);
@@ -732,13 +735,15 @@ extern "C" {
     f_status_t status = F_none;
     int8_t sign_found = 0;
 
-    for (f_array_length_t i = range.start; i <= range.stop; i++) {
+    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
       width = macro_f_utf_byte_width_is(string[i]);
 
       if (!width) {
         if (isspace(string[i])) {
           if (!mode) {
-            offset++;
+            ++offset;
+
             continue;
           }
 
@@ -753,6 +758,7 @@ extern "C" {
 
           if (status == F_true) {
             offset = i + 1;
+
             continue;
           }
 
@@ -807,12 +813,12 @@ extern "C" {
       }
 
       if (string[i] == 0x2b) {
-        offset++;
+        ++offset;
         sign_found = 1;
       }
 
       if (string[i] == 0x2d) {
-        offset++;
+        ++offset;
         sign_found = -1;
       }
 

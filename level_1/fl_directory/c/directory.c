@@ -16,9 +16,11 @@ extern "C" {
     }
 
     f_status_t status = f_directory_exists(path);
-
     if (F_status_is_error(status)) return status;
-    if (status == F_true) return F_directory_found;
+
+    if (status == F_true) {
+      return F_directory_found;
+    }
 
     {
       f_array_length_t at_tree = 0;
@@ -96,7 +98,7 @@ extern "C" {
     {
       f_array_length_t i = source_length;
 
-      for (; i > 0; i--, static_source.used--) {
+      for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator_s[0]) continue;
@@ -106,7 +108,7 @@ extern "C" {
 
       i = destination_length;
 
-      for (; i > 0; i--, static_destination.used--) {
+      for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator_s[0]) continue;
@@ -150,7 +152,7 @@ extern "C" {
     {
       f_array_length_t i = source_length;
 
-      for (; i > 0; i--, static_source.used--) {
+      for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator_s[0]) continue;
@@ -160,7 +162,7 @@ extern "C" {
 
       i = destination_length;
 
-      for (; i > 0; i--, static_destination.used--) {
+      for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator_s[0]) continue;
@@ -218,7 +220,7 @@ extern "C" {
     {
       f_array_length_t i = source_length;
 
-      for (; i > 0; i--, static_source.used--) {
+      for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator_s[0]) continue;
@@ -228,7 +230,7 @@ extern "C" {
 
       i = destination_length;
 
-      for (; i > 0; i--, static_destination.used--) {
+      for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator_s[0]) continue;
@@ -272,7 +274,7 @@ extern "C" {
     {
       f_array_length_t i = source_length;
 
-      for (; i > 0; i--, static_source.used--) {
+      for (; i > 0; --i, --static_source.used) {
 
         if (!source[i - 1]) continue;
         if (source[i - 1] == f_path_separator_s[0]) continue;
@@ -282,7 +284,7 @@ extern "C" {
 
       i = destination_length;
 
-      for (; i > 0; i--, static_destination.used--) {
+      for (; i > 0; --i, --static_destination.used) {
 
         if (!destination[i - 1]) continue;
         if (destination[i - 1] == f_path_separator_s[0]) continue;
@@ -332,7 +334,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (; i > 0; i--) {
+    for (; i > 0; --i) {
 
       if (!path->string[i]) continue;
 
@@ -361,7 +363,7 @@ extern "C" {
       else {
         first_nulless = F_true;
 
-        for (j = i; j > 0; j--) {
+        for (j = i; j > 0; --j) {
           if (!path->string[j]) continue;
 
           status = f_utf_is_control(path->string + j, path->used - j);

@@ -786,6 +786,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_spins_decrease_) || !defined(_di_f_thread_spins_decrease_by_) || !defined(_di_f_thread_spins_increase_) || !defined(_di_f_thread_spins_increase_by_)
   f_status_t private_f_thread_spins_resize(const f_array_length_t length, f_thread_spins_t *spins) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < spins->size; ++i) {

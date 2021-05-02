@@ -36,6 +36,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_utf_string_compare()
@@ -67,6 +68,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_utf_string_compare_trim()
@@ -94,6 +96,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but only whitespace found.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *

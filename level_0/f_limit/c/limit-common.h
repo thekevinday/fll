@@ -19,8 +19,8 @@ extern "C" {
 /**
  * A limit value structure.
  *
- * rlim_cur: the soft limit.
- * rlim_max: the hard limit.
+ * rlim_cur: The soft limit.
+ * rlim_max: The hard limit.
  */
 #ifndef _di_f_limit_value_t_
   typedef struct rlimit f_limit_value_t;
@@ -66,8 +66,8 @@ extern "C" {
 /**
  * A limit value structure.
  *
- * type:  the limit resource type code.
- * value: the limit value containing the soft and hard limit.
+ * type:  The limit resource type code.
+ * value: The limit value containing the soft and hard limit.
  */
 #ifndef _di_f_limit_set_t_
   typedef struct {

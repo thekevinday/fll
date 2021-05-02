@@ -77,9 +77,12 @@ extern "C" {
   typedef struct {
     f_number_unsigned_t depth_max;
     f_number_unsigned_t size_block;
+
     bool exclusive;
     f_file_t output;
+
     void (*verbose)(const f_file_t, const f_string_t, const f_string_t);
+
     f_directory_statuss_t *failures;
   } fl_directory_recurse_t;
 
@@ -104,6 +107,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there was no string to process (length is 0).
  *   F_directory_found on success, but the directory already exists.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_link_max (with error bit) max links limit reached or exceeded.
@@ -154,6 +158,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_create().
@@ -199,6 +204,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_exists().
@@ -236,6 +242,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_create().
@@ -279,6 +286,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  *   Errors (with error bit) from: f_directory_exists().
@@ -312,6 +320,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if directory is empty.
+ *
  *   F_directory_descriptor (with error bit) on directory file descriptor error.
  *   F_directory_open (with error bit) on directory open error.
  *   F_directory_stream (with error bit) on directory stream error.
@@ -348,6 +357,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
@@ -377,6 +387,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if length is 0.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
@@ -403,6 +414,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if source.used is 0.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *

@@ -24,6 +24,7 @@ extern "C" {
 
       if (e < except.used && except.array[e] == i) {
         i++;
+
         continue;
       }
 
@@ -53,6 +54,7 @@ extern "C" {
 
       if (e < except.used && except.array[e] == i) {
         i++;
+
         continue;
       }
 
@@ -70,7 +72,9 @@ extern "C" {
       if (status == F_true) {
         j = i + macro_f_utf_byte_width(string[i]);
 
-        if (j == stop) return F_none;
+        if (j == stop) {
+          return F_none;
+        }
 
         ej = e;
 
@@ -82,6 +86,7 @@ extern "C" {
 
           if (ej < except.used && except.array[ej] == j) {
             j++;
+
             continue;
           }
 
@@ -99,6 +104,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
+
               if (!string[i]) continue;
 
               for (; e < except.used && except.array[e] < i; ++e) {
@@ -107,7 +113,9 @@ extern "C" {
 
               if (e < except.used && except.array[e] == i) continue;
 
-              if (!fputc(string[i], output)) return F_status_set_error(F_output);
+              if (!fputc(string[i], output)) {
+                return F_status_set_error(F_output);
+              }
             } // for
 
             break;
@@ -119,7 +127,9 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
 
       i += macro_f_utf_byte_width(string[i]);
     } // while
@@ -160,6 +170,7 @@ extern "C" {
     } // for
 
     for (; i < stop; ++i) {
+
       if (!string[i]) continue;
 
       for (; e < except.used && except.array[e] < i; ++e) {
@@ -181,7 +192,9 @@ extern "C" {
       if (status == F_true) {
         j = i + 1;
 
-        if (j == stop) return F_none;
+        if (j == stop) {
+          return F_none;
+        }
 
         for (ej = e; j < stop; j++) {
 
@@ -204,6 +217,7 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
+
               if (!string[i]) continue;
 
               for (; e < except.used && except.array[e] < i; ++e) {
@@ -212,7 +226,9 @@ extern "C" {
 
               if (e < except.used && except.array[e] == i) continue;
 
-              if (!fputc(string[i], output)) return F_status_set_error(F_output);
+              if (!fputc(string[i], output)) {
+                return F_status_set_error(F_output);
+              }
             } // for
 
             break;
@@ -222,7 +238,9 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
     } // for
 
     return F_none;
@@ -255,6 +273,7 @@ extern "C" {
     } // for
 
     for (; i < length; i += macro_f_utf_byte_width(string[i])) {
+
       if (!string[i]) continue;
 
       width_max = (length - i) + 1;
@@ -271,7 +290,9 @@ extern "C" {
       if (status == F_true) {
         j = i + macro_f_utf_byte_width(string[i]);
 
-        if (j == length) return F_none;
+        if (j == length) {
+          return F_none;
+        }
 
         for (; j < length; j += macro_f_utf_byte_width(string[j])) {
 
@@ -289,8 +310,12 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
+
               if (!string[i]) continue;
-              if (!fputc(string[i], output)) return F_status_set_error(F_output);
+
+              if (!fputc(string[i], output)) {
+                return F_status_set_error(F_output);
+              }
             } // for
 
             break;
@@ -300,7 +325,9 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
     } // for
 
     return F_none;
@@ -331,12 +358,15 @@ extern "C" {
     } // for
 
     for (; i < length; i++) {
+
       if (!string[i]) continue;
 
       status = f_utf_character_is_whitespace(string[i]);
 
       if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf);
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
 
         return status;
       }
@@ -344,7 +374,9 @@ extern "C" {
       if (status == F_true) {
         j = i + 1;
 
-        if (j == length) return F_none;
+        if (j == length) {
+          return F_none;
+        }
 
         for (; j < length; j++) {
 
@@ -361,8 +393,12 @@ extern "C" {
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
             for (; i < j; i++) {
+
               if (!string[i]) continue;
-              if (!fputc(string[i], output)) return F_status_set_error(F_output);
+
+              if (!fputc(string[i], output)) {
+                return F_status_set_error(F_output);
+              }
             } // for
 
             break;
@@ -372,7 +408,9 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) return F_status_set_error(F_output);
+      if (!fputc(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
     } // for
 
     return F_none;

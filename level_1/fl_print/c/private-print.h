@@ -35,6 +35,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -70,6 +71,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -100,6 +102,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -130,6 +133,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.

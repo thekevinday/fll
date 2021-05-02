@@ -25,7 +25,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_append(source.string, source.used, destination);
   }
@@ -37,7 +39,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < source.used) {
       return private_f_string_append(source.string, source.used, destination);
@@ -47,13 +51,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
+
       if (!source.string[source.used - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -61,8 +68,8 @@ extern "C" {
         return private_f_string_append(source.string, source.used, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -75,7 +82,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < source.used) {
       return private_f_string_append_nulless(source.string, source.used, destination);
@@ -85,13 +94,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= source.used && j <= destination->used) {
+
       if (!source.string[source.used - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -99,8 +111,8 @@ extern "C" {
         return private_f_string_append_nulless(source.string, source.used, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -113,7 +125,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_append_nulless(source.string, source.used, destination);
   }
@@ -189,7 +203,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       const f_status_t status = private_f_string_append(glue, glue_length, destination);
@@ -206,7 +222,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       const f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
@@ -223,7 +241,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       const f_status_t status = private_f_string_prepend(glue, glue_length, destination);
@@ -240,7 +260,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       const f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
@@ -258,8 +280,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return private_f_string_append(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -272,8 +299,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     const f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -285,13 +317,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source.string[range.stop - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -299,8 +334,8 @@ extern "C" {
         return private_f_string_append(source.string + range.start, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -314,8 +349,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     const f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -327,13 +367,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source.string[range.stop - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -341,8 +384,8 @@ extern "C" {
         return private_f_string_append_nulless(source.string + range.start, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -356,8 +399,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return private_f_string_append_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -370,8 +418,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append(glue, glue_length, destination);
@@ -389,8 +442,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
@@ -408,8 +466,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend(glue, glue_length, destination);
@@ -427,8 +490,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
@@ -446,8 +514,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return private_f_string_prepend(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -460,8 +533,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     const f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -473,13 +551,16 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (!source.string[i + range.start]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -487,8 +568,8 @@ extern "C" {
         return private_f_string_prepend(source.string + range.start, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -502,8 +583,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     const f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -515,13 +601,16 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < length && j < destination->used) {
+
       if (!source.string[i + range.start]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -529,8 +618,8 @@ extern "C" {
         return private_f_string_prepend_nulless(source.string + range.start, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -544,8 +633,13 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
-    if (range.start > range.stop) return F_data_not_stop;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
+
+    if (range.start > range.stop) {
+      return F_data_not_stop;
+    }
 
     return private_f_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
@@ -557,7 +651,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_prepend(source.string, source.used, destination);
   }
@@ -569,7 +665,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < source.used) {
       return private_f_string_prepend(source.string, source.used, destination);
@@ -579,13 +677,16 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
+
       if (!source.string[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -593,8 +694,8 @@ extern "C" {
         return private_f_string_prepend(source.string, source.used, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -607,7 +708,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not_eos;
+    if (!source.used) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < source.used) {
       return private_f_string_prepend_nulless(source.string, source.used, destination);
@@ -617,13 +720,16 @@ extern "C" {
     f_array_length_t j = 0;
 
     while (i < source.used && j < destination->used) {
+
       if (!source.string[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -631,8 +737,8 @@ extern "C" {
         return private_f_string_prepend_nulless(source.string, source.used, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -671,7 +777,8 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
 
     while (buffer.string[range->start] != f_string_eol_s[0]) {
-      range->start++;
+
+      ++range->start;
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
@@ -761,7 +868,8 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used) {
-      for (; destination->used; destination->used--) {
+      for (; destination->used; --destination->used) {
+
         if (!destination->string[destination->used - 1]) continue;
         break;
       } // for
@@ -801,7 +909,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!source.used) return F_data_not;
+    if (!source.used) {
+      return F_data_not;
+    }
 
     return private_f_string_dynamics_append(source, destination);
   }

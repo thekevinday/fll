@@ -55,6 +55,7 @@ extern "C" {
  *   F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabularie names found.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.

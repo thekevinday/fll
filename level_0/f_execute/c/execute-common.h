@@ -21,8 +21,8 @@ extern "C" {
  *
  * @todo move this into a f_scheduler project.
  *
- * policy:   the scheduler policy.
- * priority: the scheduler priority;
+ * policy:   The scheduler policy.
+ * priority: The scheduler priority;
  */
 #ifndef _di_f_execute_scheduler_t_
   typedef struct {

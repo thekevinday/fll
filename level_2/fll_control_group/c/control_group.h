@@ -41,6 +41,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_directory_not (with error bit) if control_group.path does not exist.
  *
  *   Errors (with error bit) from: f_directory_exists().

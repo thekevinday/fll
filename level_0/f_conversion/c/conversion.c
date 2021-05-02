@@ -234,7 +234,7 @@ extern "C" {
 
     f_array_length_t total = 0;
 
-    for (register f_number_signed_t work = current; work; total++) {
+    for (register f_number_signed_t work = current; work; ++total) {
       work /= base;
     } // for
 
@@ -245,21 +245,24 @@ extern "C" {
       macro_f_string_dynamic_t_resize(status, (*destination), destination->used + total + 1);
     }
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     f_number_unsigned_t work = 0;
     f_number_unsigned_t power = 1;
 
     if (negative) {
       destination->string[destination->used] = f_string_ascii_minus_s[0];
-      destination->used++;
+      ++destination->used;
     }
 
-    for (register uint8_t i = 1; i < total; i++) {
+    for (register uint8_t i = 1; i < total; ++i) {
       power *= base;
     } // for
 
-    for (; power; total--) {
+    for (; power; --total) {
+
       work = current / power;
       current -= work * power;
       power /= base;
@@ -315,11 +318,11 @@ extern "C" {
           break;
       }
 
-      destination->used++;
+      ++destination->used;
     } // for
 
     destination->string[destination->used] = 0;
-    destination->used++;
+    ++destination->used;
 
     return F_none;
   }
@@ -347,7 +350,7 @@ extern "C" {
 
     f_array_length_t total = 0;
 
-    for (register f_number_unsigned_t work = number; work; total++) {
+    for (register f_number_unsigned_t work = number; work; ++total) {
       work /= base;
     } // for
 
@@ -358,11 +361,12 @@ extern "C" {
     f_number_unsigned_t work = 0;
     f_number_unsigned_t power = 1;
 
-    for (register uint8_t i = 1; i < total; i++) {
+    for (register uint8_t i = 1; i < total; ++i) {
       power *= base;
     } // for
 
-    for (; power; total--) {
+    for (; power; --total) {
+
       work = current / power;
       current -= work * power;
       power /= base;
@@ -418,11 +422,11 @@ extern "C" {
           break;
       }
 
-      destination->used++;
+      ++destination->used;
     } // for
 
     destination->string[destination->used] = 0;
-    destination->used++;
+    ++destination->used;
 
     return F_none;
   }

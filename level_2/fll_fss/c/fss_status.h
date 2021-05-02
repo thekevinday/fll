@@ -96,6 +96,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if string is empty.
+ *
  *   F_data (with error bit) if not found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -115,6 +116,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fl_status_to_string().

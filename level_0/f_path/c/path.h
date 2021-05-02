@@ -37,6 +37,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -62,6 +63,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -93,6 +95,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the path.
@@ -148,6 +151,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_buffer_too_small (with error bit) if the buffer is too small to store the path.

@@ -28,6 +28,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_file_close (with error bit) if fclose() failed for any other reason.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_synchronize (with error bit) on flush failure.
@@ -66,6 +67,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -112,6 +114,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -157,6 +160,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -192,6 +196,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -228,6 +233,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -263,6 +269,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
@@ -297,6 +304,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
@@ -336,6 +344,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
@@ -377,6 +386,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
@@ -409,6 +419,7 @@ extern "C" {
  *
  * @return
  *   F_none is returned on success.
+ *
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_filesystem_quota_block (with error bit) if filesystem's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) on I/O error.
@@ -437,6 +448,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
@@ -475,6 +487,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -514,6 +527,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -550,6 +564,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
@@ -582,6 +597,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_directory (with error bit) on invalid directory.
@@ -615,6 +631,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
  *   F_file_found_not (with error bit) if file at path was not found.
@@ -649,6 +666,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_file_descriptor (with error bit) if unable to load the file descriptor (the file pointer may still be valid).
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open (with error bit) if the file is already open.
@@ -679,6 +697,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open (with error bit) if the file is already open.
@@ -707,6 +726,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
@@ -746,6 +766,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
  *   F_access_owner (with error bit) if the current user does not have access to assign the specified owner.
@@ -782,6 +803,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
@@ -817,6 +839,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
@@ -846,6 +869,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory (with error bit) on invalid directory.
  *   F_file_found_not (with error bit) if the file was not found.
@@ -902,6 +926,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_file (with error bit) if file descriptor is in an error state.
@@ -939,6 +964,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_file (with error bit) if file descriptor is in an error state.

@@ -20,6 +20,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
+
       return status;
     }
 
@@ -39,7 +40,8 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (status == F_none_eol) {
-      range->start++;
+      ++range->start;
+
       return FL_fss_found_content_not;
     }
 
@@ -56,7 +58,7 @@ extern "C" {
 
     found->array[found->used].start = range->start;
 
-    for (;; range->start++) {
+    for (;; ++range->start) {
 
       status = f_fss_skip_past_delimit(buffer, range);
       if (F_status_is_error(status)) return status;
@@ -95,6 +97,7 @@ extern "C" {
 
       if (F_status_is_error(status_allocation)) {
         destination->used = destination_used;
+
         return status_allocation;
       }
 
@@ -111,6 +114,7 @@ extern "C" {
 
           if (F_status_is_error(status2)) {
             destination->used = destination_used;
+
             return status2;
           }
         }
@@ -169,10 +173,11 @@ extern "C" {
 
     const f_array_length_t destination_used = destination->used;
 
-    for (; range->start <= range->stop && range->start < content.used; range->start++) {
+    for (; range->start <= range->stop && range->start < content.used; ++range->start) {
 
       if (content.string[range->start] == f_fss_eol) {
         destination->used = destination_used;
+
         return F_status_set_error(F_none_eol);
       }
 

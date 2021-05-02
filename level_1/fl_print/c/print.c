@@ -11,7 +11,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string || !length) return F_data_not;
+    if (!string || !length) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_except(output, string, 0, length, except);
   }
@@ -23,7 +25,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_except(output, buffer.string, 0, buffer.used, except);
   }
@@ -35,7 +39,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -53,7 +59,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string || !length) return F_data_not;
+    if (!string || !length) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_except_utf(output, string, 0, length, except);
   }
@@ -65,7 +73,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_except_utf(output, buffer.string, 0, buffer.used, except);
   }
@@ -77,7 +87,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -95,7 +107,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string || !length) return F_data_not;
+    if (!string || !length) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim(output, string, length);
   }
@@ -107,7 +121,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim(output, buffer.string, buffer.used);
   }
@@ -119,7 +135,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -137,7 +155,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string || !length) return F_data_not;
+    if (!string || !length) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_utf(output, string, length);
   }
@@ -149,7 +169,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used) return F_data_not;
+    if (!buffer.used) {
+      return F_data_not;
+    }
 
     return private_fl_print_trim_utf(output, buffer.string, buffer.used);
   }
@@ -161,7 +183,9 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) return F_data_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t length = (range.stop - range.start) + 1;
 

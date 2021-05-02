@@ -27,7 +27,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (!*pointer || !size) return F_data_not;
+    if (!*pointer || !size) {
+      return F_data_not;
+    }
 
     #ifdef _f_memory_FORCE_secure_memory_
       if (!length) {
@@ -52,7 +54,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-frees.
-    if (!*pointer) return F_data_not;
+    if (!*pointer) {
+      return F_data_not;
+    }
 
     #ifndef _f_memory_FORCE_fast_memory_
       if (!length) {
@@ -77,7 +81,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-allocations.
-    if (*pointer || !length) return F_data_not;
+    if (*pointer || !length) {
+      return F_data_not;
+    }
 
     // Some people use malloc(size * length) to produce the same results.
     // This has been observed to sometimes causes an increase in L1/L2 cache misses (0.02% L1 increase, 0.01% L2 increase).
@@ -105,12 +111,16 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     // prevent double-allocations.
-    if (*pointer || !length) return F_data_not;
+    if (*pointer || !length) {
+      return F_data_not;
+    }
 
     const int result = posix_memalign(pointer, alignment, length);
 
     if (result) {
-      if (result == EINVAL) return F_status_set_error(F_parameter);
+      if (result == EINVAL) {
+        return F_status_set_error(F_parameter);
+      }
 
       return F_status_set_error(F_memory_not);
     }

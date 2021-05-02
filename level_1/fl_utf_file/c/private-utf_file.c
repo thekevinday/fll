@@ -184,6 +184,7 @@ extern "C" {
       if (*written + write_size > write_max) {
         write_size = write_max - *written;
       }
+
     } while (*written < write_max);
 
     return F_none;

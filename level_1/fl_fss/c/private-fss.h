@@ -118,6 +118,7 @@ extern "C" {
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
  *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
+ *
  *   F_array_too_large (with error bit) if a buffer is too large.
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
@@ -170,6 +171,7 @@ extern "C" {
  *   F_none_stop on success after reaching the range stop.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_not (with error bit) on out of memory.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.

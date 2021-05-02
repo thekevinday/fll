@@ -53,7 +53,8 @@ extern "C" {
     for (; i < length; ++i) {
 
       if (string[i]) {
-        total++;
+        ++total;
+
         continue;
       }
 
@@ -109,7 +110,8 @@ extern "C" {
 
       if (j >= except.used || except.array[j] != i) {
         if (string[i]) {
-          total++;
+          ++total;
+
           continue;
         }
       }

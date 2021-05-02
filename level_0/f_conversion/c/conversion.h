@@ -109,6 +109,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a binary.
+ *
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -127,6 +128,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a decimal.
+ *
  *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -145,6 +147,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a duodecimal.
+ *
  *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -163,6 +166,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a hexidecimal.
+ *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -181,6 +185,7 @@ extern "C" {
  *
  * @return
  *   F_none if character was converted to a hexidecimal.
+ *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -204,6 +209,7 @@ extern "C" {
  *
  * @return
  *   F_none if the number was converted to a string.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) on out of memory.
  */
@@ -227,6 +233,7 @@ extern "C" {
  *
  * @return
  *   F_none if the number was converted to a string.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_memory_not (with error bit) on out of memory.
  */

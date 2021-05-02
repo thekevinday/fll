@@ -46,6 +46,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) if a out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the current user/process has insufficient privileges to set certain cgroup settings.

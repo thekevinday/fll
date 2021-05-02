@@ -176,13 +176,13 @@ extern "C" {
 /**
  * Provide console type enumerations:
  *
- * - none: parameter not found.
- * - found: parameter found.
- * - values: parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
+ * - none:   Parameter not found.
+ * - found:  Parameter found.
+ * - values: Parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
  *
- * - normal: parameters using minus sign, such as '--help'.
- * - inverse: parameters using plus sign, such as '++version'.
- * - other: parameters using neither minus nor plus sign, such as 'build'.
+ * - normal:  Parameters using minus sign, such as '--help'.
+ * - inverse: Parameters using plus sign, such as '++version'.
+ * - other:   Parameters using neither minus nor plus sign, such as 'build'.
  */
 #ifndef _di_f_console_types_t_
   typedef uint16_t f_console_id_t;
@@ -222,19 +222,19 @@ extern "C" {
  * The other parameters are for any other parameter that has no prepended characters.
  *
  * - symbol_short: The single character string, such as 'h' in '-h'.
- * - symbol_long: The multi-character string, such as 'help' in '--help'.
+ * - symbol_long:  The multi-character string, such as 'help' in '--help'.
  * - symbol_other: The special meaning parameter, such as 'all' in 'make all'.
  *
  * - has_values: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * - type: One of the f_console_type_* codes, defining how this parameter is to be processed.
+ * - type:       One of the f_console_type_* codes, defining how this parameter is to be processed.
  *
  * - result: A code representing that the parameter is found and how it is found ('-h' vs '--help').
  *
- * - location: The last location in argv[] where this parameter is found.
- * - location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
- * - locations: All locations within argv where this parameter is found (order is preserved).
+ * - location:      The last location in argv[] where this parameter is found.
+ * - location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ * - locations:     All locations within argv where this parameter is found (order is preserved).
  * - locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
- * - values: An array of locations representing where in the argv[] the values arguments are found.
+ * - values:        An array of locations representing where in the argv[] the values arguments are found.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {

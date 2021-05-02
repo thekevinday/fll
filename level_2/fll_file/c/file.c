@@ -44,10 +44,7 @@ extern "C" {
 
     if (status == F_true) {
       status = fl_directory_clone(source, destination, source_length, destination_length, F_true, recurse);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       status = f_directory_remove(source, recurse.depth_max, F_false);
 
@@ -57,10 +54,7 @@ extern "C" {
     }
     else {
       status = f_file_clone(source, destination, F_true, recurse.size_block, recurse.exclusive);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
 
       status = f_file_remove(source);
 

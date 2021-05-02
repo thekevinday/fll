@@ -189,6 +189,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "values" parameters were expected but not found.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -238,6 +239,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -267,6 +269,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -294,6 +297,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -324,6 +328,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if nothing to rip, no allocations or reallocations are performed.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.

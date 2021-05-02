@@ -119,7 +119,7 @@ extern "C" {
       while (range->start <= range->stop && range->start < buffer->used) {
 
         if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-          range->start++;
+          ++range->start;
           continue;
         }
 
@@ -150,7 +150,7 @@ extern "C" {
           // found a valid vocabulary name.
           if (buffer->string[range->start] == f_iki_syntax_quote_single || buffer->string[range->start] == f_iki_syntax_quote_double) {
             quote = buffer->string[range->start];
-            range->start++;
+            ++range->start;
             break;
           }
 
@@ -158,6 +158,7 @@ extern "C" {
           macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, F_false);
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(delimits);
+
             return status;
           }
 
@@ -172,7 +173,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer->used) {
 
             if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-              range->start++;
+              ++range->start;
               continue;
             }
 
@@ -181,7 +182,7 @@ extern "C" {
                 vocabulary_delimited = F_true;
 
                 quote = buffer->string[range->start];
-                range->start++;
+                ++range->start;
                 break;
               }
               else {
@@ -201,6 +202,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(delimits);
+
               return status;
             }
           } // while
@@ -214,6 +216,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(delimits);
+
             return status;
           }
 
@@ -223,14 +226,17 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(delimits);
+
               return status;
             }
             else if (range->start > range->stop) {
               macro_f_array_lengths_t_delete_simple(delimits);
+
               return F_data_not_stop;
             }
             else if (range->start >= buffer->used) {
               macro_f_array_lengths_t_delete_simple(delimits);
+
               return F_data_not_eos;
             }
 
@@ -242,6 +248,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           macro_f_array_lengths_t_delete_simple(delimits);
+
           return status;
         }
       } // while
@@ -253,7 +260,8 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer->used) {
 
           if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-            range->start++;
+            ++range->start;
+
             continue;
           }
 
@@ -265,17 +273,18 @@ extern "C" {
 
               if (F_status_is_error(status)) {
                 macro_f_array_lengths_t_delete_simple(delimits);
+
                 return status;
               }
 
               delimits.array[delimits.used] = vocabulary_slash_first;
-              delimits.used++;
+              ++delimits.used;
 
               find_next = F_true;
               vocabulary_delimited = F_false;
               quote = 0;
 
-              range->start++;
+              ++range->start;
               break;
             }
             else {
@@ -296,24 +305,24 @@ extern "C" {
 
               variable->array[variable->used].start = found_vocabulary.start;
               variable->array[variable->used].stop = range->start;
-              variable->used++;
+              ++variable->used;
 
               vocabulary->array[vocabulary->used].start = found_vocabulary.start;
               vocabulary->array[vocabulary->used].stop = found_vocabulary.stop;
-              vocabulary->used++;
+              ++vocabulary->used;
 
               content->array[content->used].start = found_content;
               content->array[content->used].stop = range->start - 1;
-              content->used++;
+              ++content->used;
 
-              for (f_array_length_t i = 0; i < delimits.used; i++) {
+              for (f_array_length_t i = 0; i < delimits.used; ++i) {
                 buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
               } // for
 
               macro_f_array_lengths_t_delete_simple(delimits);
               if (F_status_is_error(status)) return status;
 
-              range->start++;
+              ++range->start;
 
               if (range->start > range->stop) {
                 return F_none_stop;
@@ -333,7 +342,8 @@ extern "C" {
             while (range->start <= range->stop && range->start < buffer->used) {
 
               if (buffer->string[range->start] == f_iki_syntax_placeholder) {
-                range->start++;
+                ++range->start;
+
                 continue;
               }
 
@@ -343,7 +353,7 @@ extern "C" {
                 f_array_length_t i = 0;
 
                 if (content_slash_total % 2) {
-                  content_slash_delimits++;
+                  ++content_slash_delimits;
                 }
 
                 if (delimits.used + content_slash_delimits > delimits.size) {
@@ -356,6 +366,7 @@ extern "C" {
 
                   if (F_status_is_error(status)) {
                     macro_f_array_lengths_t_delete_simple(delimits);
+
                     return status;
                   }
                 }
@@ -367,9 +378,9 @@ extern "C" {
 
                   if (buffer->string[content_range.start] == f_iki_syntax_slash) {
                     delimits.array[delimits.used] = content_range.start;
-                    delimits.used++;
+                    ++delimits.used;
 
-                    i++;
+                    ++i;
                   }
 
                   status = f_utf_buffer_increment(*buffer, (&content_range), 1);
@@ -389,16 +400,17 @@ extern "C" {
 
                     if (F_status_is_error(status)) {
                       macro_f_array_lengths_t_delete_simple(delimits);
+
                       return status;
                     }
 
                     delimits.array[delimits.used] = vocabulary_slash_first;
-                    delimits.used++;
+                    ++delimits.used;
 
                     vocabulary_delimited = F_false;
                     quote = 0;
 
-                    range->start++;
+                    ++range->start;
 
                     // skip past all initial non-word, non-dash, and non-plus.
                     macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, F_true);
@@ -418,29 +430,30 @@ extern "C" {
 
                     if (F_status_is_error(status)) {
                       macro_f_array_lengths_t_delete_simple(delimits);
+
                       return status;
                     }
 
                     variable->array[variable->used].start = found_vocabulary.start;
                     variable->array[variable->used].stop = range->start;
-                    variable->used++;
+                    ++variable->used;
 
                     vocabulary->array[vocabulary->used].start = found_vocabulary.start;
                     vocabulary->array[vocabulary->used].stop = found_vocabulary.stop;
-                    vocabulary->used++;
+                    ++vocabulary->used;
 
                     content->array[content->used].start = found_content;
                     content->array[content->used].stop = range->start - 1;
-                    content->used++;
+                    ++content->used;
 
-                    for (f_array_length_t i = 0; i < delimits.used; i++) {
+                    for (f_array_length_t i = 0; i < delimits.used; ++i) {
                       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
                     } // for
 
                     macro_f_array_lengths_t_delete_simple(delimits);
                     if (F_status_is_error(status)) return status;
 
-                    range->start++;
+                    ++range->start;
 
                     if (range->start > range->stop) {
                       return F_none_stop;
@@ -460,7 +473,7 @@ extern "C" {
                 break;
               }
 
-              content_slash_total++;
+              ++content_slash_total;
 
               status = f_utf_buffer_increment(*buffer, range, 1);
 
@@ -492,7 +505,7 @@ extern "C" {
       }
     } while (range->start <= range->stop && range->start < buffer->used);
 
-    for (f_array_length_t i = 0; i < delimits.used; i++) {
+    for (f_array_length_t i = 0; i < delimits.used; ++i) {
       buffer->string[delimits.array[i]] = f_iki_syntax_placeholder;
     } // for
 

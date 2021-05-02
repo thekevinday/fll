@@ -39,6 +39,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < source.used; ++i) {
+
       destination->array[i].type = source.array[i].type;
       destination->array[i].value = source.array[i].value;
     } // for
@@ -63,6 +64,7 @@ extern "C" {
     }
 
     for (f_array_length_t i = 0; i < source.used; ++i) {
+
       destination->array[i].rlim_cur = source.array[i].rlim_cur;
       destination->array[i].rlim_max = source.array[i].rlim_max;
     } // for

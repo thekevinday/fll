@@ -15,19 +15,20 @@ extern "C" {
 
     if (!length) {
       directory->used = 0;
+
       return F_none;
     }
 
     if (length > 1) {
       while (length > 1 && argument[length - 1] == f_path_separator_s[0]) {
-        length--;
+        --length;
       } // while
 
       if (argument[0] == f_path_separator_s[0]) {
         f_array_length_t begin = 1;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
-          begin++;
+          ++begin;
         } // while
 
         length -= begin;
@@ -60,7 +61,7 @@ extern "C" {
         f_array_length_t begin = 3;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
-          begin++;
+          ++begin;
         } // while
 
         length -= begin;
@@ -97,7 +98,7 @@ extern "C" {
         f_array_length_t begin = 2;
 
         while (begin < length && argument[begin] == f_path_separator_s[0]) {
-          begin++;
+          ++begin;
         } // while
 
         length -= begin;
@@ -129,7 +130,7 @@ extern "C" {
         }
       }
       else {
-        length++;
+        ++length;
 
         macro_f_string_dynamic_t_clear((*directory))
         macro_f_string_dynamic_t_resize(status, (*directory), length)

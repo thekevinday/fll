@@ -52,6 +52,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_color_set_
@@ -86,6 +87,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_color_set_to_
@@ -120,6 +122,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -149,6 +152,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_color_print_
@@ -176,6 +180,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_color_print2_
@@ -194,6 +199,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_print_dynamic().
@@ -214,6 +220,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_print_to_dynamic().
@@ -238,6 +245,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_print_dynamic().
@@ -267,6 +275,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_print_dynamic().
@@ -291,6 +300,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */

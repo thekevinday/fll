@@ -46,7 +46,9 @@ extern "C" {
       if (value->used > value->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!name.used) return F_data_not;
+    if (!name.used) {
+      return F_data_not;
+    }
 
     if (!name.string[name.used - 1]) {
       return private_f_environment_get(name.string, value);
@@ -74,7 +76,9 @@ extern "C" {
       if (value.used > value.size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!name.used) return F_data_not;
+    if (!name.used) {
+      return F_data_not;
+    }
 
     if (!name.string[name.used - 1]) {
       if (value.used > 0 && !value.string[value.used - 1]) {

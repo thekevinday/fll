@@ -33,7 +33,7 @@ extern "C" {
     f_array_length_t first = 0;
     f_array_length_t size = 0;
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
 
       if (source[i]) continue;
 
@@ -50,7 +50,7 @@ extern "C" {
       }
 
       while (i + 1 < length && !source[i + 1]) {
-        i++;
+        ++i;
       } // while
 
       first = i + 1;
@@ -131,6 +131,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < dynamics->size; ++i) {
+
       status = private_f_string_dynamic_adjust(0, &dynamics->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -182,6 +183,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < dynamics->size; ++i) {
+
       status = private_f_string_dynamic_resize(0, &dynamics->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -367,7 +369,7 @@ extern "C" {
 
     f_array_length_t size = 0;
 
-    for (f_array_length_t i = 0; i <= length; i++) {
+    for (f_array_length_t i = 0; i <= length; ++i) {
 
       if (i == length) {
         if (i > first) {
@@ -407,7 +409,7 @@ extern "C" {
         }
 
         while (i + 1 < length && !source[i + 1]) {
-          i++;
+          ++i;
         } // while
 
         first = i + 1;
@@ -471,6 +473,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < quantityss->size; ++i) {
+
       status = private_f_string_quantitys_adjust(0, &quantityss->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -499,6 +502,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < quantityss->size; ++i) {
+
       status = private_f_string_quantitys_resize(0, &quantityss->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -569,6 +573,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < rangess->size; ++i) {
+
       status = private_f_string_ranges_adjust(0, &rangess->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -597,6 +602,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < rangess->size; ++i) {
+
       status = private_f_string_ranges_resize(0, &rangess->array[i]);
       if (F_status_is_error(status)) return status;
     } // for

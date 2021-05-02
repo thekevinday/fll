@@ -52,6 +52,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_
@@ -83,6 +84,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_compare_except_
@@ -115,6 +117,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -144,6 +147,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -168,6 +172,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_compare_
@@ -195,6 +200,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_compare_except_
@@ -227,6 +233,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -259,6 +266,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -295,6 +303,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -324,6 +333,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -349,6 +359,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -378,6 +389,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -406,6 +418,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_
@@ -428,6 +441,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_dynamic_
@@ -459,6 +473,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_
@@ -488,6 +503,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_dynamic_
@@ -521,6 +537,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_string_
@@ -553,6 +570,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -587,6 +605,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -625,6 +644,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -655,6 +675,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_string_dynamic_partial_compare_string_
@@ -678,6 +699,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -709,6 +731,7 @@ extern "C" {
  * @return
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
@@ -737,6 +760,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if the combined string is too large.
@@ -765,6 +789,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -789,6 +814,7 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -818,6 +844,7 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_not (with error bit) on out of memory.
@@ -847,6 +874,7 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_not (with error bit) on out of memory.
@@ -876,6 +904,7 @@ extern "C" {
  *   F_none_stop on success, but stopped at end of range.
  *   F_data_not on success, but there was no string data to seek.
  *   F_data_not_stop on success, but the range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -906,6 +935,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -936,6 +966,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not_eos if source length is 0.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -962,6 +993,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -990,6 +1022,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_not (with error bit) on out of memory.
@@ -1019,6 +1052,7 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_memory_not (with error bit) on out of memory.
@@ -1047,6 +1081,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.

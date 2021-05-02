@@ -7,6 +7,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
   f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -38,6 +39,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_compare_except_) || !defined(_di_fl_string_dynamic_compare_except_) || !defined(_di_fl_string_dynamic_partial_compare_except_)
   f_status_t private_fl_string_compare_except(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -58,6 +60,7 @@ extern "C" {
       while (e1 < except1.used && except1.array[e1] < i1) e1++;
       if (e1 < except1.used && except1.array[e1] == i1) {
         i1++;
+
         continue;
       }
 
@@ -65,10 +68,13 @@ extern "C" {
       while (e2 < except2.used && except2.array[e2] < i2) e2++;
       if (e2 < except2.used && except2.array[e2] == i2) {
         i2++;
+
         continue;
       }
 
-      if (string1[i1] != string2[i2]) return F_equal_to_not;
+      if (string1[i1] != string2[i2]) {
+        return F_equal_to_not;
+      }
 
       i1++;
       i2++;
@@ -81,7 +87,9 @@ extern "C" {
       while (e1 < except1.used && except1.array[e1] < i1) e1++;
       if (e1 < except1.used && except1.array[e1] == i1) continue;
 
-      if (string1[i1] != 0) return F_equal_to_not;
+      if (string1[i1] != 0) {
+        return F_equal_to_not;
+      }
     } // for
 
     for (; i2 < stop2; i2++) {
@@ -90,7 +98,9 @@ extern "C" {
       while (e2 < except2.used && except2.array[e2] < i2) e2++;
       if (e2 < except2.used && except2.array[e2] == i2) continue;
 
-      if (string2[i2] != 0) return F_equal_to_not;
+      if (string2[i2] != 0) {
+        return F_equal_to_not;
+      }
     } // for
 
     return F_equal_to;
@@ -99,6 +109,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_compare_except_trim_) || !defined(_di_fl_string_dynamic_compare_except_trim_) || !defined(_di_fl_string_dynamic_partial_compare_except_trim_)
   f_status_t private_fl_string_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -121,6 +132,7 @@ extern "C" {
       while (e1 < except1.used && except1.array[e1] < i1) e1++;
       if (e1 < except1.used && except1.array[e1] == i1) {
         width = 1;
+
         continue;
       }
 
@@ -151,6 +163,7 @@ extern "C" {
       while (e2 < except2.used && except2.array[e2] < i2) e2++;
       if (e2 < except2.used && except2.array[e2] == i2) {
         width = 1;
+
         continue;
       }
 
@@ -190,8 +203,10 @@ extern "C" {
 
         // skip past except characters in string1.
         while (ej < except1.used && except1.array[ej] < j) ej++;
+
         if (ej < except1.used && except1.array[ej] == j) {
           width = 1;
+
           continue;
         }
 
@@ -249,7 +264,9 @@ extern "C" {
         }
       } // for
 
-      if (size1 != size2) return F_equal_to_not;
+      if (size1 != size2) {
+        return F_equal_to_not;
+      }
     }
 
     while (i1 <= last1 && i2 <= last2) {
@@ -264,19 +281,25 @@ extern "C" {
 
       // skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) e1++;
+
       if (e1 < except1.used && except1.array[e1] == i1) {
         i1++;
+
         continue;
       }
 
       // skip past except characters in string2.
       while (e2 < except2.used && except2.array[e2] < i2) e2++;
+
       if (e2 < except2.used && except2.array[e2] == i2) {
         i2++;
+
         continue;
       }
 
-      if (string1[i1] != string2[i2]) return F_equal_to_not;
+      if (string1[i1] != string2[i2]) {
+        return F_equal_to_not;
+      }
 
       i1++;
       i2++;
@@ -313,6 +336,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
   f_status_t private_fl_string_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) {
+
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
@@ -426,7 +450,9 @@ extern "C" {
         }
       } // for
 
-      if (size1 != size2) return F_equal_to_not;
+      if (size1 != size2) {
+        return F_equal_to_not;
+      }
     }
 
     for (; i1 < last1 && i2 < last2; i1++, i2++) {
@@ -439,16 +465,20 @@ extern "C" {
       while (i2 < last2 && !string2[i2]) i2++;
       if (i2 == last2) break;
 
-      if (string1[i1] != string2[i2]) return F_equal_to_not;
+      if (string1[i1] != string2[i2]) {
+        return F_equal_to_not;
+      }
     } // for
 
     // only return F_equal_to if all remaining characters are NULL.
     while (i1 < last1) {
+
       if (string1[i1] != 0) return F_equal_to_not;
       i1++;
     } // while
 
     while (i2 < last2) {
+
       if (string2[i2] != 0) return F_equal_to_not;
       i2++;
     } // while
@@ -459,6 +489,7 @@ extern "C" {
 
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_nulless_)
   f_status_t private_fl_string_rip_find_range(const f_string_t source, f_array_length_t *start, f_array_length_t *stop) {
+
     const f_array_length_t stop_original = *stop;
 
     f_status_t status = F_none;
@@ -537,7 +568,9 @@ extern "C" {
         return status;
       }
 
-      if (status == F_true) return F_data_not;
+      if (status == F_true) {
+        return F_data_not;
+      }
     }
 
     return F_none;

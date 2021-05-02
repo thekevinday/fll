@@ -18,6 +18,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         macro_f_string_dynamic_t_delete_simple(argument);
+
         return status;
       }
     }
@@ -26,6 +27,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_string_dynamic_t_delete_simple(argument);
+
       return status;
     }
 
@@ -399,10 +401,7 @@ extern "C" {
       close(descriptors[0]);
 
       const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
@@ -569,10 +568,7 @@ extern "C" {
 
     if (as) {
       const f_status_t status = private_fll_execute_as_child(*as, parameter, (int *) result);
-
-      if (F_status_is_error(status)) {
-        return status;
-      }
+      if (F_status_is_error(status)) return status;
     }
 
     const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);

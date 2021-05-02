@@ -26,9 +26,9 @@ extern "C" {
 /**
  * An array of f_fss_comment_t.
  *
- * array: the array of fss quote.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of fss quote.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_comments_t_
   typedef f_string_ranges_t f_fss_comments_t;
@@ -52,9 +52,9 @@ extern "C" {
 /**
  * An array of f_fss_comments_t.
  *
- * array: the array of fss quotes.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of fss quotes.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_fss_commentss_t_
   typedef f_string_rangess_t f_fss_commentss_t;

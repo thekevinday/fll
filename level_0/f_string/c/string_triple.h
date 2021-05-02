@@ -19,8 +19,8 @@ extern "C" {
 /**
  * A string triple consisting of a set of three strings.
  *
- * one: A string representing the first string in the triple.
- * two: A string representing the second string in the triple.
+ * one:   A string representing the first string in the triple.
+ * two:   A string representing the second string in the triple.
  * three: A string representing the third string in the triple.
  */
 #ifndef _di_f_string_triple_t_
@@ -57,9 +57,9 @@ extern "C" {
 /**
  * An array of string triples.
  *
- * array: the array of string triples.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of string triples.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_string_triples_t_
   typedef struct {

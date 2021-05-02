@@ -58,6 +58,7 @@ extern "C" {
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_eol if there is no data to write and EOL was reached (@todo: review related code and detemine what this is doing).
+ *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *   F_memory_not (with error bit) on out of memory.
@@ -90,6 +91,7 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
+ *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.

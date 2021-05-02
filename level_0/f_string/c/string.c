@@ -11,7 +11,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_append(source, length, destination);
   }
@@ -23,20 +25,28 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
-    if (destination->used < length) return private_f_string_append(source, length, destination);
+    if (!length) {
+      return F_data_not_eos;
+    }
+
+    if (destination->used < length) {
+      return private_f_string_append(source, length, destination);
+    }
 
     f_array_length_t i = 1;
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source[length - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -44,8 +54,8 @@ extern "C" {
         return private_f_string_append(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -58,7 +68,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < length) {
       return private_f_string_append_nulless(source, length, destination);
@@ -68,13 +80,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source[length - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -82,8 +97,8 @@ extern "C" {
         return private_f_string_append_nulless(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -96,7 +111,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_append_nulless(source, length, destination);
   }
@@ -108,7 +125,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append(glue, glue_length, destination);
@@ -125,7 +144,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_append_nulless(glue, glue_length, destination);
@@ -142,7 +163,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend(glue, glue_length, destination);
@@ -159,7 +182,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (glue_length && destination->used) {
       f_status_t status = private_f_string_prepend_nulless(glue, glue_length, destination);
@@ -176,7 +201,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_prepend(source, length, destination);
   }
@@ -188,7 +215,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < length) {
       return private_f_string_prepend(source, length, destination);
@@ -200,12 +229,14 @@ extern "C" {
     while (i < length && j < destination->used) {
 
       if (!source[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -213,8 +244,8 @@ extern "C" {
         return private_f_string_prepend(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -227,7 +258,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < length) {
       return private_f_string_prepend_nulless(source, length, destination);
@@ -239,12 +272,14 @@ extern "C" {
     while (i < length && j < destination->used) {
 
       if (!source[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -252,8 +287,8 @@ extern "C" {
         return private_f_string_prepend_nulless(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -266,7 +301,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     return private_f_string_prepend_nulless(source, length, destination);
   }
@@ -278,12 +315,17 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != f_string_eol_s[0]) {
-      range->start++;
 
-      if (range->start > range->stop) return F_none_stop;
+      ++range->start;
+
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;
@@ -296,14 +338,21 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != seek_to) {
-      if (string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      range->start++;
+      if (string[range->start] == f_string_eol_s[0]) {
+        return F_none_eol;
+      }
 
-      if (range->start > range->stop) return F_none_stop;
+      ++range->start;
+
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;
@@ -316,12 +365,17 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != seek_to) {
-      range->start++;
 
-      if (range->start > range->stop) return F_none_stop;
+      ++range->start;
+
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;

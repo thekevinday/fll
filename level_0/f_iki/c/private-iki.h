@@ -31,6 +31,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid content name.
  *   F_false on success and string is not a valid content name.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_iki_content_is()
@@ -53,6 +54,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid object name.
  *   F_false on success and string is not a valid object name.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see f_iki_object_is()

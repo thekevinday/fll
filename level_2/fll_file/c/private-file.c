@@ -22,6 +22,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_directory_listing_t_delete_simple(listing);
+
       return status;
     }
 
@@ -119,6 +120,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_directory_listing_t_delete_simple(listing);
+
       return status;
     }
 

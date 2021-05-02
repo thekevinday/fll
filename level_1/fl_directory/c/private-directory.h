@@ -36,6 +36,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_clone()
@@ -67,6 +68,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -96,6 +98,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
@@ -125,6 +128,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
@@ -155,6 +159,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if directory is empty.
+ *
  *   F_directory_descriptor (with error bit) on directory file descriptor error.
  *   F_directory_open (with error bit) on directory open error.
  *   F_directory_stream (with error bit) on directory stream error.
@@ -193,6 +198,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if length is 0.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *

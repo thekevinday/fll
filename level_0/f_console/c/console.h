@@ -78,6 +78,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if "values" parameters were expected but not found.
+ *
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -111,6 +112,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if no parameters were found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
@@ -141,6 +143,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if no parameters were found.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_

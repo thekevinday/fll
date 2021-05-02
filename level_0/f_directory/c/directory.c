@@ -7,6 +7,7 @@ extern "C" {
 
 #ifndef _di_f_directory_create_
   f_status_t f_directory_create(const f_string_t path, const mode_t mode) {
+
     return private_f_directory_create(path, mode);
   }
 #endif // _di_f_directory_create_
@@ -23,6 +24,7 @@ extern "C" {
 
 #ifndef _di_f_directory_exists_
   f_status_t f_directory_exists(const f_string_t path) {
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -40,7 +42,9 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
+      return F_true;
+    }
 
     return F_false;
   }
@@ -48,6 +52,7 @@ extern "C" {
 
 #ifndef _di_f_directory_exists_at_
   f_status_t f_directory_exists_at(const int at_id, const f_string_t path, const int flag) {
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -66,7 +71,9 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
+      return F_true;
+    }
 
     return F_false;
   }
@@ -74,6 +81,7 @@ extern "C" {
 
 #ifndef _di_f_directory_is_
   f_status_t f_directory_is(const f_string_t path) {
+
     struct stat file_stat;
 
     memset(&file_stat, AT_SYMLINK_NOFOLLOW, sizeof(struct stat));
@@ -91,7 +99,9 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
+      return F_true;
+    }
 
     return F_false;
   }
@@ -99,6 +109,7 @@ extern "C" {
 
 #ifndef _di_f_directory_is_at_
   f_status_t f_directory_is_at(const int at_id, const f_string_t path, const int flag) {
+
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -117,7 +128,9 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
+      return F_true;
+    }
 
     return F_false;
   }
@@ -141,12 +154,14 @@ extern "C" {
       else return F_status_set_error(F_failure);
     }
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
+
       size = strnlen(listing[i]->d_name, f_directory_name_max);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, "..", 3) || !strncmp(listing[i]->d_name, ".", 2))  {
         f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
+
         continue;
       }
 
@@ -165,14 +180,19 @@ extern "C" {
       f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
     } // for
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
       f_memory_delete(size, sizeof(char *), (void **) & listing[i]);
     } // for
 
     f_memory_delete(1, sizeof(struct dirent *), (void **) & listing);
 
-    if (F_status_is_error(status)) return status;
-    if (!length) return F_data_not;
+    if (F_status_is_error(status)) {
+      return status;
+    }
+
+    if (!length) {
+      return F_data_not;
+    }
 
     return F_none;
   }
@@ -270,8 +290,11 @@ extern "C" {
       }
     }
     else {
+
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) return F_none;
+      if (preserve) {
+        return F_none;
+      }
 
       result = remove(path);
     }
@@ -317,8 +340,11 @@ extern "C" {
       }
     }
     else {
+
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) return F_none;
+      if (preserve) {
+        return F_none;
+      }
 
       result = remove(path);
     }
@@ -360,7 +386,6 @@ extern "C" {
     memset(&file_stat, 0, sizeof(struct stat));
 
     if (stat(path, &file_stat) < 0) {
-
       if (errno == ENOENT) {
         return private_f_directory_create(path, mode);
       }
@@ -377,7 +402,6 @@ extern "C" {
     }
 
     if (utimensat(f_directory_at_current_working, path, 0, 0) < 0) {
-
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

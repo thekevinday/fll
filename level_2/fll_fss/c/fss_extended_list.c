@@ -82,6 +82,7 @@ extern "C" {
         contents->array[contents->used].used++;
         objects->used++;
         contents->used++;
+
         return status;
       }
       else if (status == F_data_not_eos || status == F_data_not_stop) {
@@ -119,6 +120,7 @@ extern "C" {
 
       objects->used++;
       contents->used++;
+
     } while (range->start < f_array_length_t_size);
 
     return F_status_is_error(F_number_overflow);

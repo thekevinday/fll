@@ -117,10 +117,10 @@ extern "C" {
 /**
  * Commonly used file related properties.
  *
- * stream: File stream.
- * id: File descriptor, with a value of -1 represents a closed file.
- * flag: Flags used for opening the file.
- * size_read: The default number of 1-byte characters to read at a time and is often used for the read buffer size.
+ * stream:     File stream.
+ * id:         File descriptor, with a value of -1 represents a closed file.
+ * flag:       Flags used for opening the file.
+ * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
  */
 #ifndef _di_f_file_t_

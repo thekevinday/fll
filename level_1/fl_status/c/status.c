@@ -15,7 +15,8 @@ extern "C" {
     switch (unmasked_code) {
       #ifndef _di_F_status_boolean_
         case F_false:
-          *string = FL_status_string_false; break;
+          *string = FL_status_string_false;
+          break;
         case F_true:
           *string = FL_status_string_true;
           break;
@@ -1324,6 +1325,7 @@ extern "C" {
 
       default:
         *string = 0;
+
         return F_status_set_error(F_data);
     }
 

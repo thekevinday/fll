@@ -33,9 +33,9 @@ extern "C" {
 /**
  * An array of f_thread_attribute_t.
  *
- * array: the array of f_thread_attribute_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_attribute_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_attributes_t_
   typedef struct {
@@ -77,9 +77,9 @@ extern "C" {
 /**
  * An array of f_thread_barrier_t.
  *
- * array: the array of f_thread_barrier_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_barrier_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_barriers_t_
   typedef struct {
@@ -122,9 +122,9 @@ extern "C" {
 /**
  * An array of f_thread_barrier_attribute_t.
  *
- * array: the array of f_thread_barrier_attribute_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_barrier_attribute_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_barrier_attributes_t_
   typedef struct {
@@ -167,9 +167,9 @@ extern "C" {
 /**
  * An array of thread conditions.
  *
- * array: the array of f_thread_condition_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_condition_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_conditions_t_
   typedef struct {
@@ -212,9 +212,9 @@ extern "C" {
 /**
  * An array of thread condition attributes.
  *
- * array: the array of f_thread_condition_attribute_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_condition_attribute_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_condition_attributes_t_
   typedef struct {
@@ -254,9 +254,9 @@ extern "C" {
 /**
  * An array of thread IDs.
  *
- * array: the array of f_thread_id_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_id_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_ids_t_
   typedef struct {
@@ -296,9 +296,9 @@ extern "C" {
 /**
  * An array of thread keys.
  *
- * array: the array of f_thread_key_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_key_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_keys_t_
   typedef struct {
@@ -341,9 +341,9 @@ extern "C" {
 /**
  * An array of thread locks.
  *
- * array: the array of f_thread_lock_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_lock_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_locks_t_
   typedef struct {
@@ -384,9 +384,9 @@ extern "C" {
 /**
  * An array of read/write lock attributees.
  *
- * array: the array of f_thread_lock_attribute_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_lock_attribute_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_lock_attributes_t_
   typedef struct {
@@ -431,9 +431,9 @@ extern "C" {
 /**
  * An array of thread mutexes.
  *
- * array: the array of f_thread_mutex_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_mutex_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_mutexs_t_
   typedef struct {
@@ -476,9 +476,9 @@ extern "C" {
 /**
  * An array of thread mutex_attributees.
  *
- * array: the array of f_thread_mutex_attribute_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_mutex_attribute_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_mutex_attributes_t_
   typedef struct {
@@ -518,9 +518,9 @@ extern "C" {
 /**
  * An array of thread onces.
  *
- * array: the array of f_thread_once_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_once_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_onces_t_
   typedef struct {
@@ -562,9 +562,9 @@ extern "C" {
 /**
  * An array of thread semaphorees.
  *
- * array: the array of f_thread_semaphore_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_semaphore_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_semaphores_t_
   typedef struct {
@@ -616,9 +616,9 @@ extern "C" {
 /**
  * An array of f_thread_set_t.
  *
- * array: the array of f_thread_set_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_set_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_sets_t_
   typedef struct {
@@ -647,7 +647,7 @@ extern "C" {
 /**
  * A typedef representing pthread_spinlock_t.
  *
- * Note: there appears to be no pthread init macro for spinlock, so initialize manually similarly to how the other inits work.
+ * Note: There appears to be no pthread init macro for spinlock, so initialize manually similarly to how the other inits work.
  */
 #ifndef _di_f_thread_spin_t_
   typedef pthread_spinlock_t f_thread_spin_t;
@@ -660,9 +660,9 @@ extern "C" {
 /**
  * An array of thread spins.
  *
- * array: the array of f_thread_spin_t.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of f_thread_spin_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_thread_spins_t_
   typedef struct {

@@ -393,9 +393,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array lengths.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array lengths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_array_lengthss_t_
   typedef struct {
@@ -413,9 +413,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of f_cell_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of f_cell_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_f_cells_t_
   typedef struct {
@@ -473,9 +473,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array int8_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array int8_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int8ss_t_
   typedef struct {
@@ -513,9 +513,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array uint8_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array uint8_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint8ss_t_
   typedef struct {
@@ -553,9 +553,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array int16_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array int16_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int16ss_t_
   typedef struct {
@@ -593,9 +593,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array uint16_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array uint16_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint16ss_t_
   typedef struct {
@@ -633,9 +633,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array int32_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array int32_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int32ss_t_
   typedef struct {
@@ -673,9 +673,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array uint32_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array uint32_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint32ss_t_
   typedef struct {
@@ -713,9 +713,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array int64_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array int64_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int64ss_t_
   typedef struct {
@@ -753,9 +753,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of an array of array uint64_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of an array of array uint64_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint64ss_t_
   typedef struct {
@@ -800,9 +800,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of f_int128_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of f_int128_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int128s_t_
   typedef struct {
@@ -820,9 +820,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of and array of f_int128_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of and array of f_int128_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_int128ss_t_
   typedef struct {
@@ -840,9 +840,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of f_uint128_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of f_uint128_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint128s_t_
   typedef struct {
@@ -860,9 +860,9 @@ extern "C" {
  *
  * The macros are defined in type_array.h or type_array-common.h.
  *
- * array: the array of and array of f_uint128_t.
- * size:  total amount of allocated space.
- * used:  total number of allocated spaces used.
+ * array: The array of and array of f_uint128_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_uint128ss_t_
   typedef struct {

@@ -64,6 +64,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid content name.
  *   F_false on success and string is not a valid content name.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_iki_content_partial_is_
@@ -79,6 +80,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid object name.
  *   F_false on success and string is not a valid object name.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_word().
@@ -98,6 +100,7 @@ extern "C" {
  * @return
  *   F_true on success and string is a valid object name.
  *   F_false on success and string is not a valid object name.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_is_word().
@@ -138,6 +141,7 @@ extern "C" {
  *   F_data_not on success, but there were no IKI vocabulary names found.
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabulary names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabulary names found.
+ *
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.

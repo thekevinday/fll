@@ -20,11 +20,13 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
+
       return status;
     }
 
     if (status == FL_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
       delimits->used = delimits_used;
+
       return status;
     }
 
@@ -80,12 +82,13 @@ extern "C" {
 
           if (F_status_is_error(status_allocate)) {
             delimits->used = delimits_used;
+
             return status_allocate;
           }
         }
 
         found->array[found->used] = content_partial;
-        found->used++;
+        ++found->used;
 
         if (quotes) {
           quotes->array[quotes->used] = quoted;
@@ -123,6 +126,7 @@ extern "C" {
       }
       else if (F_status_is_error(status)) {
         delimits->used = delimits_used;
+
         return status;
       }
     } // while

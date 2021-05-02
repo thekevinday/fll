@@ -12,7 +12,9 @@ extern "C" {
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) return F_data_not;
+    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t i = 0;
     uint8_t width = 0;
@@ -28,8 +30,9 @@ extern "C" {
         return F_none_eos;
       }
 
-      i++;
+      ++i;
       range->start -= width;
+
     } while (i < step);
 
     return F_none;
@@ -43,7 +46,9 @@ extern "C" {
       if (step < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) return F_data_not;
+    if (!buffer.used || range->start > range->stop || range->start >= buffer.used) {
+      return F_data_not;
+    }
 
     f_array_length_t i = 0;
     uint8_t width = 0;
@@ -68,8 +73,9 @@ extern "C" {
         return F_none_eos;
       }
 
-      i++;
+      ++i;
       range->start += width;
+
     } while (i < step);
 
     return F_none;
@@ -87,6 +93,7 @@ extern "C" {
 
     if (!width) {
       *character_utf = macro_f_utf_character_t_from_char_1(character[0]);
+
       return F_none;
     }
     else if (width == 1) {
@@ -123,6 +130,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_
   f_status_t f_utf_character_is(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -139,6 +147,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_
   f_status_t f_utf_character_is_alpha(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -159,6 +168,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_digit_
   f_status_t f_utf_character_is_alpha_digit(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -179,6 +189,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_alpha_numeric_
   f_status_t f_utf_character_is_alpha_numeric(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -199,6 +210,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_ascii_
   f_status_t f_utf_character_is_ascii(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (width == 1) {
@@ -211,6 +223,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_combining_
   f_status_t f_utf_character_is_combining(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -232,6 +245,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_control_
   f_status_t f_utf_character_is_control(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -252,6 +266,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_control_picture_
   f_status_t f_utf_character_is_control_picture(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -274,6 +289,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_digit_
   f_status_t f_utf_character_is_digit(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -294,6 +310,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_emoji_
   f_status_t f_utf_character_is_emoji(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -314,6 +331,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_fragment_
   f_status_t f_utf_character_is_fragment(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (width == 1) return F_true;
@@ -324,6 +342,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_graph_
   f_status_t f_utf_character_is_graph(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -356,6 +375,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_numeric_
   f_status_t f_utf_character_is_numeric(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -376,6 +396,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_phonetic_
   f_status_t f_utf_character_is_phonetic(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -394,6 +415,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_private_
   f_status_t f_utf_character_is_private(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -412,6 +434,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_punctuation_
   f_status_t f_utf_character_is_punctuation(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -459,6 +482,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_symbol_
   f_status_t f_utf_character_is_symbol(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -491,6 +515,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_unassigned_
   f_status_t f_utf_character_is_unassigned(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width || width == 1) {
@@ -503,6 +528,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_valid_
   f_status_t f_utf_character_is_valid(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (width == 1) {
@@ -515,6 +541,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_
   f_status_t f_utf_character_is_whitespace(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -535,6 +562,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_modifier_
   f_status_t f_utf_character_is_whitespace_modifier(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -552,6 +580,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_whitespace_other_
   f_status_t f_utf_character_is_whitespace_other(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -570,6 +599,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_word_
   f_status_t f_utf_character_is_word(const f_utf_character_t character, const bool strict) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -590,6 +620,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_word_dash_
   f_status_t f_utf_character_is_word_dash(const f_utf_character_t character, const bool strict) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -610,6 +641,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_word_dash_plus_
   f_status_t f_utf_character_is_word_dash_plus(const f_utf_character_t character, const bool strict) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -630,6 +662,7 @@ extern "C" {
 
 #ifndef _di_f_utf_character_is_zero_width_
   f_status_t f_utf_character_is_zero_width(const f_utf_character_t character) {
+
     const uint8_t width = macro_f_utf_character_t_width_is(character);
 
     if (!width) {
@@ -772,10 +805,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -806,10 +836,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -840,10 +867,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -866,10 +890,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -897,10 +918,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -931,10 +949,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -962,10 +977,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -996,10 +1008,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1030,10 +1039,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1080,10 +1086,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1127,10 +1130,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1147,6 +1147,7 @@ extern "C" {
     const uint8_t width = macro_f_utf_byte_width_is(*character);
 
     if (!width) {
+
       // There are no ASCII phonetic characters.
       return F_false;
     }
@@ -1158,10 +1159,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1178,6 +1176,7 @@ extern "C" {
     const uint8_t width = macro_f_utf_byte_width_is(*character);
 
     if (!width) {
+
       // There are no ASCII private characters.
       return F_false;
     }
@@ -1189,10 +1188,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1250,10 +1246,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1296,10 +1289,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1322,10 +1312,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1348,10 +1335,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1382,10 +1366,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1414,10 +1395,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1446,10 +1424,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1480,10 +1455,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1514,10 +1486,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1548,10 +1517,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1590,10 +1556,7 @@ extern "C" {
     f_utf_character_t character_utf = 0;
 
     {
-      f_status_t status = 0;
-
-      status = f_utf_char_to_character(character, width_max, &character_utf);
-
+      const f_status_t status = f_utf_char_to_character(character, width_max, &character_utf);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1626,13 +1589,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source[length - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -1640,8 +1606,8 @@ extern "C" {
         return private_f_utf_string_append(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -1654,7 +1620,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < length) {
       return private_f_utf_string_append_nulless(source, length, destination);
@@ -1664,13 +1632,16 @@ extern "C" {
     f_array_length_t j = 1;
 
     while (i <= length && j <= destination->used) {
+
       if (!source[length - i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[destination->used - j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -1678,8 +1649,8 @@ extern "C" {
         return private_f_utf_string_append_nulless(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -1796,12 +1767,14 @@ extern "C" {
     while (i < length && j < destination->used) {
 
       if (!source[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -1809,8 +1782,8 @@ extern "C" {
         return private_f_utf_string_prepend(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -1823,7 +1796,9 @@ extern "C" {
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length) return F_data_not_eos;
+    if (!length) {
+      return F_data_not_eos;
+    }
 
     if (destination->used < length) {
       return private_f_utf_string_prepend_nulless(source, length, destination);
@@ -1835,12 +1810,14 @@ extern "C" {
     while (i < length && j < destination->used) {
 
       if (!source[i]) {
-        i++;
+        ++i;
+
         continue;
       }
 
       if (!destination->string[j]) {
-        j++;
+        ++j;
+
         continue;
       }
 
@@ -1848,8 +1825,8 @@ extern "C" {
         return private_f_utf_string_prepend_nulless(source, length, destination);
       }
 
-      i++;
-      j++;
+      ++i;
+      ++j;
     } // while
 
     return F_none;
@@ -1874,7 +1851,9 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != f_utf_character_t_eol) {
 
@@ -1882,9 +1861,11 @@ extern "C" {
         return F_status_set_error(F_utf);
       }
 
-      range->start++;
+      ++range->start;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;
@@ -1897,7 +1878,9 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != seek_to) {
 
@@ -1905,11 +1888,15 @@ extern "C" {
         return F_status_set_error(F_utf);
       }
 
-      if (string[range->start] == f_utf_character_t_eol) return F_none_eol;
+      if (string[range->start] == f_utf_character_t_eol) {
+        return F_none_eol;
+      }
 
-      range->start++;
+      ++range->start;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;
@@ -1922,7 +1909,9 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > range->stop) {
+      return F_data_not_stop;
+    }
 
     while (string[range->start] != seek_to) {
 
@@ -1930,9 +1919,11 @@ extern "C" {
         return F_status_set_error(F_utf);
       }
 
-      range->start++;
+      ++range->start;
 
-      if (range->start > range->stop) return F_none_stop;
+      if (range->start > range->stop) {
+        return F_none_stop;
+      }
     } // while
 
     return F_none;

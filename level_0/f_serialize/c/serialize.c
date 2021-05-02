@@ -47,6 +47,7 @@ extern "C" {
     uint8_t width = 0;
 
     while (i < serialize.used) {
+
       width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
@@ -55,7 +56,7 @@ extern "C" {
 
         if (start == i) {
           strings->array[strings->used].used = 0;
-          strings->used++;
+          ++strings->used;
         }
         else {
           f_array_length_t total;
@@ -64,6 +65,7 @@ extern "C" {
             total = (i - start) + 1;
           }
           else {
+
             // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
             total = ((i - 1) - start) + 1;
           }
@@ -114,6 +116,7 @@ extern "C" {
     uint8_t width = 0;
 
     for (; i < serialize.used; i += width) {
+
       width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
@@ -121,6 +124,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
+
           // provide an invalid start to stop range to communicate that there is no data.
           locations->array[locations->used].start = 1;
           locations->array[locations->used].stop = 0;
@@ -130,12 +134,13 @@ extern "C" {
           locations->array[locations->used].stop = i;
         }
         else {
+
           // subtract one from stop point to disclused the f_serialize_simple_splitter_s[0] character.
           locations->array[locations->used].start = start;
           locations->array[locations->used].stop = i - 1;
         }
 
-        locations->used++;
+        ++locations->used;
 
         if (i + width > serialize.used) {
           return F_status_set_error(F_complete_not_utf_eos);
@@ -177,6 +182,7 @@ extern "C" {
 
     if (status == F_data_not_eos) {
       dynamic->used = 0;
+
       return status;
     }
 
