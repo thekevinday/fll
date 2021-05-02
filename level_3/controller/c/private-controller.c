@@ -117,7 +117,7 @@ extern "C" {
       }
     }
     else {
-      status = f_file_stream_read(file, 1, &cache->buffer_file);
+      status = f_file_stream_read(file, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
         if (global.main->error.verbosity != f_console_verbosity_quiet) {
@@ -219,7 +219,7 @@ extern "C" {
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
 
-    status = f_file_stream_read(pid_file, 1, &pid_buffer);
+    status = f_file_stream_read(pid_file, &pid_buffer);
 
     if (F_status_is_error_not(status)) {
       status = f_file_stream_close(F_true, &pid_file);
@@ -272,7 +272,7 @@ extern "C" {
 
     f_string_dynamic_t pid_buffer = f_string_dynamic_t_initialize;
 
-    status = f_file_stream_read(pid_file, 1, &pid_buffer);
+    status = f_file_stream_read(pid_file, &pid_buffer);
 
     if (F_status_is_error_not(status)) {
       status = f_file_stream_close(F_true, &pid_file);

@@ -1415,8 +1415,8 @@ extern "C" {
  * To determine how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * This is different from simply using the file.size_read.
- * The file.size_read represents the amount to process for a given buffer size.
- * The total represents the maximum number of bytes to process.
+ * The file.size_read represents the amount to process at a given time.
+ * The total represents the maximum number of file.size_read to process.
  * For example, if file.size_read is 16 and total is 128, then this function would need to be called 8 times until total is reached.
  *
  * @param file
@@ -2012,9 +2012,7 @@ extern "C" {
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param amount
- *   The total amount of file.size_read to process.
- *   This amount is multiplied against file.size_read and must be greater than 0.
+ *   The file.size_read represents the amount to process at a given time.
  * @param buffer
  *   The buffer the file is being read into.
  *   The contents of the file is appended into this buffer.
@@ -2034,7 +2032,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_
-  extern f_status_t f_file_stream_read(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_
 
 /**
@@ -2045,9 +2043,7 @@ extern "C" {
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param amount
- *   The total amount of file.size_read to process.
- *   This amount is multiplied against file.size_read and must be greater than 0.
+ *   The file.size_read represents the amount to process at a given time.
  * @param buffer
  *   The buffer the file is being read into.
  *   The contents of the file is appended into this buffer.
@@ -2068,7 +2064,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_block_
-  extern f_status_t f_file_stream_read_block(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_block_
 
 /**
@@ -2077,16 +2073,14 @@ extern "C" {
  * To check how much was read into the buffer, record buffer->used before execution and compare to buffer->used after execution.
  *
  * This is different from simply using the file.size_read.
- * The file.size_read represents the amount to process for a given buffer size.
- * The total represents the maximum number of "size" to process.
+ * The file.size_read represents the amount to process at a given time.
+ * The total represents the maximum number of file.size_read to process.
  * For example, if file.size_read is 16 and total is 128, then this function would need to be called 8 times until total is reached.
  *
  * @param file
  *   The file to read.
  *   The file must already be open.
- * @param amount
- *   The total amount of file.size_read to process.
- *   This amount is multiplied against file.size_read and must be greater than 0.
+ *   The file.size_read represents the amount to process at a given time.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
  * @param buffer
@@ -2108,7 +2102,7 @@ extern "C" {
  * @see fread()
  */
 #ifndef _di_f_file_stream_read_until_
-  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t amount, const f_array_length_t total, f_string_dynamic_t *buffer);
+  extern f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer);
 #endif // _di_f_file_stream_read_until_
 
 /**
@@ -2131,8 +2125,8 @@ extern "C" {
  *
  * @return
  *   F_none is returned on success.
- *   F_access_denied (with error bit) on access denied.
  *
+ *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_busy (with error bit) if filesystem is too busy to perform write.
  *   F_file_descriptor (with error bit) if unable to load the file descriptor.
@@ -2164,11 +2158,9 @@ extern "C" {
  * @param file
  *   The file to write to.
  *   The file must already be open.
+ *   The file.size_write represents the amount to process at a given time.
  * @param buffer
  *   The buffer to write to the file.
- * @param amount
- *   The total amount of file.size_write to process.
- *   This amount is multiplied against file.size_write and must be greater than 0.
  * @param written
  *   The total bytes written.
  *   Set pointer to 0 to not use.
@@ -2189,7 +2181,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_
-  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written);
+  extern f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
 #endif // _di_f_file_stream_write_
 
 /**
@@ -2200,11 +2192,9 @@ extern "C" {
  * @param file
  *   The file to write to.
  *   The file must already be open.
+ *   The file.size_write represents the amount to process at a given time.
  * @param buffer
  *   The buffer to write to the file.
- * @param amount
- *   The total amount of file.size_write to process.
- *   This amount is multiplied against file.size_write and must be greater than 0.
  * @param written
  *   The total bytes written.
  *   Set pointer to 0 to not use.
@@ -2225,7 +2215,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_block_
-  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written);
 #endif // _di_f_file_stream_write_block_
 
 /**
@@ -2234,11 +2224,9 @@ extern "C" {
  * @param file
  *   The file to write to.
  *   The file must already be open.
+ *   The file.size_write represents the amount to process at a given time.
  * @param buffer
  *   The buffer to write to the file.
- * @param amount
- *   The total amount of file.size_write to process.
- *   This amount is multiplied against file.size_write and must be greater than 0.
  * @param total
  *   The total bytes to write, unless end of buffer is reached first.
  * @param written
@@ -2262,7 +2250,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_until_
-  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written);
 #endif // _di_f_file_stream_write_until_
 
 /**
@@ -2271,11 +2259,9 @@ extern "C" {
  * @param file
  *   The file to write to.
  *   The file must already be open.
+ *   The file.size_write represents the amount to process at a given time.
  * @param buffer
  *   The buffer to write to the file.
- * @param amount
- *   The total amount of file.size_write to process.
- *   This amount is multiplied against file.size_write and must be greater than 0.
  * @param range
  *   An inclusive start an stop range within the buffer to read.
  * @param written
@@ -2298,7 +2284,7 @@ extern "C" {
  * @see fwrite()
  */
 #ifndef _di_f_file_stream_write_range_
-  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_string_range_t range, f_array_length_t *written);
+  extern f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
 #endif // _di_f_file_stream_write_range_
 
 

@@ -1981,10 +1981,9 @@ extern "C" {
 #endif // _di_f_file_stream_open_
 
 #ifndef _di_f_file_stream_read_
-  f_status_t f_file_stream_read(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2008,7 +2007,7 @@ extern "C" {
         memset(buffer->string + buffer->used, 0, sizeof(file.size_read));
       }
 
-      size_read = fread(buffer->string + buffer->used, amount, file.size_read, file.stream);
+      size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
       if (ferror(file.stream)) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -2022,7 +2021,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      buffer->used += size_read * amount;
+      buffer->used += size_read;
 
       if (feof(file.stream)) break;
     } // for
@@ -2032,30 +2031,27 @@ extern "C" {
 #endif // _di_f_file_stream_read_
 
 #ifndef _di_f_file_stream_read_block_
-  f_status_t f_file_stream_read_block(const f_file_t file, const f_array_length_t amount, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) return F_status_set_error(F_file_closed);
 
-    const f_array_length_t buffer_size = file.size_read * amount;
-
     f_status_t status = F_none;
     ssize_t size_read = 0;
 
-    if (buffer->used + buffer_size > buffer->size) {
-      if (buffer->size + buffer_size > f_array_length_t_size) {
+    if (buffer->used + file.size_read > buffer->size) {
+      if (buffer->size + file.size_read > f_array_length_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
-      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + buffer_size);
+      macro_f_string_dynamic_t_resize(status, (*buffer), buffer->size + file.size_read);
       if (F_status_is_error(status)) return status;
     }
 
-    size_read = fread(buffer->string + buffer->used, amount, file.size_read, file.stream);
+    size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
     if (ferror(file.stream)) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -2069,7 +2065,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    buffer->used += size_read * amount;
+    buffer->used += size_read;
 
     if (feof(file.stream)) {
       return F_none_eof;
@@ -2080,10 +2076,9 @@ extern "C" {
 #endif // _di_f_file_stream_read_block_
 
 #ifndef _di_f_file_stream_read_until_
-  f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t amount, const f_array_length_t total, f_string_dynamic_t *buffer) {
+  f_status_t f_file_stream_read_until(const f_file_t file, const f_array_length_t total, f_string_dynamic_t *buffer) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_read) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
       if (buffer->used > buffer->size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2110,7 +2105,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      size_read = fread(buffer->string + buffer->used, amount, file.size_read, file.stream);
+      size_read = fread(buffer->string + buffer->used, 1, file.size_read, file.stream);
 
       if (ferror(file.stream)) {
         if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
@@ -2124,13 +2119,13 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      buffer->used += size_read * amount;
+      buffer->used += size_read;
 
       if (feof(file.stream)) {
         return F_none_eof;
       }
 
-      buffer_count += size_read * amount;
+      buffer_count += size_read;
 
       if (buffer_count == total) break;
     } // for
@@ -2182,11 +2177,10 @@ extern "C" {
 #endif // _di_f_file_stream_reopen_
 
 #ifndef _di_f_file_stream_write_
-  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written) {
+  f_status_t f_file_stream_write(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) {
@@ -2201,7 +2195,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, amount, buffer.used, written);
+      private_f_file_stream_write_until(file, buffer.string, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) {
         return F_none_eos;
@@ -2210,7 +2204,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, amount, buffer.used, &written_local);
+      private_f_file_stream_write_until(file, buffer.string, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) {
         return F_none_eos;
@@ -2226,11 +2220,10 @@ extern "C" {
 #endif // _di_f_file_stream_write_
 
 #ifndef _di_f_file_stream_write_block_
-  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, f_array_length_t *written) {
+  f_status_t f_file_stream_write_block(const f_file_t file, const f_string_static_t buffer, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!file.stream) {
@@ -2252,7 +2245,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, amount, write_max, written);
+      private_f_file_stream_write_until(file, buffer.string, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2267,7 +2260,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, amount, write_max, &written_local);
+      private_f_file_stream_write_until(file, buffer.string, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2285,11 +2278,10 @@ extern "C" {
 #endif // _di_f_file_stream_write_block_
 
 #ifndef _di_f_file_stream_write_until_
-  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
       if (!total) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -2312,7 +2304,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string, amount, write_max, written);
+      private_f_file_stream_write_until(file, buffer.string, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) {
@@ -2327,7 +2319,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string, amount, buffer.used, &written_local);
+      private_f_file_stream_write_until(file, buffer.string, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) {
@@ -2345,11 +2337,10 @@ extern "C" {
 #endif // _di_f_file_stream_write_until_
 
 #ifndef _di_f_file_stream_write_range_
-  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_array_length_t amount, const f_string_range_t range, f_array_length_t *written) {
+  f_status_t f_file_stream_write_range(const f_file_t file, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t *written) {
     #ifndef _di_level_0_parameter_checking_
       if (!file.size_write) return F_status_set_error(F_parameter);
       if (buffer.used > buffer.size) return F_status_set_error(F_parameter);
-      if (amount < 1) return F_status_set_error(F_parameter);
       if (range.stop < range.start) return F_status_set_error(F_parameter);
       if (range.start >= buffer.used) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -2374,7 +2365,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (written) {
-      private_f_file_stream_write_until(file, buffer.string + range.start, amount, write_max, written);
+      private_f_file_stream_write_until(file, buffer.string + range.start, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) {
@@ -2389,7 +2380,7 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      private_f_file_stream_write_until(file, buffer.string + range.start, amount, write_max, &written_local);
+      private_f_file_stream_write_until(file, buffer.string + range.start, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) {

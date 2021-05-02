@@ -8,7 +8,9 @@ extern "C" {
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
   f_status_t private_f_file_close(const bool flush, int *id) {
 
-    if (id == 0 || *id == -1) return F_none;
+    if (id == 0 || *id == -1) {
+      return F_none;
+    }
 
     if (flush && F_status_is_error(private_f_file_flush(*id))) {
       return F_status_set_error(F_file_synchronize);
@@ -69,7 +71,9 @@ extern "C" {
     private_f_file_close(F_true, &file_destination.id);
     private_f_file_close(F_true, &file_source.id);
 
-    if (size_read < 0) return F_status_set_error(F_file_read);
+    if (size_read < 0) {
+      return F_status_set_error(F_file_read);
+    }
 
     return F_none;
   }
@@ -115,7 +119,9 @@ extern "C" {
     private_f_file_close(F_true, &file_destination.id);
     private_f_file_close(F_true, &file_source.id);
 
-    if (size_read < 0) return F_status_set_error(F_file_read);
+    if (size_read < 0) {
+      return F_status_set_error(F_file_read);
+    }
 
     return F_none;
   }
@@ -592,26 +598,34 @@ extern "C" {
       if (uid != -1) {
         result = chown(path, uid, -1);
 
-        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+        if (result < 0 && errno == EPERM) {
+          return F_status_set_error(F_access_owner);
+        }
       }
 
       if (result == 0 && gid != -1) {
         result = chown(path, -1, gid);
 
-        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_group);
+        if (result < 0 && errno == EPERM) {
+          return F_status_set_error(F_access_group);
+        }
       }
     }
     else {
       if (uid != -1) {
         result = lchown(path, uid, -1);
 
-        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+        if (result < 0 && errno == EPERM) {
+          return F_status_set_error(F_access_owner);
+        }
       }
 
       if (gid != -1) {
         result = lchown(path, -1, gid);
 
-        if (result < 0 && errno == EPERM) return F_status_set_error(F_access_group);
+        if (result < 0 && errno == EPERM) {
+          return F_status_set_error(F_access_group);
+        }
       }
     }
 
@@ -641,13 +655,17 @@ extern "C" {
     if (uid != -1) {
       result = fchownat(at_id, path, uid, -1, flag);
 
-      if (result < 0 && errno == EPERM) return F_status_set_error(F_access_owner);
+      if (result < 0 && errno == EPERM) {
+        return F_status_set_error(F_access_owner);
+      }
     }
 
     if (gid != -1) {
       result = fchownat(at_id, path, -1, gid, flag);
 
-      if (result < 0 && errno == EPERM) return F_status_set_error(F_access_group);
+      if (result < 0 && errno == EPERM) {
+        return F_status_set_error(F_access_group);
+      }
     }
 
     if (result < 0) {
@@ -762,12 +780,12 @@ extern "C" {
 #endif // !defined(_di_f_file_stream_descriptor_) || !defined(_di_f_file_stream_open_) || !defined(_di_f_file_stream_reopen_)
 
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) {
+  f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) {
 
     *written = 0;
 
     f_status_t status = F_none;
-    f_array_length_t write_amount = amount;
+    f_array_length_t write_amount = 1;
     f_array_length_t write_size = file.size_write;
     f_array_length_t write_max = total;
 
@@ -777,7 +795,7 @@ extern "C" {
       write_amount = 1;
       write_size = write_max;
     }
-    else if (amount * file.size_write > total) {
+    else if (file.size_write > total) {
       write_amount = total / file.size_write;
 
       if (total % file.size_write) {
@@ -786,6 +804,7 @@ extern "C" {
     }
 
     while (*written < write_max) {
+
       size_write = fwrite(string + *written, write_amount, write_size, file.stream);
 
       if (size_write < 0) {
@@ -827,6 +846,7 @@ extern "C" {
     }
 
     while (*written < write_max && (size_write = write(file.id, string + *written, write_size)) > 0) {
+
       *written += size_write;
 
       if (*written + write_size > write_max) {

@@ -393,7 +393,7 @@ extern "C" {
         files.array[0].name = 0;
         files.array[0].range.start = 0;
 
-        status = f_file_stream_read(file, 1, &main->buffer);
+        status = f_file_stream_read(file, &main->buffer);
 
         if (F_status_is_error(status)) {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, "-", "read", fll_error_file_type_pipe);
@@ -430,7 +430,7 @@ extern "C" {
             break;
           }
 
-          status = f_file_stream_read(file, 1, &main->buffer);
+          status = f_file_stream_read(file, &main->buffer);
 
           f_file_stream_close(F_true, &file);
 

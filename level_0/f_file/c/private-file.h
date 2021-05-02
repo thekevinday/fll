@@ -915,9 +915,6 @@ extern "C" {
  *   The file must already be open.
  * @param string
  *   The string to write to the file.
- * @param amount
- *   The total amount of file.size_write to process.
- *   This amount is multiplied against file.size_write and must be greater than 0.
  * @param total
  *   The total bytes to write.
  * @param written
@@ -943,7 +940,7 @@ extern "C" {
  * @see f_file_stream_write_until()
  */
 #if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
-  extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t amount, const f_array_length_t total, f_array_length_t *written) f_attribute_visibility_internal;
+  extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_t string, const f_array_length_t total, f_array_length_t *written) f_attribute_visibility_internal;
 #endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
 
 /**

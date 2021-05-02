@@ -751,8 +751,6 @@ extern "C" {
  *
  * @see controller_rule_items_increase_by().
  * @see controller_rule_item_read().
- * @see f_file_stream_open().
- * @see f_file_stream_read().
  * @see f_fss_count_lines().
  * @see fl_fss_apply_delimit().
  * @see f_string_dynamic_partial_append().
