@@ -289,6 +289,8 @@ extern "C" {
       F_string_not,
       F_string_too_large,
       F_string_too_small,
+      F_success,
+      F_success_not,
       F_supported,
       F_supported_not,
       F_syntax,

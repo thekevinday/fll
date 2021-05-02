@@ -315,6 +315,8 @@ extern "C" {
     #define FL_status_string_thread_not        "F_thread_not"
     #define FL_status_string_time              "F_time"
     #define FL_status_string_time_not          "F_time_not"
+    #define FL_status_string_success           "F_success"
+    #define FL_status_string_success_not       "F_success_not"
     #define FL_status_string_supported         "F_supported"
     #define FL_status_string_supported_not     "F_supported_not"
     #define FL_status_string_user              "F_user"
@@ -480,6 +482,8 @@ extern "C" {
     #define FL_status_string_string_not_length        12
     #define FL_status_string_string_too_large_length  18
     #define FL_status_string_string_too_small_length  18
+    #define FL_status_string_success_length           9
+    #define FL_status_string_success_not_length       13
     #define FL_status_string_supported_length         11
     #define FL_status_string_supported_not_length     15
     #define FL_status_string_syntax_length            8

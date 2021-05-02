@@ -1297,6 +1297,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_success, length, FL_status_string_success_length) == F_equal_to) {
+        *code = F_success;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_success_not, length, FL_status_string_success_not_length) == F_equal_to) {
+        *code = F_success_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_supported, length, FL_status_string_supported_length) == F_equal_to) {
         *code = F_supported;
 

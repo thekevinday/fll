@@ -669,6 +669,12 @@ extern "C" {
         case F_known_not:
           *string = FL_status_string_known_not;
           break;
+        case F_success:
+          *string = FL_status_string_success;
+          break;
+        case F_success_not:
+          *string = FL_status_string_success_not;
+          break;
         case F_supported:
           *string = FL_status_string_supported;
           break;
