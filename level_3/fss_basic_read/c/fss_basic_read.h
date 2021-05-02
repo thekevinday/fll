@@ -175,13 +175,6 @@ extern "C" {
     f_file_t output;
     fll_error_print_t error;
 
-    f_string_dynamic_t buffer;
-    f_fss_objects_t objects;
-    f_fss_contents_t contents;
-
-    uint8_t delimit_mode;
-    f_array_length_t delimit_depth;
-
     f_color_context_t context;
   } fss_basic_read_main_t;
 
@@ -192,11 +185,6 @@ extern "C" {
       F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_fss_contents_t_initialize, \
-      fss_basic_read_delimit_mode_all, \
-      0, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_basic_read_main_t_
@@ -234,7 +222,7 @@ extern "C" {
  * @see fss_basic_read_main_delete()
  */
 #ifndef _di_fss_basic_read_main_
-  extern f_status_t fss_basic_read_main(const f_console_arguments_t arguments, fss_basic_read_main_t *main);
+  extern f_status_t fss_basic_read_main(f_console_arguments_t * const arguments, fss_basic_read_main_t *main);
 #endif // _di_fss_basic_read_main_
 
 /**

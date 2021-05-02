@@ -18,11 +18,11 @@ extern "C" {
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
  *
  * @param arguments
- *   The console arguments to pre-process.
+ *   The parameters passed to the process.
  * @param main
- *   The program specific main.
- * @param depths
- *   This stores the pre-processed depth parameters.
+ *   The main data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -40,7 +40,7 @@ extern "C" {
  * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_depth_process_
-  extern f_status_t fss_basic_read_depth_process(const f_console_arguments_t arguments, const fss_basic_read_main_t main, fss_basic_read_depths_t *depths) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_depth_process(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_depth_process_
 
 /**
@@ -78,7 +78,8 @@ extern "C" {
  *   The location to store the loaded number.
  *
  * @return
- *   F_none on success.
+ *   F_true on success and the parameter was found (and is valid).
+ *   F_false on success and the parameter was not found.
  *
  *   Errors (with error bit) from: fl_conversion_string_to_number_unsigned().
  *
@@ -87,7 +88,7 @@ extern "C" {
  * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_load_number_
-  extern f_status_t fss_basic_read_load_number(const f_console_arguments_t arguments, const fss_basic_read_main_t main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_load_number(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_load_number_
 
 /**
@@ -96,22 +97,18 @@ extern "C" {
  * Only what is requested to print (Object, Content, both, or neither) will be printed, if there is something to print.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
+ * @param data
+ *   The program data.
  * @param at
  *   The index in the Objects and Contents to print.
- * @param include_empty
- *   If TRUE, empty Content is printed.
- *   If FALSE, empty Content is ignored.
  * @param delimits
  *   The delimits in the objects and contents.
- * @param print_this
- *   Set bit 0x1 for printing Object.
- *   Set bit 0x2 for printing Content.
  *
  *   This is a temporary parameter to be used until other structural changes are made and completed.
  */
 #ifndef _di_fss_basic_read_print_at_
-  extern void fss_basic_read_print_at(const fss_basic_read_main_t main, const f_array_length_t at, const bool include_empty, const f_fss_delimits_t delimits, const uint8_t print_this) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_at_
 
 /**
@@ -121,7 +118,7 @@ extern "C" {
  *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_object_end_
-  extern void fss_basic_read_print_object_end(const fss_basic_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_object_end_
 
 /**
@@ -131,7 +128,7 @@ extern "C" {
  *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_one_
-  extern void fss_basic_read_print_one(const fss_basic_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_one(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_one_
 
 /**
@@ -141,7 +138,7 @@ extern "C" {
  *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_set_end_
-  extern void fss_basic_read_print_set_end(const fss_basic_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_set_end_
 
 /**
@@ -151,8 +148,34 @@ extern "C" {
  *   The program specific main.
  */
 #ifndef _di_fss_basic_read_print_zero_
-  extern void fss_basic_read_print_zero(const fss_basic_read_main_t main) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_zero(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_zero_
+
+/**
+ * Process the buffer, loading the FSS data.
+ *
+ * This will print an error message on error.
+ *
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
+ *   F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
+ *
+ *   Errors (with error bit) from: fll_fss_basic_read()
+ *
+ * @see fll_fss_basic_read()
+ *
+ * @see fss_basic_read_process_option()
+ */
+#ifndef _di_fss_basic_read_load_
+  extern f_status_t fss_basic_read_load(fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_load_
 
 /**
  * Perform the basic read processing on the buffer.
@@ -160,20 +183,91 @@ extern "C" {
  * This will print an error message on error.
  *
  * @param arguments
- *   The console arguments passed to the program.
- * @param files
- *   An array representing the ranges in which a given file exists in the buffer.
- * @param depths
- *   The processed depth parameters.
+ *   The parameters passed to the process.
  * @param main
- *   The program specific main.
- * @param delimits
- *   An array of delimits detected during processing.
+ *   The main data.
+ * @param data
+ *   The program data.
  *
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fll_fss_basic_read()
+ *   Errors (with error bit) from: fss_basic_read_load()
+ *   Errors (with error bit) from: fss_basic_read_process_option()
+ *
+ * @see fss_basic_read_load()
+ * @see fss_basic_read_process_option()
+ */
+#ifndef _di_fss_basic_read_process_
+  extern f_status_t fss_basic_read_process(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_
+
+/**
+ * Process based on at parameter.
+ *
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ * @param names
+ *   An array of booleans representing whether or not some Object name is to be used.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fss_basic_read_process_at_
+  extern f_status_t fss_basic_read_process_at(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_at_
+
+/**
+ * Process based on line parameter.
+ *
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ * @param names
+ *   An array of booleans representing whether or not some Object name is to be used.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fss_basic_read_process_line_
+  extern f_status_t fss_basic_read_process_line(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_line_
+
+/**
+ * Process the Objects in the buffer, determining if the Object name is to be used or not.
+ *
+ * How an Object name is determined to be used or not is dependent on several parameters, such as --name, --depth, --at, and --line.
+ *
+ * @param data
+ *   The program data.
+ * @param names
+ *   An array of booleans representing whether or not some Object name is to be used.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fss_basic_read_process_name_
+  extern f_status_t fss_basic_read_process_name(fss_basic_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_name_
+
+/**
+ * Process the parameters, populating the option property of the program data.
+ *
+ * @param arguments
+ *   The parameters passed to the process.
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
  *
  *   Errors (with error bit) from: fss_basic_read_load_setting()
  *
@@ -181,9 +275,27 @@ extern "C" {
  *
  * @see fss_basic_read_load_setting()
  */
-#ifndef _di_fss_basic_read_process_
-  extern f_status_t fss_basic_read_process(const f_console_arguments_t arguments, const fss_basic_read_files_t files, const fss_basic_read_depths_t depths, fss_basic_read_main_t *main, f_fss_delimits_t *delimits) f_attribute_visibility_internal;
-#endif // _di_fss_basic_read_process_
+#ifndef _di_fss_basic_read_process_option_
+  extern f_status_t fss_basic_read_process_option(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_option_
+
+/**
+ * Process based on total parameter.
+ *
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ * @param names
+ *   An array of booleans representing whether or not some Object name is to be used.
+ *   (If TRUE, then the name is to be used and if FALSE, then the name is not to be used.)
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_fss_basic_read_process_total_
+  extern f_status_t fss_basic_read_process_total(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_process_total_
 
 #ifdef __cplusplus
 } // extern "C"

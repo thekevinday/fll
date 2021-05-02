@@ -160,7 +160,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_help_
 
 #ifndef _di_fss_basic_read_main_
-  f_status_t fss_basic_read_main(const f_console_arguments_t arguments, fss_basic_read_main_t *main) {
+  f_status_t fss_basic_read_main(f_console_arguments_t * const arguments, fss_basic_read_main_t *main) {
     f_status_t status = F_none;
 
     {
@@ -170,7 +170,7 @@ extern "C" {
         f_console_parameter_id_t ids[3] = { fss_basic_read_parameter_no_color, fss_basic_read_parameter_light, fss_basic_read_parameter_dark };
         const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
 
-        status = fll_program_parameter_process(arguments, parameters, choices, F_true, &main->remaining, &main->context);
+        status = fll_program_parameter_process(*arguments, parameters, choices, F_true, &main->remaining, &main->context);
 
         if (main->context.set.error.before) {
           main->error.context = main->context.set.error;
@@ -231,6 +231,14 @@ extern "C" {
       fss_basic_read_main_delete(main);
       return status;
     }
+
+    // Provide a range designating where within the buffer a particular file exists, using a statically allocated array.
+    fss_basic_read_file_t files_array[main->remaining.used + 1];
+    fss_basic_read_data_t data = fss_basic_read_data_t_initialize;
+
+    data.files.array = files_array;
+    data.files.used = 1;
+    data.files.size = main->remaining.used + 1;
 
     if (main->remaining.used > 0 || main->process_pipe) {
       if (main->parameters[fss_basic_read_parameter_at].result == f_console_result_found) {
@@ -295,7 +303,7 @@ extern "C" {
         }
         else if (main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
           const f_array_length_t location = main->parameters[fss_basic_read_parameter_delimit].values.array[0];
-          f_array_length_t length = strnlen(arguments.argv[location], f_console_parameter_size);
+          f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
 
           if (length == 0) {
             f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
@@ -304,23 +312,23 @@ extern "C" {
 
             status = F_status_set_error(F_parameter);
           }
-          else if (fl_string_compare(arguments.argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
-            main->delimit_mode = fss_basic_read_delimit_mode_none;
+          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
+            data.delimit_mode = fss_basic_read_delimit_mode_none;
           }
-          else if (fl_string_compare(arguments.argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
-            main->delimit_mode = fss_basic_read_delimit_mode_all;
+          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
+            data.delimit_mode = fss_basic_read_delimit_mode_all;
           }
           else {
-            main->delimit_mode = fss_basic_read_delimit_mode_depth;
+            data.delimit_mode = fss_basic_read_delimit_mode_depth;
 
-            if (arguments.argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
-              main->delimit_mode = fss_basic_read_delimit_mode_depth_greater;
+            if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
+              data.delimit_mode = fss_basic_read_delimit_mode_depth_greater;
 
               // shorten the length to better convert the remainder to a number.
               length--;
             }
-            else if (arguments.argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
-              main->delimit_mode = fss_basic_read_delimit_mode_depth_lesser;
+            else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
+              data.delimit_mode = fss_basic_read_delimit_mode_depth_lesser;
 
               // shorten the length to better convert the remainder to a number.
               length--;
@@ -329,35 +337,32 @@ extern "C" {
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // ignore leading plus sign.
-            if (arguments.argv[location][0] == '+') {
+            if (arguments->argv[location][0] == '+') {
               range.start++;
             }
 
-            status = fl_conversion_string_to_number_unsigned(arguments.argv[location], range, &main->delimit_depth);
+            status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
 
             if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments.argv[location]);
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
             }
           }
         }
       }
 
       f_file_t file = f_file_t_initialize;
-      fss_basic_read_depths_t depths = fss_basic_read_depths_t_initialize;
-      f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
       if (F_status_is_error_not(status)) {
-        status = fss_basic_read_depth_process(arguments, *main, &depths);
+        status = fss_basic_read_depth_process(arguments, main, &data);
       }
 
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
-      if (F_status_is_error_not(status) && depths.array[0].depth > 0) {
+      if (F_status_is_error_not(status) && data.depths.array[0].depth > 0) {
         if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
         }
 
-        fss_basic_read_depths_resize(0, &depths);
-        macro_f_fss_delimits_t_delete_simple(delimits);
+        fss_basic_read_data_delete_simple(&data);
         fss_basic_read_main_delete(main);
 
         return F_none;
@@ -368,21 +373,14 @@ extern "C" {
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
         f_color_print(main->error.to.stream, main->context.set.error, "' parameter requires a positive number.%c", f_string_eol_s[0]);
 
-        fss_basic_read_depths_resize(0, &depths);
+        fss_basic_read_depths_resize(0, &data.depths);
 
         status = F_status_set_error(F_parameter);
       }
 
-      // Provide a range designating where within the buffer a particular file exists, using a statically allocated array. @fixme make this a structure with
-      fss_basic_read_file_t files_array[main->remaining.used + 1];
-      fss_basic_read_files_t files = fss_basic_read_files_t_initialize;
-
       if (F_status_is_error_not(status)) {
-        files.array = files_array;
-        files.size += main->remaining.used;
-
-        for (f_array_length_t i = 0; i < files.used; ++i) {
-          macro_f_string_range_t_clear(files.array[i].range);
+        for (f_array_length_t i = 0; i < data.files.used; ++i) {
+          macro_f_string_range_t_clear(data.files.array[i].range);
         } // for
       }
 
@@ -390,90 +388,110 @@ extern "C" {
         file.id = f_type_descriptor_input;
         file.stream = f_type_input;
 
-        files.array[0].name = 0;
-        files.array[0].range.start = 0;
+        data.files.array[0].name = 0;
+        data.files.array[0].range.start = 0;
 
-        status = f_file_stream_read(file, &main->buffer);
+        status = f_file_stream_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, "-", "read", fll_error_file_type_pipe);
         }
-        else if (main->buffer.used) {
-          files.array[0].range.stop = main->buffer.used - 1;
+        else if (data.buffer.used) {
+          data.files.array[0].range.stop = data.buffer.used - 1;
 
           // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
           // Guarantee that a newline exists at the end of the buffer.
-          status = f_string_append_assure(f_string_eol_s, 1, &main->buffer);
+          status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
           }
         }
         else {
-          files.array[0].range.start = 1;
+          data.files.array[0].range.start = 1;
         }
       }
 
       if (F_status_is_error_not(status) && main->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+        f_array_length_t size_file = 0;
 
-          files.array[files.used].range.start = main->buffer.used;
+        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
+
+          data.files.array[data.files.used].range.start = data.buffer.used;
           file.stream = 0;
           file.id = -1;
 
-          status = f_file_stream_open(arguments.argv[main->remaining.array[i]], 0, &file);
+          status = f_file_stream_open(arguments->argv[main->remaining.array[i]], 0, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[main->remaining.array[i]], "open", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
 
             f_file_stream_close(F_true, &file);
             break;
           }
 
-          status = f_file_stream_read(file, &main->buffer);
-
-          f_file_stream_close(F_true, &file);
+          size_file = 0;
+          status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments.argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
 
+            f_file_stream_close(F_true, &file);
             break;
           }
-          else if (main->buffer.used > files.array[files.used].range.start) {
-            files.array[files.used].name = arguments.argv[main->remaining.array[i]];
-            files.array[files.used++].range.stop = main->buffer.used - 1;
 
-            // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
-            // Guarantee that a newline exists at the end of the buffer.
-            status = f_string_append_assure(f_string_eol_s, 1, &main->buffer);
+          if (size_file) {
+            status = f_string_dynamic_resize(data.buffer.size + size_file, &data.buffer);
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+
+              f_file_stream_close(F_true, &file);
+              break;
+            }
+
+            status = f_file_stream_read(file, &data.buffer);
+
+            f_file_stream_close(F_true, &file);
+
+            if (F_status_is_error(status)) {
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
+
+              break;
+            }
+            else if (data.buffer.used > data.files.array[data.files.used].range.start) {
+              data.files.array[data.files.used].name = arguments->argv[main->remaining.array[i]];
+              data.files.array[data.files.used++].range.stop = data.buffer.used - 1;
+
+              // This standard is newline sensitive, when appending files to the buffer if the file lacks a final newline then this could break the format for files appended thereafter.
+              // Guarantee that a newline exists at the end of the buffer.
+              status = f_string_append_assure(f_string_eol_s, 1, &data.buffer);
+
+              if (F_status_is_error(status)) {
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, "-", "read", fll_error_file_type_pipe);
+              }
             }
           }
           else {
-            files.array[files.used].range.start = 1;
+            data.files.array[data.files.used].range.start = 1;
           }
         } // for
       }
 
       if (F_status_is_error_not(status)) {
-        status = fss_basic_read_process(arguments, files, depths, main, &delimits);
+        status = fss_basic_read_process(arguments, main, &data);
       }
 
-      macro_f_fss_contents_t_delete_simple(main->contents);
-      macro_f_fss_objects_t_delete_simple(main->objects);
-      macro_f_string_dynamic_t_delete_simple(main->buffer);
-
-      fss_basic_read_depths_resize(0, &depths);
-      macro_f_fss_delimits_t_delete_simple(delimits);
+      fss_basic_read_data_delete_simple(&data);
     }
     else {
       f_color_print(main->error.to.stream, main->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 
+    fss_basic_read_data_delete_simple(&data);
     fss_basic_read_main_delete(main);
+
     return status;
   }
 #endif // _di_fss_basic_read_main_
@@ -487,9 +505,6 @@ extern "C" {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
     } // for
 
-    macro_f_fss_contents_t_delete_simple(main->contents);
-    macro_f_fss_objects_t_delete_simple(main->objects);
-    macro_f_string_dynamic_t_delete_simple(main->buffer);
     macro_f_array_lengths_t_delete_simple(main->remaining);
 
     macro_f_color_context_t_delete_simple(main->context);

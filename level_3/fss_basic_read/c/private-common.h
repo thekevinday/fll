@@ -90,7 +90,7 @@ extern "C" {
 #endif // _di_fss_basic_read_file_t_
 
 /**
- * An array of depth parameters.
+ * An array of files.
  *
  * This is intended to be defined and used statically allocated and as such no dynamic allocation or dynamic deallocation methods are provided.
  *
@@ -110,6 +110,88 @@ extern "C" {
 
   #define fss_basic_read_files_t_initialize { 0, 1, 1 }
 #endif // _di_fss_basic_read_files_t_
+
+/**
+ * The data structure for FSS Basic Read.
+ *
+ * fss_basic_read_data_option_*:
+ *   - at:      The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - content: The Content is to be printed.
+ *   - delimit: The Content delimits will be applied on print.
+ *   - empty:   Empty Content will be printed (Objects that have no Content will have their empty Content printed).
+ *   - line:    A specific Content at a given line is to be selected (Think of this as select a row for some Content).
+ *   - name:    A specific Object name has been requested.
+ *   - object:  The Object is to be printed.
+ *   - select:  A specific Content at a given position is to be selected (Think of this as select a column for some Content).
+ *   - total:   The total lines found and selected is printed instead of the Content.
+ *   - trim:    Empty space before and after Objects and Content will not be printed (They will be trimmed).
+ *
+ * options:       Bitwise flags representing parameters.
+ * delimit_mode:  The delimit mode.
+ * delimit_depth: The delimit depth.
+ * select:        The Content to select (column number).
+ * line:          The Content to select (row number).
+ * files:         A statically allocated array of files for designating where in the buffer a file is represented.
+ * depths:        The array of parameters for each given depth.
+ * buffer:        The buffer containing all loaded files (and STDIN pipe).
+ * objects:       The positions within the buffer representing Objects.
+ * contents:      The positions within the buffer representing Contents.
+ * delimits:      The positions within the buffer representing character delimits.
+ */
+#ifndef _di_fss_basic_read_data_t_
+
+  #define fss_basic_read_data_option_at      0x1
+  #define fss_basic_read_data_option_content 0x2
+  #define fss_basic_read_data_option_delimit 0x4
+  #define fss_basic_read_data_option_empty   0x8
+  #define fss_basic_read_data_option_line    0x10
+  #define fss_basic_read_data_option_name    0x20
+  #define fss_basic_read_data_option_object  0x40
+  #define fss_basic_read_data_option_select  0x80
+  #define fss_basic_read_data_option_total   0x100
+  #define fss_basic_read_data_option_trim    0x200
+
+  typedef struct {
+    uint16_t option;
+    uint8_t delimit_mode;
+    f_array_length_t delimit_depth;
+    f_number_unsigned_t select;
+    f_number_unsigned_t line;
+
+    fss_basic_read_files_t files;
+    fss_basic_read_depths_t depths;
+
+    f_string_dynamic_t buffer;
+    f_fss_objects_t objects;
+    f_fss_contents_t contents;
+    f_fss_delimits_t delimits;
+  } fss_basic_read_data_t;
+
+  #define fss_basic_read_data_t_initialize \
+    { \
+      0, \
+      fss_basic_read_delimit_mode_all, \
+      0, \
+      0, \
+      0, \
+      fss_basic_read_files_t_initialize, \
+      fss_basic_read_depths_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_fss_objects_t_initialize, \
+      f_fss_contents_t_initialize, \
+      f_fss_delimits_t_initialize, \
+    }
+#endif // _di_fss_basic_read_data_t_
+
+/**
+ * Fully deallocate all memory for the given data without caring about return status.
+ *
+ * @param data
+ *   The data to deallocate.
+ */
+#ifndef _di_fss_basic_read_data_delete_simple_
+  extern void fss_basic_read_data_delete_simple(fss_basic_read_data_t *daa) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_data_delete_simple_
 
 /**
  * Fully deallocate all memory for the given depth without caring about return status.
