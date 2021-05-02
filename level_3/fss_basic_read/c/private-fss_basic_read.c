@@ -533,6 +533,11 @@ extern "C" {
       data->option |= fss_basic_read_data_option_trim;
     }
 
+    // Default to content if neither Object nor Content is explicitly requested.
+    if (!(data->option & (fss_basic_read_data_option_content | fss_basic_read_data_option_object))) {
+      data->option |= fss_basic_read_data_option_content;
+    }
+
     return F_none;
   }
 #endif // _di_fss_basic_read_process_option_
