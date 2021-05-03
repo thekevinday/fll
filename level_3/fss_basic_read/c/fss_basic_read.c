@@ -240,49 +240,54 @@ extern "C" {
     data.files.used = 1;
     data.files.size = main->remaining.used + 1;
 
-    if (main->remaining.used > 0 || main->process_pipe) {
-      if (main->parameters[fss_basic_read_parameter_at].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_at);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a positive number.%c", f_string_eol_s[0]);
+    if (main->remaining.used || main->process_pipe) {
+      {
+        const f_array_length_t parameter_code[] = {
+          fss_basic_read_parameter_at,
+          fss_basic_read_parameter_depth,
+          fss_basic_read_parameter_line,
+          fss_basic_read_parameter_select,
+          fss_basic_read_parameter_name,
+          fss_basic_read_parameter_delimit,
+        };
 
-        status = F_status_set_error(F_parameter);
+        const f_string_t parameter_name[] = {
+          fss_basic_read_long_at,
+          fss_basic_read_long_depth,
+          fss_basic_read_long_line,
+          fss_basic_read_long_select,
+          fss_basic_read_long_name,
+          fss_basic_read_long_delimit,
+        };
+
+        const f_string_t message_positive_number = "positive number";
+        const f_string_t message_string = "string";
+        const f_string_t message_value = "value";
+
+        const f_string_t parameter_message[] = {
+          message_positive_number,
+          message_positive_number,
+          message_positive_number,
+          message_positive_number,
+          message_string,
+          message_value,
+        };
+
+        for (f_array_length_t i = 0; i < 6; ++i) {
+
+          if (main->parameters[parameter_code[i]].result == f_console_result_found) {
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter_name[i]);
+            f_color_print(main->error.to.stream, main->context.set.error, "' requires a %s.%c", parameter_message[i], f_string_eol_s[0]);
+
+            status = F_status_set_error(F_parameter);
+            break;
+          }
+        } // for
       }
 
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_depth].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a positive number.%c", f_string_eol_s[0]);
-
-        status = F_status_set_error(F_parameter);
-      }
-
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_line].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_line);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a positive number.%c", f_string_eol_s[0]);
-
-        status = F_status_set_error(F_parameter);
-      }
-
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_name].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a string.%c", f_string_eol_s[0]);
-
-        status = F_status_set_error(F_parameter);
-      }
-
-      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_select].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a positive number.%c", f_string_eol_s[0]);
-
-        status = F_status_set_error(F_parameter);
-      }
-
-      if (main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-        if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
+        if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
           f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
           f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_pipe);
           f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
@@ -293,64 +298,53 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status)) {
-        if (main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_found) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+      if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
+        const f_array_length_t location = main->parameters[fss_basic_read_parameter_delimit].values.array[0];
+        f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
+
+        if (length == 0) {
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
           f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
-          f_color_print(main->error.to.stream, main->context.set.error, "' requires a value.%c", f_string_eol_s[0]);
+          f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty.%c", f_string_eol_s[0]);
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
-          const f_array_length_t location = main->parameters[fss_basic_read_parameter_delimit].values.array[0];
-          f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
+        else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
+          data.delimit_mode = fss_basic_read_delimit_mode_none;
+        }
+        else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
+          data.delimit_mode = fss_basic_read_delimit_mode_all;
+        }
+        else {
+          data.delimit_mode = fss_basic_read_delimit_mode_depth;
 
-          if (length == 0) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
-            f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty.%c", f_string_eol_s[0]);
+          if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
+            data.delimit_mode = fss_basic_read_delimit_mode_depth_greater;
 
-            status = F_status_set_error(F_parameter);
+            // shorten the length to better convert the remainder to a number.
+            --length;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
-            data.delimit_mode = fss_basic_read_delimit_mode_none;
+          else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
+            data.delimit_mode = fss_basic_read_delimit_mode_depth_lesser;
+
+            // shorten the length to better convert the remainder to a number.
+            --length;
           }
-          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
-            data.delimit_mode = fss_basic_read_delimit_mode_all;
+
+          f_string_range_t range = macro_f_string_range_t_initialize(length);
+
+          // ignore leading plus sign.
+          if (arguments->argv[location][0] == '+') {
+            ++range.start;
           }
-          else {
-            data.delimit_mode = fss_basic_read_delimit_mode_depth;
 
-            if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
-              data.delimit_mode = fss_basic_read_delimit_mode_depth_greater;
+          status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
 
-              // shorten the length to better convert the remainder to a number.
-              length--;
-            }
-            else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
-              data.delimit_mode = fss_basic_read_delimit_mode_depth_lesser;
-
-              // shorten the length to better convert the remainder to a number.
-              length--;
-            }
-
-            f_string_range_t range = macro_f_string_range_t_initialize(length);
-
-            // ignore leading plus sign.
-            if (arguments->argv[location][0] == '+') {
-              range.start++;
-            }
-
-            status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
-
-            if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
-            }
+          if (F_status_is_error(status)) {
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
           }
         }
       }
-
-      f_file_t file = f_file_t_initialize;
 
       if (F_status_is_error_not(status)) {
         status = fss_basic_read_depth_process(arguments, main, &data);
@@ -385,6 +379,8 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->process_pipe) {
+        f_file_t file = f_file_t_initialize;
+
         file.id = f_type_descriptor_input;
         file.stream = f_type_input;
 
@@ -413,6 +409,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->remaining.used > 0) {
+        f_file_t file = f_file_t_initialize;
         f_array_length_t size_file = 0;
 
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
@@ -426,7 +423,6 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments->argv[main->remaining.array[i]], "open", fll_error_file_type_file);
 
-            f_file_stream_close(F_true, &file);
             break;
           }
 
@@ -436,7 +432,6 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
 
-            f_file_stream_close(F_true, &file);
             break;
           }
 
@@ -446,13 +441,10 @@ extern "C" {
             if (F_status_is_error(status)) {
               fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
 
-              f_file_stream_close(F_true, &file);
               break;
             }
 
             status = f_file_stream_read(file, &data.buffer);
-
-            f_file_stream_close(F_true, &file);
 
             if (F_status_is_error(status)) {
               fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, arguments->argv[main->remaining.array[i]], "read", fll_error_file_type_file);
@@ -475,7 +467,11 @@ extern "C" {
           else {
             data.files.array[data.files.used].range.start = 1;
           }
+
+          f_file_stream_close(F_true, &file);
         } // for
+
+        f_file_stream_close(F_true, &file);
       }
 
       if (F_status_is_error_not(status)) {
@@ -499,7 +495,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_main_delete_
   f_status_t fss_basic_read_main_delete(fss_basic_read_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_basic_read_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_basic_read_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
