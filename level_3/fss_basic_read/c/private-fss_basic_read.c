@@ -303,7 +303,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     // This standard does not support multiple content groups.
-    if (data->option & fss_basic_read_data_option_select) {
+    if ((data->option & fss_basic_read_data_option_select) && data->select) {
       if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
         fss_basic_read_print_zero(main);
       }
