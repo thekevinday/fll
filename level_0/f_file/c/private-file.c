@@ -784,7 +784,6 @@ extern "C" {
 
     *written = 0;
 
-    f_status_t status = F_none;
     f_array_length_t write_amount = 1;
     f_array_length_t write_size = file.size_write;
     f_array_length_t write_max = total;
@@ -835,7 +834,6 @@ extern "C" {
 
     *written = 0;
 
-    f_status_t status = F_none;
     f_array_length_t write_size = file.size_write;
     f_array_length_t write_max = total;
 

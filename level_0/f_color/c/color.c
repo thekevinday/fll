@@ -169,8 +169,6 @@ extern "C" {
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
     if (set.before) {
       fprintf(stream, "%s", set.before->string);
     }
@@ -260,8 +258,6 @@ extern "C" {
       if (id == -1) return F_status_set_error(F_parameter);
       if (!string) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
-
-    f_status_t status = F_none;
 
     if (set.before) {
       dprintf(id, "%s", set.before->string);

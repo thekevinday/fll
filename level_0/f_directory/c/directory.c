@@ -380,7 +380,6 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
@@ -427,7 +426,6 @@ extern "C" {
       if (!path) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));

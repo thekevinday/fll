@@ -19,8 +19,6 @@ extern "C" {
     account->password.used = 0;
     account->shell.used = 0;
 
-    f_status_t status = F_none;
-
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
     // note: pointer seems pointless except that it is used to determine if the name was found.
@@ -102,8 +100,6 @@ extern "C" {
     account->password.used = 0;
     account->shell.used = 0;
 
-    f_status_t status = F_none;
-
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
     // note: pointer seems pointless except that it is used to determine if the name was found.
@@ -176,8 +172,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
-
-    f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 
@@ -255,8 +249,6 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
-
-    f_status_t status = F_none;
 
     const size_t length_max = sysconf(_SC_GETPW_R_SIZE_MAX);
 

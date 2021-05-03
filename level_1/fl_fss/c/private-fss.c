@@ -715,7 +715,6 @@ extern "C" {
 
     f_array_length_t item_first = 0;
     f_array_length_t item_total = 0;
-    f_array_length_t quote_start = 0;
     f_array_length_t i = 0;
 
     // use placeholders for potential quote and potential delimited quote to avoid doing things such as memmove().

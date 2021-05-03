@@ -202,7 +202,6 @@ extern "C" {
     f_array_length_t distance = 0;
 
     uint8_t utf_width = 0;
-    uint8_t i = 0;
 
     position = range.start;
 
@@ -390,7 +389,6 @@ extern "C" {
 
     f_array_length_t width_max = (range->stop - range->start) + 1;
     f_array_length_t next = 0;
-    f_array_length_t next_width_max = 0;
 
     if (width_max > buffer.used - range->start) {
       width_max = buffer.used - range->start;
@@ -410,11 +408,9 @@ extern "C" {
           status = f_utf_is_zero_width(buffer.string + range->start, width_max);
 
           if (status == F_true) {
-            next_width_max = 0;
             next = range->start + 1;
 
             for (; next < buffer.used && next <= range->stop; next += macro_f_utf_byte_width_is(buffer.string[next])) {
-              next_width_max = (range->stop - next) + 1;
 
               status = f_utf_is_graph(buffer.string + next, width_max);
 

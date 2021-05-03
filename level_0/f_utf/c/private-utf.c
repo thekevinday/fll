@@ -635,9 +635,6 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_emoji_) || !defined(_di_f_utf_is_emoji_)
   f_status_t private_f_utf_character_is_emoji(const f_utf_character_t character, const uint8_t width) {
 
-    // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
-
     if (width == 2) {
 
       // Latin-1 Supplement: U+00A9, U+00AE.
@@ -1903,7 +1900,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_symbol(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
+    //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     // @todo: handle all Unicode "symbol".
 
@@ -1915,7 +1912,7 @@ extern "C" {
   f_status_t private_f_utf_character_is_unassigned(const f_utf_character_t character, const uint8_t width) {
 
     // reduce the number of checks by grouping checks by first byte.
-    const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
+    //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
     // @todo: Basic Multilingual Plane
     // @todo: handle all unassigned UTF-8 spaces.

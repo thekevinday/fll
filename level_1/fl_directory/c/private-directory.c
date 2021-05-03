@@ -20,7 +20,6 @@ extern "C" {
 
     status = F_none;
 
-    int directory_fd = 0;
     f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {
@@ -239,7 +238,6 @@ extern "C" {
 
     status = F_none;
 
-    int directory_fd = 0;
     f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
 
     {

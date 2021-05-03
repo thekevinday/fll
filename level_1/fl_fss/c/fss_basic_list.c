@@ -499,13 +499,10 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 3, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_array_length_t input_start = range->start;
     const f_array_length_t used_start = destination->used;
 
     f_array_length_t i = 0;
     f_array_length_t slash_count = 0;
-
-    f_string_range_t range_next = f_string_range_t_initialize;
 
     uint8_t width = 0;
 
@@ -688,7 +685,6 @@ extern "C" {
     status = f_string_dynamic_increase_by(destination->used + (range->stop - range->start) + 2, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_array_length_t input_start = range->start;
     const f_array_length_t used_start = destination->used;
 
     bool is_comment = F_false;

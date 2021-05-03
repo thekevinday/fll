@@ -8,10 +8,10 @@ extern "C" {
 #if !defined(_di_fl_utf_file_read_) || !defined(_di_fl_utf_file_read_until_) || !defined(_di_fl_utf_file_read_range_)
   void private_fl_utf_file_process_read_buffer(const char *buffer_read, const ssize_t size_read, f_utf_string_dynamic_t *buffer, char buffer_char[], uint8_t *width, int8_t *width_last) {
 
-    f_utf_character_t character = 0;
     uint8_t increment_by = 0;
 
     for (f_array_length_t i = 0; i < size_read; i += increment_by) {
+
       increment_by = 0;
 
       if (!*width) {
@@ -22,27 +22,27 @@ extern "C" {
       if (*width_last < *width) {
         buffer_char[0] = buffer_read[i];
         *width_last = 1;
-        increment_by++;
+        ++increment_by;
       }
 
       if (*width > 1 && i + 1 < size_read) {
         if (*width_last < *width) {
           buffer_char[1] = buffer_read[i];
           *width_last = 2;
-          increment_by++;
+          ++increment_by;
         }
 
         if (*width > 2 && i + 2 < size_read) {
           if (*width_last < *width) {
             buffer_char[2] = buffer_read[i];
             *width_last = 3;
-            increment_by++;
+            ++increment_by;
           }
 
           if (*width > 3 && i + 3 < size_read) {
             buffer_char[3] = buffer_read[i];
             *width_last = 4;
-            increment_by++;
+            ++increment_by;
           }
         }
       }
@@ -62,7 +62,7 @@ extern "C" {
           }
         }
 
-        buffer->used++;
+        ++buffer->used;
         *width = 0;
       }
     } // for
@@ -71,9 +71,9 @@ extern "C" {
 
 #if !defined(_di_fl_utf_file_write_) || !defined(_di_fl_utf_file_write_until_) || !defined(fl_utf_file_write_range)
   f_status_t private_fl_utf_file_write_until(const f_file_t file, const f_utf_string_t string, const f_array_length_t total, f_array_length_t *written) {
+
     *written = 0;
 
-    f_status_t status = F_none;
     f_array_length_t write_size = file.size_write > 4 ? file.size_write : 4;
     f_array_length_t write_max = total;
     f_array_length_t i = 0;
@@ -95,25 +95,25 @@ extern "C" {
     do {
       memset(buffer_write, 0, write_size);
 
-      for (i = 0, used = 0; used < write_size && *written + i < write_max; i++, used += width) {
+      for (i = 0, used = 0; used < write_size && *written + i < write_max; ++i, used += width) {
 
         if (width_written < width) {
           if (width_written < 2) {
             buffer_write[used] = macro_f_utf_character_t_to_char_2(string[*written + i]);
-            width_written++;
-            used++;
+            ++width_written;
+            ++used;
           }
 
           if (width > 2 && width_written < 3) {
             buffer_write[used + 1] = macro_f_utf_character_t_to_char_3(string[*written + i]);
-            width_written++;
-            used++;
+            ++width_written;
+            ++used;
           }
 
           if (width == 4 && width_written < 4) {
             buffer_write[used + 2] = macro_f_utf_character_t_to_char_4(string[*written + i]);
-            width_written++;
-            used++;
+            ++width_written;
+            ++used;
           }
 
           width = 0;
