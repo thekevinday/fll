@@ -1,14 +1,15 @@
 #include "byte_dump.h"
 
 int main(const int argc, const f_string_t *argv) {
+
   const f_console_arguments_t arguments = { argc, argv };
-  byte_dump_main_t main = byte_dump_main_t_initialize;
+  byte_dump_main_t data = byte_dump_main_t_initialize;
 
   if (f_pipe_input_exists()) {
-    main.process_pipe = F_true;
+    data.process_pipe = F_true;
   }
 
-  const f_status_t status = byte_dump_main(arguments, &main);
+  const f_status_t status = byte_dump_main(arguments, &data);
 
   // flush output pipes before closing.
   fflush(f_type_output);
