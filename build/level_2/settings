@@ -51,7 +51,7 @@ defines_all-level_threadless -D_di_pthread_support_
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses
+flags_all -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
 flags_all-level -pthread
 flags_shared
 flags_static
