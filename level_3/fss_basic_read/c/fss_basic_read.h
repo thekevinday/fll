@@ -122,7 +122,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_help_s, f_console_standard_long_help_s, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(f_console_standard_short_light_s, f_console_standard_long_light_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_dark_s, f_console_standard_long_dark_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, F_false, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
@@ -145,23 +145,33 @@ extern "C" {
   #define fss_basic_read_total_parameters 21
 #endif // _di_fss_basic_read_defines_
 
+/**
+ *
+ *
+ */
 #ifndef _di_fss_basic_read_delimit_mode_
   #define fss_basic_read_delimit_mode_name_none    "none"
   #define fss_basic_read_delimit_mode_name_all     "all"
+  #define fss_basic_read_delimit_mode_name_object  "object"
   #define fss_basic_read_delimit_mode_name_greater "+"
   #define fss_basic_read_delimit_mode_name_lesser  "-"
 
   #define fss_basic_read_delimit_mode_name_none_length    4
   #define fss_basic_read_delimit_mode_name_all_length     3
+  #define fss_basic_read_delimit_mode_name_object_length  6
   #define fss_basic_read_delimit_mode_name_greater_length 1
   #define fss_basic_read_delimit_mode_name_lesser_length  1
 
   enum {
     fss_basic_read_delimit_mode_none = 1,
     fss_basic_read_delimit_mode_all,
-    fss_basic_read_delimit_mode_depth,
-    fss_basic_read_delimit_mode_depth_greater,
-    fss_basic_read_delimit_mode_depth_lesser,
+    fss_basic_read_delimit_mode_content,
+    fss_basic_read_delimit_mode_content_greater,
+    fss_basic_read_delimit_mode_content_greater_object,
+    fss_basic_read_delimit_mode_content_lesser,
+    fss_basic_read_delimit_mode_content_lesser_object,
+    fss_basic_read_delimit_mode_content_object,
+    fss_basic_read_delimit_mode_object,
   };
 #endif // _di_fss_basic_read_delimit_modes_
 

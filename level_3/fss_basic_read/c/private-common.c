@@ -13,11 +13,11 @@ extern "C" {
     // data->files is expected to be statically loaded and cannot be deallocated.
 
     fss_basic_read_depths_resize(0, &data->depths);
-    macro_f_fss_delimits_t_delete_simple(data->delimits);
 
+    macro_f_string_dynamic_t_delete_simple(data->buffer);
     macro_f_fss_contents_t_delete_simple(data->contents);
     macro_f_fss_objects_t_delete_simple(data->objects);
-    macro_f_string_dynamic_t_delete_simple(data->buffer);
+    macro_f_fss_delimits_t_delete_simple(data->delimits);
   }
 #endif // _di_fss_basic_read_data_delete_simple_
 

@@ -6,6 +6,31 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_basic_read_delimit_object_is_
+  f_status_t fss_basic_read_delimit_object_is(const f_array_length_t depth, fss_basic_read_data_t * const data) {
+
+    switch (data->delimit_mode) {
+      case fss_basic_read_delimit_mode_none:
+      case fss_basic_read_delimit_mode_content:
+      case fss_basic_read_delimit_mode_content_greater:
+      case fss_basic_read_delimit_mode_content_lesser:
+        return F_false;
+
+      case fss_basic_read_delimit_mode_all:
+      case fss_basic_read_delimit_mode_content_object:
+      case fss_basic_read_delimit_mode_content_greater_object:
+      case fss_basic_read_delimit_mode_content_lesser_object:
+      case fss_basic_read_delimit_mode_object:
+        return F_true;
+
+      default:
+        break;
+    }
+
+    return depth == data->delimit_depth || data->delimit_mode == fss_basic_read_delimit_mode_content_lesser;
+  }
+#endif // _di_fss_basic_read_delimit_object_is_
+
 #ifndef _di_fss_basic_read_depth_process_
   f_status_t fss_basic_read_depth_process(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, fss_basic_read_data_t *data) {
 
@@ -197,7 +222,7 @@ extern "C" {
 #endif // _di_fss_basic_read_load_number_
 
 #ifndef _di_fss_basic_read_print_at_
-  void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits) {
+  void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
 
     if (at >= data->contents.used) {
       return;
@@ -212,7 +237,7 @@ extern "C" {
       }
 
       if (data->option & fss_basic_read_data_option_object) {
-        print_object(main->output.stream, data->buffer, data->objects.array[at], delimits);
+        print_object(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
 
         if (data->option & fss_basic_read_data_option_content) {
           fss_basic_read_print_object_end(main);
@@ -220,7 +245,7 @@ extern "C" {
       }
 
       if ((data->option & fss_basic_read_data_option_content) && data->contents.array[at].used) {
-        f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits);
+        f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content);
       }
 
       if ((data->option & fss_basic_read_data_option_object) || (data->option & fss_basic_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty))) {
@@ -332,13 +357,13 @@ extern "C" {
     }
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits = (data->option & fss_basic_read_data_option_delimit) ? &data->delimits : &except_none;
+    f_array_lengths_t *delimits = fss_basic_read_delimit_object_is(0, data) ? &data->delimits : &except_none;
 
     for (f_array_length_t i = 0; i < data->contents.used; ++i) {
 
       if (!names[i]) continue;
 
-      fss_basic_read_print_at(main, data, i, *delimits);
+      fss_basic_read_print_at(main, data, i, *delimits, except_none);
     } // for
 
     return F_none;
@@ -363,7 +388,7 @@ extern "C" {
     }
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits = (data->option & fss_basic_read_data_option_delimit) ? &data->delimits : &except_none;
+    f_array_lengths_t *delimits = fss_basic_read_delimit_object_is(0, data) ? &data->delimits : &except_none;
 
     f_array_length_t at = 0;
 
@@ -384,7 +409,7 @@ extern "C" {
             }
           }
           else if (!data->line) {
-            fss_basic_read_print_at(main, data, i, *delimits);
+            fss_basic_read_print_at(main, data, i, *delimits, except_none);
           }
         }
         else if (data->option & fss_basic_read_data_option_total) {
@@ -396,7 +421,7 @@ extern "C" {
           }
         }
         else {
-          fss_basic_read_print_at(main, data, i, *delimits);
+          fss_basic_read_print_at(main, data, i, *delimits, except_none);
         }
 
         break;
@@ -413,7 +438,7 @@ extern "C" {
   f_status_t fss_basic_read_process_line(fss_basic_read_main_t * const main, fss_basic_read_data_t *data, bool names[]) {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    f_array_lengths_t *delimits = (data->option & fss_basic_read_data_option_delimit) ? &data->delimits : &except_none;
+    f_array_lengths_t *delimits = fss_basic_read_delimit_object_is(0, data) ? &data->delimits : &except_none;
 
     f_array_length_t line_current = 0;
 
@@ -435,7 +460,7 @@ extern "C" {
       }
 
       if (line_current == data->line) {
-        fss_basic_read_print_at(main, data, i, *delimits);
+        fss_basic_read_print_at(main, data, i, *delimits, except_none);
 
         break;
       }
@@ -493,10 +518,6 @@ extern "C" {
 
     if (main->parameters[fss_basic_read_parameter_content].result == f_console_result_found) {
       data->option |= fss_basic_read_data_option_content;
-    }
-
-    if (!(data->delimit_mode == fss_basic_read_delimit_mode_none || (data->delimit_depth && (data->delimit_mode == fss_basic_read_delimit_mode_depth || data->delimit_mode == fss_basic_read_delimit_mode_depth_greater)))) {
-      data->option |= fss_basic_read_data_option_delimit;
     }
 
     if (main->parameters[fss_basic_read_parameter_empty].result == f_console_result_found) {

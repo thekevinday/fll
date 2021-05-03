@@ -13,6 +13,22 @@ extern "C" {
 #endif
 
 /**
+ * Determine if the given depth is to be delimited or not for an Object.
+ *
+ * @param depth
+ *   The depth to check.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_true if to apply delimits.
+ *   F_false if to not apply delimits.
+ */
+#ifndef _di_fss_basic_read_delimit_object_is_
+  extern f_status_t fss_basic_read_delimit_object_is(const f_array_length_t depth, fss_basic_read_data_t * const data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_delimit_object_is_
+
+/**
  * Process the parameters, parsing out and handling the depth and depth related parameters.
  *
  * Will handle depth-sensitive parameter conflicts, such as --name being used with --at (which is not allowed).
@@ -102,17 +118,17 @@ extern "C" {
  *   The program data.
  * @param at
  *   The index in the Objects and Contents to print.
- * @param delimits
- *   The delimits in the objects and contents.
- *
- *   This is a temporary parameter to be used until other structural changes are made and completed.
+ * @param delimits_object
+ *   The delimits to be applied to an Object.
+ * @param delimits_content
+ *   The delimits to be applied to Content.
  */
 #ifndef _di_fss_basic_read_print_at_
-  extern void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_at_
 
 /**
- * Print the end of an object (which is essentially the start of a content).
+ * Print the end of an Object (which is essentially the start of a Content).
  *
  * @param main
  *   The program specific main.
@@ -132,7 +148,7 @@ extern "C" {
 #endif // _di_fss_basic_read_print_one_
 
 /**
- * Print the end of an object/content set.
+ * Print the end of an Object/Content set.
  *
  * @param main
  *   The program specific main.

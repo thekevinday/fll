@@ -144,14 +144,31 @@ extern "C" {
     fprintf(output.stream, ": Do not apply delimits.%c", f_string_eol_s[0]);
     fprintf(output.stream, "  - ");
     f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_all);
-    fprintf(output.stream, ": (default) apply all delimits.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - a number, 0 or greater: apply delimits for the specified depth.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - a number, 0 or greater, followed by a ");
+    fprintf(output.stream, ": (default) Apply all delimits.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  - ");
+    f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_object);
+    fprintf(output.stream, ": Apply delimits for Objects.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  - A number, 0 or greater: apply delimits for Content at the specified depth.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  - A number, 0 or greater, followed by a ");
     f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_greater);
-    fprintf(output.stream, ": (such as '1+') apply delimits for the specified depth and any greater depth (numerically).%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - a number, 0 or greater, followed by a ");
+    fprintf(output.stream, ": (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  - A number, 0 or greater, followed by a ");
     f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_lesser);
-    fprintf(output.stream, ": (such as '1-') apply delimits for the specified depth and any lesser depth (numerically).%c", f_string_eol_s[0]);
+    fprintf(output.stream, ": (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "  The ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
+    fprintf(output.stream, " parameter may be specified multiple times to customize the delimit behavior.%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "  The ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
+    fprintf(output.stream, " values ");
+    f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_none);
+    fprintf(output.stream, " and ");
+    f_color_print(output.stream, context.set.notable, "%s", fss_basic_read_delimit_mode_name_all);
+    fprintf(output.stream, ", overrule all other delimit values.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -184,6 +201,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_basic_read_main_delete(main);
+
           return F_status_set_error(status);
         }
       }
@@ -198,6 +216,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_basic_read_main_delete(main);
+
           return status;
         }
 
@@ -299,50 +318,114 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->parameters[fss_basic_read_parameter_delimit].result == f_console_result_additional) {
-        const f_array_length_t location = main->parameters[fss_basic_read_parameter_delimit].values.array[0];
-        f_array_length_t length = strnlen(arguments->argv[location], f_console_parameter_size);
+        f_array_length_t location = 0;
+        f_array_length_t length = 0;
 
-        if (length == 0) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
-          f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty.%c", f_string_eol_s[0]);
+        // Set the value to 0 to allow for detecting mode based on what is provided.
+        data.delimit_mode = 0;
 
-          status = F_status_set_error(F_parameter);
-        }
-        else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
-          data.delimit_mode = fss_basic_read_delimit_mode_none;
-        }
-        else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
+        for (f_array_length_t i = 0; i < main->parameters[fss_basic_read_parameter_delimit].values.used; ++i) {
+
+          location = main->parameters[fss_basic_read_parameter_delimit].values.array[i];
+          length = strnlen(arguments->argv[location], f_console_parameter_size);
+
+          if (!length) {
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_delimit);
+            f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty.%c", f_string_eol_s[0]);
+
+            status = F_status_set_error(F_parameter);
+            break;
+          }
+          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_none, length, fss_basic_read_delimit_mode_name_none_length) == F_equal_to) {
+            data.delimit_mode = fss_basic_read_delimit_mode_none;
+          }
+          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_all, length, fss_basic_read_delimit_mode_name_all_length) == F_equal_to) {
+            data.delimit_mode = fss_basic_read_delimit_mode_all;
+          }
+          else if (fl_string_compare(arguments->argv[location], fss_basic_read_delimit_mode_name_object, length, fss_basic_read_delimit_mode_name_object_length) == F_equal_to) {
+            switch (data.delimit_mode) {
+              case 0:
+                data.delimit_mode = fss_basic_read_delimit_mode_object;
+                break;
+
+              case fss_basic_read_delimit_mode_none:
+              case fss_basic_read_delimit_mode_all:
+              case fss_basic_read_delimit_mode_content_greater_object:
+              case fss_basic_read_delimit_mode_content_lesser_object:
+              case fss_basic_read_delimit_mode_object:
+                break;
+
+              case fss_basic_read_delimit_mode_content:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+                break;
+
+              case fss_basic_read_delimit_mode_content_greater:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object;
+                break;
+
+              case fss_basic_read_delimit_mode_content_lesser:
+                data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object;
+                break;
+
+              default:
+                break;
+            }
+          }
+          else {
+            if (!data.delimit_mode) {
+              data.delimit_mode = fss_basic_read_delimit_mode_content;
+            }
+            else if (data.delimit_mode == fss_basic_read_delimit_mode_object) {
+              data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+            }
+
+            if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
+              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none || data.delimit_mode == fss_basic_read_delimit_mode_all)) {
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater_object;
+                }
+                else {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_greater;
+                }
+              }
+
+              // shorten the length to better convert the remainder to a number.
+              --length;
+            }
+            else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
+              if (!(data.delimit_mode == fss_basic_read_delimit_mode_none || data.delimit_mode == fss_basic_read_delimit_mode_all)) {
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_object) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser_object;
+                }
+                else {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_lesser;
+                }
+              }
+
+              // shorten the length to better convert the remainder to a number.
+              --length;
+            }
+
+            f_string_range_t range = macro_f_string_range_t_initialize(length);
+
+            // ignore leading plus sign.
+            if (arguments->argv[location][0] == '+') {
+              ++range.start;
+            }
+
+            status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
+
+            if (F_status_is_error(status)) {
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
+              break;
+            }
+          }
+        } // for
+
+        // Guarantee the default value is "all".
+        if (!data.delimit_mode) {
           data.delimit_mode = fss_basic_read_delimit_mode_all;
-        }
-        else {
-          data.delimit_mode = fss_basic_read_delimit_mode_depth;
-
-          if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_greater[0]) {
-            data.delimit_mode = fss_basic_read_delimit_mode_depth_greater;
-
-            // shorten the length to better convert the remainder to a number.
-            --length;
-          }
-          else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
-            data.delimit_mode = fss_basic_read_delimit_mode_depth_lesser;
-
-            // shorten the length to better convert the remainder to a number.
-            --length;
-          }
-
-          f_string_range_t range = macro_f_string_range_t_initialize(length);
-
-          // ignore leading plus sign.
-          if (arguments->argv[location][0] == '+') {
-            ++range.start;
-          }
-
-          status = fl_conversion_string_to_number_unsigned(arguments->argv[location], range, &data.delimit_depth);
-
-          if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
-          }
         }
       }
 
@@ -353,7 +436,7 @@ extern "C" {
       // This standard does not support nesting, so any depth greater than 0 can be predicted without processing the file.
       if (F_status_is_error_not(status) && data.depths.array[0].depth > 0) {
         if (main->parameters[fss_basic_read_parameter_total].result == f_console_result_found) {
-          fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+          fss_basic_read_print_zero(main);
         }
 
         fss_basic_read_data_delete_simple(&data);
@@ -502,7 +585,6 @@ extern "C" {
     } // for
 
     macro_f_array_lengths_t_delete_simple(main->remaining);
-
     macro_f_color_context_t_delete_simple(main->context);
 
     return F_none;
