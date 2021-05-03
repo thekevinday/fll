@@ -77,13 +77,13 @@ extern "C" {
 
   #define macro_f_file_type_get(mode) (f_file_type_mask & mode)
 
-  #define macro_f_file_type_is_block(mode)     macro_f_file_type_get(mode) == f_file_type_block
-  #define macro_f_file_type_is_character(mode) macro_f_file_type_get(mode) == f_file_type_character
-  #define macro_f_file_type_is_directory(mode) macro_f_file_type_get(mode) == f_file_type_directory
-  #define macro_f_file_type_is_fifo(mode)      macro_f_file_type_get(mode) == f_file_type_fifo
-  #define macro_f_file_type_is_link(mode)      macro_f_file_type_get(mode) == f_file_type_link
-  #define macro_f_file_type_is_regular(mode)   macro_f_file_type_get(mode) == f_file_type_regular
-  #define macro_f_file_type_is_socket(mode)    macro_f_file_type_get(mode) == f_file_type_socket
+  #define macro_f_file_type_is_block(mode)     (macro_f_file_type_get(mode) == f_file_type_block)
+  #define macro_f_file_type_is_character(mode) (macro_f_file_type_get(mode) == f_file_type_character)
+  #define macro_f_file_type_is_directory(mode) (macro_f_file_type_get(mode) == f_file_type_directory)
+  #define macro_f_file_type_is_fifo(mode)      (macro_f_file_type_get(mode) == f_file_type_fifo)
+  #define macro_f_file_type_is_link(mode)      (macro_f_file_type_get(mode) == f_file_type_link)
+  #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == f_file_type_regular)
+  #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == f_file_type_socket)
 
   #define macro_f_file_open_mode_append        "a"
   #define macro_f_file_open_mode_read          "r"
