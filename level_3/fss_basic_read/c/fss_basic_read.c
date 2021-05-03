@@ -23,18 +23,18 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fll_program_print_help_option(output, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select object at this numeric index.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_content, fss_basic_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the content (default).");
+    fll_program_print_help_option(output, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select Object at this numeric index.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_content, fss_basic_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Content (default).");
     fll_program_print_help_option(output, context, fss_basic_read_short_delimit, fss_basic_read_long_delimit, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Designate how to handle applying delimits.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select object at this numeric depth.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Include empty content when processing.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print only the content at the given line.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Select object with this name.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the object.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select Object at this numeric depth.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Include empty Content when processing.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print only the Content at the given line.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Select Object with this name.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the Object.");
     fll_program_print_help_option(output, context, fss_basic_read_short_pipe, fss_basic_read_long_pipe, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print using the special pipe format.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Select sub-content at this index.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Select sub-Content at this index.");
     fll_program_print_help_option(output, context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim object names on select or print.");
+    fll_program_print_help_option(output, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
 
     fll_program_print_help_usage(output, context, fss_basic_read_name, "filename(s)");
 
@@ -42,7 +42,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "  This program will print the content associated with the given object and content main based on the FSS-0000 Basic standard.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  This program will print the Content associated with the given Object and Content main based on the FSS-0000 Basic standard.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -54,7 +54,7 @@ extern "C" {
 
     fprintf(output.stream, "    ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_at);
-    fprintf(output.stream, ": An object index at the specified depth.%c", f_string_eol_s[0]);
+    fprintf(output.stream, ": An Object index at the specified depth.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "    ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
@@ -62,7 +62,7 @@ extern "C" {
 
     fprintf(output.stream, "    ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
-    fprintf(output.stream, ": An object name at the specified depth.%c", f_string_eol_s[0]);
+    fprintf(output.stream, ": An Object name at the specified depth.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -76,8 +76,8 @@ extern "C" {
 
     fprintf(output.stream, "  The parameter ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
-    fprintf(output.stream, " selects a content index at a given depth.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "    (This parameter is not synonymous with the depth parameter and does not relate to nested content).%c", f_string_eol_s[0]);
+    fprintf(output.stream, " selects a Content index at a given depth.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "    (This parameter is not synonymous with the depth parameter and does not relate to nested Content).%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -112,11 +112,11 @@ extern "C" {
 
     fprintf(output.stream, "  For parameters like ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-    fprintf(output.stream, ", if the standard doesn't support nested content, then only a depth of 0 would be valid.%c", f_string_eol_s[0]);
+    fprintf(output.stream, ", if the standard doesn't support nested Content, then only a depth of 0 would be valid.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  For parameters like ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_select);
-    fprintf(output.stream, ", if the standard doesn't support multiple content groups, then only a select of 0 would be valid.%c", f_string_eol_s[0]);
+    fprintf(output.stream, ", if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -130,9 +130,9 @@ extern "C" {
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_object);
     fprintf(output.stream, " parameter and the ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_content);
-    fprintf(output.stream, " parameter, the entire object and content are printed, including the formatting.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  Both the object and content printed are already escaped.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  Both the object and content are separated by a space.%c", f_string_eol_s[0]);
+    fprintf(output.stream, " parameter, the entire Object and Content are printed, including the formatting.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  Both the Object and Content printed are already escaped.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  Both the Object and Content are separated by a space.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
