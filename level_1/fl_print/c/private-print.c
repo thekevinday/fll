@@ -7,8 +7,8 @@ extern "C" {
 
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
   f_status_t private_fl_print_trim_except(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) {
-    register f_array_length_t i = start;
 
+    f_array_length_t i = start;
     f_array_length_t j = 0;
     f_array_length_t e = 0;
     f_array_length_t ej = 0;
@@ -23,7 +23,7 @@ extern "C" {
       } // for
 
       if (e < except.used && except.array[e] == i) {
-        i++;
+        ++i;
 
         continue;
       }
@@ -53,7 +53,7 @@ extern "C" {
       } // for
 
       if (e < except.used && except.array[e] == i) {
-        i++;
+        ++i;
 
         continue;
       }
@@ -85,7 +85,7 @@ extern "C" {
           } // for
 
           if (ej < except.used && except.array[ej] == j) {
-            j++;
+            ++j;
 
             continue;
           }
@@ -103,7 +103,7 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; i++) {
+            for (; i < j; ++i) {
 
               if (!string[i]) continue;
 
@@ -127,11 +127,16 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
+      width_max = macro_f_utf_byte_width(string[i]);
 
-      i += macro_f_utf_byte_width(string[i]);
+      for (j = 0; j < width_max; ++j) {
+
+        if (!fputc(string[i + j], output)) {
+          return F_status_set_error(F_output);
+        }
+      } // for
+
+      i += width_max;
     } // while
 
     return F_none;
@@ -140,8 +145,8 @@ extern "C" {
 
 #if !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
   f_status_t private_fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) {
-    register f_array_length_t i = start;
 
+    f_array_length_t i = start;
     f_array_length_t j = 0;
     f_array_length_t e = 0;
     f_array_length_t ej = 0;
@@ -196,7 +201,7 @@ extern "C" {
           return F_none;
         }
 
-        for (ej = e; j < stop; j++) {
+        for (ej = e; j < stop; ++j) {
 
           for (; ej < except.used && except.array[ej] < j; ++ej) {
             // do nothing.
@@ -216,7 +221,7 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; i++) {
+            for (; i < j; ++i) {
 
               if (!string[i]) continue;
 
@@ -249,8 +254,8 @@ extern "C" {
 
 #if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
   f_status_t private_fl_print_trim(FILE *output, const f_string_t string, const f_array_length_t length) {
-    register f_array_length_t i = 0;
 
+    f_array_length_t i = 0;
     f_array_length_t j = 0;
 
     f_status_t status = F_none;
@@ -309,7 +314,7 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; i++) {
+            for (; i < j; ++i) {
 
               if (!string[i]) continue;
 
@@ -325,9 +330,14 @@ extern "C" {
         if (status == F_true) break;
       }
 
-      if (!fputc(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
+      width_max = macro_f_utf_byte_width(string[i]);
+
+      for (j = 0; j < width_max; ++j) {
+
+        if (!fputc(string[i + j], output)) {
+          return F_status_set_error(F_output);
+        }
+      } // for
     } // for
 
     return F_none;
@@ -336,13 +346,13 @@ extern "C" {
 
 #if !defined(_di_fl_print_trim_utf_) || !defined(_di_fl_print_trim_utf_dynamic_) || !defined(_di_fl_print_trim_utf_dynamic_partial_)
   f_status_t private_fl_print_trim_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length) {
-    register f_array_length_t i = 0;
 
+    f_array_length_t i = 0;
     f_array_length_t j = 0;
 
     f_status_t status = F_none;
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
 
       status = f_utf_character_is_whitespace(string[i]);
 
@@ -357,7 +367,7 @@ extern "C" {
       if (status == F_false) break;
     } // for
 
-    for (; i < length; i++) {
+    for (; i < length; ++i) {
 
       if (!string[i]) continue;
 
@@ -378,7 +388,7 @@ extern "C" {
           return F_none;
         }
 
-        for (; j < length; j++) {
+        for (; j < length; ++j) {
 
           status = f_utf_character_is_whitespace(string[j]);
 
@@ -392,7 +402,7 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; i++) {
+            for (; i < j; ++i) {
 
               if (!string[i]) continue;
 
