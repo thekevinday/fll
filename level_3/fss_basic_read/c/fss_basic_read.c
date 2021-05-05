@@ -46,7 +46,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fprintf(output.stream, "  All numeric positions (indexes) start at 0 instead of one.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  All numeric positions (indexes) start at 0 instead of 1.%c", f_string_eol_s[0]);
     fprintf(output.stream, "  For example, a file of 17 lines would range from 0 to 16.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
