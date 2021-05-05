@@ -23,7 +23,7 @@ extern "C" {
       width = macro_f_utf_byte_width(buffer.string[range->start - 1]);
 
       if (width > range->start) {
-        if (width > 1) {
+        if (width > 1 && width > range->start + 1) {
           return F_status_set_error(F_complete_not_utf_eos);
         }
 
@@ -57,7 +57,7 @@ extern "C" {
       width = macro_f_utf_byte_width(buffer.string[range->start]);
 
       if (range->start + width > range->stop) {
-        if (width > 1) {
+        if (width > 1 && range->start + width > range->stop + 1) {
           return F_status_set_error(F_complete_not_utf_stop);
         }
 
@@ -65,7 +65,7 @@ extern "C" {
         return F_none_stop;
       }
       else if (range->start + width >= buffer.used) {
-        if (width > 1) {
+        if (width > 1 && range->start + width >= buffer.used + 1) {
           return F_status_set_error(F_complete_not_utf_eos);
         }
 
