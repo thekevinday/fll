@@ -145,23 +145,42 @@ extern "C" {
   #define fss_basic_list_read_total_parameters 21
 #endif // _di_fss_basic_list_read_defines_
 
+/**
+ * FSS Delimit Parameter data.
+ *
+ * fss_basic_list_read_delimit_mode_*:
+ *   - all:                    All delimits are to be aplied.
+ *   - content:                Content are to have delimits applied.
+ *   - content_greater:        Content at this number or higher are to have delimits applied.
+ *   - content_greater_object: Objects and Content at this number or higher are to have delimits applied.
+ *   - content_lesser:         Content at this number or lower are to have delimits applied.
+ *   - content_lesser_object:  Objects and Content at this number or lower are to have delimits applied.
+ *   - content_object:         Objects and Content are to have delimits applied
+ *   - object:                 Objects arre to have delimits applied.
+ */
 #ifndef _di_fss_basic_list_read_delimit_mode_
   #define fss_basic_list_read_delimit_mode_name_none    "none"
   #define fss_basic_list_read_delimit_mode_name_all     "all"
+  #define fss_basic_list_read_delimit_mode_name_object  "object"
   #define fss_basic_list_read_delimit_mode_name_greater "+"
   #define fss_basic_list_read_delimit_mode_name_lesser  "-"
 
   #define fss_basic_list_read_delimit_mode_name_none_length    4
   #define fss_basic_list_read_delimit_mode_name_all_length     3
+  #define fss_basic_list_read_delimit_mode_name_object_length  6
   #define fss_basic_list_read_delimit_mode_name_greater_length 1
   #define fss_basic_list_read_delimit_mode_name_lesser_length  1
 
   enum {
     fss_basic_list_read_delimit_mode_none = 1,
     fss_basic_list_read_delimit_mode_all,
-    fss_basic_list_read_delimit_mode_depth,
-    fss_basic_list_read_delimit_mode_depth_greater,
-    fss_basic_list_read_delimit_mode_depth_lesser,
+    fss_basic_list_read_delimit_mode_content,
+    fss_basic_list_read_delimit_mode_content_greater,
+    fss_basic_list_read_delimit_mode_content_greater_object,
+    fss_basic_list_read_delimit_mode_content_lesser,
+    fss_basic_list_read_delimit_mode_content_lesser_object,
+    fss_basic_list_read_delimit_mode_content_object,
+    fss_basic_list_read_delimit_mode_object,
   };
 #endif // _di_fss_basic_list_read_delimit_modes_
 
@@ -175,14 +194,6 @@ extern "C" {
     f_file_t output;
     fll_error_print_t error;
 
-    f_string_dynamic_t buffer;
-    f_fss_objects_t objects;
-    f_fss_contents_t contents;
-    f_string_quantity_t quantity;
-
-    uint8_t delimit_mode;
-    f_array_length_t delimit_depth;
-
     f_color_context_t context;
   } fss_basic_list_read_main_t;
 
@@ -193,12 +204,6 @@ extern "C" {
       F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_fss_objects_t_initialize, \
-      f_fss_contents_t_initialize, \
-      f_string_quantity_t_initialize, \
-      fss_basic_list_read_delimit_mode_all, \
-      0, \
       f_color_context_t_initialize, \
     }
 #endif // _di_fss_basic_list_read_main_t_
@@ -236,7 +241,7 @@ extern "C" {
  * @see fss_basic_list_read_main_delete()
  */
 #ifndef _di_fss_basic_list_read_main_
-  extern f_status_t fss_basic_list_read_main(const f_console_arguments_t arguments, fss_basic_list_read_main_t *main);
+  extern f_status_t fss_basic_list_read_main(f_console_arguments_t * const arguments, fss_basic_list_read_main_t *main);
 #endif // _di_fss_basic_list_read_main_
 
 /**
