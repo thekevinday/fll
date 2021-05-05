@@ -26,12 +26,12 @@ extern "C" {
     fll_program_print_help_option(output, context, fss_basic_write_short_file, fss_basic_write_long_file, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send output to.");
     fll_program_print_help_option(output, context, fss_basic_write_short_content, fss_basic_write_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to output.");
     fll_program_print_help_option(output, context, fss_basic_write_short_double, fss_basic_write_long_double, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
-    fll_program_print_help_option(output, context, fss_basic_write_short_ignore, fss_basic_write_long_ignore, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a content.");
+    fll_program_print_help_option(output, context, fss_basic_write_short_ignore, fss_basic_write_long_ignore, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
     fll_program_print_help_option(output, context, fss_basic_write_short_object, fss_basic_write_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to output.");
     fll_program_print_help_option(output, context, fss_basic_write_short_partial, fss_basic_write_long_partial, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not output end of Object/Content character.");
     fll_program_print_help_option(output, context, fss_basic_write_short_prepend, fss_basic_write_long_prepend, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given whitespace characters to the start of each multi-line Content.");
     fll_program_print_help_option(output, context, fss_basic_write_short_single, fss_basic_write_long_single, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
-    fll_program_print_help_option(output, context, fss_basic_write_short_trim, fss_basic_write_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim object names.");
+    fll_program_print_help_option(output, context, fss_basic_write_short_trim, fss_basic_write_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
 
     fll_program_print_help_usage(output, context, fss_basic_write_name, f_string_empty_s);
 
@@ -51,7 +51,7 @@ extern "C" {
     f_color_print(output.stream, context.set.notable, "\\v");
     fprintf(output.stream, "' (");
     f_color_print(output.stream, context.set.notable, "U+000B");
-    fprintf(output.stream, ") is used to ignore a content range, which does nothing in this program.%c", f_string_eol_s[0]);
+    fprintf(output.stream, ") is used to ignore a Content range, which does nothing in this program.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  For the pipe, an Object is terminated by either a Backspace character '");
     f_color_print(output.stream, context.set.notable, "\\b");
