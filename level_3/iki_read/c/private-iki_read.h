@@ -23,7 +23,7 @@ extern "C" {
  * @param file_name
  *   The name of the file being processed.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param range
  *   The range value to represent the --at values.
  *
@@ -46,7 +46,7 @@ extern "C" {
  * @param file_name
  *   The name of the file being processed.
  * @param main
- *   The program specific main.
+ *   The main data.
  *
  * @return
  *   F_none on success.
@@ -66,7 +66,7 @@ extern "C" {
  * @param file_name
  *   The name of the file being processed.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param buffer_range
  *   The range within the buffer to process.
  * @param variable
@@ -101,7 +101,7 @@ extern "C" {
  * @param buffer_range
  *   The range within the buffer to process.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param variable
  *   The ranges representing a variable.
  * @param vocabulary
@@ -130,7 +130,7 @@ extern "C" {
  * @param file_name
  *   The name of the file being processed.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param variable
  *   The ranges representing a variable.
  * @param vocabulary
@@ -155,7 +155,7 @@ extern "C" {
  * @param file_name
  *   The name of the file being processed.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param vocabulary
  *   The ranges representing a vocabulary.
  * @param substitutionss
@@ -174,7 +174,7 @@ extern "C" {
  * Print any applicable substition and if there is non then print the given range at the given index.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param variable
  *   The ranges representing a variable.
  * @param content
