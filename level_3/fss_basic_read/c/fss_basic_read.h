@@ -146,8 +146,17 @@ extern "C" {
 #endif // _di_fss_basic_read_defines_
 
 /**
+ * FSS Delimit Parameter data.
  *
- *
+ * fss_basic_read_delimit_mode_*:
+ *   - all:                    All delimits are to be aplied.
+ *   - content:                Content are to have delimits applied.
+ *   - content_greater:        Content at this number or higher are to have delimits applied.
+ *   - content_greater_object: Objects and Content at this number or higher are to have delimits applied.
+ *   - content_lesser:         Content at this number or lower are to have delimits applied.
+ *   - content_lesser_object:  Objects and Content at this number or lower are to have delimits applied.
+ *   - content_object:         Objects and Content are to have delimits applied
+ *   - object:                 Objects arre to have delimits applied.
  */
 #ifndef _di_fss_basic_read_delimit_mode_
   #define fss_basic_read_delimit_mode_name_none    "none"

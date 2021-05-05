@@ -46,6 +46,11 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
+    fprintf(output.stream, "  All numeric positions (indexes) start at 0 instead of one.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  For example, a file of 17 lines would range from 0 to 16.%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
+
     fprintf(output.stream, "  When using the ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
     fprintf(output.stream, " option, an order of operations is enforced on the parameters.%c", f_string_eol_s[0]);
@@ -178,6 +183,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_read_main_
   f_status_t fss_basic_read_main(f_console_arguments_t * const arguments, fss_basic_read_main_t *main) {
+
     f_status_t status = F_none;
 
     {
@@ -311,6 +317,15 @@ extern "C" {
           f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_pipe);
           f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
           f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_total);
+          f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+
+          status = F_status_set_error(F_parameter);
+        }
+        else if (main->parameters[fss_basic_read_parameter_line].result == f_console_result_additional) {
+          f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_pipe);
+          f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_line);
           f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
 
           status = F_status_set_error(F_parameter);

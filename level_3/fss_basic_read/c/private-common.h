@@ -15,13 +15,13 @@ extern "C" {
 /**
  * A structure of parameters applied at some depth.
  *
- * depth: the depth number in which this is to be processed at.
+ * depth: The depth number in which this is to be processed at.
  *
- * index_at: position of the "--at" parameter value in the argv list, when 0 there is no parameter.
- * index_name: position of the "--name" parameter value in the argv list, when 0 there is no parameter.
+ * index_at:   Position of the "--at" parameter value in the argv list, when 0 there is no parameter.
+ * index_name: Position of the "--name" parameter value in the argv list, when 0 there is no parameter.
  *
- * value_at: the value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
- * value_name: the value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
+ * value_at:   The value of the "--at" parameter, already processed and ready to use, only when index_at > 0.
+ * value_name: The value of the "--name" parameter, already processed and ready to use, only when index_name > 0.
  */
 #ifndef _di_fss_basic_read_depth_t_
   typedef struct {
@@ -54,9 +54,9 @@ extern "C" {
 /**
  * An array of depth parameters.
  *
- * array: the array of depths.
- * size: total amount of allocated space.
- * used: total number of allocated spaces used.
+ * array: The array of depths.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
 #ifndef _di_fss_basic_read_depths_t_
   typedef struct {
@@ -74,7 +74,8 @@ extern "C" {
 /**
  * A structure for designating where within the buffer a particular file exists, using a statically allocated array.
  *
- * name: The name of the file representing the range. Set string to NULL to represent the STDIN pipe.
+ * name:  The name of the file representing the range. Set string to NULL to represent the STDIN pipe.
+ * range: A range within the buffer representing the file.
  */
 #ifndef _di_fss_basic_read_file_t_
   typedef struct {
@@ -138,7 +139,6 @@ extern "C" {
  * delimits:      The positions within the buffer representing character delimits.
  */
 #ifndef _di_fss_basic_read_data_t_
-
   #define fss_basic_read_data_option_at      0x1
   #define fss_basic_read_data_option_content 0x2
   #define fss_basic_read_data_option_empty   0x4

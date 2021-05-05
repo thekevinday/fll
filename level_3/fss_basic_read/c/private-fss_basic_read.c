@@ -228,16 +228,14 @@ extern "C" {
       return;
     }
 
-    if (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty)) {
-
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
-
-      if (data->option & fss_basic_read_data_option_trim) {
-        print_object = &fl_print_trim_except_dynamic_partial;
-      }
-
+    if ((data->option & fss_basic_read_data_option_object) || (data->option & fss_basic_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty))) {
       if (data->option & fss_basic_read_data_option_object) {
-        print_object(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+        if (data->option & fss_basic_read_data_option_trim) {
+          fl_print_trim_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+        }
+        else {
+          f_print_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+        }
 
         if (data->option & fss_basic_read_data_option_content) {
           fss_basic_read_print_object_end(main);
@@ -248,9 +246,7 @@ extern "C" {
         f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content);
       }
 
-      if ((data->option & fss_basic_read_data_option_object) || (data->option & fss_basic_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty))) {
-        fss_basic_read_print_set_end(main);
-      }
+      fss_basic_read_print_set_end(main);
     }
   }
 #endif // _di_fss_basic_read_print_at_
@@ -381,8 +377,13 @@ extern "C" {
       return F_none;
     }
 
+    // This standard only has one line per Content; therefore, any line value greater than 0 equates to no line to print.
     if (data->option & fss_basic_read_data_option_line) {
       if (data->line) {
+        if (data->option & fss_basic_read_data_option_total) {
+          fss_basic_read_print_zero(main);
+        }
+
         return F_none;
       }
     }
@@ -402,10 +403,10 @@ extern "C" {
           // This standard only supports one Content per Object so when using "--at", the only valid line is line 0.
           if (data->option & fss_basic_read_data_option_total) {
             if (data->line) {
-              fss_basic_read_print_one(main);
+              fss_basic_read_print_zero(main);
             }
             else {
-              fss_basic_read_print_zero(main);
+              fss_basic_read_print_one(main);
             }
           }
           else if (!data->line) {
@@ -413,11 +414,11 @@ extern "C" {
           }
         }
         else if (data->option & fss_basic_read_data_option_total) {
-          if (!data->contents.array[i].used) {
-            fss_basic_read_print_zero(main);
+          if (data->contents.array[i].used) {
+            fss_basic_read_print_one(main);
           }
           else {
-            fss_basic_read_print_one(main);
+            fss_basic_read_print_zero(main);
           }
         }
         else {
@@ -440,7 +441,7 @@ extern "C" {
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
     f_array_lengths_t *delimits = fss_basic_read_delimit_object_is(0, data) ? &data->delimits : &except_none;
 
-    f_array_length_t line_current = 0;
+    f_array_length_t line = 0;
 
     for (f_array_length_t i = 0; i < data->contents.used; ++i) {
 
@@ -448,24 +449,25 @@ extern "C" {
 
       if (!data->contents.array[i].used) {
         if (data->option & fss_basic_read_data_option_empty) {
-          if (line_current == data->line) {
+          if (line == data->line) {
             fss_basic_read_print_set_end(main);
+
             break;
           }
 
-          ++line_current;
+          ++line;
         }
 
         continue;
       }
 
-      if (line_current == data->line) {
+      if (line == data->line) {
         fss_basic_read_print_at(main, data, i, *delimits, except_none);
 
         break;
       }
 
-      ++line_current;
+      ++line;
     } // for
 
     return F_none;

@@ -85,7 +85,7 @@ extern "C" {
  * @param arguments
  *   The console arguments passed to the program.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
@@ -128,10 +128,10 @@ extern "C" {
 #endif // _di_fss_basic_read_print_at_
 
 /**
- * Print the end of an Object (which is essentially the start of a Content).
+ * Print the end of an Object (which is essentially the start of Content).
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_basic_read_print_object_end_
   extern void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
@@ -141,7 +141,7 @@ extern "C" {
  * Print the number one and a newline.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_basic_read_print_one_
   extern void fss_basic_read_print_one(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
@@ -151,7 +151,7 @@ extern "C" {
  * Print the end of an Object/Content set.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_basic_read_print_set_end_
   extern void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
@@ -161,7 +161,7 @@ extern "C" {
  * Print the number zero and a newline.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_basic_read_print_zero_
   extern void fss_basic_read_print_zero(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
