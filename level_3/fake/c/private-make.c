@@ -210,7 +210,7 @@ extern "C" {
       *status = fll_fss_basic_list_read(data_make->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments);
 
       if (F_status_is_error(*status)) {
-        fake_print_error_fss(main, *status, "fll_fss_basic_list_read", main.file_data_build_fakefile.string, range, F_true);
+        fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_basic_list_read", main.file_data_build_fakefile.string, range, F_true);
       }
       else {
         *status = fl_fss_apply_delimit(delimits, &data_make->buffer);

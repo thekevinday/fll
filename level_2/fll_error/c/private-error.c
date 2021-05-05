@@ -99,14 +99,22 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_complete_not_utf) {
+    if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
       if (print.verbosity != f_console_verbosity_quiet) {
         fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sInvalid (incomplete) UTF-8 character", print.context.before->string, print.prefix);
+        fprintf(print.to.stream, "%s%sInvalid (incomplete) UTF-8 character found ", print.context.before->string, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        if (status == F_complete_not_utf_eos) {
+          fprintf(print.to.stream, " at end of string.%s%c", print.context.after->string, f_string_eol_s[0]);
+        }
+        else if (status == F_complete_not_utf_stop) {
+          fprintf(print.to.stream, " at stop point of string.%s%c", print.context.after->string, f_string_eol_s[0]);
+        }
+        else {
+          fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        }
       }
 
       return F_false;

@@ -247,10 +247,32 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_status_set_error(F_complete_not_utf_stop)) {
+    if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
       if (main.error.verbosity != f_console_verbosity_quiet) {
         fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(main.error.to.stream, main.context.set.error, "%serror occurred on invalid UTF-8 character at end of string (at ", fll_error_print_error);
+        f_color_print(main.error.to.stream, main.context.set.error, "%serror occurred on invalid UTF-8 character", fll_error_print_error);
+
+        if (status == F_complete_not_utf_eos) {
+          f_color_print(main.error.to.stream, main.context.set.error, " at end of string");
+        }
+        else if (status == F_complete_not_utf_stop) {
+          f_color_print(main.error.to.stream, main.context.set.error, " at stop point of string");
+        }
+
+        f_color_print(main.error.to.stream, main.context.set.error, " (at ");
+        f_color_print(main.error.to.stream, main.context.set.notable, "%d", range.start);
+        f_color_print(main.error.to.stream, main.context.set.error, " of setting file '");
+        f_color_print(main.error.to.stream, main.context.set.notable, "%s", path_file);
+        f_color_print(main.error.to.stream, main.context.set.error, "').%c", f_string_eol_s[0]);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_complete_not_utf_stop) {
+      if (main.error.verbosity != f_console_verbosity_quiet) {
+        fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+        f_color_print(main.error.to.stream, main.context.set.error, "%serror occurred on invalid UTF-8 character at stop point of string (at ", fll_error_print_error);
         f_color_print(main.error.to.stream, main.context.set.notable, "%d", range.start);
         f_color_print(main.error.to.stream, main.context.set.error, " of setting file '");
         f_color_print(main.error.to.stream, main.context.set.notable, "%s", path_file);
