@@ -372,7 +372,16 @@ extern "C" {
 
         // found a valid content close, set stop point to last newline.
         if (buffer.string[range->start] == f_fss_eol) {
-          range->start = newline_last + 1;
+          ++range->start;
+
+          // If the last newline is the entire start, then there is no Content.
+          if (newline_last == found->array[found->used].start) {
+            found->array[found->used].start = 1;
+            found->array[found->used++].stop = 0;
+
+            return FL_fss_found_content_not;
+          }
+
           found->array[found->used++].stop = newline_last;
 
           return FL_fss_found_content;
