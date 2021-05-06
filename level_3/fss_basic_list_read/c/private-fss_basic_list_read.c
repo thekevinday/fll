@@ -222,8 +222,39 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_file_identify_
 
+#ifndef _di_fss_basic_list_read_load_
+  f_status_t fss_basic_list_read_load(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
+
+    f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
+
+    data->delimits_object.used = 0;
+    data->delimits_content.used = 0;
+
+    const f_status_t status = fll_fss_basic_list_read(data->buffer, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
+
+    if (F_status_is_error(status)) {
+      const f_string_t file_name = fss_basic_list_read_file_identify(input.start, data->files);
+
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file);
+
+      return status;
+    }
+    else if (status == F_data_not_stop || status == F_data_not_eos) {
+      if (data->option & fss_basic_list_read_data_option_total) {
+        fss_basic_list_read_print_zero(main);
+
+        return F_none;
+      }
+
+      return F_status_set_warning(status);
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_basic_list_read_load_
+
 #ifndef _di_fss_basic_list_read_load_number_
-  f_status_t fss_basic_list_read_load_number(f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) {
+  f_status_t fss_basic_list_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, f_number_unsigned_t *number) {
 
     if (main->parameters[parameter].result == f_console_result_additional) {
       const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
@@ -245,7 +276,7 @@ extern "C" {
 #endif // _di_fss_basic_list_read_load_number_
 
 #ifndef _di_fss_basic_list_read_print_at_
-  void fss_basic_list_read_print_at(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) {
+  void fss_basic_list_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t * const data) {
 
     if (at >= data->contents.used) {
       return;
@@ -352,37 +383,6 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_print_zero_
 
-#ifndef _di_fss_basic_list_read_load_
-  f_status_t fss_basic_list_read_load(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
-
-    f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
-
-    data->delimits_object.used = 0;
-    data->delimits_content.used = 0;
-
-    const f_status_t status = fll_fss_basic_list_read(data->buffer, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
-
-    if (F_status_is_error(status)) {
-      const f_string_t file_name = fss_basic_list_read_file_identify(input.start, data->files);
-
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file);
-
-      return status;
-    }
-    else if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (data->option & fss_basic_list_read_data_option_total) {
-        fss_basic_list_read_print_zero(main);
-
-        return F_none;
-      }
-
-      return F_status_set_warning(status);
-    }
-
-    return F_none;
-  }
-#endif // _di_fss_basic_list_read_load_
-
 #ifndef _di_fss_basic_list_read_process_
   f_status_t fss_basic_list_read_process(f_console_arguments_t * const arguments, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
 
@@ -426,7 +426,7 @@ extern "C" {
 
       if (!names[i]) continue;
 
-      fss_basic_list_read_print_at(main, data, i, *delimits_object, *delimits_content);
+      fss_basic_list_read_print_at(i, *delimits_object, *delimits_content, main, data);
     } // for
 
     return F_none;
@@ -470,20 +470,17 @@ extern "C" {
           }
         }
         else {
-          fss_basic_list_read_print_at(main, data, i, *delimits_object, *delimits_content);
+          fss_basic_list_read_print_at(i, *delimits_object, *delimits_content, main, data);
         }
 
-        break;
+        return F_none;
       }
 
       ++at;
     } // for
 
-    // The line was never found.
-    if (data->option & fss_basic_list_read_data_option_line) {
-      if (data->option & fss_basic_list_read_data_option_total) {
-        fss_basic_list_read_print_zero(main);
-      }
+    if (data->option & fss_basic_list_read_data_option_total) {
+      fss_basic_list_read_print_zero(main);
     }
 
     return F_none;
@@ -650,7 +647,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_line].result == f_console_result_additional) {
       data->option |= fss_basic_list_read_data_option_line;
 
-      status = fss_basic_list_read_load_number(arguments, main, fss_basic_list_read_parameter_line, fss_basic_list_read_long_line, &data->line);
+      status = fss_basic_list_read_load_number(fss_basic_list_read_parameter_line, fss_basic_list_read_long_line, arguments, main, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
@@ -665,7 +662,7 @@ extern "C" {
     if (main->parameters[fss_basic_list_read_parameter_select].result == f_console_result_additional) {
       data->option |= fss_basic_list_read_data_option_select;
 
-      status = fss_basic_list_read_load_number(arguments, main, fss_basic_list_read_parameter_select, fss_basic_list_read_long_select, &data->select);
+      status = fss_basic_list_read_load_number(fss_basic_list_read_parameter_select, fss_basic_list_read_long_select, arguments, main, &data->select);
       if (F_status_is_error(status)) return status;
     }
 

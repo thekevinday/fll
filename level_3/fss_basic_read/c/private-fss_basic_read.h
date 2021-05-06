@@ -78,18 +78,44 @@ extern "C" {
 #endif // _di_fss_basic_read_file_identify_
 
 /**
+ * Process the buffer, loading the FSS data.
+ *
+ * This will print an error message on error.
+ *
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
+ *   F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
+ *
+ *   Errors (with error bit) from: fll_fss_basic_read()
+ *
+ * @see fll_fss_basic_read()
+ *
+ * @see fss_basic_read_process_option()
+ */
+#ifndef _di_fss_basic_read_load_
+  extern f_status_t fss_basic_read_load(fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
+#endif // _di_fss_basic_read_load_
+
+/**
  * Load a given number parameter.
  *
  * This will print an error message on error.
  *
- * @param arguments
- *   The console arguments passed to the program.
- * @param main
- *   The main data.
  * @param parameter
  *   An ID representing the parameter.
  * @param name
  *   The parameter name to print on error.
+ * @param arguments
+ *   The console arguments passed to the program.
+ * @param main
+ *   The main data.
  * @param number
  *   The location to store the loaded number.
  *
@@ -104,7 +130,7 @@ extern "C" {
  * @see fss_basic_read_depths_resize()
  */
 #ifndef _di_fss_basic_read_load_number_
-  extern f_status_t fss_basic_read_load_number(f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, const f_array_length_t parameter, const f_string_t name, f_number_unsigned_t *number) f_attribute_visibility_internal;
+  extern f_status_t fss_basic_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_basic_read_main_t * const main, f_number_unsigned_t *number) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_load_number_
 
 /**
@@ -112,19 +138,19 @@ extern "C" {
  *
  * Only what is requested to print (Object, Content, both, or neither) will be printed, if there is something to print.
  *
- * @param main
- *   The main data.
- * @param data
- *   The program data.
  * @param at
  *   The index in the Objects and Contents to print.
  * @param delimits_object
  *   The delimits to be applied to an Object.
  * @param delimits_content
  *   The delimits to be applied to Content.
+ * @param main
+ *   The main data.
+ * @param data
+ *   The program data.
  */
 #ifndef _di_fss_basic_read_print_at_
-  extern void fss_basic_read_print_at(fss_basic_read_main_t * const main, fss_basic_read_data_t * const data, const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content) f_attribute_visibility_internal;
+  extern void fss_basic_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_basic_read_main_t * const main, fss_basic_read_data_t * const data) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_at_
 
 /**
@@ -166,32 +192,6 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_zero_
   extern void fss_basic_read_print_zero(fss_basic_read_main_t * const main) f_attribute_visibility_internal;
 #endif // _di_fss_basic_read_print_zero_
-
-/**
- * Process the buffer, loading the FSS data.
- *
- * This will print an error message on error.
- *
- * @param main
- *   The main data.
- * @param data
- *   The program data.
- *
- * @return
- *   F_none on success.
- *
- *   F_data_not_stop (with warning bit) on no valid FSS data found and reached stopping point.
- *   F_data_not_eos (with warning bit) on no valid FSS data found and reached end of string.
- *
- *   Errors (with error bit) from: fll_fss_basic_read()
- *
- * @see fll_fss_basic_read()
- *
- * @see fss_basic_read_process_option()
- */
-#ifndef _di_fss_basic_read_load_
-  extern f_status_t fss_basic_read_load(fss_basic_read_main_t * const main, fss_basic_read_data_t *data) f_attribute_visibility_internal;
-#endif // _di_fss_basic_read_load_
 
 /**
  * Perform the basic read processing on the buffer.

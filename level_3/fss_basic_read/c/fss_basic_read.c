@@ -405,7 +405,7 @@ extern "C" {
                 }
               }
 
-              // shorten the length to better convert the remainder to a number.
+              // Shorten the length to better convert the remainder to a number.
               --length;
             }
             else if (arguments->argv[location][length - 1] == fss_basic_read_delimit_mode_name_lesser[0]) {
@@ -418,13 +418,13 @@ extern "C" {
                 }
               }
 
-              // shorten the length to better convert the remainder to a number.
+              // Shorten the length to better convert the remainder to a number.
               --length;
             }
 
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
-            // ignore leading plus sign.
+            // Ignore leading plus sign.
             if (arguments->argv[location][0] == '+') {
               ++range.start;
             }
@@ -433,7 +433,20 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_basic_read_long_delimit, arguments->argv[location]);
+
               break;
+            }
+
+            // There can be nothing smaller than 0, so replace '0-' logic with just '0' logic.
+            if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser || data.delimit_mode == fss_basic_read_delimit_mode_content_lesser_object) {
+              if (!data.delimit_depth) {
+                if (data.delimit_mode == fss_basic_read_delimit_mode_content_lesser) {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content;
+                }
+                else {
+                  data.delimit_mode = fss_basic_read_delimit_mode_content_object;
+                }
+              }
             }
           }
         } // for
