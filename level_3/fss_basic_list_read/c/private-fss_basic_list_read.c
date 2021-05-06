@@ -325,17 +325,6 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_print_at_object_
 
-#ifndef _di_fss_basic_list_read_print_content_end_
-  void fss_basic_list_read_print_content_end(fss_basic_list_read_main_t * const main) {
-
-    // @todo remove this function from fss basic list read.
-
-    if (main->parameters[fss_basic_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main->output.stream, "%c", fss_basic_list_read_pipe_content_start);
-    }
-  }
-#endif // _di_fss_basic_list_read_print_content_end_
-
 #ifndef _di_fss_basic_list_read_print_content_ignore_
   void fss_basic_list_read_print_content_ignore(fss_basic_list_read_main_t * const main) {
 

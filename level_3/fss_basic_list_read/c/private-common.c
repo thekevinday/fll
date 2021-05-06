@@ -57,7 +57,6 @@ extern "C" {
   }
 #endif // _di_fss_basic_list_read_depths_resize_
 
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

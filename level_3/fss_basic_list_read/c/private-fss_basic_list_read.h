@@ -198,16 +198,6 @@ extern "C" {
 #endif // _di_fss_basic_list_read_print_content_ignore_
 
 /**
- * Print the end of Content.
- *
- * @param main
- *   The main data.
- */
-#ifndef _di_fss_basic_list_read_print_content_end_
-  extern void fss_basic_list_read_print_content_end(fss_basic_list_read_main_t * const main) f_attribute_visibility_internal;
-#endif // _di_fss_basic_list_read_print_content_end_
-
-/**
  * Print the end of an Object (which is essentially the start of Content).
  *
  * @param main
