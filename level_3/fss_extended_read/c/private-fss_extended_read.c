@@ -6,159 +6,170 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_extended_read_is_delimited_at_depth_
-  f_status_t fss_extended_read_is_delimited_at_depth(const fss_extended_read_main_t main, const f_array_length_t depth) {
+#ifndef _di_fss_extended_read_delimit_object_is_
+  f_status_t fss_extended_read_delimit_object_is(const f_array_length_t depth, fss_extended_read_data_t * const data) {
 
-    if (main.delimit_mode == fss_extended_read_delimit_mode_none) {
-      return F_false;
+    switch (data->delimit_mode) {
+      case fss_extended_read_delimit_mode_none:
+      case fss_extended_read_delimit_mode_content:
+      case fss_extended_read_delimit_mode_content_greater:
+      case fss_extended_read_delimit_mode_content_lesser:
+        return F_false;
+
+      case fss_extended_read_delimit_mode_all:
+      case fss_extended_read_delimit_mode_content_object:
+      case fss_extended_read_delimit_mode_content_greater_object:
+      case fss_extended_read_delimit_mode_content_lesser_object:
+      case fss_extended_read_delimit_mode_object:
+        return F_true;
+
+      default:
+        break;
     }
 
-    if (main.delimit_mode == fss_extended_read_delimit_mode_all) {
-      return F_true;
-    }
-
-    if (main.delimit_mode == fss_extended_read_delimit_mode_depth) {
-      return depth == main.delimit_depth;
-    }
-
-    if (main.delimit_mode == fss_extended_read_delimit_mode_depth_lesser) {
-      return depth <= main.delimit_depth;
-    }
-
-    if (main.delimit_mode == fss_extended_read_delimit_mode_depth_greater) {
-      return depth >= main.delimit_depth;
-    }
-
-    return F_true;
+    return depth == data->delimit_depth || data->delimit_mode == fss_extended_read_delimit_mode_content_lesser;
   }
-#endif // _di_fss_extended_read_is_delimited_at_depth_
+#endif // _di_fss_extended_read_delimit_object_is_
 
-#ifndef _di_fss_extended_read_main_preprocess_depth_
-  f_status_t fss_extended_read_main_preprocess_depth(const f_console_arguments_t arguments, const fss_extended_read_main_t main, fss_extended_read_depths_t *depths) {
+#ifndef _di_fss_extended_read_delimit_content_is_
+  f_status_t fss_extended_read_delimit_content_is(const f_array_length_t depth, fss_extended_read_data_t * const data) {
+
+    switch (data->delimit_mode) {
+      case fss_extended_read_delimit_mode_none:
+      case fss_extended_read_delimit_mode_object:
+        return F_false;
+
+      case fss_extended_read_delimit_mode_all:
+        return F_true;
+
+      default:
+        break;
+    }
+
+    if (depth < data->delimit_depth) {
+      return data->delimit_mode == fss_extended_read_delimit_mode_content_lesser || data->delimit_mode == fss_extended_read_delimit_mode_content_lesser_object;
+    }
+
+    if (depth > data->delimit_depth) {
+      return data->delimit_mode == fss_extended_read_delimit_mode_content_greater || data->delimit_mode == fss_extended_read_delimit_mode_content_greater_object;
+    }
+
+    return depth == data->delimit_depth;
+  }
+#endif // _di_fss_extended_read_delimit_content_is_
+
+#ifndef _di_fss_extended_read_depth_process_
+  f_status_t fss_extended_read_depth_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+
     f_status_t status = F_none;
 
     {
       f_array_length_t depth_size = 1;
 
-      if (main.parameters[fss_extended_read_parameter_depth].result == f_console_result_additional) {
-        depth_size = main.parameters[fss_extended_read_parameter_depth].values.used;
+      if (main->parameters[fss_extended_read_parameter_depth].result == f_console_result_additional) {
+        depth_size = main->parameters[fss_extended_read_parameter_depth].values.used;
       }
 
-      macro_fss_extended_read_depths_t_resize(status, (*depths), depth_size);
+      if (depth_size > data->depths.size) {
+        status = fss_extended_read_depths_resize(depth_size, &data->depths);
 
-      if (F_status_is_error(status)) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-        return status;
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "fss_extended_read_depths_resize", F_true);
+
+          return status;
+        }
       }
 
-      depths->used = depth_size;
+      data->depths.used = depth_size;
     }
 
     f_array_length_t position_depth = 0;
     f_array_length_t position_at = 0;
     f_array_length_t position_name = 0;
 
-    for (f_array_length_t i = 0; i < depths->used; i++) {
-      depths->array[i].depth = 0;
-      depths->array[i].index_at = 0;
-      depths->array[i].index_name = 0;
-      depths->array[i].value_at = 0;
+    for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      macro_f_string_dynamic_t_clear(depths->array[i].value_name);
+      data->depths.array[i].depth = 0;
+      data->depths.array[i].index_at = 0;
+      data->depths.array[i].index_name = 0;
+      data->depths.array[i].value_at = 0;
 
-      if (!main.parameters[fss_extended_read_parameter_depth].values.used) {
+      macro_f_string_dynamic_t_clear(data->depths.array[i].value_name);
+
+      if (!main->parameters[fss_extended_read_parameter_depth].values.used) {
         position_depth = 0;
       }
       else {
-        position_depth = main.parameters[fss_extended_read_parameter_depth].values.array[i];
+        position_depth = main->parameters[fss_extended_read_parameter_depth].values.array[i];
 
-        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[position_depth]));
+        const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[position_depth]));
 
-        status = fl_conversion_string_to_number_unsigned(arguments.argv[position_depth], range, &depths->array[i].depth);
+        status = fl_conversion_string_to_number_unsigned(arguments->argv[position_depth], range, &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_depth, arguments.argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_depth, arguments->argv[position_depth]);
+
           return status;
         }
       }
 
-      if (main.parameters[fss_extended_read_parameter_at].result == f_console_result_additional) {
-        for (; position_at < main.parameters[fss_extended_read_parameter_at].values.used; position_at++) {
+      if (main->parameters[fss_extended_read_parameter_at].result == f_console_result_additional) {
+        for (; position_at < main->parameters[fss_extended_read_parameter_at].values.used; ++position_at) {
 
-          if (main.parameters[fss_extended_read_parameter_at].values.array[position_at] < position_depth) {
+          if (main->parameters[fss_extended_read_parameter_at].values.array[position_at] < position_depth) {
             continue;
           }
 
-          if (i + 1 < depths->used && main.parameters[fss_extended_read_parameter_at].values.array[position_at] > main.parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
+          if (i + 1 < data->depths.used && main->parameters[fss_extended_read_parameter_at].values.array[position_at] > main->parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
             break;
           }
 
-          depths->array[i].index_at = main.parameters[fss_extended_read_parameter_at].values.array[position_at];
+          data->depths.array[i].index_at = main->parameters[fss_extended_read_parameter_at].values.array[position_at];
 
-          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[depths->array[i].index_at]));
+          const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments->argv[data->depths.array[i].index_at]));
 
-          status = fl_conversion_string_to_number_unsigned(arguments.argv[depths->array[i].index_at], range, &depths->array[i].value_at);
+          status = fl_conversion_string_to_number_unsigned(arguments->argv[data->depths.array[i].index_at], range, &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_at, arguments.argv[depths->array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_at, arguments->argv[data->depths.array[i].index_at]);
+
             return status;
           }
         } // for
       }
 
-      if (main.parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
-        for (; position_name < main.parameters[fss_extended_read_parameter_name].values.used; position_name++) {
+      if (main->parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
+        for (; position_name < main->parameters[fss_extended_read_parameter_name].values.used; position_name++) {
 
-          if (main.parameters[fss_extended_read_parameter_name].values.array[position_name] < position_depth) {
+          if (main->parameters[fss_extended_read_parameter_name].values.array[position_name] < position_depth) {
             continue;
           }
 
-          if (i + 1 < depths->used && main.parameters[fss_extended_read_parameter_name].values.array[position_name] > main.parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
+          if (i + 1 < data->depths.used && main->parameters[fss_extended_read_parameter_name].values.array[position_name] > main->parameters[fss_extended_read_parameter_depth].values.array[i + 1]) {
             break;
           }
 
-          depths->array[i].index_name = main.parameters[fss_extended_read_parameter_name].values.array[position_name];
+          data->depths.array[i].index_name = main->parameters[fss_extended_read_parameter_name].values.array[position_name];
 
-          if (main.parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
-            status = fl_string_rip(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+          if (main->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
+            status = fl_string_rip(arguments->argv[data->depths.array[i].index_name], strlen(arguments->argv[data->depths.array[i].index_name]), &data->depths.array[i].value_name);
           }
           else {
-            status = f_string_append(arguments.argv[depths->array[i].index_name], strlen(arguments.argv[depths->array[i].index_name]), &depths->array[i].value_name);
+            status = f_string_append(arguments->argv[data->depths.array[i].index_name], strlen(arguments->argv[data->depths.array[i].index_name]), &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
-            f_status_t status_code = F_status_set_fine(status);
-
-            // @todo: move error printing into common function.
-            if (status_code == F_memory_not) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-            }
-            else if (status_code == F_string_too_large) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to process '", fll_error_print_error);
-              f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_trim);
-              f_color_print(main.error.to.stream, main.context.set.error, "' because the maximum buffer size was reached.%c", f_string_eol_s[0]);
-            }
-            else {
-              f_string_t function = "f_string_append";
-
-              if (main.parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
-                function = "fl_string_rip";
-              }
-
-              f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (", fll_error_print_error);
-              f_color_print(main.error.to.stream, main.context.set.notable, "%u", status_code);
-              f_color_print(main.error.to.stream, main.context.set.error, ") has occurred while calling ");
-              f_color_print(main.error.to.stream, main.context.set.notable, "%s()", function);
-              f_color_print(main.error.to.stream, main.context.set.error, ".%c", f_string_eol_s[0]);
-            }
+            fll_error_print(main->error, F_status_set_fine(status), main->parameters[fss_extended_read_parameter_trim].result == f_console_result_found ? "fl_string_rip" : "f_string_append", F_true);
 
             return status;
           }
 
-          if (!depths->array[i].value_name.used) {
-            f_color_print(main.error.to.stream, main.context.set.error, "%sThe '", fll_error_print_error);
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_name);
-            f_color_print(main.error.to.stream, main.context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+          if (!data->depths.array[i].value_name.used) {
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_name);
+              f_color_print(main->error.to.stream, main->context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+            }
 
             return F_status_set_error(F_parameter);
           }
@@ -166,27 +177,31 @@ extern "C" {
       }
     } // for
 
-    for (f_array_length_t i = 0; i < depths->used; i++) {
+    for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
-      for (f_array_length_t j = i + 1; j < depths->used; j++) {
+      for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
-        if (depths->array[i].depth == depths->array[j].depth) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe value '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may only be specified once for the parameter '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+        if (data->depths.array[i].depth == data->depths.array[j].depth) {
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[i].depth);
+            f_color_print(main->error.to.stream, main->context.set.error, "' may only be specified once for the parameter '");
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_depth);
+            f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
+          }
 
           return F_status_set_error(F_parameter);
         }
-        else if (depths->array[i].depth > depths->array[j].depth) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may not have the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' before the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[j].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+        else if (data->depths.array[i].depth > data->depths.array[j].depth) {
+          if (main->error.verbosity != f_console_verbosity_quiet) {
+            f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_depth);
+            f_color_print(main->error.to.stream, main->context.set.error, "' may not have the value '");
+            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[i].depth);
+            f_color_print(main->error.to.stream, main->context.set.error, "' before the value '");
+            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[j].depth);
+            f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
+          }
 
           return F_status_set_error(F_parameter);
         }
@@ -195,477 +210,564 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fss_extended_read_main_preprocess_depth_
+#endif // _di_fss_extended_read_depth_process_
 
-#ifndef _di_fss_extended_read_main_process_file_
-  f_status_t fss_extended_read_main_process_file(const f_console_arguments_t arguments, fss_extended_read_main_t *main, const f_string_t filename, const fss_extended_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits) {
-    f_status_t status = F_none;
+#ifndef _di_fss_extended_read_file_identify_
+  f_string_t fss_extended_read_file_identify(const f_array_length_t at, const fss_extended_read_files_t files) {
 
-    const f_array_lengths_t except_none = f_array_lengths_t_initialize;
-    bool object_delimited = F_true;
-    bool content_delimited = F_true;
+    for (f_array_length_t i = 0; i < files.used; ++i) {
 
-    if (main->delimit_mode == fss_extended_read_delimit_mode_none || (main->delimit_depth && (main->delimit_mode == fss_extended_read_delimit_mode_depth || main->delimit_mode == fss_extended_read_delimit_mode_depth_greater))) {
-      object_delimited = F_false;
+      if (at >= files.array[i].range.start && at <= files.array[i].range.stop) {
+        return files.array[i].name;
+      }
+    } // for
+
+    return "";
+  }
+#endif // _di_fss_extended_read_file_identify_
+
+#ifndef _di_fss_extended_read_load_
+  f_status_t fss_extended_read_load(fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+
+    f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
+
+    data->delimits_object.used = 0;
+    data->delimits_content.used = 0;
+
+    const f_status_t status = fll_fss_extended_read(data->buffer, &input, &data->objects, &data->contents, 0, 0, &data->delimits_object, &data->delimits_content);
+
+    if (F_status_is_error(status)) {
+      const f_string_t file_name = fss_extended_read_file_identify(input.start, data->files);
+
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, file_name ? file_name : "-", "process", fll_error_file_type_file);
+
+      return status;
+    }
+    else if (status == F_data_not_stop || status == F_data_not_eos) {
+      if (data->option & fss_extended_read_data_option_total) {
+        fss_extended_read_print_zero(main);
+
+        return F_none;
+      }
+
+      return F_status_set_warning(status);
     }
 
-    {
-      f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
+    return F_none;
+  }
+#endif // _di_fss_extended_read_load_
 
-      objects_delimits->used = 0;
-      contents_delimits->used = 0;
+#ifndef _di_fss_extended_read_load_number_
+  f_status_t fss_extended_read_load_number(const f_array_length_t parameter, const f_string_t name, f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, f_number_unsigned_t *number) {
 
-      status = fll_fss_extended_read(main->buffer, &input, &main->objects, &main->contents, 0, 0, objects_delimits, contents_delimits);
+    if (main->parameters[parameter].result == f_console_result_additional) {
+      const f_array_length_t index = main->parameters[parameter].values.array[main->parameters[parameter].values.used - 1];
+      const f_string_range_t range = macro_f_string_range_t_initialize(strnlen(arguments->argv[index], f_console_parameter_size));
 
-      if (F_status_is_error(status)) {
-        // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, filename, "process", fll_error_file_type_file);
-      }
-      else if (status == F_data_not_stop || status == F_data_not_eos) {
-        macro_f_fss_contents_t_delete_simple(main->contents);
-        macro_f_fss_objects_t_delete_simple(main->objects);
-        macro_f_string_dynamic_t_delete_simple(main->buffer);
-
-        if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-          fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
-          return F_none;
-        }
-
-        return F_status_set_warning(status);
-      }
+      const f_status_t status = fl_conversion_string_to_number_unsigned(arguments->argv[index], range, number);
 
       if (F_status_is_error(status)) {
-        macro_f_fss_contents_t_delete_simple(main->contents);
-        macro_f_fss_objects_t_delete_simple(main->objects);
-        macro_f_string_dynamic_t_delete_simple(main->buffer);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, name, arguments->argv[index]);
 
         return status;
       }
+
+      return F_true;
     }
 
-    f_number_unsigned_t select = 0;
+    return F_false;
+  }
+#endif // _di_fss_extended_read_load_number_
 
-    if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-      const f_array_length_t index = main->parameters[fss_extended_read_parameter_select].values.array[main->parameters[fss_extended_read_parameter_select].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
+#ifndef _di_fss_extended_read_print_at_
+  void fss_extended_read_print_at(const f_array_length_t at, const f_fss_delimits_t delimits_object, const f_fss_delimits_t delimits_content, fss_extended_read_main_t * const main, fss_extended_read_data_t * const data) {
 
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &select);
-
-      if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_select, arguments.argv[index]);
-        return status;
-      }
+    if (at >= data->contents.used) {
+      return;
     }
 
-    f_array_length_t line = 0;
-
-    if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-      const f_array_length_t index = main->parameters[fss_extended_read_parameter_line].values.array[main->parameters[fss_extended_read_parameter_line].values.used - 1];
-      const f_string_range_t range = macro_f_string_range_t_initialize(strlen(arguments.argv[index]));
-
-      status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &line);
-
-      if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_extended_read_long_line, arguments.argv[index]);
-        return status;
-      }
-    }
-
-    bool names[main->objects.used];
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    if (depths.array[0].index_name > 0) {
-      memset(names, 0, sizeof(bool) * main->objects.used);
-
-      if (main->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
-        for (i = 0; i < main->objects.used; i++) {
-
-          if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[0].value_name, main->buffer, main->objects.array[i], except_none, *objects_delimits) == F_equal_to) {
-            names[i] = 1;
-          }
-        } // for
-      }
-      else {
-        for (i = 0; i < main->objects.used; i++) {
-
-          if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[0].value_name, main->buffer, main->objects.array[i], except_none, *objects_delimits) == F_equal_to) {
-            names[i] = 1;
-          }
-        } // for
-      }
-    }
-    else {
-      memset(names, 1, sizeof(bool) * main->objects.used);
-    }
-
-    bool include_empty = 0;
-
-    if (main->parameters[fss_extended_read_parameter_empty].result == f_console_result_found) {
-      include_empty = 1;
-    }
-
-    if (main->parameters[fss_extended_read_parameter_object].result == f_console_result_found) {
-      if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-        if (depths.array[0].index_at > 0) {
-          if (depths.array[0].value_at < main->objects.used && names[depths.array[0].value_at]) {
-            fprintf(main->output.stream, "1%c", f_string_eol_s[0]);
-          }
-          else {
-            fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
-          }
-        }
-        else if (depths.array[0].index_name > 0) {
-          f_array_length_t total = 0;
-
-          for (i = 0; i < main->objects.used; i++) {
-            if (!names[i]) continue;
-
-            total++;
-          } // for
-
-          fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+    if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_extended_read_data_option_empty))) {
+      if (data->option & fss_extended_read_data_option_object) {
+        if (data->option & fss_extended_read_data_option_trim) {
+          fl_print_trim_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
         }
         else {
-          fprintf(main->output.stream, "%llu%c", main->objects.used, f_string_eol_s[0]);
+          f_print_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
         }
 
-        return F_none;
+        if (data->option & fss_extended_read_data_option_content) {
+          fss_extended_read_print_object_end(main);
+        }
       }
 
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
+      bool content_printed = F_false;
 
-      if (main->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
-        print_object = &fl_print_trim_except_dynamic_partial;
-      }
+      if ((data->option & fss_extended_read_data_option_content) && data->contents.array[at].used) {
+        if (data->option & fss_extended_read_data_option_select) {
+          if (data->select < data->contents.array[at].used) {
+            content_printed = F_true;
 
-      if (depths.array[0].index_at > 0) {
-        f_array_length_t at = 0;
+            f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[data->select], delimits_content);
+          }
+        }
+        else {
+          for (f_array_length_t i = 0; i < data->contents.array[at].used; ++i) {
 
-        for (j = 0; i < main->objects.used; i++) {
-
-          if (names[i]) {
-            if (at == depths.array[0].value_at) {
-              print_object(main->output.stream, main->buffer, main->objects.array[i], object_delimited ? *objects_delimits : except_none);
-
-              if (main->parameters[fss_extended_read_parameter_content].result == f_console_result_found) {
-                if (main->contents.array[i].used) {
-                  fss_extended_read_print_object_end(*main);
-
-                  for (j = 0; j < main->contents.array[i].used; j++) {
-
-                    content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-                    f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-                    if (j + 1 < main->contents.array[i].used) {
-                      fss_extended_read_print_content_end(*main);
-                    }
-                  } // for
-                }
-              }
-
-              fss_extended_read_print_set_end(*main);
-              break;
+            if (data->contents.array[at].array[i].start > data->contents.array[at].array[i].stop) {
+              continue;
             }
 
-            at++;
-          }
-        } // for
+            content_printed = F_true;
 
-        return F_none;
+            f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[i], delimits_content);
+
+            if (i + 1 < data->contents.array[at].used && data->contents.array[at].array[i + 1].start <= data->contents.array[at].array[i + 1].stop) {
+              fss_extended_read_print_content_end(main);
+            }
+          } // for
+        }
       }
 
-      for (i = 0; i < main->objects.used; i++) {
-        if (!names[i]) continue;
-
-        print_object(main->output.stream, main->buffer, main->objects.array[i], object_delimited ? *objects_delimits : except_none);
-
-        if (main->parameters[fss_extended_read_parameter_content].result == f_console_result_found) {
-          if (main->contents.array[i].used) {
-            fss_extended_read_print_object_end(*main);
-
-            for (j = 0; j < main->contents.array[i].used; j++) {
-
-              content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-              f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-              if (j + 1 < main->contents.array[i].used) {
-                fss_extended_read_print_content_end(*main);
-              }
-            } // for
-          }
-        }
-
-        fss_extended_read_print_set_end(*main);
-      } // for
-
-      return F_none;
+      if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_content) && (content_printed || (data->option & fss_extended_read_data_option_empty))) {
+        fss_extended_read_print_set_end(main);
+      }
     }
+  }
+#endif // _di_fss_extended_read_print_at_
 
-    if (depths.array[0].index_at > 0) {
-      if (depths.array[0].value_at >= main->objects.used) {
-        if (names[depths.array[0].value_at] && main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-          fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
-        }
+#ifndef _di_fss_extended_read_print_at_total_
+  f_status_t fss_extended_read_print_at_total(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
 
-        return F_none;
+    if (data->option & fss_extended_read_data_option_select) {
+      if (data->option & fss_extended_read_data_option_object) {
+        fss_extended_read_print_one(main);
+
+        return F_success;
       }
 
-      f_array_length_t at = 0;
+      if (data->select < data->contents.array[at].used) {
+        if (data->contents.array[at].array[data->select].start <= data->contents.array[at].array[data->select].stop || (data->option & fss_extended_read_data_option_empty)) {
+          fss_extended_read_print_one(main);
 
-      for (; i < main->objects.used; i++) {
+          return F_success;
+        }
+      }
+    }
+    else if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_empty)) {
+      fss_extended_read_print_one(main);
 
-        if (names[i]) {
-          if (at == depths.array[0].value_at) {
-            if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-              if (!main->contents.array[i].used) {
-                fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
-              }
-              else {
-                fprintf(main->output.stream, "1%c", f_string_eol_s[0]);
-              }
+      return F_success;
+    }
+    else if (data->contents.array[at].used) {
+      for (f_array_length_t j = 0; j < data->contents.array[at].used; ++j) {
 
-              return F_none;
-            }
+        if (data->contents.array[at].array[j].start <= data->contents.array[at].array[j].stop) {
+          fss_extended_read_print_one(main);
 
-            if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-              if (!line) {
-                if (main->contents.array[i].used > 0) {
-                  j = 0;
-
-                  if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                    if (select < main->contents.array[i].used) {
-                      content_delimited = fss_extended_read_is_delimited_at_depth(*main, select);
-
-                      f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[select], content_delimited ? *contents_delimits : except_none);
-                      fss_extended_read_print_set_end(*main);
-                    }
-                  }
-                  else {
-                    for (j = 0; j < main->contents.array[i].used; j++) {
-
-                      content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-                      f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-                      if (j + 1 < main->contents.array[i].used) {
-                        fss_extended_read_print_content_end(*main);
-                      }
-                    } // for
-
-                    fss_extended_read_print_set_end(*main);
-                  }
-                }
-                else if (include_empty) {
-                  if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                    if (!select) {
-                      fss_extended_read_print_set_end(*main);
-                    }
-                  }
-                  else {
-                    fss_extended_read_print_set_end(*main);
-                  }
-                }
-              }
-
-              return F_none;
-            }
-
-            if (main->contents.array[i].used > 0) {
-              j = 0;
-
-              if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                if (select < main->contents.array[i].used) {
-                  content_delimited = fss_extended_read_is_delimited_at_depth(*main, select);
-
-                  f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[select], content_delimited ? *contents_delimits : except_none);
-                  fss_extended_read_print_set_end(*main);
-                }
-              }
-              else {
-                for (j = 0; j < main->contents.array[i].used; j++) {
-
-                  content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-                  f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-                  if (j + 1 < main->contents.array[i].used) {
-                    fss_extended_read_print_content_end(*main);
-                  }
-                } // for
-
-                fss_extended_read_print_set_end(*main);
-              }
-            }
-            else if (include_empty) {
-              if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-                if (!select) {
-                  fss_extended_read_print_set_end(*main);
-                }
-              }
-              else {
-                fss_extended_read_print_set_end(*main);
-              }
-            }
-
-            break;
-          }
-
-          at++;
+          return F_success;
         }
       } // for
-
-      return F_none;
     }
-
-    if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
-      f_array_length_t total = 0;
-
-      for (i = 0; i < main->objects.used; i++) {
-        if (!names[i]) {
-          continue;
-        }
-
-        if (!main->contents.array[i].used && !include_empty) {
-          continue;
-        }
-
-        total++;
-      } // for
-
-      fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
-      return F_none;
-    }
-
-    if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
-      f_array_length_t line_current = 0;
-
-      for (i = 0, j = 0; i < main->contents.used; i++) {
-        if (!names[i]) continue;
-
-        if (!main->contents.array[i].used) {
-          if (include_empty) {
-            if (line_current == line) {
-              fss_extended_read_print_set_end(*main);
-              break;
-            }
-
-            line_current++;
-          }
-
-          continue;
-        }
-
-        if (line_current == line) {
-          if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-            if (select < main->contents.array[i].used) {
-              content_delimited = fss_extended_read_is_delimited_at_depth(*main, select);
-
-              f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[select], content_delimited ? *contents_delimits : except_none);
-              fss_extended_read_print_set_end(*main);
-            }
-          }
-          else {
-            for (j = 0; j < main->contents.array[i].used; j++) {
-
-              content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-              f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-              if (j + 1 < main->contents.array[i].used) {
-                fss_extended_read_print_content_end(*main);
-              }
-            } // for
-
-            fss_extended_read_print_set_end(*main);
-          }
-
-          break;
-        }
-
-        line_current++;
-      } // for
-
-      return F_none;
-    }
-
-    for (i = 0, j = 0; i < main->contents.used; i++) {
-      if (!names[i]) continue;
-
-      if (!main->contents.array[i].used) {
-        if (include_empty && !select) {
-          fss_extended_read_print_set_end(*main);
-        }
-
-        continue;
-      }
-
-      if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
-        if (select < main->contents.array[i].used) {
-          content_delimited = fss_extended_read_is_delimited_at_depth(*main, select);
-
-          f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[select], content_delimited ? *contents_delimits : except_none);
-          fss_extended_read_print_set_end(*main);
-        }
-      }
-      else {
-        for (j = 0; j < main->contents.array[i].used; j++) {
-
-          content_delimited = fss_extended_read_is_delimited_at_depth(*main, j);
-
-          f_print_except_dynamic_partial(main->output.stream, main->buffer, main->contents.array[i].array[j], content_delimited ? *contents_delimits : except_none);
-
-          if (j + 1 < main->contents.array[i].used) {
-            fss_extended_read_print_content_end(*main);
-          }
-        } // for
-
-        fss_extended_read_print_set_end(*main);
-      }
-    } // for
 
     return F_none;
   }
-#endif // _di_fss_extended_read_main_process_file_
-
-#ifndef _di_fss_extended_read_print_object_end_
-  void fss_extended_read_print_object_end(const fss_extended_read_main_t main) {
-
-    if (main.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_extended_read_pipe_content_start);
-    }
-    else {
-      fprintf(main.output.stream, "%c", f_fss_space);
-    }
-  }
-#endif // _di_fss_extended_read_print_object_end_
+#endif // _di_fss_extended_read_print_at_total_
 
 #ifndef _di_fss_extended_read_print_content_end_
-  void fss_extended_read_print_content_end(const fss_extended_read_main_t main) {
+  void fss_extended_read_print_content_end(fss_extended_read_main_t * const main) {
 
-    if (main.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_extended_read_pipe_content_start);
+    if (main->parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(main->output.stream, "%c", fss_extended_read_pipe_content_start);
     }
     else {
-      fprintf(main.output.stream, "%c", f_fss_space);
+      fprintf(main->output.stream, "%c", f_fss_space);
     }
   }
 #endif // _di_fss_extended_read_print_content_end_
 
-#ifndef _di_fss_extended_read_print_set_end_
-  void fss_extended_read_print_set_end(const fss_extended_read_main_t main) {
+#ifndef _di_fss_extended_read_print_object_end_
+  void fss_extended_read_print_object_end(fss_extended_read_main_t * const main) {
 
-    if (main.parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_extended_read_pipe_content_end);
+    if (main->parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(main->output.stream, "%c", fss_extended_read_pipe_content_end);
     }
     else {
-      fprintf(main.output.stream, "%c", f_fss_eol);
+      fprintf(main->output.stream, "%c", f_fss_space);
+    }
+  }
+#endif // _di_fss_extended_read_print_object_end_
+
+#ifndef _di_fss_extended_read_print_one_
+  void fss_extended_read_print_one(fss_extended_read_main_t * const main) {
+    fprintf(main->output.stream, "1%c", f_string_eol_s[0]);
+  }
+#endif // _di_fss_extended_read_print_one_
+
+#ifndef _di_fss_extended_read_print_set_end_
+  void fss_extended_read_print_set_end(fss_extended_read_main_t * const main) {
+
+    if (main->parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
+      fprintf(main->output.stream, "%c", fss_extended_read_pipe_content_end);
+    }
+    else {
+      fprintf(main->output.stream, "%c", f_fss_eol);
     }
   }
 #endif // _di_fss_extended_read_print_set_end_
+
+#ifndef _di_fss_extended_read_print_zero_
+  void fss_extended_read_print_zero(fss_extended_read_main_t * const main) {
+    fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+  }
+#endif // _di_fss_extended_read_print_zero_
+
+#ifndef _di_fss_extended_read_process_
+  f_status_t fss_extended_read_process(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+
+    f_status_t status = fss_extended_read_process_option(arguments, main, data);
+    if (F_status_is_error(status)) return status;
+
+    status = fss_extended_read_load(main, data);
+    if (F_status_is_error(status)) return status;
+
+    bool names[data->objects.used];
+
+    status = fss_extended_read_process_name(data, names);
+    if (F_status_is_error(status)) return status;
+
+    if (data->depths.array[0].index_at) {
+      return fss_extended_read_process_at(main, data, names);
+    }
+
+    if (data->option & fss_extended_read_data_option_total) {
+      return fss_extended_read_process_total(main, data, names);
+    }
+
+    if (data->option & fss_extended_read_data_option_line) {
+      return fss_extended_read_process_line(main, data, names);
+    }
+
+    f_array_lengths_t except_none = f_array_lengths_t_initialize;
+    f_array_lengths_t *delimits_object = fss_extended_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_read_delimit_content_is((data->option & fss_extended_read_data_option_select) ? data->select : 0, data) ? &data->delimits_content : &except_none;
+
+    for (f_array_length_t i = 0; i < data->contents.used; ++i) {
+
+      if (!names[i]) continue;
+
+      fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_
+
+#ifndef _di_fss_extended_read_process_at_
+  f_status_t fss_extended_read_process_at(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) {
+
+    if (data->depths.array[0].value_at >= data->objects.used) {
+      if (names[data->depths.array[0].value_at] && (data->option & fss_extended_read_data_option_total)) {
+        fss_extended_read_print_zero(main);
+      }
+
+      return F_none;
+    }
+
+    // This standard only has one line per Content; therefore, any line value greater than 0 equates to no line to print.
+    if (data->option & fss_extended_read_data_option_line) {
+      if (data->line) {
+        if (data->option & fss_extended_read_data_option_total) {
+          fss_extended_read_print_zero(main);
+        }
+
+        return F_none;
+      }
+    }
+
+    f_array_lengths_t except_none = f_array_lengths_t_initialize;
+    f_array_lengths_t *delimits_object = fss_extended_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_read_delimit_content_is((data->option & fss_extended_read_data_option_select) ? data->select : 0, data) ? &data->delimits_content : &except_none;
+
+    f_array_length_t at = 0;
+    f_array_length_t i = 0;
+
+    for (; i < data->objects.used; ++i) {
+
+      if (!names[i]) continue;
+
+      if (at == data->depths.array[0].value_at) {
+        if (data->option & fss_extended_read_data_option_line) {
+
+          // This standard only supports one line per Object so when using "--at", the only valid line is line 0.
+          if (data->line) break;
+
+          if (data->option & fss_extended_read_data_option_total) {
+            if (fss_extended_read_print_at_total(i, main, data) == F_none) {
+              break;
+            }
+          }
+          else {
+            fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+          }
+        }
+        else if (data->option & fss_extended_read_data_option_total) {
+          if (fss_extended_read_print_at_total(i, main, data) == F_none) {
+            break;
+          }
+        }
+        else {
+          fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+        }
+
+        return F_none;
+      }
+
+      ++at;
+    } // for
+
+    if (data->option & fss_extended_read_data_option_total) {
+      fss_extended_read_print_zero(main);
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_at_
+
+#ifndef _di_fss_extended_read_process_line_
+  f_status_t fss_extended_read_process_line(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) {
+
+    f_array_lengths_t except_none = f_array_lengths_t_initialize;
+    f_array_lengths_t *delimits_object = fss_extended_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
+    f_array_lengths_t *delimits_content = fss_extended_read_delimit_content_is((data->option & fss_extended_read_data_option_select) ? data->select : 0, data) ? &data->delimits_content : &except_none;
+
+    f_array_length_t line = 0;
+
+    for (f_array_length_t i = 0; i < data->contents.used; ++i) {
+
+      if (!names[i]) continue;
+
+      if (!(data->option & fss_extended_read_data_option_object) && (data->option & fss_extended_read_data_option_content)) {
+        if (!data->contents.array[i].used) {
+          if (data->option & fss_extended_read_data_option_empty) {
+            if (line == data->line) {
+              fss_extended_read_print_set_end(main);
+
+              break;
+            }
+
+            ++line;
+          }
+
+          continue;
+        }
+      }
+
+      if (line == data->line) {
+        fss_extended_read_print_at(i, *delimits_object, *delimits_content, main, data);
+
+        break;
+      }
+
+      ++line;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_line_
+
+#ifndef _di_fss_extended_read_process_name_
+  f_status_t fss_extended_read_process_name(fss_extended_read_data_t *data, bool names[]) {
+
+    f_array_lengths_t except_none = f_array_lengths_t_initialize;
+
+    if (data->depths.array[0].index_name > 0) {
+      f_array_length_t i = 0;
+
+      memset(names, F_false, sizeof(bool) * data->objects.used);
+
+      if (data->option & fss_extended_read_data_option_trim) {
+        for (i = 0; i < data->objects.used; ++i) {
+
+          if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
+            names[i] = F_true;
+          }
+        } // for
+      }
+      else {
+        for (i = 0; i < data->objects.used; ++i) {
+
+           if (fl_string_dynamic_partial_compare_except_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_content) == F_equal_to) {
+            names[i] = F_true;
+          }
+        } // for
+      }
+    }
+    else {
+      memset(names, F_true, sizeof(bool) * data->objects.used);
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_name_
+
+#ifndef _di_fss_extended_read_process_option_
+  f_status_t fss_extended_read_process_option(f_console_arguments_t * const arguments, fss_extended_read_main_t * const main, fss_extended_read_data_t *data) {
+
+    f_status_t status = F_none;
+
+    if (main->parameters[fss_extended_read_parameter_at].result == f_console_result_additional) {
+      data->option |= fss_extended_read_data_option_at;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_content].result == f_console_result_found) {
+      data->option |= fss_extended_read_data_option_content;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_empty].result == f_console_result_found) {
+      data->option |= fss_extended_read_data_option_empty;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
+      data->option |= fss_extended_read_data_option_line;
+
+      status = fss_extended_read_load_number(fss_extended_read_parameter_line, fss_extended_read_long_line, arguments, main, &data->line);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_name].result == f_console_result_additional) {
+      data->option |= fss_extended_read_data_option_name;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_object].result == f_console_result_found) {
+      data->option |= fss_extended_read_data_option_object;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_select].result == f_console_result_additional) {
+      data->option |= fss_extended_read_data_option_select;
+
+      status = fss_extended_read_load_number(fss_extended_read_parameter_select, fss_extended_read_long_select, arguments, main, &data->select);
+      if (F_status_is_error(status)) return status;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
+      data->option |= fss_extended_read_data_option_total;
+    }
+
+    if (main->parameters[fss_extended_read_parameter_trim].result == f_console_result_found) {
+      data->option |= fss_extended_read_data_option_trim;
+    }
+
+    // Default to content if neither Object nor Content is explicitly requested.
+    if (!(data->option & (fss_extended_read_data_option_content | fss_extended_read_data_option_object))) {
+      data->option |= fss_extended_read_data_option_content;
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_option_
+
+#ifndef _di_fss_extended_read_process_total_
+  f_status_t fss_extended_read_process_total(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) {
+
+    f_array_length_t total = 0;
+
+    // This standard only has one Content per line, however it has multiple Contents within that line.
+    if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_content) && (data->option & fss_extended_read_data_option_empty)) {
+      for (f_array_length_t i = 0; i < data->objects.used; ++i) {
+
+        if (!names[i]) continue;
+
+        ++total;
+      } // for
+    }
+    else {
+      f_array_length_t i = 0;
+      f_array_length_t j = 0;
+
+      for (; i < data->contents.used; ++i) {
+
+        if (!names[i]) continue;
+        if (!data->contents.array[i].used) continue;
+
+        if ((data->option & fss_extended_read_data_option_select) && data->contents.array[i].used <= data->select) {
+          continue;
+        }
+
+        for (j = 0; j < data->contents.array[i].used; ++j) {
+
+          if (data->contents.array[i].array[j].start <= data->contents.array[i].array[j].stop) {
+            if (data->option & fss_extended_read_data_option_select) {
+              if (j == data->select) {
+                ++total;
+
+                break;
+              }
+            }
+            else {
+              ++total;
+
+              break;
+            }
+          }
+        } // for
+      } // for
+    }
+
+    if (data->option & fss_extended_read_data_option_line) {
+      if (data->line < total) {
+        fss_extended_read_print_one(main);
+      }
+      else {
+        fss_extended_read_print_zero(main);
+      }
+    }
+    else {
+      fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_total_
+
+
+
+#ifndef _di_fss_extended_read_process_total_content_
+  f_status_t fss_extended_read_process_total_content(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data, f_array_length_t *total) {
+
+    if (data->option & fss_extended_read_data_option_select) {
+      if (data->option & fss_extended_read_data_option_object) {
+        fss_extended_read_print_one(main);
+
+        return F_success;
+      }
+
+      if (data->select < data->contents.array[at].used) {
+        if (data->contents.array[at].array[data->select].start <= data->contents.array[at].array[data->select].stop || (data->option & fss_extended_read_data_option_empty)) {
+          fss_extended_read_print_one(main);
+
+          return F_success;
+        }
+      }
+    }
+    else if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_empty)) {
+      fss_extended_read_print_one(main);
+
+      return F_success;
+    }
+    else if (data->contents.array[at].used) {
+      for (f_array_length_t j = 0; j < data->contents.array[at].used; ++j) {
+
+        if (data->contents.array[at].array[j].start <= data->contents.array[at].array[j].stop) {
+          fss_extended_read_print_one(main);
+
+          return F_success;
+        }
+      } // for
+    }
+
+    return F_none;
+  }
+#endif // _di_fss_extended_read_process_total_content_
 
 #ifdef __cplusplus
 } // extern "C"
