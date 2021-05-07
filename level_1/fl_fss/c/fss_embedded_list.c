@@ -1108,10 +1108,7 @@ extern "C" {
           status = f_fss_skip_past_space(content, range);
           if (F_status_is_error(status)) break;
 
-          if (has_graph && content.string[range->start] == f_fss_embedded_list_close) {
-            // do nothing.
-          }
-          else if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+          if (range->start >= content.used || range->start > range->stop || content.string[range->start] == f_fss_eol) {
 
             // increase by total slashes + 1 embedded list open/close.
             status = f_string_dynamic_increase_by(slash_count + 2, destination);
@@ -1171,7 +1168,7 @@ extern "C" {
         status = f_fss_skip_past_space(content, range);
         if (F_status_is_error(status)) break;
 
-        if (content.string[range->start] == f_fss_eol || range->start >= content.used || range->start > range->stop) {
+        if (range->start >= content.used || range->start > range->stop || content.string[range->start] == f_fss_eol) {
 
           if (content.string[range->start] == f_fss_eol) {
             do_prepend = F_true;

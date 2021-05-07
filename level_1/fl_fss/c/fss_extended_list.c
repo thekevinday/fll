@@ -291,6 +291,8 @@ extern "C" {
         continue;
       }
 
+      if (status == F_none_eos || status == F_none_stop) break;
+
       if (buffer.string[range->start] == f_fss_delimit_slash) {
         slash_first = range->start;
         slash_count = 1;
