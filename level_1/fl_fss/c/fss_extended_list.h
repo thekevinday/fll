@@ -102,10 +102,10 @@ extern "C" {
  * @return
  *   FL_fss_found_content on success and content was found (start location is at end of content).
  *   FL_fss_found_content_not on success and no content was found (start location is after character designating this is not a content).
- *   F_none_eos on success after reaching the end of the buffer (a valid object is not yet confirmed).
- *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
- *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
- *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
+ *   F_none_eos on success after reaching the end of the buffer (a valid content is not yet confirmed).
+ *   F_none_stop on success after reaching stopping point (a valid content is not yet confirmed).
+ *   F_data_not_eos no content found after reaching the end of the buffer (essentially only comments are found).
+ *   F_data_not_stop no content found after reaching stopping point (essentially only comments are found).
  *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
  *
