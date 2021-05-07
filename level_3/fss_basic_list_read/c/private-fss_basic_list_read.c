@@ -426,7 +426,10 @@ extern "C" {
   f_status_t fss_basic_list_read_process_at(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
-      if (names[data->depths.array[0].value_at] && (data->option & fss_basic_list_read_data_option_total)) {
+      if (!data->objects.used) {
+        fss_extended_list_read_print_zero(main);
+      }
+      else if (names[data->depths.array[0].value_at] && (data->option & fss_basic_list_read_data_option_total)) {
         fss_basic_list_read_print_zero(main);
       }
 
@@ -438,7 +441,6 @@ extern "C" {
     f_array_lengths_t *delimits_content = fss_basic_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
 
     f_array_length_t at = 0;
-    f_array_length_t line = 0;
     f_status_t status = F_none;
 
     for (f_array_length_t i = 0; i < data->objects.used; ++i) {
@@ -447,6 +449,8 @@ extern "C" {
 
       if (at == data->depths.array[0].value_at) {
         if (data->option & fss_basic_list_read_data_option_line) {
+          f_array_length_t line = 0;
+
           status = fss_basic_list_read_process_at_line(at, *delimits_object, *delimits_content, main, data, &line);
           if (status == F_success) return F_none;
         }
@@ -586,27 +590,18 @@ extern "C" {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
 
-    if (data->depths.array[0].index_name > 0) {
+    if (data->depths.array[0].index_name) {
       f_array_length_t i = 0;
 
       memset(names, F_false, sizeof(bool) * data->objects.used);
 
-      if (data->option & fss_basic_list_read_data_option_trim) {
-        for (i = 0; i < data->objects.used; ++i) {
+      // This standard should always tread selected names as trimmed.
+      for (i = 0; i < data->objects.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
-            names[i] = F_true;
-          }
-        } // for
-      }
-      else {
-        for (i = 0; i < data->objects.used; ++i) {
-
-           if (fl_string_dynamic_partial_compare_except_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
-            names[i] = F_true;
-          }
-        } // for
-      }
+        if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
+          names[i] = F_true;
+        }
+      } // for
     }
     else {
       memset(names, F_true, sizeof(bool) * data->objects.used);

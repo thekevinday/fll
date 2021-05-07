@@ -466,7 +466,10 @@ extern "C" {
   f_status_t fss_extended_read_process_at(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
-      if (names[data->depths.array[0].value_at] && (data->option & fss_extended_read_data_option_total)) {
+      if (!data->objects.used) {
+        fss_extended_list_read_print_zero(main);
+      }
+      else if (names[data->depths.array[0].value_at] && (data->option & fss_extended_read_data_option_total)) {
         fss_extended_read_print_zero(main);
       }
 
@@ -489,9 +492,8 @@ extern "C" {
     f_array_lengths_t *delimits_content = fss_extended_read_delimit_content_is((data->option & fss_extended_read_data_option_select) ? data->select : 0, data) ? &data->delimits_content : &except_none;
 
     f_array_length_t at = 0;
-    f_array_length_t i = 0;
 
-    for (; i < data->objects.used; ++i) {
+    for (f_array_length_t i = 0; i < data->objects.used; ++i) {
 
       if (!names[i]) continue;
 
@@ -580,7 +582,7 @@ extern "C" {
 
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
 
-    if (data->depths.array[0].index_name > 0) {
+    if (data->depths.array[0].index_name) {
       f_array_length_t i = 0;
 
       memset(names, F_false, sizeof(bool) * data->objects.used);
