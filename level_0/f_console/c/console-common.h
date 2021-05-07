@@ -168,9 +168,12 @@ extern "C" {
 
 /**
  * The maximum size for a single parameter (the length of the string representing the parameter).
+ *
+ * The ideal parameter value is f_array_length_t_size, which generally defaults to 2^64 (unsigned).
+ * However, the libc/POSIX appears to limit this to 2^63 (signed).
  */
 #ifndef _di_f_console_length_size_
-  #define f_console_parameter_size f_array_length_t_size
+  #define f_console_parameter_size f_type_size_max_64_positive
 #endif // _di_f_console_length_size_
 
 /**

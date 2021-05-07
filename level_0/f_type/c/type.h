@@ -187,12 +187,16 @@ extern "C" {
 
 /**
  * Defines a variable to be used by arrays.
+ *
+ * There are problems in some libc's and systems that do not handle lengths greater than 2^63.
+ * This is primarily a problem with libc string functions.
+ * For general compatiblity reasons, this is set to a signed 64-bit integer.
  */
 #ifndef _di_f_array_t_
-  typedef f_number_unsigned_t f_array_length_t;
+  typedef f_number_signed_t f_array_length_t;
 
-  #define f_array_length_t_size     f_number_t_size_unsigned
-  #define f_array_length_t_size_max f_number_t_size_max_unsigned
+  #define f_array_length_t_size     f_type_size_64_positive
+  #define f_array_length_t_size_max f_type_size_max_64_positive
 #endif // _di_f_array_t_
 
 /**

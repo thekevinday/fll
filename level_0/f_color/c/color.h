@@ -15,6 +15,7 @@
 
 // libc includes
 #include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 
 // fll-0 includes
