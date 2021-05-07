@@ -44,7 +44,7 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-defines_all
+defines_all -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 defines_static
 defines_shared
 

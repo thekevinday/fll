@@ -25,7 +25,15 @@ extern "C" {
   }
 #endif // _di_f_thread_key_create_
 
-#ifndef _di_f_thread_attribute_affinity_get_
+#if defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_get_)
+  f_status_t f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t *affinity_set) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!affinity_set) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return F_status_set_error(F_implemented_not);
+  }
+#elif !defined(_di_f_thread_attribute_affinity_get_)
   f_status_t f_thread_attribute_affinity_get(const f_thread_attribute_t attribute, const size_t affinity_size, cpu_set_t *affinity_set) {
     #ifndef _di_level_0_parameter_checking_
       if (!affinity_set) return F_status_set_error(F_parameter);
@@ -41,9 +49,17 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_affinity_get_
+#endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_get_)
 
-#ifndef _di_f_thread_attribute_affinity_set_
+#if defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
+  f_status_t f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t *attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return F_status_set_error(F_implemented_not);
+  }
+#elif !defined(_di_f_thread_attribute_affinity_set_)
   f_status_t f_thread_attribute_affinity_set(const size_t affinity_size, const cpu_set_t *affinity_set, f_thread_attribute_t *attribute) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
@@ -60,7 +76,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_affinity_set_
+#endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
 
 #ifndef _di_f_thread_attribute_clock_get_
   f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t *attribute, clockid_t *id) {
@@ -2978,7 +2994,12 @@ extern "C" {
   }
 #endif // _di_f_thread_signal_mask_
 
-#ifndef _di_f_thread_signal_queue_
+#if defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
+  f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
+
+    return F_status_set_error(F_implemented_not);
+  }
+#elif !defined(_di_f_thread_signal_queue_)
   f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
 
     const int error = pthread_sigqueue(id, signal, value);
@@ -2994,7 +3015,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_signal_queue_
+#endif // defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
 
 #ifndef _di_f_thread_spin_create_
   f_status_t f_thread_spin_create(const int shared, f_thread_spin_t *spin) {

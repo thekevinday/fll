@@ -2,3 +2,5 @@
 
 _di_libcap_ Disable libcap support, allow for compiling and linking without libcap (-lcap).
 _libcap_legacy_only_ Disable functionality provided by later versions of libcap (2.43 and later).
+_pthread_attr_unsupported_ Disable non-portable functionality associated with pthread_attr.
+_pthread_sigqueue_unsupported_ Disable GNU specific sigqueue().
