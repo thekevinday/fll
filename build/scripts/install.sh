@@ -166,7 +166,7 @@ install_main() {
     return 1
   fi
 
-  if [[ $prefix == "" && ! -d $path_build ]] ; then
+  if [[ ! -d $path_build ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
     fi
@@ -175,7 +175,7 @@ install_main() {
     return 1
   fi
 
-  if [[ $destination_prefix != "" && ! -d $destination_prefix ]] ; then
+  if [[ $work == "" && $destination_prefix != "" && ! -d $destination_prefix ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
     fi
@@ -239,7 +239,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_programs ]] ; then
+  if [[ $work == "" && ! -d $destination_programs ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
     fi
@@ -248,7 +248,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_programs_static ]] ; then
+  if [[ $work == "" && ! -d $destination_programs_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination (static) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
     fi
@@ -257,7 +257,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_programs_shared ]] ; then
+  if [[ $work == "" && ! -d $destination_programs_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination (shared) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
     fi
@@ -266,7 +266,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_includes ]] ; then
+  if [[ $work == "" && ! -d $destination_includes ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
     fi
@@ -275,7 +275,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_libraries_static ]] ; then
+  if [[ $work == "" && ! -d $destination_libraries_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination (static) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
     fi
@@ -284,7 +284,7 @@ install_main() {
     return 1
   fi
 
-  if [[ ! -d $destination_libraries_shared ]] ; then
+  if [[ $work == "" && ! -d $destination_libraries_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: the destination (shared) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
     fi
