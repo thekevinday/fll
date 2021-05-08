@@ -7,7 +7,7 @@ Featureless Settings Specification: 0002 - Basic List:
   A colon followed by any whitespace until a newline terminates a valid Object.
   Non-whitespace may not follow the colon of a valid Object.
 
-  Content exists on every line following a valid object until the end of file (or string) or until the next valid Object is found.
+  Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until the next valid Object is found.
   Any content that could be interpreted as a valid Object must have the colon delimited.
 
   There is no single-quote or double-quote delimitation in this specification.

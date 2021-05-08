@@ -25,6 +25,7 @@ extern "C" {
 
     fll_program_print_help_option(output, context, fss_extended_read_short_at, fss_extended_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select Object at this numeric index.");
     fll_program_print_help_option(output, context, fss_extended_read_short_content, fss_extended_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Content (default).");
+    fll_program_print_help_option(output, context, fss_extended_read_short_columns, fss_extended_read_long_columns, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the total number of columns.");
     fll_program_print_help_option(output, context, fss_extended_read_short_delimit, fss_extended_read_long_delimit, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Designate how to handle applying delimits.");
     fll_program_print_help_option(output, context, fss_extended_read_short_depth, fss_extended_read_long_depth, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select Object at this numeric depth.");
     fll_program_print_help_option(output, context, fss_extended_read_short_empty, fss_extended_read_long_empty, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Include empty Content when processing.");
@@ -81,8 +82,7 @@ extern "C" {
 
     fprintf(output.stream, "  The parameter ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_select);
-    fprintf(output.stream, " selects a Content index at a given depth.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "    (This parameter is not synonymous with the depth parameter and does not relate to nested Content).%c", f_string_eol_s[0]);
+    fprintf(output.stream, " selects a Content column.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -174,6 +174,16 @@ extern "C" {
     fprintf(output.stream, " and ");
     f_color_print(output.stream, context.set.notable, "%s", fss_extended_read_delimit_mode_name_all);
     fprintf(output.stream, ", overrule all other delimit values.%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "  The parameters ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_columns);
+    fprintf(output.stream, " and ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_select);
+    fprintf(output.stream, " refer to a Content column.%c", f_string_eol_s[0]);
+    fprintf(output.stream, " The word \"column\" is being loosely defined to refer to a specific Content.%c", f_string_eol_s[0]);
+    fprintf(output.stream, " This is not to be confused with a depth.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -310,6 +320,46 @@ extern "C" {
         } // for
       }
 
+      if (F_status_is_error_not(status) && main->parameters[fss_extended_read_parameter_columns].result == f_console_result_found) {
+        const f_array_length_t parameter_code[] = {
+          fss_extended_read_parameter_depth,
+          fss_extended_read_parameter_line,
+          fss_extended_read_parameter_pipe,
+          fss_extended_read_parameter_select,
+          fss_extended_read_parameter_total,
+        };
+
+        const f_string_t parameter_name[] = {
+          fss_extended_read_long_depth,
+          fss_extended_read_long_line,
+          fss_extended_read_long_pipe,
+          fss_extended_read_long_select,
+          fss_extended_read_long_total,
+        };
+
+        const uint8_t parameter_match[] = {
+          f_console_result_additional,
+          f_console_result_additional,
+          f_console_result_found,
+          f_console_result_additional,
+          f_console_result_found,
+        };
+
+        for (f_array_length_t i = 0; i < 5; ++i) {
+
+          if (main->parameters[parameter_code[i]].result == parameter_match[i]) {
+            f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_columns);
+            f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
+            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter_name[i]);
+            f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+
+            status = F_status_set_error(F_parameter);
+            break;
+          }
+        } // for
+      }
+
       if (F_status_is_error_not(status) && main->parameters[fss_extended_read_parameter_pipe].result == f_console_result_found) {
         if (main->parameters[fss_extended_read_parameter_total].result == f_console_result_found) {
           f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
@@ -320,7 +370,7 @@ extern "C" {
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_found) {
+        else if (main->parameters[fss_extended_read_parameter_line].result == f_console_result_additional) {
           f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
           f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_read_long_pipe);
           f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");

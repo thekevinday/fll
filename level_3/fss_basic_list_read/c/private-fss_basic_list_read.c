@@ -399,6 +399,10 @@ extern "C" {
       return fss_basic_list_read_process_at(main, data, names);
     }
 
+    if (data->option & fss_basic_list_read_data_option_columns) {
+      return fss_basic_list_read_process_columns(main, data, names);
+    }
+
     if (data->option & fss_basic_list_read_data_option_total) {
       return fss_basic_list_read_process_total(main, data, names);
     }
@@ -426,10 +430,7 @@ extern "C" {
   f_status_t fss_basic_list_read_process_at(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
-      if (!data->objects.used) {
-        fss_extended_list_read_print_zero(main);
-      }
-      else if (names[data->depths.array[0].value_at] && (data->option & fss_basic_list_read_data_option_total)) {
+      if (data->option & (fss_basic_list_read_data_option_columns | fss_basic_list_read_data_option_total)) {
         fss_basic_list_read_print_zero(main);
       }
 
@@ -453,6 +454,9 @@ extern "C" {
 
           status = fss_basic_list_read_process_at_line(at, *delimits_object, *delimits_content, main, data, &line);
           if (status == F_success) return F_none;
+        }
+        else if (data->option & fss_basic_list_read_data_option_columns) {
+          fprintf(main->output.stream, "%llu%c", data->contents.array[i].used, f_string_eol_s[0]);
         }
         else if (data->option & fss_basic_list_read_data_option_total) {
           if (data->contents.array[i].used) {
@@ -479,6 +483,32 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fss_basic_list_read_process_at_
+
+#ifndef _di_fss_basic_list_read_process_columns_
+  f_status_t fss_basic_list_read_process_columns(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, bool names[]) {
+
+    if (!(data->option & fss_basic_list_read_data_option_content)) {
+      fss_basic_list_read_print_zero(main);
+
+      return F_none;
+    }
+
+    f_array_length_t max = 0;
+
+    for (f_array_length_t at = 0; at < data->contents.used; ++at) {
+
+      if (!names[at]) continue;
+
+      if (data->contents.array[at].used > max) {
+        max = data->contents.array[at].used;
+      }
+    } // for
+
+    fprintf(main->output.stream, "%llu%c", max, f_string_eol_s[0]);
+
+    return F_none;
+  }
+#endif // _di_fss_basic_list_read_process_columns_
 
 #ifndef _di_fss_basic_list_read_process_at_line_
   f_status_t fss_basic_list_read_process_at_line(const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data, f_array_length_t *line) {
@@ -618,6 +648,10 @@ extern "C" {
 
     if (main->parameters[fss_basic_list_read_parameter_at].result == f_console_result_additional) {
       data->option |= fss_basic_list_read_data_option_at;
+    }
+
+    if (main->parameters[fss_basic_list_read_parameter_columns].result == f_console_result_found) {
+      data->option |= fss_basic_list_read_data_option_columns;
     }
 
     if (main->parameters[fss_basic_list_read_parameter_content].result == f_console_result_found) {

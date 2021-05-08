@@ -117,6 +117,7 @@ extern "C" {
  *
  * fss_basic_read_data_option_*:
  *   - at:      The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - columns: The total columns found and selected is printed instead of the Content.
  *   - content: The Content is to be printed.
  *   - empty:   Empty Content will be printed (Objects that have no Content will have their empty Content printed).
  *   - line:    A specific Content at a given line is to be selected (Think of this as select a row for some Content).
@@ -140,14 +141,15 @@ extern "C" {
  */
 #ifndef _di_fss_basic_read_data_t_
   #define fss_basic_read_data_option_at      0x1
-  #define fss_basic_read_data_option_content 0x2
-  #define fss_basic_read_data_option_empty   0x4
-  #define fss_basic_read_data_option_line    0x8
-  #define fss_basic_read_data_option_name    0x10
-  #define fss_basic_read_data_option_object  0x20
-  #define fss_basic_read_data_option_select  0x40
-  #define fss_basic_read_data_option_total   0x80
-  #define fss_basic_read_data_option_trim    0x100
+  #define fss_basic_read_data_option_columns 0x2
+  #define fss_basic_read_data_option_content 0x4
+  #define fss_basic_read_data_option_empty   0x8
+  #define fss_basic_read_data_option_line    0x10
+  #define fss_basic_read_data_option_name    0x20
+  #define fss_basic_read_data_option_object  0x40
+  #define fss_basic_read_data_option_select  0x80
+  #define fss_basic_read_data_option_total   0x100
+  #define fss_basic_read_data_option_trim    0x200
 
   typedef struct {
     uint16_t option;

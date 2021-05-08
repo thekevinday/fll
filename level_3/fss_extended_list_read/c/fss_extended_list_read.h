@@ -68,6 +68,7 @@ extern "C" {
 
   #define fss_extended_list_read_short_at      "a"
   #define fss_extended_list_read_short_content "c"
+  #define fss_extended_list_read_short_columns "C"
   #define fss_extended_list_read_short_delimit "D"
   #define fss_extended_list_read_short_depth   "d"
   #define fss_extended_list_read_short_empty   "e"
@@ -81,6 +82,7 @@ extern "C" {
 
   #define fss_extended_list_read_long_at      "at"
   #define fss_extended_list_read_long_content "content"
+  #define fss_extended_list_read_long_columns "columns"
   #define fss_extended_list_read_long_delimit "delimit"
   #define fss_extended_list_read_long_depth   "depth"
   #define fss_extended_list_read_long_empty   "empty"
@@ -105,6 +107,7 @@ extern "C" {
 
     fss_extended_list_read_parameter_at,
     fss_extended_list_read_parameter_content,
+    fss_extended_list_read_parameter_columns,
     fss_extended_list_read_parameter_delimit,
     fss_extended_list_read_parameter_depth,
     fss_extended_list_read_parameter_empty,
@@ -130,6 +133,7 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_at, fss_extended_list_read_long_at, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_content, fss_extended_list_read_long_content, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_extended_list_read_short_columns, fss_extended_list_read_long_columns, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_delimit, fss_extended_list_read_long_delimit, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_depth, fss_extended_list_read_long_depth, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_extended_list_read_short_empty, fss_extended_list_read_long_empty, 0, 0, f_console_type_normal), \
@@ -142,7 +146,7 @@ extern "C" {
       f_console_parameter_t_initialize(fss_extended_list_read_short_trim, fss_extended_list_read_long_trim, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_extended_list_read_total_parameters 21
+  #define fss_extended_list_read_total_parameters 22
 #endif // _di_fss_extended_list_read_defines_
 
 /**

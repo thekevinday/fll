@@ -6,8 +6,9 @@ Featureless Settings Specification: 0001 - Extended:
   An Object may be followed by a newline, in which case means that the Object has no Content.
 
   Content exists on the same line as the Object.
-  Content of whitespace separated sets until the newline.
-  Any number of sets may exist in the Content until the newline is reached.
+  Content is represented as multiple Content columns.
+  Content columns are whitespace separated parts within the Content and terminated by a newline.
+  Any number of Content columns may exist in the Content until the newline is reached.
 
   Key\:
     \s = whitespace, except newline.

@@ -2,10 +2,11 @@
 
 Featureless Settings Specification: 000C - Iki Text:
   IKI is an unstructured WIKI-like syntax meant to be simpler than WIKI syntax.
-  This fss specification represents a plain text file not following any special FSS structure but instead supports the IKI syntax.
+  This FSS specification represents a plain text file not following any special FSS structure but instead supports the IKI syntax.
   The IKI syntax may be used in any FSS specification and the specific vocabulary is defined by appending
 
   For compatibility with the FSS terminology, the Vocabulary Name is to be considered the Object and the Vocabulary value is to be considered the Content.
+  The Content column, therefore, exists as a single Column (which is the entire Vocabulary value).
 
   There is no requirement for any specific IKI vocabulary by this standard only that the given syntax is supported.
   To specify the IKI vocabulary being used append the IKI vocabulary header immediately after the fss header like such: "# fss-000c iki-0001".

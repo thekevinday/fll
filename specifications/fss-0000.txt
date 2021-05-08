@@ -6,9 +6,10 @@ Featureless Settings Specification: 0000 - Basic:
   An Object may be followed by a newline, in which case means that the Object has no Content.
 
   Content exists on the same line as the Object.
-  Content consists of everything following the first non-whitespace character until the newline.
-  Content includes trailing whitespace before newline is reached.
-  Content does not include any of the leading whitespace.
+  Content is represented as a single Content column terminated by a newline.
+  Content column consists of everything following the first non-whitespace character until the newline.
+  Content column includes trailing whitespace before newline is reached.
+  Content column does not include any of the leading whitespace.
   No delimits are supported in the content.
 
   If only printing whitespace follows a valid Object, that Object is considered to have no Content.
