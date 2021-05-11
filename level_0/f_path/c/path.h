@@ -12,9 +12,13 @@
 
 // libc includes
 #include <limits.h>
-#include <linux/limits.h> // defines PATH_MAX
 #include <stdlib.h>
 #include <string.h>
+
+// If limits.h does not provide PATH_MAX, define it instead of relying on <linux/limits.h>.
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif /* PATH_MAX */
 
 // fll-0 includes
 #include <fll/level_0/type.h>
