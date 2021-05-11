@@ -58,7 +58,11 @@ install_main() {
   local work=
 
   local enable_shared=
+  local enable_shared_programs="yes"
+  local enable_shared_libraries="yes"
   local enable_static=
+  local enable_static_programs="yes"
+  local enable_static_libraries="yes"
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -101,6 +105,14 @@ install_main() {
           enable_shared="yes"
         elif [[ $p == "--disable-shared" ]] ; then
           enable_shared="no"
+        elif [[ $p == "--disable-shared-programs" ]] ; then
+          enable_shared_programs="no"
+        elif [[ $p == "--disable-shared-libraries" ]] ; then
+          enable_shared_libraries="no"
+        elif [[ $p == "--disable-static-programs" ]] ; then
+          enable_static_programs="no"
+        elif [[ $p == "--disable-static-libraries" ]] ; then
+          enable_static_libraries="no"
         elif [[ $p == "--enable-static" ]] ; then
           enable_static="yes"
         elif [[ $p == "--disable-static" ]] ; then
@@ -347,14 +359,18 @@ install_help() {
   echo -e " -${c_important}w$c_reset, --${c_important}work${c_reset}        Install to this directory instead of system."
   echo
   echo -e "${c_highlight}Special Options:$c_reset"
-  echo -e " --${c_important}enable-shared${c_reset}     Forcibly do install shared files."
-  echo -e " --${c_important}disable-shared${c_reset}    Forcibly do not install shared files."
-  echo -e " --${c_important}enable-static${c_reset}     Forcibly do install static files."
-  echo -e " --${c_important}disable-static${c_reset}    Forcibly do not install static files."
-  echo -e " --${c_important}libraries-static${c_reset}  Custom destination for static libraries."
-  echo -e " --${c_important}libraries-shared${c_reset}  Custom destination for shared libraries."
-  echo -e " --${c_important}programs-static${c_reset}   Custom destination for static programs."
-  echo -e " --${c_important}programs-shared${c_reset}   Custom destination for shared programs."
+  echo -e " --${c_important}enable-shared${c_reset}             Forcibly do install shared files."
+  echo -e " --${c_important}disable-shared${c_reset}            Forcibly do not install shared files."
+  echo -e " --${c_important}disable-shared-programs${c_reset}   Forcibly do not install shared programs."
+  echo -e " --${c_important}disable-shared-libraries${c_reset}  Forcibly do not install shared libraries."
+  echo -e " --${c_important}enable-static${c_reset}             Forcibly do install static files."
+  echo -e " --${c_important}disable-static${c_reset}            Forcibly do not install static files."
+  echo -e " --${c_important}disable-static-programs${c_reset}   Forcibly do not install shared programs."
+  echo -e " --${c_important}disable-static-libraries${c_reset}  Forcibly do not install shared libraries."
+  echo -e " --${c_important}libraries-static${c_reset}          Custom destination for static libraries."
+  echo -e " --${c_important}libraries-shared${c_reset}          Custom destination for shared libraries."
+  echo -e " --${c_important}programs-static${c_reset}           Custom destination for static programs."
+  echo -e " --${c_important}programs-shared${c_reset}           Custom destination for shared programs."
   echo
 }
 
@@ -535,7 +551,7 @@ install_perform_install() {
   fi
 
   if [[ $failure == "" && ( $build_sources_library != "" || $build_sources_program != "" ) ]] ; then
-    if [[ $build_static == "yes" ]] ; then
+    if [[ $build_static == "yes" && $enable_static_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (static) Libraries to: $c_reset$c_notice$destination_libraries_static$c_reset${c_highlight}.$c_reset"
@@ -552,7 +568,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ $failure == "" && $build_shared == "yes" ]] ; then
+    if [[ $failure == "" && $build_shared == "yes" && $enable_shared_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Libraries to: $c_reset$c_notice$destination_libraries_shared$c_reset${c_highlight}.$c_reset"
@@ -571,7 +587,7 @@ install_perform_install() {
   fi
 
   if [[ $failure == "" && $build_sources_program != "" ]] ; then
-    if [[ $build_static == "yes" ]] ; then
+    if [[ $build_static == "yes" && $enable_static_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (static) Programs to: $c_reset$c_notice$destination_programs_static$c_reset${c_highlight}.$c_reset"
@@ -588,7 +604,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ $failure == "" && $build_shared == "yes" ]] ; then
+    if [[ $failure == "" && $build_shared == "yes" && $enable_shared_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Programs to: $c_reset$c_notice$destination_programs_shared$c_reset${c_highlight}.$c_reset"
