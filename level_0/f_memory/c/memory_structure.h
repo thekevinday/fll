@@ -117,6 +117,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param type_size
  *   The size of the structure type (such as: sizeof(structure_size)).
  *   Must be greater than 0.
@@ -139,7 +142,7 @@ extern "C" {
  * @see memset()
  */
 #ifndef _di_f_memory_structure_increase_
-  extern f_status_t f_memory_structure_increase(const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
+  extern f_status_t f_memory_structure_increase(const uint16_t step, const size_t type_size, void **structure, f_array_length_t *used, f_array_length_t *size);
 #endif // _di_f_memory_structure_increase_
 
 /**

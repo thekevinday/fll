@@ -479,7 +479,7 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small)
 
     if (F_status_is_error(status)) {
       controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
@@ -583,7 +583,7 @@ extern "C" {
 
               if (error_has) break;
 
-              macro_f_array_lengths_t_increase_by(status2, cache->ats, controller_default_allocation_step)
+              macro_f_array_lengths_t_increase_by(status2, cache->ats, controller_common_allocation_small)
 
               if (F_status_is_error(status2)) {
                 controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status2), "macro_f_array_lengths_t_increase_by", F_true, global.thread);
@@ -723,7 +723,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+    macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small)
 
     if (F_status_is_error(status)) {
       controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);
@@ -971,7 +971,7 @@ extern "C" {
             return F_status_is_error(F_critical);
           }
 
-          macro_f_array_lengths_t_increase_by(status, cache->ats, controller_default_allocation_step)
+          macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small)
 
           if (F_status_is_error(status)) {
             controller_entry_error_print(is_entry, global->main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, global->thread);

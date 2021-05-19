@@ -46,13 +46,14 @@ extern "C" {
 #endif // _di_f_fss_named_decrease_by_
 
 #ifndef _di_f_fss_named_increase_
-  f_status_t f_fss_named_increase(f_fss_named_t *named) {
+  f_status_t f_fss_named_increase(const uint16_t step, f_fss_named_t *named) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (named->objects.used + 1 > named->objects.size) {
-      f_array_length_t size = named->objects.used + f_memory_default_allocation_step;
+      f_array_length_t size = named->objects.used + step;
 
       if (size > f_array_length_t_size) {
         if (named->objects.used + 1 > f_array_length_t_size) {
@@ -139,13 +140,14 @@ extern "C" {
 #endif // _di_f_fss_nameds_decrease_by_
 
 #ifndef _di_f_fss_nameds_increase_
-  f_status_t f_fss_nameds_increase(f_fss_nameds_t *nameds) {
+  f_status_t f_fss_nameds_increase(const uint16_t step, f_fss_nameds_t *nameds) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (nameds->used + 1 > nameds->size) {
-      f_array_length_t size = nameds->used + f_memory_default_allocation_step;
+      f_array_length_t size = nameds->used + step;
 
       if (size > f_array_length_t_size) {
         if (nameds->used + 1 > f_array_length_t_size) {

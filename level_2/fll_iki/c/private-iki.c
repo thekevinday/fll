@@ -38,7 +38,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (escaped->used + 1 > escaped->size) {
-          status = f_string_dynamic_increase_by(f_memory_default_allocation_step, escaped);
+          status = f_string_dynamic_increase_by(f_memory_default_allocation_small, escaped);
           if (F_status_is_error(status)) return status;
         }
 
@@ -173,7 +173,7 @@ extern "C" {
       }
       else if (content.string[i]) {
         if (unescaped->used + 1 > unescaped->size) {
-          status = f_string_dynamic_increase_by(f_memory_default_allocation_step, unescaped);
+          status = f_string_dynamic_increase_by(f_memory_default_allocation_small, unescaped);
           if (F_status_is_error(status)) return status;
         }
 

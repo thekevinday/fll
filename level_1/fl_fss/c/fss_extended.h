@@ -37,6 +37,15 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -61,6 +70,7 @@ extern "C" {
  *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
  *
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
@@ -72,7 +82,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits);
+  extern f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quoted, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -82,6 +92,15 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -105,6 +124,7 @@ extern "C" {
  *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
  *
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_utf_buffer_increment().
@@ -115,7 +135,7 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_skip_past_space().
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits);
+  extern f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_quotes_t *quotes, f_fss_delimits_t *delimits);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
@@ -136,6 +156,15 @@ extern "C" {
  *   If f_fss_complete_none, then only the object name is written.
  *   If f_fss_complete_full, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this object.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the object string to write as an object.
  * @param destination
@@ -149,6 +178,7 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_memory_not (with error bit) on out of memory.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -159,7 +189,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_object_write_string_
-  extern f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_object_write_string_
 
 /**
@@ -181,6 +211,15 @@ extern "C" {
  *   If f_fss_complete_end, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
  *   If f_fss_complete_partial, this will write any appropriate open and close aspects of this content, except for the final newline.
  *   If f_fss_complete_full, this will write any appropriate open and close aspects of this content, including the final newline.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the content string to write as an content.
  * @param destination
@@ -194,6 +233,7 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_memory_not (with error bit) on out of memory.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -204,7 +244,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_buffer_increment().
  */
 #ifndef _di_fl_fss_extended_content_write_string_
-  extern f_status_t fl_fss_extended_content_write_string(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination);
+  extern f_status_t fl_fss_extended_content_write_string(const f_string_static_t content, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination);
 #endif // _di_fl_fss_extended_content_write_string_
 
 #ifdef __cplusplus

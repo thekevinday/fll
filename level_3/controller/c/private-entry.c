@@ -214,9 +214,11 @@ extern "C" {
     } // while
 
     {
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(F_true, global.thread);
+      f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
-      status = fll_fss_extended_read(cache->buffer_file, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+      status = fll_fss_extended_read(cache->buffer_file, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
     }
 
     if (F_status_is_error(status)) {
@@ -815,9 +817,11 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
+        f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
         f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
 
-        status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
+        status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
           controller_error_print(global.main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, global.thread);
@@ -886,7 +890,7 @@ extern "C" {
           cache->action.name_action.used = 0;
           cache->action.name_item.used = 0;
 
-          status = controller_entry_items_increase_by(controller_default_allocation_step, &entry->items);
+          status = controller_entry_items_increase_by(controller_common_allocation_small, &entry->items);
 
           if (F_status_is_error(status)) {
             controller_entry_error_print(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_items_increase_by", F_true, global.thread);
@@ -1104,9 +1108,11 @@ extern "C" {
     f_status_t status = F_none;
 
     {
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
+      f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
-      status = fll_fss_extended_read(cache->buffer_file, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+      status = fll_fss_extended_read(cache->buffer_file, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
     }
 
     if (F_status_is_error(status)) {

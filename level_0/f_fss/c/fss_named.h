@@ -50,7 +50,7 @@ extern "C" {
   #define macro_f_fss_named_t_delete_simple(named)  f_fss_named_resize(0, &named);
   #define macro_f_fss_named_t_destroy_simple(named) f_fss_named_adjust(0, &named);
 
-  #define macro_f_fss_named_t_increase(status, named)            status = f_fss_named_increase(&named);
+  #define macro_f_fss_named_t_increase(status, step, named)            status = f_fss_named_increase(step, &named);
   #define macro_f_fss_named_t_increase_by(status, named, amount) status = f_fss_named_increase_by(amount, &named);
   #define macro_f_fss_named_t_decrease_by(status, named, amount) status = f_fss_named_decrease_by(amount, &named);
   #define macro_f_fss_named_t_decimate_by(status, named, amount) status = f_fss_named_decimate_by(amount, &named);
@@ -81,7 +81,7 @@ extern "C" {
   #define macro_f_fss_nameds_t_delete_simple(nameds)  f_fss_nameds_resize(0, &nameds);
   #define macro_f_fss_nameds_t_destroy_simple(nameds) f_fss_nameds_adjust(0, &nameds);
 
-  #define macro_f_fss_nameds_t_increase(status, nameds)            status = f_fss_nameds_increase(&nameds);
+  #define macro_f_fss_nameds_t_increase(status, step, nameds)      status = f_fss_nameds_increase(step, &nameds);
   #define macro_f_fss_nameds_t_increase_by(status, nameds, amount) status = f_fss_nameds_increase_by(amount, &nameds);
   #define macro_f_fss_nameds_t_decrease_by(status, nameds, amount) status = f_fss_nameds_decrease_by(amount, &nameds);
   #define macro_f_fss_nameds_t_decimate_by(status, nameds, amount) status = f_fss_nameds_decimate_by(amount, &nameds);
@@ -155,6 +155,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param named
  *   The named array to resize.
  *
@@ -167,7 +170,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_named_increase_
-  extern f_status_t f_fss_named_increase(f_fss_named_t *named);
+  extern f_status_t f_fss_named_increase(const uint16_t step, f_fss_named_t *named);
 #endif // _di_f_fss_named_increase_
 
 /**
@@ -280,6 +283,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param nameds
  *   The nameds array to resize.
  *
@@ -292,7 +298,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nameds_increase_
-  extern f_status_t f_fss_nameds_increase(f_fss_nameds_t *nameds);
+  extern f_status_t f_fss_nameds_increase(const uint16_t step, f_fss_nameds_t *nameds);
 #endif // _di_f_fss_nameds_increase_
 
 /**

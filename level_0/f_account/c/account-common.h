@@ -101,7 +101,7 @@ extern "C" {
   #define macro_f_string_accounts_t_delete_simple(accounts)  macro_f_memory_structure_delete_simple(values, sizeof(f_account_t), 0)
   #define macro_f_string_accounts_t_destroy_simple(accounts) macro_f_memory_structure_destroy_simple(values, sizeof(f_account_t), 0)
 
-  #define macro_f_string_accounts_t_increase(status, values)            macro_f_memory_structure_increase(status, values, f_account_t)
+  #define macro_f_string_accounts_t_increase(status, step, values)      macro_f_memory_structure_increase(status, step, values, f_account_t)
   #define macro_f_string_accounts_t_increase_by(status, values, amount) macro_f_memory_structure_increase_by(status, values, f_account_t, amount)
   #define macro_f_string_accounts_t_decrease_by(status, values, amount) macro_f_memory_structure_decrease_by(status, values, f_account_t, amount)
   #define macro_f_string_accounts_t_decimate_by(status, values, amount) macro_f_memory_structure_decimate_by(status, values, f_account_t, amount)

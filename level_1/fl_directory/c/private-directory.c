@@ -164,7 +164,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, macro_f_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_small, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;
@@ -369,7 +369,7 @@ extern "C" {
 
       const f_status_t status_failure = status;
 
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_step, macro_f_directory_statuss_t_resize, F_array_too_large);
+      macro_f_memory_structure_increment(status, (*recurse.failures), 1, f_memory_default_allocation_small, macro_f_directory_statuss_t_resize, F_array_too_large);
       if (F_status_is_error(status)) return status;
 
       f_directory_status_t failure = f_directory_status_t_initialize;

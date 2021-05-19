@@ -68,7 +68,7 @@ extern "C" {
   #define macro_f_string_maps_t_delete_simple(maps)  f_string_maps_resize(0, &maps);
   #define macro_f_string_maps_t_destroy_simple(maps) f_string_maps_adjust(0, &maps);
 
-  #define macro_f_string_maps_t_increase(status, maps)            status = f_string_maps_increase(maps);
+  #define macro_f_string_maps_t_increase(status, step, maps)      status = f_string_maps_increase(step, maps);
   #define macro_f_string_maps_t_increase_by(status, maps, amount) status = f_string_maps_increase_by(amount, maps);
   #define macro_f_string_maps_t_decrease_by(status, maps, amount) status = f_string_maps_decrease_by(amount, maps);
   #define macro_f_string_maps_t_decimate_by(status, maps, amount) status = f_string_maps_decimate_by(amount, maps);
@@ -126,7 +126,7 @@ extern "C" {
   #define macro_f_string_map_multis_t_delete_simple(map_multis)  f_string_map_multis_resize(0, &map_multis);
   #define macro_f_string_map_multis_t_destroy_simple(map_multis) f_string_map_multis_adjust(0, &map_multis);
 
-  #define macro_f_string_map_multis_t_increase(status, map_multis)            status = f_string_map_multis_increase(&map_multis);
+  #define macro_f_string_map_multis_t_increase(status, step, map_multis)      status = f_string_map_multis_increase(step, &map_multis);
   #define macro_f_string_map_multis_t_increase_by(status, map_multis, amount) status = f_string_map_multis_increase_by(amount, &map_multis);
   #define macro_f_string_map_multis_t_decrease_by(status, map_multis, amount) status = f_string_map_multis_decrease_by(amount, &map_multis);
   #define macro_f_string_map_multis_t_decimate_by(status, map_multis, amount) status = f_string_map_multis_decimate_by(amount, &map_multis);
@@ -224,6 +224,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param map_multis
  *   The map_multis array to resize.
  *
@@ -237,7 +240,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_map_multis_increase_
-  extern f_status_t f_string_map_multis_increase(f_string_map_multis_t *map_multis);
+  extern f_status_t f_string_map_multis_increase(const uint16_t step, f_string_map_multis_t *map_multis);
 #endif // _di_f_string_map_multis_increase_
 
 /**
@@ -376,6 +379,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param maps
  *   The string maps array to resize.
  *
@@ -389,7 +395,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_maps_increase_
-  extern f_status_t f_string_maps_increase(f_string_maps_t *maps);
+  extern f_status_t f_string_maps_increase(const uint16_t step, f_string_maps_t *maps);
 #endif // _di_f_string_maps_increase_
 
 /**

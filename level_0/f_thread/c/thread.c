@@ -536,13 +536,14 @@ extern "C" {
 #endif // _di_f_thread_attributes_decrease_by_
 
 #ifndef _di_f_thread_attributes_increase_
-  f_status_t f_thread_attributes_increase(f_thread_attributes_t *attributes) {
+  f_status_t f_thread_attributes_increase(const uint16_t step, f_thread_attributes_t *attributes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+      f_array_length_t size = attributes->used + step;
 
       if (size > f_array_length_t_size) {
         if (attributes->used + 1 > f_array_length_t_size) {
@@ -687,13 +688,14 @@ extern "C" {
 #endif // _di_f_thread_barrier_attributes_decrease_by_
 
 #ifndef _di_f_thread_barrier_attributes_increase_
-  f_status_t f_thread_barrier_attributes_increase(f_thread_barrier_attributes_t *attributes) {
+  f_status_t f_thread_barrier_attributes_increase(const uint16_t step, f_thread_barrier_attributes_t *attributes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+      f_array_length_t size = attributes->used + step;
 
       if (size > f_array_length_t_size) {
         if (attributes->used + 1 > f_array_length_t_size) {
@@ -822,13 +824,14 @@ extern "C" {
 #endif // _di_f_thread_barriers_decrease_by_
 
 #ifndef _di_f_thread_barriers_increase_
-  f_status_t f_thread_barriers_increase(f_thread_barriers_t *barriers) {
+  f_status_t f_thread_barriers_increase(const uint16_t step, f_thread_barriers_t *barriers) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!barriers) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (barriers->used + 1 > barriers->size) {
-      f_array_length_t size = barriers->used + f_memory_default_allocation_step;
+      f_array_length_t size = barriers->used + step;
 
       if (size > f_array_length_t_size) {
         if (barriers->used + 1 > f_array_length_t_size) {
@@ -1069,13 +1072,14 @@ extern "C" {
 #endif // _di_f_thread_condition_attributes_decrease_by_
 
 #ifndef _di_f_thread_condition_attributes_increase_
-  f_status_t f_thread_condition_attributes_increase(f_thread_condition_attributes_t *attributes) {
+  f_status_t f_thread_condition_attributes_increase(const uint16_t step, f_thread_condition_attributes_t *attributes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+      f_array_length_t size = attributes->used + step;
 
       if (size > f_array_length_t_size) {
         if (attributes->used + 1 > f_array_length_t_size) {
@@ -1274,13 +1278,14 @@ extern "C" {
 #endif // _di_f_thread_conditions_decrease_by_
 
 #ifndef _di_f_thread_conditions_increase_
-  f_status_t f_thread_conditions_increase(f_thread_conditions_t *conditions) {
+  f_status_t f_thread_conditions_increase(const uint16_t step, f_thread_conditions_t *conditions) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!conditions) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (conditions->used + 1 > conditions->size) {
-      f_array_length_t size = conditions->used + f_memory_default_allocation_step;
+      f_array_length_t size = conditions->used + step;
 
       if (size > f_array_length_t_size) {
         if (conditions->used + 1 > f_array_length_t_size) {
@@ -1533,13 +1538,14 @@ extern "C" {
 #endif // _di_f_thread_keys_decrease_by_
 
 #ifndef _di_f_thread_keys_increase_
-  f_status_t f_thread_keys_increase(f_thread_keys_t *keys) {
+  f_status_t f_thread_keys_increase(const uint16_t step, f_thread_keys_t *keys) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!keys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (keys->used + 1 > keys->size) {
-      f_array_length_t size = keys->used + f_memory_default_allocation_step;
+      f_array_length_t size = keys->used + step;
 
       if (size > f_array_length_t_size) {
         if (keys->used + 1 > f_array_length_t_size) {
@@ -1692,13 +1698,14 @@ extern "C" {
 #endif // _di_f_thread_lock_attributes_decrease_by_
 
 #ifndef _di_f_thread_lock_attributes_increase_
-  f_status_t f_thread_lock_attributes_increase(f_thread_lock_attributes_t *attributes) {
+  f_status_t f_thread_lock_attributes_increase(const uint16_t step, f_thread_lock_attributes_t *attributes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+      f_array_length_t size = attributes->used + step;
 
       if (size > f_array_length_t_size) {
         if (attributes->used + 1 > f_array_length_t_size) {
@@ -1938,13 +1945,14 @@ extern "C" {
 #endif // _di_f_thread_locks_decrease_by_
 
 #ifndef _di_f_thread_locks_increase_
-  f_status_t f_thread_locks_increase(f_thread_locks_t *locks) {
+  f_status_t f_thread_locks_increase(const uint16_t step, f_thread_locks_t *locks) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!locks) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (locks->used + 1 > locks->size) {
-      f_array_length_t size = locks->used + f_memory_default_allocation_step;
+      f_array_length_t size = locks->used + step;
 
       if (size > f_array_length_t_size) {
         if (locks->used + 1 > f_array_length_t_size) {
@@ -2209,13 +2217,14 @@ extern "C" {
 #endif // _di_f_thread_mutex_attributes_decrease_by_
 
 #ifndef _di_f_thread_mutex_attributes_increase_
-  f_status_t f_thread_mutex_attributes_increase(f_thread_mutex_attributes_t *attributes) {
+  f_status_t f_thread_mutex_attributes_increase(const uint16_t step, f_thread_mutex_attributes_t *attributes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + f_memory_default_allocation_step;
+      f_array_length_t size = attributes->used + step;
 
       if (size > f_array_length_t_size) {
         if (attributes->used + 1 > f_array_length_t_size) {
@@ -2639,13 +2648,14 @@ extern "C" {
 #endif // _di_f_thread_mutexs_decrease_by_
 
 #ifndef _di_f_thread_mutexs_increase_
-  f_status_t f_thread_mutexs_increase(f_thread_mutexs_t *mutexs) {
+  f_status_t f_thread_mutexs_increase(const uint16_t step, f_thread_mutexs_t *mutexs) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!mutexs) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (mutexs->used + 1 > mutexs->size) {
-      f_array_length_t size = mutexs->used + f_memory_default_allocation_step;
+      f_array_length_t size = mutexs->used + step;
 
       if (size > f_array_length_t_size) {
         if (mutexs->used + 1 > f_array_length_t_size) {
@@ -2807,13 +2817,14 @@ extern "C" {
 #endif // _di_f_thread_semaphores_decrease_by_
 
 #ifndef _di_f_thread_semaphores_increase_
-  f_status_t f_thread_semaphores_increase(f_thread_semaphores_t *semaphores) {
+  f_status_t f_thread_semaphores_increase(const uint16_t step, f_thread_semaphores_t *semaphores) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!semaphores) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (semaphores->used + 1 > semaphores->size) {
-      f_array_length_t size = semaphores->used + f_memory_default_allocation_step;
+      f_array_length_t size = semaphores->used + step;
 
       if (size > f_array_length_t_size) {
         if (semaphores->used + 1 > f_array_length_t_size) {
@@ -2900,13 +2911,14 @@ extern "C" {
 #endif // _di_f_thread_sets_decrease_by_
 
 #ifndef _di_f_thread_sets_increase_
-  f_status_t f_thread_sets_increase(f_thread_sets_t *sets) {
+  f_status_t f_thread_sets_increase(const uint16_t step, f_thread_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (sets->used + 1 > sets->size) {
-      f_array_length_t size = sets->used + f_memory_default_allocation_step;
+      f_array_length_t size = sets->used + step;
 
       if (size > f_array_length_t_size) {
         if (sets->used + 1 > f_array_length_t_size) {
@@ -3148,13 +3160,14 @@ extern "C" {
 #endif // _di_f_thread_spins_decrease_by_
 
 #ifndef _di_f_thread_spins_increase_
-  f_status_t f_thread_spins_increase(f_thread_spins_t *spins) {
+  f_status_t f_thread_spins_increase(const uint16_t step, f_thread_spins_t *spins) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!spins) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (spins->used + 1 > spins->size) {
-      f_array_length_t size = spins->used + f_memory_default_allocation_step;
+      f_array_length_t size = spins->used + step;
 
       if (size > f_array_length_t_size) {
         if (spins->used + 1 > f_array_length_t_size) {

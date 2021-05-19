@@ -89,13 +89,14 @@ extern "C" {
 #endif // _di_f_string_triples_decrease_by_
 
 #ifndef _di_f_string_triples_increase_
-  f_status_t f_string_triples_increase(f_string_triples_t *triples) {
+  f_status_t f_string_triples_increase(const uint16_t step, f_string_triples_t *triples) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (triples->used + 1 > triples->size) {
-      f_array_length_t size = triples->used + f_memory_default_allocation_step;
+      f_array_length_t size = triples->used + f_memory_default_allocation_small;
 
       if (size > f_array_length_t_size) {
         if (triples->used + 1 > f_array_length_t_size) {

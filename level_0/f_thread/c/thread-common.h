@@ -55,7 +55,7 @@ extern "C" {
   #define macro_f_thread_attributes_t_delete_simple(attributes)  f_thread_attributes_resize(0, &attributes);
   #define macro_f_thread_attributes_t_destroy_simple(attributes) f_thread_attributes_adjust(0, &attributes);
 
-  #define macro_f_thread_attributes_t_increase(status, attributes)            status = f_thread_attributes_increase(attributes);
+  #define macro_f_thread_attributes_t_increase(status, step, attributes)      status = f_thread_attributes_increase(step, attributes);
   #define macro_f_thread_attributes_t_increase_by(status, attributes, amount) status = f_thread_attributes_increase_by(amount, attributes);
   #define macro_f_thread_attributes_t_decrease_by(status, attributes, amount) status = f_thread_attributes_decrease_by(amount, attributes);
   #define macro_f_thread_attributes_t_decimate_by(status, attributes, amount) status = f_thread_attributes_decimate_by(amount, attributes);
@@ -99,7 +99,7 @@ extern "C" {
   #define macro_f_thread_barriers_t_delete_simple(barriers)  f_thread_barriers_resize(0, &barriers);
   #define macro_f_thread_barriers_t_destroy_simple(barriers) f_thread_barriers_adjust(0, &barriers);
 
-  #define macro_f_thread_barriers_t_increase(status, barriers)            status = f_thread_barriers_increase(barriers);
+  #define macro_f_thread_barriers_t_increase(status, step, barriers)      status = f_thread_barriers_increase(step, barriers);
   #define macro_f_thread_barriers_t_increase_by(status, barriers, amount) status = f_thread_barriers_increase_by(amount, barriers);
   #define macro_f_thread_barriers_t_decrease_by(status, barriers, amount) status = f_thread_barriers_decrease_by(amount, barriers);
   #define macro_f_thread_barriers_t_decimate_by(status, barriers, amount) status = f_thread_barriers_decimate_by(amount, barriers);
@@ -144,7 +144,7 @@ extern "C" {
   #define macro_f_thread_barrier_attributes_t_delete_simple(barrier_attributes)  f_thread_barrier_attributes_resize(0, &barrier_attributes);
   #define macro_f_thread_barrier_attributes_t_destroy_simple(barrier_attributes) f_thread_barrier_attributes_adjust(0, &barrier_attributes);
 
-  #define macro_f_thread_barrier_attributes_t_increase(status, barrier_attributes)            status = f_thread_barrier_attributes_increase(barrier_attributes);
+  #define macro_f_thread_barrier_attributes_t_increase(status, step, barrier_attributes)      status = f_thread_barrier_attributes_increase(step, barrier_attributes);
   #define macro_f_thread_barrier_attributes_t_increase_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_increase_by(amount, barrier_attributes);
   #define macro_f_thread_barrier_attributes_t_decrease_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decrease_by(amount, barrier_attributes);
   #define macro_f_thread_barrier_attributes_t_decimate_by(status, barrier_attributes, amount) status = f_thread_barrier_attributes_decimate_by(amount, barrier_attributes);
@@ -189,7 +189,7 @@ extern "C" {
   #define macro_f_thread_conditions_t_delete_simple(conditions)  f_thread_conditions_resize(0, &conditions);
   #define macro_f_thread_conditions_t_destroy_simple(conditions) f_thread_conditions_adjust(0, &conditions);
 
-  #define macro_f_thread_conditions_t_increase(status, conditions)            status = f_thread_conditions_increase(conditions);
+  #define macro_f_thread_conditions_t_increase(status, step, conditions)      status = f_thread_conditions_increase(step, conditions);
   #define macro_f_thread_conditions_t_increase_by(status, conditions, amount) status = f_thread_conditions_increase_by(amount, conditions);
   #define macro_f_thread_conditions_t_decrease_by(status, conditions, amount) status = f_thread_conditions_decrease_by(amount, conditions);
   #define macro_f_thread_conditions_t_decimate_by(status, conditions, amount) status = f_thread_conditions_decimate_by(amount, conditions);
@@ -234,7 +234,7 @@ extern "C" {
   #define macro_f_thread_condition_attributes_t_delete_simple(attributes)  f_thread_condition_attributes_resize(0, &condition_attributes);
   #define macro_f_thread_condition_attributes_t_destroy_simple(attributes) f_thread_condition_attributes_adjust(0, &condition_attributes);
 
-  #define macro_f_thread_condition_attributes_t_increase(status, attributes)            status = f_thread_condition_attributes_increase(attributes);
+  #define macro_f_thread_condition_attributes_t_increase(status, step, attributes)      status = f_thread_condition_attributes_increase(step, attributes);
   #define macro_f_thread_condition_attributes_t_increase_by(status, attributes, amount) status = f_thread_condition_attributes_increase_by(amount, attributes);
   #define macro_f_thread_condition_attributes_t_decrease_by(status, attributes, amount) status = f_thread_condition_attributes_decrease_by(amount, attributes);
   #define macro_f_thread_condition_attributes_t_decimate_by(status, attributes, amount) status = f_thread_condition_attributes_decimate_by(amount, attributes);
@@ -274,7 +274,7 @@ extern "C" {
   #define macro_f_thread_ids_t_delete_simple(ids)  macro_f_memory_structure_delete_simple(ids, f_thread_id_t)
   #define macro_f_thread_ids_t_destroy_simple(ids) macro_f_memory_structure_destroy_simple(ids, f_thread_id_t)
 
-  #define macro_f_thread_ids_t_increase(status, ids)            macro_f_memory_structure_increase(status, ids, f_thread_id_t)
+  #define macro_f_thread_ids_t_increase(status, step, ids)      macro_f_memory_structure_increase(status, step, ids, f_thread_id_t)
   #define macro_f_thread_ids_t_increase_by(status, ids, amount) macro_f_memory_structure_increase_by(status, ids, f_thread_id_t, amount)
   #define macro_f_thread_ids_t_decrease_by(status, ids, amount) macro_f_memory_structure_decrease_by(status, ids, f_thread_id_t, amount)
   #define macro_f_thread_ids_t_decimate_by(status, ids, amount) macro_f_memory_structure_decimate_by(status, ids, f_thread_id_t, amount)
@@ -318,7 +318,7 @@ extern "C" {
   #define macro_f_thread_keys_t_delete_simple(keys)  f_thread_keys_resize(0, &keys);
   #define macro_f_thread_keys_t_destroy_simple(keys) f_thread_keys_adjust(0, &keys);
 
-  #define macro_f_thread_keys_t_increase(status, keys)            status = f_thread_keys_increase(keys);
+  #define macro_f_thread_keys_t_increase(status, step, keys)      status = f_thread_keys_increase(step, keys);
   #define macro_f_thread_keys_t_increase_by(status, keys, amount) status = f_thread_keys_increase_by(amount, keys);
   #define macro_f_thread_keys_t_decrease_by(status, keys, amount) status = f_thread_keys_decrease_by(amount, keys);
   #define macro_f_thread_keys_t_decimate_by(status, keys, amount) status = f_thread_keys_decimate_by(amount, keys);
@@ -361,7 +361,7 @@ extern "C" {
   #define macro_f_thread_locks_t_delete_simple(locks)  macro_f_memory_structure_delete_simple(locks, f_thread_lock_t)
   #define macro_f_thread_locks_t_destroy_simple(locks) macro_f_memory_structure_destroy_simple(locks, f_thread_lock_t)
 
-  #define macro_f_thread_locks_t_increase(status, locks)            macro_f_memory_structure_increase(status, locks, f_thread_lock_t)
+  #define macro_f_thread_locks_t_increase(status, step, locks)      macro_f_memory_structure_increase(status, step, locks, f_thread_lock_t)
   #define macro_f_thread_locks_t_increase_by(status, locks, amount) macro_f_memory_structure_increase_by(status, locks, f_thread_lock_t, amount)
   #define macro_f_thread_locks_t_decrease_by(status, locks, amount) macro_f_memory_structure_decrease_by(status, locks, f_thread_lock_t, amount)
   #define macro_f_thread_locks_t_decimate_by(status, locks, amount) macro_f_memory_structure_decimate_by(status, locks, f_thread_lock_t, amount)
@@ -406,7 +406,7 @@ extern "C" {
   #define macro_f_thread_lock_attributes_t_delete_simple(attributes)  f_thread_lock_attributes_resize(0, &attributes);
   #define macro_f_thread_lock_attributes_t_destroy_simple(attributes) f_thread_lock_attributes_adjust(0, &attributes);
 
-  #define macro_f_thread_lock_attributes_t_increase(status, attributes)            status = f_thread_lock_attributes_increase(attributes);
+  #define macro_f_thread_lock_attributes_t_increase(status, step, attributes)      status = f_thread_lock_attributes_increase(step, attributes);
   #define macro_f_thread_lock_attributes_t_increase_by(status, attributes, amount) status = f_thread_lock_attributes_increase_by(amount, attributes);
   #define macro_f_thread_lock_attributes_t_decrease_by(status, attributes, amount) status = f_thread_lock_attributes_decrease_by(amount, attributes);
   #define macro_f_thread_lock_attributes_t_decimate_by(status, attributes, amount) status = f_thread_lock_attributes_decimate_by(amount, attributes);
@@ -453,7 +453,7 @@ extern "C" {
   #define macro_f_thread_mutexs_t_delete_simple(mutexs)  f_thread_mutexs_resize(0, &mutexs);
   #define macro_f_thread_mutexs_t_destroy_simple(mutexs) f_thread_mutexs_adjust(0, &mutexs);
 
-  #define macro_f_thread_mutexs_t_increase(status, mutexs)            status = f_thread_mutexs_increase(mutexs);
+  #define macro_f_thread_mutexs_t_increase(status, step, mutexs)      status = f_thread_mutexs_increase(step, mutexs);
   #define macro_f_thread_mutexs_t_increase_by(status, mutexs, amount) status = f_thread_mutexs_increase_by(amount, mutexs);
   #define macro_f_thread_mutexs_t_decrease_by(status, mutexs, amount) status = f_thread_mutexs_decrease_by(amount, mutexs);
   #define macro_f_thread_mutexs_t_decimate_by(status, mutexs, amount) status = f_thread_mutexs_decimate_by(amount, mutexs);
@@ -498,7 +498,7 @@ extern "C" {
   #define macro_f_thread_mutex_attributes_t_delete_simple(attributes)  f_thread_mutex_attributes_resize(0, &attributes);
   #define macro_f_thread_mutex_attributes_t_destroy_simple(attributes) f_thread_mutex_attributes_adjust(0, &attributes);
 
-  #define macro_f_thread_mutex_attributes_t_increase(status, attributes)            status = f_thread_mutex_attributes_increase(attributes);
+  #define macro_f_thread_mutex_attributes_t_increase(status, step, attributes)      status = f_thread_mutex_attributes_increase(step, attributes);
   #define macro_f_thread_mutex_attributes_t_increase_by(status, attributes, amount) status = f_thread_mutex_attributes_increase_by(amount, attributes);
   #define macro_f_thread_mutex_attributes_t_decrease_by(status, attributes, amount) status = f_thread_mutex_attributes_decrease_by(amount, attributes);
   #define macro_f_thread_mutex_attributes_t_decimate_by(status, attributes, amount) status = f_thread_mutex_attributes_decimate_by(amount, attributes);
@@ -538,7 +538,7 @@ extern "C" {
   #define macro_f_thread_onces_t_delete_simple(onces)  macro_f_memory_structure_delete_simple(onces, f_thread_once_t)
   #define macro_f_thread_onces_t_destroy_simple(onces) macro_f_memory_structure_destroy_simple(onces, f_thread_once_t)
 
-  #define macro_f_thread_onces_t_increase(status, onces)            macro_f_memory_structure_increase(status, onces, f_thread_once_t)
+  #define macro_f_thread_onces_t_increase(status, step, onces)      macro_f_memory_structure_increase(status, step, onces, f_thread_once_t)
   #define macro_f_thread_onces_t_increase_by(status, onces, amount) macro_f_memory_structure_increase_by(status, onces, f_thread_once_t, amount)
   #define macro_f_thread_onces_t_decrease_by(status, onces, amount) macro_f_memory_structure_decrease_by(status, onces, f_thread_once_t, amount)
   #define macro_f_thread_onces_t_decimate_by(status, onces, amount) macro_f_memory_structure_decimate_by(status, onces, f_thread_once_t, amount)
@@ -584,7 +584,7 @@ extern "C" {
   #define macro_f_thread_semaphores_t_delete_simple(semaphores)  f_thread_semaphores_resize(0, &semaphores);
   #define macro_f_thread_semaphores_t_destroy_simple(semaphores) f_thread_semaphores_adjust(0, &semaphores);
 
-  #define macro_f_thread_semaphores_t_increase(status, semaphores)            status = f_thread_semaphores_increase(semaphores);
+  #define macro_f_thread_semaphores_t_increase(status, step, semaphores)      status = f_thread_semaphores_increase(step, semaphores);
   #define macro_f_thread_semaphores_t_increase_by(status, semaphores, amount) status = f_thread_semaphores_increase_by(amount, semaphores);
   #define macro_f_thread_semaphores_t_decrease_by(status, semaphores, amount) status = f_thread_semaphores_decrease_by(amount, semaphores);
   #define macro_f_thread_semaphores_t_decimate_by(status, semaphores, amount) status = f_thread_semaphores_decimate_by(amount, semaphores);
@@ -638,7 +638,7 @@ extern "C" {
   #define macro_f_thread_sets_t_delete_simple(sets)  f_thread_sets_resize(0, &sets);
   #define macro_f_thread_sets_t_destroy_simple(sets) f_thread_sets_adjust(0, &sets);
 
-  #define macro_f_thread_sets_t_increase(status, sets)            status = f_thread_sets_increase(sets);
+  #define macro_f_thread_sets_t_increase(status, step, sets)      status = f_thread_sets_increase(step, sets);
   #define macro_f_thread_sets_t_increase_by(status, sets, amount) status = f_thread_sets_increase_by(amount, sets);
   #define macro_f_thread_sets_t_decrease_by(status, sets, amount) status = f_thread_sets_decrease_by(amount, sets);
   #define macro_f_thread_sets_t_decimate_by(status, sets, amount) status = f_thread_sets_decimate_by(amount, sets);
@@ -682,7 +682,7 @@ extern "C" {
   #define macro_f_thread_spins_t_delete_simple(spins)  f_thread_spins_resize(0, &spins);
   #define macro_f_thread_spins_t_destroy_simple(spins) f_thread_spins_adjust(0, &spins);
 
-  #define macro_f_thread_spins_t_increase(status, spins)            status = f_thread_spins_increase(spins);
+  #define macro_f_thread_spins_t_increase(status, step, spins)      status = f_thread_spins_increase(step, spins);
   #define macro_f_thread_spins_t_increase_by(status, spins, amount) status = f_thread_spins_increase_by(amount, spins);
   #define macro_f_thread_spins_t_decrease_by(status, spins, amount) status = f_thread_spins_decrease_by(amount, spins);
   #define macro_f_thread_spins_t_decimate_by(status, spins, amount) status = f_thread_spins_decimate_by(amount, spins);

@@ -77,7 +77,7 @@ extern "C" {
 #endif // _di_firewall_paths_
 
 #ifndef _di_firewall_default_allocation_step_
-  #define firewall_default_allocation_step f_memory_default_allocation_step
+  #define firewall_default_allocation_step f_memory_default_allocation_small
 #endif // _di_firewall_default_allocation_step_
 
 #ifndef _di_firewall_defines_

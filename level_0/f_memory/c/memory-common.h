@@ -38,7 +38,8 @@ extern "C" {
  * Other projects may provide their own values.
  */
 #ifndef _di_f_memory_default_allocation_step_
-  #define f_memory_default_allocation_step 4
+  #define f_memory_default_allocation_large 64
+  #define f_memory_default_allocation_small 4
 #endif // _di_f_memory_default_allocation_step_
 
 /**
@@ -130,22 +131,23 @@ extern "C" {
 /**
  * Increase a generic memory structure.
  *
- * status:    the status to return.
- * structure: the structure to operate on.
- * type:      the structure type.
+ * status:    The status to return.
+ * step:      The allocation step.
+ * structure: The structure to operate on.
+ * type:      The structure type.
  */
 #ifndef _di_macro_f_memory_structure_increase_
-  #define macro_f_memory_structure_increase(status, structure, type) \
-    status = f_memory_structure_increase(sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
+  #define macro_f_memory_structure_increase(status, step, structure, type) \
+    status = f_memory_structure_increase(step, sizeof(type), (void **) &structure.array, &structure.used, &structure.size);
 #endif // _di_macro_f_memory_structure_increase_
 
 /**
  * Increase a generic memory structure by some amount.
  *
- * status:    the status to return.
- * structure: the structure to operate on.
- * type:      the structure type.
- * amount:    the amount to increase the size of the array by.
+ * status:    The status to return.
+ * structure: The structure to operate on.
+ * type:      The structure type.
+ * amount:    The amount to increase the size of the array by.
  */
 #ifndef _di_macro_f_memory_structure_increase_by_
   #define macro_f_memory_structure_increase_by(status, structure, type, amount) \
@@ -155,10 +157,10 @@ extern "C" {
 /**
  * Decrease a generic memory structure by some amount.
  *
- * status:    the status to return.
- * structure: the structure to operate on.
- * type:      the structure type.
- * amount:    the amount to decrease the size of the array by.
+ * status:    The status to return.
+ * structure: The structure to operate on.
+ * type:      The structure type.
+ * amount:    The amount to decrease the size of the array by.
  */
 #ifndef _di_macro_f_memory_structure_decrease_by_
   #define macro_f_memory_structure_decrease_by(status, structure, type, amount) \
@@ -168,10 +170,10 @@ extern "C" {
 /**
  * Decimate a generic memory structure by some amount.
  *
- * status:    the status to return.
- * structure: the structure to operate on.
- * type:      the structure type.
- * amount:    the amount to decimate the size of the array by.
+ * status:    The status to return.
+ * structure: The structure to operate on.
+ * type:      The structure type.
+ * amount:    The amount to decimate the size of the array by.
  */
 #ifndef _di_macro_f_memory_structure_decimate_by_
   #define macro_f_memory_structure_decimate_by(status, structure, type, amount) \
@@ -195,12 +197,12 @@ extern "C" {
 /**
  * Resize a generic memory structures.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
- * length:         the new size of the array.
- * type_length:    the data type of the length variable type.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
+ * length:         The new size of the array.
+ * type_length:    The data type of the length variable type.
  */
 #ifndef _di_macro_f_memory_structures_resize_
   #define macro_f_memory_structures_resize(status, structures, type_structure, type_structures, length, type_length) \
@@ -215,12 +217,12 @@ extern "C" {
 /**
  * Adjust a generic memory structures.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
- * length:         the new size of the array.
- * type_length:    the data type of the length variable type.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
+ * length:         The new size of the array.
+ * type_length:    The data type of the length variable type.
  */
 #ifndef _di_macro_f_memory_structures_adjust_
   #define macro_f_memory_structures_adjust(status, structures, type_structure, type_structures, length, type_length) \
@@ -235,10 +237,10 @@ extern "C" {
 /**
  * Delete a generic memory structures.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
  */
 #ifndef _di_macro_f_memory_structures_delete_
   #define macro_f_memory_structures_delete(status, structures, type_structure, type_structures) \
@@ -254,10 +256,10 @@ extern "C" {
 /**
  * Destroy a generic memory structures.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
  */
 #ifndef _di_macro_f_memory_structures_destroy_
   #define macro_f_memory_structures_destroy(status, structures, type_structure, type_structures) \
@@ -273,9 +275,9 @@ extern "C" {
 /**
  * Delete a generic memory structures.
  *
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
  */
 #ifndef _di_macro_f_memory_structures_delete_simple_
   #define macro_f_memory_structures_delete_simple(structures, type_structure, type_structures) \
@@ -290,9 +292,9 @@ extern "C" {
 /**
  * Destroy a generic memory structures.
  *
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
  */
 #ifndef _di_macro_f_memory_structures_destroy_simple_
   #define macro_f_memory_structures_destroy_simple(structures, type_structure, type_structures) \
@@ -309,10 +311,10 @@ extern "C" {
  *
  * This only increases if the structure.used + 1 is greater than structure.size.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stuctures: the structures type.
- * type_length:    the data type of the length variable type.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stuctures: The structures type.
+ * type_length:    The data type of the length variable type.
  */
 #ifndef _di_macro_f_memory_structures_increase_
   #define macro_f_memory_structures_increase(status, structures, type_structures, type_length) \
@@ -324,11 +326,11 @@ extern "C" {
  *
  * This only increases if the structure.used + amount is greater than structure.size.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stuctures: the structures type.
- * type_length:    the data type of the length variable type.
- * amount:         the amount to increase by.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stuctures: The structures type.
+ * type_length:    The data type of the length variable type.
+ * amount:         The amount to increase by.
  */
 #ifndef _di_macro_f_memory_structures_increase_by_
   #define macro_f_memory_structures_increase_by(status, structures, type_structures, type_length, amount) \
@@ -338,12 +340,12 @@ extern "C" {
 /**
  * Decrease a generic memory structures by the given amount.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
- * type_length:    the data type of the length variable type.
- * amount:         the amount to decrease by.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
+ * type_length:    The data type of the length variable type.
+ * amount:         The amount to decrease by.
  */
 #ifndef _di_macro_f_memory_structures_decrease_by_
   #define macro_f_memory_structures_decrease_by(status, structures, type_structure, type_structures, type_length, amount) \
@@ -356,12 +358,12 @@ extern "C" {
 /**
  * Decimate a generic memory structures by the given amount.
  *
- * status:         the status to return.
- * structures:     the structures to operate on.
- * type_stucture:  the structure type.
- * type_stuctures: the structures type.
- * type_length:    the data type of the length variable type.
- * amount:         the amount to decimate by.
+ * status:         The status to return.
+ * structures:     The structures to operate on.
+ * type_stucture:  The structure type.
+ * type_stuctures: The structures type.
+ * type_length:    The data type of the length variable type.
+ * amount:         The amount to decimate by.
  */
 #ifndef _di_macro_f_memory_structures_decimate_by_
   #define macro_f_memory_structures_decimate_by(status, structures, type_structure, type_structures, type_length, amount) \
@@ -380,12 +382,12 @@ extern "C" {
  *
  * Be sure to check size for error after calling this.
  *
- * status:          the status to return.
- * structures:      the structures to operate on.
- * step:            the step to increase by, must be less than or equal to step_default.
- * step_default:    the default step to increase by if memory allows.
- * macro_resize:    the resize structure macro to call that excepts the exact arguments: (status, structure, length).
- * error_too_large: the error status to return when f_array_length_t_size would be exceeded.
+ * status:          The status to return.
+ * structures:      The structures to operate on.
+ * step:            The step to increase by, must be less than or equal to step_default.
+ * step_default:    The default step to increase by if memory allows.
+ * macro_resize:    The resize structure macro to call that excepts the exact arguments: (status, structure, length).
+ * error_too_large: The error status to return when f_array_length_t_size would be exceeded.
  */
 #ifndef _di_macro_f_memory_structure_increment_
   #define macro_f_memory_structure_increment(status, structure, step, step_default, macro_resize, error_too_large) \

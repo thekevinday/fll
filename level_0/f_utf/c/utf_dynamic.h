@@ -73,7 +73,7 @@ extern "C" {
   #define macro_f_utf_string_dynamic_t_delete_simple(dynamic)  f_utf_string_dynamic_resize(0, &dynamic);
   #define macro_f_utf_string_dynamic_t_destroy_simple(dynamic) f_utf_string_dynamic_adjust(0, &dynamic);
 
-  #define macro_f_utf_string_dynamic_t_increase(status, dynamic)            status = f_utf_string_dynamic_increase(&dynamic);
+  #define macro_f_utf_string_dynamic_t_increase(status, step, dynamic)      status = f_utf_string_dynamic_increase(step, &dynamic);
   #define macro_f_utf_string_dynamic_t_increase_by(status, dynamic, amount) status = f_utf_string_dynamic_increase_by(amount, &dynamic);
   #define macro_f_utf_string_dynamic_t_decrease_by(status, dynamic, amount) status = f_utf_string_dynamic_decrease_by(amount, &dynamic);
   #define macro_f_utf_string_dynamic_t_decimate_by(status, dynamic, amount) status = f_utf_string_dynamic_decimate_by(amount, &dynamic);
@@ -287,8 +287,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
- * @param amount
- *   A positive number representing how much to increase the size by.
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param dynamic
  *   The string to resize.
  *
@@ -302,7 +303,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamic_increase_
-  extern f_status_t f_utf_string_dynamic_increase(f_utf_string_dynamic_t *dynamic);
+  extern f_status_t f_utf_string_dynamic_increase(const uint16_t step, f_utf_string_dynamic_t *dynamic);
 #endif // _di_f_utf_string_dynamic_increase_
 
 /**
@@ -1118,6 +1119,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param dynamics
  *   The array to resize.
  *
@@ -1131,7 +1135,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_dynamics_increase_
-  extern f_status_t f_utf_string_dynamics_increase(f_utf_string_dynamics_t *dynamics);
+  extern f_status_t f_utf_string_dynamics_increase(const uint16_t step, f_utf_string_dynamics_t *dynamics);
 #endif // _di_f_utf_string_dynamics_increase_
 
 /**

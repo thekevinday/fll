@@ -120,6 +120,15 @@ extern "C" {
  * This will update the buffer at the given range with any placeholders to escaped data.
  * Calling this more than once on the same buffer range could result in multiple escaping.
  *
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param buffer
  *   The string to process.
  * @param range
@@ -142,12 +151,13 @@ extern "C" {
  *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabulary names found.
  *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabulary names found.
  *
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
  */
 #ifndef _di_f_iki_read_
-  extern f_status_t f_iki_read(f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);
+  extern f_status_t f_iki_read(f_state_t state, f_string_static_t *buffer, f_string_range_t *range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content);
 #endif // _di_f_iki_read_
 
 #ifdef __cplusplus

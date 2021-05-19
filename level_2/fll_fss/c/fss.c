@@ -331,11 +331,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_map_multis_increase(values[j]);
+        status = f_string_map_multis_increase(f_memory_default_allocation_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -403,11 +403,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_maps_increase(values[j]);
+        status = f_string_maps_increase(f_memory_default_allocation_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -505,11 +505,11 @@ extern "C" {
           map_multi = &values[j]->array[k];
         }
         else {
-          status = f_string_map_multis_increase(values[j]);
+          status = f_string_map_multis_increase(f_memory_default_allocation_small, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -530,7 +530,7 @@ extern "C" {
           if (contents.array[i].used == 1) continue;
         }
 
-        status = f_string_dynamics_increase(&map_multi->value);
+        status = f_string_dynamics_increase(f_memory_default_allocation_small, &map_multi->value);
         if (F_status_is_error(status)) return status;
 
         for (k = 1; k < contents.array[i].used; k++) {
@@ -617,11 +617,11 @@ extern "C" {
           map = &values[j]->array[k];
         }
         else {
-          status = f_string_maps_increase(values[j]);
+          status = f_string_maps_increase(f_memory_default_allocation_small, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -740,11 +740,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_dynamics_increase(values[j]);
+        status = f_string_dynamics_increase(f_memory_default_allocation_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 

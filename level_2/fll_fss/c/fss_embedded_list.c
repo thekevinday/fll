@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_embedded_list_read_
-  f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+  f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
     #ifndef _di_level_2_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
@@ -34,7 +34,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        status = fl_fss_embedded_list_object_read(buffer, range, &nest->depth[0].array[nest->depth[0].used].object, objects_delimits);
+        status = fl_fss_embedded_list_object_read(buffer, state, range, &nest->depth[0].array[nest->depth[0].used].object, objects_delimits);
         if (F_status_is_error(status)) return status;
 
         if (range->start >= range->stop || range->start >= buffer.used) {
@@ -63,7 +63,7 @@ extern "C" {
         if (status == FL_fss_found_object) {
           found_data = F_true;
 
-          status = fl_fss_embedded_list_content_read(buffer, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
+          status = fl_fss_embedded_list_content_read(buffer, state, range, nest, contents_delimits ? contents_delimits : objects_delimits, comments);
           break;
         }
         else if (status == FL_fss_found_object_content_not) {
@@ -126,7 +126,7 @@ extern "C" {
 #endif // _di_fll_fss_embedded_list_read_
 
 #ifndef _di_fll_fss_embedded_list_write_string_
-  f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t *destination) {
+  f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t *destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -134,7 +134,7 @@ extern "C" {
     f_status_t status = 0;
     f_string_range_t range = macro_f_string_range_t_initialize(object.used);
 
-    status = fl_fss_embedded_list_object_write_string(object, f_fss_complete_full, &range, destination);
+    status = fl_fss_embedded_list_object_write_string(object, f_fss_complete_full, state, &range, destination);
 
     if (F_status_is_error(status) || status == F_data_not_stop || status == F_data_not_eos) {
       return status;
@@ -150,7 +150,7 @@ extern "C" {
         range.stop = 0;
       }
 
-      status = fl_fss_embedded_list_content_write_string(content, f_fss_complete_full, content_prepend, ignore, &range, destination);
+      status = fl_fss_embedded_list_content_write_string(content, f_fss_complete_full, content_prepend, ignore, state, &range, destination);
     }
 
     return status;

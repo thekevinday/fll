@@ -67,7 +67,7 @@ extern "C" {
  * This is generally used for nftw() recursive operations to reduce the number of open file descriptors during recursion.
  */
 #ifndef _di_f_directory_limitations_
-  #define f_directory_default_allocation_step f_memory_default_allocation_step
+  #define f_directory_default_allocation_step f_memory_default_allocation_small
 
   #define f_directory_descriptors_max 255
   #define f_directory_name_max        NAME_MAX

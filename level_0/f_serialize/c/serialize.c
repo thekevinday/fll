@@ -51,7 +51,7 @@ extern "C" {
       width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
-        macro_f_memory_structure_increment(status, (*strings), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*strings), 1, f_memory_default_allocation_small, macro_f_string_dynamics_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {
@@ -120,7 +120,7 @@ extern "C" {
       width = macro_f_utf_byte_width(serialize.string[i]);
 
       if (serialize.string[i] == f_serialize_simple_splitter_s[0] || i + 1 >= serialize.used) {
-        macro_f_memory_structure_increment(status, (*locations), 1, f_memory_default_allocation_step, macro_f_string_ranges_t_resize, F_array_too_large);
+        macro_f_memory_structure_increment(status, (*locations), 1, f_memory_default_allocation_small, macro_f_string_ranges_t_resize, F_array_too_large);
         if (F_status_is_error(status)) return status;
 
         if (start == i) {

@@ -71,13 +71,14 @@ extern "C" {
 #endif // _di_f_utf_string_ranges_decrease_by_
 
 #ifndef _di_f_utf_string_ranges_increase_
-  f_status_t f_utf_string_ranges_increase(f_utf_string_ranges_t *ranges) {
+  f_status_t f_utf_string_ranges_increase(const uint16_t step, f_utf_string_ranges_t *ranges) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!ranges) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (ranges->used + 1 > ranges->size) {
-      f_array_length_t size = ranges->used + f_memory_default_allocation_step;
+      f_array_length_t size = ranges->used + step;
 
       if (size > f_array_length_t_size) {
         if (ranges->used + 1 > f_array_length_t_size) {
@@ -164,13 +165,14 @@ extern "C" {
 #endif // _di_f_utf_string_rangess_decrease_by_
 
 #ifndef _di_f_utf_string_rangess_increase_
-  f_status_t f_utf_string_rangess_increase(f_utf_string_rangess_t *rangess) {
+  f_status_t f_utf_string_rangess_increase(const uint16_t step, f_utf_string_rangess_t *rangess) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!rangess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (rangess->used + 1 > rangess->size) {
-      f_array_length_t size = rangess->used + f_memory_default_allocation_step;
+      f_array_length_t size = rangess->used + step;
 
       if (size > f_array_length_t_size) {
         if (rangess->used + 1 > f_array_length_t_size) {

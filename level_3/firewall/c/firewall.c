@@ -192,6 +192,7 @@ extern "C" {
       f_string_range_t input = f_string_range_t_initialize;
 
       if (command == firewall_parameter_command_show) {
+
         // Warning: these are hardcoded print commands (I am not certain how I am going to implement external 'show' rules as the default-firewall setting file is the wrong place to put this)
         bool show_nat = F_true;
         bool show_mangle = F_true;
@@ -232,6 +233,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
           return status;

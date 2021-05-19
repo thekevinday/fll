@@ -52,7 +52,7 @@ extern "C" {
   #define macro_f_fss_item_t_delete_simple(item)  macro_f_fss_content_t_delete_simple(item.content)
   #define macro_f_fss_item_t_destroy_simple(item) macro_f_fss_content_t_destroy_simple(item.content)
 
-  #define macro_f_fss_item_t_increase(status, item)            macro_f_fss_content_t_increase(status, item.content)
+  #define macro_f_fss_item_t_increase(status, step, item)      macro_f_fss_content_t_increase(status, step, item.content)
   #define macro_f_fss_item_t_increase_by(status, item, amount) macro_f_fss_content_t_increase_by(status, item.content, amount)
   #define macro_f_fss_item_t_decrease_by(status, item, amount) macro_f_fss_content_t_decrease_by(status, item.content, amount)
   #define macro_f_fss_item_t_decimate_by(status, item, amount) macro_f_fss_content_t_decimate_by(status, item.content, amount)
@@ -104,7 +104,7 @@ extern "C" {
   #define macro_f_fss_items_t_delete_simple(items)  f_fss_items_resize(0, &items);
   #define macro_f_fss_items_t_destroy_simple(items) f_fss_items_adjust(0, &items);
 
-  #define macro_f_fss_items_t_increase(status, items)            status = f_fss_items_increase(&items);
+  #define macro_f_fss_items_t_increase(status, step, items)      status = f_fss_items_increase(step, &items);
   #define macro_f_fss_items_t_increase_by(status, items, amount) status = f_fss_items_increase_by(amount, &items);
   #define macro_f_fss_items_t_decrease_by(status, items, amount) status = f_fss_items_decrease_by(amount, &items);
   #define macro_f_fss_items_t_decimate_by(status, items, amount) status = f_fss_items_decimate_by(amount, &items);
@@ -140,7 +140,7 @@ extern "C" {
   #define macro_f_fss_nest_t_delete_simple(nest)  f_fss_nest_resize(0, &nest);
   #define macro_f_fss_nest_t_destroy_simple(nest) f_fss_nest_adjust(0, &nest);
 
-  #define macro_f_fss_nest_t_increase(status, nest)            status = f_fss_nest_increase(&nest);
+  #define macro_f_fss_nest_t_increase(status, step, nest)      status = f_fss_nest_increase(step, &nest);
   #define macro_f_fss_nest_t_increase_by(status, nest, amount) status = f_fss_nest_increase_by(amount, &nest);
   #define macro_f_fss_nest_t_decrease_by(status, nest, amount) status = f_fss_nest_decrease_by(amount, &nest);
   #define macro_f_fss_nest_t_decimate_by(status, nest, amount) status = f_fss_nest_decimate_by(amount, &nest);
@@ -171,7 +171,7 @@ extern "C" {
   #define macro_f_fss_nests_t_delete_simple(nests)  f_fss_nests_resize(0, &nests);
   #define macro_f_fss_nests_t_destroy_simple(nests) f_fss_nests_adjust(0, &nests);
 
-  #define macro_f_fss_nests_t_increase(status, nests)            status = f_fss_nests_increase(&nests);
+  #define macro_f_fss_nests_t_increase(status, step, nests)      status = f_fss_nests_increase(step, &nests);
   #define macro_f_fss_nests_t_increase_by(status, nests, amount) status = f_fss_nests_increase_by(amount, &nests);
   #define macro_f_fss_nests_t_decrease_by(status, nests, amount) status = f_fss_nests_decrease_by(amount, &nests);
   #define macro_f_fss_nests_t_decimate_by(status, nests, amount) status = f_fss_nests_decimate_by(amount, &nests);
@@ -245,6 +245,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param items
  *   The items array to resize.
  *
@@ -257,7 +260,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_items_increase_
-  extern f_status_t f_fss_items_increase(f_fss_items_t *items);
+  extern f_status_t f_fss_items_increase(const uint16_t step, f_fss_items_t *items);
 #endif // _di_f_fss_items_increase_
 
 /**
@@ -370,6 +373,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param nest
  *   The nest array to resize.
  *
@@ -382,7 +388,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nest_increase_
-  extern f_status_t f_fss_nest_increase(f_fss_nest_t *nest);
+  extern f_status_t f_fss_nest_increase(const uint16_t step, f_fss_nest_t *nest);
 #endif // _di_f_fss_nest_increase_
 
 /**
@@ -495,6 +501,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param nests
  *   The nests array to resize.
  *
@@ -507,7 +516,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_nests_increase_
-  extern f_status_t f_fss_nests_increase(f_fss_nests_t *nests);
+  extern f_status_t f_fss_nests_increase(const uint16_t step, f_fss_nests_t *nests);
 #endif // _di_f_fss_nests_increase_
 
 /**

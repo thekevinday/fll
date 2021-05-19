@@ -40,6 +40,7 @@
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
+#include <fll/level_1/signal.h>
 #include <fll/level_1/string.h>
 
 // fll-2 includes

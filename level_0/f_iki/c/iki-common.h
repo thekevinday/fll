@@ -194,14 +194,15 @@ extern "C" {
 /**
  * Reallocate delimits array if necessary for appending a new delimit.
  *
+ * state:    The state.
  * status:   The return status to use.
  * delimits: The delimit array to conditionally reallocate.
  */
 #ifndef _di_macro_f_iki_allocate_delimits_if_necessary_
-  #define macro_f_iki_allocate_delimits_if_necessary(status, delimits) \
+  #define macro_f_iki_allocate_delimits_if_necessary(state, status, delimits) \
     status = F_none; \
     if (delimits.used == delimits.size) { \
-      if (delimits.used + f_iki_default_allocation_step > f_array_length_t_size) { \
+      if (delimits.used + state.step_small > f_array_length_t_size) { \
         if (delimits.used == f_array_length_t_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
@@ -210,7 +211,7 @@ extern "C" {
         } \
       } \
       else { \
-        macro_f_array_lengths_t_resize(status, delimits, delimits.size + f_iki_default_allocation_step); \
+        macro_f_array_lengths_t_resize(status, delimits, delimits.size + state.step_small); \
       } \
     }
 #endif // _di_macro_f_iki_allocate_delimits_if_necessary_
@@ -218,14 +219,15 @@ extern "C" {
 /**
  * Reallocate delimits array if necessary for appending a new ranges.
  *
+ * state:  The state.
  * status: The return status to use.
  * ranges: The delimit array to conditionally reallocate.
  */
 #ifndef _di_macro_f_iki_allocate_ranges_if_necessary_
-  #define macro_f_iki_allocate_ranges_if_necessary(status, ranges) \
+  #define macro_f_iki_allocate_ranges_if_necessary(state, status, ranges) \
     status = F_none; \
     if (ranges.used == ranges.size) { \
-      if (ranges.used + f_iki_default_allocation_step > f_array_length_t_size) { \
+      if (ranges.used + state.step_small > f_array_length_t_size) { \
         if (ranges.used == f_array_length_t_size) { \
           status = F_status_set_error(F_string_too_large); \
         } \
@@ -234,7 +236,7 @@ extern "C" {
         } \
       } \
       else { \
-        macro_f_string_ranges_t_resize(status, ranges, ranges.size + f_iki_default_allocation_step); \
+        macro_f_string_ranges_t_resize(status, ranges, ranges.size + state.step_small); \
       } \
     }
 #endif // _di_macro_f_iki_allocate_ranges_if_necessary_

@@ -190,6 +190,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param quantitys
  *   The string quantitys array to resize.
  *
@@ -202,7 +205,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantitys_increase_
-  extern f_status_t f_utf_string_quantitys_increase(f_utf_string_quantitys_t *quantitys);
+  extern f_status_t f_utf_string_quantitys_increase(const uint16_t step, f_utf_string_quantitys_t *quantitys);
 #endif // _di_f_utf_string_quantitys_increase_
 
 /**
@@ -319,6 +322,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param quantityss
  *   The string quantityss array to resize.
  *
@@ -332,7 +338,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_quantityss_increase_
-  extern f_status_t f_utf_string_quantityss_increase(f_utf_string_quantityss_t *quantityss);
+  extern f_status_t f_utf_string_quantityss_increase(const uint16_t step, f_utf_string_quantityss_t *quantityss);
 #endif // _di_f_utf_string_quantityss_increase_
 
 /**

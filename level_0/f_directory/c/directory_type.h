@@ -74,6 +74,7 @@ extern "C" {
  *
  * The allocation macros apply to the path.
  *
+ * step:   The allocation step.
  * status: The status code.
  * path:   The dynamically allocated path associated with the status code.
  */
@@ -95,7 +96,7 @@ extern "C" {
   #define macro_f_directory_status_t_delete_simple(statuses)  macro_f_string_dynamic_t_delete_simple(statuses.path)
   #define macro_f_directory_status_t_destroy_simple(statuses) macro_f_string_dynamic_t_destroy_simple(statuses.path)
 
-  #define macro_f_directory_status_t_increase(status, values)            macro_f_string_dynamic_t_increase(status, values)
+  #define macro_f_directory_status_t_increase(status, step, values)      macro_f_string_dynamic_t_increase(status, step, values)
   #define macro_f_directory_status_t_increase_by(status, values, amount) macro_f_string_dynamic_t_increase_by(status, values, amount)
   #define macro_f_directory_status_t_decrease_by(status, values, amount) macro_f_string_dynamic_t_decrease_by(status, values, amount)
   #define macro_f_directory_status_t_decimate_by(status, values, amount) macro_f_string_dynamic_t_decimate_by(status, values, amount)

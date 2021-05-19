@@ -26,11 +26,105 @@ extern "C" {
 #endif
 
 /**
- * Status type.
+ * Compiler-specific attribute visibility features.
+ *
+ * Use these macros for visibility-specific tweaks so that if these are not supported by any given compiler, then they can be easily disabled.
+ *
+ * f_attribute_visibility_internal provides a way to make some functions effectively private.
+ */
+#ifndef _di_f_attribute_visibility_
+  #define f_attribute_visibility_hidden    __attribute__((visibility("hidden")))
+  #define f_attribute_visibility_internal  __attribute__((visibility("internal")))
+  #define f_attribute_visibility_protected __attribute__((visibility("protected")))
+  #define f_attribute_visibility_public    __attribute__((visibility("default")))
+#endif // _di_f_attribute_visibility_
+
+/**
+ * A status intended to be used as the return value status of some function or operation.
  */
 #ifndef _di_f_type_status_t_
   typedef uint16_t f_status_t;
 #endif // _di_f_type_status_t_
+
+/**
+ * A representation of a state to be shared between different levels for some function.
+ *
+ * This is used to provide advanced controls on different levels of the project to something outside.
+ *
+ * The allocate provides an allocation step so that the caller can determine a better performing allocation step for their purpose.
+ * For example, if the caller knows that they need to allocate a hundred megabytes of data of which is separated into blocks of 8k, then allocate could be set to 8192.
+ *
+ * There are two standard callbacks that are expected to be commonly available: interrupt() and handle().
+ * Additional callbacks are stored in the structure "callbacks" as defined by the class requiring the use of this structure (f_state_t).
+ *
+ * All state values may be NULL, in which case they are to be ignored.
+ *
+ * The general interpretation of the return results of interrupt() or any of the functions should have an error bit to designate an error and not an error bit to designate no error.
+ * In the case of interrupt(), the F_interrupt and F_interrupt_not must be returned as appropriate and if not an error (the F_interrupt and F_interrupt_not may have an error bit).
+ * To keep the logic simple, it is recommended that F_interrupt always be returned with the error bit set.
+ *
+ * The general interpretation of handle() is to either print an error message or to perform additional tasks when an error occurs (such as saving state data for use at a higher level).
+ * This allows for the error to be processed with all relevant data before the function returns.
+ *
+ * These two callbacks (handle() and interrupt()) accept the following parameters:
+ * - error:    The current status code (with error bit as appropriate) (only passed to handle()).
+ * - state:    The state data. Must be of type f_state_t. Must not be NULL.
+ * - internal: Additional data passed by the function being called, often containing internal data to the called function. May be NULL.
+ *
+ * The "custom" property on f_state_t is intended to be used so that the callback, such as the interrupt(), can make changes to something within the scope of the parent.
+ *
+ * For example:
+ *   There exists some project "bob" with some functions "bob_does()" and "bob_interrupts()".
+ *   The function "bob_does()" maintains a state (f_state_t) called "bob_state".
+ *   The function "bob_does()" will call "f_talk()" that accepts a state (f_state_t) and defines the data structure type "f_interject_t" to be called interject.
+ *   While "f_talk()" executes, "bob_interrupts()" is periodically with the state (f_state_t) "bob_state" as the first parameter and the data structure (f_interject_t) "interject" as the second parameter.
+ *   If Bob interjects the talk, then bob_interrupts() would return F_interrupt.
+ *   If Bob does not interject the talk, then bob_interrupts() would return F_interrupt_not.
+ *   This response is handled within f_talk().
+ *   The f_talk() function will then return status when done and might immediately return with F_interrupt (with error bit) if bob_interrupts() returns F_interrupt (with/without error bit).
+ *
+ * step_large: The allocation step to use for large buffers.
+ * step_small: The allocation step to use for small buffers.
+ * handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
+ * interrupt:  A function to call for checking to see if an interrupt is to be called (return result is passed to and handled by caller). May be NULL.
+ * callbacks:  A structure (defined by function/project using this) of additional functions to call. May be NULL.
+ * custom:     A structure (defined by caller/parent) for holding custom data to be passed along to the interrupt() or one of the functions. May be NULL.
+ * data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
+ */
+#ifndef _di_f_type_state_t_
+  typedef struct {
+    uint16_t step_large;
+    uint16_t step_small;
+
+    f_status_t (*handle)(const f_status_t error, void *state, void *internal);
+    f_status_t (*interrupt)(void *state, void *internal);
+
+    void *callbacks;
+    void *custom;
+    void *data;
+  } f_state_t;
+
+  #define f_state_t_initialize { f_memory_default_allocation_large, f_memory_default_allocation_small, 0, 0, 0, 0, 0 }
+
+  #define macro_f_state_t_initialize(step_large, step_small, handle, interrupt, callbacks, custom, data) { \
+    step_large, \
+    step_small, \
+    handle, \
+    interrupt, \
+    callbacks, \
+    custom, \
+    data \
+  }
+
+  #define macro_f_state_t_clear(state) \
+    state.step_large = 0; \
+    state.step_small = 0; \
+    state.handle = 0; \
+    state.interrupt = 0; \
+    state.callbacks = 0; \
+    state.custom = 0; \
+    state.data = 0;
+#endif // _di_f_type_state_t_
 
 /**
  * Conditional 128-bit support.
@@ -219,18 +313,44 @@ extern "C" {
 #endif // _di_f_cell_t_
 
 /**
- * Compiler-specific attribute visibility features.
+ * An array of f_cell_t.
  *
- * Use these macros for visibility-specific tweaks so that if these are not supported by any given compiler, then they can be easily disabled.
+ * The macros are defined in type_array.h or type_array-common.h.
  *
- * f_attribute_visibility_internal provides a way to make some functions effectively private.
+ * array: The array of f_cell_t.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_attribute_visibility_
-  #define f_attribute_visibility_hidden    __attribute__((visibility("hidden")))
-  #define f_attribute_visibility_internal  __attribute__((visibility("internal")))
-  #define f_attribute_visibility_protected __attribute__((visibility("protected")))
-  #define f_attribute_visibility_public    __attribute__((visibility("default")))
-#endif // _di_f_attribute_visibility_
+#ifndef _di_f_cells_t_
+  typedef struct {
+    f_cell_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_cells_t;
+
+  #define f_cells_t_initialize { 0, 0, 0 }
+#endif // _di_f_cells_t_
+
+/**
+ * This holds an array of f_cells_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_cell_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_cellss_t_
+  typedef struct {
+    f_cells_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_cellss_t;
+
+  #define f_cellss_t_initialize { 0, 0, 0 }
+#endif // _di_f_cellss_t_
 
 /**
  * A structure representing a set of modes intended to be used by file or directory operations.
@@ -413,46 +533,6 @@ extern "C" {
 #endif // _di_f_array_lengthss_t_
 
 /**
- * An array of f_cell_t.
- *
- * The macros are defined in type_array.h or type_array-common.h.
- *
- * array: The array of f_cell_t.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_cells_t_
-  typedef struct {
-    f_cell_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_cells_t;
-
-  #define f_cells_t_initialize { 0, 0, 0 }
-#endif // _di_f_cells_t_
-
-/**
- * This holds an array of f_cells_t.
- *
- * The macros are defined in type_array.h or type_array-common.h.
- *
- * array: The array of f_cell_t arrays.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_cellss_t_
-  typedef struct {
-    f_cells_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_cellss_t;
-
-  #define f_cellss_t_initialize { 0, 0, 0 }
-#endif // _di_f_cellss_t_
-
-/**
  * An array of array int8_t.
  *
  * The macros are defined in type_array.h or type_array-common.h.
@@ -630,6 +710,8 @@ extern "C" {
   } f_int32s_t;
 
   #define f_int32s_t_initialize { 0, 0, 0 }
+
+  #define macro_f_int32s_t_initialize(structure)
 #endif // _di_int32s_t_
 
 /**
@@ -878,6 +960,86 @@ extern "C" {
 
   #define f_uint128ss_t_initialize { 0, 0, 0 }
 #endif // _di_uint128ss_t_
+
+/**
+ * This holds an array of f_status_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_status_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_type_statuss_t_
+  typedef struct {
+    f_status_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_statuss_t;
+
+  #define f_statuss_t_initialize { 0, 0, 0 }
+#endif // _di_f_type_statuss_t_
+
+/**
+ * This holds an array of f_statuss_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_status_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_type_statusss_t_
+  typedef struct {
+    f_statuss_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_statusss_t;
+
+  #define f_statusss_t_initialize { 0, 0, 0 }
+#endif // _di_f_type_statusss_t_
+
+/**
+ * This holds an array of f_state_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_state_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_type_states_t_
+  typedef struct {
+    f_state_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_states_t;
+
+  #define f_states_t_initialize { 0, 0, 0 }
+#endif // _di_f_type_states_t_
+
+/**
+ * This holds an array of f_states_t.
+ *
+ * The macros are defined in type_array.h or type_array-common.h.
+ *
+ * array: The array of f_state_t arrays.
+ * size:  Total amount of allocated space.
+ * used:  Total number of allocated spaces used.
+ */
+#ifndef _di_f_type_statess_t_
+  typedef struct {
+    f_states_t *array;
+
+    f_array_length_t size;
+    f_array_length_t used;
+  } f_statess_t;
+
+  #define f_statess_t_initialize { 0, 0, 0 }
+#endif // _di_f_type_statess_t_
 
 #ifdef __cplusplus
 } // extern "C"

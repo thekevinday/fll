@@ -164,13 +164,14 @@ extern "C" {
 #endif // _di_f_string_dynamic_decrease_by_
 
 #ifndef _di_f_string_dynamic_increase_
-  f_status_t f_string_dynamic_increase(f_string_dynamic_t *dynamic) {
+  f_status_t f_string_dynamic_increase(const uint16_t step, f_string_dynamic_t *dynamic) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!dynamic) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (dynamic->used + 1 > dynamic->size) {
-      f_array_length_t size = dynamic->used + f_memory_default_allocation_step;
+      f_array_length_t size = dynamic->used + step;
 
       if (size > f_array_length_t_size) {
         if (dynamic->used + 1 > f_array_length_t_size) {
@@ -948,13 +949,14 @@ extern "C" {
 #endif // _di_f_string_dynamics_decrease_by_
 
 #ifndef _di_f_string_dynamics_increase_
-  f_status_t f_string_dynamics_increase(f_string_dynamics_t *dynamics) {
+  f_status_t f_string_dynamics_increase(const uint16_t step, f_string_dynamics_t *dynamics) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!dynamics) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (dynamics->used + 1 > dynamics->size) {
-      f_array_length_t size = dynamics->used + f_memory_default_allocation_step;
+      f_array_length_t size = dynamics->used + step;
 
       if (size > f_array_length_t_size) {
         if (dynamics->used + 1 > f_array_length_t_size) {

@@ -330,6 +330,20 @@ extern "C" {
 #endif // _di_controller_resource_limit_t_
 
 /**
+ * Provide common/generic definitions.
+ *
+ * The controller_common_allocation_large or controller_common_allocation_small must be at least 2 for this project.
+ *
+ * controller_common_allocation_*:
+ *   - large: An allocation step used for buffers that are anticipated to have large buffers.
+ *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ */
+#ifndef _di_controller_common_
+  #define controller_common_allocation_large 256
+  #define controller_common_allocation_small 16
+#endif // _di_controller_common_
+
+/**
  * Action related cache.
  *
  * line_action: The line in some file representing an Action.
@@ -1409,7 +1423,30 @@ extern "C" {
     controller_processs_t_initialize, \
     controller_cache_t_initialize, \
   }
-#endif // _di_controller_data_common_t_
+#endif // _di_controller_thread_t_
+
+/**
+ * A structure for passing data to the interrupt state function.
+ *
+ * is_normal: Boolean designating if this is operating in a normal state.
+ * thread:    The thread data.
+ */
+#ifndef _di_controller_state_interrupt_t_
+  typedef struct {
+    bool is_normal;
+    controller_thread_t *thread;
+  } controller_state_interrupt_t;
+
+  #define controller_state_interrupt_t_initialize { \
+    F_true, \
+    0, \
+  }
+
+  #define macro_controller_state_interrupt_t_initialize(is_normal, thread) { \
+    is_normal, \
+    thread, \
+  }
+#endif // _di_controller_state_interrupt_t_
 
 /**
  * A wrapper used for passing a common set of all data, particularly for sharing between threads.
@@ -1843,7 +1880,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -1951,7 +1988,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2096,7 +2133,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.
@@ -2151,7 +2188,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success, but there is no reason to increase size (used + controller_default_allocation_step <= size).
+ *   F_data_not on success, but there is no reason to increase size (used + controller_common_allocation_small <= size).
  *
  *   F_array_too_large (with error bit) if the new array length is too large.
  *   F_memory_not (with error bit) on out of memory.

@@ -54,8 +54,9 @@ extern "C" {
 
 #ifndef _di_fss_extended_write_process_
   f_status_t fss_extended_write_process(const fss_extended_write_main_t main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) {
-    f_status_t status = F_none;
 
+    f_status_t status = F_none;
+    f_state_t state = macro_f_state_t_initialize(fss_extended_write_common_allocation_large, fss_extended_write_common_allocation_small, 0, 0, 0, 0, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
@@ -79,7 +80,7 @@ extern "C" {
         }
       }
 
-      status = fl_fss_extended_object_write_string(*object, quote, complete, &range, buffer);
+      status = fl_fss_extended_object_write_string(*object, quote, complete, state, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_extended_write_error_parameter_unsupported_eol_print(main);
@@ -89,6 +90,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "fl_fss_extended_object_write_string", F_true);
+
         return F_status_set_error(status);
       }
     }
@@ -106,7 +108,7 @@ extern "C" {
             range.stop = 0;
           }
 
-          status = fl_fss_extended_content_write_string(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next : f_fss_complete_end, &range, buffer);
+          status = fl_fss_extended_content_write_string(contents->array[i], quote, i + 1 < contents->used ? f_fss_complete_next : f_fss_complete_end, state, &range, buffer);
 
           if (F_status_set_fine(status) == F_none_eol) {
             fss_extended_write_error_parameter_unsupported_eol_print(main);
@@ -116,6 +118,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main.error, F_status_set_fine(status), "fl_fss_extended_content_write_string", F_true);
+
             return F_status_set_error(status);
           }
         } // for
@@ -126,6 +129,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);
+
         return status;
       }
     }
@@ -139,6 +143,7 @@ extern "C" {
 
 #ifndef _di_fss_extended_write_process_pipe_
   f_status_t fss_extended_write_process_pipe(const fss_extended_write_main_t main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 
@@ -185,7 +190,7 @@ extern "C" {
       if (!state || state == 0x1) {
         if (!state) {
           if (contents.used) {
-            for (i = 0; i < contents.used; i++) {
+            for (i = 0; i < contents.used; ++i) {
               contents.array[i].used = 0;
             } // for
           }
@@ -209,13 +214,13 @@ extern "C" {
 
           if (block.string[range.start] == fss_extended_write_pipe_content_start) {
             state = 0x2;
-            range.start++;
+            ++range.start;
             break;
           }
 
           if (block.string[range.start] == fss_extended_write_pipe_content_end) {
             state = 0x4;
-            range.start++;
+            ++range.start;
             break;
           }
 
@@ -247,7 +252,7 @@ extern "C" {
         }
 
         state = 0x3;
-        contents.used++;
+        ++contents.used;
       }
 
       if (state == 0x3) {
@@ -259,7 +264,7 @@ extern "C" {
         }
 
         if (total) {
-          for (; range.start <= range.stop; range.start++) {
+          for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_extended_write_pipe_content_start) {
               if (contents.used + 1 > contents.size) {
@@ -271,17 +276,18 @@ extern "C" {
                 }
               }
 
-              contents.used++;
+              ++contents.used;
               continue;
             }
 
             if (block.string[range.start] == fss_extended_write_pipe_content_end) {
               state = 0x4;
-              range.start++;
+              ++range.start;
               break;
             }
 
             if (block.string[range.start] == fss_extended_write_pipe_content_ignore) {
+
               // this is not used by this program.
               continue;
             }

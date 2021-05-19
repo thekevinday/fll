@@ -208,7 +208,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_ranges_increase_
-  extern f_status_t f_utf_string_ranges_increase(f_utf_string_ranges_t *ranges);
+  extern f_status_t f_utf_string_ranges_increase(const uint16_t step, f_utf_string_ranges_t *ranges);
 #endif // _di_f_utf_string_ranges_increase_
 
 /**
@@ -339,7 +339,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_rangess_increase_
-  extern f_status_t f_utf_string_rangess_increase(f_utf_string_rangess_t *rangess);
+  extern f_status_t f_utf_string_rangess_increase(const uint16_t step, f_utf_string_rangess_t *rangess);
 #endif // _di_f_utf_string_rangess_increase_
 
 /**

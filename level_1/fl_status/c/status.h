@@ -197,12 +197,16 @@ extern "C" {
     #define FL_status_string_descriptor_not    "F_descriptor_not"
     #define FL_status_string_device            "F_device"
     #define FL_status_string_device_not        "F_device_not"
+    #define FL_status_string_disable           "F_disable"
+    #define FL_status_string_disable_not       "F_disable_not"
     #define FL_status_string_done              "F_done"
     #define FL_status_string_done_not          "F_done_not"
     #define FL_status_string_dummy             "F_dummy"
     #define FL_status_string_dummy_not         "F_dummy_not"
     #define FL_status_string_empty             "F_empty"
     #define FL_status_string_empty_not         "F_empty_not"
+    #define FL_status_string_enable            "F_enable"
+    #define FL_status_string_enable_not        "F_enable_not"
     #define FL_status_string_encoding          "F_encoding"
     #define FL_status_string_encoding_not      "F_encoding_not"
     #define FL_status_string_eoa               "F_eoa"
@@ -370,12 +374,16 @@ extern "C" {
     #define FL_status_string_descriptor_not_length    16
     #define FL_status_string_device_length            8
     #define FL_status_string_device_not_length        12
+    #define FL_status_string_disable_length           9
+    #define FL_status_string_disable_not_length       13
     #define FL_status_string_done_length              6
     #define FL_status_string_done_not_length          10
     #define FL_status_string_dummy_length             7
     #define FL_status_string_dummy_not_length         11
     #define FL_status_string_empty_length             7
     #define FL_status_string_empty_not_length         11
+    #define FL_status_string_enable_length            8
+    #define FL_status_string_enable_not_length        12
     #define FL_status_string_encoding_length          10
     #define FL_status_string_encoding_not_length      14
     #define FL_status_string_eoa_length               5

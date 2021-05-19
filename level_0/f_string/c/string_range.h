@@ -68,7 +68,7 @@ extern "C" {
   #define macro_f_string_ranges_t_delete_simple(ranges)  f_string_ranges_resize(0, &ranges);
   #define macro_f_string_ranges_t_destroy_simple(ranges) f_string_ranges_adjust(0, &ranges);
 
-  #define macro_f_string_ranges_t_increase(status, ranges)            status = f_string_ranges_increase(&ranges);
+  #define macro_f_string_ranges_t_increase(status, step, ranges)      status = f_string_ranges_increase(step, &ranges);
   #define macro_f_string_ranges_t_increase_by(status, ranges, amount) status = f_string_ranges_increase_by(amount, &ranges);
   #define macro_f_string_ranges_t_decrease_by(status, ranges, amount) status = f_string_ranges_decrease_by(amount, &ranges);
   #define macro_f_string_ranges_t_decimate_by(status, ranges, amount) status = f_string_ranges_decimate_by(amount, &ranges);
@@ -99,7 +99,7 @@ extern "C" {
   #define macro_f_string_rangess_t_delete_simple(rangess)  f_string_rangess_resize(0, &rangess);
   #define macro_f_string_rangess_t_destroy_simple(rangess) f_string_rangess_adjust(0, &rangess);
 
-  #define macro_f_string_rangess_t_increase(status, rangess)            status = f_string_rangess_increase(&rangess);
+  #define macro_f_string_rangess_t_increase(status, step, rangess)      status = f_string_rangess_increase(step, &rangess);
   #define macro_f_string_rangess_t_increase_by(status, rangess, amount) status = f_string_rangess_increase_by(amount, &rangess);
   #define macro_f_string_rangess_t_decrease_by(status, rangess, amount) status = f_string_rangess_decrease_by(amount, &rangess);
   #define macro_f_string_rangess_t_decimate_by(status, rangess, amount) status = f_string_rangess_decimate_by(amount, &rangess);
@@ -195,6 +195,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param ranges
  *   The string ranges array to resize.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
@@ -208,7 +211,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_ranges_increase_
-  extern f_status_t f_string_ranges_increase(f_string_ranges_t *ranges);
+  extern f_status_t f_string_ranges_increase(const uint16_t step, f_string_ranges_t *ranges);
 #endif // _di_f_string_ranges_increase_
 
 /**
@@ -326,6 +329,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param rangess
  *   The string rangess array to resize.
  *
@@ -339,7 +345,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_rangess_increase_
-  extern f_status_t f_string_rangess_increase(f_string_rangess_t *rangess);
+  extern f_status_t f_string_rangess_increase(const uint16_t step, f_string_rangess_t *rangess);
 #endif // _di_f_string_rangess_increase_
 
 /**

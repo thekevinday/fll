@@ -218,16 +218,18 @@ extern "C" {
 
 #ifndef _di_fss_embedded_list_read_main_process_file_
   f_status_t fss_embedded_list_read_main_process_file(const f_console_arguments_t arguments, fss_embedded_list_read_main_t *main, const f_string_t filename, const fss_embedded_list_read_depths_t depths, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments) {
+
     f_status_t status = F_none;
 
     {
+      f_state_t state = macro_f_state_t_initialize(fss_embedded_list_read_common_allocation_large, fss_embedded_list_read_common_allocation_small, 0, 0, 0, 0, 0);
       f_string_range_t input = macro_f_string_range_t_initialize(main->buffer.used);
 
       objects_delimits->used = 0;
       contents_delimits->used = 0;
       comments->used = 0;
 
-      status = fll_fss_embedded_list_read(main->buffer, &input, &main->nest, objects_delimits, contents_delimits, comments);
+      status = fll_fss_embedded_list_read(main->buffer, state, &input, &main->nest, objects_delimits, contents_delimits, comments);
 
       if (F_status_is_error(status)) {
         // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.

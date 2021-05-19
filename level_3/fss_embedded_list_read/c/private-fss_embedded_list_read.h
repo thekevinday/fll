@@ -20,7 +20,7 @@ extern "C" {
  * @param arguments
  *   The console arguments to pre-process.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param depths
  *   This stores the pre-processed depth parameters.
  *
@@ -39,7 +39,7 @@ extern "C" {
  * @param arguments
  *   The console arguments passed to the program.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param file_name
  *   The name of the file being processed.
  * @param depths
@@ -83,7 +83,7 @@ extern "C" {
  *   The skip status of any parent lists.
  *   Set parents.length to 0 for depth 0.
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param objects_delimits
  *   An array of delimits detected during processing, for top-level objects.
  * @param contents_delimits
@@ -104,7 +104,7 @@ extern "C" {
  * Print the end of an content.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_content_end_
   extern void fss_embedded_list_read_print_content_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
@@ -116,7 +116,7 @@ extern "C" {
  * This is only used in pipe output mode.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_content_ignore_
   extern void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
@@ -126,7 +126,7 @@ extern "C" {
  * Print the end of an object (which is essentially the start of a content).
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_object_end_
   extern void fss_embedded_list_read_print_object_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
@@ -136,7 +136,7 @@ extern "C" {
  * Print the end of an object/content set.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  */
 #ifndef _di_fss_embedded_list_read_print_set_end_
   extern void fss_embedded_list_read_print_set_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
@@ -146,7 +146,7 @@ extern "C" {
  * Rewrite the object and content delimit ranges to be within the given depth range.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param objects_delimits
  *   An array of delimits detected during processing, for top-level objects.
  * @param contents_delimits
@@ -162,7 +162,7 @@ extern "C" {
  * Write the given delimits at the given depth back into the new delimits array, specifically for contents.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param depth
  *   The depth in which to process.
  * @param original_delimits
@@ -182,7 +182,7 @@ extern "C" {
  * Write the given delimits at the given depth back into the new delimits array, specifically for objects.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param depth
  *   The depth in which to process.
  * @param original_delimits
@@ -202,7 +202,7 @@ extern "C" {
  * Determine if the given location is actually within another depth.
  *
  * @param main
- *   The program specific main.
+ *   The main data.
  * @param depth
  *   The depth in which to process.
  * @param location

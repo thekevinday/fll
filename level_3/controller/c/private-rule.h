@@ -118,6 +118,9 @@ extern "C" {
  *
  * This will automatically increase the size of the actions array as needed.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param global
  *   The global data.
  * @param type
@@ -146,7 +149,7 @@ extern "C" {
  * @see f_fss_count_lines()
  */
 #ifndef _di_controller_rule_action_read_
-  extern f_status_t controller_rule_action_read(const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_action_read(const bool is_normal, const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) f_attribute_visibility_internal;
 #endif // _di_controller_rule_action_read_
 
 /**
@@ -540,6 +543,9 @@ extern "C" {
  *
  * This will perform additional FSS read functions as appropriate.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param global
  *   The global data.
  * @param cache
@@ -560,7 +566,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_controller_rule_item_read_
-  extern f_status_t controller_rule_item_read(const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_item_read(const bool is_normal, const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_read_
 
 /**
@@ -770,6 +776,9 @@ extern "C" {
  * Errors from this are not considered fatal, but the first error code encountered is returned.
  * Memory failure errors are always immediately returned.
  *
+ * @param is_normal
+ *   If TRUE, then process as if this operates during a normal operation (entry and control).
+ *   If FALSE, then process as if this operates during a an exit operation.
  * @param global
  *   The global data.
  * @param setting
@@ -798,7 +807,7 @@ extern "C" {
  * @see fll_path_canonical()
  */
 #ifndef _di_controller_rule_setting_read_
-  extern f_status_t controller_rule_setting_read(const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_setting_read(const bool is_normal, const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
 
 /**

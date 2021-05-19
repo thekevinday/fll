@@ -71,13 +71,14 @@ extern "C" {
 #endif // _di_f_utf_string_quantitys_decrease_by_
 
 #ifndef _di_f_utf_string_quantitys_increase_
-  f_status_t f_utf_string_quantitys_increase(f_utf_string_quantitys_t *quantitys) {
+  f_status_t f_utf_string_quantitys_increase(const uint16_t step, f_utf_string_quantitys_t *quantitys) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!quantitys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (quantitys->used + 1 > quantitys->size) {
-      f_array_length_t size = quantitys->used + f_memory_default_allocation_step;
+      f_array_length_t size = quantitys->used + step;
 
       if (size > f_array_length_t_size) {
         if (quantitys->used + 1 > f_array_length_t_size) {
@@ -164,13 +165,14 @@ extern "C" {
 #endif // _di_f_utf_string_quantityss_decrease_by_
 
 #ifndef _di_f_utf_string_quantityss_increase_
-  f_status_t f_utf_string_quantityss_increase(f_utf_string_quantityss_t *quantityss) {
+  f_status_t f_utf_string_quantityss_increase(const uint16_t step, f_utf_string_quantityss_t *quantityss) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!quantityss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (quantityss->used + 1 > quantityss->size) {
-      f_array_length_t size = quantityss->used + f_memory_default_allocation_step;
+      f_array_length_t size = quantityss->used + step;
 
       if (size > f_array_length_t_size) {
         if (quantityss->used + 1 > f_array_length_t_size) {

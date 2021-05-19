@@ -54,6 +54,7 @@ extern "C" {
 
 #ifndef _di_iki_write_main_
   f_status_t iki_write_main(const f_console_arguments_t arguments, iki_write_main_t *main) {
+
     f_status_t status = F_none;
 
     {
@@ -96,6 +97,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           iki_write_main_delete(main);
+
           return status;
         }
 

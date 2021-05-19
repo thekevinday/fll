@@ -322,7 +322,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
       // first add the program name
       f_string_dynamics_resize(0, &arguments);
 
-      status = f_string_dynamics_increase(&arguments);
+      status = f_string_dynamics_increase(f_memory_default_allocation_small, &arguments);
       if (F_status_is_error(status)) break;
 
       if (tool == firewall_program_ip46tables) {
@@ -650,9 +650,10 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
               f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
               {
+                f_state_t state = f_state_t_initialize;
                 f_string_range_t input = macro_f_string_range_t_initialize(local_buffer.used);
 
-                status = fll_fss_basic_read(local_buffer, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
+                status = fll_fss_basic_read(local_buffer, state, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
               }
 
               if (F_status_set_error(status)) {
@@ -906,7 +907,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
 
   arguments.array[0].used = firewall_chain_create_command_length;
 
-  status = f_string_dynamic_increase(&arguments.array[1]);
+  status = f_string_dynamic_increase(f_memory_default_allocation_small, &arguments.array[1]);
 
   if (F_status_is_error(status)) {
     arguments.used = 1;
@@ -1430,9 +1431,10 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
   f_fss_comments_t comments = f_fss_comments_t_initialize;
 
   {
+    f_state_t state = f_state_t_initialize;
     f_string_range_t input = macro_f_string_range_t_initialize(local->buffer.used);
 
-    status = fll_fss_basic_list_read(local->buffer, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
+    status = fll_fss_basic_list_read(local->buffer, state, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
   }
 
   if (F_status_is_error(status)) {
@@ -1466,9 +1468,15 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
 }
 
 f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t *local, firewall_main_t *main) {
+
+  f_status_t status = F_none;
   f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-  f_status_t status = fll_fss_extended_read(local->buffer, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
+  {
+    f_state_t state = f_state_t_initialize;
+
+    status = fll_fss_extended_read(local->buffer, state, range, &local->rule_objects, &local->rule_contents, 0, 0, &delimits, 0);
+  }
 
   if (F_status_is_error_not(status)) {
     status = fl_fss_apply_delimit(delimits, &local->buffer);

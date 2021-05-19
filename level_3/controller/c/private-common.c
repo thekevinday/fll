@@ -415,7 +415,7 @@ extern "C" {
   f_status_t controller_pids_increase(controller_pids_t *pids) {
 
     if (pids->used + 1 > pids->size) {
-      f_array_length_t size = pids->used + controller_default_allocation_step;
+      f_array_length_t size = pids->used + controller_common_allocation_small;
 
       if (size > f_array_length_t_size) {
         if (pids->used + 1 > f_array_length_t_size) {
@@ -581,7 +581,7 @@ extern "C" {
   f_status_t controller_processs_increase(controller_processs_t *processs) {
 
     if (processs->used + 1 > processs->size) {
-      f_array_length_t size = processs->used + controller_default_allocation_step;
+      f_array_length_t size = processs->used + controller_common_allocation_small;
 
       if (size > f_array_length_t_size) {
         if (processs->used + 1 > f_array_length_t_size) {
@@ -760,7 +760,7 @@ extern "C" {
   f_status_t controller_rule_ons_increase(controller_rule_ons_t *ons) {
 
     if (ons->used + 1 > ons->size) {
-      f_array_length_t size = ons->used + controller_default_allocation_step;
+      f_array_length_t size = ons->used + controller_common_allocation_small;
 
       if (size > f_array_length_t_size) {
         if (ons->used + 1 > f_array_length_t_size) {
@@ -811,7 +811,7 @@ extern "C" {
   f_status_t controller_rules_increase(controller_rules_t *rules) {
 
     if (rules->used + 1 > rules->size) {
-      f_array_length_t size = rules->used + controller_default_allocation_step;
+      f_array_length_t size = rules->used + controller_common_allocation_small;
 
       if (size > f_array_length_t_size) {
         if (rules->used + 1 > f_array_length_t_size) {

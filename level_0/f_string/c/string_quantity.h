@@ -62,7 +62,7 @@ extern "C" {
   #define macro_f_string_quantitys_t_delete_simple(quantitys)  f_string_quantitys_resize(0, &quantitys);
   #define macro_f_string_quantitys_t_destroy_simple(quantitys) f_string_quantitys_adjust(0, &quantitys);
 
-  #define macro_f_string_quantitys_t_increase(status, quantitys)            status = f_string_quantitys_increase(&quantitys);
+  #define macro_f_string_quantitys_t_increase(status, step, quantitys)      status = f_string_quantitys_increase(step, &quantitys);
   #define macro_f_string_quantitys_t_increase_by(status, quantitys, amount) status = f_string_quantitys_increase_by(amount, &quantitys);
   #define macro_f_string_quantitys_t_decrease_by(status, quantitys, amount) status = f_string_quantitys_decrease_by(amount, &quantitys);
   #define macro_f_string_quantitys_t_decimate_by(status, quantitys, amount) status = f_string_quantitys_decimate_by(amount, &quantitys);
@@ -93,7 +93,7 @@ extern "C" {
   #define macro_f_string_quantityss_t_delete_simple(quantityss)  f_string_quantityss_resize(0, &quantityss);
   #define macro_f_string_quantityss_t_destroy_simple(quantityss) f_string_quantityss_adjust(0, &quantityss);
 
-  #define macro_f_string_quantityss_t_increase(status, quantityss)            status = f_string_quantityss_increase(&quantityss);
+  #define macro_f_string_quantityss_t_increase(status, step, quantityss)      status = f_string_quantityss_increase(step, &quantityss);
   #define macro_f_string_quantityss_t_increase_by(status, quantityss, amount) status = f_string_quantityss_increase_by(amount, &quantityss);
   #define macro_f_string_quantityss_t_decrease_by(status, quantityss, amount) status = f_string_quantityss_decrease_by(amount, &quantityss);
   #define macro_f_string_quantityss_t_decimate_by(status, quantityss, amount) status = f_string_quantityss_decimate_by(amount, &quantityss);
@@ -190,6 +190,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param quantitys
  *   The string quantitys array to resize.
  *
@@ -202,7 +205,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantitys_increase_
-  extern f_status_t f_string_quantitys_increase(f_string_quantitys_t *quantitys);
+  extern f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t *quantitys);
 #endif // _di_f_string_quantitys_increase_
 
 /**
@@ -319,6 +322,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param quantityss
  *   The string quantityss array to resize.
  *
@@ -332,7 +338,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_string_quantityss_increase_
-  extern f_status_t f_string_quantityss_increase(f_string_quantityss_t *quantityss);
+  extern f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t *quantityss);
 #endif // _di_f_string_quantityss_increase_
 
 /**

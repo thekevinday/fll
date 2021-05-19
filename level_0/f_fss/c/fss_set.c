@@ -46,13 +46,14 @@ extern "C" {
 #endif // _di_f_fss_set_decrease_by_
 
 #ifndef _di_f_fss_set_increase_
-  f_status_t f_fss_set_increase(f_fss_set_t *set) {
+  f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t *set) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (set->objects.used + 1 > set->objects.size) {
-      f_array_length_t size = set->objects.used + f_memory_default_allocation_step;
+      f_array_length_t size = set->objects.used + step;
 
       if (size > f_array_length_t_size) {
         if (set->objects.used + 1 > f_array_length_t_size) {
@@ -139,13 +140,14 @@ extern "C" {
 #endif // _di_f_fss_set_quote_decrease_by_
 
 #ifndef _di_f_fss_set_quote_increase_
-  f_status_t f_fss_set_quote_increase(f_fss_set_quote_t *set_quote) {
+  f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t *set_quote) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (set_quote->objects.used + 1 > set_quote->objects.size) {
-      f_array_length_t size = set_quote->objects.used + f_memory_default_allocation_step;
+      f_array_length_t size = set_quote->objects.used + step;
 
       if (size > f_array_length_t_size) {
         if (set_quote->objects.used + 1 > f_array_length_t_size) {
@@ -232,13 +234,14 @@ extern "C" {
 #endif // _di_f_fss_set_quotes_decrease_by_
 
 #ifndef _di_f_fss_set_quotes_increase_
-  f_status_t f_fss_set_quotes_increase(f_fss_set_quotes_t *set_quotes) {
+  f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t *set_quotes) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (set_quotes->used + 1 > set_quotes->size) {
-      f_array_length_t size = set_quotes->used + f_memory_default_allocation_step;
+      f_array_length_t size = set_quotes->used + step;
 
       if (size > f_array_length_t_size) {
         if (set_quotes->used + 1 > f_array_length_t_size) {
@@ -325,13 +328,14 @@ extern "C" {
 #endif // _di_f_fss_sets_decrease_by_
 
 #ifndef _di_f_fss_sets_increase_
-  f_status_t f_fss_sets_increase(f_fss_sets_t *sets) {
+  f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t *sets) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (sets->used + 1 > sets->size) {
-      f_array_length_t size = sets->used + f_memory_default_allocation_step;
+      f_array_length_t size = sets->used + step;
 
       if (size > f_array_length_t_size) {
         if (sets->used + 1 > f_array_length_t_size) {

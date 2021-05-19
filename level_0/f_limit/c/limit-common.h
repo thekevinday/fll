@@ -57,7 +57,7 @@ extern "C" {
   #define macro_f_limit_values_t_delete_simple(values)  macro_f_memory_structure_delete_simple(values, f_limit_value_t)
   #define macro_f_limit_values_t_destroy_simple(values) macro_f_memory_structure_destroy_simple(values, f_limit_value_t)
 
-  #define macro_f_limit_values_t_increase(status, values)            macro_f_memory_structure_increase(status, values, f_limit_value_t)
+  #define macro_f_limit_values_t_increase(status, step, values)      macro_f_memory_structure_increase(status, step, values, f_limit_value_t)
   #define macro_f_limit_values_t_increase_by(status, values, amount) macro_f_memory_structure_increase_by(status, values, f_limit_value_t, amount)
   #define macro_f_limit_values_t_decrease_by(status, values, amount) macro_f_memory_structure_decrease_by(status, values, f_limit_value_t, amount)
   #define macro_f_limit_values_t_decimate_by(status, values, amount) macro_f_memory_structure_decimate_by(status, values, f_limit_value_t, amount)
@@ -107,7 +107,7 @@ extern "C" {
   #define macro_f_limit_sets_t_delete_simple(sets)  macro_f_memory_structure_delete_simple(sets, f_limit_set_t)
   #define macro_f_limit_sets_t_destroy_simple(sets) macro_f_memory_structure_destroy_simple(sets, f_limit_set_t)
 
-  #define macro_f_limit_sets_t_increase(status, sets)            macro_f_memory_structure_increase(status, sets, f_limit_set_t)
+  #define macro_f_limit_sets_t_increase(status, step, sets)      macro_f_memory_structure_increase(status, step, sets, f_limit_set_t)
   #define macro_f_limit_sets_t_increase_by(status, sets, amount) macro_f_memory_structure_increase_by(status, sets, f_limit_set_t, amount)
   #define macro_f_limit_sets_t_decrease_by(status, sets, amount) macro_f_memory_structure_decrease_by(status, sets, f_limit_set_t, amount)
   #define macro_f_limit_sets_t_decimate_by(status, sets, amount) macro_f_memory_structure_decimate_by(status, sets, f_limit_set_t, amount)

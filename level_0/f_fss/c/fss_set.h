@@ -43,7 +43,7 @@ extern "C" {
   #define macro_f_fss_set_t_delete_simple(set)  f_fss_set_resize(0, &set);
   #define macro_f_fss_set_t_destroy_simple(set) f_fss_set_adjust(0, &set);
 
-  #define macro_f_fss_set_t_increase(status, set)            status = f_fss_set_increase(&set);
+  #define macro_f_fss_set_t_increase(status, step, set)      status = f_fss_set_increase(step, &set);
   #define macro_f_fss_set_t_increase_by(status, set, amount) status = f_fss_set_increase_by(amount, &set);
   #define macro_f_fss_set_t_decrease_by(status, set, amount) status = f_fss_set_decrease_by(amount, &set);
   #define macro_f_fss_set_t_decimate_by(status, set, amount) status = f_fss_set_decimate_by(amount, &set);
@@ -74,7 +74,7 @@ extern "C" {
   #define macro_f_fss_sets_t_delete_simple(sets)  f_fss_sets_resize(0, &sets);
   #define macro_f_fss_sets_t_destroy_simple(sets) f_fss_sets_adjust(0, &sets);
 
-  #define macro_f_fss_sets_t_increase(status, sets)            status = f_fss_sets_increase(&sets);
+  #define macro_f_fss_sets_t_increase(status, step, sets)      status = f_fss_sets_increase(step, &sets);
   #define macro_f_fss_sets_t_increase_by(status, sets, amount) status = f_fss_sets_increase_by(amount, &sets);
   #define macro_f_fss_sets_t_decrease_by(status, sets, amount) status = f_fss_sets_decrease_by(amount, &sets);
   #define macro_f_fss_sets_t_decimate_by(status, sets, amount) status = f_fss_sets_decimate_by(amount, &sets);
@@ -114,7 +114,7 @@ extern "C" {
   #define macro_f_fss_set_quote_t_delete_simple(set_quote)  f_fss_set_quote_resize(0, &set_quote);
   #define macro_f_fss_set_quote_t_destroy_simple(set_quote) f_fss_set_quote_adjust(0, &set_quote);
 
-  #define macro_f_fss_set_quote_t_increase(status, set_quote)            status = f_fss_set_quote_increase(&set_quote);
+  #define macro_f_fss_set_quote_t_increase(status, step, set_quote)      status = f_fss_set_quote_increase(step, &set_quote);
   #define macro_f_fss_set_quote_t_increase_by(status, set_quote, amount) status = f_fss_set_quote_increase_by(amount, &set_quote);
   #define macro_f_fss_set_quote_t_decrease_by(status, set_quote, amount) status = f_fss_set_quote_decrease_by(amount, &set_quote);
   #define macro_f_fss_set_quote_t_decimate_by(status, set_quote, amount) status = f_fss_set_quote_decimate_by(amount, &set_quote);
@@ -145,7 +145,7 @@ extern "C" {
   #define macro_f_fss_set_quotes_t_delete_simple(set_quotes)  f_fss_set_quotes_resize(0, &set_quotes);
   #define macro_f_fss_set_quotes_t_destroy_simple(set_quotes) f_fss_set_quotes_adjust(0, &set_quotes);
 
-  #define macro_f_fss_set_quotes_t_increase(status, set_quotes)            status = f_fss_set_quotes_increase(&set_quotes);
+  #define macro_f_fss_set_quotes_t_increase(status, step, set_quotes)      status = f_fss_set_quotes_increase(step, &set_quotes);
   #define macro_f_fss_set_quotes_t_increase_by(status, set_quotes, amount) status = f_fss_set_quotes_increase_by(amount, &set_quotes);
   #define macro_f_fss_set_quotes_t_decrease_by(status, set_quotes, amount) status = f_fss_set_quotes_decrease_by(amount, &set_quotes);
   #define macro_f_fss_set_quotes_t_decimate_by(status, set_quotes, amount) status = f_fss_set_quotes_decimate_by(amount, &set_quotes);
@@ -219,6 +219,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param set
  *   The set array to resize.
  *
@@ -231,7 +234,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_increase_
-  extern f_status_t f_fss_set_increase(f_fss_set_t *set);
+  extern f_status_t f_fss_set_increase(const uint16_t step, f_fss_set_t *set);
 #endif // _di_f_fss_set_increase_
 
 /**
@@ -344,6 +347,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set_quote max buffer size (f_array_length_t_size).
  * If already set_quote to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param set_quote
  *   The set_quote array to resize.
  *
@@ -356,7 +362,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quote_increase_
-  extern f_status_t f_fss_set_quote_increase(f_fss_set_quote_t *set_quote);
+  extern f_status_t f_fss_set_quote_increase(const uint16_t step, f_fss_set_quote_t *set_quote);
 #endif // _di_f_fss_set_quote_increase_
 
 /**
@@ -469,6 +475,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param set_quotes
  *   The set_quotes array to resize.
  *
@@ -481,7 +490,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_set_quotes_increase_
-  extern f_status_t f_fss_set_quotes_increase(f_fss_set_quotes_t *set_quotes);
+  extern f_status_t f_fss_set_quotes_increase(const uint16_t step, f_fss_set_quotes_t *set_quotes);
 #endif // _di_f_fss_set_quotes_increase_
 
 /**
@@ -594,6 +603,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param sets
  *   The sets array to resize.
  *
@@ -606,7 +618,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_sets_increase_
-  extern f_status_t f_fss_sets_increase(f_fss_sets_t *sets);
+  extern f_status_t f_fss_sets_increase(const uint16_t step, f_fss_sets_t *sets);
 #endif // _di_f_fss_sets_increase_
 
 /**

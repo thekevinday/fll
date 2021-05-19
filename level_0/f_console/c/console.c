@@ -82,7 +82,7 @@ extern "C" {
       if (needs_value.used > 0) {
         i = needs_value.array[0];
 
-        macro_f_array_lengths_t_increase(status, parameters.parameter[i].values)
+        macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, parameters.parameter[i].values)
 
         if (F_status_is_error(status)) {
           macro_f_array_lengths_t_delete_simple(needs_value);
@@ -200,7 +200,7 @@ extern "C" {
               continue;
             }
 
-            macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations)
+            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, parameters.parameter[i].locations)
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(needs_value);
@@ -208,7 +208,7 @@ extern "C" {
               return status;
             }
 
-            macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, parameters.parameter[i].locations_sub)
 
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(needs_value);
@@ -263,7 +263,7 @@ extern "C" {
 
           if (strncmp(arguments.argv[location], parameters.parameter[i].symbol_other, argument_length + 1) != 0) continue;
 
-          macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations)
+          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, parameters.parameter[i].locations)
 
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(needs_value);
@@ -271,7 +271,7 @@ extern "C" {
             return status;
           }
 
-          macro_f_array_lengths_t_increase(status, parameters.parameter[i].locations_sub)
+          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, parameters.parameter[i].locations_sub)
 
           if (F_status_is_error(status)) {
             macro_f_array_lengths_t_delete_simple(needs_value);
@@ -310,7 +310,7 @@ extern "C" {
 
           // populate list of remaining parameters.parameter not associated with anything.
           if (remaining->used == remaining->size) {
-            macro_f_memory_structure_increment(status, (*remaining), 1, f_memory_default_allocation_step, macro_f_array_lengths_t_resize, F_array_too_large);
+            macro_f_memory_structure_increment(status, (*remaining), 1, f_memory_default_allocation_small, macro_f_array_lengths_t_resize, F_array_too_large);
             if (F_status_is_error(status)) {
               macro_f_array_lengths_t_delete_simple(needs_value);
               return status;

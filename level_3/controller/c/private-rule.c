@@ -60,7 +60,7 @@ extern "C" {
 
     if (object && object->start <= object->start) {
 
-      status = f_string_dynamics_increase(parameters);
+      status = f_string_dynamics_increase(controller_common_allocation_small, parameters);
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, global.thread);
@@ -95,7 +95,7 @@ extern "C" {
 
         if (content->array[i].start > content->array[i].start) continue;
 
-        status = f_string_dynamics_increase(parameters);
+        status = f_string_dynamics_increase(controller_common_allocation_small, parameters);
 
         if (F_status_is_error(status)) {
           controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, global.thread);
@@ -229,7 +229,7 @@ extern "C" {
 #endif // _di_controller_rule_actions_increase_by_
 
 #ifndef _di_controller_rule_action_read_
-  f_status_t controller_rule_action_read(const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
+  f_status_t controller_rule_action_read(const bool is_normal, const controller_global_t global, const uint8_t type, const uint8_t method, controller_cache_t *cache, controller_rule_item_t *item, controller_rule_actions_t *actions, f_string_range_t *range) {
 
     f_status_t status = F_none;
 
@@ -244,7 +244,12 @@ extern "C" {
         actions->array[actions->used].parameters.used = 0;
       }
 
-      status = fl_fss_extended_list_content_read(cache->buffer_item, range, &cache->content_action, &cache->delimits, &cache->comments);
+      {
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+        f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+
+        status = fl_fss_extended_list_content_read(cache->buffer_item, state, range, &cache->content_action, &cache->delimits, &cache->comments);
+      }
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_extended_list_content_read", F_true, global.thread);
@@ -261,7 +266,7 @@ extern "C" {
           if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
             actions->array[actions->used].parameters.used = 0;
 
-            status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
+            status = f_string_dynamics_increase(controller_common_allocation_small, &actions->array[actions->used].parameters);
 
             if (F_status_is_error(status)) {
               controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, global.thread);
@@ -293,8 +298,13 @@ extern "C" {
             return status;
           }
 
-          // the object_actions and content_actions caches are being used for the purposes of getting the parameters a given the action.
-          status = fll_fss_extended_read(cache->buffer_item, &cache->content_action.array[0], &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+          {
+            controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+            f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+
+            // the object_actions and content_actions caches are being used for the purposes of getting the parameters a given the action.
+            status = fll_fss_extended_read(cache->buffer_item, state, &cache->content_action.array[0], &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+          }
 
           if (F_status_is_error(status)) {
             controller_error_print(global.main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, global.thread);
@@ -312,7 +322,7 @@ extern "C" {
               f_array_length_t j = 0;
 
               for (; i < cache->object_actions.used; ++i) {
-                status = controller_rule_actions_increase_by(controller_default_allocation_step, actions);
+                status = controller_rule_actions_increase_by(controller_common_allocation_small, actions);
 
                 if (F_status_is_error(status)) {
                   controller_error_print(global.main->error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true, global.thread);
@@ -331,7 +341,7 @@ extern "C" {
                 actions->array[actions->used].parameters.used = 0;
                 actions->array[actions->used].status = F_known_not;
 
-                status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
+                status = f_string_dynamics_increase(controller_common_allocation_small, &actions->array[actions->used].parameters);
 
                 if (F_status_is_error(status)) {
                   controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, global.thread);
@@ -356,11 +366,15 @@ extern "C" {
       }
     }
     else {
-
       cache->content_action.used = 0;
       cache->delimits.used = 0;
 
-      status = fl_fss_extended_content_read(cache->buffer_item, range, &cache->content_action, 0, &cache->delimits);
+      {
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+        f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+
+        status = fl_fss_extended_content_read(cache->buffer_item, state, range, &cache->content_action, 0, &cache->delimits);
+      }
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "fll_fss_extended_content_read", F_true, global.thread);
@@ -372,7 +386,7 @@ extern "C" {
           controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_apply_delimit", F_true, global.thread);
         }
         else if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
-          status = f_string_dynamics_increase(&actions->array[actions->used].parameters);
+          status = f_string_dynamics_increase(controller_common_allocation_small, &actions->array[actions->used].parameters);
 
           if (F_status_is_error(status)) {
             controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true, global.thread);
@@ -1309,7 +1323,7 @@ extern "C" {
       return status;
     }
 
-    status = f_string_dynamics_increase(&process->path_pids);
+    status = f_string_dynamics_increase(controller_common_allocation_small, &process->path_pids);
 
     if (F_status_is_error(status)) {
       fll_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
@@ -1592,10 +1606,11 @@ extern "C" {
 #endif // _di_controller_rule_status_is_error_
 
 #ifndef _di_controller_rule_item_read_
-  f_status_t controller_rule_item_read(const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) {
+  f_status_t controller_rule_item_read(const bool is_normal, const controller_global_t global, controller_cache_t *cache, controller_rule_item_t *item) {
 
     f_status_t status = F_none;
-
+    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+    f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
     f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
     f_array_length_t last = 0;
 
@@ -1607,7 +1622,7 @@ extern "C" {
 
     for (; range.start < cache->buffer_item.used && range.start <= range.stop; last = range.start, cache->delimits.used = 0, cache->comments.used = 0) {
 
-      status = fl_fss_extended_list_object_read(cache->buffer_item, &range, &cache->range_action, &cache->delimits);
+      status = fl_fss_extended_list_object_read(cache->buffer_item, state, &range, &cache->range_action, &cache->delimits);
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_extended_list_object_read", F_true, global.thread);
@@ -1623,7 +1638,7 @@ extern "C" {
         cache->delimits.used = 0;
 
         // The current line is not an Extended List object, so the next possibility is a Basic List (and Extended List, both use the same Object structure).
-        status = fl_fss_extended_object_read(cache->buffer_item, &range, &cache->range_action, 0, &cache->delimits);
+        status = fl_fss_extended_object_read(cache->buffer_item, state, &range, &cache->range_action, 0, &cache->delimits);
 
         if (F_status_is_error(status)) {
           controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true, global.thread);
@@ -1737,14 +1752,14 @@ extern "C" {
         method = controller_rule_action_method_extended;
       }
 
-      status = controller_rule_actions_increase_by(controller_default_allocation_step, &item->actions);
+      status = controller_rule_actions_increase_by(controller_common_allocation_small, &item->actions);
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "controller_rule_actions_increase_by", F_true, global.thread);
         break;
       }
 
-      status = controller_rule_action_read(global, type, method, cache, item, &item->actions, &range);
+      status = controller_rule_action_read(is_normal, global, type, method, cache, item, &item->actions, &range);
       if (F_status_is_error(status)) break;
     } // for
 
@@ -2822,7 +2837,7 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status)) {
-          status = f_type_array_lengths_increase(&process->stack);
+          status = f_type_array_lengths_increase(controller_common_allocation_small, &process->stack);
 
           if (F_status_is_error(status)) {
             controller_error_print(global.main->error, F_status_set_fine(status), "f_type_array_lengths_increase", F_true, global.thread);
@@ -3077,9 +3092,11 @@ extern "C" {
       rule->timestamp = cache->timestamp;
 
       if (cache->buffer_file.used) {
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+        f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
         f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_file.used);
 
-        status = fll_fss_basic_list_read(cache->buffer_file, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
+        status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
         if (F_status_is_error(status)) {
           controller_error_print(global.main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, global.thread);
@@ -3197,7 +3214,7 @@ extern "C" {
           }
 
           if (rule->items.array[rule->items.used].type) {
-            status = controller_rule_item_read(global, cache, &rule->items.array[rule->items.used]);
+            status = controller_rule_item_read(is_normal, global, cache, &rule->items.array[rule->items.used]);
             if (F_status_is_error(status)) break;
 
             rule->items.used++;
@@ -3205,7 +3222,7 @@ extern "C" {
           else {
             for_item = F_false;
 
-            status = controller_rule_setting_read(global, *global.setting, cache, rule);
+            status = controller_rule_setting_read(is_normal, global, *global.setting, cache, rule);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) == F_memory_not) {
@@ -3229,7 +3246,7 @@ extern "C" {
 #endif // _di_controller_rule_read_
 
 #ifndef _di_controller_rule_setting_read_
-  f_status_t controller_rule_setting_read(const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
+  f_status_t controller_rule_setting_read(const bool is_normal, const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) {
 
     f_status_t status = F_none;
     f_status_t status_return = F_none;
@@ -3237,7 +3254,12 @@ extern "C" {
     f_string_range_t range = macro_f_string_range_t_initialize(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
-    status = fll_fss_extended_read(cache->buffer_item, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+    {
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+      f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
+
+      status = fll_fss_extended_read(cache->buffer_item, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);
+    }
 
     if (F_status_is_error(status)) {
       controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "fll_fss_extended_read", F_true, F_false, global.thread);
@@ -3472,7 +3494,7 @@ extern "C" {
 
           // @todo this needs to be in a function such as f_int32s_increase().
           if (rule->affinity.used + 1 > rule->affinity.size) {
-            f_array_length_t size = rule->affinity.used + f_memory_default_allocation_step;
+            f_array_length_t size = rule->affinity.used + controller_common_allocation_small;
 
             if (size > f_array_length_t_size) {
               if (rule->affinity.used + 1 > f_array_length_t_size) {
@@ -3593,7 +3615,7 @@ extern "C" {
           setting_maps = &rule->parameter;
         }
 
-        status = f_string_maps_increase(setting_maps);
+        status = f_string_maps_increase(controller_common_allocation_small, setting_maps);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_maps_increase", F_true, F_false, global.thread);
@@ -3757,7 +3779,7 @@ extern "C" {
 
           for (j = 1; j < cache->content_actions.array[i].used; ++j) {
 
-            status = f_string_dynamics_increase(&rule->control_group.groups);
+            status = f_string_dynamics_increase(controller_common_allocation_small, &rule->control_group.groups);
 
             if (F_status_is_error(status)) {
               controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false, global.thread);
@@ -3940,7 +3962,7 @@ extern "C" {
 
         if (F_status_is_error(status)) continue;
 
-        macro_f_limit_sets_t_increase(status, rule->limits);
+        macro_f_limit_sets_t_increase(status, controller_common_allocation_small, rule->limits);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_limit_sets_increase", F_true, F_false, global.thread);
@@ -4640,7 +4662,7 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          macro_f_array_lengths_t_increase_by(status, rule->groups, controller_default_allocation_step)
+          macro_f_array_lengths_t_increase_by(status, rule->groups, controller_common_allocation_small)
 
           if (F_status_is_error(status)) {
             controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, F_false, global.thread);
@@ -4747,7 +4769,7 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          status = f_string_dynamics_increase(setting_values);
+          status = f_string_dynamics_increase(controller_common_allocation_small, setting_values);
 
           if (F_status_is_error(status)) {
             controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase", F_true, F_false, global.thread);
@@ -5002,7 +5024,7 @@ extern "C" {
           continue;
         }
 
-        status = f_string_dynamics_increase_by(controller_default_allocation_step, setting_values);
+        status = f_string_dynamics_increase_by(controller_common_allocation_small, setting_values);
 
         if (F_status_is_error(status)) {
           controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true, F_false, global.thread);

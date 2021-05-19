@@ -115,6 +115,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param cells
  *   The string cells array to resize.
  *
@@ -128,7 +131,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_cells_increase_
-  extern f_status_t f_type_cells_increase(f_cells_t *cells);
+  extern f_status_t f_type_cells_increase(const uint16_t step, f_cells_t *cells);
 #endif // _di_f_type_cells_increase_
 
 /**
@@ -289,6 +292,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param cellss
  *   The string cellss array to resize.
  *
@@ -302,7 +308,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_cellss_increase_
-  extern f_status_t f_type_cellss_increase(f_cellss_t *cellss);
+  extern f_status_t f_type_cellss_increase(const uint16_t step, f_cellss_t *cellss);
 #endif // _di_f_type_cellss_increase_
 
 /**
@@ -441,6 +447,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param lengths
  *   The string lengths array to resize.
  *
@@ -454,7 +463,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_array_lengths_increase_
-  extern f_status_t f_type_array_lengths_increase(f_array_lengths_t *lengths);
+  extern f_status_t f_type_array_lengths_increase(const uint16_t step, f_array_lengths_t *lengths);
 #endif // _di_f_type_array_lengths_increase_
 
 /**
@@ -615,6 +624,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param lengthss
  *   The string lengthss array to resize.
  *
@@ -628,7 +640,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_array_lengthss_increase_
-  extern f_status_t f_type_array_lengthss_increase(f_array_lengthss_t *lengthss);
+  extern f_status_t f_type_array_lengthss_increase(const uint16_t step, f_array_lengthss_t *lengthss);
 #endif // _di_f_type_array_lengthss_increase_
 
 /**
@@ -767,6 +779,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int8s
  *   The string int8s array to resize.
  *
@@ -780,7 +795,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int8s_increase_
-  extern f_status_t f_type_int8s_increase(f_int8s_t *int8s);
+  extern f_status_t f_type_int8s_increase(const uint16_t step, f_int8s_t *int8s);
 #endif // _di_f_type_int8s_increase_
 
 /**
@@ -941,6 +956,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int8ss
  *   The string int8ss array to resize.
  *
@@ -954,7 +972,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int8ss_increase_
-  extern f_status_t f_type_int8ss_increase(f_int8ss_t *int8ss);
+  extern f_status_t f_type_int8ss_increase(const uint16_t step, f_int8ss_t *int8ss);
 #endif // _di_f_type_int8ss_increase_
 
 /**
@@ -1093,6 +1111,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint8s
  *   The string uint8s array to resize.
  *
@@ -1106,7 +1127,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint8s_increase_
-  extern f_status_t f_type_uint8s_increase(f_uint8s_t *uint8s);
+  extern f_status_t f_type_uint8s_increase(const uint16_t step, f_uint8s_t *uint8s);
 #endif // _di_f_type_uint8s_increase_
 
 /**
@@ -1267,6 +1288,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint8ss
  *   The string uint8ss array to resize.
  *
@@ -1280,7 +1304,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint8ss_increase_
-  extern f_status_t f_type_uint8ss_increase(f_uint8ss_t *uint8ss);
+  extern f_status_t f_type_uint8ss_increase(const uint16_t step, f_uint8ss_t *uint8ss);
 #endif // _di_f_type_uint8ss_increase_
 
 /**
@@ -1419,6 +1443,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int16s
  *   The string int16s array to resize.
  *
@@ -1432,7 +1459,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int16s_increase_
-  extern f_status_t f_type_int16s_increase(f_int16s_t *int16s);
+  extern f_status_t f_type_int16s_increase(const uint16_t step, f_int16s_t *int16s);
 #endif // _di_f_type_int16s_increase_
 
 /**
@@ -1593,6 +1620,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int16ss
  *   The string int16ss array to resize.
  *
@@ -1606,7 +1636,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int16ss_increase_
-  extern f_status_t f_type_int16ss_increase(f_int16ss_t *int16ss);
+  extern f_status_t f_type_int16ss_increase(const uint16_t step, f_int16ss_t *int16ss);
 #endif // _di_f_type_int16ss_increase_
 
 /**
@@ -1745,6 +1775,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint16s
  *   The string uint16s array to resize.
  *
@@ -1758,7 +1791,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint16s_increase_
-  extern f_status_t f_type_uint16s_increase(f_uint16s_t *uint16s);
+  extern f_status_t f_type_uint16s_increase(const uint16_t step, f_uint16s_t *uint16s);
 #endif // _di_f_type_uint16s_increase_
 
 /**
@@ -1919,6 +1952,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint16ss
  *   The string uint16ss array to resize.
  *
@@ -1932,7 +1968,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint16ss_increase_
-  extern f_status_t f_type_uint16ss_increase(f_uint16ss_t *uint16ss);
+  extern f_status_t f_type_uint16ss_increase(const uint16_t step, f_uint16ss_t *uint16ss);
 #endif // _di_f_type_uint16ss_increase_
 
 /**
@@ -2071,6 +2107,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int32s
  *   The string int32s array to resize.
  *
@@ -2084,7 +2123,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int32s_increase_
-  extern f_status_t f_type_int32s_increase(f_int32s_t *int32s);
+  extern f_status_t f_type_int32s_increase(const uint16_t step, f_int32s_t *int32s);
 #endif // _di_f_type_int32s_increase_
 
 /**
@@ -2245,6 +2284,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int32ss
  *   The string int32ss array to resize.
  *
@@ -2258,7 +2300,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int32ss_increase_
-  extern f_status_t f_type_int32ss_increase(f_int32ss_t *int32ss);
+  extern f_status_t f_type_int32ss_increase(const uint16_t step, f_int32ss_t *int32ss);
 #endif // _di_f_type_int32ss_increase_
 
 /**
@@ -2397,6 +2439,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint32s
  *   The string uint32s array to resize.
  *
@@ -2410,7 +2455,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint32s_increase_
-  extern f_status_t f_type_uint32s_increase(f_uint32s_t *uint32s);
+  extern f_status_t f_type_uint32s_increase(const uint16_t step, f_uint32s_t *uint32s);
 #endif // _di_f_type_uint32s_increase_
 
 /**
@@ -2571,6 +2616,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint32ss
  *   The string uint32ss array to resize.
  *
@@ -2584,7 +2632,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint32ss_increase_
-  extern f_status_t f_type_uint32ss_increase(f_uint32ss_t *uint32ss);
+  extern f_status_t f_type_uint32ss_increase(const uint16_t step, f_uint32ss_t *uint32ss);
 #endif // _di_f_type_uint32ss_increase_
 
 /**
@@ -2723,6 +2771,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int64s
  *   The string int64s array to resize.
  *
@@ -2736,7 +2787,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int64s_increase_
-  extern f_status_t f_type_int64s_increase(f_int64s_t *int64s);
+  extern f_status_t f_type_int64s_increase(const uint16_t step, f_int64s_t *int64s);
 #endif // _di_f_type_int64s_increase_
 
 /**
@@ -2897,6 +2948,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int64ss
  *   The string int64ss array to resize.
  *
@@ -2910,7 +2964,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int64ss_increase_
-  extern f_status_t f_type_int64ss_increase(f_int64ss_t *int64ss);
+  extern f_status_t f_type_int64ss_increase(const uint16_t step, f_int64ss_t *int64ss);
 #endif // _di_f_type_int64ss_increase_
 
 /**
@@ -3049,6 +3103,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint64s
  *   The string uint64s array to resize.
  *
@@ -3062,7 +3119,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint64s_increase_
-  extern f_status_t f_type_uint64s_increase(f_uint64s_t *uint64s);
+  extern f_status_t f_type_uint64s_increase(const uint16_t step, f_uint64s_t *uint64s);
 #endif // _di_f_type_uint64s_increase_
 
 /**
@@ -3223,6 +3280,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint64ss
  *   The string uint64ss array to resize.
  *
@@ -3236,7 +3296,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint64ss_increase_
-  extern f_status_t f_type_uint64ss_increase(f_uint64ss_t *uint64ss);
+  extern f_status_t f_type_uint64ss_increase(const uint16_t step, f_uint64ss_t *uint64ss);
 #endif // _di_f_type_uint64ss_increase_
 
 /**
@@ -3375,6 +3435,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int128s
  *   The string int128s array to resize.
  *
@@ -3388,7 +3451,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int128s_increase_
-  extern f_status_t f_type_int128s_increase(f_int128s_t *int128s);
+  extern f_status_t f_type_int128s_increase(const uint16_t step, f_int128s_t *int128s);
 #endif // _di_f_type_int128s_increase_
 
 /**
@@ -3549,6 +3612,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param int128ss
  *   The string int128ss array to resize.
  *
@@ -3562,7 +3628,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_int128ss_increase_
-  extern f_status_t f_type_int128ss_increase(f_int128ss_t *int128ss);
+  extern f_status_t f_type_int128ss_increase(const uint16_t step, f_int128ss_t *int128ss);
 #endif // _di_f_type_int128ss_increase_
 
 /**
@@ -3701,6 +3767,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint128s
  *   The string uint128s array to resize.
  *
@@ -3714,7 +3783,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint128s_increase_
-  extern f_status_t f_type_uint128s_increase(f_uint128s_t *uint128s);
+  extern f_status_t f_type_uint128s_increase(const uint16_t step, f_uint128s_t *uint128s);
 #endif // _di_f_type_uint128s_increase_
 
 /**
@@ -3875,6 +3944,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param uint128ss
  *   The string uint128ss array to resize.
  *
@@ -3888,7 +3960,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_type_uint128ss_increase_
-  extern f_status_t f_type_uint128ss_increase(f_uint128ss_t *uint128ss);
+  extern f_status_t f_type_uint128ss_increase(const uint16_t step, f_uint128ss_t *uint128ss);
 #endif // _di_f_type_uint128ss_increase_
 
 /**

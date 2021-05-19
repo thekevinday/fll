@@ -225,12 +225,13 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_load_
   f_status_t fss_basic_list_read_load(fss_basic_list_read_main_t * const main, fss_basic_list_read_data_t *data) {
 
+    f_state_t state = macro_f_state_t_initialize(fss_basic_list_read_common_allocation_large, fss_basic_list_read_common_allocation_small, 0, 0, 0, 0, 0);
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
 
     data->delimits_object.used = 0;
     data->delimits_content.used = 0;
 
-    const f_status_t status = fll_fss_basic_list_read(data->buffer, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
+    const f_status_t status = fll_fss_basic_list_read(data->buffer, state, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
 
     if (F_status_is_error(status)) {
       const f_string_t file_name = fss_basic_list_read_file_identify(input.start, data->files);

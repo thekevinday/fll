@@ -46,13 +46,14 @@ extern "C" {
 #endif // _di_f_fss_items_decrease_by_
 
 #ifndef _di_f_fss_items_increase_
-  f_status_t f_fss_items_increase(f_fss_items_t *items) {
+  f_status_t f_fss_items_increase(const uint16_t step, f_fss_items_t *items) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (items->used + 1 > items->size) {
-      f_array_length_t size = items->used + f_memory_default_allocation_step;
+      f_array_length_t size = items->used + step;
 
       if (size > f_array_length_t_size) {
         if (items->used + 1 > f_array_length_t_size) {
@@ -139,13 +140,14 @@ extern "C" {
 #endif // _di_f_fss_nest_decrease_by_
 
 #ifndef _di_f_fss_nest_increase_
-  f_status_t f_fss_nest_increase(f_fss_nest_t *nest) {
+  f_status_t f_fss_nest_increase(const uint16_t step, f_fss_nest_t *nest) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (nest->used + 1 > nest->size) {
-      f_array_length_t size = nest->used + f_memory_default_allocation_step;
+      f_array_length_t size = nest->used + step;
 
       if (size > f_array_length_t_size) {
         if (nest->used + 1 > f_array_length_t_size) {
@@ -232,13 +234,14 @@ extern "C" {
 #endif // _di_f_fss_nests_decrease_by_
 
 #ifndef _di_f_fss_nests_increase_
-  f_status_t f_fss_nests_increase(f_fss_nests_t *nests) {
+  f_status_t f_fss_nests_increase(const uint16_t step, f_fss_nests_t *nests) {
     #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (nests->used + 1 > nests->size) {
-      f_array_length_t size = nests->used + f_memory_default_allocation_step;
+      f_array_length_t size = nests->used + step;
 
       if (size > f_array_length_t_size) {
         if (nests->used + 1 > f_array_length_t_size) {

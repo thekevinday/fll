@@ -685,6 +685,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param attributes
  *   The string attributes array to resize.
  *
@@ -697,7 +700,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_attributes_increase_
-  extern f_status_t f_thread_attributes_increase(f_thread_attributes_t *attributes);
+  extern f_status_t f_thread_attributes_increase(const uint16_t step, f_thread_attributes_t *attributes);
 #endif // _di_f_thread_attributes_increase_
 
 /**
@@ -897,6 +900,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param attributes
  *   The thread attributes array to resize.
  *
@@ -909,7 +915,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barrier_attributes_increase_
-  extern f_status_t f_thread_barrier_attributes_increase(f_thread_barrier_attributes_t *attributes);
+  extern f_status_t f_thread_barrier_attributes_increase(const uint16_t step, f_thread_barrier_attributes_t *attributes);
 #endif // _di_f_thread_barrier_attributes_increase_
 
 /**
@@ -1087,6 +1093,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param barriers
  *   The thread barriers array to resize.
  *
@@ -1099,7 +1108,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_barriers_increase_
-  extern f_status_t f_thread_barriers_increase(f_thread_barriers_t *barriers);
+  extern f_status_t f_thread_barriers_increase(const uint16_t step, f_thread_barriers_t *barriers);
 #endif // _di_f_thread_barriers_increase_
 
 /**
@@ -1429,6 +1438,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param attributes
  *   The string attributes array to resize.
  *
@@ -1441,7 +1453,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_condition_attributes_increase_
-  extern f_status_t f_thread_condition_attributes_increase(f_thread_condition_attributes_t *attributes);
+  extern f_status_t f_thread_condition_attributes_increase(const uint16_t step, f_thread_condition_attributes_t *attributes);
 #endif // _di_f_thread_condition_attributes_increase_
 
 /**
@@ -1695,6 +1707,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param conditions
  *   The string conditions array to resize.
  *
@@ -1707,7 +1722,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_conditions_increase_
-  extern f_status_t f_thread_conditions_increase(f_thread_conditions_t *conditions);
+  extern f_status_t f_thread_conditions_increase(const uint16_t step, f_thread_conditions_t *conditions);
 #endif // _di_f_thread_conditions_increase_
 
 /**
@@ -2069,6 +2084,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param keys
  *   The string keys array to resize.
  *
@@ -2081,7 +2099,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_keys_increase_
-  extern f_status_t f_thread_keys_increase(f_thread_keys_t *keys);
+  extern f_status_t f_thread_keys_increase(const uint16_t step, f_thread_keys_t *keys);
 #endif // _di_f_thread_keys_increase_
 
 /**
@@ -2282,6 +2300,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param attributes
  *   The string attributes array to resize.
  *
@@ -2294,7 +2315,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_lock_attributes_increase_
-  extern f_status_t f_thread_lock_attributes_increase(f_thread_lock_attributes_t *attributes);
+  extern f_status_t f_thread_lock_attributes_increase(const uint16_t step, f_thread_lock_attributes_t *attributes);
 #endif // _di_f_thread_lock_attributes_increase_
 
 /**
@@ -2604,6 +2625,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param locks
  *   The string locks array to resize.
  *
@@ -2616,7 +2640,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_locks_increase_
-  extern f_status_t f_thread_locks_increase(f_thread_locks_t *locks);
+  extern f_status_t f_thread_locks_increase(const uint16_t step, f_thread_locks_t *locks);
 #endif // _di_f_thread_locks_increase_
 
 /**
@@ -2942,6 +2966,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param attributes
  *   The string attributes array to resize.
  *
@@ -2954,7 +2981,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutex_attributes_increase_
-  extern f_status_t f_thread_mutex_attributes_increase(f_thread_mutex_attributes_t *attributes);
+  extern f_status_t f_thread_mutex_attributes_increase(const uint16_t step, f_thread_mutex_attributes_t *attributes);
 #endif // _di_f_thread_mutex_attributes_increase_
 
 /**
@@ -3267,6 +3294,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param mutexs
  *   The string mutexs array to resize.
  *
@@ -3279,7 +3309,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_mutexs_increase_
-  extern f_status_t f_thread_mutexs_increase(f_thread_mutexs_t *mutexs);
+  extern f_status_t f_thread_mutexs_increase(const uint16_t step, f_thread_mutexs_t *mutexs);
 #endif // _di_f_thread_mutexs_increase_
 
 /**
@@ -3740,6 +3770,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param semaphores
  *   The string semaphores array to resize.
  *
@@ -3752,7 +3785,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_semaphores_increase_
-  extern f_status_t f_thread_semaphores_increase(f_thread_semaphores_t *semaphores);
+  extern f_status_t f_thread_semaphores_increase(const uint16_t step, f_thread_semaphores_t *semaphores);
 #endif // _di_f_thread_semaphores_increase_
 
 /**
@@ -3865,6 +3898,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param sets
  *   The string sets array to resize.
  *
@@ -3877,7 +3913,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_sets_increase_
-  extern f_status_t f_thread_sets_increase(f_thread_sets_t *sets);
+  extern f_status_t f_thread_sets_increase(const uint16_t step, f_thread_sets_t *sets);
 #endif // _di_f_thread_sets_increase_
 
 /**
@@ -4182,6 +4218,9 @@ extern "C" {
  * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
  * If already set to the maximum buffer size, then the resize will fail.
  *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
  * @param spins
  *   The string spins array to resize.
  *
@@ -4194,7 +4233,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_thread_spins_increase_
-  extern f_status_t f_thread_spins_increase(f_thread_spins_t *spins);
+  extern f_status_t f_thread_spins_increase(const uint16_t step, f_thread_spins_t *spins);
 #endif // _di_f_thread_spins_increase_
 
 /**

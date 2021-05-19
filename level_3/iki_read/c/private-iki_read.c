@@ -8,7 +8,10 @@ extern "C" {
 
 #ifndef _di_iki_read_process_at_
   f_status_t iki_read_process_at(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_string_range_t *range) {
-    if (main->parameters[iki_read_parameter_line].result != f_console_result_additional) return F_false;
+
+    if (main->parameters[iki_read_parameter_line].result != f_console_result_additional) {
+      return F_false;
+    }
 
     f_array_length_t line = 0;
 
@@ -33,6 +36,7 @@ extern "C" {
 
 #ifndef _di_iki_read_process_buffer_
   f_status_t iki_read_process_buffer(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main) {
+
     f_status_t status = F_none;
 
     f_iki_variable_t variable = f_iki_variable_t_initialize;
@@ -101,14 +105,20 @@ extern "C" {
 
 #ifndef _di_iki_read_process_buffer_ranges_
   f_status_t iki_read_process_buffer_ranges(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_string_range_t *buffer_range, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) {
+
     f_status_t status = F_none;
 
     bool unmatched = F_true;
 
-    status = fl_iki_read(&main->buffer, buffer_range, variable, vocabulary, content);
+    {
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+
+      status = fl_iki_read(state, &main->buffer, buffer_range, variable, vocabulary, content);
+    }
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "fl_iki_read", F_true);
+
       return status;
     }
 
@@ -216,18 +226,25 @@ extern "C" {
 
 #ifndef _di_iki_read_process_buffer_ranges_whole_
   f_status_t iki_read_process_buffer_ranges_whole(const f_console_arguments_t arguments, const f_string_t file_name, const f_string_range_t buffer_range, iki_read_main_t *main, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content, f_string_ranges_t *ranges) {
+
     f_status_t status = F_none;
     f_string_range_t range = buffer_range;
 
-    status = fl_iki_read(&main->buffer, &range, variable, vocabulary, content);
+    {
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+
+      status = fl_iki_read(state, &main->buffer, &range, variable, vocabulary, content);
+    }
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "fl_iki_read", F_true);
+
       return status;
     }
 
     if (!variable->used) {
       f_print_dynamic_partial(main->output.stream, main->buffer, buffer_range);
+
       return F_none;
     }
 
@@ -391,6 +408,7 @@ extern "C" {
 
 #ifndef _di_iki_read_process_buffer_total_
   f_status_t iki_read_process_buffer_total(const f_console_arguments_t arguments, const f_string_t file_name, iki_read_main_t *main, f_iki_variable_t *variable, f_iki_vocabulary_t *vocabulary, f_iki_content_t *content) {
+
     f_status_t status = F_none;
     f_string_range_t range = macro_f_string_range_t_initialize(main->buffer.used);
 
@@ -399,18 +417,25 @@ extern "C" {
     if (status == F_true) {
       if (range.start > main->buffer.used) {
         printf("0\n");
+
         return F_none;
       }
     }
     else if (status == F_data_not) {
       printf("0\n");
+
       return F_none;
     }
 
-    status = fl_iki_read(&main->buffer, &range, variable, vocabulary, content);
+    {
+      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large, iki_read_common_allocation_small, 0, 0, 0, 0, 0);
+
+      status = fl_iki_read(state, &main->buffer, &range, variable, vocabulary, content);
+    }
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "fl_iki_read", F_true);
+
       return status;
     }
 
@@ -442,6 +467,7 @@ extern "C" {
         range.stop = name.used - 1;
 
         for (j = 0; j < vocabulary->used; j++) {
+
           status = fl_string_dynamic_partial_compare(name, main->buffer, range, vocabulary->array[j]);
 
           if (status == F_equal_to) total++;
@@ -522,6 +548,7 @@ extern "C" {
     range.start = 0;
 
     for (; i < substitutions.used; i++) {
+
       range.stop = substitutions.array[i].replace.used - 1;
 
       status = fl_string_dynamic_partial_compare(substitutions.array[i].replace, main.buffer, range, content.array[index]);

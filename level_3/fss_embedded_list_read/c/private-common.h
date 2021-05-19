@@ -13,6 +13,18 @@ extern "C" {
 #endif
 
 /**
+ * Provide common/generic definitions.
+ *
+ * embedded_list_read_common_allocation_*:
+ *   - large: An allocation step used for buffers that are anticipated to have large buffers.
+ *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ */
+#ifndef _di_fss_embedded_list_read_common_
+  #define fss_embedded_list_read_common_allocation_large 256
+  #define fss_embedded_list_read_common_allocation_small 16
+#endif // _di_fss_embedded_list_read_common_
+
+/**
  * A structure of parameters applied at some depth.
  *
  * depth: the depth number in which this is to be processed at.

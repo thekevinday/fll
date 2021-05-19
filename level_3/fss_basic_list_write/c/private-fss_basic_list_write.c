@@ -54,8 +54,9 @@ extern "C" {
 
 #ifndef _di_fss_basic_list_write_process_
   f_status_t fss_basic_list_write_process(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
-    f_status_t status = F_none;
 
+    f_status_t status = F_none;
+    f_state_t state = macro_f_state_t_initialize(fss_basic_list_write_common_allocation_large, fss_basic_list_write_common_allocation_small, 0, 0, 0, 0, 0);
     f_string_range_t range = f_string_range_t_initialize;
 
     if (object) {
@@ -79,7 +80,7 @@ extern "C" {
         }
       }
 
-      status = fl_fss_basic_list_object_write_string(*object, complete, &range, buffer);
+      status = fl_fss_basic_list_object_write_string(*object, complete, state, &range, buffer);
 
       if (F_status_set_fine(status) == F_none_eol) {
         fss_basic_list_write_error_parameter_unsupported_eol_print(main);
@@ -89,6 +90,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_object_write_string", F_true);
+
         return status;
       }
     }
@@ -97,10 +99,11 @@ extern "C" {
       range.start = 0;
       range.stop = content->used - 1;
 
-      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &main.prepend, &range, buffer);
+      status = fl_fss_basic_list_content_write_string(*content, object ? f_fss_complete_full : f_fss_complete_none, &main.prepend, state, &range, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "fl_fss_basic_list_content_write_string", F_true);
+
         return status;
       }
     }
@@ -110,6 +113,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);
+
         return status;
       }
     }
@@ -123,6 +127,7 @@ extern "C" {
 
 #ifndef _di_fss_basic_list_write_process_pipe_
   f_status_t fss_basic_list_write_process_pipe(const fss_basic_list_write_main_t main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;
 
@@ -181,17 +186,17 @@ extern "C" {
           }
         }
 
-        for (; range.start <= range.stop; range.start++) {
+        for (; range.start <= range.stop; ++range.start) {
 
           if (block.string[range.start] == fss_basic_list_write_pipe_content_start) {
             state = 0x2;
-            range.start++;
+            ++range.start;
             break;
           }
 
           if (block.string[range.start] == fss_basic_list_write_pipe_content_end) {
             state = 0x3;
-            range.start++;
+            ++range.start;
             break;
           }
 
@@ -230,7 +235,7 @@ extern "C" {
             }
           }
 
-          for (; range.start <= range.stop; range.start++) {
+          for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_basic_list_write_pipe_content_start) {
               if (main.error.verbosity != f_console_verbosity_quiet) {
@@ -244,7 +249,7 @@ extern "C" {
 
             if (block.string[range.start] == fss_basic_list_write_pipe_content_end) {
               state = 0x3;
-              range.start++;
+              ++range.start;
               break;
             }
 

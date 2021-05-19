@@ -385,7 +385,17 @@ extern "C" {
   #define fake_build_parameter_object_link_arguments_length 3
 #endif // _di_fake_build_parameter_
 
+/**
+ * Provide common/generic definitions.
+ *
+ * fake_common_allocation_*:
+ *   - large: An allocation step used for buffers that are anticipated to have large buffers.
+ *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ */
 #ifndef _di_fake_common_
+  #define fake_common_allocation_large 256
+  #define fake_common_allocation_small 16
+
   #define fake_common_initial_buffer_max 131072 // 128k max default initial buffer size.
 
   #define fake_common_setting_bool_yes "yes"

@@ -53,7 +53,7 @@ extern "C" {
   #define macro_f_fss_quotes_t_delete_simple(quotes)  macro_f_uint8s_t_delete_simple(quotes)
   #define macro_f_fss_quotes_t_destroy_simple(quotes) macro_f_uint8s_t_destroy_simple(quotes)
 
-  #define macro_f_fss_quotes_t_increase(status, quotes)            macro_f_uint8s_t_increase(status, quotes)
+  #define macro_f_fss_quotes_t_increase(status, step, quotes)      macro_f_uint8s_t_increase(status, step, quotes)
   #define macro_f_fss_quotes_t_increase_by(status, quotes, amount) macro_f_uint8s_t_increase_by(status, quotes, amount)
   #define macro_f_fss_quotes_t_decrease_by(status, quotes, amount) macro_f_uint8s_t_decrease_by(status, quotes, amount)
   #define macro_f_fss_quotes_t_decimate_by(status, quotes, amount) macro_f_uint8s_t_decimate_by(status, quotes, amount)
@@ -79,7 +79,7 @@ extern "C" {
   #define macro_f_fss_quotess_t_delete_simple(quotess)  macro_f_uint8ss_t_delete_simple(quotess)
   #define macro_f_fss_quotess_t_destroy_simple(quotess) macro_f_uint8ss_t_destroy_simple(quotess)
 
-  #define macro_f_fss_quotess_t_increase(status, quotess)            macro_f_uint8ss_t_increase(status, quotess)
+  #define macro_f_fss_quotess_t_increase(status, step, quotess)      macro_f_uint8ss_t_increase(status, step, quotess)
   #define macro_f_fss_quotess_t_increase_by(status, quotess, amount) macro_f_uint8ss_t_increase_by(status, quotess, amount)
   #define macro_f_fss_quotess_t_decrease_by(status, quotess, amount) macro_f_uint8ss_t_decrease_by(status, quotess, amount)
   #define macro_f_fss_quotess_t_decimate_by(status, quotess, amount) macro_f_uint8ss_t_decimate_by(status, quotess, amount)

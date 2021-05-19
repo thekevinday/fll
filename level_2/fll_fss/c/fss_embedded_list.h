@@ -31,6 +31,15 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param range
  *   The range within the buffer that is currently being read.
  * @param nest
@@ -58,6 +67,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_memory_not (with error bit) on out of memory.
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -71,7 +81,7 @@ extern "C" {
  *   Errors (with error bit) from: fl_fss_embedded_list_object_read().
  */
 #ifndef _di_fll_fss_embedded_list_read_
-  extern f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
+  extern f_status_t fll_fss_embedded_list_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_nest_t *nest, f_fss_delimits_t *objects_delimits, f_fss_delimits_t *contents_delimits, f_fss_comments_t *comments);
 #endif // _di_fll_fss_embedded_list_read_
 
 /**
@@ -89,6 +99,15 @@ extern "C" {
  *   These ranges are only checked/ignored if there is a valid nested object open or a valid nested object close.
  *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
  *   Set the pointer address to 0 to disable.
+ * @param state
+ *   A state for handling interrupts during long running operations.
+ *   There is no print_error() usage at this time (@todo this should be implemented and supported).
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions (@todo the additional parameters could be moved to a custom structure).
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  * @param destination
  *   The buffer where the content is written to.
  *
@@ -100,6 +119,7 @@ extern "C" {
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *
  *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
@@ -109,7 +129,7 @@ extern "C" {
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  */
 #ifndef _di_fll_fss_embedded_list_write_string_
-  extern f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t *destination);
+  extern f_status_t fll_fss_embedded_list_write_string(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t *destination);
 #endif // _di_fll_fss_embedded_list_write_string_
 
 #ifdef __cplusplus

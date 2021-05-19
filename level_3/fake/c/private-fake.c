@@ -956,6 +956,52 @@ extern "C" {
   }
 #endif // _di_fake_signal_read_
 
+#ifndef _di_fake_signal_state_interrupt_fss_
+  f_status_t fake_signal_state_interrupt_fss(void *state, void *internal) {
+
+    if (!state) {
+      return F_interrupt_not;
+    }
+
+    f_state_t *state_ptr = (f_state_t *) state;
+
+    if (!state_ptr->custom) {
+      return F_interrupt_not;
+    }
+
+    fake_main_t *main = (fake_main_t *) state_ptr->custom;
+
+    if (fake_signal_received(*main)) {
+      return F_status_set_error(F_interrupt);
+    }
+
+    return F_interrupt_not;
+  }
+#endif // _di_fake_signal_state_interrupt_fss_
+
+#ifndef _di_fake_signal_state_interrupt_iki_
+  f_status_t fake_signal_state_interrupt_iki(void *state, void *internal) {
+
+    if (!state) {
+      return F_interrupt_not;
+    }
+
+    f_state_t *state_ptr = (f_state_t *) state;
+
+    if (!state_ptr->custom) {
+      return F_interrupt_not;
+    }
+
+    fake_main_t *main = (fake_main_t *) state_ptr->custom;
+
+    if (fake_signal_received(*main)) {
+      return F_status_set_error(F_interrupt);
+    }
+
+    return F_interrupt_not;
+  }
+#endif // _di_fake_signal_state_interrupt_iki_
+
 #ifndef _di_fake_validate_directories_
   f_status_t fake_validate_parameter_directories(const f_console_arguments_t arguments, const fake_main_t main) {
 

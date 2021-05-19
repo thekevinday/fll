@@ -315,6 +315,12 @@ extern "C" {
         case F_device_not:
           *string = FL_status_string_device_not;
           break;
+        case F_disable:
+          *string = FL_status_string_disable;
+          break;
+        case F_disable_not:
+          *string = FL_status_string_disable_not;
+          break;
         case F_done:
           *string = FL_status_string_done;
           break;
@@ -332,6 +338,12 @@ extern "C" {
           break;
         case F_empty_not:
           *string = FL_status_string_empty_not;
+          break;
+        case F_enable:
+          *string = FL_status_string_enable;
+          break;
+        case F_enable_not:
+          *string = FL_status_string_enable_not;
           break;
         case F_encoding:
           *string = FL_status_string_encoding;

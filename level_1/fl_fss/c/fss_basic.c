@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_object_t *found, f_fss_quote_t *quote, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -16,7 +16,7 @@ extern "C" {
 
     const f_array_length_t delimits_used = delimits->used;
 
-    f_status_t status = private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits);
+    f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quote, delimits);
 
     if (F_status_is_error(status)) {
       delimits->used = delimits_used;
@@ -29,7 +29,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
+  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t *range, f_fss_content_t *found, f_fss_delimits_t *delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -53,15 +53,24 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    macro_f_fss_content_t_increase(status, (*found))
+    macro_f_fss_content_t_increase(status, state.step_small, (*found))
     if (F_status_is_error(status)) return status;
 
     found->array[found->used].start = range->start;
 
     for (;; ++range->start) {
 
+      if (state.interrupt) {
+        status = state.interrupt((void *) &state, 0);
+
+        if (F_status_set_fine(status) == F_interrupt) {
+          status = F_status_set_error(F_interrupt);
+          break;
+        }
+      }
+
       status = f_fss_skip_past_delimit(buffer, range);
-      if (F_status_is_error(status)) return status;
+      if (F_status_is_error(status)) break;
 
       if (status == F_none_eos || status == F_none_stop) {
         return status;
@@ -69,6 +78,10 @@ extern "C" {
 
       if (buffer.string[range->start] == f_fss_basic_close) break;
     } // for
+
+    if (F_status_is_error(status)) {
+      return status;
+    }
 
     found->array[found->used++].stop = range->start - 1;
 
@@ -80,7 +93,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_object_write_string_
-  f_status_t fl_fss_basic_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_object_write_string(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -88,7 +101,7 @@ extern "C" {
 
     const f_array_length_t destination_used = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double, state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
@@ -110,7 +123,7 @@ extern "C" {
         f_status_t status2 = F_none;
 
         if (complete == f_fss_complete_full_trim) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double, destination_used, destination);
+          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double, destination_used, state, destination);
 
           if (F_status_is_error(status2)) {
             destination->used = destination_used;
@@ -119,7 +132,7 @@ extern "C" {
           }
         }
 
-        status2 = f_string_dynamic_increase(destination);
+        status2 = f_string_dynamic_increase(state.step_large, destination);
 
         if (F_status_is_error(status2)) {
           destination->used = destination_used;
@@ -139,7 +152,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_write_string_
 
 #ifndef _di_fl_fss_basic_content_write_string_
-  f_status_t fl_fss_basic_content_write_string(const f_string_static_t content, const uint8_t complete, f_string_range_t *range, f_string_dynamic_t *destination) {
+  f_status_t fl_fss_basic_content_write_string(const f_string_static_t content, const uint8_t complete, f_state_t state, f_string_range_t *range, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -154,7 +167,7 @@ extern "C" {
 
       // content should be terminated, even if empty.
       if (complete == f_fss_complete_full || complete == f_fss_complete_full_trim || complete == f_fss_complete_end) {
-        status = f_string_dynamic_increase(destination);
+        status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) return status;
 
         destination->string[destination->used++] = f_fss_basic_close;
@@ -174,6 +187,14 @@ extern "C" {
     const f_array_length_t destination_used = destination->used;
 
     for (; range->start <= range->stop && range->start < content.used; ++range->start) {
+
+      if (state.interrupt) {
+        status = state.interrupt((void *) &state, 0);
+
+        if (F_status_set_fine(status) == F_interrupt) {
+          return F_status_set_error(F_interrupt);
+        }
+      }
 
       if (content.string[range->start] == f_fss_eol) {
         destination->used = destination_used;

@@ -177,6 +177,7 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -185,6 +186,7 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -207,7 +209,11 @@ extern "C" {
       f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
-      *status = fll_fss_basic_list_read(data_make->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments);
+      {
+        f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large, fake_common_allocation_small, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
+
+        *status = fll_fss_basic_list_read(data_make->buffer, state, &range, &list_objects, &list_contents, &delimits, 0, &comments);
+      }
 
       if (F_status_is_error(*status)) {
         fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_basic_list_read", main.file_data_build_fakefile.string, range, F_true);
@@ -234,6 +240,8 @@ extern "C" {
       bool missing_settings = F_true;
 
       f_fss_set_t settings = f_fss_set_t_initialize;
+
+      f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large, fake_common_allocation_small, 0, &fake_signal_state_interrupt_fss, 0, (void *) &main, 0);
 
       const f_string_static_t name_settings = macro_f_string_static_t_initialize(fake_make_section_settings, fake_make_section_settings_length);
       const f_string_static_t name_main = macro_f_string_static_t_initialize(fake_make_section_main, fake_make_section_main_length);
@@ -273,7 +281,7 @@ extern "C" {
             delimits.used = 0;
             content_range = list_contents.array[i].array[0];
 
-            *status = fll_fss_extended_read(data_make->buffer, &content_range, &settings.objects, &settings.contents, 0, 0, &delimits, 0);
+            *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &settings.objects, &settings.contents, 0, 0, &delimits, 0);
 
             if (F_status_is_error(*status)) {
               fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_extended_read", main.file_data_build_fakefile.string, content_range, F_true);
@@ -305,7 +313,7 @@ extern "C" {
           delimits.used = 0;
           content_range = list_contents.array[i].array[0];
 
-          *status = fll_fss_extended_read(data_make->buffer, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
+          *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
 
           if (F_status_is_error(*status)) {
             fake_print_error_fss(main, F_status_set_fine(*status), "fll_fss_extended_read", main.file_data_build_fakefile.string, content_range, F_true);
@@ -354,7 +362,7 @@ extern "C" {
       {
         f_string_t function_name = "macro_f_string_map_multis_t_resize";
 
-        macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, f_memory_default_allocation_step);
+        macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, f_memory_default_allocation_small);
 
         if (F_status_is_error_not(*status)) {
           data_make->setting_make.parameter.used = 1;
@@ -447,7 +455,7 @@ extern "C" {
 
                 if (k == data_make->setting_build.environment.used) {
                   if (data_make->setting_build.environment.used + 1 > data_make->setting_build.environment.size) {
-                    *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->setting_build.environment);
+                    *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, &data_make->setting_build.environment);
 
                     if (F_status_is_error(*status)) {
                       fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -766,7 +774,7 @@ extern "C" {
 
     if (main.context.mode != f_color_mode_none) {
       if (data_make->parameter.color.used >= data_make->parameter.color.size) {
-        *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->parameter.color);
+        *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, &data_make->parameter.color);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -822,7 +830,7 @@ extern "C" {
 
     if (main.error.verbosity != f_console_verbosity_normal) {
       if (data_make->parameter.verbosity.used >= data_make->parameter.verbosity.size) {
-        *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->parameter.verbosity);
+        *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, &data_make->parameter.verbosity);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -905,7 +913,7 @@ extern "C" {
         for (j = 0; j < source[i]->used; j++) {
 
           if (destination[i]->used >= destination[i]->size) {
-            *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
+            *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -933,7 +941,7 @@ extern "C" {
           }
 
           if (destination[i]->used >= destination[i]->size) {
-            *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
+            *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
 
             if (F_status_is_error(*status)) {
               fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -998,7 +1006,7 @@ extern "C" {
       for (uint8_t i = 0; i < 7; i ++) {
 
         if (destination[i]->used >= destination[i]->size) {
-          *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
+          *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -1026,7 +1034,7 @@ extern "C" {
         }
 
         if (destination[i]->used >= destination[i]->size) {
-          *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, destination[i]);
+          *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -1066,7 +1074,7 @@ extern "C" {
     f_array_lengths_t section_stack = f_array_lengths_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
-    status = f_string_dynamics_increase(&data_make.path.stack);
+    status = f_string_dynamics_increase(f_memory_default_allocation_small, &data_make.path.stack);
 
     if (F_status_is_error(status)) {
       fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
@@ -1175,6 +1183,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_expand_
   void fake_make_operate_expand(const fake_main_t main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_fss_content_t content, const f_fss_quotes_t quotes, fake_make_data_t *data_make, f_string_dynamics_t *arguments, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
     if (!content.used) return;
 
@@ -1198,6 +1207,8 @@ extern "C" {
     f_iki_vocabulary_t iki_vocabulary = f_iki_vocabulary_t_initialize;
     f_iki_content_t iki_content = f_iki_content_t_initialize;
 
+    f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large, fake_common_allocation_small, 0, &fake_signal_state_interrupt_iki, 0, (void *) &main, 0);
+
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
 
@@ -1211,7 +1222,6 @@ extern "C" {
     f_array_length_t l = 0;
 
     f_array_length_t used_arguments = 0;
-
     f_array_length_t previous = 0;
 
     const f_string_t reserved_name[] = {
@@ -1266,7 +1276,7 @@ extern "C" {
 
       used_arguments = arguments->used;
 
-      *status = fl_iki_read(&data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content);
+      *status = fl_iki_read(state, &data_make->buffer, &range, &iki_variable, &iki_vocabulary, &iki_content);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fl_iki_read", F_true);
@@ -1274,7 +1284,7 @@ extern "C" {
       }
 
       if (arguments->used >= arguments->size) {
-        *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
+        *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, arguments);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -1296,6 +1306,7 @@ extern "C" {
         }
 
         for (j = 0, previous = iki_variable.array[0].start; j < iki_variable.used; j++) {
+
           parameter_is = F_false;
           define_is = F_false;
 
@@ -1360,7 +1371,7 @@ extern "C" {
 
                 if (fl_string_dynamic_partial_compare_string(reserved_name[k], data_make->buffer, reserved_length[k], iki_content.array[j]) == F_equal_to) {
                   if (arguments->used >= arguments->size) {
-                    *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
+                    *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, arguments);
 
                     if (F_status_is_error(*status)) {
                       fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -1430,7 +1441,7 @@ extern "C" {
                     }
                     else {
                       if (arguments->used >= arguments->size) {
-                        *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
+                        *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, arguments);
 
                         if (F_status_is_error(*status)) {
                           fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
@@ -1808,7 +1819,7 @@ extern "C" {
       status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      status = f_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
+      status = f_string_dynamics_increase_by(f_memory_default_allocation_small, arguments);
 
       if (F_status_is_error_not(status)) {
         status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
@@ -1864,7 +1875,7 @@ extern "C" {
       status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
     }
     else {
-      status = f_string_dynamics_increase_by(f_memory_default_allocation_step, arguments);
+      status = f_string_dynamics_increase_by(f_memory_default_allocation_small, arguments);
 
       if (F_status_is_error_not(status)) {
         status = f_string_dynamic_append_nulless(value, &arguments->array[arguments->used]);
@@ -1907,7 +1918,7 @@ extern "C" {
 
     // add the operation id to the operation stack.
     if (section_stack->used + 1 > section_stack->size) {
-      macro_f_array_lengths_t_increase_by((*status), (*section_stack), f_memory_default_allocation_step);
+      macro_f_array_lengths_t_increase_by((*status), (*section_stack), f_memory_default_allocation_small);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "macro_f_array_lengths_t_increase_by", F_true);
@@ -3653,7 +3664,7 @@ extern "C" {
       }
       else {
         if (data_make->path.stack.used == data_make->path.stack.size) {
-          *status = f_string_dynamics_increase_by(f_memory_default_allocation_step, &data_make->path.stack);
+          *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, &data_make->path.stack);
 
           if (F_status_set_fine(*status) == F_array_too_large) {
             fake_print_message_section_operation_path_stack_max(*main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", "path stack");

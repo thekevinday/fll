@@ -144,7 +144,7 @@ extern "C" {
  * Recommended to be set to at least 4 to be UTF-8 friendlier.
  */
 #ifndef _di_f_fss_default_allocation_step_
-  #define f_fss_default_allocation_step f_memory_default_allocation_step
+  #define f_fss_default_allocation_step f_memory_default_allocation_small
 #endif // _di_f_fss_default_allocation_step_
 
 /**
@@ -190,7 +190,7 @@ extern "C" {
   #define macro_f_fss_headers_t_delete_simple(headers)  macro_f_memory_structure_delete_simple(headers, f_fss_header_t)
   #define macro_f_fss_headers_t_destroy_simple(headers) macro_f_memory_structure_destroy_simple(headers, f_fss_header_t)
 
-  #define macro_f_fss_headers_t_increase(status, headers)            macro_f_memory_structure_increase(status, headers, f_fss_header_t)
+  #define macro_f_fss_headers_t_increase(status, step, headers)      macro_f_memory_structure_increase(status, step, headers, f_fss_header_t)
   #define macro_f_fss_headers_t_increase_by(status, headers, amount) macro_f_memory_structure_increase_by(status, headers, f_fss_header_t, amount)
   #define macro_f_fss_headers_t_decrease_by(status, headers, amount) macro_f_memory_structure_decrease_by(status, headers, f_fss_header_t, amount)
   #define macro_f_fss_headers_t_decimate_by(status, headers, amount) macro_f_memory_structure_decimate_by(status, headers, f_fss_header_t, amount)
@@ -227,7 +227,7 @@ extern "C" {
   #define macro_f_fss_objects_t_delete_simple(objects)  macro_f_string_ranges_t_delete_simple(objects)
   #define macro_f_fss_objects_t_destroy_simple(objects) macro_f_string_ranges_t_destroy_simple(objects)
 
-  #define macro_f_fss_objects_t_increase(status, objects)            macro_f_string_ranges_t_increase(status, objects)
+  #define macro_f_fss_objects_t_increase(status, step, objects)      macro_f_string_ranges_t_increase(status, step, objects)
   #define macro_f_fss_objects_t_increase_by(status, objects, amount) macro_f_string_ranges_t_increase_by(status, objects, amount)
   #define macro_f_fss_objects_t_decrease_by(status, objects, amount) macro_f_string_ranges_t_decrease_by(status, objects, amount)
   #define macro_f_fss_objects_t_decimate_by(status, objects, amount) macro_f_string_ranges_t_decimate_by(status, objects, amount)
@@ -255,7 +255,7 @@ extern "C" {
   #define macro_f_fss_content_t_delete_simple(content)  macro_f_string_ranges_t_delete_simple(content)
   #define macro_f_fss_content_t_destroy_simple(content) macro_f_string_ranges_t_destroy_simple(content)
 
-  #define macro_f_fss_content_t_increase(status, content)            macro_f_string_ranges_t_increase(status, content)
+  #define macro_f_fss_content_t_increase(status, step, content)      macro_f_string_ranges_t_increase(status, step, content)
   #define macro_f_fss_content_t_increase_by(status, content, amount) macro_f_string_ranges_t_increase_by(status, content, amount)
   #define macro_f_fss_content_t_decrease_by(status, content, amount) macro_f_string_ranges_t_decrease_by(status, content, amount)
   #define macro_f_fss_content_t_decimate_by(status, content, amount) macro_f_string_ranges_t_decimate_by(status, content, amount)
@@ -281,7 +281,7 @@ extern "C" {
   #define macro_f_fss_contents_t_delete_simple(contents)  macro_f_string_rangess_t_delete_simple(contents)
   #define macro_f_fss_contents_t_destroy_simple(contents) macro_f_string_rangess_t_destroy_simple(contents)
 
-  #define macro_f_fss_contents_t_increase(status, contents)            macro_f_string_rangess_t_increase(status, contents)
+  #define macro_f_fss_contents_t_increase(status, step, contents)            macro_f_string_rangess_t_increase(status, step, contents)
   #define macro_f_fss_contents_t_increase_by(status, contents, amount) macro_f_string_rangess_t_increase_by(status, contents, amount)
   #define macro_f_fss_contents_t_decrease_by(status, contents, amount) macro_f_string_rangess_t_decrease_by(status, contents, amount)
   #define macro_f_fss_contents_t_decimate_by(status, contents, amount) macro_f_string_rangess_t_decimate_by(status, contents, amount)

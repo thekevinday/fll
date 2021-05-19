@@ -179,7 +179,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          macro_f_memory_structure_increment(status, (*destination), 1, f_memory_default_allocation_step, macro_f_string_dynamics_t_resize, F_array_too_large);
+          macro_f_memory_structure_increment(status, (*destination), 1, f_memory_default_allocation_small, macro_f_string_dynamics_t_resize, F_array_too_large);
           if (F_status_is_error(status)) break;
 
           destination->array[destination->used] = ripped;
@@ -252,7 +252,7 @@ extern "C" {
           status = F_none;
         }
         else {
-          macro_f_string_dynamics_t_increase(status, (*destination));
+          macro_f_string_dynamics_t_increase(status, f_memory_default_allocation_small, (*destination));
           if (F_status_is_error(status)) return status;
 
           destination->array[destination->used] = ripped;
