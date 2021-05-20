@@ -160,6 +160,7 @@ extern "C" {
 
 #ifndef _di_controller_file_pid_create_
   f_status_t controller_file_pid_create(const pid_t pid, const f_string_static_t path) {
+
     f_status_t status = F_none;
 
     // the file exists, do not attempt to overwrite.
@@ -313,6 +314,7 @@ extern "C" {
 
       if (processs.array[i] && processs.array[i]->action == action && fl_string_dynamic_compare(alias, processs.array[i]->rule.alias) == F_equal_to) {
         if (at) *at = i;
+
         return F_true;
       }
     } // for
@@ -323,6 +325,7 @@ extern "C" {
 
 #ifndef _di_controller_get_id_user_
   f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, uid_t *id) {
+
     f_number_unsigned_t number = 0;
 
     f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
@@ -364,6 +367,7 @@ extern "C" {
 
 #ifndef _di_controller_get_id_group_
   f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t *cache, gid_t *id) {
+
     f_number_unsigned_t number = 0;
 
     f_status_t status = fl_conversion_string_to_number_unsigned(buffer.string, range, &number);
@@ -405,6 +409,7 @@ extern "C" {
 
 #ifndef _di_controller_perform_ready_
   f_status_t controller_perform_ready(const bool is_entry, controller_global_t global, controller_cache_t *cache) {
+
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
@@ -453,6 +458,7 @@ extern "C" {
 
 #ifndef _di_controller_preprocess_entry_
   f_status_t controller_preprocess_entry(const bool is_entry, controller_global_t global, controller_cache_t *cache) {
+
     f_status_t status = F_none;
     f_status_t status2 = F_none;
 
@@ -1144,7 +1150,7 @@ extern "C" {
               }
             }
             else {
-              global->setting->rules.used++;
+              ++global->setting->rules.used;
             }
 
             f_thread_unlock(&global->thread->lock.rule);

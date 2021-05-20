@@ -561,7 +561,7 @@ extern "C" {
       f_thread_unlock(&process->lock);
 
       if (count < controller_thread_wait_timeout_3_before) {
-        count++;
+        ++count;
       }
 
     } while (status == F_time && controller_thread_is_enabled_process(process, global.thread));

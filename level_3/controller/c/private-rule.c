@@ -291,7 +291,7 @@ extern "C" {
               }
               else {
                 actions->array[actions->used].parameters.used = 1;
-                actions->used++;
+                ++actions->used;
               }
             }
 
@@ -400,6 +400,7 @@ extern "C" {
             actions->array[actions->used].status = F_known_not;
 
             for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
+
               status = f_string_dynamic_partial_mash_nulless(f_string_space_s, f_string_space_length, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
               if (F_status_is_error(status)) break;
             } // for
@@ -443,7 +444,7 @@ extern "C" {
               actions->array[actions->used].status = status;
             }
 
-            actions->used++;
+            ++actions->used;
           }
         }
       }
@@ -3217,7 +3218,7 @@ extern "C" {
             status = controller_rule_item_read(is_normal, global, cache, &rule->items.array[rule->items.used]);
             if (F_status_is_error(status)) break;
 
-            rule->items.used++;
+            ++rule->items.used;
           }
           else {
             for_item = F_false;
@@ -3238,6 +3239,7 @@ extern "C" {
       controller_rule_item_error_print(global.main->error, cache->action, for_item, global.thread);
 
       rule->status[0] = controller_status_simplify_error(F_status_set_fine(status));
+
       return rule->status[0];
     }
 
@@ -3702,7 +3704,7 @@ extern "C" {
           continue;
         }
 
-        setting_maps->used++;
+        ++setting_maps->used;
         continue;
       }
 
@@ -3795,7 +3797,7 @@ extern "C" {
               break;
             }
 
-            rule->control_group.groups.used++;
+            ++rule->control_group.groups.used;
           } // for
         }
 
@@ -4883,7 +4885,7 @@ extern "C" {
             continue;
           }
 
-          setting_values->used++;
+          ++setting_values->used;
         } // for
 
         continue;

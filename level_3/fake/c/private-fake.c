@@ -11,12 +11,14 @@ extern "C" {
 
 #ifndef _di_fake_execute_
   int fake_execute(const fake_main_t main, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t *status) {
+
     if (F_status_is_error(*status)) return 1;
 
     if (main.error.verbosity == f_console_verbosity_verbose) {
       fprintf(main.output.stream, "%s", program.string);
 
-      for (f_array_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+
         if (!arguments.array[i].used) continue;
 
         fprintf(main.output.stream, " %s", arguments.array[i].string);
@@ -30,6 +32,7 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return 0;
     }
 
@@ -48,6 +51,7 @@ extern "C" {
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
@@ -84,6 +88,7 @@ extern "C" {
 
 #ifndef _di_fake_file_buffer_
   f_status_t fake_file_buffer(const fake_main_t main, const f_string_t path_file, f_string_dynamic_t *buffer) {
+
     f_file_t file = f_file_t_initialize;
     f_string_t name_function = "f_file_exists";
     f_status_t status = F_none;
@@ -153,6 +158,7 @@ extern "C" {
 
 #ifndef _di_fake_path_generate_
   f_status_t fake_path_generate(fake_main_t *main) {
+
     f_status_t status = F_none;
     uint8_t i = 0;
 
@@ -197,11 +203,13 @@ extern "C" {
         parameters_value_2,
       };
 
-      for (i = 0; i < 3; i++) {
+      for (i = 0; i < 3; ++i) {
+
         status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+
           return status;
         }
       } // for
@@ -262,11 +270,13 @@ extern "C" {
         &main->path_sources_script,
       };
 
-      for (i = 0; i < 15; i++) {
+      for (i = 0; i < 15; ++i) {
+
         status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+
           return status;
         }
       } // for
@@ -317,11 +327,13 @@ extern "C" {
         parameters_value_3,
       };
 
-      for (i = 0; i < 4; i++) {
+      for (i = 0; i < 4; ++i) {
+
         status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+
           return status;
         }
       } // for
@@ -379,11 +391,13 @@ extern "C" {
         &main->file_documents_readme,
       };
 
-      for (i = 0; i < 11; i++) {
+      for (i = 0; i < 11; ++i) {
+
         status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+
           return status;
         }
       } // for
@@ -397,11 +411,13 @@ extern "C" {
           &main->path_work_programs,
         };
 
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; ++i) {
+
           status = f_string_dynamic_append_nulless(main->path_work, parameters_value[i]);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+
             return status;
           }
         } // for
@@ -426,11 +442,13 @@ extern "C" {
           &main->path_work_programs,
         };
 
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; ++i) {
+
           status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+
             return status;
           }
         } // for
@@ -464,11 +482,13 @@ extern "C" {
           parameters_value_1,
         };
 
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < 2; ++i) {
+
           status = fake_path_generate_string_dynamic(main, *parameters_source[i], parameters_value[i], parameters_length[i]);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "fake_path_generate_string_dynamic", F_true);
+
             return status;
           }
         } // for
@@ -502,11 +522,13 @@ extern "C" {
           &main->path_work_programs_static,
         };
 
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < 6; ++i) {
+
           status = f_string_append_nulless(parameters_source[i], parameters_length[i], parameters_value[i]);
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+
             return status;
           }
         } // for
@@ -551,13 +573,15 @@ extern "C" {
         &main->file_documents_readme,
       };
 
-      for (i = 0; i < 34; i++) {
+      for (i = 0; i < 34; ++i) {
+
         if (!parameters_value[i]->used) continue;
 
         status = f_string_dynamic_terminate_after(parameters_value[i]);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
           return status;
         }
       } // for
@@ -569,9 +593,11 @@ extern "C" {
 
 #ifndef _di_fake_path_generate_string_dynamic_
   f_status_t fake_path_generate_string_dynamic(fake_main_t *main, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+
     f_status_t status = F_none;
 
-    for (uint8_t i = 0; i < length; i++) {
+    for (uint8_t i = 0; i < length; ++i) {
+
       status = f_string_dynamic_append_nulless(source, destination[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -623,15 +649,17 @@ extern "C" {
         F_false,
       };
 
-      for (uint8_t i = 0; i < 3; i++) {
+      for (uint8_t i = 0; i < 3; ++i) {
 
         if (main->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(*main, parameters_name[i]);
+
           return F_status_set_error(F_parameter);
         }
         else if (main->parameters[parameters_id[i]].result == f_console_result_additional) {
           if (main->parameters[parameters_id[i]].locations.used > 1) {
             fake_print_error_parameter_too_many(*main, parameters_name[i]);
+
             return F_status_set_error(F_parameter);
           }
 
@@ -643,7 +671,8 @@ extern "C" {
               f_array_length_t j = 0;
               f_array_length_t width_max = 0;
 
-              for (j = 0; j < length; j++) {
+              for (j = 0; j < length; ++j) {
+
                 width_max = length - j;
 
                 status = f_utf_is_word_dash_plus(arguments.argv[location] + j, width_max, F_false);
@@ -710,6 +739,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_print(main->error, F_status_set_fine(status), "macro_f_string_dynamic_t_resize", F_true);
+
             return status;
           }
 
@@ -721,6 +751,7 @@ extern "C" {
 
     if (main->parameters[fake_parameter_define].result == f_console_result_found) {
       fake_print_error_parameter_missing_value(*main, fake_long_define);
+
       return F_status_set_error(F_parameter);
     }
 
@@ -760,7 +791,7 @@ extern "C" {
         &main->path_work,
       };
 
-      for (uint8_t i = 0; i < 4; i++) {
+      for (uint8_t i = 0; i < 4; ++i) {
 
         if (main->parameters[parameters_id[i]].result == f_console_result_found) {
           fake_print_error_parameter_missing_value(*main, parameters_name[i]);
@@ -823,9 +854,9 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t width_max = 0;
 
-      for (; i < main->define.used; i++) {
+      for (; i < main->define.used; ++i) {
 
-        for (j = 0; j < main->define.array[i].used; j++) {
+        for (j = 0; j < main->define.array[i].used; ++j) {
 
           width_max = main->define.array[i].used - j;
 
@@ -880,9 +911,9 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t width_max = 0;
 
-      for (; i < main->mode.used; i++) {
+      for (; i < main->mode.used; ++i) {
 
-        for (j = 0; j < main->mode.array[i].used; j++) {
+        for (j = 0; j < main->mode.array[i].used; ++j) {
 
           width_max = main->mode.array[i].used - j;
 
@@ -1042,7 +1073,7 @@ extern "C" {
     struct stat directory_stat;
     f_status_t status = F_none;
 
-    for (uint8_t i = 0; i < 3; i++) {
+    for (uint8_t i = 0; i < 3; ++i) {
 
       if (fake_signal_received(main)) {
         return F_status_set_error(F_signal);

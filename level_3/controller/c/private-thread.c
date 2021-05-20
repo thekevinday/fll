@@ -64,7 +64,10 @@ extern "C" {
             f_array_length_t j = 0;
 
             for (; j < process->path_pids.used; ++j) {
-              if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) break;
+
+              if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j].string) == F_true) {
+                break;
+              }
             } // for
 
             if (j < process->path_pids.used) {
@@ -355,7 +358,6 @@ extern "C" {
       // A forked child process should deallocate memory on exit.
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
-
       controller_main_t *main = (controller_main_t *) process->main_data;
       controller_setting_t *setting = (controller_setting_t *) process->main_setting;
       controller_thread_t *thread = (controller_thread_t *) process->main_thread;
@@ -455,7 +457,9 @@ extern "C" {
       process = global->thread->processs.array[i];
 
       // do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit && global->thread->enabled != controller_thread_enabled_exit_execute) continue;
+      if (process->type == controller_process_type_exit && global->thread->enabled != controller_thread_enabled_exit_execute) {
+        continue;
+      }
 
       for (j = 0; j < process->childs.used; ++j) {
 
@@ -597,7 +601,9 @@ extern "C" {
 #ifndef _di_controller_thread_process_exit_
   void controller_thread_process_exit(controller_global_t *global) {
 
-    if (global->thread->enabled != controller_thread_enabled_exit) return;
+    if (global->thread->enabled != controller_thread_enabled_exit) {
+      return;
+    }
 
     if (global->setting->ready == controller_setting_ready_done) {
 
@@ -797,7 +803,6 @@ extern "C" {
       // A forked child process should deallocate memory on exit.
       // It seems that this function doesn't return to the calling thread for a forked child process, even with the "return 0;" below.
       // Deallocate as much as possible.
-
       controller_thread_delete_simple(entry->global->thread);
       controller_setting_delete_simple(entry->global->setting);
       controller_main_delete(entry->global->main);

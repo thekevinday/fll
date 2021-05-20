@@ -101,6 +101,7 @@ extern "C" {
 
 #ifndef _di_fake_main_
   f_status_t fake_main(const f_console_arguments_t arguments, fake_main_t *main) {
+
     f_status_t status = F_none;
 
     {
@@ -179,18 +180,18 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t k = 0;
 
-      for (; i < main->parameters[fake_parameter_operation_build].locations.used; i++, locations_length++) {
+      for (; i < main->parameters[fake_parameter_operation_build].locations.used; ++i, ++locations_length) {
 
         operations[locations_length] = fake_operation_build;
         locations[locations_length] = main->parameters[fake_parameter_operation_build].locations.array[i];
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_clean].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_clean].locations.used; ++i) {
 
-        for (j = 0; j < locations_length; j++) {
+        for (j = 0; j < locations_length; ++j) {
 
           if (main->parameters[fake_parameter_operation_clean].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; k--) {
+            for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
             } // for
@@ -201,15 +202,15 @@ extern "C" {
 
         locations[j] = main->parameters[fake_parameter_operation_clean].locations.array[i];
         operations[j] = fake_operation_clean;
-        locations_length++;
+        ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_make].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_make].locations.used; ++i) {
 
-        for (j = 0; j < locations_length; j++) {
+        for (j = 0; j < locations_length; ++j) {
 
           if (main->parameters[fake_parameter_operation_make].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; k--) {
+            for (k = locations_length; k > j; --k) {
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
             } // for
@@ -220,15 +221,16 @@ extern "C" {
 
         locations[j] = main->parameters[fake_parameter_operation_make].locations.array[i];
         operations[j] = fake_operation_make;
-        locations_length++;
+        ++locations_length;
       } // for
 
-      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton].locations.used; i++) {
+      for (i = 0; i < main->parameters[fake_parameter_operation_skeleton].locations.used; ++i) {
 
-        for (j = 0; j < locations_length; j++) {
+        for (j = 0; j < locations_length; ++j) {
 
           if (main->parameters[fake_parameter_operation_skeleton].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; k--) {
+            for (k = locations_length; k > j; --k) {
+
               locations[k] = locations[k - 1];
               operations[k] = operations[k - 1];
             } // for
@@ -239,7 +241,7 @@ extern "C" {
 
         locations[j] = main->parameters[fake_parameter_operation_skeleton].locations.array[i];
         operations[j] = fake_operation_skeleton;
-        locations_length++;
+        ++locations_length;
       } // for
     }
 
@@ -270,10 +272,12 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fake_main_delete(main);
+
         return F_status_set_error(status);
       }
 
-      for (uint8_t i = 0; i < operations_length; i++) {
+      for (uint8_t i = 0; i < operations_length; ++i) {
+
         main->operation = operations[i];
 
         if (main->operation == fake_operation_build) {

@@ -201,16 +201,15 @@ extern "C" {
     cache->object_actions.used = cache->object_actions.size;
 
     while (cache->object_actions.used) {
-      cache->object_actions.used--;
-      cache->object_actions.array[cache->object_actions.used].start = 1;
+
+      cache->object_actions.array[--cache->object_actions.used].start = 1;
       cache->object_actions.array[cache->object_actions.used].stop = 0;
     } // while
 
     cache->content_actions.used = cache->content_actions.size;
 
     while (cache->content_actions.used) {
-      cache->content_actions.used--;
-      cache->content_actions.array[cache->content_actions.used].used = 0;
+      cache->content_actions.array[--cache->content_actions.used].used = 0;
     } // while
 
     {
@@ -443,7 +442,7 @@ extern "C" {
             break;
           }
 
-          action->parameters.used++;
+          ++action->parameters.used;
         } // for
 
         if (F_status_is_error_not(action->status)) {
@@ -683,7 +682,7 @@ extern "C" {
         }
       }
 
-      actions->used++;
+      ++actions->used;
     } // for
 
     if (F_status_is_error(status_action)) {

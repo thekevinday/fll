@@ -46,6 +46,7 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_group_
   f_status_t fake_make_get_id_group(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, gid_t *id) {
+
     const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
 
     f_number_unsigned_t number = 0;
@@ -60,6 +61,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(error, F_status_set_fine(status), "f_account_id_group_by_name", F_true);
+
           return F_status_set_error(status);
         }
         else if (status == F_exist_not) {
@@ -95,8 +97,10 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_mode_
   f_status_t fake_make_get_id_mode(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
+
     if (!buffer.used) {
       fll_error_print(error, F_parameter, "fake_make_get_id_mode", F_true);
+
       return F_status_set_error(F_parameter);
     }
 
@@ -124,6 +128,7 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_owner_
   f_status_t fake_make_get_id_owner(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, uid_t *id) {
+
     const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
 
     f_number_unsigned_t number = 0;
@@ -138,6 +143,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_print(error, status, "f_account_id_user_by_name", F_true);
+
           return F_status_set_error(status);
         }
         else if (status == F_exist_not) {
@@ -173,6 +179,7 @@ extern "C" {
 
 #ifndef _di_fake_make_load_fakefile_
   void fake_make_load_fakefile(const fake_main_t main, fake_make_data_t *data_make, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (fake_signal_received(main)) {
@@ -264,7 +271,7 @@ extern "C" {
         f_string_range_t content_range = f_string_range_t_initialize;
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        for (f_array_length_t i = 0; i < list_objects.used; i++) {
+        for (f_array_length_t i = 0; i < list_objects.used; ++i) {
 
           if (fake_signal_received(main)) {
             *status = F_status_set_error(F_signal);
@@ -327,7 +334,7 @@ extern "C" {
             break;
           }
 
-          data_make->fakefile.used++;
+          ++data_make->fakefile.used;
         } // for
 
         macro_f_fss_delimits_t_delete_simple(delimits);
@@ -405,7 +412,7 @@ extern "C" {
         bool unmatched_fail = F_true;
         bool unmatched_load = F_true;
 
-        for (f_array_length_t i = 0; i < settings.objects.used; i++) {
+        for (f_array_length_t i = 0; i < settings.objects.used; ++i) {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_setting_compiler, data_make->buffer, fake_make_setting_compiler_length, settings.objects.array[i]) == F_equal_to) {
             if (range_compiler) {
@@ -430,7 +437,7 @@ extern "C" {
             f_array_length_t j = 0;
             f_array_length_t k = 0;
 
-            for (; j < settings.contents.array[i].used; j++) {
+            for (; j < settings.contents.array[i].used; ++j) {
 
               *status = f_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &name_define);
 
@@ -447,7 +454,7 @@ extern "C" {
               }
 
               if (fake_make_operate_validate_define_name(name_define) == F_true) {
-                for (k = 0; k < data_make->setting_build.environment.used; k++) {
+                for (k = 0; k < data_make->setting_build.environment.used; ++k) {
                   if (fl_string_dynamic_compare(name_define, data_make->setting_build.environment.array[k]) == F_equal_to) {
                     break;
                   }
@@ -464,7 +471,7 @@ extern "C" {
                   }
 
                   // Include the terminating NULL when copying.
-                  name_define.used++;
+                  ++name_define.used;
 
                   *status = f_string_dynamic_append(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
 
@@ -585,7 +592,7 @@ extern "C" {
                   // each define replaces the previous define.
                   data_make->setting_make.parameter.array[0].value.array[0].used = 0;
 
-                  for (f_array_length_t j = 1; j < settings.contents.array[i].used; j++) {
+                  for (f_array_length_t j = 1; j < settings.contents.array[i].used; ++j) {
 
                     function_name = "f_string_dynamic_partial_append_nulless";
                     *status = f_string_dynamic_partial_append_nulless(data_make->buffer, settings.contents.array[i].array[j], &data_make->setting_make.parameter.array[0].value.array[0]);
@@ -641,6 +648,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         macro_f_fss_set_t_delete_simple(settings);
+
         return;
       }
 
@@ -702,14 +710,14 @@ extern "C" {
         f_status_t status_validate = F_none;
         f_string_dynamic_t combined = f_string_dynamic_t_initialize;
 
-        for (f_array_length_t i = 0; i < define.used; i++) {
+        for (f_array_length_t i = 0; i < define.used; ++i) {
 
           status_validate = fake_make_operate_validate_define_name(define.array[i].name);
 
           if (status_validate) {
             combined.used = 0;
 
-            for (f_array_length_t j = 0; j < define.array[i].value.used; j++) {
+            for (f_array_length_t j = 0; j < define.array[i].value.used; ++j) {
 
               *status = f_string_dynamic_mash(f_string_space_s, 1, define.array[i].value.array[j], &combined);
 
@@ -765,10 +773,12 @@ extern "C" {
 
 #ifndef _di_fake_make_load_parameters_
   void fake_make_load_parameters(const fake_main_t main, fake_make_data_t *data_make, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -778,6 +788,7 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+
           return;
         }
       }
@@ -821,10 +832,11 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
+
         return;
       }
       else {
-        data_make->parameter.color.used++;
+        ++data_make->parameter.color.used;
       }
     }
 
@@ -834,6 +846,7 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+
           return;
         }
       }
@@ -877,6 +890,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
+
         return;
       }
       else {
@@ -908,9 +922,9 @@ extern "C" {
       uint8_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < 2; i ++) {
+      for (; i < 2; ++i) {
 
-        for (j = 0; j < source[i]->used; j++) {
+        for (j = 0; j < source[i]->used; ++j) {
 
           if (destination[i]->used >= destination[i]->size) {
             *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
@@ -937,7 +951,7 @@ extern "C" {
             return;
           }
           else {
-            destination[i]->used++;
+            ++destination[i]->used;
           }
 
           if (destination[i]->used >= destination[i]->size) {
@@ -956,7 +970,7 @@ extern "C" {
             return;
           }
           else {
-            destination[i]->used++;
+            ++destination[i]->used;
           }
         } // for
       } // for
@@ -1003,13 +1017,14 @@ extern "C" {
         &data_make->parameter.settings,
       };
 
-      for (uint8_t i = 0; i < 7; i ++) {
+      for (uint8_t i = 0; i < 7; ++i) {
 
         if (destination[i]->used >= destination[i]->size) {
           *status = f_string_dynamics_increase_by(f_memory_default_allocation_small, destination[i]);
 
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+
             return;
           }
         }
@@ -1027,10 +1042,11 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
+
           return;
         }
         else {
-          destination[i]->used++;
+          ++destination[i]->used;
         }
 
         if (destination[i]->used >= destination[i]->size) {
@@ -1038,6 +1054,7 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+
             return;
           }
         }
@@ -1046,10 +1063,11 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
           return;
         }
         else {
-          destination[i]->used++;
+          ++destination[i]->used;
         }
       } // for
     }
@@ -1193,6 +1211,7 @@ extern "C" {
 
       if (F_status_is_error(*status) || *status == F_string_too_large) {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+
         return;
       }
     }
@@ -1266,7 +1285,7 @@ extern "C" {
       &data_make->parameter.work,
     };
 
-    for (; i < content.used; i++) {
+    for (; i < content.used; ++i) {
 
       if (content.array[i].start > content.array[i].stop) {
         continue;
@@ -1305,7 +1324,7 @@ extern "C" {
           }
         }
 
-        for (j = 0, previous = iki_variable.array[0].start; j < iki_variable.used; j++) {
+        for (j = 0, previous = iki_variable.array[0].start; j < iki_variable.used; ++j) {
 
           parameter_is = F_false;
           define_is = F_false;
@@ -1367,7 +1386,7 @@ extern "C" {
               unmatched = F_false;
             }
             else {
-              for (k = 0; k < 11; k++) {
+              for (k = 0; k < 11; ++k) {
 
                 if (fl_string_dynamic_partial_compare_string(reserved_name[k], data_make->buffer, reserved_length[k], iki_content.array[j]) == F_equal_to) {
                   if (arguments->used >= arguments->size) {
@@ -1379,7 +1398,7 @@ extern "C" {
                     }
                   }
 
-                  for (l = 0; l < reserved_value[k]->used; l++) {
+                  for (l = 0; l < reserved_value[k]->used; ++l) {
 
                     if (l > 0) {
                       *status = f_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
@@ -1400,7 +1419,7 @@ extern "C" {
 
                   if (F_status_is_error_not(*status)) {
                     unmatched = F_false;
-                    arguments->used++;
+                    ++arguments->used;
                   }
                   else {
                     break;
@@ -1410,7 +1429,7 @@ extern "C" {
             }
 
             if (unmatched && parameter->used) {
-              for (k = 0; k < parameter->used; k++) {
+              for (k = 0; k < parameter->used; ++k) {
 
                 // check against iki variable list.
                 *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_content.array[j]);
@@ -1420,7 +1439,7 @@ extern "C" {
 
                   if (parameter->array[k].value.used) {
                     if (quotes.array[i]) {
-                      for (l = 0; l < parameter->array[k].value.used; l++) {
+                      for (l = 0; l < parameter->array[k].value.used; ++l) {
 
                         if (l > 0) {
                           *status = f_string_append(f_string_space_s, 1, &arguments->array[arguments->used]);
@@ -1449,7 +1468,7 @@ extern "C" {
                         }
                       }
 
-                      for (l = 0; l < parameter->array[k].value.used; l++) {
+                      for (l = 0; l < parameter->array[k].value.used; ++l) {
 
                         *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
 
@@ -1465,7 +1484,7 @@ extern "C" {
                           break;
                         }
 
-                        arguments->used++;
+                        ++arguments->used;
                       } // for
                     }
                   }
@@ -1549,7 +1568,7 @@ extern "C" {
           break;
         }
 
-        arguments->used++;
+        ++arguments->used;
       }
 
       macro_f_iki_variable_t_delete_simple(iki_variable);
@@ -1565,6 +1584,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_expand_build_
   f_status_t fake_make_operate_expand_build(const fake_main_t main, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
+
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
 
@@ -1586,7 +1606,7 @@ extern "C" {
         data_make->setting_build.version_target,
       };
 
-      for (uint8_t i = 0; i < 2; i++) {
+      for (uint8_t i = 0; i < 2; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(uint8_name[i], data_make->buffer, uint8_length[i], range_name);
 
@@ -1630,7 +1650,7 @@ extern "C" {
         data_make->setting_build.search_static,
       };
 
-      for (uint8_t i = 0; i < 7; i++) {
+      for (uint8_t i = 0; i < 7; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(bool_name[i], data_make->buffer, bool_length[i], range_name);
 
@@ -1710,7 +1730,7 @@ extern "C" {
         data_make->setting_build.version_minor,
       };
 
-      for (uint8_t i = 0; i < 17; i++) {
+      for (uint8_t i = 0; i < 17; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamic_name[i], data_make->buffer, dynamic_length[i], range_name);
 
@@ -1784,14 +1804,14 @@ extern "C" {
         data_make->setting_build.modes_default,
       };
 
-      for (uint8_t i = 0; i < 17; i++) {
+      for (uint8_t i = 0; i < 17; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamics_name[i], data_make->buffer, dynamics_length[i], range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          for (f_array_length_t j = 0; j < dynamics_value[i].used; j++) {
+          for (f_array_length_t j = 0; j < dynamics_value[i].used; ++j) {
 
             status = f_string_dynamic_mash(f_string_space_s, 1, dynamics_value[i].array[j], &value);
 
@@ -1807,11 +1827,13 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_string_dynamic_t_delete_simple(value);
+
       return status;
     }
 
     if (unmatched) {
       macro_f_string_dynamic_t_delete_simple(value);
+
       return F_false;
     }
 
@@ -1828,7 +1850,7 @@ extern "C" {
           status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
           if (F_status_is_error_not(status)) {
-            arguments->used++;
+            ++arguments->used;
           }
         }
       }
@@ -1846,6 +1868,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_expand_environment_
   f_status_t fake_make_operate_expand_environment(const fake_main_t main, const f_fss_quote_t quoted, const f_string_range_t range_name, fake_make_data_t *data_make, f_string_dynamics_t *arguments) {
+
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
 
@@ -1864,10 +1887,12 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       macro_f_string_dynamic_t_delete_simple(value);
+
       return status;
     }
     else if (status == F_exist_not) {
       macro_f_string_dynamic_t_delete_simple(value);
+
       return F_false;
     }
 
@@ -1902,6 +1927,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_section_
   int fake_make_operate_section(const f_array_length_t id_section, fake_main_t *main, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+
     if (F_status_is_error(*status) || *status == F_child) return main->child;
 
     if (fake_signal_received(*main)) {
@@ -1926,8 +1952,7 @@ extern "C" {
       }
     }
 
-    section_stack->array[section_stack->used] = id_section;
-    section_stack->used++;
+    section_stack->array[section_stack->used++] = id_section;
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
@@ -1944,7 +1969,8 @@ extern "C" {
     }
 
     if (!section->objects.used) {
-      section_stack->used--;
+      --section_stack->used;
+
       return 0;
     }
 
@@ -2066,7 +2092,8 @@ extern "C" {
     memset(operations, 0, sizeof(uint8_t) * section->objects.used);
     memset(arguments, 0, sizeof(f_string_dynamics_t) * section->objects.used);
 
-    for (i = 0; i < section->objects.used; i++, *status = F_none) {
+    for (i = 0; i < section->objects.used; ++i, *status = F_none) {
+
       operation = 0;
       operation_name = 0;
 
@@ -2075,7 +2102,7 @@ extern "C" {
         break;
       }
 
-      for (j = 0; j < fake_make_operation_total; j++) {
+      for (j = 0; j < fake_make_operation_total; ++j) {
 
         if (fl_string_dynamic_partial_compare(operations_name[j], data_make->buffer, operations_range[j], section->objects.array[i]) == F_equal_to) {
           operation = operations_type[j];
@@ -2243,7 +2270,7 @@ extern "C" {
     } // for
 
     if (*status == F_status_set_error(F_signal)) {
-      for (i = 0; i < section->objects.used; i++) {
+      for (i = 0; i < section->objects.used; ++i) {
         macro_f_string_dynamics_t_delete_simple(arguments[i]);
       } // for
 
@@ -2278,11 +2305,11 @@ extern "C" {
       *status = F_status_set_error(F_failure);
     }
 
-    for (i = 0; i < section->objects.used; i++) {
+    for (i = 0; i < section->objects.used; ++i) {
       macro_f_string_dynamics_t_delete_simple(arguments[i]);
     } // for
 
-    section_stack->used--;
+    --section_stack->used;
 
     return 0;
   }
@@ -2290,6 +2317,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_
   int fake_make_operate_process(const f_string_range_t section_name, const uint8_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, const bool success, uint8_t *operation_if, fake_main_t *main, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+
     if (*status == F_child) return main->child;
 
     if (operation == fake_make_operation_type_index) {
@@ -2336,6 +2364,7 @@ extern "C" {
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
@@ -2354,6 +2383,7 @@ extern "C" {
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
@@ -2388,6 +2418,7 @@ extern "C" {
 
         if (F_status_is_error(status_file)) {
           fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, arguments.array[1].string, "identify", fll_error_file_type_directory);
+
           *status = F_status_set_error(F_failure);
           return 0;
         }
@@ -2397,7 +2428,7 @@ extern "C" {
         }
       }
 
-      for (f_array_length_t i = 0; i < total; i++) {
+      for (f_array_length_t i = 0; i < total; ++i) {
 
         destination_length = arguments.array[total].used;
 
@@ -2502,7 +2533,8 @@ extern "C" {
         }
       }
 
-      for (f_array_length_t i = 0; i < total; i++) {
+      for (f_array_length_t i = 0; i < total; ++i) {
+
         destination_length = arguments.array[total].used;
 
         if (existing) {
@@ -2580,7 +2612,8 @@ extern "C" {
       const int recursion_max = operation == fake_make_operation_type_delete ? 0 : f_directory_descriptors_max;
       struct stat file_stat;
 
-      for (f_array_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+
         memset(&file_stat, 0, sizeof(struct stat));
 
         *status = f_file_stat(arguments.array[i].string, F_false, &file_stat);
@@ -2749,7 +2782,7 @@ extern "C" {
 
       f_status_t status_file = F_none;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
         status_file = fake_make_assure_inside_project(*main, arguments.array[i], data_make);
 
@@ -2788,7 +2821,7 @@ extern "C" {
 
       f_status_t status_file = F_none;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
         status_file = fake_make_assure_inside_project(*main, arguments.array[i], data_make);
 
@@ -2853,7 +2886,7 @@ extern "C" {
 
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (f_array_length_t i = 2; i < arguments.used; i++, id_file = 0) {
+        for (f_array_length_t i = 2; i < arguments.used; ++i, id_file = 0) {
 
           *status = f_file_group_read(arguments.array[i].string, &id_file);
           if (F_status_is_error(*status)) {
@@ -2904,7 +2937,7 @@ extern "C" {
 
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (f_array_length_t i = 3; i < arguments.used; i++, mode_file = 0) {
+        for (f_array_length_t i = 3; i < arguments.used; ++i, mode_file = 0) {
 
           *status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
@@ -2941,7 +2974,7 @@ extern "C" {
 
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (f_array_length_t i = 2; i < arguments.used; i++, id_file = 0) {
+        for (f_array_length_t i = 2; i < arguments.used; ++i, id_file = 0) {
 
           *status = f_file_owner_read(arguments.array[i].string, &id_file);
 
@@ -2961,6 +2994,7 @@ extern "C" {
       }
 
       if (*operation_if == fake_make_operation_if_type_if_is) {
+
         // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
         // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
         // directory = 0x4 (0000 0100) socket  = 0x40 (0100 0000)
@@ -2971,9 +3005,10 @@ extern "C" {
 
         *status = F_none;
 
-        for (; i < arguments.used; i++) {
+        for (; i < arguments.used; ++i) {
+
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for, arguments.array[i], fake_make_operation_argument_if_is_for_length) == F_equal_to) {
-            i++;
+            ++i;
             break;
           }
 
@@ -3005,7 +3040,7 @@ extern "C" {
 
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (; i < arguments.used; i++, mode_file = 0) {
+        for (; i < arguments.used; ++i, mode_file = 0) {
 
           *status = f_file_mode_read(arguments.array[i].string, &mode_file);
 
@@ -3049,7 +3084,7 @@ extern "C" {
       if (*operation_if == fake_make_operation_if_type_if_exists) {
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (f_array_length_t i = 1; i < arguments.used; i++) {
+        for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
           *status = f_file_exists(arguments.array[i].string);
 
@@ -3073,7 +3108,7 @@ extern "C" {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_environment, arguments.array[1], fake_make_operation_argument_environment_length) == F_equal_to) {
           *operation_if = fake_make_operation_if_type_true_next;
 
-          for (f_array_length_t i = 2; i < arguments.used; i++) {
+          for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
             if (f_environment_exists(arguments.array[i].string) != F_true) {
               *operation_if = fake_make_operation_if_type_false_next;
@@ -3094,9 +3129,9 @@ extern "C" {
 
           *operation_if = fake_make_operation_if_type_true_next;
 
-          for (; i < arguments.used; i++, missed = F_true) {
+          for (; i < arguments.used; ++i, missed = F_true) {
 
-            for (j = 0; j < data_make->setting_make.parameter.used; j++) {
+            for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
 
               if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
                 missed = F_false;
@@ -3117,7 +3152,7 @@ extern "C" {
       if (*operation_if == fake_make_operation_if_type_if_equal) {
         *operation_if = fake_make_operation_if_type_true_next;
 
-        for (f_array_length_t i = 2; i < arguments.used; i++) {
+        for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
           if (fl_string_dynamic_compare(arguments.array[1], arguments.array[i]) == F_equal_to_not) {
             *operation_if = fake_make_operation_if_type_false_next;
@@ -3134,9 +3169,9 @@ extern "C" {
         f_array_length_t i = 1;
         f_array_length_t j = 0;
 
-        for (; i < arguments.used; i++) {
+        for (; i < arguments.used; ++i) {
 
-          for (j = i + 1; j < arguments.used; j++) {
+          for (j = i + 1; j < arguments.used; ++j) {
 
             if (fl_string_dynamic_compare(arguments.array[i], arguments.array[j]) == F_equal_to) {
               *operation_if = fake_make_operation_if_type_false_next;
@@ -3150,6 +3185,7 @@ extern "C" {
       }
 
       if (*operation_if == fake_make_operation_if_type_if_greater || *operation_if == fake_make_operation_if_type_if_greater_equal || *operation_if == fake_make_operation_if_type_if_less || *operation_if == fake_make_operation_if_type_if_less_equal) {
+
         f_status_t status_number = F_none;
         f_string_range_t range = f_string_range_t_initialize;
 
@@ -3185,7 +3221,7 @@ extern "C" {
         }
 
         if (F_status_is_error_not(status_number)) {
-          for (i = 2; i < arguments.used; i++, status_number = F_none, number_left = number_right, is_negative_left = is_negative_right) {
+          for (i = 2; i < arguments.used; ++i, status_number = F_none, number_left = number_right, is_negative_left = is_negative_right) {
 
             if (arguments.array[i].used) {
               range.start = 0;
@@ -3324,7 +3360,7 @@ extern "C" {
       mode_t mode = 0;
       mode_t mode_file = 0;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
         mode = 0;
 
         *status = f_file_mode_read(arguments.array[i].string, &mode_file);
@@ -3370,7 +3406,7 @@ extern "C" {
       mode_t mode = 0;
       mode_t mode_file = 0;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
         mode = 0;
 
         *status = f_file_mode_read(arguments.array[i].string, &mode_file);
@@ -3437,7 +3473,7 @@ extern "C" {
         }
       }
 
-      for (f_array_length_t i = 0; i < total; i++) {
+      for (f_array_length_t i = 0; i < total; ++i) {
 
         destination_length = arguments.array[total].used;
 
@@ -3470,7 +3506,7 @@ extern "C" {
     if (operation == fake_make_operation_type_operate) {
       f_array_length_t id_section = 0;
 
-      for (; id_section < data_make->fakefile.used; id_section++) {
+      for (; id_section < data_make->fakefile.used; ++id_section) {
 
         if (fl_string_dynamic_partial_compare_string(arguments.array[0].string, data_make->buffer, arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
           break;
@@ -3502,7 +3538,7 @@ extern "C" {
 
       f_status_t status_file = F_none;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
         status_file = fake_make_assure_inside_project(*main, arguments.array[i], data_make);
 
@@ -3542,7 +3578,7 @@ extern "C" {
 
       f_status_t status_file = F_none;
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
         status_file = fake_make_assure_inside_project(*main, arguments.array[i], data_make);
 
@@ -3604,7 +3640,8 @@ extern "C" {
     }
 
     if (operation == fake_make_operation_type_print) {
-      for (f_array_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+
         f_print_dynamic(main->output.stream, arguments.array[i]);
 
         if (i + 1 < arguments.used) {
@@ -3618,11 +3655,13 @@ extern "C" {
 
     if (operation == fake_make_operation_type_run) {
       *status = fake_make_operate_process_run(*main, arguments, F_false, data_make);
+
       return 0;
     }
 
     if (operation == fake_make_operation_type_shell) {
       *status = fake_make_operate_process_run(*main, arguments, F_true, data_make);
+
       return 0;
     }
 
@@ -3631,6 +3670,7 @@ extern "C" {
 
       if (F_status_set_fine(*status) == F_signal) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
@@ -3668,21 +3708,24 @@ extern "C" {
 
           if (F_status_set_fine(*status) == F_array_too_large) {
             fake_print_message_section_operation_path_stack_max(*main, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", "path stack");
+
             return 0;
           }
           else if (F_status_is_error(*status)) {
             fll_error_print(data_make->error, F_status_set_fine(*status), "macro_f_string_dynamics_t_resize", F_true);
+
             return 0;
           }
         }
 
         // copy the entire real path, including the trailing NULL.
-        data_make->path_cache.used++;
+        ++data_make->path_cache.used;
 
         f_string_dynamic_append(data_make->path_cache, &data_make->path.stack.array[data_make->path.stack.used]);
 
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
           return 0;
         }
 
@@ -3690,6 +3733,7 @@ extern "C" {
           *status = fake_make_path_relative(*main, data_make->path.stack.array[data_make->path.stack.used], data_make);
 
           if (F_status_is_error(*status)) {
+
             fll_error_print(data_make->error, F_status_set_fine(*status), "fake_make_path_relative", F_true);
             return 0;
           }
@@ -3701,7 +3745,7 @@ extern "C" {
           fprintf(main->output.stream, "'.%c", f_string_eol_s[0]);
         }
 
-        data_make->path.stack.used++;
+        ++data_make->path.stack.used;
       }
 
       return 0;
@@ -3713,6 +3757,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         fake_print_message_section_operation_path_stack_max(*main, data_make->error, F_status_set_fine(*status), "f_path_change", arguments.array[0].string);
+
         return 0;
       }
 
@@ -3721,7 +3766,7 @@ extern "C" {
       }
 
       // clear stack, except for the project root.
-      for (f_array_length_t i = 1; i < data_make->path.stack.used; i++) {
+      for (f_array_length_t i = 1; i < data_make->path.stack.used; ++i) {
         macro_f_string_dynamic_t_delete_simple(data_make->path.stack.array[i]);
       } // for
 
@@ -3734,7 +3779,7 @@ extern "C" {
 
       macro_f_mode_t_set_default_umask(mode, main->umask);
 
-      for (f_array_length_t i = 1; i < arguments.used; i++) {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_file, arguments.array[0], fake_make_operation_argument_file_length) == F_equal_to) {
           *status = f_file_touch(arguments.array[i].string, mode.regular, F_false);
@@ -3772,7 +3817,6 @@ extern "C" {
           f_color_print_code(main->output.stream, *main->context.set.notable.after);
           fprintf(main->output.stream, "'.%c", f_string_eol_s[0]);
         }
-
       } // for
     }
 
@@ -3790,7 +3834,8 @@ extern "C" {
     f_status_t status = F_none;
 
     // reset the environment.
-    for (f_array_length_t i = 0; i < data_make->environment.used; i++) {
+    for (f_array_length_t i = 0; i < data_make->environment.used; ++i) {
+
       data_make->environment.array[i].name.used = 0;
       data_make->environment.array[i].value.used = 0;
     } // for
@@ -3808,7 +3853,8 @@ extern "C" {
     if (main.error.verbosity == f_console_verbosity_verbose) {
       fprintf(main.output.stream, "%s", program.string);
 
-      for (f_array_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+
         if (!arguments.array[i].used) continue;
 
         fprintf(main.output.stream, " %s", arguments.array[i].string);
@@ -3857,6 +3903,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_return_
   void fake_make_operate_process_return(const fake_main_t main, const int return_code, fake_make_data_t *data_make, f_status_t *status) {
+
     f_status_t status2 = F_none;
 
     data_make->setting_make.parameter.array[0].value.array[0].used = 0;
@@ -3929,6 +3976,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_run_
   f_status_t fake_make_operate_process_run(const fake_main_t main, const f_string_statics_t arguments, const bool as_shell, fake_make_data_t *data_make) {
+
     const f_string_static_t *program = &arguments.array[0];
 
     f_status_t status = F_none;
@@ -3942,7 +3990,7 @@ extern "C" {
         return status;
       }
 
-      for (f_array_length_t i = 0; i < args.size; i++) {
+      for (f_array_length_t i = 0; i < args.size; ++i) {
 
         status = f_string_dynamic_append(arguments.array[i + 1], &args.array[i]);
 
@@ -3962,7 +4010,7 @@ extern "C" {
           return status;
         }
 
-        args.used++;
+        ++args.used;
       } // for
     }
 
@@ -3975,6 +4023,7 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_validate_
   void fake_make_operate_validate(const fake_main_t main, const f_string_range_t section_name, const f_array_length_t operation, const f_string_static_t operation_name, const f_string_dynamics_t arguments, uint8_t *operation_if, fake_make_data_t *data_make, f_array_lengths_t *section_stack, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (operation == fake_make_operation_type_index || operation == fake_make_operation_type_run || operation == fake_make_operation_type_shell) {
@@ -4115,7 +4164,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_clone) {
       if (arguments.used > 1) {
-        for (f_array_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
           *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 
@@ -4128,7 +4177,7 @@ extern "C" {
           }
         } // for
 
-        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+        for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (main.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
@@ -4220,7 +4269,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_copy) {
       if (arguments.used > 1) {
-        for (f_array_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
           *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 
@@ -4233,7 +4282,7 @@ extern "C" {
           }
         } // for
 
-        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+        for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (main.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
@@ -4302,7 +4351,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_delete || operation == fake_make_operation_type_deletes) {
       if (arguments.used) {
-        for (f_array_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
           *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 
@@ -4482,7 +4531,7 @@ extern "C" {
       if (arguments.used > 1) {
         f_status_t status_file = F_none;
 
-        for (f_array_length_t i = 1; i < arguments.used; i++) {
+        for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
           status_file = f_file_is(arguments.array[i].string, f_file_type_regular, F_false);
 
@@ -4604,7 +4653,7 @@ extern "C" {
 
         f_array_length_t i = 0;
 
-        for (; i < 14; i++) {
+        for (; i < 14; ++i) {
 
           if (fl_string_dynamic_compare_string(if_type_strings[i], arguments.array[0], if_type_lengths[i]) == F_equal_to) {
             *operation_if = if_type_codes[i];
@@ -4836,7 +4885,7 @@ extern "C" {
             bool is_negative = F_false;
 
             // @fixme there needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
-            for (i = 1; i < arguments.used; i++, status_number = F_none) {
+            for (i = 1; i < arguments.used; ++i, status_number = F_none) {
 
               if (arguments.array[i].used) {
                 range.start = 0;
@@ -4941,7 +4990,7 @@ extern "C" {
 
     if (operation == fake_make_operation_type_move) {
       if (arguments.used > 1) {
-        for (f_array_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
           *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 
@@ -4954,7 +5003,7 @@ extern "C" {
           }
         } // for
 
-        for (f_array_length_t i = 0; i < arguments.used - 1; i++) {
+        for (f_array_length_t i = 0; i < arguments.used - 1; ++i) {
 
           if (f_file_exists(arguments.array[i].string) != F_true) {
             if (main.error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
@@ -5033,7 +5082,7 @@ extern "C" {
       else if (arguments.used == 1) {
         f_array_length_t id_section = 0;
 
-        for (; id_section < data_make->fakefile.used; id_section++) {
+        for (; id_section < data_make->fakefile.used; ++id_section) {
 
           if (fl_string_dynamic_partial_compare_string(arguments.array[0].string, data_make->buffer, arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
             break;
@@ -5047,7 +5096,7 @@ extern "C" {
           f_color_print(data_make->error.to.stream, data_make->error.context, "' was found.%c", f_string_eol_s[0]);
         }
         else {
-          for (f_array_length_t i = 0; i < section_stack->used; i++) {
+          for (f_array_length_t i = 0; i < section_stack->used; ++i) {
 
             if (section_stack->array[i] == id_section) {
               fprintf(data_make->error.to.stream, "%c", f_string_eol_s[0]);
@@ -5152,7 +5201,7 @@ extern "C" {
           }
         }
 
-        for (f_array_length_t i = 1; i < arguments.used; i++) {
+        for (f_array_length_t i = 1; i < arguments.used; ++i) {
 
           *status = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 
@@ -5183,13 +5232,14 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_validate_define_name_
   f_status_t fake_make_operate_validate_define_name(const f_string_static_t name) {
+
     if (!name.used) return F_none;
 
     if (!(isalpha(name.string[0]) || name.string[0] == '_')) {
       return F_false;
     }
 
-    for (f_array_length_t i = 0; i < name.used; i++) {
+    for (f_array_length_t i = 0; i < name.used; ++i) {
 
       if (!(isalnum(name.string[i]) || name.string[i] == '_')) {
         return F_false;
@@ -5202,6 +5252,7 @@ extern "C" {
 
 #ifndef _di_fake_make_path_relative_
   f_status_t fake_make_path_relative(const fake_main_t main, const f_string_static_t path, fake_make_data_t *data_make) {
+
     data_make->path_cache.used = 0;
 
     if (!path.used || path.used == data_make->path.stack.array[0].used) {

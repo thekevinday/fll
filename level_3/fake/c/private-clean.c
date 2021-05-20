@@ -12,6 +12,7 @@ extern "C" {
 
 #ifndef _di_fake_clean_operate_
   f_status_t fake_clean_operate(const fake_main_t main) {
+
     f_status_t status = F_none;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
@@ -42,6 +43,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fll_error_file_print(main.error, F_status_set_fine(status), "f_directory_remove", F_true, main.path_build.string, "remove", fll_error_file_type_directory);
+
       return status;
     }
 
@@ -51,11 +53,13 @@ extern "C" {
 
 #if !defined(_di_fake_clean_operate_)
   int fake_clean_remove_recursively_verbosely(const char *path, const struct stat *file_stat, int type, struct FTW *entity) {
+
     if (!entity->level) return 0;
 
     const int result = remove(path);
 
     if (!result) {
+
       // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
       printf("Removed '%s'.%c", path, f_string_eol_s[0]);
     }

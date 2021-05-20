@@ -11,6 +11,7 @@ extern "C" {
 
 #ifndef _di_fake_build_arguments_standard_add_
   void fake_build_arguments_standard_add(const fake_main_t main, const fake_build_data_t data_build, const bool is_shared, const bool is_library, f_string_dynamics_t *arguments, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_length + main.path_build_libraries_shared.used;
@@ -45,7 +46,8 @@ extern "C" {
       build_includes_length,
     };
 
-    for (uint8_t i = 0; i < 2; i++) {
+    for (uint8_t i = 0; i < 2; ++i) {
+
       *status = fll_execute_arguments_add(values[i], lengths[i], arguments);
       if (F_status_is_error(*status)) break;
     } // for
@@ -94,34 +96,34 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status)) {
-      for (f_array_length_t i = 0; i < data_build.setting.build_libraries.used; i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.build_libraries.used; ++i) {
 
         *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i].string, data_build.setting.build_libraries.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); i++) {
+    for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); ++i) {
 
       *status = fll_execute_arguments_add(data_build.setting.flags_all.array[i].string, data_build.setting.flags_all.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); i++) {
+    for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
 
       *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i].string, data_build.setting.flags_shared.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
     if (is_library) {
-      for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_error_not(*status); j++) {
+      for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_error_not(*status); ++j) {
 
         *status = fll_execute_arguments_add(data_build.setting.flags_library.array[j].string, data_build.setting.flags_library.array[j].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
     else {
-      for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); ++i) {
 
         *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i].string, data_build.setting.flags_program.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
@@ -132,7 +134,7 @@ extern "C" {
       f_array_length_t length = 0;
       f_array_length_t i = 0;
 
-      for (; i < main.define.used && F_status_is_error_not(*status); i++) {
+      for (; i < main.define.used && F_status_is_error_not(*status); ++i) {
 
         *status = fll_execute_arguments_add(main.define.array[i].string, main.define.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
@@ -142,21 +144,21 @@ extern "C" {
       f_array_length_t length = 0;
       f_array_length_t i = 0;
 
-      for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); i++) {
+      for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); ++i) {
 
         *status = fll_execute_arguments_add(data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
 
       if (is_shared) {
-        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); i++) {
+        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
 
           *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
         } // for
       }
       else {
-        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); i++) {
+        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); ++i) {
 
           *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
           if (F_status_is_error(*status)) break;
@@ -168,10 +170,12 @@ extern "C" {
 
 #ifndef _di_fake_build_copy_
   void fake_build_copy(const fake_main_t main, const f_mode_t mode, const f_string_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t preserve, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -206,7 +210,8 @@ extern "C" {
 
     recurse.failures = &failures;
 
-    for (f_array_length_t i = 0; i < files.used; i++) {
+    for (f_array_length_t i = 0; i < files.used; ++i) {
+
       if (!files.array[i].used) continue;
 
       path_source.used = source.used;
@@ -265,7 +270,7 @@ extern "C" {
 
         if (F_status_is_error(*status)) {
           if (main.error.verbosity == f_console_verbosity_verbose) {
-            for (f_array_length_t j = 0; j < failures.used; j++) {
+            for (f_array_length_t j = 0; j < failures.used; ++j) {
               fake_print_error_build_operation_file(main, F_status_set_fine(*status), "fl_directory_copy", "copy directory", "to", path_source.string, destination_directory.string, F_true);
             } // for
 
@@ -382,6 +387,7 @@ extern "C" {
 
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(const fake_main_t main, const fake_build_data_t data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return;
 
     if (fake_signal_received(main)) {
@@ -436,12 +442,13 @@ extern "C" {
       fprintf(main.output.stream, "%c", f_string_eol_s[0]);
     }
 
-    for (uint8_t i = 0; i < 15; i++) {
+    for (uint8_t i = 0; i < 15; ++i) {
 
       if (!directorys[i]->used) continue;
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
+
         return;
       }
 
@@ -494,11 +501,13 @@ extern "C" {
 
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(const fake_main_t main, const fake_build_data_t data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!process_script.used) return 0;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return 0;
     }
 
@@ -551,7 +560,7 @@ extern "C" {
       f_string_dynamic_t defines = f_string_dynamic_t_initialize;
 
       if (main.define.used) {
-        for (f_array_length_t i = 0; i < main.define.used; i++) {
+        for (f_array_length_t i = 0; i < main.define.used; ++i) {
 
           *status = f_string_dynamic_mash(f_string_space_s, 1, main.define.array[i], &defines);
 
@@ -731,6 +740,7 @@ extern "C" {
 
 #ifndef _di_fake_build_get_file_name_without_extension_
   f_status_t fake_build_get_file_name_without_extension(const fake_main_t main, const f_string_static_t path, f_string_dynamic_t *name) {
+
     name->used = 0;
 
     if (!path.used) return F_none;
@@ -739,12 +749,14 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fll_error_print(main.error, F_status_set_fine(status), "f_file_name_base", F_true);
+
       return status;
     }
 
     f_array_length_t i = name->used;
 
-    for (; i > 0; i--) {
+    for (; i > 0; --i) {
+
       if (name->string[i] == f_path_extension_separator[0]) {
         name->used = i;
         break;
@@ -755,6 +767,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fll_error_print(main.error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+
       return status;
     }
 
@@ -776,6 +789,7 @@ extern "C" {
 
 #ifndef _di_fake_build_library_shared_
   int fake_build_library_shared(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
@@ -803,7 +817,7 @@ extern "C" {
 
       f_array_length_t source_length = 0;
 
-      for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; ++i) {
 
         source_length = path_sources->used + data_build.setting.build_sources_library.array[i].used;
 
@@ -949,7 +963,8 @@ extern "C" {
         parameter_file_path_length,
       };
 
-      for (uint8_t i = 0; i < 4; i++) {
+      for (uint8_t i = 0; i < 4; ++i) {
+
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -1004,6 +1019,7 @@ extern "C" {
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
@@ -1015,10 +1031,12 @@ extern "C" {
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
           fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+
           return 0;
         }
 
         fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
+
         return 0;
       }
     }
@@ -1093,6 +1111,7 @@ extern "C" {
 
 #ifndef _di_fake_build_library_static_
   int fake_build_library_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
@@ -1136,7 +1155,8 @@ extern "C" {
     if (F_status_is_error_not(*status)) {
       f_array_length_t source_length = 0;
 
-      for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; ++i) {
+
         source_path.used = 0;
 
         *status = fake_build_get_file_name_without_extension(main, data_build.setting.build_sources_library.array[i], &file_name);
@@ -1230,6 +1250,7 @@ extern "C" {
 
 #ifndef _di_fake_build_load_environment_
   void fake_build_load_environment(const fake_main_t main, const fake_build_data_t data_build, f_string_maps_t *environment, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     // reset the environment.
@@ -1252,7 +1273,7 @@ extern "C" {
         f_path_present_working_length
       };
 
-      for (uint8_t i = 0; i < 2; i++) {
+      for (uint8_t i = 0; i < 2; ++i) {
 
         *status = fl_environment_load_name(variables_name[i], variables_length[i], environment);
 
@@ -1294,6 +1315,7 @@ extern "C" {
 
 #ifndef _di_fake_build_load_setting_
   void fake_build_load_setting(const fake_main_t main, const f_string_static_t setting_file, fake_build_setting_t *setting, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (fake_signal_received(main)) {
@@ -1368,7 +1390,7 @@ extern "C" {
         fake_build_setting_name_project_name,
       };
 
-      for (uint8_t i = 0; i < 1; i++) {
+      for (uint8_t i = 0; i < 1; ++i) {
 
         if (!settings[i]->used) {
           fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
@@ -1385,6 +1407,7 @@ extern "C" {
 
       if (failed) {
         *status = F_status_set_error(F_failure);
+
         return;
       }
     }
@@ -1395,10 +1418,12 @@ extern "C" {
 
 #ifndef _di_fake_build_load_setting_process_
   void fake_build_load_setting_process(const fake_main_t main, const f_string_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t *setting, f_status_t *status) {
+
     if (F_status_is_error(*status) && buffer.used) return;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -1595,10 +1620,11 @@ extern "C" {
         modes = &main.mode;
       }
 
-      for (; i < modes->used; i++) {
+      for (; i < modes->used; ++i) {
+
         found = F_false;
 
-        for (j = 0; j < setting->modes.used; j++) {
+        for (j = 0; j < setting->modes.used; ++j) {
 
           if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
             found = F_true;
@@ -1626,7 +1652,7 @@ extern "C" {
         memset(&settings_mode_names, 0, sizeof(f_string_t) * fake_build_setting_total);
         memset(&setting_mode_lengths, 0, sizeof(f_array_length_t) * fake_build_setting_total);
 
-        for (j = 0; j < fake_build_setting_total; j++) {
+        for (j = 0; j < fake_build_setting_total; ++j) {
 
           setting_mode_lengths[j] = settings_length[j] + 1 + modes->array[i].used;
 
@@ -1652,7 +1678,7 @@ extern "C" {
           }
         }
 
-        for (j = 0; j < fake_build_setting_total; j++) {
+        for (j = 0; j < fake_build_setting_total; ++j) {
           macro_f_string_dynamic_t_delete_simple(settings_mode_name_dynamic[j]);
         } // for
 
@@ -1664,18 +1690,21 @@ extern "C" {
         f_string_dynamic_t temporary[total_build_libraries];
 
         for (i = 0; i < total_build_libraries; ++i) {
+
           temporary[i].string = setting->build_libraries.array[i].string;
           temporary[i].used = setting->build_libraries.array[i].used;
           temporary[i].size = setting->build_libraries.array[i].size;
         } // for
 
         for (i = 0, j = total_build_libraries; j < setting->build_libraries.used; ++i, ++j) {
+
           setting->build_libraries.array[i].string = setting->build_libraries.array[j].string;
           setting->build_libraries.array[i].used = setting->build_libraries.array[j].used;
           setting->build_libraries.array[i].size = setting->build_libraries.array[j].size;
         } // for
 
         for (i = setting->build_libraries.used - total_build_libraries, j = 0; j < total_build_libraries; ++i, ++j) {
+
           setting->build_libraries.array[i].string = temporary[j].string;
           setting->build_libraries.array[i].used = temporary[j].used;
           setting->build_libraries.array[i].size = temporary[j].size;
@@ -1881,7 +1910,8 @@ extern "C" {
         5,
       };
 
-      for (f_array_length_t i = 0; i < 27; i++) {
+      for (f_array_length_t i = 0; i < 27; ++i) {
+
         if (!settings_single_source[i]->used) continue;
 
         if (settings_single_source[i]->used > 1) {
@@ -1990,6 +2020,7 @@ extern "C" {
           }
         }
         else {
+
           // replace any potential existing value.
           settings_single_destination[i]->used = 0;
 
@@ -2048,10 +2079,12 @@ extern "C" {
 
 #ifndef _di_fake_build_load_setting_defaults_
   void fake_build_load_setting_defaults(const fake_main_t main, fake_build_setting_t *setting, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 
@@ -2074,7 +2107,8 @@ extern "C" {
         &setting->version_micro,
       };
 
-      for (uint8_t i = 0; i < 3; i++) {
+      for (uint8_t i = 0; i < 3; ++i) {
+
         if (destinations[i]->used) continue;
 
         *status = f_string_append_assure(sources[i], lengths[i], destinations[i]);
@@ -2209,6 +2243,7 @@ extern "C" {
 
 #ifndef _di_fake_build_load_stage_
   void fake_build_load_stage(const fake_main_t main, const f_string_static_t settings_file, fake_build_stage_t *stage, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     if (fake_signal_received(main)) {
@@ -2276,10 +2311,11 @@ extern "C" {
 
     if (F_status_is_error(*status)) {
       fll_error_print(main.error, F_status_set_fine(*status), "f_file_name_base", F_true);
+
       return;
     }
 
-    for (uint8_t i = 0; i < fake_build_stage_total; i++) {
+    for (uint8_t i = 0; i < fake_build_stage_total; ++i) {
 
       *status = f_string_dynamic_append_nulless(main.path_build_stage, values[i]);
 
@@ -2346,6 +2382,7 @@ extern "C" {
 
 #ifndef _di_fake_build_objects_static_
   int fake_build_objects_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
@@ -2376,7 +2413,8 @@ extern "C" {
       path_sources = &data_build.setting.path_sources;
     }
 
-    for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; i++) {
+    for (f_array_length_t i = 0; i < data_build.setting.build_sources_library.used; ++i) {
+
       file_name.used = 0;
       destination_path.used = 0;
 
@@ -2512,7 +2550,7 @@ extern "C" {
         destination_length,
       };
 
-      for (uint8_t j = 0; j < 5; j++) {
+      for (uint8_t j = 0; j < 5; ++j) {
 
         *status = fll_execute_arguments_add(values[j], lengths[j], &arguments);
         if (F_status_is_error(*status)) break;
@@ -2680,6 +2718,7 @@ extern "C" {
 
 #ifndef _di_fake_build_program_shared_
   int fake_build_program_shared(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
@@ -2707,7 +2746,8 @@ extern "C" {
 
       f_array_length_t source_length = 0;
 
-      for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; ++i) {
+
         source_length = path_sources->used + data_build.setting.build_sources_program.array[i].used;
 
         char source[source_length + 1];
@@ -2740,7 +2780,8 @@ extern "C" {
         parameter_file_name_path_length,
       };
 
-      for (uint8_t i = 0; i < 2; i++) {
+      for (uint8_t i = 0; i < 2; ++i) {
+
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -2782,6 +2823,7 @@ extern "C" {
 
 #ifndef _di_fake_build_program_static_
   int fake_build_program_static(const fake_main_t main, const fake_build_data_t data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t *status) {
+
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
@@ -2809,7 +2851,8 @@ extern "C" {
 
       f_array_length_t source_length = 0;
 
-      for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; i++) {
+      for (f_array_length_t i = 0; i < data_build.setting.build_sources_program.used; ++i) {
+
         if (!data_build.setting.build_sources_program.array[i].used) continue;
 
         source_length = path_sources->used + data_build.setting.build_sources_program.array[i].used;
@@ -2871,7 +2914,8 @@ extern "C" {
         parameter_file_name_path_length,
       };
 
-      for (uint8_t i = 0; i < 4; i++) {
+      for (uint8_t i = 0; i < 4; ++i) {
+
         *status = fll_execute_arguments_add(values[i], lengths[i], &arguments);
         if (F_status_is_error(*status)) break;
       } // for
@@ -2900,6 +2944,7 @@ extern "C" {
 
 #ifndef _di_fake_build_touch_
   void fake_build_touch(const fake_main_t main, const f_string_dynamic_t file, f_status_t *status) {
+
     if (F_status_is_error(*status)) return;
 
     f_mode_t mode = f_mode_t_initialize;
@@ -2908,6 +2953,7 @@ extern "C" {
 
     if (fake_signal_received(main)) {
       *status = F_status_set_error(F_signal);
+
       return;
     }
 

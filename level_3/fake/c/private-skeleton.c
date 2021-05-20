@@ -159,6 +159,7 @@ extern "C" {
 
 #ifndef _di_fake_skeleton_operate_directory_create_
   f_status_t fake_skeleton_operate_directory_create(const fake_main_t main, const f_string_dynamic_t path) {
+
     f_status_t status = F_none;
 
     if (!path.used) return F_none;
@@ -215,6 +216,7 @@ extern "C" {
 
 #ifndef _di_fake_skeleton_operate_file_create_
   f_status_t fake_skeleton_operate_file_create(const fake_main_t main, const f_string_dynamic_t path, const bool executable, const f_string_static_t content) {
+
     f_status_t status = F_none;
 
     if (!path.used) return F_none;
