@@ -207,6 +207,7 @@ extern "C" {
     }
     else if (F_status_is_error(status)) {
       fll_error_file_print(main.error, F_status_set_fine(status), "f_directory_exists", F_true, path.string, "create", fll_error_file_type_directory);
+
       return status;
     }
 
@@ -251,7 +252,7 @@ extern "C" {
 
       return F_status_set_warning(F_none);
     }
-    else if (status == F_file_found_not) {
+    else if (F_status_set_fine(status) == F_file_found_not) {
       mode_t mode = f_file_mode_all_rw;
 
       if (executable) {
