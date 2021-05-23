@@ -177,7 +177,11 @@ extern "C" {
       previous.invalid = 0;
 
       while (cell.column < main.width) {
-        if (main.mode == byte_dump_mode_hexidecimal) {
+
+        if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+          fprintf(main.output.stream, "         ");
+        }
+        else if (main.mode == byte_dump_mode_hexidecimal) {
           fprintf(main.output.stream, "   ");
         }
         else if (main.mode == byte_dump_mode_duodecimal) {
@@ -196,20 +200,35 @@ extern "C" {
         ++cell.column;
 
         if (cell.column < main.width) {
-          if (main.mode == byte_dump_mode_hexidecimal && cell.column % 8 == 0) {
-            fprintf(main.output.stream, "%s", f_string_space_s);
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            if (!(cell.column % 4)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
           }
-          else if (main.mode == byte_dump_mode_duodecimal && cell.column % 6 == 0) {
-            fprintf(main.output.stream, "%s", f_string_space_s);
+          else if (main.mode == byte_dump_mode_hexidecimal) {
+            if (!(cell.column % 8)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
           }
-          else if (main.mode == byte_dump_mode_octal && cell.column % 6 == 0) {
-            fprintf(main.output.stream, "%s", f_string_space_s);
+          else if (main.mode == byte_dump_mode_duodecimal) {
+            if (!(cell.column % 6)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
           }
-          else if (main.mode == byte_dump_mode_binary && cell.column % 4 == 0) {
-            fprintf(main.output.stream, "%s", f_string_space_s);
+          else if (main.mode == byte_dump_mode_octal) {
+            if (!(cell.column % 6)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
           }
-          else if (main.mode == byte_dump_mode_decimal && cell.column % 6 == 0) {
-            fprintf(main.output.stream, "%s", f_string_space_s);
+          else if (main.mode == byte_dump_mode_binary) {
+            if (!(cell.column % 6)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
+          }
+          else if (main.mode == byte_dump_mode_decimal) {
+            if (!(cell.column % 6)) {
+              fprintf(main.output.stream, "%s", f_string_space_s);
+            }
           }
         }
       } // while
@@ -274,12 +293,16 @@ extern "C" {
     if (!cell->column) {
       f_color_print(main.output.stream, main.context.set.notable, "%016X ", (uint64_t) cell->row);
 
-      if (*offset > 0) {
+      if (*offset) {
         uint8_t offset_to_print = *offset;
 
         // Pad the buffer with spaces to hide any skipped bytes (skipped via --first).
-        while (offset_to_print > 0 && cell->column < main.width) {
-          if (main.mode == byte_dump_mode_hexidecimal) {
+        while (offset_to_print && cell->column < main.width) {
+
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            fprintf(main.output.stream, "         ");
+          }
+          else if (main.mode == byte_dump_mode_hexidecimal) {
             fprintf(main.output.stream, "   ");
           }
           else if (main.mode == byte_dump_mode_duodecimal) {
@@ -299,20 +322,35 @@ extern "C" {
           ++cell->column;
 
           if (cell->column < main.width) {
-            if (main.mode == byte_dump_mode_hexidecimal && cell->column % 8 == 0) {
-              fprintf(main.output.stream, "%s", f_string_space_s);
+            if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+              if (!(cell->column % 4)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
             }
-            else if (main.mode == byte_dump_mode_duodecimal && cell->column % 6 == 0) {
-              fprintf(main.output.stream, "%s", f_string_space_s);
+            else if (main.mode == byte_dump_mode_hexidecimal) {
+              if (!(cell->column % 8)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
             }
-            else if (main.mode == byte_dump_mode_octal && cell->column % 6 == 0) {
-              fprintf(main.output.stream, "%s", f_string_space_s);
+            else if (main.mode == byte_dump_mode_duodecimal) {
+              if (!(cell->column % 6)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
             }
-            else if (main.mode == byte_dump_mode_binary && cell->column % 4 == 0) {
-              fprintf(main.output.stream, "%s", f_string_space_s);
+            else if (main.mode == byte_dump_mode_octal) {
+              if (!(cell->column % 6)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
             }
-            else if (main.mode == byte_dump_mode_decimal && cell->column % 6 == 0) {
-              fprintf(main.output.stream, "%s", f_string_space_s);
+            else if (main.mode == byte_dump_mode_binary) {
+              if (!(cell->column % 4)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
+            }
+            else if (main.mode == byte_dump_mode_decimal) {
+              if (!(cell->column % 6)) {
+                fprintf(main.output.stream, "%s", f_string_space_s);
+              }
             }
           }
         }
@@ -320,82 +358,144 @@ extern "C" {
     }
 
     if (cell->column < main.width) {
-      if (main.mode == byte_dump_mode_hexidecimal) {
-        if (invalid[character_current]) {
-          f_color_print(main.output.stream, main.context.set.error, " %02x", (uint8_t) byte);
+      if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found && !invalid[character_current]) {
+        if (byte_current == 1) {
+          uint32_t unicode = 0;
+
+          if (width_utf < 2) {
+
+            // 1 == U+0000 -> U+007F
+            unicode = macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7f;
+          }
+          else if (width_utf == 2) {
+
+            // 2 == U+0080 -> U+07FF
+            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x1f) << 6;
+            unicode |= macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f;
+          }
+          else if (width_utf == 3) {
+
+            // 3 == U+0800 -> U+FFFF
+            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0xf) << 12;
+            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_character_t_to_char_3(characters.string[character_current]) & 0x3f;
+          }
+          else if (width_utf == 4) {
+
+            // 4 == U+10000 -> U+10FFFF
+            unicode = (macro_f_utf_character_t_to_char_1(characters.string[character_current]) & 0x7) << 18;
+            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 12;
+            unicode |= (macro_f_utf_character_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_character_t_to_char_4(characters.string[character_current]) & 0x3f;
+          }
+
+          if (width_utf < 4) {
+            fprintf(main.output.stream, " U+%04x  ", (uint32_t) unicode);
+          }
+          else {
+            fprintf(main.output.stream, " U+%06x", (uint32_t) unicode);
+          }
         }
         else {
-          fprintf(main.output.stream, " %02x", (uint8_t) byte);
+
+          // Pad the characters that are incomplete fragments of an already printed valid Unicode.
+          fprintf(main.output.stream, "         ");
         }
       }
-      else if (main.mode == byte_dump_mode_duodecimal) {
-        if (invalid[character_current]) {
-          fprintf(main.output.stream, "%s", main.context.error.string);
-        }
+      else {
+        if (main.mode == byte_dump_mode_hexidecimal) {
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            fprintf(main.output.stream, "      ");
+          }
 
-        fprintf(main.output.stream, " %01d", byte / 144);
+          if (invalid[character_current]) {
+            f_color_print(main.output.stream, main.context.set.error, " %02x", (uint8_t) byte);
+          }
+          else {
+            fprintf(main.output.stream, " %02x", (uint8_t) byte);
+          }
+        }
+        else if (main.mode == byte_dump_mode_duodecimal) {
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            fprintf(main.output.stream, "   ");
+          }
 
-        uint8_t current = (byte % 144) / 12;
+          if (invalid[character_current]) {
+            fprintf(main.output.stream, "%s", main.context.error.string);
+          }
 
-        if (current == 11) {
-          fprintf(main.output.stream, "%s", f_string_ascii_b_s);
-        }
-        else if (current == 10) {
-          fprintf(main.output.stream, "%s", f_string_ascii_a_s);
-        }
-        else {
-          fprintf(main.output.stream, "%01d", current);
-        }
+          fprintf(main.output.stream, " %01d", byte / 144);
 
-        current = (byte % 144) % 12;
+          uint8_t current = (byte % 144) / 12;
 
-        if (current == 11) {
-          fprintf(main.output.stream, "%s", f_string_ascii_b_s);
-        }
-        else if (current == 10) {
-          fprintf(main.output.stream, "%s", f_string_ascii_a_s);
-        }
-        else {
-          fprintf(main.output.stream, "%01d", current);
-        }
+          if (current == 11) {
+            fprintf(main.output.stream, "%s", f_string_ascii_b_s);
+          }
+          else if (current == 10) {
+            fprintf(main.output.stream, "%s", f_string_ascii_a_s);
+          }
+          else {
+            fprintf(main.output.stream, "%01d", current);
+          }
 
-        if (invalid[character_current]) {
-          fprintf(main.output.stream, "%s", main.context.reset.string);
-        }
-      }
-      else if (main.mode == byte_dump_mode_octal) {
-        if (invalid[character_current]) {
-          f_color_print(main.output.stream, main.context.set.error, " %03o", (uint8_t) byte);
-        }
-        else {
-          fprintf(main.output.stream, " %03o", (uint8_t) byte);
-        }
-      }
-      else if (main.mode == byte_dump_mode_binary) {
-        char binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+          current = (byte % 144) % 12;
 
-        binary_string[0] = ((byte >> 7) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[1] = ((byte >> 6) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[2] = ((byte >> 5) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[3] = ((byte >> 4) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[4] = ((byte >> 3) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[5] = ((byte >> 2) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[6] = ((byte >> 1) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
-        binary_string[7] = (byte & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          if (current == 11) {
+            fprintf(main.output.stream, "%s", f_string_ascii_b_s);
+          }
+          else if (current == 10) {
+            fprintf(main.output.stream, "%s", f_string_ascii_a_s);
+          }
+          else {
+            fprintf(main.output.stream, "%01d", current);
+          }
 
-        if (invalid[character_current]) {
-          f_color_print(main.output.stream, main.context.set.error, " %s", binary_string);
+          if (invalid[character_current]) {
+            fprintf(main.output.stream, "%s", main.context.reset.string);
+          }
         }
-        else {
-          fprintf(main.output.stream, " %s", binary_string);
+        else if (main.mode == byte_dump_mode_octal) {
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            fprintf(main.output.stream, "     ");
+          }
+
+          if (invalid[character_current]) {
+            f_color_print(main.output.stream, main.context.set.error, " %03o", (uint8_t) byte);
+          }
+          else {
+            fprintf(main.output.stream, " %03o", (uint8_t) byte);
+          }
         }
-      }
-      else if (main.mode == byte_dump_mode_decimal) {
-        if (invalid[character_current]) {
-          f_color_print(main.output.stream, main.context.set.error, " %3d", (uint8_t) byte);
+        else if (main.mode == byte_dump_mode_binary) {
+          char binary_string[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+          binary_string[0] = ((byte >> 7) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[1] = ((byte >> 6) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[2] = ((byte >> 5) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[3] = ((byte >> 4) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[4] = ((byte >> 3) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[5] = ((byte >> 2) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[6] = ((byte >> 1) & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+          binary_string[7] = (byte & 0x01) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[0];
+
+          if (invalid[character_current]) {
+            f_color_print(main.output.stream, main.context.set.error, " %s", binary_string);
+          }
+          else {
+            fprintf(main.output.stream, " %s", binary_string);
+          }
         }
-        else {
-          fprintf(main.output.stream, " %3d", (uint8_t) byte);
+        else if (main.mode == byte_dump_mode_decimal) {
+          if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+            fprintf(main.output.stream, "     ");
+          }
+
+          if (invalid[character_current]) {
+            f_color_print(main.output.stream, main.context.set.error, " %3d", (uint8_t) byte);
+          }
+          else {
+            fprintf(main.output.stream, " %3d", (uint8_t) byte);
+          }
         }
       }
 
@@ -430,20 +530,37 @@ extern "C" {
         previous->invalid = invalid[character_current];
       }
     }
-    else if (main.mode == byte_dump_mode_hexidecimal && cell->column % 8 == 0) {
-      fprintf(main.output.stream, "%s", f_string_space_s);
-    }
-    else if (main.mode == byte_dump_mode_duodecimal && cell->column % 6 == 0) {
-      fprintf(main.output.stream, "%s", f_string_space_s);
-    }
-    else if (main.mode == byte_dump_mode_octal && cell->column % 6 == 0) {
-      fprintf(main.output.stream, "%s", f_string_space_s);
-    }
-    else if (main.mode == byte_dump_mode_binary && cell->column % 4 == 0) {
-      fprintf(main.output.stream, "%s", f_string_space_s);
-    }
-    else if (main.mode == byte_dump_mode_decimal && cell->column % 6 == 0) {
-      fprintf(main.output.stream, "%s", f_string_space_s);
+    else {
+      if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
+        if (!(cell->column % 4)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
+      else if (main.mode == byte_dump_mode_hexidecimal) {
+        if (!(cell->column % 8)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
+      else if (main.mode == byte_dump_mode_duodecimal) {
+        if (!(cell->column % 6)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
+      else if (main.mode == byte_dump_mode_octal) {
+        if (!(cell->column % 6)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
+      else if (main.mode == byte_dump_mode_binary) {
+        if (!(cell->column % 4)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
+      else if (main.mode == byte_dump_mode_decimal) {
+        if (!(cell->column % 6)) {
+          fprintf(main.output.stream, "%s", f_string_space_s);
+        }
+      }
     }
 
     return reset;

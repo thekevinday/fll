@@ -28,6 +28,7 @@ extern "C" {
     fll_program_print_help_option(output, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Display duodecimal representation.");
     fll_program_print_help_option(output, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Display hexadecimal representation.");
     fll_program_print_help_option(output, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Display octal representation.");
+    fll_program_print_help_option(output, context, byte_dump_short_unicode, byte_dump_long_unicode, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display using Unicode representation for valid Unicode (like: U+0000).");
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -69,6 +70,12 @@ extern "C" {
     fprintf(output.stream, "  When ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_last);
     fprintf(output.stream, " is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.");
+
+    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+
+    fprintf(output.stream, "  When using the ");
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, byte_dump_long_unicode);
+    fprintf(output.stream, " option, invalid Unicode will fallback to being displayed using one of the other modes.");
 
     fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
 

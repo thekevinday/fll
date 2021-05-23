@@ -125,6 +125,7 @@ extern "C" {
   #define byte_dump_short_duodecimal  "D"
   #define byte_dump_short_hexidecimal "x"
   #define byte_dump_short_octal       "o"
+  #define byte_dump_short_unicode     "U"
 
   #define byte_dump_short_first       "f"
   #define byte_dump_short_last        "l"
@@ -137,6 +138,7 @@ extern "C" {
   #define byte_dump_long_duodecimal  "duodecimal"
   #define byte_dump_long_hexidecimal "hexidecimal"
   #define byte_dump_long_octal       "octal"
+  #define byte_dump_long_unicode     "unicode"
 
   #define byte_dump_long_first "first" // first offset byte size.
   #define byte_dump_long_last  "last"  // last offset byte size.
@@ -165,6 +167,7 @@ extern "C" {
     byte_dump_parameter_duodecimal,
     byte_dump_parameter_hexidecimal,
     byte_dump_parameter_octal,
+    byte_dump_parameter_unicode,
 
     byte_dump_parameter_first,
     byte_dump_parameter_last,
@@ -194,6 +197,7 @@ extern "C" {
       f_console_parameter_t_initialize(byte_dump_short_duodecimal, byte_dump_long_duodecimal, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_octal, byte_dump_long_octal, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(byte_dump_short_unicode, byte_dump_long_unicode, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_first, byte_dump_long_first, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_last, byte_dump_long_last, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(byte_dump_short_width, byte_dump_long_width, 0, 1, f_console_type_normal), \
@@ -204,7 +208,7 @@ extern "C" {
       f_console_parameter_t_initialize(0, byte_dump_long_classic, 0, 0, f_console_type_normal), \
     }
 
-  #define byte_dump_total_parameters 22
+  #define byte_dump_total_parameters 23
 #endif // _di_byte_dump_defines_
 
 #ifndef _di_byte_dump_main_t_
