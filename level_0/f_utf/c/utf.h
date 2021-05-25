@@ -701,6 +701,52 @@ extern "C" {
 #endif // _di_f_utf_character_to_char_
 
 /**
+ * Convert a given (UTF-8) character into Unicode.
+ *
+ * The f_utf_character_t is a 32-bit integer containing UTF-8 sequences, unchanged.
+ * The Unicode is a 32-bit integer representing the Unicode (such as U+0001).
+ * The Unciode does not need to be interpretted like UTF-8, it simple is a sequence of number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @param character
+ *   The (UTF-8) character.
+ * @param unicode
+ *   The Unicode number.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_valid()
+ */
+#ifndef _di_f_utf_character_unicode_to_
+  extern f_status_t f_utf_character_unicode_to(const f_utf_character_t character, uint32_t *unicode);
+#endif // _di_f_utf_character_unicode_to_
+
+/**
+ * Convert a given Unicode into (UTF-8) character.
+ *
+ * The f_utf_character_t is a 32-bit integer containing UTF-8 sequences, unchanged.
+ * The Unicode is a 32-bit integer representing the Unicode (such as U+0001).
+ * The Unciode does not need to be interpretted like UTF-8, it simple is a sequence of number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @param unicode
+ *   The Unicode number.
+ * @param character
+ *   The (UTF-8) character.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if unicode is an invalid Unicode character.
+ */
+#ifndef _di_f_utf_character_unicode_from_
+  extern f_status_t f_utf_character_unicode_from(const uint32_t unicode, f_utf_character_t *character);
+#endif // _di_f_utf_character_unicode_from_
+
+/**
  * Helper function for UTF-8 processing code to determine endianess of the system.
  *
  * @todo relocate this outside of f_utf into a more general path, perhaps f_memory (f_memory_is_big_endian).
@@ -1777,6 +1823,62 @@ extern "C" {
 #ifndef _di_f_utf_string_seek_to_
   extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range);
 #endif // _di_f_utf_string_seek_to_
+
+/**
+ * Convert a given string block representing a single character into Unicode.
+ *
+ * The f_utf_character_t is a 32-bit integer containing UTF-8 sequences, unchanged.
+ * The Unicode is a 32-bit integer representing the Unicode (such as U+0001).
+ * The Unciode does not need to be interpretted like UTF-8, it simple is a sequence of number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @param character
+ *   The (UTF-8) character to convert to the Unicode representation.
+ * @param width_max
+ *   The max width available for representing the UTF-8 character.
+ *   There must be enough space in the character buffer to handle the Unicode width.
+ *   It is recommended to always have 4 characters (4 uint8_t) of space available in character.
+ * @param unicode
+ *   The Unicode number.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_character_is_valid()
+ */
+#ifndef _di_f_utf_unicode_to_
+  extern f_status_t f_utf_unicode_to(const f_string_t character, const f_array_length_t width_max, uint32_t *unicode);
+#endif // _di_f_utf_unicode_to_
+
+/**
+ * Convert a given Unicode into a string block representing a single character.
+ *
+ * The f_string is a 32-bit integer containing UTF-8 sequences, unchanged.
+ * The Unicode is a 32-bit integer representing the Unicode (such as U+0001).
+ * The Unciode does not need to be interpretted like UTF-8, it simple is a sequence of number from 0 onto max supported Unicode integer value (U+10FFFF).
+ *
+ * @param character
+ *   The (UTF-8) character.
+ * @param width_max
+ *   The max width available for representing the UTF-8 character.
+ *   There must be enough space in the character buffer to handle the Unicode width.
+ *   It is recommended to always have 4 characters (4 uint8_t) of space available in character.
+ * @param unicode
+ *   The Unicode number.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if unicode is an invalid Unicode character.
+ */
+#ifndef _di_f_utf_unicode_from_
+  extern f_status_t f_utf_unicode_from(const uint32_t unicode, const f_array_length_t width_max, f_string_t *character);
+#endif // _di_f_utf_unicode_from_
 
 #ifdef __cplusplus
 } // extern "C"

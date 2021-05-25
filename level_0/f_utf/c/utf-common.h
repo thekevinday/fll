@@ -7,6 +7,8 @@
  *
  * Defines common data to be used for/by project utf.
  *
+ * @fixme this code probably only works on little-endian only as-is, this needs to be checked for and possibly redesign to support both big or little.
+ *
  * This is auto-included by utf.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_common_h
@@ -31,7 +33,7 @@ extern "C" {
  * The macro_f_utf_byte_is_* macros are used to determine a width of the character (either 1, 2, 3, or 4, respectively).
  *
  * The macro_f_utf_byte_width macro determines a width of the character.
- * The macro_f_utf_byte_width_is is identical to macro_f_utf_byte_width, except it returns 0 when character is not UTF-8.
+ * The macro_f_utf_byte_width_is is identical to macro_f_utf_byte_width, except it returns 0 when character is ASCII.
  */
 #ifndef _di_f_utf_byte_
   #define f_utf_byte_1 0x80 // 1000 0000
@@ -165,6 +167,9 @@ extern "C" {
  *
  * The macro_f_utf_character_t_width is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width.
  * The macro_f_utf_character_t_width_is is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width_is.
+ *
+ * The macro_f_utf_character_t_width macro determines a width of the UTF-8 character based on macro_f_utf_byte_width.
+ * The macro_f_utf_character_t_width_is is identical to macro_f_utf_character_t_width, except it returns 0 when character is ASCII.
  *
  * @see f_utf_is_big_endian()
  */

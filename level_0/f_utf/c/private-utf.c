@@ -5,6 +5,48 @@
 extern "C" {
 #endif
 
+#if !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+  f_status_t private_f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf) {
+
+    const uint8_t width = macro_f_utf_byte_width_is(*character);
+
+    if (!width) {
+      *character_utf = macro_f_utf_character_t_from_char_1(character[0]);
+
+      return F_none;
+    }
+    else if (width == 1) {
+      return F_status_is_error(F_utf);
+    }
+
+    if (width > width_max) {
+      return F_status_set_error(F_failure);
+    }
+
+    *character_utf = macro_f_utf_character_t_from_char_1(character[0]);
+
+    if (width < 2) {
+      return F_none;
+    }
+
+    *character_utf |= macro_f_utf_character_t_from_char_2(character[1]);
+
+    if (width == 2) {
+      return F_none;
+    }
+
+    *character_utf |= macro_f_utf_character_t_from_char_3(character[2]);
+
+    if (width == 3) {
+      return F_none;
+    }
+
+    *character_utf |= macro_f_utf_character_t_from_char_4(character[3]);
+
+    return F_none;
+  }
+#endif // !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+
 #if !defined(_di_f_utf_character_is_alpha_) || !defined(_di_f_utf_is_alpha_)
   f_status_t private_f_utf_character_is_alpha(const f_utf_character_t character, const uint8_t width) {
 

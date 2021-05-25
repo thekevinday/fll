@@ -18,6 +18,60 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation of f_utf_char_to_character().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param character
+ *   The character string to be converted to the f_utf_character_t type.
+ *   There must be enough space allocated to convert against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for converting.
+ *   Can be anything greater than 0.
+ * @param character_utf
+ *   The generated character of type f_utf_character_t.
+ *   This value may be cleared, even on error.
+ *
+ * @return
+ *   F_none if conversion was successful.
+ *
+ *   F_failure (with error bit) if width is not long enough to convert.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see f_utf_char_to_character()
+ * @see f_utf_character_is_valid()
+ * @see f_utf_is_valid()
+ * @see f_utf_is_alpha()
+ * @see f_utf_is_alpha_digit()
+ * @see f_utf_is_alpha_numeric()
+ * @see f_utf_is_ascii()
+ * @see f_utf_is_combining_  _di_f_utf_is_control()
+ * @see f_utf_is_control_picture()
+ * @see f_utf_is_digit()
+ * @see f_utf_is_emoji()
+ * @see f_utf_is_graph()
+ * @see f_utf_is_numeric()
+ * @see f_utf_is_phonetic()
+ * @see f_utf_is_private()
+ * @see f_utf_is_punctuation()
+ * @see f_utf_is_symbol()
+ * @see f_utf_is_unassigned()
+ * @see f_utf_is_valid()
+ * @see f_utf_is_whitespace()
+ * @see f_utf_is_whitespace_modifier()
+ * @see f_utf_is_whitespace_other()
+ * @see f_utf_is_word()
+ * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus()
+ * @see f_utf_is_zero_width()
+ * @see f_utf_unicode_to()
+ */
+#if !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+  extern f_status_t private_f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_character_t *character_utf) f_attribute_visibility_internal;
+#endif // !defined(_di_f_utf_char_to_character_) || !defined(_di_f_utf_is_alpha_) || !defined(_di_f_utf_is_alpha_digit_) || !defined(_di_f_utf_is_alpha_numeric_) || !defined(_di_f_utf_is_ascii_) || !defined(_di_f_utf_is_combining_) || !defined(_di_f_utf_is_control_) || !defined(_di_f_utf_is_control_picture_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_emoji_) || !defined(_di_f_utf_is_graph_) || !defined(_di_f_utf_is_numeric_) || !defined(_di_f_utf_is_phonetic_) || !defined(_di_f_utf_is_private_) || !defined(_di_f_utf_is_punctuation_) || !defined(_di_f_utf_is_symbol_) || !defined(_di_f_utf_is_unassigned_) || !defined(_di_f_utf_is_valid_) || !defined(_di_f_utf_is_whitespace_) || !defined(_di_f_utf_is_whitespace_modifier_) || !defined(_di_f_utf_is_whitespace_other_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_) || !defined(_di_f_utf_is_zero_width_) || !defined(f_utf_unicode_to)
+
+/**
  * Private implementation of f_utf_character_is_alpha().
  *
  * Intended to be shared to each of the different implementation variations.
