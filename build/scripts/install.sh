@@ -58,11 +58,11 @@ install_main() {
   local work=
 
   local enable_shared=
-  local enable_shared_programs="yes"
-  local enable_shared_libraries="yes"
+  local enable_shared_programs=
+  local enable_shared_libraries=
   local enable_static=
-  local enable_static_programs="yes"
-  local enable_static_libraries="yes"
+  local enable_static_programs=
+  local enable_static_libraries=
   local enable_includes="yes"
 
   if [[ $# -gt 0 ]] ; then
@@ -431,92 +431,180 @@ install_perform_install() {
   local build_static=${variables[$(install_id build_static)]}
   local failure=
 
-  if [[ $enable_shared == "yes" ]] ; then
-    build_shared="yes"
-  elif [[ $enable_shared == "no" ]] ; then
-    build_shared="no"
+  if [[ $build_shared == "yes" ]] ; then
+    if [[ $enable_shared == "" ]] ; then
+      enable_shared="yes"
+    fi
+
+    if [[ $enable_shared == "no" ]] ; then
+      enable_shared_programs="no"
+      enable_shared_libraries="no"
+    else
+      if [[ $enable_shared_programs == "" ]] ; then
+        enable_shared_programs="yes"
+      fi
+
+      if [[ $enable_shared_libraries == "" ]] ; then
+        enable_shared_libraries="yes"
+      fi
+    fi
+  elif [[ $build_shared == "no" ]] ; then
+    if [[ $enable_shared == "" ]] ; then
+      enable_shared="no"
+    fi
+
+    if [[ $enable_shared == "no" ]] ; then
+      enable_shared_programs="no"
+      enable_shared_libraries="no"
+    else
+      if [[ $enable_shared_programs == "" ]] ; then
+        enable_shared_programs="yes"
+      fi
+
+      if [[ $enable_shared_libraries == "" ]] ; then
+        enable_shared_libraries="yes"
+      fi
+    fi
+  else
+    if [[ $enable_shared == "" ]] ; then
+      enable_shared="yes"
+    fi
+
+    if [[ $enable_shared_programs == "" ]] ; then
+      enable_shared_programs="yes"
+    fi
+
+    if [[ $enable_shared_libraries == "" ]] ; then
+      enable_shared_libraries="yes"
+    fi
   fi
 
-  if [[ $enable_static == "yes" ]] ; then
-    build_static="yes"
-  elif [[ $enable_static == "no" ]] ; then
-    build_static="no"
+  if [[ $build_static == "yes" ]] ; then
+    if [[ $enable_static == "" ]] ; then
+      enable_static="yes"
+    fi
+
+    if [[ $enable_static == "no" ]] ; then
+      enable_static_programs="no"
+      enable_static_libraries="no"
+    else
+      if [[ $enable_static_programs == "" ]] ; then
+        enable_static_programs="yes"
+      fi
+
+      if [[ $enable_static_libraries == "" ]] ; then
+        enable_static_libraries="yes"
+      fi
+    fi
+  elif [[ $build_static == "no" ]] ; then
+    if [[ $enable_static == "" ]] ; then
+      enable_static="no"
+    fi
+
+    if [[ $enable_static == "no" ]] ; then
+      enable_static_programs="no"
+      enable_static_libraries="no"
+    else
+      if [[ $enable_static_programs == "" ]] ; then
+        enable_static_programs="yes"
+      fi
+
+      if [[ $enable_static_libraries == "" ]] ; then
+        enable_static_libraries="yes"
+      fi
+    fi
+  else
+    if [[ $enable_static == "" ]] ; then
+      enable_static="yes"
+    fi
+
+    if [[ $enable_static_programs == "" ]] ; then
+      enable_static_programs="yes"
+    fi
+
+    if [[ $enable_static_libraries == "" ]] ; then
+      enable_static_libraries="yes"
+    fi
   fi
 
   if [[ $work != "" ]] ; then
-    if [[ ! -d ${work}programs ]] ; then
-      mkdir $verbose ${work}programs
+    if [[ $build_sources_program != "" && ( $enable_shared_programs == "yes" || $enable_static_programs == "yes" ) ]] ; then
+      if [[ ! -d ${work}programs ]] ; then
+        mkdir $verbose ${work}programs
 
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs$c_error.$c_reset"
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs$c_error.$c_reset"
+          fi
+
+          failure=1
         fi
+      fi
 
-        failure=1
+      if [[ $enable_shared_programs == "yes" && ! -d ${work}programs/shared ]] ; then
+        mkdir $verbose ${work}programs/shared
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
+          fi
+
+          failure=1
+        fi
+      fi
+
+      if [[ $enable_static_programs == "yes" && ! -d ${work}programs/static ]] ; then
+        mkdir $verbose ${work}programs/static
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
+          fi
+
+          failure=1
+        fi
       fi
     fi
 
-    if [[ ! -d ${work}programs/shared ]] ; then
-      mkdir $verbose ${work}programs/shared
+    if [[ $build_sources_library != "" && ( $enable_shared_libraries == "yes" || $enable_static_libraries == "yes" ) ]] ; then
+      if [[ ! -d ${work}libraries ]] ; then
+        mkdir $verbose ${work}libraries
 
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
+          fi
+
+          failure=1
         fi
+      fi
 
-        failure=1
+      if [[ $enable_shared_libraries == "yes" && ! -d ${work}libraries/shared ]] ; then
+        mkdir $verbose ${work}libraries/shared
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
+          fi
+
+          failure=1
+        fi
+      fi
+
+      if [[ $enable_static_libraries == "yes" && ! -d ${work}libraries/static ]] ; then
+        mkdir $verbose ${work}libraries/static
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
+          fi
+
+          failure=1
+        fi
       fi
     fi
 
-    if [[ ! -d ${work}programs/static ]] ; then
-      mkdir $verbose ${work}programs/static
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
-        fi
-
-        failure=1
-      fi
-    fi
-
-    if [[ ! -d ${work}libraries ]] ; then
-      mkdir $verbose ${work}libraries
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
-        fi
-
-        failure=1
-      fi
-    fi
-
-    if [[ ! -d ${work}libraries/shared ]] ; then
-      mkdir $verbose ${work}libraries/shared
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
-        fi
-
-        failure=1
-      fi
-    fi
-
-    if [[ ! -d ${work}libraries/static ]] ; then
-      mkdir $verbose ${work}libraries/static
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
-        fi
-
-        failure=1
-      fi
-    fi
-
-    if [[ $enable_includes == "yes" ]] ; then
+    if [[ $build_sources_headers != "" && $enable_includes == "yes" ]] ; then
       if [[ ! -d ${work}includes ]] ; then
         mkdir $verbose ${work}includes
 
@@ -542,7 +630,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && $enable_includes == "yes" && $build_sources_headers != "" ]] ; then
+  if [[ $failure == "" && $build_sources_headers != "" && $enable_includes == "yes" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
       echo -e "${c_highlight}Installing Includes to: $c_reset$c_notice$destination_includes$c_reset${c_highlight}.$c_reset"
@@ -559,8 +647,8 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && ( $build_sources_library != "" || $build_sources_program != "" ) ]] ; then
-    if [[ $build_static == "yes" && $enable_static_libraries == "yes" ]] ; then
+  if [[ $failure == "" && ( $enable_shared_libraries == "yes" || $enable_static_libraries == "yes" ) ]] ; then
+    if [[ $enable_static_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (static) Libraries to: $c_reset$c_notice$destination_libraries_static$c_reset${c_highlight}.$c_reset"
@@ -577,7 +665,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ $failure == "" && $build_shared == "yes" && $enable_shared_libraries == "yes" ]] ; then
+    if [[ $failure == "" && $enable_shared_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Libraries to: $c_reset$c_notice$destination_libraries_shared$c_reset${c_highlight}.$c_reset"
@@ -587,7 +675,7 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_libraries$build_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
+          echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_libraries$path_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
         fi
 
         failure=1
@@ -595,7 +683,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && $build_sources_program != "" ]] ; then
+  if [[ $failure == "" && $build_sources_program != "" && ( $enable_shared_programs == "yes" || $enable_static_programs == "yes" ) ]] ; then
     if [[ $build_static == "yes" && $enable_static_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
@@ -606,14 +694,14 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (static) library files from $c_notice$path_build$path_programs$path_static$c_error to $c_notice$destination_programs_static$c_error.$c_reset"
+          echo -e "${c_error}ERROR: failed to copy (static) program files from $c_notice$path_build$path_programs$path_static$c_error to $c_notice$destination_programs_static$c_error.$c_reset"
         fi
 
         failure=1
       fi
     fi
 
-    if [[ $failure == "" && $build_shared == "yes" && $enable_shared_programs == "yes" ]] ; then
+    if [[ $failure == "" && $enable_shared_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Programs to: $c_reset$c_notice$destination_programs_shared$c_reset${c_highlight}.$c_reset"
@@ -623,7 +711,7 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (shared) library files from $c_notice$path_build$path_programs$build_shared$c_error to $c_notice$destination_programs_shared$c_error.$c_reset"
+          echo -e "${c_error}ERROR: failed to copy (shared) program files from $c_notice$path_build$path_programs$path_shared$c_error to $c_notice$destination_programs_shared$c_error.$c_reset"
         fi
 
         failure=1
