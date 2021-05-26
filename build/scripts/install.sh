@@ -63,6 +63,7 @@ install_main() {
   local enable_static=
   local enable_static_programs="yes"
   local enable_static_libraries="yes"
+  local enable_includes="yes"
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -117,6 +118,10 @@ install_main() {
           enable_static="yes"
         elif [[ $p == "--disable-static" ]] ; then
           enable_static="no"
+        elif [[ $p == "--enable-includes" ]] ; then
+          enable_includes="yes"
+        elif [[ $p == "--disable-includes" ]] ; then
+          enable_includes="no"
         elif [[ $p == "--libraries-static" ]] ; then
           grab_next="destination_libraries_static"
         elif [[ $p == "--libraries-shared" ]] ; then
@@ -367,6 +372,8 @@ install_help() {
   echo -e " --${c_important}disable-static${c_reset}            Forcibly do not install static files."
   echo -e " --${c_important}disable-static-programs${c_reset}   Forcibly do not install shared programs."
   echo -e " --${c_important}disable-static-libraries${c_reset}  Forcibly do not install shared libraries."
+  echo -e " --${c_important}enable-includes${c_reset}           Forcibly do not install include files."
+  echo -e " --${c_important}disable-includes${c_reset}          Forcibly do not install include files."
   echo -e " --${c_important}libraries-static${c_reset}          Custom destination for static libraries."
   echo -e " --${c_important}libraries-shared${c_reset}          Custom destination for shared libraries."
   echo -e " --${c_important}programs-static${c_reset}           Custom destination for static programs."
@@ -509,15 +516,17 @@ install_perform_install() {
       fi
     fi
 
-    if [[ ! -d ${work}includes ]] ; then
-      mkdir $verbose ${work}includes
+    if [[ $enable_includes == "yes" ]] ; then
+      if [[ ! -d ${work}includes ]] ; then
+        mkdir $verbose ${work}includes
 
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}includes$c_error.$c_reset"
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: failed to create work directories $c_notice${work}includes$c_error.$c_reset"
+          fi
+
+          failure=1
         fi
-
-        failure=1
       fi
     fi
 
@@ -533,7 +542,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && $build_sources_headers != "" ]] ; then
+  if [[ $failure == "" && $enable_includes == "yes" && $build_sources_headers != "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
       echo -e "${c_highlight}Installing Includes to: $c_reset$c_notice$destination_includes$c_reset${c_highlight}.$c_reset"
