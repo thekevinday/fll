@@ -684,7 +684,7 @@ install_perform_install() {
   fi
 
   if [[ $failure == "" && $build_sources_program != "" && ( $enable_shared_programs == "yes" || $enable_static_programs == "yes" ) ]] ; then
-    if [[ $build_static == "yes" && $enable_static_programs == "yes" ]] ; then
+    if [[ $enable_static_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (static) Programs to: $c_reset$c_notice$destination_programs_static$c_reset${c_highlight}.$c_reset"
