@@ -390,10 +390,10 @@ extern "C" {
           }
 
           if (width_utf < 4) {
-            fprintf(main.output.stream, " U+%04x  ", (uint32_t) unicode);
+            fprintf(main.output.stream, " U+%04X  ", (uint32_t) unicode);
           }
           else {
-            fprintf(main.output.stream, " U+%06x", (uint32_t) unicode);
+            fprintf(main.output.stream, " U+%06X", (uint32_t) unicode);
           }
         }
         else {
