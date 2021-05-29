@@ -1041,6 +1041,116 @@ extern "C" {
   #define f_statess_t_initialize { 0, 0, 0 }
 #endif // _di_f_type_statess_t_
 
+/**
+ * An FLL Identifier represents a way to identify FLL related text files and possibly binary files.
+ *
+ * This was originally designed for FSS (Featureless Settings Specification) but has been expanded to be used by the entire project.
+ *
+ * An FLL Identifier consists of two parts:
+ * 1) A 64-byte long string representing a machine-name for the type.
+ * 2) A 16-bit digit representing 2^16 possible type classifications, which is representeed by 4 hexadecial 1-byte strings for text.
+ *
+ * For example "fss-1234" is a valid type such that:
+ * 1) name: "fss".
+ * 2) type: "1234", (or 0x1 in binary.
+ *
+ * UTF-8 codes are available, but one must consider that 1 4-byte characte still takes up 4-bytes.
+ * Therefore for all 4-byte UTF-8 characters, there is a maximum of 16 characters available.
+ *
+ * This intentionally utilizes a fixed array to avoid the need of dynamic allocation.
+ *
+ * The macro_f_fll_id_t_clear() is provided for "consistency in design" reasons.
+ * However, it is probably a better idea to use memset to clear the name array.
+ *
+ * The name must only be "word" characters (therefore "-" is not allowed).
+ *
+ * name: The string representing the name of the FLL Identifier (This is not a NULL terminated string).
+ * type: The code representing the type of the Identifier.
+ * used: A representation of how many bytes in name are in used (if 0, then there is no name, thus this can be seen as not a valid identifier).
+ */
+#ifndef _di_f_fll_id_t_
+  typedef struct {
+    char name[64];
+
+    uint16_t type;
+    uint8_t used;
+  } f_fll_id_t;
+
+  #define f_fll_id_t_initialize { \
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, \
+    0, \
+    0, \
+  }
+
+  #define macro_f_fll_id_t_clear(id) \
+    id.name[0] = 0; \
+    id.name[1] = 0; \
+    id.name[2] = 0; \
+    id.name[3] = 0; \
+    id.name[4] = 0; \
+    id.name[5] = 0; \
+    id.name[6] = 0; \
+    id.name[7] = 0; \
+    id.name[8] = 0; \
+    id.name[9] = 0; \
+    id.name[10] = 0; \
+    id.name[11] = 0; \
+    id.name[12] = 0; \
+    id.name[13] = 0; \
+    id.name[14] = 0; \
+    id.name[15] = 0; \
+    id.name[16] = 0; \
+    id.name[17] = 0; \
+    id.name[18] = 0; \
+    id.name[19] = 0; \
+    id.name[20] = 0; \
+    id.name[21] = 0; \
+    id.name[22] = 0; \
+    id.name[23] = 0; \
+    id.name[24] = 0; \
+    id.name[25] = 0; \
+    id.name[26] = 0; \
+    id.name[27] = 0; \
+    id.name[28] = 0; \
+    id.name[29] = 0; \
+    id.name[30] = 0; \
+    id.name[31] = 0; \
+    id.name[32] = 0; \
+    id.name[33] = 0; \
+    id.name[34] = 0; \
+    id.name[35] = 0; \
+    id.name[36] = 0; \
+    id.name[37] = 0; \
+    id.name[38] = 0; \
+    id.name[39] = 0; \
+    id.name[40] = 0; \
+    id.name[41] = 0; \
+    id.name[42] = 0; \
+    id.name[43] = 0; \
+    id.name[44] = 0; \
+    id.name[45] = 0; \
+    id.name[46] = 0; \
+    id.name[47] = 0; \
+    id.name[48] = 0; \
+    id.name[49] = 0; \
+    id.name[50] = 0; \
+    id.name[51] = 0; \
+    id.name[52] = 0; \
+    id.name[53] = 0; \
+    id.name[54] = 0; \
+    id.name[55] = 0; \
+    id.name[56] = 0; \
+    id.name[57] = 0; \
+    id.name[58] = 0; \
+    id.name[59] = 0; \
+    id.name[60] = 0; \
+    id.name[61] = 0; \
+    id.name[62] = 0; \
+    id.name[63] = 0; \
+    id.type = 0; \
+    id.used = 0;
+#endif // _di_f_fll_id_t__
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

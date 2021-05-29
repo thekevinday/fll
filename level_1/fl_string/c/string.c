@@ -546,6 +546,168 @@ extern "C" {
   }
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
+#ifndef _di_fl_string_fll_identify_
+  f_status_t fl_string_fll_identify(const f_string_t buffer, const f_array_length_t length, f_fll_id_t *id) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!length) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (id) {
+      id->type = 0;
+      id->used = 0;
+    }
+
+    // The FLL identifier is always at least 6 characters ("X-0000").
+    if (length < 6) {
+      return F_false;
+    }
+
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t remaining = length;
+
+    for (; i < length; ) {
+
+      status = f_utf_is_whitespace(buffer + i, remaining);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_complete_not_utf);
+        }
+
+        return status;
+      }
+
+      if (status == F_false) {
+        if (buffer[i] == 0) {
+          ++i;
+          --remaining;
+          continue;
+        }
+
+        break;
+      }
+
+      i += macro_f_utf_byte_width(buffer[i]);
+      remaining -= macro_f_utf_byte_width(buffer[i]);
+    } // for
+
+    if (remaining < 6) {
+      return F_false;
+    }
+
+    f_array_length_t j = i;
+
+    for (; i < length; ) {
+
+      status = f_utf_is_word(buffer + i, remaining, F_true);
+      if (F_status_is_error(status)) return status;
+
+      if (status == F_false) {
+        if (buffer[i] == 0) {
+          ++i;
+          --remaining;
+          continue;
+        }
+
+        break;
+      }
+
+      i += macro_f_utf_byte_width(buffer[i]);
+      remaining -= macro_f_utf_byte_width(buffer[i]);
+    } // for
+
+    if (i > length || buffer[i] != f_string_ascii_minus[0]) {
+      return F_false;
+    }
+
+    {
+      f_array_length_t k = 0;
+
+      for (; i < length && k < 5; ++i, --remaining, ++k) {
+
+        // The hexidecimal representing the number may only be ASCII.
+        if (macro_f_utf_byte_width_is(buffer[i])) {
+          if (id) {
+            id->type = 0;
+          }
+
+          return F_false;
+        }
+
+        if (isxdigit(buffer[i])) {
+          if (id) {
+            if (k) {
+              id->type *= 16;
+              id->type += strtol(buffer + i, 0, 16);
+            }
+            else {
+              id->type = strtol(buffer + i, 0, 16);
+            }
+          }
+        }
+        else {
+          if (buffer[i] == 0) continue;
+
+          if (id) {
+            id->type = 0;
+          }
+
+          return F_false;
+        }
+      } // for
+
+      if (i > length || k > 4) {
+        if (id) {
+          id->type = 0;
+        }
+
+        return F_false;
+      }
+    }
+
+    // The end of line, string, or end of length are the only valid stop points.
+    if (i < length && buffer[i] != f_string_eol_s[0]) {
+      status = f_utf_is_whitespace(buffer + i, remaining);
+
+      if (F_status_is_error(status)) {
+        if (id) {
+          id->type = 0;
+        }
+
+        return status;
+      }
+
+      if (status == F_false) {
+        if (id) {
+          id->type = 0;
+        }
+
+        return F_none;
+      }
+    }
+
+    if (id) {
+      for (i = j, j = 0; i < length; ++i) {
+
+        if (buffer[i] == 0) continue;
+        if (buffer[i] == f_string_ascii_minus[0]) break;
+
+        id->name[j] = buffer[i];
+        ++j;
+      } // for
+
+      if (j < 64) {
+        id->name[j] = 0;
+      }
+
+      id->used = j;
+    }
+
+    return F_true;
+  }
+#endif // _di_fl_string_fll_identify_
+
 #ifndef _di_fl_string_rip_
   f_status_t fl_string_rip(const f_string_t source, const f_array_length_t length, f_string_dynamic_t *destination) {
     #ifndef _di_level_1_parameter_checking_

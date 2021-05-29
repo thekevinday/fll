@@ -919,6 +919,43 @@ extern "C" {
 #endif // _di_fl_string_dynamic_seek_to_utf_character_
 
 /**
+ * Identify whether or not the given string represents a single valid FLL Identifier and possibly save the FLL Identifier.
+ *
+ * This will always change the FLL Identifier used and type codes, if a FLL Identifier is provided.
+ *
+ * Whitespace may be before and after the FLL Identifier and will be ignored.
+ * Anything else will result in treating the character as a possible FLL Identifier.
+ *
+ * A valid FLL Identifier must terminate on either whitespace, EOL, or the stop point (length).
+ *
+ * @param buffer
+ *   The string to process.
+ * @param length
+ *   The number of bytes within the buffer to process.
+ *   Must be greater than 0.
+ * @param id
+ *   (optional) The FLL Identifier found.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_false if the buffer does not represent a valid FLL Identifier.
+ *   F_true if the buffer does represent a valid FLL Identifier.
+ *
+ *   F_complete_not_utf (with error bit) if a character is an incomplete UTF-8 fragment.
+ *   F_maybe (with error bit) if a character could be a whitespace but width is not long enough. (This is only returned for an otherwise valid FLL Identifier.)
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ * @see isxdigit()
+ *
+ * @see f_utf_is_whitespace()
+ * @see f_utf_is_word()
+ */
+#ifndef _di_fl_string_fll_identify_
+  extern f_status_t fl_string_fll_identify(const f_string_t buffer, const f_array_length_t length, f_fll_id_t *id);
+#endif // _di_fl_string_fll_identify_
+
+/**
  * Allocate a new string from the provided range in the string.
  *
  * Ignores leading and trailing whitespace.
