@@ -2,5 +2,10 @@
 
 _di_libcap_ Disable libcap support, allow for compiling and linking without libcap (-lcap).
 _libcap_legacy_only_ Disable functionality provided by later versions of libcap (2.43 and later).
+_override_controller_default_program_script_ Provide a custom script name string to execute (such as php).
+_override_controller_path_pid_init_ Provide a custom init path for the system rather than the default.
+_override_controller_path_pid_init_length_ The number of bytes representing the string in _override_controller_path_pid_init_ (not including the terminating NULL).
+_override_controller_path_settings_init_ Provide a custom init path for the system rather than the default.
+_override_controller_path_settings_init_length_ The number of bytes representing the string in _override_controller_path_settings_init_ (not including the terminating NULL).
 _pthread_attr_unsupported_ Disable non-portable functionality associated with pthread_attr.
 _pthread_sigqueue_unsupported_ Disable GNU specific sigqueue().

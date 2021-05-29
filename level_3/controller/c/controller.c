@@ -29,6 +29,7 @@ extern "C" {
 
     fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(output, context, controller_short_init, controller_long_init, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         The program will run as an init replacement.");
     fll_program_print_help_option(output, context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program can be interrupted.");
     fll_program_print_help_option(output, context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
     fll_program_print_help_option(output, context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Specify a custom settings path, such as '" controller_path_settings "'.");
@@ -181,7 +182,12 @@ extern "C" {
       }
     }
     else {
-      status = f_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
+      if (main->parameters[controller_parameter_init].result == f_console_result_found) {
+        status = f_string_append(controller_path_settings_init, controller_path_settings_init_length, &setting.path_setting);
+      }
+      else {
+        status = f_string_append(controller_path_settings, controller_path_settings_length, &setting.path_setting);
+      }
 
       if (F_status_is_error(status)) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
@@ -224,7 +230,13 @@ extern "C" {
 
     // a pid file path is required.
     if (!setting.path_pid.used) {
-      status = f_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
+
+      if (main->parameters[controller_parameter_init].result == f_console_result_found) {
+        status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);
+      }
+      else {
+        status = f_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
+      }
 
       if (F_status_is_error_not(status)) {
         status = f_string_append(setting.name_entry.string, setting.name_entry.used, &setting.path_pid);
