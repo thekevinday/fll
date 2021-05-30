@@ -33,52 +33,50 @@ extern "C" {
 /**
  * Identify FSS type from a buffered string.
  *
+ * The operates on the assumption that the first character provided is the start of the line.
+ * This will process until the stop point or the end of the line.
+ * This stop point should always be after the end of the line, except when there is an error.
+ *
+ * This expects there to be at least a single "fss-XXXX" FSS Identifier.
+ * If one is not found but the line contains valid FLL Identifiers, then this returns F_maybe.
+ *
+ * See the fl_string_fll_identify() function for details on individual FLL/FSS Identifier processing.
+ *
  * @param buffer
  *   The string to process.
- * @param header
- *   The header data to populate with results of this function.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The caller must ensure that the stop point does not exceed the buffer size.
+ *
+ *   The range->start may be updated by this function.
+ *   On failure, the range->start may represent the last position looked at.
+ *   On success, the range->start should be after the last valid position (for example for "# fss-1234 fss-4321\n", the ast valid position would be the byte after the "\n").
+ * @param ids
+ *   (optional) The FLL Identifiers to populate with results of this function.
+ *   Set to NULL to not use.
+ *
+ *   When non-NULL, this will have its length reset to 0.
+ *   FLL/FSS Identifiers will then be appended to this array.
  *
  * @return
- *   F_none on success
- *   FL_fss_header_not if no header is found.
+ *   F_data_not if length is 0.
+ *   F_found if the buffer does represent a valid FSS Identifier.
+ *   F_found_not if the buffer does not represent a valid FSS Identifier.
+ *   F_maybe if the buffer is a valid FLL Identifier but does not have an FSS Identifier ("fss-XXXX").
  *
- *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *
- *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
+ *   Errors (with error bit) from: f_type_fll_ids_increase().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: fl_string_fll_identify().
  *
- *   Errors (with error bit) from: fl_conversion_string_to_hexidecimal_unsigned().
+ * @see f_type_fll_ids_increase()
+ * @see f_utf_is_whitespace()
+ * @see fl_string_fll_identify()
  */
 #ifndef _di_fll_fss_identify_
-  extern f_status_t fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header);
+  extern f_status_t fll_fss_identify(const f_string_t buffer, f_string_range_t *range, f_fll_ids_t *ids);
 #endif // _di_fll_fss_identify_
-
-/**
- * Identify FSS type from a file.
- *
- * @param file
- *   The file information.
- * @param header
- *   The header data to populate with results of this function.
- *
- * @return
- *   F_none on success.
- *   FL_fss_header_not if no header is found.
- *
- *   FL_fss_accepted_invalid (with warning bit) if header is technically invalid but can be identified.
- *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   FL_fss_header_not (with error bit) if the an error occurred prior to identifying a valid header.
- *
- *   Errors (with error bit) from: fl_conversion_string_to_hexidecimal_unsigned().
- *   Errors (with error bit) from: f_file_read_until().
- *   Errors (with error bit) from: f_file_seek().
- *
- * @see f_file_read_until()
- */
-#ifndef _di_fll_fss_identify_file_
-  extern f_status_t fll_fss_identify_file(f_file_t *file, f_fss_header_t *header);
-#endif // _di_fll_fss_identify_file_
 
 /**
  * Perform simple search through all objects against the given set, saving all values when matched.

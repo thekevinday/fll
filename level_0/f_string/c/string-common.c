@@ -5,21 +5,9 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_string_eol_s_
-  const f_string_t f_string_eol_s = f_string_eol;
-#endif // _di_f_string_eol_s_
-
 #ifndef _di_f_string_empty_s_
   const f_string_t f_string_empty_s = "";
 #endif // _di_f_string_empty_s_
-
-#ifndef _di_f_string_placeholder_s_
-  const f_string_t f_string_placeholder_s = f_string_placeholder;
-#endif // _di_f_string_placeholder_s_
-
-#ifndef _di_f_string_space_s_
-  const f_string_t f_string_space_s = f_string_space;
-#endif // _di_f_string_space_s_
 
 #ifndef _di_string_format_s_
   const f_string_t f_string_format_string_s = f_string_format_string;
@@ -105,16 +93,72 @@ extern "C" {
   const f_string_t f_string_ascii_Y_s = f_string_ascii_Y;
   const f_string_t f_string_ascii_Z_s = f_string_ascii_Z;
 
+  const f_string_t f_string_ascii_ampersand_s = f_string_ascii_ampersand;
+  const f_string_t f_string_ascii_asterisk_s = f_string_ascii_asterisk;
+  const f_string_t f_string_ascii_brace_close_s = f_string_ascii_brace_close;
+  const f_string_t f_string_ascii_brace_open_s = f_string_ascii_brace_open;
+  const f_string_t f_string_ascii_bracket_close_s = f_string_ascii_bracket_close;
+  const f_string_t f_string_ascii_bracket_open_s = f_string_ascii_bracket_open;
+  const f_string_t f_string_ascii_caret_s = f_string_ascii_caret;
   const f_string_t f_string_ascii_comma_s = f_string_ascii_comma;
   const f_string_t f_string_ascii_colon_s = f_string_ascii_colon;
   const f_string_t f_string_ascii_colon_semi_s = f_string_ascii_colon_semi;
+  const f_string_t f_string_ascii_dollar_s = f_string_ascii_dollar;
   const f_string_t f_string_ascii_equal_s = f_string_ascii_equal;
+  const f_string_t f_string_ascii_exclamation_s = f_string_ascii_exclamation;
+  const f_string_t f_string_ascii_grave_s = f_string_ascii_grave;
+  const f_string_t f_string_ascii_mark_question_s = f_string_ascii_mark_question;
   const f_string_t f_string_ascii_minus_s = f_string_ascii_minus;
+  const f_string_t f_string_ascii_parenthesis_open_s = f_string_ascii_parenthesis_open;
+  const f_string_t f_string_ascii_parenthesis_close_s = f_string_ascii_parenthesis_close;
+  const f_string_t f_string_ascii_percent_s = f_string_ascii_percent;
   const f_string_t f_string_ascii_period_s = f_string_ascii_period;
+  const f_string_t f_string_ascii_pipe_s = f_string_ascii_pipe;
   const f_string_t f_string_ascii_plus_s = f_string_ascii_plus;
+  const f_string_t f_string_ascii_pound_s = f_string_ascii_pound;
+  const f_string_t f_string_ascii_quote_double_s = f_string_ascii_quote_double;
+  const f_string_t f_string_ascii_quote_single_s = f_string_ascii_quote_single;
+  const f_string_t f_string_ascii_sign_at_s = f_string_ascii_sign_at;
+  const f_string_t f_string_ascii_sign_greater_than_s = f_string_ascii_sign_greater_than;
+  const f_string_t f_string_ascii_sign_less_than_s = f_string_ascii_sign_less_than;
   const f_string_t f_string_ascii_slash_forward_s = f_string_ascii_slash_forward;
   const f_string_t f_string_ascii_slash_backward_s = f_string_ascii_slash_backward;
   const f_string_t f_string_ascii_tilde_s = f_string_ascii_tilde;
+  const f_string_t f_string_ascii_underscore_s = f_string_ascii_underscore;
+
+  const f_string_t f_string_ascii_acknowledge_s = f_string_ascii_acknowledge;
+  const f_string_t f_string_ascii_acknowledge_negative_s = f_string_ascii_acknowledge_negative;
+  const f_string_t f_string_ascii_bell_s = f_string_ascii_bell;
+  const f_string_t f_string_ascii_cancel_s = f_string_ascii_cancel;
+  const f_string_t f_string_ascii_data_link_escape_s = f_string_ascii_data_link_escape;
+  const f_string_t f_string_ascii_device_control_one_s = f_string_ascii_device_control_one;
+  const f_string_t f_string_ascii_device_control_two_s = f_string_ascii_device_control_two;
+  const f_string_t f_string_ascii_device_control_three_s = f_string_ascii_device_control_three;
+  const f_string_t f_string_ascii_device_control_four_s = f_string_ascii_device_control_four;
+  const f_string_t f_string_ascii_enquiry_s = f_string_ascii_enquiry;
+  const f_string_t f_string_ascii_escape_s = f_string_ascii_escape;
+  const f_string_t f_string_ascii_feed_form_s = f_string_ascii_feed_form;
+  const f_string_t f_string_ascii_feed_line_s = f_string_ascii_feed_line;
+  const f_string_t f_string_ascii_header_start_s = f_string_ascii_header_start;
+  const f_string_t f_string_ascii_medium_stop_s = f_string_ascii_medium_stop;
+  const f_string_t f_string_ascii_null_s = f_string_ascii_null;
+  const f_string_t f_string_ascii_return_carriage_s = f_string_ascii_return_carriage;
+  const f_string_t f_string_ascii_separator_file_s = f_string_ascii_separator_file;
+  const f_string_t f_string_ascii_separator_group_s = f_string_ascii_separator_group;
+  const f_string_t f_string_ascii_separator_record_s = f_string_ascii_separator_record;
+  const f_string_t f_string_ascii_separator_unit_s = f_string_ascii_separator_unit;
+  const f_string_t f_string_ascii_shift_in_s = f_string_ascii_shift_in;
+  const f_string_t f_string_ascii_shift_out_s = f_string_ascii_shift_out;
+  const f_string_t f_string_ascii_space_s = f_string_ascii_space;
+  const f_string_t f_string_ascii_space_back_s = f_string_ascii_space_back;
+  const f_string_t f_string_ascii_substitute_s = f_string_ascii_substitute;
+  const f_string_t f_string_ascii_synchronous_idle_s = f_string_ascii_synchronous_idle;
+  const f_string_t f_string_ascii_tab_horizontal_s = f_string_ascii_tab_horizontal;
+  const f_string_t f_string_ascii_tab_vertical_s = f_string_ascii_tab_vertical;
+  const f_string_t f_string_ascii_text_start_s = f_string_ascii_text_start;
+  const f_string_t f_string_ascii_text_stop_s = f_string_ascii_text_stop;
+  const f_string_t f_string_ascii_transmission_stop_s = f_string_ascii_transmission_stop;
+  const f_string_t f_string_ascii_transmission_block_end_s = f_string_ascii_transmission_block_end;
 #endif // _di_string_ascii_s_
 
 #ifdef __cplusplus

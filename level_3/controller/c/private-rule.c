@@ -401,7 +401,7 @@ extern "C" {
 
             for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
 
-              status = f_string_dynamic_partial_mash_nulless(f_string_space_s, f_string_space_length, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
+              status = f_string_dynamic_partial_mash_nulless(f_string_space_s, f_string_space_s_length, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
               if (F_status_is_error(status)) break;
             } // for
 

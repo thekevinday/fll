@@ -5,21 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_fss_types_t_
-  const f_string_t f_fss_brace_left_s = "{";
-  const f_string_t f_fss_brace_right_s = "}";
-  const f_string_t f_fss_colon_s = ":";
-  const f_string_t f_fss_dash_s = "-";
-  const f_string_t f_fss_f_s = "f";
-  const f_string_t f_fss_pound_s = "#";
-  const f_string_t f_fss_quote_single_s = "'";
-  const f_string_t f_fss_quote_double_s = "\"";
-  const f_string_t f_fss_s_s = "s";
-  const f_string_t f_fss_slash_s = "\\";
-  const f_string_t f_fss_space_s = " ";
-  const f_string_t f_fss_underscore_s = "_";
-#endif // _di_f_fss_types_t_
-
 #ifndef _di_fl_fss_apply_delimit_
   f_status_t fl_fss_apply_delimit(const f_fss_delimits_t delimits, f_string_static_t *buffer) {
     #ifndef _di_level_0_parameter_checking_

@@ -6,45 +6,179 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_identify_
-  f_status_t fll_fss_identify(const f_string_static_t buffer, f_fss_header_t *header) {
+  f_status_t fll_fss_identify(const f_string_t buffer, f_string_range_t *range, f_fll_ids_t *ids) {
     #ifndef _di_level_2_parameter_checking_
-      if (!header) return F_status_set_error(F_parameter);
-      if (!buffer.used) return F_status_set_error(F_parameter);
+      if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    return private_fll_fss_identify(buffer, header);
-  }
-#endif // _di_fll_fss_identify_
-
-#ifndef _di_fll_fss_identify_file_
-  f_status_t fll_fss_identify_file(f_file_t *file, f_fss_header_t *header) {
-    #ifndef _di_level_2_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
-      if (!header) return F_status_set_error(F_parameter);
-      if (!file->id) return F_status_set_error(F_file_closed);
-      if (file->id < 0) return F_status_set_error(F_file);
-    #endif // _di_level_2_parameter_checking_
-
-    {
-      f_array_length_t seeked = 0;
-
-      if (F_status_is_error(f_file_seek(file->id, SEEK_SET, 0, &seeked))) {
-        return F_status_set_error(F_file_seek);
-      }
+    // skip past all NULLs.
+    for (; range->start <= range->stop; ++range->start) {
+      if (buffer[range->start]) break;
     }
 
-    f_status_t status = F_none;
-    f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
+    if (range->start > range->stop) {
+      return F_data_not;
+    }
 
-    macro_f_string_dynamic_t_resize(status, buffer, f_fss_max_header_length + 1);
-    if (F_status_is_error(status)) return status;
+    // The first character must be a '#'.
+    if (buffer[range->start] != f_fss_pound_s[0]) {
 
-    status = f_file_read_until(*file, f_fss_max_header_length + 1, &buffer);
-    if (F_status_is_error(status)) return status;
+      // Increment until stop, while taking into consideration UTF-8 character widths.
+      for (; range->start <= range->stop; ) {
 
-    return private_fll_fss_identify(buffer, header);
+        if (buffer[range->start] == f_string_eol_s[0]) {
+          ++range->start;
+
+          break;
+        }
+
+        range->start += macro_f_utf_byte_width(buffer[range->start]);
+      } // for
+
+      if (ids) {
+        ids->used = 0;
+      }
+
+      return F_found_not;
+    }
+
+    // skip past all NULLs after the '#'.
+    for (++range->start; range->start <= range->stop; ++range->start) {
+      if (buffer[range->start]) break;
+    }
+
+    if (range->start > range->stop) {
+      if (ids) {
+        ids->used = 0;
+      }
+
+      return F_found_not;
+    }
+
+    // The minimum requirement for a valid FLL/FSS Identifier for the entire line is 7 characters after the '#' ("# X-FFFF").
+    if (range->stop - range->start < 6) {
+
+      // Increment until stop, while taking into consideration UTF-8 character widths.
+      for (; range->start <= range->stop; ) {
+
+        if (buffer[range->start] == f_string_eol_s[0]) {
+          ++range->start;
+
+          break;
+        }
+
+        range->start += macro_f_utf_byte_width(buffer[range->start]);
+      } // for
+
+      if (ids) {
+        ids->used = 0;
+      }
+
+      return F_found_not;
+    }
+
+    f_status_t status = f_utf_is_whitespace(buffer + range->start, (range->stop - range->start) + 1);
+
+    if (F_status_is_error(status)) {
+      if (F_status_set_fine(status) == F_maybe) {
+        return F_status_set_error(F_complete_not_utf);
+      }
+
+      return status;
+    }
+
+    if (status == F_false) {
+
+      // Increment until stop, while taking into consideration UTF-8 character widths.
+      for (; range->start <= range->stop; ) {
+
+        if (buffer[range->start] == f_string_eol_s[0]) {
+          ++range->start;
+
+          break;
+        }
+
+        range->start += macro_f_utf_byte_width(buffer[range->start]);
+      } // for
+
+      return F_found_not;
+    }
+
+    if (buffer[range->start] == f_string_eol_s[0]) {
+      ++range->start;
+
+      if (ids) {
+        ids->used = 0;
+      }
+
+      return F_found_not;
+    }
+
+    // in order to determine if a valid FLL Identifier represents a valid FSS identifier, the data must be saved.
+    f_fll_id_t id = f_fll_id_t_initialize;
+    bool found_fss = F_false;
+
+    do {
+
+      status = fl_string_fll_identify(buffer, range, ids ? &ids->array[ids->used] : &id);
+
+      if (F_status_is_error(status) || status == F_found_not) {
+        if (ids) {
+          ids->used = 0;
+        }
+
+        return status;
+      }
+
+      if (!found_fss) {
+        if (ids) {
+          if (ids->array[ids->used].used == 3 && ids->array[ids->used].name[0] == f_fss_f_s[0] && ids->array[ids->used].name[0] == f_fss_s_s[0] && ids->array[ids->used].name[0] == f_fss_s_s[0]) {
+            found_fss = F_true;
+          }
+        }
+        else {
+          if (id.used == 3 && id.name[0] == f_fss_f_s[0] && id.name[0] == f_fss_s_s[0] && id.name[0] == f_fss_s_s[0]) {
+            found_fss = F_true;
+          }
+        }
+      }
+
+      if (ids) {
+        status = f_type_fll_ids_increase(f_fss_default_allocation_step_small, ids);
+
+        if (F_status_is_error(status)) {
+          if (ids) {
+            ids->used = 0;
+          }
+
+          return status;
+        }
+
+        ++ids->used;
+      }
+
+    } while (range->start <= range->stop);
+
+    if (ids) {
+      if (ids->used) {
+        if (found_fss) {
+          return F_found;
+        }
+
+        return F_maybe;
+      }
+    }
+    else if (id.used) {
+      if (found_fss) {
+        return F_found;
+      }
+
+      return F_maybe;
+    }
+
+    return F_found_not;
   }
-#endif // _di_fll_fss_identify_file_
+#endif // _di_fll_fss_identify_
 
 #ifndef _di_fll_fss_snatch_
   f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
@@ -331,11 +465,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_map_multis_increase(f_memory_default_allocation_small, values[j]);
+        status = f_string_map_multis_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -403,11 +537,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_maps_increase(f_memory_default_allocation_small, values[j]);
+        status = f_string_maps_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 
@@ -505,11 +639,11 @@ extern "C" {
           map_multi = &values[j]->array[k];
         }
         else {
-          status = f_string_map_multis_increase(f_memory_default_allocation_small, values[j]);
+          status = f_string_map_multis_increase(f_fss_default_allocation_step_small, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -530,7 +664,7 @@ extern "C" {
           if (contents.array[i].used == 1) continue;
         }
 
-        status = f_string_dynamics_increase(f_memory_default_allocation_small, &map_multi->value);
+        status = f_string_dynamics_increase(f_fss_default_allocation_step_small, &map_multi->value);
         if (F_status_is_error(status)) return status;
 
         for (k = 1; k < contents.array[i].used; k++) {
@@ -617,11 +751,11 @@ extern "C" {
           map = &values[j]->array[k];
         }
         else {
-          status = f_string_maps_increase(f_memory_default_allocation_small, values[j]);
+          status = f_string_maps_increase(f_fss_default_allocation_step_small, values[j]);
           if (F_status_is_error(status)) return status;
 
           if (indexs) {
-            macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
+            macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
             if (F_status_is_error(status)) return status;
           }
 
@@ -740,11 +874,11 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        status = f_string_dynamics_increase(f_memory_default_allocation_small, values[j]);
+        status = f_string_dynamics_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
 
         if (indexs) {
-          macro_f_array_lengths_t_increase(status, f_memory_default_allocation_small, (*indexs[j]));
+          macro_f_array_lengths_t_increase(status, f_fss_default_allocation_step_small, (*indexs[j]));
           if (F_status_is_error(status)) return status;
         }
 

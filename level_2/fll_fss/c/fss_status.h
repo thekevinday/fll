@@ -39,14 +39,8 @@ extern "C" {
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
-    #define fll_fss_status_string_header_not "FL_fss_header_not"
-    #define fll_fss_status_string_header_not_length 17
-
     #define fll_fss_status_string_accepted_invalid "FL_fss_accepted_invalid"
     #define fll_fss_status_string_accepted_invalid_length 23
-
-    #define fll_fss_status_string_header_not_eos "FL_fss_header_not_eos"
-    #define fll_fss_status_string_header_not_eos_length 21
 
     #define fll_fss_status_string_accepted_invalid_eos "FL_fss_accepted_invalid_eos"
     #define fll_fss_status_string_accepted_invalid_eos_length 27

@@ -31,8 +31,6 @@ enum {
   #ifndef _di_FL_fss_status_warning_
     FL_fss_accepted_invalid,
     FL_fss_accepted_invalid_eos,
-    FL_fss_header_not,
-    FL_fss_header_not_eos,
   #endif // _di_FL_fss_status_warning_
 
   #ifndef _di_FL_fss_status_success_

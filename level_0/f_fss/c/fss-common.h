@@ -20,18 +20,18 @@ extern "C" {
  * FSS-specific types.
  */
 #ifndef _di_f_fss_types_t_
-  extern const f_string_t f_fss_brace_left_s;
-  extern const f_string_t f_fss_brace_right_s;
-  extern const f_string_t f_fss_colon_s;
-  extern const f_string_t f_fss_dash_s;
-  extern const f_string_t f_fss_f_s;
-  extern const f_string_t f_fss_pound_s;
-  extern const f_string_t f_fss_quote_single_s;
-  extern const f_string_t f_fss_quote_double_s;
-  extern const f_string_t f_fss_s_s;
-  extern const f_string_t f_fss_slash_s;
-  extern const f_string_t f_fss_space_s;
-  extern const f_string_t f_fss_underscore_s;
+  #define f_fss_brace_close_s  f_string_ascii_brace_close_s
+  #define f_fss_brace_open_s   f_string_ascii_brace_open_s
+  #define f_fss_colon_s        f_string_ascii_colon_s
+  #define f_fss_dash_s         f_string_ascii_minus_s
+  #define f_fss_f_s            f_string_ascii_f_s
+  #define f_fss_pound_s        f_string_ascii_pound_s
+  #define f_fss_quote_double_s f_string_ascii_quote_double_s
+  #define f_fss_quote_single_s f_string_ascii_quote_single_s
+  #define f_fss_s_s            f_string_ascii_s_s
+  #define f_fss_slash_s        f_string_ascii_slash_backward_s
+  #define f_fss_space_s        f_string_ascii_space_s
+  #define f_fss_underscore_s   f_string_ascii_underscore_s
 
   #define f_fss_comment                 f_fss_pound_s[0]
   #define f_fss_eol                     f_string_eol_s[0]
@@ -45,13 +45,13 @@ extern "C" {
   #define f_fss_basic_list_open         f_fss_colon_s[0]
   #define f_fss_basic_list_open_end     f_string_eol_s[0]
   #define f_fss_basic_list_close        f_string_eol_s[0]
-  #define f_fss_extended_list_open      f_fss_brace_left_s[0]
+  #define f_fss_extended_list_open      f_fss_brace_open_s[0]
   #define f_fss_extended_list_open_end  f_string_eol_s[0]
-  #define f_fss_extended_list_close     f_fss_brace_right_s[0]
+  #define f_fss_extended_list_close     f_fss_brace_close_s[0]
   #define f_fss_extended_list_close_end f_string_eol_s[0]
-  #define f_fss_embedded_list_open      f_fss_brace_left_s[0]
+  #define f_fss_embedded_list_open      f_fss_brace_open_s[0]
   #define f_fss_embedded_list_open_end  f_string_eol_s[0]
-  #define f_fss_embedded_list_close     f_fss_brace_right_s[0]
+  #define f_fss_embedded_list_close     f_fss_brace_close_s[0]
   #define f_fss_embedded_list_close_end f_string_eol_s[0]
   #define f_fss_type_header_open        f_fss_pound_s[0]
   #define f_fss_type_header_part1       f_fss_space_s[0]
@@ -60,15 +60,13 @@ extern "C" {
   #define f_fss_type_header_part4       f_fss_s_s[0]
   #define f_fss_type_header_part5       f_fss_dash_s[0]
   #define f_fss_type_header_close       f_string_eol_s[0]
-
-  typedef uint64_t f_fss_id_t;
 #endif // _di_f_fss_types_t_
 
 /**
  * FSS-specific delimiters.
  */
 #ifndef _di_f_fss_delimiters_
-  #define f_fss_delimit_placeholder  f_string_placeholder[0]
+  #define f_fss_delimit_placeholder  f_string_placeholder_s[0]
   #define f_fss_delimit_quote_single f_fss_quote_single_s[0]
   #define f_fss_delimit_quote_double f_fss_quote_double_s[0]
   #define f_fss_delimit_slash        f_fss_slash_s[0]
@@ -125,76 +123,15 @@ extern "C" {
 #endif // _di_f_fss_complete_
 
 /**
- * Max size of a FSS header.
- *
- * The standard FSS character header is: "# fss-0000\n\0", which is 10 characters + newline + EOS = 12.
- *
- * The UTF-8 BOM is not supported because it is not an actual thing (only a suggestion according to rfc3629).
- * The UTF-8 BOM sequence is actually a different character called "zero-width non-breaking space".
- * Because it already has a use, this project considers the existence of UTF-8 BOM bad practice in all cases.
- * After all, if your file begins with a "zero-width non breaking space", you may want to actually use a space and not a "BOM".
- */
-#ifndef _di_f_fss_max_header_length_
-  #define f_fss_max_header_length 12
-#endif // _di_f_fss_max_header_length_
-
-/**
  * Default allocation steps.
  *
  * Recommended to be set to at least 4 to be UTF-8 friendlier.
  */
 #ifndef _di_f_fss_default_allocation_step_
   #define f_fss_default_allocation_step f_memory_default_allocation_small
+  #define f_fss_default_allocation_step_small f_memory_default_allocation_small
+  #define f_fss_default_allocation_step_large f_memory_default_allocation_large
 #endif // _di_f_fss_default_allocation_step_
-
-/**
- * Stores information about a particular fss file, otherwise known as its header.
- *
- * @todo change this to use a range instead if a length to support multiple sub-headers.
- *
- * type:   The kind of fss file is this.
- * length: Total length of the header.
- */
-#ifndef _di_f_fss_header_t_
-  typedef struct {
-    f_fss_id_t type;
-
-    f_array_length_t length;
-  } f_fss_header_t;
-
-  #define f_fss_header_initialize { 0, 0 }
-#endif // _di_f_fss_header_t_
-
-/**
- * This holds an array of fss_headers.
- *
- * array: The array of headers.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_fss_headers_t_
-  typedef struct {
-    f_fss_header_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_fss_headers_t;
-
-  #define f_fss_headers_t_initialize { 0, 0, 0 }
-
-  #define macro_f_fss_headers_t_clear(headers) macro_f_memory_structure_clear(headers)
-
-  #define macro_f_fss_headers_t_resize(status, headers, length) macro_f_memory_structure_resize(status, headers, f_fss_header_t, length)
-  #define macro_f_fss_headers_t_adjust(status, headers, length) macro_f_memory_structure_adjust(status, headers, f_fss_header_t, length)
-
-  #define macro_f_fss_headers_t_delete_simple(headers)  macro_f_memory_structure_delete_simple(headers, f_fss_header_t)
-  #define macro_f_fss_headers_t_destroy_simple(headers) macro_f_memory_structure_destroy_simple(headers, f_fss_header_t)
-
-  #define macro_f_fss_headers_t_increase(status, step, headers)      macro_f_memory_structure_increase(status, step, headers, f_fss_header_t)
-  #define macro_f_fss_headers_t_increase_by(status, headers, amount) macro_f_memory_structure_increase_by(status, headers, f_fss_header_t, amount)
-  #define macro_f_fss_headers_t_decrease_by(status, headers, amount) macro_f_memory_structure_decrease_by(status, headers, f_fss_header_t, amount)
-  #define macro_f_fss_headers_t_decimate_by(status, headers, amount) macro_f_memory_structure_decimate_by(status, headers, f_fss_header_t, amount)
-#endif // _di_f_fss_headers_t_
 
 /**
  * This is a range that represents an object.
@@ -286,6 +223,292 @@ extern "C" {
   #define macro_f_fss_contents_t_decrease_by(status, contents, amount) macro_f_string_rangess_t_decrease_by(status, contents, amount)
   #define macro_f_fss_contents_t_decimate_by(status, contents, amount) macro_f_string_rangess_t_decimate_by(status, contents, amount)
 #endif // _di_f_fss_contents_t_
+
+/**
+ * Resize the string quantitys array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_adjust_
+  extern f_status_t f_string_quantitys_adjust(const f_array_length_t length, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_adjust_
+
+/**
+ * Append the source quantitys onto the destination.
+ *
+ * @param source
+ *   The source quantitys to append.
+ * @param destination
+ *   The destination quantitys the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is nothing to append (size == 0).
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_append_
+  extern f_status_t f_string_quantitys_append(const f_string_quantitys_t source, f_string_quantitys_t *destination);
+#endif // _di_f_string_quantitys_append_
+
+/**
+ * Resize the string quantitys array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_decimate_by_
+  extern f_status_t f_string_quantitys_decimate_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decimate_by_
+
+/**
+ * Resize the string quantitys array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_decrease_by_
+  extern f_status_t f_string_quantitys_decrease_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_decrease_by_
+
+/**
+ * Increase the size of the string quantitys array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_increase_
+  extern f_status_t f_string_quantitys_increase(const uint16_t step, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_increase_
+
+/**
+ * Resize the string quantitys array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param quantitys
+ *   The string quantitys array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_increase_by_
+  extern f_status_t f_string_quantitys_increase_by(const f_array_length_t amount, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_increase_by_
+
+/**
+ * Resize the string quantitys array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantitys
+ *   The string quantitys array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantitys_resize_
+  extern f_status_t f_string_quantitys_resize(const f_array_length_t length, f_string_quantitys_t *quantitys);
+#endif // _di_f_string_quantitys_resize_
+
+/**
+ * Resize the string quantityss array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantityss
+ *   The string quantityss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_adjust_
+  extern f_status_t f_string_quantityss_adjust(const f_array_length_t length, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_adjust_
+
+/**
+ * Resize the string quantityss array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decimate the size by.
+ * @param quantityss
+ *   The string quantityss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_decimate_by_
+  extern f_status_t f_string_quantityss_decimate_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_decimate_by_
+
+/**
+ * Resize the string quantityss array to a smaller size.
+ *
+ * This will resize making the array smaller based on (size - given length).
+ * If the given length is too small, then the resize will fail.
+ * This will not shrink the size to less than 0.
+ *
+ * @param amount
+ *   A positive number representing how much to decrease the size by.
+ * @param quantityss
+ *   The string quantityss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_decrease_by_
+  extern f_status_t f_string_quantityss_decrease_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_decrease_by_
+
+/**
+ * Increase the size of the string quantityss array, but only if necessary.
+ *
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param step
+ *   The allocation step to use.
+ *   Must be greater than 0.
+ * @param quantityss
+ *   The string quantityss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_increase_
+  extern f_status_t f_string_quantityss_increase(const uint16_t step, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_increase_
+
+/**
+ * Resize the string quantityss array to a larger size.
+ *
+ * This will resize making the string larger based on the given length.
+ * If the given length is too large for the buffer, then attempt to set max buffer size (f_array_length_t_size).
+ * If already set to the maximum buffer size, then the resize will fail.
+ *
+ * @param amount
+ *   A positive number representing how much to increase the size by.
+ * @param quantityss
+ *   The string quantityss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
+ *
+ *   F_array_too_large (with error bit) if the new array length is too large.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_increase_by_
+  extern f_status_t f_string_quantityss_increase_by(const f_array_length_t amount, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_increase_by_
+
+/**
+ * Resize the string quantityss array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param quantityss
+ *   The string quantityss array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ */
+#ifndef _di_f_string_quantityss_resize_
+  extern f_status_t f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t *quantityss);
+#endif // _di_f_string_quantityss_resize_
 
 #ifdef __cplusplus
 } // extern "C"

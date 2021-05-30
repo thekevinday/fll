@@ -109,7 +109,7 @@ extern "C" {
     }
 
     if (!object || !content) {
-      status = f_string_append(f_string_eol, 1, buffer);
+      status = f_string_append(f_string_eol_s, 1, buffer);
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);

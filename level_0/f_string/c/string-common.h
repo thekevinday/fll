@@ -69,10 +69,8 @@ extern "C" {
  * FLL forbids '\r' and '\r\n' as end of line characters, \r will be silently ignored.
  */
 #ifndef _di_f_string_eol_s_
-  #define f_string_eol "\n"
-  #define f_string_eol_length 1
-
-  const extern f_string_t f_string_eol_s;
+  #define f_string_eol_s f_string_ascii_feed_line_s
+  #define f_string_eol_s_length 1
 #endif // _di_f_string_eol_s_
 
 #ifndef _di_f_string_empty_s_
@@ -80,17 +78,13 @@ extern "C" {
 #endif // _di_f_string_empty_s_
 
 #ifndef _di_f_string_placeholder_s_
-  #define f_string_placeholder ""
-  #define f_string_placeholder_length 1
-
-  const extern f_string_t f_string_placeholder_s;
+  #define f_string_placeholder_s f_string_empty_s
+  #define f_string_placeholder_s_length 1
 #endif // _di_f_string_placeholder_s_
 
 #ifndef _di_f_string_space_s_
-  #define f_string_space " "
-  #define f_string_space_length 1
-
-  const extern f_string_t f_string_space_s;
+  #define f_string_space_s f_string_ascii_space_s
+  #define f_string_space_s_length 1
 #endif // _di_f_string_space_s_
 
 #ifndef _di_string_format_s_
@@ -140,7 +134,10 @@ extern "C" {
  * Instead, this is for very common uses such as converting a hex-digit string into a number.
  * These are standardized not be the language, per-say, but instead by the specific standard (such as hexidecimal).
  *
- * @todo provide most (printable) ASCII-characters.
+ * The NULL ASCII string can be represented by the integer 0; however, given that these are all NULL-terminated strings the NULL character is represented with a NULL termination as well.
+ * The NULL ASCII string therefore has two NULLs, first the NULL represents the NULL and the second represents the NULL termination.
+ *
+ * @todo provide extended ASCII-characters.
  */
 #ifndef _di_string_ascii_s_
   #define f_string_ascii_0 "0"
@@ -208,16 +205,72 @@ extern "C" {
   #define f_string_ascii_Y "Y"
   #define f_string_ascii_Z "Z"
 
-  #define f_string_ascii_comma          ","
-  #define f_string_ascii_colon          ":"
-  #define f_string_ascii_colon_semi     ";"
-  #define f_string_ascii_equal          "="
-  #define f_string_ascii_minus          "-"
-  #define f_string_ascii_period         "."
-  #define f_string_ascii_plus           "+"
-  #define f_string_ascii_slash_forward  "/"
-  #define f_string_ascii_slash_backward "\\"
-  #define f_string_ascii_tilde          "~"
+  #define f_string_ascii_ampersand         "&"
+  #define f_string_ascii_asterisk          "*"
+  #define f_string_ascii_brace_close       "}"
+  #define f_string_ascii_brace_open        "{"
+  #define f_string_ascii_bracket_close     "]"
+  #define f_string_ascii_bracket_open      "["
+  #define f_string_ascii_caret             "^"
+  #define f_string_ascii_comma             ","
+  #define f_string_ascii_colon             ":"
+  #define f_string_ascii_colon_semi        ";"
+  #define f_string_ascii_dollar            "$"
+  #define f_string_ascii_equal             "="
+  #define f_string_ascii_exclamation       "!"
+  #define f_string_ascii_grave             "`"
+  #define f_string_ascii_mark_question     "?"
+  #define f_string_ascii_minus             "-"
+  #define f_string_ascii_parenthesis_open  "("
+  #define f_string_ascii_parenthesis_close ")"
+  #define f_string_ascii_percent           "%"
+  #define f_string_ascii_period            "."
+  #define f_string_ascii_pipe              "|"
+  #define f_string_ascii_plus              "+"
+  #define f_string_ascii_pound             "#"
+  #define f_string_ascii_quote_double      "\""
+  #define f_string_ascii_quote_single      "'"
+  #define f_string_ascii_sign_at           "@"
+  #define f_string_ascii_sign_greater_than ">"
+  #define f_string_ascii_sign_less_than    "<"
+  #define f_string_ascii_slash_forward     "/"
+  #define f_string_ascii_slash_backward    "\\"
+  #define f_string_ascii_tilde             "~"
+  #define f_string_ascii_underscore        "_"
+
+  #define f_string_ascii_acknowledge            ""
+  #define f_string_ascii_acknowledge_negative   ""
+  #define f_string_ascii_bell                   ""
+  #define f_string_ascii_cancel                 ""
+  #define f_string_ascii_data_link_escape       ""
+  #define f_string_ascii_device_control_one     ""
+  #define f_string_ascii_device_control_two     ""
+  #define f_string_ascii_device_control_three   ""
+  #define f_string_ascii_device_control_four    ""
+  #define f_string_ascii_enquiry                ""
+  #define f_string_ascii_escape                 ""
+  #define f_string_ascii_feed_form              "\f"
+  #define f_string_ascii_feed_line              "\n"
+  #define f_string_ascii_header_start           ""
+  #define f_string_ascii_medium_stop            ""
+  #define f_string_ascii_null                   "\0"
+  #define f_string_ascii_return_carriage        "\r"
+  #define f_string_ascii_separator_file         ""
+  #define f_string_ascii_separator_group        ""
+  #define f_string_ascii_separator_record       ""
+  #define f_string_ascii_separator_unit         ""
+  #define f_string_ascii_shift_in               ""
+  #define f_string_ascii_shift_out              ""
+  #define f_string_ascii_space                  " "
+  #define f_string_ascii_space_back             ""
+  #define f_string_ascii_substitute             ""
+  #define f_string_ascii_synchronous_idle       ""
+  #define f_string_ascii_tab_horizontal         "\t"
+  #define f_string_ascii_tab_vertical           "\v"
+  #define f_string_ascii_text_start             ""
+  #define f_string_ascii_text_stop              ""
+  #define f_string_ascii_transmission_stop      ""
+  #define f_string_ascii_transmission_block_end ""
 
   extern const f_string_t f_string_ascii_0_s;
   extern const f_string_t f_string_ascii_1_s;
@@ -284,16 +337,72 @@ extern "C" {
   extern const f_string_t f_string_ascii_Y_s;
   extern const f_string_t f_string_ascii_Z_s;
 
+  extern const f_string_t f_string_ascii_ampersand_s;
+  extern const f_string_t f_string_ascii_asterisk_s;
+  extern const f_string_t f_string_ascii_brace_close_s;
+  extern const f_string_t f_string_ascii_brace_open_s;
+  extern const f_string_t f_string_ascii_bracket_close_s;
+  extern const f_string_t f_string_ascii_bracket_open_s;
+  extern const f_string_t f_string_ascii_caret_s;
   extern const f_string_t f_string_ascii_comma_s;
   extern const f_string_t f_string_ascii_colon_s;
   extern const f_string_t f_string_ascii_colon_semi_s;
+  extern const f_string_t f_string_ascii_dollar_s;
   extern const f_string_t f_string_ascii_equal_s;
+  extern const f_string_t f_string_ascii_exclamation_s;
+  extern const f_string_t f_string_ascii_grave_s;
+  extern const f_string_t f_string_ascii_mark_question_s;
   extern const f_string_t f_string_ascii_minus_s;
+  extern const f_string_t f_string_ascii_parenthesis_open_s;
+  extern const f_string_t f_string_ascii_parenthesis_close_s;
+  extern const f_string_t f_string_ascii_percent_s;
   extern const f_string_t f_string_ascii_period_s;
+  extern const f_string_t f_string_ascii_pipe_s;
   extern const f_string_t f_string_ascii_plus_s;
+  extern const f_string_t f_string_ascii_pound_s;
+  extern const f_string_t f_string_ascii_quote_double_s;
+  extern const f_string_t f_string_ascii_quote_single_s;
+  extern const f_string_t f_string_ascii_sign_at_s;
+  extern const f_string_t f_string_ascii_sign_greater_than_s;
+  extern const f_string_t f_string_ascii_sign_less_than_s;
   extern const f_string_t f_string_ascii_slash_forward_s;
   extern const f_string_t f_string_ascii_slash_backward_s;
   extern const f_string_t f_string_ascii_tilde_s;
+  extern const f_string_t f_string_ascii_underscore_s;
+
+  extern const f_string_t f_string_ascii_acknowledge_s;
+  extern const f_string_t f_string_ascii_acknowledge_negative_s;
+  extern const f_string_t f_string_ascii_bell_s;
+  extern const f_string_t f_string_ascii_cancel_s;
+  extern const f_string_t f_string_ascii_data_link_escape_s;
+  extern const f_string_t f_string_ascii_device_control_one_s;
+  extern const f_string_t f_string_ascii_device_control_two_s;
+  extern const f_string_t f_string_ascii_device_control_three_s;
+  extern const f_string_t f_string_ascii_device_control_four_s;
+  extern const f_string_t f_string_ascii_enquiry_s;
+  extern const f_string_t f_string_ascii_escape_s;
+  extern const f_string_t f_string_ascii_feed_form_s;
+  extern const f_string_t f_string_ascii_feed_line_s;
+  extern const f_string_t f_string_ascii_header_start_s;
+  extern const f_string_t f_string_ascii_medium_stop_s;
+  extern const f_string_t f_string_ascii_null_s;
+  extern const f_string_t f_string_ascii_return_carriage_s;
+  extern const f_string_t f_string_ascii_separator_file_s;
+  extern const f_string_t f_string_ascii_separator_group_s;
+  extern const f_string_t f_string_ascii_separator_record_s;
+  extern const f_string_t f_string_ascii_separator_unit_s;
+  extern const f_string_t f_string_ascii_shift_in_s;
+  extern const f_string_t f_string_ascii_shift_out_s;
+  extern const f_string_t f_string_ascii_space_s;
+  extern const f_string_t f_string_ascii_space_back_s;
+  extern const f_string_t f_string_ascii_substitute_s;
+  extern const f_string_t f_string_ascii_synchronous_idle_s;
+  extern const f_string_t f_string_ascii_tab_horizontal_s;
+  extern const f_string_t f_string_ascii_tab_vertical_s;
+  extern const f_string_t f_string_ascii_text_start_s;
+  extern const f_string_t f_string_ascii_text_stop_s;
+  extern const f_string_t f_string_ascii_transmission_stop_s;
+  extern const f_string_t f_string_ascii_transmission_block_end_s;
 #endif // _di_string_ascii_s_
 
 #ifdef __cplusplus

@@ -43,20 +43,8 @@ extern "C" {
     #endif // _di_fll_fss_status_error_
 
     #ifndef _di_fll_fss_status_warning_
-      if (fl_string_compare(string, fll_fss_status_string_header_not, length, fll_fss_status_string_header_not_length) == F_equal_to) {
-        *code = FL_fss_header_not;
-
-        return F_none;
-      }
-
       if (fl_string_compare(string, fll_fss_status_string_accepted_invalid, length, fll_fss_status_string_accepted_invalid_length) == F_equal_to) {
         *code = FL_fss_accepted_invalid;
-
-        return F_none;
-      }
-
-      if (fl_string_compare(string, fll_fss_status_string_header_not_eos, length, fll_fss_status_string_header_not_eos_length) == F_equal_to) {
-        *code = FL_fss_header_not_eos;
 
         return F_none;
       }
@@ -143,14 +131,8 @@ extern "C" {
       #endif // _di_fll_fss_status_error_
 
       #ifndef _di_fll_fss_status_warning_
-        case FL_fss_header_not:
-          *string = fll_fss_status_string_header_not;
-          break;
         case FL_fss_accepted_invalid:
           *string = fll_fss_status_string_accepted_invalid;
-          break;
-        case FL_fss_header_not_eos:
-          *string = fll_fss_status_string_header_not_eos;
           break;
         case FL_fss_accepted_invalid_eos:
           *string = fll_fss_status_string_accepted_invalid_eos;

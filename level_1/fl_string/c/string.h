@@ -924,24 +924,34 @@ extern "C" {
  * This will always change the FLL Identifier used and type codes, if a FLL Identifier is provided.
  *
  * Whitespace may be before and after the FLL Identifier and will be ignored.
+ * NULLs will be ignored.
  * Anything else will result in treating the character as a possible FLL Identifier.
  *
  * A valid FLL Identifier must terminate on either whitespace, EOL, or the stop point (length).
  *
- * The id.name may not be NULL terminated and this function will skip over NULLs in the buffer when processing.
+ * The id.name might not be NULL terminated.
+ * An id.name using all 64-bytes will not be NULL terminated.
+ *
+ * If a newline ("\n") is encountered, range->start will be set to 1 byte after the newline.
  *
  * @param buffer
  *   The string to process.
- * @param length
- *   The number of bytes within the buffer to process.
- *   Must be greater than 0.
+ * @param range
+ *   A range within the buffer representing the start and stop locations.
+ *   The caller must ensure that the stop point does not exceed the buffer size.
+ *
+ *   The range->start will be updated by this function.
+ *   On error, the range->start may represent the last position looked at.
+ *   On success, the range->start should be after the last valid position (for example for "fss-1234", the ast valid position would be the byte after the "4").
+ *   Be aware that if a UTF-8 character exists at the end of the string but extends beyond the range stop, the stop position may be after the UTF-8 byte and not 1 byte after the stop point.
  * @param id
  *   (optional) The FLL Identifier found.
  *   Set to NULL to not use.
  *
  * @return
- *   F_false if the buffer does not represent a valid FLL Identifier.
- *   F_true if the buffer does represent a valid FLL Identifier.
+ *   F_data_not if length is 0.
+ *   F_found if the buffer does represent a valid FLL Identifier.
+ *   F_found_not if the buffer does not represent a valid FLL Identifier.
  *
  *   F_complete_not_utf (with error bit) if a character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if a character could be a whitespace but width is not long enough. (This is only returned for an otherwise valid FLL Identifier.)
@@ -957,7 +967,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #ifndef _di_fl_string_fll_identify_
-  extern f_status_t fl_string_fll_identify(const f_string_t buffer, const f_array_length_t length, f_fll_id_t *id);
+  extern f_status_t fl_string_fll_identify(const f_string_t buffer, f_string_range_t *range, f_fll_id_t *id);
 #endif // _di_fl_string_fll_identify_
 
 /**
