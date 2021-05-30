@@ -16,6 +16,262 @@ extern "C" {
 #endif
 
 /**
+ * Private implementation for resizing the statuss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param statuss
+ *   The statuss array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_type_statuss_adjust()
+ * @see f_type_statuss_decimate_by()
+ */
+#if !defined(_di_f_type_statuss_adjust_) || !defined(_di_f_type_statuss_decimate_by_)
+  extern f_status_t private_f_type_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statuss_adjust_) || !defined(_di_f_type_statuss_decimate_by_)
+
+/**
+ * Private implementation for appending the status array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source statuss to append.
+ * @param destination
+ *   The destination statuss the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_statuss_append()
+ * @see f_type_statusss_append()
+ */
+#if !defined(_di_f_type_statuss_append_) || !defined(_di_f_type_statusss_append_)
+  extern f_status_t private_f_type_statuss_append(const f_statuss_t source, f_statuss_t *destination) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statuss_append_) || !defined(_di_f_type_statusss_append_)
+
+/**
+ * Private implementation for resizing the statuss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param statuss
+ *   The statuss array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_statuss_resize()
+ * @see f_type_statuss_append()
+ * @see f_type_statuss_decimate_by()
+ * @see f_type_statusss_append()
+ */
+#if !defined(_di_f_type_statuss_resize_) || !defined(_di_f_type_statuss_append_) || !defined(_di_f_type_statuss_decimate_by_) || !defined(_di_f_type_statusss_append_)
+  extern f_status_t private_f_type_statuss_resize(const f_array_length_t length, f_statuss_t *statuss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statuss_resize_) || !defined(_di_f_type_statuss_append_) || !defined(_di_f_type_statuss_decimate_by_) || !defined(_di_f_type_statusss_append_)
+
+/**
+ * Private implementation for resizing the statusss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param statusss
+ *   The statusss array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_destroy().
+ *
+ * @see f_type_statusss_adjust()
+ * @see f_type_statusss_decimate_by()
+ */
+#if !defined(_di_f_type_statusss_adjust_) || !defined(_di_f_type_statusss_decimate_by_)
+  extern f_status_t private_f_type_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statusss_adjust_) || !defined(_di_f_type_statusss_decimate_by_)
+
+/**
+ * Private implementation for resizing the statusss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to resize to.
+ * @param statusss
+ *   The statusss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_delete().
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_statusss_decrease_by()
+ * @see f_type_statusss_increase()
+ * @see f_type_statusss_increase_by()
+ * @see f_type_statusss_resize()
+ */
+#if !defined(_di_f_type_statusss_decrease_by_) || !defined(_di_f_type_statusss_increase_) || !defined(_di_f_type_statusss_increase_by_) || !defined(_di_f_type_statusss_resize_)
+  extern f_status_t private_f_type_statusss_resize(const f_array_length_t length, f_statusss_t *statusss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statusss_decrease_by_) || !defined(_di_f_type_statusss_increase_) || !defined(_di_f_type_statusss_increase_by_) || !defined(_di_f_type_statusss_resize_)
+
+/**
+ * Private implementation for resizing the states array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param states
+ *   The states array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_type_states_adjust()
+ * @see f_type_states_decimate_by()
+ */
+#if !defined(_di_f_type_states_adjust_) || !defined(_di_f_type_states_decimate_by_)
+  extern f_status_t private_f_type_states_adjust(const f_array_length_t length, f_states_t *states) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_states_adjust_) || !defined(_di_f_type_states_decimate_by_)
+
+/**
+ * Private implementation for appending the state array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source states to append.
+ * @param destination
+ *   The destination states the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_states_append()
+ * @see f_type_statess_append()
+ */
+#if !defined(_di_f_type_states_append_) || !defined(_di_f_type_statess_append_)
+  extern f_status_t private_f_type_states_append(const f_states_t source, f_states_t *destination) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_states_append_) || !defined(_di_f_type_statess_append_)
+
+/**
+ * Private implementation for resizing the states array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param states
+ *   The states array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_states_resize()
+ * @see f_type_states_append()
+ * @see f_type_states_decimate_by()
+ * @see f_type_statess_append()
+ */
+#if !defined(_di_f_type_states_resize_) || !defined(_di_f_type_states_append_) || !defined(_di_f_type_states_decimate_by_) || !defined(_di_f_type_statess_append_)
+  extern f_status_t private_f_type_states_resize(const f_array_length_t length, f_states_t *states) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_states_resize_) || !defined(_di_f_type_states_append_) || !defined(_di_f_type_states_decimate_by_) || !defined(_di_f_type_statess_append_)
+
+/**
+ * Private implementation for resizing the statess array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param statess
+ *   The statess array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_destroy().
+ *
+ * @see f_type_statess_adjust()
+ * @see f_type_statess_decimate_by()
+ */
+#if !defined(_di_f_type_statess_adjust_) || !defined(_di_f_type_statess_decimate_by_)
+  extern f_status_t private_f_type_statess_adjust(const f_array_length_t length, f_statess_t *statess) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statess_adjust_) || !defined(_di_f_type_statess_decimate_by_)
+
+/**
+ * Private implementation for resizing the statess array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to resize to.
+ * @param statess
+ *   The statess array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_delete().
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_statess_decrease_by()
+ * @see f_type_statess_increase()
+ * @see f_type_statess_increase_by()
+ * @see f_type_statess_resize()
+ */
+#if !defined(_di_f_type_statess_decrease_by_) || !defined(_di_f_type_statess_increase_) || !defined(_di_f_type_statess_increase_by_) || !defined(_di_f_type_statess_resize_)
+  extern f_status_t private_f_type_statess_resize(const f_array_length_t length, f_statess_t *statess) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_statess_decrease_by_) || !defined(_di_f_type_statess_increase_) || !defined(_di_f_type_statess_increase_by_) || !defined(_di_f_type_statess_resize_)
+
+/**
  * Private implementation for resizing the cells array.
  *
  * Intended to be shared to each of the different implementation variations.
@@ -143,6 +399,133 @@ extern "C" {
   extern f_status_t private_f_type_cellss_resize(const f_array_length_t length, f_cellss_t *cellss) f_attribute_visibility_internal;
 #endif // !defined(_di_f_type_cellss_decrease_by_) || !defined(_di_f_type_cellss_increase_) || !defined(_di_f_type_cellss_increase_by_) || !defined(_di_f_type_cellss_resize_)
 
+/**
+ * Private implementation for resizing the ids array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param ids
+ *   The ids array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *
+ * @see f_type_fll_ids_adjust()
+ * @see f_type_fll_ids_decimate_by()
+ */
+#if !defined(_di_f_type_fll_ids_adjust_) || !defined(_di_f_type_fll_ids_decimate_by_)
+  extern f_status_t private_f_type_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_fll_ids_adjust_) || !defined(_di_f_type_fll_ids_decimate_by_)
+
+/**
+ * Private implementation for appending the fll_id array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param source
+ *   The source ids to append.
+ * @param destination
+ *   The destination ids the source is appended onto.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_fll_ids_append()
+ * @see f_type_fll_idss_append()
+ */
+#if !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_idss_append_)
+  extern f_status_t private_f_type_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_idss_append_)
+
+/**
+ * Private implementation for resizing the ids array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param ids
+ *   The ids array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_fll_ids_resize()
+ * @see f_type_fll_ids_append()
+ * @see f_type_fll_ids_decimate_by()
+ * @see f_type_fll_idss_append()
+ */
+#if !defined(_di_f_type_fll_ids_resize_) || !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_ids_decimate_by_) || !defined(_di_f_type_fll_idss_append_)
+  extern f_status_t private_f_type_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_fll_ids_resize_) || !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_ids_decimate_by_) || !defined(_di_f_type_fll_idss_append_)
+
+/**
+ * Private implementation for resizing the idss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to adjust to.
+ * @param idss
+ *   The idss array to adjust.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_adjust().
+ *   Errors (with error bit) from: f_memory_destroy().
+ *
+ * @see f_type_fll_idss_adjust()
+ * @see f_type_fll_idss_decimate_by()
+ */
+#if !defined(_di_f_type_fll_idss_adjust_) || !defined(_di_f_type_fll_idss_decimate_by_)
+  extern f_status_t private_f_type_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_fll_idss_adjust_) || !defined(_di_f_type_fll_idss_decimate_by_)
+
+/**
+ * Private implementation for resizing the idss array.
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param length
+ *   The length to resize to.
+ * @param idss
+ *   The idss array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
+ *
+ *   F_array_too_large (with error bit) if new length is larger than max array length.
+ *   F_memory_not (with error bit) on out of memory.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_memory_delete().
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ * @see f_type_fll_idss_decrease_by()
+ * @see f_type_fll_idss_increase()
+ * @see f_type_fll_idss_increase_by()
+ * @see f_type_fll_idss_resize()
+ */
+#if !defined(_di_f_type_fll_idss_decrease_by_) || !defined(_di_f_type_fll_idss_increase_) || !defined(_di_f_type_fll_idss_increase_by_) || !defined(_di_f_type_fll_idss_resize_)
+  extern f_status_t private_f_type_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss) f_attribute_visibility_internal;
+#endif // !defined(_di_f_type_fll_idss_decrease_by_) || !defined(_di_f_type_fll_idss_increase_) || !defined(_di_f_type_fll_idss_increase_by_) || !defined(_di_f_type_fll_idss_resize_)
 /**
  * Private implementation for resizing the array_lengths array.
  *

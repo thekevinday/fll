@@ -4,6 +4,455 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#ifndef _di_f_type_statuss_adjust_
+  f_status_t f_type_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statuss_adjust(length, statuss);
+  }
+#endif // _di_f_type_statuss_adjust_
+
+#ifndef _di_f_type_statuss_append_
+  f_status_t f_type_statuss_append(const f_statuss_t source, f_statuss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    return private_f_type_statuss_append(source, destination);
+  }
+#endif // _di_f_type_statuss_append_
+
+#ifndef _di_f_type_statuss_decimate_by_
+  f_status_t f_type_statuss_decimate_by(const f_array_length_t amount, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statuss->size - amount > 0) {
+      return private_f_type_statuss_adjust(statuss->size - amount, statuss);
+    }
+
+    return private_f_type_statuss_adjust(0, statuss);
+  }
+#endif // _di_f_type_statuss_decimate_by_
+
+#ifndef _di_f_type_statuss_decrease_by_
+  f_status_t f_type_statuss_decrease_by(const f_array_length_t amount, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statuss->size - amount > 0) {
+      return private_f_type_statuss_resize(statuss->size - amount, statuss);
+    }
+
+    return private_f_type_statuss_resize(0, statuss);
+  }
+#endif // _di_f_type_statuss_decrease_by_
+
+#ifndef _di_f_type_statuss_increase_
+  f_status_t f_type_statuss_increase(const uint16_t step, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statuss->used + 1 > statuss->size) {
+      f_array_length_t size = statuss->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (statuss->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_statuss_resize(size, statuss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statuss_increase_
+
+#ifndef _di_f_type_statuss_increase_by_
+  f_status_t f_type_statuss_increase_by(const f_array_length_t amount, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statuss->used + amount > statuss->size) {
+      if (statuss->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_statuss_resize(statuss->used + amount, statuss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statuss_increase_by_
+
+#ifndef _di_f_type_statuss_resize_
+  f_status_t f_type_statuss_resize(const f_array_length_t length, f_statuss_t *statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statuss_resize(length, statuss);
+  }
+#endif // _di_f_type_statuss_resize_
+
+#ifndef _di_f_type_statusss_adjust_
+  f_status_t f_type_statusss_adjust(const f_array_length_t length, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statusss_adjust(length, statusss);
+  }
+#endif // _di_f_type_statusss_adjust_
+
+#ifndef _di_f_type_statusss_append_
+  f_status_t f_type_statusss_append(const f_statusss_t source, f_statusss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_statusss_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      status = private_f_type_statuss_append(source.array[i], &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_type_statusss_append_
+
+#ifndef _di_f_type_statusss_decimate_by_
+  f_status_t f_type_statusss_decimate_by(const f_array_length_t amount, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statusss->size - amount > 0) {
+      return private_f_type_statusss_adjust(statusss->size - amount, statusss);
+    }
+
+    return private_f_type_statusss_adjust(0, statusss);
+  }
+#endif // _di_f_type_statusss_decimate_by_
+
+#ifndef _di_f_type_statusss_decrease_by_
+  f_status_t f_type_statusss_decrease_by(const f_array_length_t amount, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statusss->size - amount > 0) {
+      return private_f_type_statusss_resize(statusss->size - amount, statusss);
+    }
+
+    return private_f_type_statusss_resize(0, statusss);
+  }
+#endif // _di_f_type_statusss_decrease_by_
+
+#ifndef _di_f_type_statusss_increase_
+  f_status_t f_type_statusss_increase(const uint16_t step, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statusss->used + 1 > statusss->size) {
+      f_array_length_t size = statusss->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (statusss->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_statusss_resize(size, statusss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statusss_increase_
+
+#ifndef _di_f_type_statusss_increase_by_
+  f_status_t f_type_statusss_increase_by(const f_array_length_t amount, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statusss->used + amount > statusss->size) {
+      if (statusss->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_statusss_resize(statusss->used + amount, statusss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statusss_increase_by_
+
+#ifndef _di_f_type_statusss_resize_
+  f_status_t f_type_statusss_resize(const f_array_length_t length, f_statusss_t *statusss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statusss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statusss_resize(length, statusss);
+  }
+#endif // _di_f_type_statusss_resize_
+
+#ifndef _di_f_type_states_adjust_
+  f_status_t f_type_states_adjust(const f_array_length_t length, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_states_adjust(length, states);
+  }
+#endif // _di_f_type_states_adjust_
+
+#ifndef _di_f_type_states_append_
+  f_status_t f_type_states_append(const f_states_t source, f_states_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    return private_f_type_states_append(source, destination);
+  }
+#endif // _di_f_type_states_append_
+
+#ifndef _di_f_type_states_decimate_by_
+  f_status_t f_type_states_decimate_by(const f_array_length_t amount, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (states->size - amount > 0) {
+      return private_f_type_states_adjust(states->size - amount, states);
+    }
+
+    return private_f_type_states_adjust(0, states);
+  }
+#endif // _di_f_type_states_decimate_by_
+
+#ifndef _di_f_type_states_decrease_by_
+  f_status_t f_type_states_decrease_by(const f_array_length_t amount, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (states->size - amount > 0) {
+      return private_f_type_states_resize(states->size - amount, states);
+    }
+
+    return private_f_type_states_resize(0, states);
+  }
+#endif // _di_f_type_states_decrease_by_
+
+#ifndef _di_f_type_states_increase_
+  f_status_t f_type_states_increase(const uint16_t step, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (states->used + 1 > states->size) {
+      f_array_length_t size = states->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (states->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_states_resize(size, states);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_states_increase_
+
+#ifndef _di_f_type_states_increase_by_
+  f_status_t f_type_states_increase_by(const f_array_length_t amount, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (states->used + amount > states->size) {
+      if (states->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_states_resize(states->used + amount, states);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_states_increase_by_
+
+#ifndef _di_f_type_states_resize_
+  f_status_t f_type_states_resize(const f_array_length_t length, f_states_t *states) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!states) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_states_resize(length, states);
+  }
+#endif // _di_f_type_states_resize_
+
+#ifndef _di_f_type_statess_adjust_
+  f_status_t f_type_statess_adjust(const f_array_length_t length, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statess_adjust(length, statess);
+  }
+#endif // _di_f_type_statess_adjust_
+
+#ifndef _di_f_type_statess_append_
+  f_status_t f_type_statess_append(const f_statess_t source, f_statess_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_statess_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      status = private_f_type_states_append(source.array[i], &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_type_statess_append_
+
+#ifndef _di_f_type_statess_decimate_by_
+  f_status_t f_type_statess_decimate_by(const f_array_length_t amount, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statess->size - amount > 0) {
+      return private_f_type_statess_adjust(statess->size - amount, statess);
+    }
+
+    return private_f_type_statess_adjust(0, statess);
+  }
+#endif // _di_f_type_statess_decimate_by_
+
+#ifndef _di_f_type_statess_decrease_by_
+  f_status_t f_type_statess_decrease_by(const f_array_length_t amount, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statess->size - amount > 0) {
+      return private_f_type_statess_resize(statess->size - amount, statess);
+    }
+
+    return private_f_type_statess_resize(0, statess);
+  }
+#endif // _di_f_type_statess_decrease_by_
+
+#ifndef _di_f_type_statess_increase_
+  f_status_t f_type_statess_increase(const uint16_t step, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statess->used + 1 > statess->size) {
+      f_array_length_t size = statess->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (statess->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_statess_resize(size, statess);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statess_increase_
+
+#ifndef _di_f_type_statess_increase_by_
+  f_status_t f_type_statess_increase_by(const f_array_length_t amount, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (statess->used + amount > statess->size) {
+      if (statess->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_statess_resize(statess->used + amount, statess);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_statess_increase_by_
+
+#ifndef _di_f_type_statess_resize_
+  f_status_t f_type_statess_resize(const f_array_length_t length, f_statess_t *statess) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statess) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_statess_resize(length, statess);
+  }
+#endif // _di_f_type_statess_resize_
+
 #ifndef _di_f_type_cells_adjust_
   f_status_t f_type_cells_adjust(const f_array_length_t length, f_cells_t *cells) {
     #ifndef _di_level_0_parameter_checking_
@@ -227,6 +676,230 @@ extern "C" {
     return private_f_type_cellss_resize(length, cellss);
   }
 #endif // _di_f_type_cellss_resize_
+
+#ifndef _di_f_type_fll_ids_adjust_
+  f_status_t f_type_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_fll_ids_adjust(length, ids);
+  }
+#endif // _di_f_type_fll_ids_adjust_
+
+#ifndef _di_f_type_fll_ids_append_
+  f_status_t f_type_fll_ids_append(const f_fll_ids_t source, f_fll_ids_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    return private_f_type_fll_ids_append(source, destination);
+  }
+#endif // _di_f_type_fll_ids_append_
+
+#ifndef _di_f_type_fll_ids_decimate_by_
+  f_status_t f_type_fll_ids_decimate_by(const f_array_length_t amount, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->size - amount > 0) {
+      return private_f_type_fll_ids_adjust(ids->size - amount, ids);
+    }
+
+    return private_f_type_fll_ids_adjust(0, ids);
+  }
+#endif // _di_f_type_fll_ids_decimate_by_
+
+#ifndef _di_f_type_fll_ids_decrease_by_
+  f_status_t f_type_fll_ids_decrease_by(const f_array_length_t amount, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->size - amount > 0) {
+      return private_f_type_fll_ids_resize(ids->size - amount, ids);
+    }
+
+    return private_f_type_fll_ids_resize(0, ids);
+  }
+#endif // _di_f_type_fll_ids_decrease_by_
+
+#ifndef _di_f_type_fll_ids_increase_
+  f_status_t f_type_fll_ids_increase(const uint16_t step, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->used + 1 > ids->size) {
+      f_array_length_t size = ids->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (ids->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_fll_ids_resize(size, ids);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_fll_ids_increase_
+
+#ifndef _di_f_type_fll_ids_increase_by_
+  f_status_t f_type_fll_ids_increase_by(const f_array_length_t amount, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (ids->used + amount > ids->size) {
+      if (ids->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_fll_ids_resize(ids->used + amount, ids);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_fll_ids_increase_by_
+
+#ifndef _di_f_type_fll_ids_resize_
+  f_status_t f_type_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!ids) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_fll_ids_resize(length, ids);
+  }
+#endif // _di_f_type_fll_ids_resize_
+
+#ifndef _di_f_type_fll_idss_adjust_
+  f_status_t f_type_fll_idss_adjust(const f_array_length_t length, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_fll_idss_adjust(length, idss);
+  }
+#endif // _di_f_type_fll_idss_adjust_
+
+#ifndef _di_f_type_fll_idss_append_
+  f_status_t f_type_fll_idss_append(const f_fll_idss_t source, f_fll_idss_t *destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used + source.used > destination->size) {
+      status = private_f_type_fll_idss_resize(destination->used + source.used, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    for (f_array_length_t i = 0; i < source.used; ++i, ++destination->used) {
+      status = private_f_type_fll_ids_append(source.array[i], &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_type_fll_idss_append_
+
+#ifndef _di_f_type_fll_idss_decimate_by_
+  f_status_t f_type_fll_idss_decimate_by(const f_array_length_t amount, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (idss->size - amount > 0) {
+      return private_f_type_fll_idss_adjust(idss->size - amount, idss);
+    }
+
+    return private_f_type_fll_idss_adjust(0, idss);
+  }
+#endif // _di_f_type_fll_idss_decimate_by_
+
+#ifndef _di_f_type_fll_idss_decrease_by_
+  f_status_t f_type_fll_idss_decrease_by(const f_array_length_t amount, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (idss->size - amount > 0) {
+      return private_f_type_fll_idss_resize(idss->size - amount, idss);
+    }
+
+    return private_f_type_fll_idss_resize(0, idss);
+  }
+#endif // _di_f_type_fll_idss_decrease_by_
+
+#ifndef _di_f_type_fll_idss_increase_
+  f_status_t f_type_fll_idss_increase(const uint16_t step, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!step) return F_status_set_error(F_parameter);
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (idss->used + 1 > idss->size) {
+      f_array_length_t size = idss->used + step;
+
+      if (size > f_array_length_t_size) {
+        if (idss->used + 1 > f_array_length_t_size) {
+          return F_status_set_error(F_array_too_large);
+        }
+
+        size = f_array_length_t_size;
+      }
+
+      return private_f_type_fll_idss_resize(size, idss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_fll_idss_increase_
+
+#ifndef _di_f_type_fll_idss_increase_by_
+  f_status_t f_type_fll_idss_increase_by(const f_array_length_t amount, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!amount) return F_status_set_error(F_parameter);
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (idss->used + amount > idss->size) {
+      if (idss->used + amount > f_array_length_t_size) {
+        return F_status_set_error(F_array_too_large);
+      }
+
+      return private_f_type_fll_idss_resize(idss->used + amount, idss);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_f_type_fll_idss_increase_by_
+
+#ifndef _di_f_type_fll_idss_resize_
+  f_status_t f_type_fll_idss_resize(const f_array_length_t length, f_fll_idss_t *idss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!idss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_type_fll_idss_resize(length, idss);
+  }
+#endif // _di_f_type_fll_idss_resize_
 
 #ifndef _di_f_type_array_lengths_adjust_
   f_status_t f_type_array_lengths_adjust(const f_array_length_t length, f_array_lengths_t *lengths) {

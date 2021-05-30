@@ -4664,7 +4664,7 @@ extern "C" {
 
         for (j = 0; j < cache->content_actions.array[i].used; ++j) {
 
-          macro_f_array_lengths_t_increase_by(status, rule->groups, controller_common_allocation_small)
+          macro_f_int32s_t_increase_by(status, rule->groups, controller_common_allocation_small)
 
           if (F_status_is_error(status)) {
             controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "macro_f_array_lengths_t_increase_by", F_true, F_false, global.thread);

@@ -928,6 +928,8 @@ extern "C" {
  *
  * A valid FLL Identifier must terminate on either whitespace, EOL, or the stop point (length).
  *
+ * The id.name may not be NULL terminated and this function will skip over NULLs in the buffer when processing.
+ *
  * @param buffer
  *   The string to process.
  * @param length
@@ -945,6 +947,9 @@ extern "C" {
  *   F_maybe (with error bit) if a character could be a whitespace but width is not long enough. (This is only returned for an otherwise valid FLL Identifier.)
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_word().
  *
  * @see isxdigit()
  *
