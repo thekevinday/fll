@@ -1315,7 +1315,7 @@ extern "C" {
     f_array_length_t size = strnlen(path_to_name, length);
 
     if (name_base->used + size > name_base->size) {
-      if (name_base->used + size > f_array_length_t_size) {
+      if (name_base->used + size > f_string_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1351,7 +1351,7 @@ extern "C" {
     f_array_length_t size = strnlen(path_to_name, length);
 
     if (name_directory->used + size > name_directory->size) {
-      if (name_directory->used + size > f_array_length_t_size) {
+      if (name_directory->used + size > f_string_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1428,7 +1428,7 @@ extern "C" {
     for (f_string_t buffer_read = 0; ; ) {
 
       if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > f_array_length_t_size) {
+        if (buffer->size + file.size_read > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -1478,7 +1478,7 @@ extern "C" {
     f_string_t buffer_read = 0;
 
     if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > f_array_length_t_size) {
+      if (buffer->size + file.size_read > f_string_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -1538,7 +1538,7 @@ extern "C" {
       }
 
       if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > f_array_length_t_size) {
+        if (buffer->size + buffer_size > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -1997,7 +1997,7 @@ extern "C" {
     for (;;) {
 
       if (buffer->used + file.size_read > buffer->size) {
-        if (buffer->size + file.size_read > f_array_length_t_size) {
+        if (buffer->size + file.size_read > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -2043,7 +2043,7 @@ extern "C" {
     ssize_t size_read = 0;
 
     if (buffer->used + file.size_read > buffer->size) {
-      if (buffer->size + file.size_read > f_array_length_t_size) {
+      if (buffer->size + file.size_read > f_string_t_size) {
         return F_status_set_error(F_string_too_large);
       }
 
@@ -2097,7 +2097,7 @@ extern "C" {
       }
 
       if (buffer->used + buffer_size > buffer->size) {
-        if (buffer->size + buffer_size > f_array_length_t_size) {
+        if (buffer->size + buffer_size > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 

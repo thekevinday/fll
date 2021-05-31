@@ -34,7 +34,7 @@ extern "C" {
     while ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
 
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_array_length_t_size) {
+        if (buffer->size + size_read > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -94,7 +94,7 @@ extern "C" {
 
     if ((size_read = read(file.id, buffer_read, file.size_read)) > 0) {
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_array_length_t_size) {
+        if (buffer->size + size_read > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
@@ -167,7 +167,7 @@ extern "C" {
     while (buffer_count < total && (size_read = read(file.id, buffer_read, buffer_size)) > 0) {
 
       if (buffer->used + size_read > buffer->size) {
-        if (buffer->size + size_read > f_array_length_t_size) {
+        if (buffer->size + size_read > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 

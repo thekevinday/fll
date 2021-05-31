@@ -1289,7 +1289,7 @@ extern "C" {
     }
 
     if (environment->used + data_build.setting.environment.used > environment->size) {
-      if (environment->used + data_build.setting.environment.used > f_array_length_t_size) {
+      if (environment->used + data_build.setting.environment.used > f_environment_max_length) {
         if (main.error.verbosity != f_console_verbosity_quiet) {
           fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
           f_color_print(main.error.to.stream, main.context.set.error, "%sThe values for the setting '", fll_error_print_error);

@@ -28,6 +28,12 @@ extern "C" {
  * Define the basic string type.
  *
  * Dynamic allocation macros are provided, but it is recommended to utilize the f_string_dynamic_t for dynamic allocation.
+ *
+ *  is provided as a way t have a string max for systems that do not support max string length in 64-bits (when f_array_length_t is set to uint64_t).
+ *
+ * The ideal length for a string is f_array_length_t_size, which generally defaults to 2^64 (unsigned).
+ * However, the libc/POSIX appears to limit this to 2^63 (signed).
+ * f_string_t_size is provided to help safely navigate this.
  */
 #ifndef _di_f_string_t_
   typedef char *f_string_t;
@@ -41,6 +47,9 @@ extern "C" {
 
   #define macro_f_string_t_delete_simple(string, length)  f_memory_resize(length, 0, sizeof(f_string_t), (void **) & string);
   #define macro_f_string_t_destroy_simple(string, length) f_memory_adjust(length, 0, sizeof(f_string_t), (void **) & string);
+
+  // @fixme update all code utilizing f_array_length_t on a string, such as strnlen().
+  #define f_string_t_size f_type_size_64_positive
 #endif // _di_f_string_t_
 
 /**

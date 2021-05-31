@@ -178,7 +178,7 @@ extern "C" {
       status = f_file_stat(source.string, F_false, &source_stat);
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_array_length_t_size - 1;
+          size = f_string_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -192,7 +192,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_array_length_t_size - 1;
+          size = f_string_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -384,7 +384,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_array_length_t_size - 1;
+          size = f_string_t_size - 1;
         }
         else {
           size = source.used + file.used + 1;
@@ -398,7 +398,7 @@ extern "C" {
       }
       else {
         if (status == F_status_set_error(F_string_too_large)) {
-          size = f_array_length_t_size - 1;
+          size = f_string_t_size - 1;
         }
         else {
           size = destination.used + file.used + 1;
@@ -551,7 +551,7 @@ extern "C" {
       if (F_status_is_error(status)) break;
 
       if (names->array[names->used].used > 0 && names->array[names->used].string[names->array[names->used].used - 1] != 0) {
-        if (names->array[names->used].used == f_array_length_t_size) {
+        if (names->array[names->used].used == f_string_t_size) {
           status = F_status_set_error(F_string_too_large);
           break;
         }
@@ -766,7 +766,7 @@ extern "C" {
       total += length_truncated - start;
 
       if (destination->used + total > destination->size) {
-        if (destination->used + total > f_array_length_t_size) {
+        if (destination->used + total > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 

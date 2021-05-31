@@ -166,12 +166,12 @@ extern "C" {
     if (dynamic->used + 1 > dynamic->size) {
       f_array_length_t size = dynamic->used + step;
 
-      if (size > f_array_length_t_size) {
-        if (dynamic->used + 1 > f_array_length_t_size) {
+      if (size > f_string_t_size) {
+        if (dynamic->used + 1 > f_string_t_size) {
           return F_status_set_error(F_string_too_large);
         }
 
-        size = f_array_length_t_size;
+        size = f_string_t_size;
       }
 
       return private_f_utf_string_dynamic_resize(size, dynamic);
@@ -835,7 +835,7 @@ extern "C" {
       return F_none;
     }
 
-    if (destination->used == f_array_length_t_size) {
+    if (destination->used == f_string_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 
@@ -868,7 +868,7 @@ extern "C" {
       } // for
     }
 
-    if (destination->used == f_array_length_t_size) {
+    if (destination->used == f_string_t_size) {
       return F_status_set_error(F_string_too_large);
     }
 

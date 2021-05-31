@@ -186,7 +186,7 @@ extern "C" {
         contents_quoted->used++;
       }
 
-    } while (range->start < f_array_length_t_size);
+    } while (range->start < f_string_t_size);
 
     return F_status_is_error(F_number_overflow);
   }
