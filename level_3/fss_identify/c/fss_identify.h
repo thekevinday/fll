@@ -59,15 +59,17 @@ extern "C" {
 #endif // _di_fss_identify_name_
 
 #ifndef _di_fss_identify_defines_
-  #define fss_identify_short_line  "l"
-  #define fss_identify_short_name  "n"
-  #define fss_identify_short_total "T"
-  #define fss_identify_short_type  "t"
+  #define fss_identify_short_content "c"
+  #define fss_identify_short_line    "l"
+  #define fss_identify_short_name    "n"
+  #define fss_identify_short_object  "o"
+  #define fss_identify_short_total   "t"
 
-  #define fss_identify_long_line  "line"
-  #define fss_identify_long_name  "name"
-  #define fss_identify_long_total "total"
-  #define fss_identify_long_type  "type"
+  #define fss_identify_long_content "content"
+  #define fss_identify_long_line    "line"
+  #define fss_identify_long_name    "name"
+  #define fss_identify_long_object  "object"
+  #define fss_identify_long_total   "total"
 
   enum {
     fss_identify_parameter_help,
@@ -80,10 +82,11 @@ extern "C" {
     fss_identify_parameter_verbosity_debug,
     fss_identify_parameter_version,
 
+    fss_identify_parameter_content,
     fss_identify_parameter_line,
     fss_identify_parameter_name,
+    fss_identify_parameter_object,
     fss_identify_parameter_total,
-    fss_identify_parameter_type,
   };
 
   #define fss_identify_console_parameter_t_initialize \
@@ -97,13 +100,14 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(fss_identify_short_content, fss_identify_long_content, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_identify_short_line, fss_identify_long_line, 0, 1, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_name, fss_identify_long_name, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_name, fss_identify_long_name, 0, 1, f_console_type_normal), \
+      f_console_parameter_t_initialize(fss_identify_short_object, fss_identify_long_object, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(fss_identify_short_total, fss_identify_long_total, 0, 0, f_console_type_normal), \
-      f_console_parameter_t_initialize(fss_identify_short_type, fss_identify_long_type, 0, 0, f_console_type_normal), \
     }
 
-  #define fss_identify_total_parameters 13
+  #define fss_identify_total_parameters 14
 #endif // _di_fss_identify_defines_
 
 #ifndef _di_fss_identify_data_t_

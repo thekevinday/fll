@@ -23,12 +23,13 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fll_program_print_help_option(output, context, fss_identify_short_name, fss_identify_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier name.");
-    fll_program_print_help_option(output, context, fss_identify_short_type, fss_identify_long_type, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier type.");
+    fll_program_print_help_option(output, context, fss_identify_short_content, fss_identify_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier content (the 4-digit hexidecimal type code).");
+    fll_program_print_help_option(output, context, fss_identify_short_object, fss_identify_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Identifier object (the name).");
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fll_program_print_help_option(output, context, fss_identify_short_line, fss_identify_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the Identifier at the given line.");
+    fll_program_print_help_option(output, context, fss_identify_short_name, fss_identify_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
     fll_program_print_help_option(output, context, fss_identify_short_total, fss_identify_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
 
     fll_program_print_help_usage(output, context, fss_identify_name, "filename(s)");
@@ -40,9 +41,9 @@ extern "C" {
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "  If neither the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
     fprintf(output.stream, " nor ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_type);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
     fprintf(output.stream, " are specified, then the default behavior is to print both.%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
@@ -50,10 +51,19 @@ extern "C" {
     fprintf(output.stream, "  When specifying the ");
     f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
     fprintf(output.stream, " parameter, neither the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
     fprintf(output.stream, " nor the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_type);
+    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
     fprintf(output.stream, " parameter may be specified.%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "%c", f_string_eol_s[0]);
+
+    fprintf(output.stream, "  An FSS file is identified by the following format: '");
+    f_color_print(output.stream, context.set.notable, "# Object-Content");
+    fprintf(output.stream, "' where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  Whitespace must follow this pound character.%c", f_string_eol_s[0]);
+    fprintf(output.stream, "  There may be multiple Object and Content pairs, separated by whitspace, such as: \"# fss-0002 fss-0000 iki-0002\".%c", f_string_eol_s[0]);
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
@@ -150,9 +160,9 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[fss_identify_parameter_line].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_line);
-        f_color_print(main->error.to.stream, main->context.set.error, "' requires a positive number.%c", f_string_eol_s[0]);
+        f_color_print(main->error.to.stream, main->context.set.error, " requires a positive number.%c", f_string_eol_s[0]);
 
         status = F_status_set_error(F_parameter);
       }
@@ -169,23 +179,80 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
-      if (main->parameters[fss_identify_parameter_name].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
-        f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
+      if (main->parameters[fss_identify_parameter_object].result == f_console_result_found) {
+        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the ", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
+        f_color_print(main->error.to.stream, main->context.set.error, " parameter with the ");
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
-        f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+        f_color_print(main->error.to.stream, main->context.set.error, " parameter.%c", f_string_eol_s[0]);
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters[fss_identify_parameter_type].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_type);
-        f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
+      else if (main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
+        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the ", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
+        f_color_print(main->error.to.stream, main->context.set.error, " parameter with the ");
         f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
-        f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+        f_color_print(main->error.to.stream, main->context.set.error, " parameter.%c", f_string_eol_s[0]);
 
         status = F_status_set_error(F_parameter);
+      }
+    }
+
+    if (F_status_is_error_not(status)) {
+      if (main->parameters[fss_identify_parameter_name].result == f_console_result_found) {
+        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
+        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
+        f_color_print(main->error.to.stream, main->context.set.error, " requires a string.%c", f_string_eol_s[0]);
+
+        status = F_status_set_error(F_parameter);
+      }
+      else if (main->parameters[fss_identify_parameter_name].result == f_console_result_additional) {
+        const f_array_length_t index = main->parameters[fss_identify_parameter_name].values.array[main->parameters[fss_identify_parameter_name].values.used - 1];
+        const f_array_length_t length = strnlen(arguments.argv[index], f_console_parameter_size);
+        const f_string_range_t range = macro_f_string_range_t_initialize(length);
+
+        if (length == 0) {
+          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
+          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
+          f_color_print(main->error.to.stream, main->context.set.error, " does not allow zero length strings.%c", f_string_eol_s[0]);
+
+          status = F_status_set_error(F_parameter);
+        }
+        else {
+          status = f_string_dynamic_resize(length, &data.name);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
+          }
+        }
+
+        if (F_status_is_error_not(status)) {
+
+          for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+            status = f_utf_is_word(arguments.argv[index] + i, length, F_true);
+
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
+
+              break;
+            }
+            else if (status == F_false) {
+              f_color_print(main->error.to.stream, main->context.set.error, "%sThe value '", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s", arguments.argv[index]);
+              f_color_print(main->error.to.stream, main->context.set.error, "' for the parameter ", fll_error_print_error);
+              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
+              f_color_print(main->error.to.stream, main->context.set.error, " may only contain word characters.%c", f_string_eol_s[0]);
+
+              status = F_status_set_error(F_parameter);
+
+              break;
+            }
+
+            data.name.string[data.name.used++] = arguments.argv[index][i];
+          } // for
+        }
       }
     }
 
@@ -239,13 +306,8 @@ extern "C" {
     f_string_dynamic_resize(0, &buffer);
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters[fss_identify_parameter_line].result == f_console_result_additional) {
-
-        if (data.current < data.line) {
-          if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
-            fprintf(main->output.stream, "%c%c", f_string_ascii_0_s[0], f_string_eol_s[0]);
-          }
-        }
+      if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
+        fprintf(main->output.stream, "%llu%c", data.total, f_string_eol_s[0]);
       }
     }
 
@@ -256,6 +318,7 @@ extern "C" {
       }
     }
 
+    fss_identify_data_delete(&data);
     fss_identify_main_delete(main);
 
     return status;

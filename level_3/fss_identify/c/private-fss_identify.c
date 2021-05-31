@@ -55,7 +55,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_
   void fss_identify_print(const fss_identify_main_t main, f_fll_id_t id) {
 
-    if (main.parameters[fss_identify_parameter_name].result == f_console_result_found || main.parameters[fss_identify_parameter_type].result != f_console_result_found) {
+    if (main.parameters[fss_identify_parameter_object].result == f_console_result_found || main.parameters[fss_identify_parameter_content].result != f_console_result_found) {
       f_string_static_t part = f_string_static_t_initialize;
 
       part.string = id.name;
@@ -64,12 +64,12 @@ extern "C" {
 
       f_print_dynamic(main.output.stream, part);
 
-      if (main.parameters[fss_identify_parameter_name].result != f_console_result_found || main.parameters[fss_identify_parameter_type].result == f_console_result_found) {
+      if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
         fprintf(main.output.stream, "%c", f_fss_type_header_part5);
       }
     }
 
-    if (main.parameters[fss_identify_parameter_name].result != f_console_result_found || main.parameters[fss_identify_parameter_type].result == f_console_result_found) {
+    if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
       fprintf(main.output.stream, "%04x", id.type);
     }
 
@@ -98,8 +98,14 @@ extern "C" {
       for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {
 
         if (data->current == data->line) {
+          if (data->name.used) {
+            if (fl_string_dynamic_compare_string(ids.array[i].name, data->name, ids.array[i].used) != F_equal_to) {
+              continue;
+            }
+          }
+
           if (main.parameters[fss_identify_parameter_total].result == f_console_result_found) {
-            fprintf(main.output.stream, "%c%c", f_string_ascii_1_s[0], f_string_eol_s[0]);
+            ++data->total;
           }
           else {
             fss_identify_print(main, ids.array[i]);
@@ -112,11 +118,29 @@ extern "C" {
       } // for
     }
     else if (main.parameters[fss_identify_parameter_total].result == f_console_result_found) {
-      fprintf(main.output.stream, "%llu%c", ids.used, f_string_eol_s[0]);
+      if (data->name.used) {
+
+        for (f_array_length_t i = 0; i < ids.used; ++i, ++data->current) {
+
+          if (fl_string_dynamic_compare_string(ids.array[i].name, data->name, ids.array[i].used) == F_equal_to) {
+            ++data->total;
+          }
+        } // for
+      }
+      else {
+        data->total += ids.used;
+      }
     }
     else if (status == F_found || status == F_maybe) {
 
       for (f_array_length_t i = 0; i < ids.used; ++i) {
+
+        if (data->name.used) {
+          if (fl_string_dynamic_compare_string(ids.array[i].name, data->name, ids.array[i].used) != F_equal_to) {
+            continue;
+          }
+        }
+
         fss_identify_print(main, ids.array[i]);
       } // for
     }
