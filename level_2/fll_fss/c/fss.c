@@ -119,10 +119,15 @@ extern "C" {
     bool found_fss = F_false;
 
     do {
+      if (ids && ids->used + 1 > ids->size) {
+        status = f_type_fll_ids_increase(f_fss_default_allocation_step_small, ids);
+      }
 
-      status = fl_string_fll_identify(buffer, range, ids ? &ids->array[ids->used] : &id);
+      if (F_status_is_error_not(status)) {
+        status = fl_string_fll_identify(buffer, range, ids ? &ids->array[ids->used] : &id);
+      }
 
-      if (F_status_is_error(status) || status == F_found_not) {
+      if (F_status_is_error(status) || (status == F_found_not && !found_fss)) {
         if (ids) {
           ids->used = 0;
         }
@@ -132,7 +137,7 @@ extern "C" {
 
       if (!found_fss) {
         if (ids) {
-          if (ids->array[ids->used].used == 3 && ids->array[ids->used].name[0] == f_fss_f_s[0] && ids->array[ids->used].name[0] == f_fss_s_s[0] && ids->array[ids->used].name[0] == f_fss_s_s[0]) {
+          if (ids->used && ids->array[ids->used - 1].used == 3 && ids->array[ids->used - 1].name[0] == f_fss_f_s[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s[0] && ids->array[ids->used - 1].name[0] == f_fss_s_s[0]) {
             found_fss = F_true;
           }
         }

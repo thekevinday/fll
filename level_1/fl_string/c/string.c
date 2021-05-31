@@ -560,7 +560,7 @@ extern "C" {
     // skip past all leading NULLs.
     for (; range->start <= range->stop; ++range->start) {
       if (buffer[range->start]) break;
-    }
+    } // for
 
     if (range->start > range->stop) {
       return F_data_not;
@@ -677,8 +677,9 @@ extern "C" {
 
     {
       f_array_length_t j = 0;
+      char number[5] = { 0, 0, 0, 0, 0 };
 
-      for (; range->start <= range->stop && j < 5; ++range->start, ++j) {
+      for (++range->start; range->start <= range->stop && j < 4; ++range->start, ++j) {
 
         // The hexidecimal representing the number may only be ASCII.
         if (macro_f_utf_byte_width_is(buffer[range->start])) {
@@ -703,40 +704,21 @@ extern "C" {
         }
 
         if (isxdigit(buffer[range->start])) {
-          if (id) {
-            if (j) {
-              id->type *= 16;
-              id->type += strtol(buffer + range->start, 0, 16);
-            }
-            else {
-              id->type = strtol(buffer + range->start, 0, 16);
-            }
-          }
+          number[j] = buffer[range->start];
         }
         else {
           if (!buffer[range->start]) continue;
 
-          // Increment until stop, while taking into consideration UTF-8 character widths.
-          for (; range->start <= range->stop; ) {
-
-            if (buffer[range->start] == f_string_eol_s[0]) {
-              ++range->start;
-
-              break;
-            }
-
-            range->start += macro_f_utf_byte_width(buffer[range->start]);
-          } // for
-
-          if (id) {
-            id->type = 0;
-          }
-
-          return F_found_not;
+          break;
         }
       } // for
 
-      if (j != 5) {
+      if (j == 4) {
+        if (id) {
+          id->type = strtol(number, 0, 16);
+        }
+      }
+      else {
 
         // Increment until stop, while taking into consideration UTF-8 character widths.
         for (; range->start <= range->stop; ) {
@@ -761,7 +743,7 @@ extern "C" {
     // skip past all NULLs.
     for (; range->start <= range->stop; ++range->start) {
       if (buffer[range->start]) break;
-    }
+    } // for
 
     // The end of line, whitespace, or range stop point are the only valid stop points.
     if (range->start <= range->stop) {
@@ -775,7 +757,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_true) {
+      if (status == F_false) {
 
         // Increment until stop, while taking into consideration UTF-8 character widths.
         for (; range->start <= range->stop; ) {
@@ -811,11 +793,11 @@ extern "C" {
         ++i;
       } // for
 
-      if (i < 64) {
-        id->name[i] = 0;
-      }
+      id->used = i + 1;
 
-      id->used = i;
+      if (id->used < 64) {
+        id->name[id->used] = 0;
+      }
     }
 
     return F_found;
