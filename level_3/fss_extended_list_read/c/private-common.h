@@ -208,7 +208,7 @@ extern "C" {
  *   The data to deallocate.
  */
 #ifndef _di_fss_extended_list_read_data_delete_simple_
-  extern void fss_extended_list_read_data_delete_simple(fss_extended_list_read_data_t *daa) f_attribute_visibility_internal;
+  extern void fss_extended_list_read_data_delete_simple(fss_extended_list_read_data_t *data) f_attribute_visibility_internal;
 #endif // _di_fss_extended_list_read_data_delete_simple_
 
 /**

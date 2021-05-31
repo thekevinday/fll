@@ -570,8 +570,6 @@ extern "C" {
  *
  * A word character is alpha-numeric or an underscore '_'.
  *
- * This does not include zero-width punctuation.
- *
  * @param character
  *   The character to validate.
  * @param strict
@@ -600,8 +598,6 @@ extern "C" {
  * Therefore, only these hyphens are considered dashes for the purposes of this function.
  * All other dash-like Unicode characters are not considered a dash here.
  * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
- *
- * This does not include zero-width punctuation.
  *
  * @param character
  *   The character to validate.
@@ -1284,8 +1280,6 @@ extern "C" {
  *
  * A word character is alpha-digit or an underscore '_'.
  *
- * This does not include zero-width punctuation.
- *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.
@@ -1318,8 +1312,6 @@ extern "C" {
  * Therefore, only these hyphens are considered dashes for the purposes of this function.
  * All other dash-like Unicode characters are not considered a dash here.
  * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
- *
- * This does not include zero-width punctuation.
  *
  * @param character
  *   The character to validate.
