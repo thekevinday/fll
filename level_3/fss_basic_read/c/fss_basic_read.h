@@ -50,9 +50,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_read_version_
-  #define fss_basic_read_major_version "0"
-  #define fss_basic_read_minor_version "5"
-  #define fss_basic_read_micro_version "4"
+  #define fss_basic_read_major_version f_string_ascii_0
+  #define fss_basic_read_minor_version f_string_ascii_5
+  #define fss_basic_read_micro_version f_string_ascii_4
   #define fss_basic_read_version fss_basic_read_major_version f_string_ascii_period fss_basic_read_minor_version f_string_ascii_period fss_basic_read_micro_version
 #endif // _di_fss_basic_read_version_
 

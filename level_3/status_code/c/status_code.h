@@ -43,9 +43,9 @@ extern "C" {
 #endif
 
 #ifndef _di_status_code_version_
-  #define status_code_major_version "0"
-  #define status_code_minor_version "5"
-  #define status_code_micro_version "4"
+  #define status_code_major_version f_string_ascii_0
+  #define status_code_minor_version f_string_ascii_5
+  #define status_code_micro_version f_string_ascii_4
   #define status_code_version status_code_major_version f_string_ascii_period status_code_minor_version f_string_ascii_period status_code_micro_version
 #endif // _di_status_code_version_
 

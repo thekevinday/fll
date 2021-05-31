@@ -41,9 +41,9 @@ extern "C" {
 #endif
 
 #ifndef _di_control_version_
-  #define control_major_version "0"
-  #define control_minor_version "5"
-  #define control_micro_version "4"
+  #define control_major_version f_string_ascii_0
+  #define control_minor_version f_string_ascii_5
+  #define control_micro_version f_string_ascii_4
   #define control_version control_major_version f_string_ascii_period control_minor_version f_string_ascii_period control_micro_version
 #endif // _di_control_version_
 

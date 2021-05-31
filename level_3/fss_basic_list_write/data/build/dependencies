@@ -7,6 +7,7 @@ f_string
 f_utf
 f_color
 f_console
+f_conversion
 f_directory
 f_environment
 f_file

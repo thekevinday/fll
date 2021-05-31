@@ -23,7 +23,7 @@ extern "C" {
   #define f_fss_brace_close_s  f_string_ascii_brace_close_s
   #define f_fss_brace_open_s   f_string_ascii_brace_open_s
   #define f_fss_colon_s        f_string_ascii_colon_s
-  #define f_fss_dash_s         f_string_ascii_minus_s
+  #define f_fss_minus_s         f_string_ascii_minus_s
   #define f_fss_f_s            f_string_ascii_f_s
   #define f_fss_pound_s        f_string_ascii_pound_s
   #define f_fss_quote_double_s f_string_ascii_quote_double_s
@@ -58,7 +58,7 @@ extern "C" {
   #define f_fss_type_header_part2       f_fss_f_s[0]
   #define f_fss_type_header_part3       f_fss_s_s[0]
   #define f_fss_type_header_part4       f_fss_s_s[0]
-  #define f_fss_type_header_part5       f_fss_dash_s[0]
+  #define f_fss_type_header_part5       f_fss_minus_s[0]
   #define f_fss_type_header_close       f_string_eol_s[0]
 #endif // _di_f_fss_types_t_
 
