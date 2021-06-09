@@ -183,6 +183,13 @@ bootstrap_main() {
     return 1
   fi
 
+  bootstrap_load_settings_has
+
+  if [[ $? -ne 0 ]] ; then
+    bootstrap_cleanup
+    return 1
+  fi
+
   project_built="${path_build_stage}${variables[$(bootstrap_id project_name)]}"
   if [[ $process != "" ]] ; then
     project_built="${project_built}-$process"
@@ -433,57 +440,76 @@ bootstrap_id() {
     "build_sources_headers") echo -n 6;;
     "build_sources_library") echo -n 7;;
     "build_sources_program") echo -n 8;;
-    "build_sources_setting") echo -n 9;;
-    "build_sources_script") echo -n 10;;
+    "build_sources_script") echo -n 9;;
+    "build_sources_setting") echo -n 10;;
     "build_static") echo -n 11;;
     "defines_all") echo -n 12;;
-    "defines_shared") echo -n 13;;
-    "defines_static") echo -n 14;;
-    "environment") echo -n 15;;
-    "flags_all") echo -n 16;;
-    "flags_library") echo -n 17;;
-    "flags_program") echo -n 18;;
-    "flags_shared") echo -n 19;;
-    "flags_static") echo -n 20;;
-    "modes") echo -n 21;;
-    "modes_default") echo -n 22;;
-    "path_language") echo -n 23;;
-    "path_headers") echo -n 24;;
-    "path_headers_preserve") echo -n 25;;
-    "path_library_script") echo -n 26;;
-    "path_library_shared") echo -n 27;;
-    "path_library_static") echo -n 28;;
-    "path_program_script") echo -n 29;;
-    "path_program_shared") echo -n 30;;
-    "path_program_static") echo -n 31;;
-    "path_sources") echo -n 32;;
-    "path_standard") echo -n 33;;
-    "process_post") echo -n 34;;
-    "process_pre") echo -n 35;;
-    "project_name") echo -n 36;;
-    "search_exclusive") echo -n 37;;
-    "search_shared") echo -n 38;;
-    "search_static") echo -n 39;;
-    "version_major") echo -n 40;;
-    "version_micro") echo -n 41;;
-    "version_minor") echo -n 42;;
-    "version_target") echo -n 43;;
+    "defines_library") echo -n 13;;
+    "defines_program") echo -n 14;;
+    "defines_shared") echo -n 15;;
+    "defines_static") echo -n 16;;
+    "environment") echo -n 17;;
+    "flags_all") echo -n 18;;
+    "flags_library") echo -n 19;;
+    "flags_program") echo -n 20;;
+    "flags_shared") echo -n 21;;
+    "flags_static") echo -n 22;;
+    "modes") echo -n 23;;
+    "modes_default") echo -n 24;;
+    "path_headers") echo -n 25;;
+    "path_headers_preserve") echo -n 26;;
+    "path_language") echo -n 27;;
+    "path_library_script") echo -n 28;;
+    "path_library_shared") echo -n 29;;
+    "path_library_static") echo -n 30;;
+    "path_program_script") echo -n 31;;
+    "path_program_shared") echo -n 32;;
+    "path_program_static") echo -n 33;;
+    "path_sources") echo -n 34;;
+    "path_standard") echo -n 35;;
+    "process_post") echo -n 36;;
+    "process_pre") echo -n 37;;
+    "project_name") echo -n 38;;
+    "search_exclusive") echo -n 39;;
+    "search_shared") echo -n 40;;
+    "search_static") echo -n 41;;
+    "version_major") echo -n 42;;
+    "version_major_prefix") echo -n 43;;
+    "version_micro") echo -n 44;;
+    "version_micro_prefix") echo -n 45;;
+    "version_minor") echo -n 46;;
+    "version_minor_prefix") echo -n 47;;
+    "version_nano") echo -n 48;;
+    "version_nano_prefix") echo -n 49;;
+    "version_target") echo -n 50;;
 
-    "build_libraries-$mode") echo -n 44;;
-    "build_sources_headers-$mode") echo -n 45;;
-    "build_sources_library-$mode") echo -n 46;;
-    "build_sources_program-$mode") echo -n 47;;
-    "build_sources_setting-$mode") echo -n 48;;
-    "build_sources_script-$mode") echo -n 49;;
-    "defines_all-$mode") echo -n 50;;
-    "defines_shared-$mode") echo -n 51;;
-    "defines_static-$mode") echo -n 52;;
-    "environment-$mode") echo -n 53;;
-    "flags_all-$mode") echo -n 54;;
-    "flags_library-$mode") echo -n 55;;
-    "flags_program-$mode") echo -n 56;;
-    "flags_shared-$mode") echo -n 57;;
-    "flags_static-$mode") echo -n 58;;
+    "build_libraries-$mode") echo -n 51;;
+    "build_sources_headers-$mode") echo -n 52;;
+    "build_sources_library-$mode") echo -n 53;;
+    "build_sources_program-$mode") echo -n 54;;
+    "build_sources_script-$mode") echo -n 55;;
+    "build_sources_setting-$mode") echo -n 56;;
+    "defines_all-$mode") echo -n 57;;
+    "defines_library-$mode") echo -n 58;;
+    "defines_program-$mode") echo -n 59;;
+    "defines_shared-$mode") echo -n 60;;
+    "defines_static-$mode") echo -n 61;;
+    "environment-$mode") echo -n 62;;
+    "flags_all-$mode") echo -n 63;;
+    "flags_library-$mode") echo -n 64;;
+    "flags_program-$mode") echo -n 65;;
+    "flags_shared-$mode") echo -n 66;;
+    "flags_static-$mode") echo -n 67;;
+
+    "has-version_major_prefix") echo -n 68;;
+    "has-version_micro_prefix") echo -n 69;;
+    "has-version_minor_prefix") echo -n 70;;
+    "has-version_nano_prefix") echo -n 71;;
+
+    "has-version_major_prefix-$mode") echo -n 72;;
+    "has-version_micro_prefix-$mode") echo -n 73;;
+    "has-version_minor_prefix-$mode") echo -n 74;;
+    "has-version_nano_prefix-$mode") echo -n 75;;
   esac
 }
 
@@ -510,7 +536,7 @@ bootstrap_load_settings() {
     return 1
   fi
 
-  for i in build_compiler build_indexer build_language build_libraries build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_setting build_sources_script build_static defines_all defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_language path_headers path_headers_preserve path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_micro version_minor ; do
+  for i in build_compiler build_indexer build_language build_libraries build_script build_shared build_sources_headers build_sources_library build_sources_program build_sources_script build_sources_setting build_static defines_all defines_library defines_program defines_shared defines_static environment flags_all flags_library flags_program flags_shared flags_static modes modes_default path_headers path_headers_preserve path_language path_library_script path_library_shared path_library_static path_program_script path_program_shared path_program_static path_sources path_standard process_post process_pre project_name search_exclusive search_shared search_static version_major version_major_prefix version_micro version_micro_prefix version_minor version_minor_prefix version_nano version_nano_prefix version_target ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
   done
 }
@@ -518,8 +544,28 @@ bootstrap_load_settings() {
 bootstrap_load_settings_mode() {
   local i=
 
-  for i in build_libraries-$mode build_sources_headers-$mode build_sources_library-$mode build_sources_program-$mode build_sources_setting-$mode build_sources_script-$mode defines_all-$mode defines_shared-$mode defines_static-$mode environment-$mode flags_all-$mode flags_library-$mode flags_program-$mode flags_shared-$mode flags_static-$mode ; do
+  for i in build_libraries-$mode build_sources_headers-$mode build_sources_library-$mode build_sources_program-$mode build_sources_script-$mode build_sources_setting-$mode defines_all-$mode defines_library-$mode defines_program-$mode defines_shared-$mode defines_static-$mode environment-$mode flags_all-$mode flags_library-$mode flags_program-$mode flags_shared-$mode flags_static-$mode ; do
     variables[$(bootstrap_id $i)]=$(grep -s -o "^[[:space:]]*$i[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
+  done
+}
+
+bootstrap_load_settings_has() {
+  local i=
+
+  for i in version_major_prefix version_minor_prefix version_micro_prefix version_nano_prefix ; do
+    if [[ $(grep -s -o "^[[:space:]]*$i\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
+      variables[$(bootstrap_id has-$i)]="yes"
+    else
+      variables[$(bootstrap_id has-$i)]="no"
+    fi
+  done
+
+  for i in version_major_prefix-$mode version_minor_prefix-$mode version_micro_prefix-$mode version_nano_prefix-$mode ; do
+    if [[ $(grep -s -o "^[[:space:]]*$i-$mode\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
+      variables[$(bootstrap_id has-$i)]="yes"
+    else
+      variables[$(bootstrap_id has-$i)]="no"
+    fi
   done
 }
 
@@ -547,8 +593,13 @@ bootstrap_operation_build() {
   local failure=
   local name=${variables[$(bootstrap_id project_name)]}
   local major=${variables[$(bootstrap_id version_major)]}
+  local major_prefix=${variables[$(bootstrap_id version_major_prefix)]}
   local minor=${variables[$(bootstrap_id version_minor)]}
+  local minor_prefix=${variables[$(bootstrap_id version_minor_prefix)]}
   local micro=${variables[$(bootstrap_id version_micro)]}
+  local micro_prefix=${variables[$(bootstrap_id version_micro_prefix)]}
+  local nano=${variables[$(bootstrap_id version_nano)]}
+  local nano_prefix=${variables[$(bootstrap_id version_nano_prefix)]}
   local target=${variables[$(bootstrap_id version_target)]}
   local compiler=${variables[$(bootstrap_id build_compiler)]}
   local indexer=${variables[$(bootstrap_id build_indexer)]}
@@ -560,22 +611,24 @@ bootstrap_operation_build() {
   local search_static=${variables[$(bootstrap_id search_static)]}
   local shared=${variables[$(bootstrap_id build_shared)]}
   local static=${variables[$(bootstrap_id build_static)]}
+  local sources_headers=${variables[$(bootstrap_id build_sources_headers)]}
   local sources_library=${variables[$(bootstrap_id build_sources_library)]}
   local sources_program=${variables[$(bootstrap_id build_sources_program)]}
-  local sources_headers=${variables[$(bootstrap_id build_sources_headers)]}
-  local sources_bash=${variables[$(bootstrap_id build_sources_bash)]}
+  local sources_script=${variables[$(bootstrap_id build_sources_script)]}
   local sources_setting=${variables[$(bootstrap_id build_sources_setting)]}
   local sources=
   local libraries=${variables[$(bootstrap_id build_libraries)]}
   local links=
-  local defines=${variables[$(bootstrap_id defines_all)]}
+  local defines_all=${variables[$(bootstrap_id defines_all)]}
+  local defines_library=${variables[$(bootstrap_id defines_library)]}
+  local defines_program=${variables[$(bootstrap_id defines_program)]}
   local defines_shared=${variables[$(bootstrap_id defines_shared)]}
   local defines_static=${variables[$(bootstrap_id defines_static)]}
   local flags_all=${variables[$(bootstrap_id flags_all)]}
-  local flags_shared=${variables[$(bootstrap_id flags_shared)]}
-  local flags_static=${variables[$(bootstrap_id flags_static)]}
   local flags_library=${variables[$(bootstrap_id flags_library)]}
   local flags_program=${variables[$(bootstrap_id flags_program)]}
+  local flags_shared=${variables[$(bootstrap_id flags_shared)]}
+  local flags_static=${variables[$(bootstrap_id flags_static)]}
   local i=
   local n=
   local version=
@@ -584,16 +637,31 @@ bootstrap_operation_build() {
   local path_headers=${variables[$(bootstrap_id path_headers)]}
   local path_headers_preserve=${variables[$(bootstrap_id path_headers_preserve)]}
 
+  # provide defaults for version prefixes if they are not specified (except for major).
+  if [[ ${variables[$(bootstrap_id has-version_minor_prefix)]} != "yes" && $minor != "" ]] ; then
+    minor_prefix="."
+  fi
+
+  if [[ ${variables[$(bootstrap_id has-version_micro_prefix)]} != "yes" && $micro != "" ]] ; then
+    micro_prefix="."
+  fi
+
+  if [[ ${variables[$(bootstrap_id has-version_nano_prefix)]} != "yes" && $nano != "" ]] ; then
+    nano_prefix="."
+  fi
+
   if [[ $target == "" ]] ; then
-    target="major"
+    target="micro"
   fi
 
   if [[ $target == "major" ]] ; then
-    version="$major"
+    version="$major_prefix$major"
   elif [[ $target == "minor" ]] ; then
-    version="${major}.$minor"
+    version="$major_prefix$major$minor_prefix$minor"
   elif [[ $target == "micro" ]] ; then
-    version="${major}.${minor}.$micro"
+    version="$major_prefix$major$minor_prefix$minor$micro_prefix$micro"
+  elif [[ $target == "nano" ]] ; then
+    version="$major_prefix$major$minor_prefix$minor$micro_prefix$micro$nano_prefix$nano"
   fi
 
   if [[ $sources_library == "" ]] ; then
@@ -626,10 +694,22 @@ bootstrap_operation_build() {
     libraries="${variables[$(bootstrap_id build_libraries-$mode)]} $libraries"
   fi
 
-  if [[ $defines == "" ]] ; then
-    defines=${variables[$(bootstrap_id defines_all-$mode)]}
+  if [[ $defines_all == "" ]] ; then
+    defines_all=${variables[$(bootstrap_id defines_all-$mode)]}
   else
-    defines="$defines ${variables[$(bootstrap_id defines_all-$mode)]}"
+    defines_all="$defines_all ${variables[$(bootstrap_id defines_all-$mode)]}"
+  fi
+
+  if [[ $defines_library == "" ]] ; then
+    defines_library=${variables[$(bootstrap_id defines_library-$mode)]}
+  else
+    defines_library="$defines_library ${variables[$(bootstrap_id defines_library-$mode)]}"
+  fi
+
+  if [[ $defines_program == "" ]] ; then
+    defines_program=${variables[$(bootstrap_id defines_program-$mode)]}
+  else
+    defines_program="$defines_program ${variables[$(bootstrap_id defines_program-$mode)]}"
   fi
 
   if [[ $defines_shared == "" ]] ; then
@@ -650,18 +730,6 @@ bootstrap_operation_build() {
     flags_all="$flags_all ${variables[$(bootstrap_id flags_all-$mode)]}"
   fi
 
-  if [[ $flags_shared == "" ]] ; then
-    flags_shared=${variables[$(bootstrap_id flags_shared-$mode)]}
-  else
-    flags_shared="$flags_shared ${variables[$(bootstrap_id flags_shared-$mode)]}"
-  fi
-
-  if [[ $flags_static == "" ]] ; then
-    flags_static=${variables[$(bootstrap_id flags_static-$mode)]}
-  else
-    flags_static="$flags_static ${variables[$(bootstrap_id flags_static-$mode)]}"
-  fi
-
   if [[ $flags_library == "" ]] ; then
     flags_library=${variables[$(bootstrap_id flags_library-$mode)]}
   else
@@ -674,6 +742,18 @@ bootstrap_operation_build() {
     flags_program="$flags_program ${variables[$(bootstrap_id flags_program-$mode)]}"
   fi
 
+  if [[ $flags_shared == "" ]] ; then
+    flags_shared=${variables[$(bootstrap_id flags_shared-$mode)]}
+  else
+    flags_shared="$flags_shared ${variables[$(bootstrap_id flags_shared-$mode)]}"
+  fi
+
+  if [[ $flags_static == "" ]] ; then
+    flags_static=${variables[$(bootstrap_id flags_static-$mode)]}
+  else
+    flags_static="$flags_static ${variables[$(bootstrap_id flags_static-$mode)]}"
+  fi
+
   if [[ $path_work != "" ]] ; then
     arguments_include="$arguments_include -I${path_work}includes/"
     arguments_shared="$arguments_shared -L${path_work}libraries/shared/"
@@ -681,30 +761,11 @@ bootstrap_operation_build() {
   fi
 
   if [[ $defines_override != "" ]] ; then
-    defines="$defines_override"
+    defines_all="$defines_override"
+    defines_library=
+    defines_program=
     defines_shared=
     defines_static=
-  fi
-
-  if [[ $defines != "" ]] ; then
-    flags_all="$flags_all "
-    for i in $defines ; do
-      flags_all="${flags_all}$i "
-    done
-  fi
-
-  if [[ $defines_shared != "" ]] ; then
-    flags_shared="$flags_shared "
-    for i in $defines_shared ; do
-      flags_shared="${flags_shared}$i "
-    done
-  fi
-
-  if [[ $defines_static != "" ]] ; then
-    flags_static="$flags_static "
-    for i in $defines_static ; do
-      flags_static="${flags_static}$i "
-    done
   fi
 
   if [[ $enable_shared == "yes" ]] ; then
@@ -872,13 +933,16 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library
+        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$version $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library
       fi
 
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$major.$minor.$micro $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library || failure=1
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$version $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library || failure=1
 
       if [[ $failure == "" ]] ; then
-        ln $verbose -sf lib$name.so.$major.$minor.$micro ${path_build}libraries/shared/lib$name.so.$major || failure=1
+        if [[ $target != "major" ]] ; then
+          ln $verbose -sf lib$name.so.$version ${path_build}libraries/shared/lib$name.so.$major || failure=1
+        fi
+
         ln $verbose -sf lib$name.so.$major ${path_build}libraries/shared/lib$name.so || failure=1
       fi
     fi
@@ -896,10 +960,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program
+        echo $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program $defines_all $defines_shared $defines_program
       fi
 
-      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program || failure=1
+      $compiler $sources -o ${path_build}programs/shared/$name $arguments_shared $arguments_include $links $libraries $flags_all $flags_shared $flags_program $defines_all $defines_shared $defines_program || failure=1
     fi
   fi
 
@@ -922,10 +986,10 @@ bootstrap_operation_build() {
         sources="$sources${path_build}objects/$directory/$n.o "
 
         if [[ $verbosity == "verbose" ]] ; then
-          echo $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library
+          echo $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library $defines_all $defines_static $defines_library
         fi
 
-        $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library || failure=1
+        $compiler $path_c$i -c -static -o ${path_build}objects/$directory/$n.o $arguments_static $arguments_include $libraries $flags_all $flags_static $flags_library $defines_all $defines_static $defines_library || failure=1
 
         if [[ $failure == "1" ]] ; then
           break;
@@ -955,10 +1019,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program
+        echo $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program $defines_all $defines_static $defines_program
       fi
 
-      $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program || failure=1
+      $compiler $sources -static -o ${path_build}programs/static/$name $arguments_static $arguments_include $links $libraries $flags_all $flags_static $flags_program $defines_all $defines_static $defines_program || failure=1
     fi
   fi
 
@@ -998,6 +1062,7 @@ bootstrap_cleanup() {
   unset bootstrap_id
   unset bootstrap_load_settings
   unset bootstrap_load_settings_mode
+  unset bootstrap_load_settings_has
   unset bootstrap_prepare_build
   unset bootstrap_operation_build
   unset bootstrap_operation_clean

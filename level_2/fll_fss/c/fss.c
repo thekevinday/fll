@@ -186,7 +186,7 @@ extern "C" {
 #endif // _di_fll_fss_identify_
 
 #ifndef _di_fll_fss_snatch_
-  f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
+  f_status_t fll_fss_snatch(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -207,11 +207,12 @@ extern "C" {
 
     memset(&matched, 0, sizeof(bool) * size);
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
+
         if (matched[j]) continue;
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
@@ -220,6 +221,10 @@ extern "C" {
         if (status == F_equal_to_not) continue;
 
         matched[j] = F_true;
+
+        if (matches) {
+          matches[j] = F_true;
+        }
 
         if (!contents.array[i].used) continue;
 
@@ -237,7 +242,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_
 
 #ifndef _di_fll_fss_snatch_apart_
-  f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -257,11 +262,11 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t k = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
@@ -270,6 +275,10 @@ extern "C" {
 
         value = values[j];
         content = &contents.array[i];
+
+        if (matches) {
+          matches[j] = F_true;
+        }
 
         if (values[j]->used + contents.array[i].used > values[j]->size) {
           if (values[j]->used + contents.array[i].used > f_array_length_t_size) {
@@ -285,16 +294,16 @@ extern "C" {
           }
         }
 
-        for (k = 0; k < contents.array[i].used; k++) {
+        for (k = 0; k < contents.array[i].used; ++k) {
 
           status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
 
-          values[j]->used++;
+          ++values[j]->used;
 
           if (indexs) {
             indexs[j]->array[indexs[j]->used] = i;
-            indexs[j]->used++;
+            ++indexs[j]->used;
           }
         } // for
       } // for
@@ -305,7 +314,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_apart_
 
 #ifndef _di_fll_fss_snatch_map_
-  f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -328,12 +337,13 @@ extern "C" {
 
     f_string_map_t *map = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
+
       if (!contents.array[i].used) continue;
 
       length_name = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_name, lengths[j]);
 
@@ -344,23 +354,29 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           macro_f_string_dynamic_t_delete_simple(name);
+
           return status;
         }
 
         matched = F_false;
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
-        for (k = 0; k < values[j]->used; k++) {
+        for (k = 0; k < values[j]->used; ++k) {
 
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
+
             return status;
           }
 
           if (status == F_equal_to) {
             matched = F_true;
+
+            if (matches) {
+              matches[j] = F_true;
+            }
 
             macro_f_string_dynamic_t_delete_simple(name);
             break;
@@ -369,6 +385,7 @@ extern "C" {
 
         if (matched) {
           name.used = 0;
+
           continue;
         }
 
@@ -376,6 +393,7 @@ extern "C" {
           if (values[j]->used + f_fss_default_allocation_step > f_array_length_t_size) {
             if (values[j]->used == f_array_length_t_size) {
               macro_f_string_dynamic_t_delete_simple(name);
+
               return F_status_set_error(F_array_too_large);
             }
 
@@ -383,6 +401,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_string_dynamic_t_delete_simple(name);
+
               return status;
             }
 
@@ -396,6 +415,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               macro_f_string_dynamic_t_delete_simple(name);
+
               return status;
             }
 
@@ -413,6 +433,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
+
             return status;
           }
         }
@@ -421,11 +442,11 @@ extern "C" {
         map->name.used = name.used;
         map->name.size = name.size;
 
-        values[j]->used++;
+        ++values[j]->used;
 
         if (indexs) {
           indexs[j]->array[indexs[j]->used] = i;
-          indexs[j]->used++;
+          ++indexs[j]->used;
         }
 
         macro_f_string_dynamic_t_clear(name);
@@ -438,7 +459,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_
 
 #ifndef _di_fll_fss_snatch_map_apart_
-  f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -458,17 +479,22 @@ extern "C" {
 
     f_string_map_multi_t *map_multi = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
+
       if (!contents.array[i].used) continue;
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
+
+        if (matches) {
+          matches[j] = F_true;
+        }
 
         status = f_string_map_multis_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
@@ -483,23 +509,23 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map_multi->name);
         if (F_status_is_error(status)) return status;
 
-        values[j]->used++;
+        ++values[j]->used;
 
         if (indexs) {
           indexs[j]->array[indexs[j]->used] = i;
-          indexs[j]->used++;
+          ++indexs[j]->used;
         }
 
         if (contents.array[i].used > 1) {
           status = f_string_dynamics_increase_by(contents.array[i].used - 1, &map_multi->value);
           if (F_status_is_error(status)) return status;
 
-          for (k = 1; k < contents.array[i].used; k++) {
+          for (k = 1; k < contents.array[i].used; ++k) {
 
             status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
             if (F_status_is_error(status)) return status;
 
-            map_multi->value.used++;
+            ++map_multi->value.used;
           } // for
         }
       } // for
@@ -510,7 +536,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_apart_
 
 #ifndef _di_fll_fss_snatch_map_mash_
-  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -530,17 +556,22 @@ extern "C" {
 
     f_string_map_t *map = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
+
       if (!contents.array[i].used) continue;
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
+
+        if (matches) {
+          matches[j] = F_true;
+        }
 
         status = f_string_maps_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
@@ -577,7 +608,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_map_mash_
 
 #ifndef _di_fll_fss_snatch_map_mash_apart_
-  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_map_multis_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_map_multis_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -600,33 +631,41 @@ extern "C" {
 
     f_string_map_multi_t *map_multi = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
+
       if (!contents.array[i].used) continue;
 
       length_name = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
+
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_name, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
+        if (matches) {
+          matches[j] = F_true;
+        }
+
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
           macro_f_string_dynamic_t_delete_simple(name);
+
           return status;
         }
 
         matched = F_false;
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
-        for (k = 0; k < values[j]->used; k++) {
+        for (k = 0; k < values[j]->used; ++k) {
 
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
+
             return status;
           }
 
@@ -657,11 +696,11 @@ extern "C" {
           map_multi->name.used = name.used;
           map_multi->name.size = name.size;
 
-          values[j]->used++;
+          ++values[j]->used;
 
           if (indexs) {
             indexs[j]->array[indexs[j]->used] = i;
-            indexs[j]->used++;
+            ++indexs[j]->used;
           }
 
           macro_f_string_dynamic_t_clear(name);
@@ -672,23 +711,24 @@ extern "C" {
         status = f_string_dynamics_increase(f_fss_default_allocation_step_small, &map_multi->value);
         if (F_status_is_error(status)) return status;
 
-        for (k = 1; k < contents.array[i].used; k++) {
+        for (k = 1; k < contents.array[i].used; ++k) {
 
           status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map_multi->value.array[map_multi->value.used]);
           if (F_status_is_error(status)) return status;
         } // for
 
-        map_multi->value.used++;
+        ++map_multi->value.used;
       } // for
     } // for
 
     macro_f_string_dynamic_t_delete_simple(name);
+
     return F_none;
   }
 #endif // _di_fll_fss_snatch_map_mash_apart_
 
 #ifndef _di_fll_fss_snatch_map_together_
-  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_map_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_maps_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -711,34 +751,41 @@ extern "C" {
 
     f_string_map_t *map = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
+
       if (!contents.array[i].used) continue;
 
       length_name = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_name, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
+        if (matches) {
+          matches[j] = F_true;
+        }
+
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &name);
 
         if (F_status_is_error(status)) {
           macro_f_string_dynamic_t_delete_simple(name);
+
           return status;
         }
 
         matched = F_false;
         length_name = (contents.array[i].array[0].stop - contents.array[i].array[0].start) + 1;
 
-        for (k = 0; k < values[j]->used; k++) {
+        for (k = 0; k < values[j]->used; ++k) {
 
           status = fl_string_compare_trim(buffer.string + contents.array[i].array[0].start, values[j]->array[k].name.string, length_name, values[j]->array[k].name.used);
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
+
             return status;
           }
 
@@ -770,11 +817,11 @@ extern "C" {
           map->name.used = name.used;
           map->name.size = name.size;
 
-          values[j]->used++;
+          ++values[j]->used;
 
           if (indexs) {
             indexs[j]->array[indexs[j]->used] = i;
-            indexs[j]->used++;
+            ++indexs[j]->used;
           }
 
           macro_f_string_dynamic_t_clear(name);
@@ -785,6 +832,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             macro_f_string_dynamic_t_delete_simple(name);
+
             return status;
           }
         }
@@ -792,12 +840,13 @@ extern "C" {
     } // for
 
     macro_f_string_dynamic_t_delete_simple(name);
+
     return F_none;
   }
 #endif // _di_fll_fss_snatch_map_together_
 
 #ifndef _di_fll_fss_snatch_mash_
-  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
+  f_status_t fll_fss_snatch_mash(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -819,11 +868,12 @@ extern "C" {
 
     memset(&matched, 0, sizeof(bool) * size);
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
+
         if (matched[j]) continue;
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
@@ -831,9 +881,13 @@ extern "C" {
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
+        if (matches) {
+          matches[j] = F_true;
+        }
+
         matched[j] = F_true;
 
-        for (k = 0; k < contents.array[i].used; k++) {
+        for (k = 0; k < contents.array[i].used; ++k) {
 
           status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;
@@ -850,7 +904,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_
 
 #ifndef _di_fll_fss_snatch_mash_apart_
-  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamics_t *values[], f_array_lengths_t *indexs[]) {
+  f_status_t fll_fss_snatch_mash_apart(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamics_t *values[], bool matches[], f_array_lengths_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -868,16 +922,20 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t k = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
+
+        if (matches) {
+          matches[j] = F_true;
+        }
 
         status = f_string_dynamics_increase(f_fss_default_allocation_step_small, values[j]);
         if (F_status_is_error(status)) return status;
@@ -887,17 +945,17 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        for (k = 0; k < contents.array[i].used; k++) {
+        for (k = 0; k < contents.array[i].used; ++k) {
 
           status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &values[j]->array[values[j]->used]);
           if (F_status_is_error(status)) return status;
         } // for
 
-        values[j]->used++;
+        ++values[j]->used;
 
         if (indexs) {
           indexs[j]->array[indexs[j]->used] = i;
-          indexs[j]->used++;
+          ++indexs[j]->used;
         }
       } // for
     } // for
@@ -907,7 +965,7 @@ extern "C" {
 #endif // _di_fll_fss_snatch_mash_apart_
 
 #ifndef _di_fll_fss_snatch_together_
-  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], f_array_length_t *indexs[]) {
+  f_status_t fll_fss_snatch_together(const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, const f_string_t names[], const f_array_length_t lengths[], const f_array_length_t size, const f_string_t glue, const f_array_length_t glue_length, f_string_dynamic_t *values[], bool matches[], f_array_length_t *indexs[]) {
     #ifndef _di_level_2_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (objects.used != contents.used) return F_status_set_error(F_parameter);
@@ -925,18 +983,22 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t k = 0;
 
-    for (; i < objects.used; i++) {
+    for (; i < objects.used; ++i) {
 
       length_object = (objects.array[i].stop - objects.array[i].start) + 1;
 
-      for (j = 0; j < size; j++) {
+      for (j = 0; j < size; ++j) {
 
         status = fl_string_compare_trim(buffer.string + objects.array[i].start, names[j], length_object, lengths[j]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
 
-        for (k = 0; k < contents.array[i].used; k++) {
+        if (matches) {
+          matches[j] = F_true;
+        }
+
+        for (k = 0; k < contents.array[i].used; ++k) {
 
           status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], values[j]);
           if (F_status_is_error(status)) return status;

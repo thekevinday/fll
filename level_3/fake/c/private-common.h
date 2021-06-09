@@ -44,16 +44,23 @@ extern "C" {
     f_string_dynamic_t process_pre;
     f_string_dynamic_t project_name;
     f_string_dynamic_t version_major;
+    f_string_dynamic_t version_major_prefix;
     f_string_dynamic_t version_micro;
+    f_string_dynamic_t version_micro_prefix;
     f_string_dynamic_t version_minor;
+    f_string_dynamic_t version_minor_prefix;
+    f_string_dynamic_t version_nano;
+    f_string_dynamic_t version_nano_prefix;
 
     f_string_dynamics_t build_libraries;
     f_string_dynamics_t build_sources_headers;
     f_string_dynamics_t build_sources_library;
     f_string_dynamics_t build_sources_program;
-    f_string_dynamics_t build_sources_setting;
     f_string_dynamics_t build_sources_script;
+    f_string_dynamics_t build_sources_setting;
     f_string_dynamics_t defines_all;
+    f_string_dynamics_t defines_library;
+    f_string_dynamics_t defines_program;
     f_string_dynamics_t defines_shared;
     f_string_dynamics_t defines_static;
     f_string_dynamics_t environment;
@@ -94,6 +101,13 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
@@ -129,15 +143,22 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(setting.process_pre); \
     macro_f_string_dynamic_t_delete_simple(setting.project_name); \
     macro_f_string_dynamic_t_delete_simple(setting.version_major); \
+    macro_f_string_dynamic_t_delete_simple(setting.version_major_prefix); \
     macro_f_string_dynamic_t_delete_simple(setting.version_micro); \
+    macro_f_string_dynamic_t_delete_simple(setting.version_micro_prefix); \
     macro_f_string_dynamic_t_delete_simple(setting.version_minor); \
+    macro_f_string_dynamic_t_delete_simple(setting.version_minor_prefix); \
+    macro_f_string_dynamic_t_delete_simple(setting.version_nano); \
+    macro_f_string_dynamic_t_delete_simple(setting.version_nano_prefix); \
     macro_f_string_dynamics_t_delete_simple(setting.build_libraries); \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers); \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_library); \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_program); \
-    macro_f_string_dynamics_t_delete_simple(setting.build_sources_setting); \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_script); \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_setting); \
     macro_f_string_dynamics_t_delete_simple(setting.defines_all); \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_library); \
+    macro_f_string_dynamics_t_delete_simple(setting.defines_program); \
     macro_f_string_dynamics_t_delete_simple(setting.defines_shared); \
     macro_f_string_dynamics_t_delete_simple(setting.defines_static); \
     macro_f_string_dynamics_t_delete_simple(setting.environment); \
@@ -158,10 +179,12 @@ extern "C" {
   #define fake_build_setting_name_build_sources_headers  "build_sources_headers"
   #define fake_build_setting_name_build_sources_library  "build_sources_library"
   #define fake_build_setting_name_build_sources_program  "build_sources_program"
-  #define fake_build_setting_name_build_sources_settings "build_sources_setting"
   #define fake_build_setting_name_build_sources_script   "build_sources_script"
+  #define fake_build_setting_name_build_sources_settings "build_sources_setting"
   #define fake_build_setting_name_build_static           "build_static"
   #define fake_build_setting_name_defines_all            "defines_all"
+  #define fake_build_setting_name_defines_library        "defines_library"
+  #define fake_build_setting_name_defines_program        "defines_program"
   #define fake_build_setting_name_defines_shared         "defines_shared"
   #define fake_build_setting_name_defines_static         "defines_static"
   #define fake_build_setting_name_environment            "environment"
@@ -190,8 +213,13 @@ extern "C" {
   #define fake_build_setting_name_search_shared          "search_shared"
   #define fake_build_setting_name_search_static          "search_static"
   #define fake_build_setting_name_version_major          "version_major"
+  #define fake_build_setting_name_version_major_prefix   "version_major_prefix"
   #define fake_build_setting_name_version_micro          "version_micro"
+  #define fake_build_setting_name_version_micro_prefix   "version_micro_prefix"
   #define fake_build_setting_name_version_minor          "version_minor"
+  #define fake_build_setting_name_version_minor_prefix   "version_minor_prefix"
+  #define fake_build_setting_name_version_nano           "version_nano"
+  #define fake_build_setting_name_version_nano_prefix    "version_nano_prefix"
   #define fake_build_setting_name_version_target         "version_target"
 
   #define fake_build_setting_name_build_compiler_length         14
@@ -203,11 +231,13 @@ extern "C" {
   #define fake_build_setting_name_build_sources_headers_length  21
   #define fake_build_setting_name_build_sources_library_length  21
   #define fake_build_setting_name_build_sources_program_length  21
-  #define fake_build_setting_name_build_sources_settings_length 22
   #define fake_build_setting_name_build_sources_script_length   20
+  #define fake_build_setting_name_build_sources_settings_length 22
   #define fake_build_setting_name_build_static_length           12
   #define fake_build_setting_name_environment_length            11
   #define fake_build_setting_name_defines_all_length            11
+  #define fake_build_setting_name_defines_library_length        15
+  #define fake_build_setting_name_defines_program_length        15
   #define fake_build_setting_name_defines_shared_length         14
   #define fake_build_setting_name_defines_static_length         14
   #define fake_build_setting_name_flags_all_length              9
@@ -235,15 +265,22 @@ extern "C" {
   #define fake_build_setting_name_search_shared_length          13
   #define fake_build_setting_name_search_static_length          13
   #define fake_build_setting_name_version_major_length          13
+  #define fake_build_setting_name_version_major_prefix_length   20
   #define fake_build_setting_name_version_micro_length          13
+  #define fake_build_setting_name_version_micro_prefix_length   20
   #define fake_build_setting_name_version_minor_length          13
+  #define fake_build_setting_name_version_minor_prefix_length   20
+  #define fake_build_setting_name_version_nano_length           12
+  #define fake_build_setting_name_version_nano_prefix_length    19
   #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 44
+  #define fake_build_setting_total 51
 
-  #define fake_build_setting_default_version "0"
+  #define fake_build_setting_default_version        "0"
+  #define fake_build_setting_default_version_prefix "."
 
-  #define fake_build_setting_default_version_length 1
+  #define fake_build_setting_default_version_length        1
+  #define fake_build_setting_default_version_prefix_length 1
 #endif // _di_fake_build_setting_t_
 
 #ifndef _di_fake_build_stage_t_
@@ -353,7 +390,6 @@ extern "C" {
   #define fake_build_parameter_library_name_suffix_shared ".so"
   #define fake_build_parameter_library_name_suffix_static ".a"
   #define fake_build_parameter_library_output             "-o"
-  #define fake_build_parameter_library_separator          "."
   #define fake_build_parameter_library_shared             "-shared"
   #define fake_build_parameter_library_static             "-static"
   #define fake_build_parameter_library_shared_prefix      "-Wl,-soname,"
@@ -365,7 +401,6 @@ extern "C" {
   #define fake_build_parameter_library_name_suffix_shared_length 3
   #define fake_build_parameter_library_name_suffix_static_length 2
   #define fake_build_parameter_library_output_length             2
-  #define fake_build_parameter_library_separator_length          1
   #define fake_build_parameter_library_shared_length             7
   #define fake_build_parameter_library_static_length             7
   #define fake_build_parameter_library_shared_prefix_length      12

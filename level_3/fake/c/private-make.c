@@ -695,7 +695,7 @@ extern "C" {
           &data_make->setting_make.parameter,
         };
 
-        *status = fll_fss_snatch_map_apart(data_make->buffer, settings.objects, settings.contents, settings_name, settings_length, 2, settings_value, 0);
+        *status = fll_fss_snatch_map_apart(data_make->buffer, settings.objects, settings.contents, settings_name, settings_length, 2, settings_value, 0, 0);
 
         if (F_status_is_error(*status)) {
           fll_error_print(main.error, F_status_set_fine(*status), "fll_fss_snatch_map_apart", F_true);

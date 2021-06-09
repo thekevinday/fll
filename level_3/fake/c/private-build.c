@@ -164,6 +164,21 @@ extern "C" {
           if (F_status_is_error(*status)) break;
         } // for
       }
+
+      if (is_library) {
+        for (i = 0; i < data_build.setting.defines_library.used && F_status_is_error_not(*status); ++i) {
+
+          *status = fll_execute_arguments_add(data_build.setting.defines_library.array[i].string, data_build.setting.defines_library.array[i].used, arguments);
+          if (F_status_is_error(*status)) break;
+        } // for
+      }
+      else {
+        for (i = 0; i < data_build.setting.defines_program.used && F_status_is_error_not(*status); ++i) {
+
+          *status = fll_execute_arguments_add(data_build.setting.defines_program.array[i].string, data_build.setting.defines_program.array[i].used, arguments);
+          if (F_status_is_error(*status)) break;
+        } // for
+      }
     }
   }
 #endif // _di_fake_build_arguments_standard_add_
@@ -839,115 +854,182 @@ extern "C" {
       }
     }
 
-    f_array_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_length;
-    f_array_length_t parameter_file_name_major_length = fake_build_parameter_library_name_prefix_length;
-    f_array_length_t parameter_file_name_minor_length = fake_build_parameter_library_name_prefix_length;
-    f_array_length_t parameter_file_name_micro_length = fake_build_parameter_library_name_prefix_length;
-
-    parameter_file_name_micro_length += data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_length;
-    parameter_file_name_length = parameter_file_name_micro_length;
-
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length + data_build.setting.version_major.used;
-    parameter_file_name_major_length = parameter_file_name_micro_length;
-
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length + data_build.setting.version_minor.used;
-    parameter_file_name_minor_length = parameter_file_name_micro_length;
-
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length + data_build.setting.version_micro.used;
+    const f_array_length_t parameter_file_name_length = fake_build_parameter_library_name_prefix_length + data_build.setting.project_name.used + fake_build_parameter_library_name_suffix_shared_length;
+    const f_array_length_t parameter_file_name_major_length = data_build.setting.version_major.used ? parameter_file_name_length + data_build.setting.version_major_prefix.used + data_build.setting.version_major.used : 0;
+    const f_array_length_t parameter_file_name_minor_length = data_build.setting.version_minor.used ? parameter_file_name_major_length + data_build.setting.version_minor_prefix.used + data_build.setting.version_minor.used : 0;
+    const f_array_length_t parameter_file_name_micro_length = data_build.setting.version_micro.used ? parameter_file_name_minor_length + data_build.setting.version_micro_prefix.used + data_build.setting.version_micro.used : 0;
+    const f_array_length_t parameter_file_name_nano_length = data_build.setting.version_nano.used ? parameter_file_name_micro_length + data_build.setting.version_nano_prefix.used + data_build.setting.version_nano.used : 0;
 
     char parameter_file_name[parameter_file_name_length + 1];
     char parameter_file_name_major[parameter_file_name_major_length + 1];
     char parameter_file_name_minor[parameter_file_name_minor_length + 1];
     char parameter_file_name_micro[parameter_file_name_micro_length + 1];
-
-    parameter_file_name_micro_length = 0;
-
-    memcpy(parameter_file_name, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-    memcpy(parameter_file_name_major, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-    memcpy(parameter_file_name_minor, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-    memcpy(parameter_file_name_micro, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
-    parameter_file_name_micro_length += fake_build_parameter_library_name_prefix_length;
-
-    memcpy(parameter_file_name + parameter_file_name_micro_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-    memcpy(parameter_file_name_major + parameter_file_name_micro_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, data_build.setting.project_name.string, data_build.setting.project_name.used);
-    parameter_file_name_micro_length += data_build.setting.project_name.used;
-
-    memcpy(parameter_file_name + parameter_file_name_micro_length, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
-    memcpy(parameter_file_name_major + parameter_file_name_micro_length, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
-    parameter_file_name_micro_length += fake_build_parameter_library_name_suffix_shared_length;
-
-    memcpy(parameter_file_name_major + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length;
-
-    memcpy(parameter_file_name_major + parameter_file_name_micro_length, data_build.setting.version_major.string, data_build.setting.version_major.used);
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, data_build.setting.version_major.string, data_build.setting.version_major.used);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, data_build.setting.version_major.string, data_build.setting.version_major.used);
-    parameter_file_name_micro_length += data_build.setting.version_major.used;
-    parameter_file_name_major_length = parameter_file_name_micro_length;
-
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length;
-
-    memcpy(parameter_file_name_minor + parameter_file_name_micro_length, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
-    parameter_file_name_micro_length += data_build.setting.version_minor.used;
-    parameter_file_name_minor_length = parameter_file_name_micro_length;
-
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, fake_build_parameter_library_separator, fake_build_parameter_library_separator_length);
-    parameter_file_name_micro_length += fake_build_parameter_library_separator_length;
-
-    memcpy(parameter_file_name_micro + parameter_file_name_micro_length, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
-    parameter_file_name_micro_length += data_build.setting.version_micro.used;
+    char parameter_file_name_nano[parameter_file_name_nano_length + 1];
 
     parameter_file_name[parameter_file_name_length] = 0;
     parameter_file_name_major[parameter_file_name_major_length] = 0;
     parameter_file_name_minor[parameter_file_name_minor_length] = 0;
     parameter_file_name_micro[parameter_file_name_micro_length] = 0;
+    parameter_file_name_nano[parameter_file_name_nano_length] = 0;
+
+    memcpy(parameter_file_name, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+
+    if (parameter_file_name_major_length) {
+      memcpy(parameter_file_name_major, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+
+      if (parameter_file_name_minor_length) {
+        memcpy(parameter_file_name_minor, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+
+        if (parameter_file_name_micro_length) {
+          memcpy(parameter_file_name_micro, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+
+          if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano, fake_build_parameter_library_name_prefix, fake_build_parameter_library_name_prefix_length);
+          }
+        }
+      }
+    }
+
+    f_array_length_t count = fake_build_parameter_library_name_prefix_length;
+
+    memcpy(parameter_file_name + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+    if (parameter_file_name_major_length) {
+      memcpy(parameter_file_name_major + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+      if (parameter_file_name_minor_length) {
+        memcpy(parameter_file_name_minor + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+        if (parameter_file_name_micro_length) {
+          memcpy(parameter_file_name_micro + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
+
+          if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano + count, data_build.setting.project_name.string, data_build.setting.project_name.used);
+          }
+        }
+      }
+    }
+
+    count += data_build.setting.project_name.used;
+
+    memcpy(parameter_file_name + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+
+    if (parameter_file_name_major_length) {
+      memcpy(parameter_file_name_major + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+
+      if (parameter_file_name_minor_length) {
+        memcpy(parameter_file_name_minor + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+
+        if (parameter_file_name_micro_length) {
+          memcpy(parameter_file_name_micro + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+
+          if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano + count, fake_build_parameter_library_name_suffix_shared, fake_build_parameter_library_name_suffix_shared_length);
+          }
+        }
+      }
+    }
+
+    count += fake_build_parameter_library_name_suffix_shared_length;
+
+    if (parameter_file_name_major_length) {
+      if (data_build.setting.version_major_prefix.used) {
+        memcpy(parameter_file_name_major + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+        memcpy(parameter_file_name_minor + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+        memcpy(parameter_file_name_micro + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+        memcpy(parameter_file_name_nano + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+        count += data_build.setting.version_major_prefix.used;
+      }
+
+      memcpy(parameter_file_name_major + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+      memcpy(parameter_file_name_minor + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+      memcpy(parameter_file_name_micro + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+      memcpy(parameter_file_name_nano + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+      count += data_build.setting.version_major.used;
+
+      if (parameter_file_name_minor_length) {
+        if (data_build.setting.version_minor_prefix.used) {
+          memcpy(parameter_file_name_minor + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+          memcpy(parameter_file_name_micro + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+          memcpy(parameter_file_name_nano + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+          count += data_build.setting.version_minor_prefix.used;
+        }
+
+        memcpy(parameter_file_name_minor + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
+        memcpy(parameter_file_name_micro + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
+        memcpy(parameter_file_name_nano + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
+        count += data_build.setting.version_minor.used;
+
+        if (parameter_file_name_micro_length) {
+          if (data_build.setting.version_micro_prefix.used) {
+            memcpy(parameter_file_name_micro + count, data_build.setting.version_micro_prefix.string, data_build.setting.version_micro_prefix.used);
+            memcpy(parameter_file_name_nano + count, data_build.setting.version_micro_prefix.string, data_build.setting.version_micro_prefix.used);
+            count += data_build.setting.version_micro_prefix.used;
+          }
+
+          memcpy(parameter_file_name_micro + count, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
+          memcpy(parameter_file_name_nano + count, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
+          count += data_build.setting.version_micro.used;
+
+          if (parameter_file_name_nano_length) {
+            if (data_build.setting.version_nano_prefix.used) {
+              memcpy(parameter_file_name_nano + count, data_build.setting.version_nano_prefix.string, data_build.setting.version_nano_prefix.used);
+              count += data_build.setting.version_nano_prefix.used;
+            }
+
+            memcpy(parameter_file_name_nano + count, data_build.setting.version_nano.string, data_build.setting.version_nano.used);
+            count += data_build.setting.version_nano.used;
+          }
+        }
+      }
+    }
 
     {
-      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_micro_length;
-
-      char parameter_file_path[parameter_file_path_length + 1];
-
-      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
-      memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
-
-      parameter_file_path[parameter_file_path_length] = 0;
-
       f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
+      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used;
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
         parameter_linker_length += parameter_file_name_major_length;
+        parameter_file_path_length += parameter_file_name_major_length;
       }
       else if (data_build.setting.version_target == fake_build_version_type_minor) {
         parameter_linker_length += parameter_file_name_minor_length;
+        parameter_file_path_length += parameter_file_name_minor_length;
       }
       else if (data_build.setting.version_target == fake_build_version_type_micro) {
         parameter_linker_length += parameter_file_name_micro_length;
+        parameter_file_path_length += parameter_file_name_micro_length;
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_nano) {
+        parameter_linker_length += parameter_file_name_nano_length;
+        parameter_file_path_length += parameter_file_name_nano_length;
       }
 
       char parameter_linker[parameter_linker_length + 1];
+      char parameter_file_path[parameter_file_path_length + 1];
 
       memcpy(parameter_linker, fake_build_parameter_library_shared_prefix, fake_build_parameter_library_shared_prefix_length);
+      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
 
       if (data_build.setting.version_target == fake_build_version_type_major) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_major, parameter_file_name_major_length);
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_minor) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_minor, parameter_file_name_minor_length);
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_micro) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_micro, parameter_file_name_micro_length);
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_nano) {
+        memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_nano, parameter_file_name_nano_length);
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_nano, parameter_file_name_nano_length);
       }
 
       parameter_linker[parameter_linker_length] = 0;
+      parameter_file_path[parameter_file_path_length] = 0;
 
       const f_string_t values[] = {
         fake_build_parameter_library_shared,
@@ -975,6 +1057,7 @@ extern "C" {
         fll_error_print(main.error, F_status_set_fine(*status), "fll_execute_arguments_add", F_true);
 
         macro_f_string_dynamics_t_delete_simple(arguments);
+
         return 0;
       }
     }
@@ -993,29 +1076,26 @@ extern "C" {
       }
     }
 
-    if (data_build.setting.version_target != fake_build_version_type_micro) {
-      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used;
+    if (data_build.setting.version_target != fake_build_version_type_major && parameter_file_name_major_length) {
+      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_major_length;
 
-      if (data_build.setting.version_target == fake_build_version_type_major) {
-        parameter_file_path_length += parameter_file_name_major_length;
-      }
-      else {
-        parameter_file_path_length += parameter_file_name_minor_length;
-      }
-
+      char *link_target = 0;
       char parameter_file_path[parameter_file_path_length + 1];
 
-      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+      if (data_build.setting.version_target == fake_build_version_type_minor) {
+        link_target = parameter_file_name_minor;
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_micro) {
+        link_target = parameter_file_name_micro;
+      }
+      else if (data_build.setting.version_target == fake_build_version_type_nano) {
+        link_target = parameter_file_name_nano;
+      }
 
-      if (data_build.setting.version_target == fake_build_version_type_major) {
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
-      }
-      else {
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
-      }
+      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+      memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
 
       parameter_file_path[parameter_file_path_length] = 0;
-
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
@@ -1023,10 +1103,10 @@ extern "C" {
         return 0;
       }
 
-      *status = f_file_link(parameter_file_name_micro, parameter_file_path);
+      *status = f_file_link(link_target, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
+        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, link_target, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1035,52 +1115,33 @@ extern "C" {
           return 0;
         }
 
-        fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
+        fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, link_target, "link", fll_error_file_type_file);
 
         return 0;
       }
     }
 
-    if (F_status_is_error_not(*status)) {
+    if (F_status_is_error_not(*status) && parameter_file_name_major_length) {
+
       f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_length;
 
       char parameter_file_path[parameter_file_path_length + 1];
 
       memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
-
       memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name, parameter_file_name_length);
 
       parameter_file_path[parameter_file_path_length] = 0;
 
       if (fake_signal_received(main)) {
         *status = F_status_set_error(F_signal);
+
         return 0;
       }
 
-      if (data_build.setting.version_target == fake_build_version_type_major) {
-        *status = f_file_link(parameter_file_name_major, parameter_file_path);
-      }
-      else if (data_build.setting.version_target == fake_build_version_type_minor) {
-        *status = f_file_link(parameter_file_name_minor, parameter_file_path);
-      }
-      else if (data_build.setting.version_target == fake_build_version_type_micro) {
-        *status = f_file_link(parameter_file_name_micro, parameter_file_path);
-      }
+      *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Linked file '%s' to '", parameter_file_path);
-
-        if (data_build.setting.version_target == fake_build_version_type_major) {
-          fprintf(main.output.stream, "%s", parameter_file_name_major);
-        }
-        else if (data_build.setting.version_target == fake_build_version_type_minor) {
-          fprintf(main.output.stream, "%s", parameter_file_name_minor);
-        }
-        else if (data_build.setting.version_target == fake_build_version_type_micro) {
-          fprintf(main.output.stream, "%s", parameter_file_name_micro);
-        }
-
-        fprintf(main.output.stream, "'.%c", f_string_eol_s[0]);
+        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1089,15 +1150,7 @@ extern "C" {
           return 0;
         }
 
-        if (data_build.setting.version_target == fake_build_version_type_major) {
-          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_major, "link", fll_error_file_type_file);
-        }
-        else if (data_build.setting.version_target == fake_build_version_type_minor) {
-          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_minor, "link", fll_error_file_type_file);
-        }
-        else if (data_build.setting.version_target == fake_build_version_type_micro) {
-          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
-        }
+        fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_major, "link", fll_error_file_type_file);
 
         return 0;
       }
@@ -1429,6 +1482,39 @@ extern "C" {
 
     bool error_printed = F_false;
 
+    f_string_dynamics_t build_compiler = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_indexer = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_language = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_script = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_shared = f_string_dynamics_t_initialize;
+    f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_headers = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_headers_preserve = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_language = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_library_script = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_library_shared = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_library_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_program_script = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_program_shared = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_program_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_sources = f_string_dynamics_t_initialize;
+    f_string_dynamics_t path_standard = f_string_dynamics_t_initialize;
+    f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
+    f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
+    f_string_dynamics_t project_name = f_string_dynamics_t_initialize;
+    f_string_dynamics_t search_exclusive = f_string_dynamics_t_initialize;
+    f_string_dynamics_t search_shared = f_string_dynamics_t_initialize;
+    f_string_dynamics_t search_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_major = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_major_prefix = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_micro = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_micro_prefix = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_minor = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_minor_prefix = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_nano = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_nano_prefix = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
+
     const f_string_t settings_name[] = {
       fake_build_setting_name_build_compiler,
       fake_build_setting_name_build_indexer,
@@ -1439,10 +1525,12 @@ extern "C" {
       fake_build_setting_name_build_sources_headers,
       fake_build_setting_name_build_sources_library,
       fake_build_setting_name_build_sources_program,
-      fake_build_setting_name_build_sources_settings,
       fake_build_setting_name_build_sources_script,
+      fake_build_setting_name_build_sources_settings,
       fake_build_setting_name_build_static,
       fake_build_setting_name_defines_all,
+      fake_build_setting_name_defines_library,
+      fake_build_setting_name_defines_program,
       fake_build_setting_name_defines_shared,
       fake_build_setting_name_defines_static,
       fake_build_setting_name_environment,
@@ -1471,8 +1559,13 @@ extern "C" {
       fake_build_setting_name_search_shared,
       fake_build_setting_name_search_static,
       fake_build_setting_name_version_major,
+      fake_build_setting_name_version_major_prefix,
       fake_build_setting_name_version_micro,
+      fake_build_setting_name_version_micro_prefix,
       fake_build_setting_name_version_minor,
+      fake_build_setting_name_version_minor_prefix,
+      fake_build_setting_name_version_nano,
+      fake_build_setting_name_version_nano_prefix,
       fake_build_setting_name_version_target,
     };
 
@@ -1486,10 +1579,12 @@ extern "C" {
       fake_build_setting_name_build_sources_headers_length,
       fake_build_setting_name_build_sources_library_length,
       fake_build_setting_name_build_sources_program_length,
-      fake_build_setting_name_build_sources_settings_length,
       fake_build_setting_name_build_sources_script_length,
+      fake_build_setting_name_build_sources_settings_length,
       fake_build_setting_name_build_static_length,
       fake_build_setting_name_defines_all_length,
+      fake_build_setting_name_defines_library_length,
+      fake_build_setting_name_defines_program_length,
       fake_build_setting_name_defines_shared_length,
       fake_build_setting_name_defines_static_length,
       fake_build_setting_name_environment_length,
@@ -1518,38 +1613,15 @@ extern "C" {
       fake_build_setting_name_search_shared_length,
       fake_build_setting_name_search_static_length,
       fake_build_setting_name_version_major_length,
+      fake_build_setting_name_version_major_prefix_length,
       fake_build_setting_name_version_micro_length,
+      fake_build_setting_name_version_micro_prefix_length,
       fake_build_setting_name_version_minor_length,
+      fake_build_setting_name_version_minor_prefix_length,
+      fake_build_setting_name_version_nano_length,
+      fake_build_setting_name_version_nano_prefix_length,
       fake_build_setting_name_version_target_length,
     };
-
-    f_string_dynamics_t build_compiler = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_indexer = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_language = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_script = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t build_static = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_headers = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_headers_preserve = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_language = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_library_script = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_library_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_library_static = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_program_script = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_program_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_program_static = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_sources = f_string_dynamics_t_initialize;
-    f_string_dynamics_t path_standard = f_string_dynamics_t_initialize;
-    f_string_dynamics_t process_post = f_string_dynamics_t_initialize;
-    f_string_dynamics_t process_pre = f_string_dynamics_t_initialize;
-    f_string_dynamics_t project_name = f_string_dynamics_t_initialize;
-    f_string_dynamics_t search_exclusive = f_string_dynamics_t_initialize;
-    f_string_dynamics_t search_shared = f_string_dynamics_t_initialize;
-    f_string_dynamics_t search_static = f_string_dynamics_t_initialize;
-    f_string_dynamics_t version_major = f_string_dynamics_t_initialize;
-    f_string_dynamics_t version_micro = f_string_dynamics_t_initialize;
-    f_string_dynamics_t version_minor = f_string_dynamics_t_initialize;
-    f_string_dynamics_t version_target = f_string_dynamics_t_initialize;
 
     f_string_dynamics_t *settings_value[] = {
       &build_compiler,
@@ -1561,10 +1633,12 @@ extern "C" {
       &setting->build_sources_headers,
       &setting->build_sources_library,
       &setting->build_sources_program,
-      &setting->build_sources_setting,
       &setting->build_sources_script,
+      &setting->build_sources_setting,
       &build_static,
       &setting->defines_all,
+      &setting->defines_library,
+      &setting->defines_program,
       &setting->defines_shared,
       &setting->defines_static,
       &setting->environment,
@@ -1593,14 +1667,73 @@ extern "C" {
       &search_shared,
       &search_static,
       &version_major,
+      &version_major_prefix,
       &version_micro,
+      &version_micro_prefix,
       &version_minor,
+      &version_minor_prefix,
+      &version_nano,
+      &version_nano_prefix,
       &version_target,
+    };
+
+    bool settings_matches[] = {
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
+      F_false,
     };
 
     f_string_t function = "fll_fss_snatch_apart";
 
-    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value, 0);
+    *status = fll_fss_snatch_apart(buffer, objects, contents, settings_name, settings_length, fake_build_setting_total, settings_value, settings_matches, 0);
 
     if (*status == F_none) {
       const int total_build_libraries = setting->build_libraries.used;
@@ -1659,7 +1792,7 @@ extern "C" {
           macro_f_string_dynamic_t_resize(*status, settings_mode_name_dynamic[j], setting_mode_lengths[j]);
 
           if (F_status_is_error(*status)) {
-            function = " macro_f_string_dynamic_t_resize";
+            function = "macro_f_string_dynamic_t_resize";
             break;
           }
 
@@ -1671,7 +1804,7 @@ extern "C" {
         } // for
 
         if (*status == F_none) {
-          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value, 0);
+          *status = fll_fss_snatch_apart(buffer, objects, contents, settings_mode_names, setting_mode_lengths, fake_build_setting_total, settings_value, 0, 0);
 
           if (F_status_is_error(*status)) {
             function = "fll_fss_snatch_apart";
@@ -1753,8 +1886,13 @@ extern "C" {
         fake_build_setting_name_search_shared,
         fake_build_setting_name_search_static,
         fake_build_setting_name_version_major,
+        fake_build_setting_name_version_major_prefix,
         fake_build_setting_name_version_micro,
+        fake_build_setting_name_version_micro_prefix,
         fake_build_setting_name_version_minor,
+        fake_build_setting_name_version_minor_prefix,
+        fake_build_setting_name_version_nano,
+        fake_build_setting_name_version_nano_prefix,
         fake_build_setting_name_version_target,
       };
 
@@ -1783,8 +1921,13 @@ extern "C" {
         &search_shared,
         &search_static,
         &version_major,
+        &version_major_prefix,
         &version_micro,
+        &version_micro_prefix,
         &version_minor,
+        &version_minor_prefix,
+        &version_nano,
+        &version_nano_prefix,
         &version_target,
       };
 
@@ -1839,8 +1982,13 @@ extern "C" {
         0,
         0,
         &setting->version_major,
+        &setting->version_major_prefix,
         &setting->version_micro,
+        &setting->version_micro_prefix,
         &setting->version_minor,
+        &setting->version_minor_prefix,
+        &setting->version_nano,
+        &setting->version_nano_prefix,
       };
 
       uint8_t * const settings_single_language[] = {
@@ -1876,10 +2024,15 @@ extern "C" {
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
         &setting->version_target,
       };
 
-      // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", or "micro".
+      // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", "micro", or "nano".
       const uint8_t settings_single_type[] = {
         3,
         3,
@@ -1907,10 +2060,15 @@ extern "C" {
         3,
         3,
         3,
+        3,
+        3,
+        3,
+        3,
+        3,
         5,
       };
 
-      for (f_array_length_t i = 0; i < 27; ++i) {
+      for (f_array_length_t i = 0; i < 32; ++i) {
 
         if (!settings_single_source[i]->used) continue;
 
@@ -1997,6 +2155,9 @@ extern "C" {
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_minor;
           }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano, settings_single_source[i]->array[0].used, fake_build_version_nano_length) == F_equal_to) {
+            *settings_single_version[i] = fake_build_version_type_nano;
+          }
           else {
             *settings_single_version[i] = fake_build_version_type_major;
 
@@ -2010,8 +2171,10 @@ extern "C" {
               f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
               f_color_print(main.output.stream, main.context.set.warning, "', '");
               f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_minor);
-              f_color_print(main.output.stream, main.context.set.warning, "', or '");
+              f_color_print(main.output.stream, main.context.set.warning, "', '");
               f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_micro);
+              f_color_print(main.output.stream, main.context.set.warning, "', or '");
+              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_nano);
               f_color_print(main.output.stream, main.context.set.warning, "', defaulting to '");
               f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
               f_color_print(main.output.stream, main.context.set.warning, "'.");
@@ -2025,6 +2188,7 @@ extern "C" {
           settings_single_destination[i]->used = 0;
 
           *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[0], settings_single_destination[i]);
+
           if (F_status_is_error(*status)) {
             fll_error_print(main.error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
             break;
@@ -2032,6 +2196,7 @@ extern "C" {
 
           if (settings_single_type[i] == 2) {
             *status = f_string_append_assure(f_path_separator_s, f_path_separator_length, settings_single_destination[i]);
+
             if (F_status_is_error(*status)) {
               fll_error_print(main.error, F_status_set_fine(*status), "f_string_append_assure", F_true);
               break;
@@ -2045,6 +2210,50 @@ extern "C" {
           }
         }
       } // for
+
+      // Provide these defaults only if the Object is not defined (this allows for empty Content to exist if the Object is defined).
+      // In the case of the version prefixes, if the associated version is empty, then instead clear the associated version prefix.
+      {
+        f_string_dynamic_t *prefix[] = {
+          &setting->version_major_prefix,
+          &setting->version_minor_prefix,
+          &setting->version_micro_prefix,
+          &setting->version_nano_prefix,
+        };
+
+        f_string_dynamic_t *version[] = {
+          &setting->version_major,
+          &setting->version_minor,
+          &setting->version_micro,
+          &setting->version_nano,
+        };
+
+        bool has_prefix_object[] = {
+          settings_matches[43], // version_major_prefix
+          settings_matches[45], // version_minor_prefix
+          settings_matches[47], // version_micro_prefix
+          settings_matches[49], // version_nano_prefix
+        };
+
+        for (f_array_length_t i = 0; i < 4; ++i) {
+
+          if (version[i]->used) {
+            if (!has_prefix_object[i]) {
+              prefix[i]->used = 0;
+
+              *status = f_string_append(fake_build_setting_default_version_prefix, fake_build_setting_default_version_prefix_length, prefix[i]);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(main.error, F_status_set_fine(*status), "f_string_append", F_true);
+                break;
+              }
+            }
+          }
+          else {
+            prefix[i]->used = 0;
+          }
+        } // for
+      }
     }
 
     macro_f_string_dynamics_t_delete_simple(build_compiler);
@@ -2071,8 +2280,13 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(search_shared);
     macro_f_string_dynamics_t_delete_simple(search_static);
     macro_f_string_dynamics_t_delete_simple(version_major);
+    macro_f_string_dynamics_t_delete_simple(version_major_prefix);
     macro_f_string_dynamics_t_delete_simple(version_micro);
+    macro_f_string_dynamics_t_delete_simple(version_micro_prefix);
     macro_f_string_dynamics_t_delete_simple(version_minor);
+    macro_f_string_dynamics_t_delete_simple(version_minor_prefix);
+    macro_f_string_dynamics_t_delete_simple(version_nano);
+    macro_f_string_dynamics_t_delete_simple(version_nano_prefix);
     macro_f_string_dynamics_t_delete_simple(version_target);
   }
 #endif // _di_fake_build_load_setting_process_
