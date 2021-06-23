@@ -2188,11 +2188,11 @@ extern "C" {
           if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_major, settings_single_source[i]->array[0].used, fake_build_version_major_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_major;
           }
-          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_micro;
-          }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_minor, settings_single_source[i]->array[0].used, fake_build_version_minor_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_minor;
+          }
+          else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_micro, settings_single_source[i]->array[0].used, fake_build_version_micro_length) == F_equal_to) {
+            *settings_single_version[i] = fake_build_version_type_micro;
           }
           else if (fl_string_compare_trim(settings_single_source[i]->array[0].string, fake_build_version_nano, settings_single_source[i]->array[0].used, fake_build_version_nano_length) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_type_nano;
@@ -2252,7 +2252,7 @@ extern "C" {
 
       // Provide these defaults only if the Object is not defined (this allows for empty Content to exist if the Object is defined).
       // In the case of the version prefixes, if the associated version is empty, then instead clear the associated version prefix.
-      {
+      if (F_status_is_error_not(*status)) {
         f_string_dynamic_t *prefix[] = {
           &setting->version_major_prefix,
           &setting->version_minor_prefix,
@@ -2274,6 +2274,20 @@ extern "C" {
           settings_matches[49], // version_nano_prefix
         };
 
+        const char *name_target[] = {
+          fake_build_version_major,
+          fake_build_version_minor,
+          fake_build_version_micro,
+          fake_build_version_nano,
+        };
+
+        const char *name_object[] = {
+          fake_build_setting_name_version_major,
+          fake_build_setting_name_version_minor,
+          fake_build_setting_name_version_micro,
+          fake_build_setting_name_version_nano,
+        };
+
         for (f_array_length_t i = 0; i < 4; ++i) {
 
           if (version[i]->used) {
@@ -2290,6 +2304,21 @@ extern "C" {
           }
           else {
             prefix[i]->used = 0;
+
+            if (setting->version_target && i + 1 <= setting->version_target) {
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+                f_color_print(main.error.to.stream, main.context.set.error, "%sWhen the version target is set to '", fll_error_print_error);
+                f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_target[setting->version_target - 1]);
+                f_color_print(main.error.to.stream, main.context.set.error, "', then the '");
+                f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_object[i]);
+                f_color_print(main.error.to.stream, main.context.set.error, "' Object must have Content.");
+                fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+              }
+
+              *status = F_status_set_error(F_failure);
+              break;
+            }
           }
         } // for
       }

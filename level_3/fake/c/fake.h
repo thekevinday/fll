@@ -205,19 +205,19 @@ extern "C" {
 #ifndef _di_fake_build_version_
   enum {
     fake_build_version_type_major = 1,
-    fake_build_version_type_micro,
     fake_build_version_type_minor,
+    fake_build_version_type_micro,
     fake_build_version_type_nano,
   };
 
   #define fake_build_version_major "major"
-  #define fake_build_version_micro "micro"
   #define fake_build_version_minor "minor"
+  #define fake_build_version_micro "micro"
   #define fake_build_version_nano  "nano"
 
   #define fake_build_version_major_length 5
-  #define fake_build_version_micro_length 5
   #define fake_build_version_minor_length 5
+  #define fake_build_version_micro_length 5
   #define fake_build_version_nano_length  4
 #endif // _di_fake_build_version_
 
