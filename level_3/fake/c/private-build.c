@@ -930,55 +930,94 @@ extern "C" {
       }
     }
 
-    count += fake_build_parameter_library_name_suffix_shared_length;
-
     if (parameter_file_name_major_length) {
+      count += fake_build_parameter_library_name_suffix_shared_length;
+
       if (data_build.setting.version_major_prefix.used) {
         memcpy(parameter_file_name_major + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
-        memcpy(parameter_file_name_minor + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
-        memcpy(parameter_file_name_micro + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
-        memcpy(parameter_file_name_nano + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+
+        if (parameter_file_name_minor_length) {
+          memcpy(parameter_file_name_minor + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+
+          if (parameter_file_name_micro_length) {
+            memcpy(parameter_file_name_micro + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+
+            if (parameter_file_name_nano_length) {
+              memcpy(parameter_file_name_nano + count, data_build.setting.version_major_prefix.string, data_build.setting.version_major_prefix.used);
+            }
+          }
+        }
+
         count += data_build.setting.version_major_prefix.used;
       }
 
       memcpy(parameter_file_name_major + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
-      memcpy(parameter_file_name_minor + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
-      memcpy(parameter_file_name_micro + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
-      memcpy(parameter_file_name_nano + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
-      count += data_build.setting.version_major.used;
 
       if (parameter_file_name_minor_length) {
+        memcpy(parameter_file_name_minor + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+
+        if (parameter_file_name_micro_length) {
+          memcpy(parameter_file_name_micro + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+
+          if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano + count, data_build.setting.version_major.string, data_build.setting.version_major.used);
+          }
+        }
+      }
+
+      if (parameter_file_name_minor_length) {
+        count += data_build.setting.version_major.used;
+
         if (data_build.setting.version_minor_prefix.used) {
           memcpy(parameter_file_name_minor + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
-          memcpy(parameter_file_name_micro + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
-          memcpy(parameter_file_name_nano + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+
+          if (parameter_file_name_micro_length) {
+            memcpy(parameter_file_name_micro + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+
+            if (parameter_file_name_nano_length) {
+              memcpy(parameter_file_name_nano + count, data_build.setting.version_minor_prefix.string, data_build.setting.version_minor_prefix.used);
+            }
+          }
+
           count += data_build.setting.version_minor_prefix.used;
         }
 
         memcpy(parameter_file_name_minor + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
-        memcpy(parameter_file_name_micro + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
-        memcpy(parameter_file_name_nano + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
-        count += data_build.setting.version_minor.used;
 
         if (parameter_file_name_micro_length) {
+          memcpy(parameter_file_name_micro + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
+
+          if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano + count, data_build.setting.version_minor.string, data_build.setting.version_minor.used);
+          }
+        }
+
+        if (parameter_file_name_micro_length) {
+          count += data_build.setting.version_minor.used;
+
           if (data_build.setting.version_micro_prefix.used) {
             memcpy(parameter_file_name_micro + count, data_build.setting.version_micro_prefix.string, data_build.setting.version_micro_prefix.used);
-            memcpy(parameter_file_name_nano + count, data_build.setting.version_micro_prefix.string, data_build.setting.version_micro_prefix.used);
+
+            if (parameter_file_name_nano_length) {
+              memcpy(parameter_file_name_nano + count, data_build.setting.version_micro_prefix.string, data_build.setting.version_micro_prefix.used);
+            }
+
             count += data_build.setting.version_micro_prefix.used;
           }
 
           memcpy(parameter_file_name_micro + count, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
-          memcpy(parameter_file_name_nano + count, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
-          count += data_build.setting.version_micro.used;
 
           if (parameter_file_name_nano_length) {
+            memcpy(parameter_file_name_nano + count, data_build.setting.version_micro.string, data_build.setting.version_micro.used);
+
+            count += data_build.setting.version_micro.used;
+
             if (data_build.setting.version_nano_prefix.used) {
               memcpy(parameter_file_name_nano + count, data_build.setting.version_nano_prefix.string, data_build.setting.version_nano_prefix.used);
               count += data_build.setting.version_nano_prefix.used;
             }
 
             memcpy(parameter_file_name_nano + count, data_build.setting.version_nano.string, data_build.setting.version_nano.used);
-            count += data_build.setting.version_nano.used;
           }
         }
       }
