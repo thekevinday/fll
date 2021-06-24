@@ -849,44 +849,6 @@ extern "C" {
 
         return status;
       }
-
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_length_t width_max = 0;
-
-      for (; i < main->define.used; ++i) {
-
-        for (j = 0; j < main->define.array[i].used; ++j) {
-
-          width_max = main->define.array[i].used - j;
-
-          status = f_utf_is_word(main->define.array[i].string + j, width_max, F_false);
-
-          if (F_status_is_error(status)) {
-            if (fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_false) == F_known_not && main->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to process the parameter '", fll_error_print_error);
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
-              f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
-            }
-
-            return status;
-          }
-
-          if (status == F_false) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
-              fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_define);
-              f_color_print(main->error.to.stream, main->context.set.error, "' parameters value '");
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s", main->define.array[i].string);
-              f_color_print(main->error.to.stream, main->context.set.error, "' contains non-word characters.%c", f_string_eol_s[0]);
-            }
-
-            return F_status_set_error(F_parameter);
-          }
-        } // for
-      } // for
     }
 
     if (main->parameters[fake_parameter_mode].result == f_console_result_found) {
