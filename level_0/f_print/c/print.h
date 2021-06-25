@@ -169,6 +169,109 @@ extern "C" {
 #endif // _di_f_print_except_dynamic_
 
 /**
+ * Similar to a c-library printf, except that this will only print a specific range.
+ *
+ * Will not stop at NULL.
+ * Will not print NULL.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ * Will print up to length 1-byte characters.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc()
+ */
+#ifndef _di_f_print_except_in_
+  extern f_status_t f_print_except_in(FILE *output, const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_f_print_except_in_
+
+/**
+ * Similar to a c-library printf, except that this prints a given dynamic string.
+ *
+ * Will not stop at NULL.
+ * Will not print NULL.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ * Will print up to the length of the buffer.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc()
+ */
+#ifndef _di_f_print_except_in_dynamic_
+  extern f_status_t f_print_except_in_dynamic(FILE *output, const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_f_print_except_in_dynamic_
+
+/**
+ * Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
+ *
+ * Will not stop at NULL.
+ * Will not print NULL.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ * Will print up to the specified range within the buffer.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if there is nothing to print.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc()
+ */
+#ifndef _di_f_print_dynamic_except_partial_
+  extern f_status_t f_print_except_in_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_f_print_except_in_dynamic_partial_
+
+/**
  * Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
  *
  * Will not stop at NULL.

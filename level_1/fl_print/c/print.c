@@ -15,7 +15,9 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except(output, string, 0, length, except);
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in(output, string, 0, length, except, except_in);
   }
 #endif // _di_fl_print_trim_except_
 
@@ -29,9 +31,59 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except(output, buffer.string, 0, buffer.used, except);
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in(output, buffer.string, 0, buffer.used, except, except_in);
   }
 #endif // _di_fl_print_trim_except_dynamic_
+
+#ifndef _di_fl_print_trim_except_in_
+  f_status_t fl_print_trim_except_in(FILE *output, const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string || !length) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in(output, string, 0, length, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_
+
+#ifndef _di_fl_print_trim_except_in_dynamic_
+  f_status_t fl_print_trim_except_in_dynamic(FILE *output, const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in(output, buffer.string, 0, buffer.used, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_dynamic_
+
+#ifndef _di_fl_print_trim_except_in_dynamic_partial_
+  f_status_t fl_print_trim_except_in_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_fl_print_trim_except_in(output, buffer.string, range.start, range.start + length, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_dynamic_partial_
 
 #ifndef _di_fl_print_trim_except_dynamic_partial_
   f_status_t fl_print_trim_except_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except) {
@@ -49,7 +101,9 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_fl_print_trim_except(output, buffer.string, range.start, range.start + length, except);
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in(output, buffer.string, range.start, range.start + length, except, except_in);
   }
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
@@ -63,7 +117,9 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_utf(output, string, 0, length, except);
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_utf(output, string, 0, length, except, except_in);
   }
 #endif // _di_fl_print_trim_except_utf_
 
@@ -77,12 +133,42 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_utf(output, buffer.string, 0, buffer.used, except);
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_utf(output, buffer.string, 0, buffer.used, except, except_in);
   }
 #endif // _di_fl_print_trim_except_utf_dynamic_
 
-#ifndef _di_fl_print_trim_except_utf_dynamic_partial_
-  f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range, const f_array_lengths_t except) {
+#ifndef _di_fl_print_trim_except_in_utf_
+  f_status_t fl_print_trim_except_in_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!string || !length) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in_utf(output, string, 0, length, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_utf_
+
+#ifndef _di_fl_print_trim_except_in_utf_dynamic_
+  f_status_t fl_print_trim_except_in_utf_dynamic(FILE *output, const f_utf_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    return private_fl_print_trim_except_in_utf(output, buffer.string, 0, buffer.used, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_utf_dynamic_
+
+#ifndef _di_fl_print_trim_except_in_utf_dynamic_partial_
+  f_status_t fl_print_trim_except_in_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -97,7 +183,29 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_fl_print_trim_except_utf(output, buffer.string, range.start, range.start + length, except);
+    return private_fl_print_trim_except_in_utf(output, buffer.string, range.start, range.start + length, except_at, except_in);
+  }
+#endif // _di_fl_print_trim_except_in_utf_dynamic_partial_
+
+#ifndef _di_fl_print_trim_except_utf_dynamic_partial_
+  f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_1_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    const f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+    return private_fl_print_trim_except_in_utf(output, buffer.string, range.start, range.start + length, except, except_in);
   }
 #endif // _di_fl_print_trim_except_utf_dynamic_partial_
 
@@ -178,7 +286,7 @@ extern "C" {
 #endif // _di_fl_print_trim_utf_dynamic_
 
 #ifndef _di_fl_print_trim_utf_dynamic_partial_
-  f_status_t fl_print_trim_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range) {
+  f_status_t fl_print_trim_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_

@@ -28,9 +28,12 @@ extern "C" {
  *   The inclusive start point to start printing.
  * @param stop
  *   The exclusive stop point to stop printing.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
  *
  * @return
  *   F_none on success.
@@ -46,10 +49,13 @@ extern "C" {
  * @see fl_print_trim_except()
  * @see fl_print_trim_except_dynamic()
  * @see fl_print_trim_except_dynamic_partial()
+ * @see fl_print_trim_except_in()
+ * @see fl_print_trim_except_in_dynamic()
+ * @see fl_print_trim_except_in_dynamic_partial()
  */
-#if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_except(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) f_attribute_visibility_internal;
-#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
+#if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
+  extern f_status_t private_fl_print_trim_except_in(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in) f_attribute_visibility_internal;
+#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
 /**
  * Private implementation of fl_print_trim_except_utf().
@@ -79,13 +85,16 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  *
+ * @see fl_print_trim_except_in_utf()
+ * @see fl_print_trim_except_in_utf_dynamic()
+ * @see fl_print_trim_except_in_utf_dynamic_partial()
  * @see fl_print_trim_except_utf()
  * @see fl_print_trim_except_utf_dynamic()
  * @see fl_print_trim_except_utf_dynamic_partial()
  */
-#if !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) f_attribute_visibility_internal;
-#endif // !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
+#if !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
+  extern f_status_t private_fl_print_trim_except_in_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in) f_attribute_visibility_internal;
+#endif // !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
 
 /**
  * Private implementation of fl_print_trim().

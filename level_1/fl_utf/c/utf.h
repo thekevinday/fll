@@ -160,7 +160,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_utf_string_dynamic_partial_compare_
-  extern f_status_t fl_utf_string_dynamic_partial_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
+  extern f_status_t fl_utf_string_dynamic_partial_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
 #endif // _di_fl_utf_string_dynamic_partial_compare_
 
 /**
@@ -190,7 +190,7 @@ extern "C" {
  * @see f_utf_character_is_whitespace()
  */
 #ifndef _di_fl_utf_string_dynamic_partial_compare_trim_
-  extern f_status_t fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_utf_string_range_t range1, const f_utf_string_range_t range2);
+  extern f_status_t fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2);
 #endif // _di_fl_utf_string_dynamic_partial_compare_trim_
 
 /**
@@ -216,7 +216,7 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  */
 #ifndef _di_fl_utf_string_dynamic_rip_
-  extern f_status_t fl_utf_string_dynamic_rip(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t fl_utf_string_dynamic_rip(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_fl_utf_string_dynamic_rip_
 
 /**
@@ -243,7 +243,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_utf_string_dynamic_rip_nulless_
-  extern f_status_t fl_utf_string_dynamic_rip_nulless(const f_utf_string_static_t source, const f_utf_string_range_t range, f_utf_string_dynamic_t *destination);
+  extern f_status_t fl_utf_string_dynamic_rip_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t *destination);
 #endif // _di_fl_utf_string_dynamic_rip_nulless_
 
 /**
@@ -268,7 +268,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const char seek_to_this);
+  extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_dynamic_seek_line_to_char_
 
 /**
@@ -296,7 +296,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph(const f_utf_string_static_t buffer, f_string_range_t *range, const f_utf_character_t placeholder);
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_
 
 /**
@@ -325,7 +325,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_until_graph_non_
-  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_dynamic_seek_line_until_graph_non(const f_utf_string_static_t buffer, f_string_range_t *range, const f_utf_character_t placeholder);
 #endif // _di_fl_utf_string_dynamic_seek_line_until_graph_non_
 
 /**
@@ -350,7 +350,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_to_char_
-  extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_utf_string_range_t *range, const char seek_to_this);
+  extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_dynamic_seek_to_char_
 
 /**
@@ -432,7 +432,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_seek_line_to_char_
-  extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const char seek_to_this);
+  extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string_seek_line_to_char_
 
 /**
@@ -462,7 +462,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_seek_line_until_graph_
-  extern f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_seek_line_until_graph(const f_utf_string_t string, f_string_range_t *range, const f_utf_character_t placeholder);
 #endif // _di_fl_utf_string_seek_line_until_graph_
 
 /**
@@ -493,7 +493,7 @@ extern "C" {
  * @see f_utf_character_is_graph()
  */
 #ifndef _di_fl_utf_string_seek_line_until_graph_non_
-  extern f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_utf_string_range_t *range, const f_utf_character_t placeholder);
+  extern f_status_t fl_utf_string_seek_line_until_graph_non(const f_utf_string_t string, f_string_range_t *range, const f_utf_character_t placeholder);
 #endif // _di_fl_utf_string_seek_line_until_graph_non_
 
 /**
@@ -517,7 +517,7 @@ extern "C" {
  *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  */
 #ifndef _di_fl_utf_string_seek_to_character_
-  extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_utf_string_range_t *range, const char seek_to_this);
+  extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_string_range_t *range, const char seek_to_this);
 #endif // _di_fl_utf_string__seek_to_character_
 
 #ifdef __cplusplus

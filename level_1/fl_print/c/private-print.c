@@ -5,25 +5,38 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
-  f_status_t private_fl_print_trim_except(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) {
+#if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
+  f_status_t private_fl_print_trim_except_in(FILE *output, const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
 
     f_array_length_t i = start;
     f_array_length_t j = 0;
-    f_array_length_t e = 0;
-    f_array_length_t ej = 0;
+    f_array_length_t at = 0;
+    f_array_length_t at2 = 0;
+    f_array_length_t in = 0;
+    f_array_length_t in2 = 0;
 
     f_status_t status = F_none;
     uint8_t width_max = 0;
 
+    // skip past leading whitespace.
     while (i < stop) {
 
-      for (; e < except.used && except.array[e] < i; ++e) {
-        // do nothing.
-      } // for
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
 
-      if (e < except.used && except.array[e] == i) {
+      if (at < except_at.used && except_at.array[at] == i) {
         ++i;
+
+        continue;
+      }
+
+      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+        ++in;
+      } // while
+
+      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        i = except_in.array[in].stop + 1;
 
         continue;
       }
@@ -48,12 +61,22 @@ extern "C" {
 
       if (!string[i]) continue;
 
-      for (; e < except.used && except.array[e] < i; ++e) {
-        // do nothing.
-      } // for
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
 
-      if (e < except.used && except.array[e] == i) {
+      if (at < except_at.used && except_at.array[at] == i) {
         ++i;
+
+        continue;
+      }
+
+      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+        ++in;
+      } // while
+
+      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        i = except_in.array[in].stop + 1;
 
         continue;
       }
@@ -76,16 +99,26 @@ extern "C" {
           return F_none;
         }
 
-        ej = e;
+        at2 = at;
 
         while (j < stop) {
 
-          for (; ej < except.used && except.array[ej] < j; ++ej) {
-            // do nothing.
-          } // for
+          while (at2 < except_at.used && except_at.array[at2] < j) {
+            ++at2;
+          } // while
 
-          if (ej < except.used && except.array[ej] == j) {
+          if (at2 < except_at.used && except_at.array[at2] == j) {
             ++j;
+
+            continue;
+          }
+
+          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
+            ++in2;
+          } // while
+
+          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            j = except_in.array[in2].stop + 1;
 
             continue;
           }
@@ -103,20 +136,40 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; ++i) {
+            while (i < j) {
 
-              if (!string[i]) continue;
+              if (!string[i]) {
+                ++i;
 
-              for (; e < except.used && except.array[e] < i; ++e) {
-                // do nothing.
-              } // for
+                continue;
+              }
 
-              if (e < except.used && except.array[e] == i) continue;
+              while (at < except_at.used && except_at.array[at] < i) {
+                ++at;
+              } // while
+
+              if (at < except_at.used && except_at.array[at] == i) {
+                ++i;
+
+                continue;
+              }
+
+              while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+                ++in;
+              } // while
+
+              if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+                i = except_in.array[in].stop + 1;
+
+                continue;
+              }
 
               if (!fputc(string[i], output)) {
                 return F_status_set_error(F_output);
               }
-            } // for
+
+              ++i;
+            } // while
 
             break;
           }
@@ -141,25 +194,41 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_)
+#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
-#if !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except) {
+#if !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
+  f_status_t private_fl_print_trim_except_in_utf(FILE *output, const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in) {
 
     f_array_length_t i = start;
     f_array_length_t j = 0;
-    f_array_length_t e = 0;
-    f_array_length_t ej = 0;
+    f_array_length_t at = 0;
+    f_array_length_t at2 = 0;
+    f_array_length_t in = 0;
+    f_array_length_t in2 = 0;
 
     f_status_t status = F_none;
 
-    for (; i < stop; ++i) {
+    while (i < stop) {
 
-      for (; e < except.used && except.array[e] < i; ++e) {
-        // do nothing.
-      } // for
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
 
-      if (e < except.used && except.array[e] == i) continue;
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
+
+      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+        ++in;
+      } // while
+
+      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        i = except_in.array[in].stop + 1;
+
+        continue;
+      }
 
       status = f_utf_character_is_whitespace(string[i]);
 
@@ -172,17 +241,27 @@ extern "C" {
       }
 
       if (status == F_false) break;
-    } // for
 
-    for (; i < stop; ++i) {
+      ++i;
+    } // while
 
-      if (!string[i]) continue;
+    while (i < stop) {
 
-      for (; e < except.used && except.array[e] < i; ++e) {
-        // do nothing.
-      } // for
+      if (!string[i]) {
+        ++i;
 
-      if (e < except.used && except.array[e] == i) continue;
+        continue;
+      }
+
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
 
       status = f_utf_character_is_whitespace(string[i]);
 
@@ -201,13 +280,29 @@ extern "C" {
           return F_none;
         }
 
-        for (ej = e; j < stop; ++j) {
+        at2 = at;
 
-          for (; ej < except.used && except.array[ej] < j; ++ej) {
-            // do nothing.
-          } // for
+        while (j < stop) {
 
-          if (ej < except.used && except.array[ej] == j) continue;
+          while (at2 < except_at.used && except_at.array[at2] < j) {
+            ++at2;
+          } // while
+
+          if (at2 < except_at.used && except_at.array[at2] == j) {
+            ++j;
+
+            continue;
+          }
+
+          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
+            ++in2;
+          } // while
+
+          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            j = except_in.array[in2].stop + 1;
+
+            continue;
+          }
 
           status = f_utf_character_is_whitespace(string[j]);
 
@@ -221,24 +316,36 @@ extern "C" {
 
           // all whitespaces found so far must be printed when a non-whitespace is found.
           if (status == F_false) {
-            for (; i < j; ++i) {
+            while (i < j) {
 
-              if (!string[i]) continue;
+              if (!string[i]) {
+                ++i;
 
-              for (; e < except.used && except.array[e] < i; ++e) {
-                // do nothing.
-              } // for
+                continue;
+              }
 
-              if (e < except.used && except.array[e] == i) continue;
+              while (at < except_at.used && except_at.array[at] < i) {
+                ++at;
+              } // while
+
+              if (at < except_at.used && except_at.array[at] == i) {
+                ++i;
+
+                continue;
+              }
 
               if (!fputc(string[i], output)) {
                 return F_status_set_error(F_output);
               }
-            } // for
+
+              ++i;
+            } // while
 
             break;
           }
-        } // for
+
+          ++j;
+        } // while
 
         if (status == F_true) break;
       }
@@ -246,11 +353,13 @@ extern "C" {
       if (!fputc(string[i], output)) {
         return F_status_set_error(F_output);
       }
-    } // for
+
+      ++i;
+    } // while
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
+#endif // !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
 
 #if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
   f_status_t private_fl_print_trim(FILE *output, const f_string_t string, const f_array_length_t length) {

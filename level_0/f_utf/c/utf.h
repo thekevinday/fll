@@ -50,8 +50,6 @@
 #include <fll/level_0/utf-common.h>
 #include <fll/level_0/utf_dynamic.h>
 #include <fll/level_0/utf_map.h>
-#include <fll/level_0/utf_quantity.h>
-#include <fll/level_0/utf_range.h>
 #include <fll/level_0/utf_triple.h>
 
 #ifdef __cplusplus
@@ -1766,7 +1764,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  */
 #ifndef _di_f_utf_string_seek_line_
-  extern f_status_t f_utf_string_seek_line(const f_utf_string_t string, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_seek_line(const f_utf_string_t string, f_string_range_t *range);
 #endif // _di_f_utf_string_seek_line_
 
 /**
@@ -1790,7 +1788,7 @@ extern "C" {
  *   F_utf (with error bit) if character is invalid UTF-8.
  */
 #ifndef _di_f_utf_string_seek_line_to_
-  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_seek_line_to(const f_utf_string_t string, const uint8_t seek_to, f_string_range_t *range);
 #endif // _di_f_utf_string_seek_line_to_
 
 /**
@@ -1813,7 +1811,7 @@ extern "C" {
  *   F_utf (with error bit) if character is invalid UTF-8.
  */
 #ifndef _di_f_utf_string_seek_to_
-  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const uint8_t seek_to, f_utf_string_range_t *range);
+  extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const uint8_t seek_to, f_string_range_t *range);
 #endif // _di_f_utf_string_seek_to_
 
 /**

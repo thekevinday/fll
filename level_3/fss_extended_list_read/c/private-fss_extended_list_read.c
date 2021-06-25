@@ -299,7 +299,7 @@ extern "C" {
         if (data->contents.array[at].used && data->contents.array[at].array[0].start <= data->contents.array[at].array[0].stop) {
           if (data->contents.array[at].used && data->contents.array[at].array[0].start <= data->contents.array[at].array[0].stop) {
             fss_extended_list_read_print_content_ignore(main);
-            f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content);
+            f_print_except_in_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content, data->comments);
             fss_extended_list_read_print_content_ignore(main);
           }
         }
@@ -607,7 +607,7 @@ extern "C" {
               fss_extended_list_read_print_one(main);
             }
             else {
-              f_print_except_dynamic_partial(main->output.stream, data->buffer, range, delimits_content);
+              f_print_except_in_dynamic_partial(main->output.stream, data->buffer, range, delimits_content, data->comments);
             }
 
             return F_success;
@@ -632,7 +632,7 @@ extern "C" {
           else {
             range.stop = data->contents.array[at].array[0].stop;
 
-            f_print_except_dynamic_partial(main->output.stream, data->buffer, range, delimits_content);
+            f_print_except_in_dynamic_partial(main->output.stream, data->buffer, range, delimits_content, data->comments);
             fprintf(main->output.stream, "%c", f_string_eol_s[0]);
           }
 

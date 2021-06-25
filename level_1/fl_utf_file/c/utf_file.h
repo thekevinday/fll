@@ -263,7 +263,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_fl_utf_file_write_range_
-  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_utf_string_range_t range, f_array_length_t *written);
+  extern f_status_t fl_utf_file_write_range(const f_file_t file, const f_utf_string_static_t buffer, const f_string_range_t range, f_array_length_t *written);
 #endif // _di_fl_utf_file_write_range_
 
 #ifdef __cplusplus

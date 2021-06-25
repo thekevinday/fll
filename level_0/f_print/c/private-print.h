@@ -75,6 +75,41 @@ extern "C" {
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 /**
+ * Private implementation of f_print_except_in().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param stop
+ *   The exclusive stop point to stop printing.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if length is 0.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_print_except_in()
+ * @see f_print_except_in_dynamic()
+ * @see f_print_except_in_dynamic_partial()
+ */
+#if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_dynamic_in_) || !defined(_di_f_print_except_in_dynamic_partial_)
+  extern f_status_t private_f_print_except_in(FILE *output, const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in) f_attribute_visibility_internal;
+#endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_dynamic_in_) || !defined(_di_f_print_except_in_dynamic_partial_)
+
+/**
  * Private implementation of f_print_to().
  *
  * Intended to be shared to each of the different implementation variations.

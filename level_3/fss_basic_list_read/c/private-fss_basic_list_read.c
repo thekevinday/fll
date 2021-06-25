@@ -286,10 +286,10 @@ extern "C" {
     if ((data->option & fss_basic_list_read_data_option_object) || (data->option & fss_basic_list_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_list_read_data_option_empty))) {
       if (data->option & fss_basic_list_read_data_option_object) {
         if (data->option & fss_basic_list_read_data_option_trim) {
-          fl_print_trim_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+          fl_print_trim_except_in_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object, data->comments);
         }
         else {
-          f_print_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+          f_print_except_in_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object, data->comments);
         }
 
         fss_basic_list_read_print_object_end(main);
@@ -298,7 +298,7 @@ extern "C" {
       if (data->option & fss_basic_list_read_data_option_content) {
         if (data->contents.array[at].used) {
           fss_basic_list_read_print_content_ignore(main);
-          f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content);
+          f_print_except_in_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content, data->comments);
           fss_basic_list_read_print_content_ignore(main);
         }
       }
@@ -556,7 +556,7 @@ extern "C" {
               fss_basic_list_read_print_one(main);
             }
             else {
-              f_print_except_dynamic_partial(main->output.stream, data->buffer, range, delimits_content);
+              f_print_except_in_dynamic_partial(main->output.stream, data->buffer, range, delimits_content, data->comments);
             }
 
             return F_success;
@@ -581,7 +581,7 @@ extern "C" {
           else {
             range.stop = data->contents.array[at].array[0].stop;
 
-            f_print_except_dynamic_partial(main->output.stream, data->buffer, range, delimits_content);
+            f_print_except_in_dynamic_partial(main->output.stream, data->buffer, range, delimits_content, data->comments);
             fprintf(main->output.stream, "%c", f_string_eol_s[0]);
           }
 

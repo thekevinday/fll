@@ -95,6 +95,120 @@ extern "C" {
 #endif // _di_fl_print_trim_except_dynamic_
 
 /**
+ * Print a string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_
+  extern f_status_t fl_print_trim_except_in(FILE *output, const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_
+
+/**
+ * Print a dynamic string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will print the entire dynamic string, except for leading/trailing whitespace.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_dynamic_
+  extern f_status_t fl_print_trim_except_in_dynamic(FILE *output, const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_dynamic_
+
+/**
+ * Print a partial dynamic string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will not print any 1-byte character at a location specified in except_at array.
+ * Will not print any 1-byte character within the ranges specified in except_in array.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_dynamic_partial_
+  extern f_status_t fl_print_trim_except_in_dynamic_partial(FILE *output, const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_dynamic_partial_
+
+/**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
  * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
@@ -197,6 +311,120 @@ extern "C" {
 #endif // _di_fl_print_trim_except_utf_dynamic_
 
 /**
+ * Print a string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will not print any 1 UTF character at a location specified in except_at array.
+ * Will not print any 1 UTF character within the ranges specified in except_in array.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_utf_
+  extern f_status_t fl_print_trim_except_in_utf(FILE *output, const f_utf_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_utf_
+
+/**
+ * Print a dynamic string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will not print any 1 UTF character at a location specified in except_at array.
+ * Will not print any 1 UTF character within the ranges specified in except_in array.
+ * Will print the entire dynamic string, except for leading/trailing whitespace.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_utf_dynamic_
+  extern f_status_t fl_print_trim_except_in_utf_dynamic(FILE *output, const f_utf_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_utf_dynamic_
+
+/**
+ * Print a partial dynamic string, stripping leading and trailing whitespace.
+ *
+ * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
+ *
+ * Will not stop at \0.
+ * Will not print \0.
+ * Will not print any 1 UTF character at a location specified in except_at array.
+ * Will not print any 1 UTF character within the ranges specified in except_in array.
+ * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
+ *
+ * @param output
+ *   The file to output to, including standard streams such as stdout and stderr.
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *
+ *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_output (with error bit) on error when printing to output.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
+ */
+#ifndef _di_fl_print_trim_except_in_utf_dynamic_partial_
+  extern f_status_t fl_print_trim_except_in_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in);
+#endif // _di_fl_print_trim_except_in_utf_dynamic_partial_
+
+/**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
  * Except for leading/trailing whitespace, the string is printed as-is without interpretation.
@@ -228,7 +456,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_except_utf_dynamic_partial_
-  extern f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range, const f_array_lengths_t except);
+  extern f_status_t fl_print_trim_except_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except);
 #endif // _di_fl_print_trim_except_utf_dynamic_partial_
 
 /**
@@ -408,7 +636,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  */
 #ifndef _di_fl_print_trim_utf_dynamic_partial_
-  extern f_status_t fl_print_trim_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_utf_string_range_t range);
+  extern f_status_t fl_print_trim_utf_dynamic_partial(FILE *output, const f_utf_string_static_t buffer, const f_string_range_t range);
 #endif // _di_fl_print_trim_utf_dynamic_partial_
 
 #ifdef __cplusplus
