@@ -28,7 +28,7 @@ extern "C" {
 
     fprintf(output.stream, "%c", f_string_eol_s[0]);
 
-    fll_program_print_help_option(output, context, fake_short_define, fake_long_define, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Override defines from settings file with this define.");
+    fll_program_print_help_option(output, context, fake_short_define, fake_long_define, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Append an additional define after defines from settings file.");
     fll_program_print_help_option(output, context, fake_short_fakefile, fake_long_fakefile, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use this fakefile.");
     fll_program_print_help_option(output, context, fake_short_mode, fake_long_mode, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Use this mode when processing the build settings.");
     fll_program_print_help_option(output, context, fake_short_process, fake_long_process, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Process name for storing build states.");

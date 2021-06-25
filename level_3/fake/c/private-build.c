@@ -95,91 +95,84 @@ extern "C" {
       }
     }
 
+    f_array_length_t i = 0;
+
     if (F_status_is_error_not(*status)) {
-      for (f_array_length_t i = 0; i < data_build.setting.build_libraries.used; ++i) {
+      for (i = 0; i < data_build.setting.build_libraries.used; ++i) {
 
         *status = fll_execute_arguments_add(data_build.setting.build_libraries.array[i].string, data_build.setting.build_libraries.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data_build.setting.flags_all.used && F_status_is_error_not(*status); ++i) {
 
       *status = fll_execute_arguments_add(data_build.setting.flags_all.array[i].string, data_build.setting.flags_all.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
-    for (f_array_length_t i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data_build.setting.flags_shared.used && F_status_is_error_not(*status); ++i) {
 
       *status = fll_execute_arguments_add(data_build.setting.flags_shared.array[i].string, data_build.setting.flags_shared.array[i].used, arguments);
       if (F_status_is_error(*status)) break;
     } // for
 
     if (is_library) {
-      for (f_array_length_t j = 0; j < data_build.setting.flags_library.used && F_status_is_error_not(*status); ++j) {
+      for (i = 0; i < data_build.setting.flags_library.used && F_status_is_error_not(*status); ++i) {
 
-        *status = fll_execute_arguments_add(data_build.setting.flags_library.array[j].string, data_build.setting.flags_library.array[j].used, arguments);
+        *status = fll_execute_arguments_add(data_build.setting.flags_library.array[i].string, data_build.setting.flags_library.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
     else {
-      for (f_array_length_t i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); ++i) {
+      for (i = 0; i < data_build.setting.flags_program.used && F_status_is_error_not(*status); ++i) {
 
         *status = fll_execute_arguments_add(data_build.setting.flags_program.array[i].string, data_build.setting.flags_program.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
 
-    if (main.define.used) {
-      f_array_length_t length = 0;
-      f_array_length_t i = 0;
+    for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); ++i) {
 
-      for (; i < main.define.used && F_status_is_error_not(*status); ++i) {
+      *status = fll_execute_arguments_add(data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used, arguments);
+      if (F_status_is_error(*status)) break;
+    } // for
 
-        *status = fll_execute_arguments_add(main.define.array[i].string, main.define.array[i].used, arguments);
+    if (is_shared) {
+      for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
+
+        *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
     }
     else {
-      f_array_length_t length = 0;
-      f_array_length_t i = 0;
+      for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); ++i) {
 
-      for (; i < data_build.setting.defines_all.used && F_status_is_error_not(*status); ++i) {
-
-        *status = fll_execute_arguments_add(data_build.setting.defines_all.array[i].string, data_build.setting.defines_all.array[i].used, arguments);
+        *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
         if (F_status_is_error(*status)) break;
       } // for
-
-      if (is_shared) {
-        for (i = 0; i < data_build.setting.defines_shared.used && F_status_is_error_not(*status); ++i) {
-
-          *status = fll_execute_arguments_add(data_build.setting.defines_shared.array[i].string, data_build.setting.defines_shared.array[i].used, arguments);
-          if (F_status_is_error(*status)) break;
-        } // for
-      }
-      else {
-        for (i = 0; i < data_build.setting.defines_static.used && F_status_is_error_not(*status); ++i) {
-
-          *status = fll_execute_arguments_add(data_build.setting.defines_static.array[i].string, data_build.setting.defines_static.array[i].used, arguments);
-          if (F_status_is_error(*status)) break;
-        } // for
-      }
-
-      if (is_library) {
-        for (i = 0; i < data_build.setting.defines_library.used && F_status_is_error_not(*status); ++i) {
-
-          *status = fll_execute_arguments_add(data_build.setting.defines_library.array[i].string, data_build.setting.defines_library.array[i].used, arguments);
-          if (F_status_is_error(*status)) break;
-        } // for
-      }
-      else {
-        for (i = 0; i < data_build.setting.defines_program.used && F_status_is_error_not(*status); ++i) {
-
-          *status = fll_execute_arguments_add(data_build.setting.defines_program.array[i].string, data_build.setting.defines_program.array[i].used, arguments);
-          if (F_status_is_error(*status)) break;
-        } // for
-      }
     }
+
+    if (is_library) {
+      for (i = 0; i < data_build.setting.defines_library.used && F_status_is_error_not(*status); ++i) {
+
+        *status = fll_execute_arguments_add(data_build.setting.defines_library.array[i].string, data_build.setting.defines_library.array[i].used, arguments);
+        if (F_status_is_error(*status)) break;
+      } // for
+    }
+    else {
+      for (i = 0; i < data_build.setting.defines_program.used && F_status_is_error_not(*status); ++i) {
+
+        *status = fll_execute_arguments_add(data_build.setting.defines_program.array[i].string, data_build.setting.defines_program.array[i].used, arguments);
+        if (F_status_is_error(*status)) break;
+      } // for
+    }
+
+    for (i = 0; i < main.define.used && F_status_is_error_not(*status); ++i) {
+
+      *status = fll_execute_arguments_add(main.define.array[i].string, main.define.array[i].used, arguments);
+      if (F_status_is_error(*status)) break;
+    } // for
   }
 #endif // _di_fake_build_arguments_standard_add_
 
