@@ -101,16 +101,6 @@ extern "C" {
 #endif // _di_fss_embedded_list_read_main_process_for_depth_
 
 /**
- * Print the end of an content.
- *
- * @param main
- *   The main data.
- */
-#ifndef _di_fss_embedded_list_read_print_content_end_
-  extern void fss_embedded_list_read_print_content_end(const fss_embedded_list_read_main_t main) f_attribute_visibility_internal;
-#endif // _di_fss_embedded_list_read_print_content_end_
-
-/**
  * Print the ignore character for content.
  *
  * This is only used in pipe output mode.

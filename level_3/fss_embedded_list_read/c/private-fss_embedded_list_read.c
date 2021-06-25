@@ -646,23 +646,6 @@ extern "C" {
   }
 #endif // _di_fss_embedded_list_read_print_object_end_
 
-#ifndef _di_fss_embedded_list_read_print_content_end_
-  void fss_embedded_list_read_print_content_end(const fss_embedded_list_read_main_t main) {
-
-    if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_embedded_list_read_pipe_content_start);
-    }
-    else {
-      if (main.parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main.parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
-        fprintf(main.output.stream, "%c%c", f_fss_embedded_list_close, f_fss_embedded_list_close_end);
-      }
-      else {
-        fprintf(main.output.stream, "%c", f_fss_eol);
-      }
-    }
-  }
-#endif // _di_fss_embedded_list_read_print_content_end_
-
 #ifndef _di_fss_embedded_list_read_print_content_ignore_
   void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) {
 
