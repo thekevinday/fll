@@ -324,7 +324,7 @@ extern "C" {
           f_string_range_t range = macro_f_string_range_t_initialize(length);
           const f_string_static_t prepend = macro_f_string_static_t_initialize(arguments.argv[index], length);
 
-          for (; range.start < length; range.start++) {
+          for (; range.start < length; ++range.start) {
 
             status = f_fss_is_space(prepend, range);
             if (F_status_is_error(status)) break;
@@ -421,7 +421,7 @@ extern "C" {
           if (main->parameters[fss_extended_write_parameter_object].result == f_console_result_additional) {
             contents.used = 0;
 
-            for (f_array_length_t i = 0; i < main->parameters[fss_extended_write_parameter_object].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_extended_write_parameter_object].values.used; ++i) {
 
               object.string = arguments.argv[main->parameters[fss_extended_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
@@ -446,18 +446,18 @@ extern "C" {
             else {
               f_array_length_t i = 0;
 
-              for (; i < main->parameters[fss_extended_write_parameter_content].values.used; i++) {
+              for (; i < main->parameters[fss_extended_write_parameter_content].values.used; ++i) {
 
                 contents.array[contents.used].string = arguments.argv[main->parameters[fss_extended_write_parameter_content].values.array[i]];
                 contents.array[contents.used].used = strnlen(contents.array[contents.used].string, f_console_parameter_size);
                 contents.array[contents.used].size = contents.array[contents.used].used;
-                contents.used++;
+                ++contents.used;
               } // for
 
               status = fss_extended_write_process(*main, output, quote, 0, &contents, &buffer);
 
               // clear the contents array of the static strings to avoid deallocation attempts on static variables.
-              for (; i < main->parameters[fss_extended_write_parameter_content].values.used; i++) {
+              for (; i < main->parameters[fss_extended_write_parameter_content].values.used; ++i) {
                 contents.array[contents.used].string = 0;
                 contents.array[contents.used].used = 0;
                 contents.array[contents.used].size = 0;
@@ -475,7 +475,7 @@ extern "C" {
           f_array_length_t object_next = 0;
           f_array_length_t content_current = 0;
 
-          for (; i < main->parameters[fss_extended_write_parameter_object].values.used; i++) {
+          for (; i < main->parameters[fss_extended_write_parameter_object].values.used; ++i) {
 
             object_current = main->parameters[fss_extended_write_parameter_object].locations.array[i];
 
@@ -489,7 +489,7 @@ extern "C" {
 
             contents.used = 0;
 
-            for (; j < main->parameters[fss_extended_write_parameter_content].values.used; j++) {
+            for (; j < main->parameters[fss_extended_write_parameter_content].values.used; ++j) {
 
               content_current = main->parameters[fss_extended_write_parameter_content].locations.array[j];
 
@@ -515,7 +515,7 @@ extern "C" {
                 break;
               }
 
-              contents.used++;
+              ++contents.used;
             } // for
 
             if (F_status_is_error(status)) break;
@@ -574,7 +574,7 @@ extern "C" {
 #ifndef _di_fss_extended_write_main_delete_
   f_status_t fss_extended_write_main_delete(fss_extended_write_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_extended_write_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_extended_write_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

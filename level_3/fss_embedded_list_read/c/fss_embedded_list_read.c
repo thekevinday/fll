@@ -374,20 +374,20 @@ extern "C" {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_greater;
 
               // shorten the length to better convert the remainder to a number.
-              length--;
+              --length;
             }
             else if (arguments.argv[location][length - 1] == fss_embedded_list_read_delimit_mode_name_lesser[0]) {
               main->delimit_mode = fss_embedded_list_read_delimit_mode_depth_lesser;
 
               // shorten the length to better convert the remainder to a number.
-              length--;
+              --length;
             }
 
             f_string_range_t range = macro_f_string_range_t_initialize(length);
 
             // ignore leading plus sign.
             if (arguments.argv[location][0] == '+') {
-              range.start++;
+              ++range.start;
             }
 
             status = fl_conversion_string_to_number_unsigned(arguments.argv[location], range, &main->delimit_depth);
@@ -447,7 +447,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
           f_file_t file = f_file_t_initialize;
 
           status = f_file_open(arguments.argv[main->remaining.array[i]], 0, &file);
@@ -524,7 +524,7 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_main_delete_
   f_status_t fss_embedded_list_read_main_delete(fss_embedded_list_read_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_embedded_list_read_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_embedded_list_read_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

@@ -665,7 +665,7 @@ extern "C" {
         at_j -= 2;
 
         cache->ats.used -= 2;
-        cache->ats.array[at_j]++;
+        ++cache->ats.array[at_j];
 
         cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;
@@ -1386,7 +1386,7 @@ extern "C" {
         at_j -= 2;
 
         cache->ats.used -= 2;
-        cache->ats.array[at_j]++;
+        ++cache->ats.array[at_j];
 
         cache->action.line_item = entry->items.array[cache->ats.array[at_i]].line;
         cache->action.name_item.used = 0;

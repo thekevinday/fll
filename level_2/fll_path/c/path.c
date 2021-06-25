@@ -38,7 +38,7 @@ extern "C" {
     status = f_string_append_assure("/", 1, canonical);
     if (F_status_is_error(status)) return status;
 
-    for (; path[at]; at++) {
+    for (; path[at]; ++at) {
 
       if (!size_chunk && path[at] == f_path_separator_current_s[0]) {
         if (!previous_1 || previous_1 == f_path_separator_s[0]) {
@@ -71,14 +71,14 @@ extern "C" {
         if (previous_1 == f_path_separator_current_s[0]) {
           if (previous_2 == f_path_separator_current_s[0]) {
             if (canonical->used > 1) {
-              for (canonical->used--; canonical->used > 0; canonical->used--) {
+              for (--canonical->used; canonical->used > 0; --canonical->used) {
                 if (canonical->string[canonical->used - 1] == f_path_separator_s[0]) break;
               } // for
             }
           }
         }
         else {
-          size_chunk++;
+          ++size_chunk;
 
           if (size_chunk) {
             status = f_string_append(path + position, size_chunk, canonical);
@@ -100,7 +100,7 @@ extern "C" {
             size_chunk = 2;
           }
           else if (previous_1 && previous_1 != f_path_separator_s[0]) {
-            position--;
+            --position;
             size_chunk = 1;
           }
         }
@@ -110,13 +110,13 @@ extern "C" {
           previous_2 = 0;
         }
 
-        size_chunk++;
+        ++size_chunk;
       }
     } // for
 
     if (previous_2 == f_path_separator_current_s[0]) {
       if (canonical->used > 1) {
-        for (canonical->used--; canonical->used > 0; canonical->used--) {
+        for (--canonical->used; canonical->used > 0; --canonical->used) {
           if (canonical->string[canonical->used - 1] == f_path_separator_s[0]) break;
         } // for
       }

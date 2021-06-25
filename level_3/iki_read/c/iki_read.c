@@ -401,7 +401,7 @@ extern "C" {
         f_array_length_t total = 0;
         f_file_t file = f_file_t_initialize;
 
-        for (; i < main->remaining.used; i++) {
+        for (; i < main->remaining.used; ++i) {
           macro_f_file_t_reset(file);
           total = 0;
 
@@ -468,7 +468,7 @@ extern "C" {
 #ifndef _di_iki_read_main_delete_
   f_status_t iki_read_main_delete(iki_read_main_t *main) {
 
-    for (f_array_length_t i = 0; i < iki_read_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < iki_read_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

@@ -240,7 +240,7 @@ extern "C" {
               f_array_length_t location_sub_object = 0;
               f_array_length_t location_sub_content = 0;
 
-              for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].locations.used; i++) {
+              for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].locations.used; ++i) {
                 location_object = main->parameters[fss_extended_list_write_parameter_object].locations.array[i];
                 location_content = main->parameters[fss_extended_list_write_parameter_content].locations.array[i];
                 location_sub_object = main->parameters[fss_extended_list_write_parameter_object].locations_sub.array[i];
@@ -323,7 +323,7 @@ extern "C" {
           main->prepend.used = length;
           main->prepend.size = length;
 
-          for (; range.start < length; range.start++) {
+          for (; range.start < length; ++range.start) {
 
             status = f_fss_is_space(main->prepend, range);
             if (F_status_is_error(status)) break;
@@ -422,7 +422,7 @@ extern "C" {
         if (main->parameters[fss_extended_list_write_parameter_partial].result == f_console_result_found) {
 
           if (main->parameters[fss_extended_list_write_parameter_object].result == f_console_result_additional) {
-            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; ++i) {
 
               object.string = arguments.argv[main->parameters[fss_extended_list_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
@@ -433,7 +433,7 @@ extern "C" {
             } // for
           }
           else {
-            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_content].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_content].values.used; ++i) {
 
               status = fss_extended_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
               if (F_status_is_error(status)) break;
@@ -448,7 +448,7 @@ extern "C" {
           }
         }
         else {
-          for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; i++) {
+          for (f_array_length_t i = 0; i < main->parameters[fss_extended_list_write_parameter_object].values.used; ++i) {
 
             status = fss_extended_list_write_process_parameter_ignore(arguments, *main, main->parameters[fss_extended_list_write_parameter_content].locations, i, &ignore);
             if (F_status_is_error(status)) break;
@@ -518,7 +518,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_main_delete_
   f_status_t fss_extended_list_write_main_delete(fss_extended_list_write_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_extended_list_write_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_extended_list_write_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

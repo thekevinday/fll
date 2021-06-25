@@ -108,7 +108,7 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_slash) slash_count++;
+          if (buffer.string[range->start] == f_fss_delimit_slash) ++slash_count;
 
           status = f_utf_buffer_increment(buffer, range, 1);
           if (F_status_is_error(status)) break;
@@ -598,7 +598,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(width, destination);
           if (F_status_is_error(status)) break;
 
-          for (i = 0; i < width; i++) {
+          for (i = 0; i < width; ++i) {
             destination->string[destination->used++] = object.string[range->start + i];
           } // for
         }
@@ -659,7 +659,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(slash_count, destination);
         if (F_status_is_error(status)) break;
 
-        while (slash_count--) {
+        while (--slash_count) {
           destination->string[destination->used++] = f_fss_delimit_slash;
         } // while
 

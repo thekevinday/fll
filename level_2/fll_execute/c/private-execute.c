@@ -33,8 +33,7 @@ extern "C" {
 
     arguments->array[arguments->used].string = argument.string;
     arguments->array[arguments->used].used = argument.used;
-    arguments->array[arguments->used].size = argument.size;
-    arguments->used++;
+    arguments->array[arguments->used++].size = argument.size;
 
     return F_none;
   }
@@ -390,7 +389,7 @@ extern "C" {
     if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->environment->used; i++) {
+      for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
         f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }
@@ -559,7 +558,7 @@ extern "C" {
     if (parameter && parameter->environment) {
       clearenv();
 
-      for (f_array_length_t i = 0; i < parameter->environment->used; i++) {
+      for (f_array_length_t i = 0; i < parameter->environment->used; ++i) {
         f_environment_set_dynamic(parameter->environment->array[i].name, parameter->environment->array[i].value, F_true);
       } // for
     }

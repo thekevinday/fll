@@ -232,7 +232,7 @@ extern "C" {
               f_array_length_t location_sub_object = 0;
               f_array_length_t location_sub_content = 0;
 
-              for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].locations.used; i++) {
+              for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].locations.used; ++i) {
                 location_object = main->parameters[fss_basic_write_parameter_object].locations.array[i];
                 location_content = main->parameters[fss_basic_write_parameter_content].locations.array[i];
                 location_sub_object = main->parameters[fss_basic_write_parameter_object].locations_sub.array[i];
@@ -410,7 +410,7 @@ extern "C" {
           if (main->parameters[fss_basic_write_parameter_object].result == f_console_result_additional) {
             content.used = 0;
 
-            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; ++i) {
 
               object.string = arguments.argv[main->parameters[fss_basic_write_parameter_object].values.array[i]];
               object.used = strnlen(object.string, f_console_parameter_size);
@@ -423,7 +423,7 @@ extern "C" {
           else {
             object.used = 0;
 
-            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_content].values.used; i++) {
+            for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_content].values.used; ++i) {
 
               content.string = arguments.argv[main->parameters[fss_basic_write_parameter_content].values.array[i]];
               content.used = strnlen(content.string, f_console_parameter_size);
@@ -435,7 +435,7 @@ extern "C" {
           }
         }
         else {
-          for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; i++) {
+          for (f_array_length_t i = 0; i < main->parameters[fss_basic_write_parameter_object].values.used; ++i) {
 
             object.string = arguments.argv[main->parameters[fss_basic_write_parameter_object].values.array[i]];
             object.used = strnlen(object.string, f_console_parameter_size);
@@ -500,7 +500,7 @@ extern "C" {
 #ifndef _di_fss_basic_write_main_delete_
   f_status_t fss_basic_write_main_delete(fss_basic_write_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_basic_write_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_basic_write_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

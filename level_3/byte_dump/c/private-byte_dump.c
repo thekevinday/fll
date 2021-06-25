@@ -609,7 +609,7 @@ extern "C" {
 
       if (previous->bytes > 0) {
         if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-          for (; j < previous->bytes && j < main.width; j++) {
+          for (; j < previous->bytes && j < main.width; ++j) {
 
             if (previous->invalid) {
               f_color_print(main.output.stream, main.context.set.error, "%s", byte_dump_character_placeholder);
@@ -623,7 +623,7 @@ extern "C" {
           } // for
         }
         else {
-          for (; j < previous->bytes && j < main.width; j++) {
+          for (; j < previous->bytes && j < main.width; ++j) {
             fprintf(main.output.stream, "%s", f_string_space_s);
           } // for
         }
@@ -638,7 +638,7 @@ extern "C" {
       }
     }
 
-    for (uint8_t i = 0; i < characters.used && j < main.width; i++, j++) {
+    for (uint8_t i = 0; i < characters.used && j < main.width; ++i, ++j) {
 
       output = macro_f_utf_character_t_to_char_1(characters.string[i]);
       width_utf = macro_f_utf_byte_width_is(output);
@@ -941,7 +941,7 @@ extern "C" {
 
     // Print placeholder for the remaining parts of the line.
     if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-      for (; j < main.width; j++) {
+      for (; j < main.width; ++j) {
 
         if (invalid[j]) {
           f_color_print(main.output.stream, main.context.set.error, "%s", byte_dump_character_placeholder);
@@ -955,7 +955,7 @@ extern "C" {
       } // for
     }
     else {
-      for (; j < main.width; j++) {
+      for (; j < main.width; ++j) {
         fprintf(main.output.stream, "%s", f_string_space_s);
       } // for
     }

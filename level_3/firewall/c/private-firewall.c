@@ -60,7 +60,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     chain = firewall_chain_custom_id;
   }
 
-  for (; i < local.rule_objects.used; i++) {
+  for (; i < local.rule_objects.used; ++i) {
     length  = macro_firewall_structure_size(local.rule_objects, i);
     invalid = F_false;
 
@@ -317,7 +317,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
       continue;
     }
 
-    for (r = repeat; r > 0; r--) {
+    for (r = repeat; r > 0; --r) {
 
       // first add the program name
       f_string_dynamics_resize(0, &arguments);
@@ -510,8 +510,9 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
         f_array_length_t subcounter = 0;
 
         if (is_ip_list) {
+
           // skip past the chain
-          subcounter++;
+          ++subcounter;
 
           length = macro_firewall_structure_size(local.rule_contents.array[i], subcounter);
 
@@ -526,12 +527,12 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
               macro_firewall_concat_string(ip_list.string, local.buffer.string + local.rule_contents.array[i].array[subcounter].start, length);
               ip_list.used = length;
 
-              subcounter++;
+              ++subcounter;
             }
           }
         }
 
-        for (; subcounter < local.rule_contents.array[i].used; subcounter++) {
+        for (; subcounter < local.rule_contents.array[i].used; ++subcounter) {
 
           length = macro_firewall_structure_size(local.rule_contents.array[i], subcounter);
 
@@ -725,7 +726,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                   }
 
                   // the ip_list file contains objects and no content, all objects are what matter an nothing else
-                  for (; buffer_counter < basic_objects.used; buffer_counter++) {
+                  for (; buffer_counter < basic_objects.used; ++buffer_counter) {
 
                     ip_length = macro_firewall_structure_size(basic_objects, buffer_counter);
 
@@ -746,7 +747,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       f_color_print_code(f_type_debug, main.context.warning);
                       fprintf(f_type_debug, "%s ", current_tool);
 
-                      for (f_array_length_t i = 0; i < arguments.used; i++) {
+                      for (f_array_length_t i = 0; i < arguments.used; ++i) {
                         fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
                       } // for
 
@@ -768,7 +769,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       f_color_print_code(f_type_error, main.context.error);
 
                       fprintf(f_type_error, "%s ", current_tool);
-                      for (f_array_length_t i = 0; i < arguments.used; i++) {
+                      for (f_array_length_t i = 0; i < arguments.used; ++i) {
                         fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
                       } // for
 
@@ -776,8 +777,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       fprintf(f_type_error, "\n");
 
                       // remove ip_argument from arguments string.
-                      macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
-                      arguments.used--;
+                      macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
 
                       break;
                     }
@@ -785,22 +785,19 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
 
                       // remove ip_argument from arguments string.
-                      macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
-                      arguments.used--;
+                      macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
 
                       break;
                     }
 
                     // remove ip_argument from arguments string.
-                    macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
-                    arguments.used--;
+                    macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
                   } // for
 
                   macro_f_string_dynamic_t_delete_simple(ip_argument);
 
                   // remove ip_list_action from arguments string.
-                  macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used]);
-                  arguments.used--;
+                  macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
                 }
               }
 
@@ -820,7 +817,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             f_color_print_code(f_type_debug, main.context.warning);
             fprintf(f_type_debug, "%s ", current_tool);
 
-            for (f_array_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; ++i) {
               fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -841,7 +838,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             f_color_print_code(f_type_error, main.context.error);
 
             fprintf(f_type_error, "%s ", current_tool);
-            for (f_array_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; ++i) {
               fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -982,7 +979,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
           break;
         }
 
-        j++;
+        ++j;
       } // while
     }
 
@@ -1028,15 +1025,13 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
       while (j <= local->chain_objects.array[i].stop) {
 
         if (local->buffer.string[j] == f_fss_delimit_placeholder) {
-          j++;
+          ++j;
           continue;
         }
 
-        main->chains.array[main->chains.used].string[main->chains.array[main->chains.used].used] = local->buffer.string[j];
-        main->chains.array[main->chains.used].used++;
-        arguments.array[1].string[arguments.array[1].used] = local->buffer.string[j];
-        arguments.array[1].used++;
-        j++;
+        main->chains.array[main->chains.used].string[main->chains.array[main->chains.used].used++] = local->buffer.string[j];
+        arguments.array[1].string[arguments.array[1].used++] = local->buffer.string[j];
+        ++j;
       } // while
 
       if (fl_string_compare(arguments.array[1].string, firewall_chain_forward, arguments.array[1].used, firewall_chain_forward_length) == F_equal_to) {
@@ -1060,7 +1055,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
           f_color_print_code(f_type_debug, main->context.warning);
           fprintf(f_type_debug, "%s ", firewall_tool_iptables);
 
-          for (f_array_length_t i = 0; i < arguments.used; i++) {
+          for (f_array_length_t i = 0; i < arguments.used; ++i) {
             fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
           } // for
 
@@ -1081,7 +1076,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
             f_color_print_code(f_type_debug, main->context.warning);
             fprintf(f_type_debug, "%s ", firewall_tool_ip6tables);
 
-            for (f_array_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; ++i) {
               fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -1119,7 +1114,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
               fprintf(f_type_error, "%s ", firewall_tool_ip6tables);
             }
 
-            for (f_array_length_t i = 0; i < arguments.used; i++) {
+            for (f_array_length_t i = 0; i < arguments.used; ++i) {
               fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
             } // for
 
@@ -1138,10 +1133,10 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         }
       }
 
-      main->chains.used++;
+      ++main->chains.used;
     }
 
-    i++;
+    ++i;
   } // while
 
   macro_f_string_dynamics_t_delete_simple(arguments);
@@ -1153,7 +1148,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
   const f_string_t tools[2] = { firewall_tool_iptables, firewall_tool_ip6tables };
   f_status_t status = F_none;
 
-  for (f_array_length_t i = 0; i < 2; i++) {
+  for (f_array_length_t i = 0; i < 2; ++i) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
     int return_code = 0;
@@ -1170,7 +1165,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
       f_color_print_code(f_type_debug, main.context.warning);
       fprintf(f_type_debug, "%s ", tools[i]);
 
-      for (f_array_length_t i = 0; i < arguments.used; i++) {
+      for (f_array_length_t i = 0; i < arguments.used; ++i) {
         fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
       } // for
 
@@ -1195,7 +1190,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
         f_color_print_code(f_type_error, main.context.error);
 
         fprintf(f_type_error, "%s ", tools[i]);
-        for (f_array_length_t i = 0; i < arguments.used; i++) {
+        for (f_array_length_t i = 0; i < arguments.used; ++i) {
           fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
         } // for
 
@@ -1213,7 +1208,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
     }
   } // for
 
-  for (f_array_length_t i = 0; i < 2; i++) {
+  for (f_array_length_t i = 0; i < 2; ++i) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[1] = f_string_dynamic_t_initialize;
     int return_code = 0;
@@ -1230,7 +1225,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
       f_color_print_code(f_type_debug, main.context.warning);
       fprintf(f_type_debug, "%s ", tools[i]);
 
-      for (f_array_length_t j = 0; j < arguments.used; j++) {
+      for (f_array_length_t j = 0; j < arguments.used; ++j) {
         fprintf(f_type_debug, "%.*s ", arguments.array[j].used, arguments.array[j].string);
       } // for
 
@@ -1255,7 +1250,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
         f_color_print_code(f_type_error, main.context.error);
 
         fprintf(f_type_error, "%s ", tools[i]);
-        for (f_array_length_t j = 0; j < arguments.used; j++) {
+        for (f_array_length_t j = 0; j < arguments.used; ++j) {
           fprintf(f_type_error, "%.*s ", arguments.array[j].used, arguments.array[j].string);
         } // for
 
@@ -1284,7 +1279,7 @@ f_status_t firewall_default_lock(const firewall_main_t main) {
 
   f_status_t status = F_none;
 
-  for (f_array_length_t i = 0; i < 3; i++) {
+  for (f_array_length_t i = 0; i < 3; ++i) {
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
     f_string_dynamic_t argument[3];
 
@@ -1304,7 +1299,7 @@ f_status_t firewall_default_lock(const firewall_main_t main) {
     arguments.array[1].size = arguments.array[1].used;
     arguments.array[2].size = arguments.array[2].used;
 
-    for (f_array_length_t j = 0; j < 2; j++) {
+    for (f_array_length_t j = 0; j < 2; ++j) {
       int return_code = 0;
 
       // print command when debugging.

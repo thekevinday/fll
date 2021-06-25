@@ -135,7 +135,7 @@ extern "C" {
       }
 
       if (main->parameters[fss_basic_list_read_parameter_name].result == f_console_result_additional) {
-        for (; position_name < main->parameters[fss_basic_list_read_parameter_name].values.used; position_name++) {
+        for (; position_name < main->parameters[fss_basic_list_read_parameter_name].values.used; ++position_name) {
 
           if (main->parameters[fss_basic_list_read_parameter_name].values.array[position_name] < position_depth) {
             continue;

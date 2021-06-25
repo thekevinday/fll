@@ -48,7 +48,7 @@ extern "C" {
         &main.path_work_programs_static,
       };
 
-      for (uint8_t i = 0; i < 20; i++) {
+      for (uint8_t i = 0; i < 20; ++i) {
 
         if (fake_signal_received(main)) {
           return F_status_set_error(F_signal);

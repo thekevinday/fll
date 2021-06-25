@@ -271,7 +271,7 @@ extern "C" {
   #define macro_f_iki_seek_whitespace(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
       if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
-        range->start++; \
+        ++range->start; \
         continue; \
       } \
       macro_f_iki_determine_width_max(buffer, range, width_max); \
@@ -298,7 +298,7 @@ extern "C" {
   #define macro_f_iki_seek_word_dash_plus(status, buffer, range, width_max, condition) \
     while (range->start <= range->stop && range->start < buffer->used) { \
       if (buffer->string[range->start] == f_iki_syntax_placeholder) { \
-        range->start++; \
+        ++range->start; \
         continue; \
       } \
       macro_f_iki_determine_width_max(buffer, range, width_max); \

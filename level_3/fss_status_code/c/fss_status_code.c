@@ -155,7 +155,7 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
           status2 = fss_status_code_process_check(*main, arguments.argv[main->remaining.array[i]]);
 
@@ -171,7 +171,7 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
           status2 = fss_status_code_process_number(*main, arguments.argv[main->remaining.array[i]]);
 
@@ -187,7 +187,7 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
-        for (f_array_length_t i = 0; i < main->remaining.used; i++) {
+        for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
           status2 = fss_status_code_process_normal(*main, arguments.argv[main->remaining.array[i]]);
 
           if (F_status_is_error(status2) && status == F_none) {
@@ -205,7 +205,7 @@ extern "C" {
 #ifndef _di_fss_status_code_main_delete_
   f_status_t fss_status_code_main_delete(fss_status_code_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_status_code_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_status_code_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

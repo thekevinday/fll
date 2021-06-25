@@ -241,7 +241,7 @@ extern "C" {
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (digits) {
-          digits++;
+          ++digits;
 
           if (negative) {
             if (digits > f_conversion_digits_duodecimal_signed) {

@@ -427,7 +427,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
 
             part.string[part.used - 1] = f_path_separator_s[0];
-            part.used++;
+            ++part.used;
           }
         }
 

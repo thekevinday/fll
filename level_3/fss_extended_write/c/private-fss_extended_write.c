@@ -97,7 +97,7 @@ extern "C" {
 
     if (contents) {
       if (contents->used) {
-        for (f_array_length_t i = 0; i < contents->used; i++) {
+        for (f_array_length_t i = 0; i < contents->used; ++i) {
 
           if (contents->array[i].used) {
             range.start = 0;
@@ -210,7 +210,7 @@ extern "C" {
           }
         }
 
-        for (; range.start <= range.stop; range.start++) {
+        for (; range.start <= range.stop; ++range.start) {
 
           if (block.string[range.start] == fss_extended_write_pipe_content_start) {
             state = 0x2;

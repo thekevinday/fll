@@ -624,7 +624,7 @@ extern "C" {
         }
 
         if (buffer.string[range->start] == f_fss_eol) {
-          depth++;
+          ++depth;
 
           if (depth >= positions_start.size) {
             macro_f_array_lengths_t_resize(status, positions_start, positions_start.size + state.step_small);
@@ -1269,7 +1269,7 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             if (content.string[range->start] == f_fss_embedded_list_open) {
-              while (slash_count--) {
+              while (--slash_count) {
                 destination->string[destination->used++] = f_fss_delimit_slash;
               } // while
             }

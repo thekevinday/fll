@@ -798,7 +798,7 @@ extern "C" {
       write_amount = total / file.size_write;
 
       if (total % file.size_write) {
-        write_amount++;
+        ++write_amount;
       }
     }
 

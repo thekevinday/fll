@@ -81,7 +81,7 @@ extern "C" {
         slash_first = range->start;
         slash_count = 1;
 
-        for (range->start++; range->start <= range->stop && range->start < buffer.used; range->start++) {
+        for (++range->start; range->start <= range->stop && range->start < buffer.used; ++range->start) {
 
           if (state.interrupt) {
             status = state.interrupt((void *) &state, 0);
@@ -682,7 +682,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(slash_count, destination);
         if (F_status_is_error(status)) break;
 
-        while (slash_count--) {
+        while (--slash_count) {
           destination->string[destination->used++] = f_fss_delimit_slash;
         } // while
 
@@ -820,7 +820,7 @@ extern "C" {
         destination->string[destination->used++] = content.string[range->start];
         has_graph = F_true;
 
-        for (range->start++; range->start <= range->stop && range->start < content.used; range->start++) {
+        for (++range->start; range->start <= range->stop && range->start < content.used; ++range->start) {
 
           if (state.interrupt) {
             status = state.interrupt((void *) &state, 0);
@@ -835,7 +835,7 @@ extern "C" {
           if (content.string[range->start] != f_fss_delimit_slash) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash;
-          slash_count++;
+          ++slash_count;
         } // for
 
         if (content.string[range->start] == f_fss_basic_list_open) {
@@ -850,7 +850,7 @@ extern "C" {
             status = f_string_dynamic_increase_by(slash_count + 3, destination);
             if (F_status_is_error(status)) break;
 
-            while (slash_count--) {
+            while (--slash_count) {
               destination->string[destination->used++] = f_fss_delimit_slash;
             } // while
 

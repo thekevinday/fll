@@ -19,7 +19,7 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t delimits = 0;
 
-    for (; i < content.used; i++) {
+    for (; i < content.used; ++i) {
 
       if (content.string[i] == quote) {
         if (escaped->used + delimits + 2 > escaped->size) {
@@ -27,7 +27,7 @@ extern "C" {
           if (F_status_is_error(status)) return status;
         }
 
-        for (j = 0; j < delimits; j++) {
+        for (j = 0; j < delimits; ++j) {
           escaped->string[escaped->used++] = f_iki_syntax_slash;
         } // for
 
@@ -43,7 +43,7 @@ extern "C" {
         }
 
         if (content.string[i] == f_iki_syntax_slash) {
-          delimits++;
+          ++delimits;
         }
         else {
           delimits = 0;
@@ -60,7 +60,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      for (j = 0; j < delimits; j++) {
+      for (j = 0; j < delimits; ++j) {
         escaped->string[escaped->used++] = f_iki_syntax_slash;
       } // for
     }
@@ -85,7 +85,7 @@ extern "C" {
 
     const f_array_length_t used = unescaped->used;
 
-    for (; i < content.used; i++) {
+    for (; i < content.used; ++i) {
 
       if (content.string[i] == quote) {
 
@@ -98,7 +98,7 @@ extern "C" {
         delimits = 1;
 
         if (i + 1 < content.used) {
-          for (j = i + 1; j < content.used; j++) {
+          for (j = i + 1; j < content.used; ++j) {
 
             if (content.string[j] == quote) {
               if (delimits % 2 == 0) {
@@ -117,7 +117,7 @@ extern "C" {
                 if (F_status_is_error(status)) return status;
               }
 
-              for (j = 0; j < delimits; j++) {
+              for (j = 0; j < delimits; ++j) {
                 unescaped->string[unescaped->used++] = f_iki_syntax_slash;
               } // for
 
@@ -126,7 +126,7 @@ extern "C" {
               break;
             }
             else if (content.string[j] == f_iki_syntax_slash) {
-              delimits++;
+              ++delimits;
             }
             else if (content.string[j]) {
               if (unescaped->used + (j - i) + 1 > unescaped->size) {
@@ -134,12 +134,12 @@ extern "C" {
                 if (F_status_is_error(status)) return status;
               }
 
-              for (; i <= j; i++) {
+              for (; i <= j; ++i) {
                 unescaped->string[unescaped->used++] = content.string[i];
               } // for
 
               delimits = 0;
-              i--;
+              --i;
               break;
             }
           } // for
@@ -164,7 +164,7 @@ extern "C" {
             if (F_status_is_error(status)) return status;
           }
 
-          for (j = 0; j < delimits; j++) {
+          for (j = 0; j < delimits; ++j) {
             unescaped->string[unescaped->used++] = f_iki_syntax_slash;
           } // for
 

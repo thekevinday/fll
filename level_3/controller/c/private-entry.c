@@ -910,7 +910,7 @@ extern "C" {
             break;
           }
 
-          cache->action.line_item++;
+          ++cache->action.line_item;
 
           for (j = (code & 0x1) ? 1 : 0; j < entry->items.used; ++j) {
 

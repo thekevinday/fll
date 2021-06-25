@@ -246,7 +246,7 @@ extern "C" {
   #define macro_f_memory_structures_delete(status, structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
-      structures.used--; \
+      --structures.used; \
       status = f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
       if (F_status_is_error(status)) break; \
     } \
@@ -265,7 +265,7 @@ extern "C" {
   #define macro_f_memory_structures_destroy(status, structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
-      structures.used--; \
+      --structures.used; \
       status = f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
       if (F_status_is_error(status)) break; \
     } \
@@ -283,7 +283,7 @@ extern "C" {
   #define macro_f_memory_structures_delete_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
-      structures.used--; \
+      --structures.used; \
       f_memory_structure_resize(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
     } \
     f_memory_structure_resize(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);
@@ -300,7 +300,7 @@ extern "C" {
   #define macro_f_memory_structures_destroy_simple(structures, type_structure, type_structures) \
     structures.used = structures.size; \
     while (structures.used) { \
-      structures.used--; \
+      --structures.used; \
       f_memory_structure_adjust(0, sizeof(type_structure), (void **) &structures.array[structures.used].array, &structures.array[structures.used].used, &structures.array[structures.used].size); \
     } \
     f_memory_structure_adjust(0, sizeof(type_structures), (void **) & structures.array, &structures.used, &structures.size);

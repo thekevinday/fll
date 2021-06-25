@@ -802,7 +802,7 @@ extern "C" {
 
       if (buffer.string[range->start] == f_string_eol_s[0]) return F_none_eol;
 
-      range->start++;
+      ++range->start;
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
@@ -822,7 +822,8 @@ extern "C" {
     if (range->start > range->stop) return F_data_not_stop;
 
     while (buffer.string[range->start] != seek_to_this) {
-      range->start++;
+
+      ++range->start;
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;

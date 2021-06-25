@@ -254,7 +254,7 @@ extern "C" {
 
             if (block.string[range.start] == fss_embedded_list_write_pipe_content_end) {
               state = 0x3;
-              range.start++;
+              ++range.start;
               break;
             }
 

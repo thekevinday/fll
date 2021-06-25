@@ -93,7 +93,7 @@ extern "C" {
         parameters.parameter[i].result = f_console_result_additional;
         parameters.parameter[i].values.array[parameters.parameter[i].values.used++] = location;
 
-        needs_value.used--;
+        --needs_value.used;
 
         // Pop the matched parameter off of the top of the needs_value array.
         for (f_array_length_t i = 0; i < needs_value.used; ++i) {

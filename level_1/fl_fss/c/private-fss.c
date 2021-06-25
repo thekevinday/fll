@@ -88,7 +88,7 @@ extern "C" {
 
       const f_array_length_t rear = destination_range.start + 1;
 
-      for (; destination_range.start > front; destination_range.start--) {
+      for (; destination_range.start > front; --destination_range.start) {
 
         if (state.interrupt) {
           status = state.interrupt((void *) &state, 0);

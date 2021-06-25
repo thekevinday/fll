@@ -183,9 +183,9 @@ extern "C" {
       depths->used++;
     }
 
-    for (i = 0; i < depths->used; i++) {
+    for (i = 0; i < depths->used; ++i) {
 
-      for (j = i + 1; j < depths->used; j++) {
+      for (j = i + 1; j < depths->used; ++j) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
           fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
@@ -475,10 +475,10 @@ extern "C" {
       if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
         f_array_length_t total = 0;
 
-        for (i = 0; i < items->used; i++) {
+        for (i = 0; i < items->used; ++i) {
           if (skip[i]) continue;
 
-          total++;
+          ++total;
         } // for
 
         fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
@@ -492,7 +492,7 @@ extern "C" {
         print_object = &fl_print_trim_except_dynamic_partial;
       }
 
-      for (i = 0; i < items->used; i++) {
+      for (i = 0; i < items->used; ++i) {
 
         if (skip[i]) continue;
 
@@ -528,7 +528,7 @@ extern "C" {
 
         if (!items->array[i].content.used) {
           if (include_empty) {
-            total++;
+            ++total;
           }
 
           continue;
@@ -539,7 +539,7 @@ extern "C" {
           if (!main->buffer.string[j]) continue;
 
           if (main->buffer.string[j] == f_string_eol_s[0]) {
-            total++;
+            ++total;
           }
         } // for
       } // for
@@ -562,7 +562,7 @@ extern "C" {
               break;
             }
 
-            line_current++;
+            ++line_current;
           }
 
           continue;
@@ -574,7 +574,7 @@ extern "C" {
           for (; j <= items->array[i].content.array[0].stop; ++j) {
 
             if (main->buffer.string[j] == f_string_eol_s[0]) {
-              line_current++;
+              ++line_current;
 
               if (line_current == line) {
                 ++j;
@@ -606,7 +606,7 @@ extern "C" {
       return F_none;
     }
 
-    for (i = 0; i < items->used; i++) {
+    for (i = 0; i < items->used; ++i) {
 
       if (skip[i]) continue;
 
@@ -798,7 +798,7 @@ extern "C" {
 
                 if (fss_embedded_list_read_process_delimits_within_greater(main, depth, original_delimits[j]) == F_false) {
                   delimits->array[l] = original_delimits[j];
-                  delimits->used++;
+                  ++delimits->used;
                 }
 
                 break;
@@ -848,7 +848,7 @@ extern "C" {
 
               if (fss_embedded_list_read_process_delimits_within_greater(main, depth, original_delimits[j]) == F_false) {
                 delimits->array[k] = original_delimits[j];
-                delimits->used++;
+                ++delimits->used;
               }
 
               break;

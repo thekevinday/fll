@@ -118,7 +118,7 @@ extern "C" {
         return F_none_eol;
       }
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -168,7 +168,7 @@ extern "C" {
         return F_none_eol;
       }
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -212,7 +212,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_character_t_eol) return F_none_eol;
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -251,7 +251,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_character) {
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -336,7 +336,7 @@ extern "C" {
 
     f_utf_character_t seek_to_character = seek_to_this << 24;
 
-    for (; range->start <= range->stop; range->start++) {
+    for (; range->start <= range->stop; ++range->start) {
 
       if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -381,7 +381,7 @@ extern "C" {
         return F_none_eol;
       }
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -426,7 +426,7 @@ extern "C" {
         return F_none_eol;
       }
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);
@@ -465,7 +465,7 @@ extern "C" {
         return F_none;
       }
 
-      range->start++;
+      ++range->start;
 
       if (macro_f_utf_character_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf);

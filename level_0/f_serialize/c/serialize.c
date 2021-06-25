@@ -81,7 +81,7 @@ extern "C" {
           memcpy(strings->array[strings->used].string, serialize.string + start, total);
 
           strings->array[strings->used].used = total;
-          strings->used++;
+          ++strings->used;
         }
 
         if (i + width > serialize.used) {

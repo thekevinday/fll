@@ -376,7 +376,7 @@ extern "C" {
 #ifndef _di_fake_main_delete_
   f_status_t fake_main_delete(fake_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fake_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fake_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

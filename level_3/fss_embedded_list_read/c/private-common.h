@@ -112,7 +112,7 @@ extern "C" {
   #define macro_fss_embedded_list_read_depths_t_delete_simple(depths) \
     depths.used = depths.size; \
     while (depths.used > 0) { \
-      depths.used--; \
+      --depths.used; \
       macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[depths.used]); \
     } \
     if (!depths.used) macro_f_memory_structure_delete_simple(depths, fss_embedded_list_read_depth_t)
@@ -121,7 +121,7 @@ extern "C" {
     status = F_none; \
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
-      for (; i < depths.size; i++) { \
+      for (; i < depths.size; ++i) { \
         macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[i]); \
       } \
     } \
@@ -135,7 +135,7 @@ extern "C" {
     status = F_none; \
     if (new_length < depths.size) { \
       f_array_length_t i = depths.size - new_length; \
-      for (; i < depths.size; i++) { \
+      for (; i < depths.size; ++i) { \
         macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[i]); \
       } \
     } \

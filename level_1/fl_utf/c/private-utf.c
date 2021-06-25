@@ -11,25 +11,25 @@ extern "C" {
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
-    for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
+    for (; i1 < stop1 && i2 < stop2; ++i1, ++i2) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
     // only return F_equal_to if all remaining characters are NULL.
-    for (; i1 < stop1; i1++) {
+    for (; i1 < stop1; ++i1) {
       if (string1[i1] != 0) return F_equal_to_not;
     } // for
 
-    for (; i2 < stop2; i2++) {
+    for (; i2 < stop2; ++i2) {
       if (string2[i2] != 0) return F_equal_to_not;
     } // for
 
@@ -46,10 +46,10 @@ extern "C" {
     f_status_t status = F_none;
 
     // skip past leading whitespace in string1.
-    for (; i1 < stop1; i1++) {
+    for (; i1 < stop1; ++i1) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       status = f_utf_character_is_whitespace(string1[i1]);
@@ -69,7 +69,7 @@ extern "C" {
     for (; i2 < stop2; i2++) {
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       status = f_utf_character_is_whitespace(string2[i2]);
@@ -95,10 +95,10 @@ extern "C" {
       f_array_length_t j = 0;
 
       // determine where the last non-whitespace is in string1.
-      for (j = i1; j < stop1; j++) {
+      for (j = i1; j < stop1; ++j) {
 
         // skip past NULL in string1.
-        while (j < stop1 && !string1[j]) j++;
+        while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
         status = f_utf_character_is_whitespace(string1[j]);
@@ -112,15 +112,15 @@ extern "C" {
 
         if (status == F_false) {
           last1 = j;
-          size1++;
+          ++size1;
         }
       } // for
 
       // determine where the last non-whitespace is in string2.
-      for (j = i2; j < stop2; j++) {
+      for (j = i2; j < stop2; ++j) {
 
         // skip past NULL in string2.
-        while (j < stop2 && !string2[j]) j++;
+        while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
         status = f_utf_character_is_whitespace(string2[j]);
@@ -135,7 +135,7 @@ extern "C" {
 
         if (status == F_false) {
           last2 = j;
-          size2++;
+          ++size2;
         }
       } // for
 
@@ -144,25 +144,25 @@ extern "C" {
       }
     }
 
-    for (; i1 < last1 && i2 < last2; i1++, i2++) {
+    for (; i1 < last1 && i2 < last2; ++i1, ++i2) {
 
       // skip past NULL in string1.
-      while (i1 < last1 && !string1[i1]) i1++;
+      while (i1 < last1 && !string1[i1]) ++i1;
       if (i1 == last1) break;
 
       // skip past NULL in string2.
-      while (i2 < last2 && !string2[i2]) i2++;
+      while (i2 < last2 && !string2[i2]) ++i2;
       if (i2 == last2) break;
 
       if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
     // only return F_equal_to if all remaining characters are NULL.
-    for (; i1 < last1; i1++) {
+    for (; i1 < last1; ++i1) {
       if (string1[i1] != 0) return F_equal_to_not;
     } // for
 
-    for (; i2 < last2; i2++) {
+    for (; i2 < last2; ++i2) {
       if (string2[i2] != 0) return F_equal_to_not;
     } // for
 
@@ -176,10 +176,10 @@ extern "C" {
     f_status_t status = F_none;
 
     // skip past leading whitespace.
-    for (; *start <= *stop; (*start)++) {
+    for (; *start <= *stop; ++(*start)) {
 
       // skip past NULL.
-      while (*start < *stop && !source[*start]) (*start)++;
+      while (*start < *stop && !source[*start]) ++(*start);
       if (*start > *stop) break;
 
       status = f_utf_character_is_whitespace(source[*start]);
@@ -195,10 +195,10 @@ extern "C" {
       if (status == F_false) break;
     } // for
 
-    for (; *stop > *start; (*stop)--) {
+    for (; *stop > *start; --(*stop)) {
 
       // skip past NULL.
-      while (*stop > *start && !source[*stop]) (*stop)--;
+      while (*stop > *start && !source[*stop]) --(*stop);
 
       if (!source[*stop]) continue;
       if (*stop == *start) break;

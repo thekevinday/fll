@@ -328,7 +328,7 @@ extern "C" {
 #ifndef _di_fss_identify_main_delete_
   f_status_t fss_identify_main_delete(fss_identify_main_t *main) {
 
-    for (f_array_length_t i = 0; i < fss_identify_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < fss_identify_total_parameters; ++i) {
 
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);

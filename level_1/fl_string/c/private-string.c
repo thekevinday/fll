@@ -11,25 +11,25 @@ extern "C" {
     f_array_length_t i1 = offset1;
     f_array_length_t i2 = offset2;
 
-    for (; i1 < stop1 && i2 < stop2; i1++, i2++) {
+    for (; i1 < stop1 && i2 < stop2; ++i1, ++i2) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
     // only return F_equal_to if all remaining characters are NULL.
-    for (; i1 < stop1; i1++) {
+    for (; i1 < stop1; ++i1) {
       if (string1[i1] != 0) return F_equal_to_not;
     } // for
 
-    for (; i2 < stop2; i2++) {
+    for (; i2 < stop2; ++i2) {
       if (string2[i2] != 0) return F_equal_to_not;
     } // for
 
@@ -49,25 +49,25 @@ extern "C" {
     while (i1 < stop1 && i2 < stop2) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       // skip past except characters in string1.
-      while (e1 < except1.used && except1.array[e1] < i1) e1++;
+      while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) {
-        i1++;
+        ++i1;
 
         continue;
       }
 
       // skip past except characters in string2.
-      while (e2 < except2.used && except2.array[e2] < i2) e2++;
+      while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) {
-        i2++;
+        ++i2;
 
         continue;
       }
@@ -76,15 +76,15 @@ extern "C" {
         return F_equal_to_not;
       }
 
-      i1++;
-      i2++;
+      ++i1;
+      ++i2;
     } // while
 
     // only return F_equal_to if all remaining characters are NULL or are designated to be ignored.
     for (; i1 < stop1; i1++) {
 
       // skip past except characters in string1.
-      while (e1 < except1.used && except1.array[e1] < i1) e1++;
+      while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) continue;
 
       if (string1[i1] != 0) {
@@ -92,10 +92,10 @@ extern "C" {
       }
     } // for
 
-    for (; i2 < stop2; i2++) {
+    for (; i2 < stop2; ++i2) {
 
       // skip past except characters in string2.
-      while (e2 < except2.used && except2.array[e2] < i2) e2++;
+      while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) continue;
 
       if (string2[i2] != 0) {
@@ -125,11 +125,11 @@ extern "C" {
     for (; i1 < stop1; i1 += width) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       // skip past except characters in string1.
-      while (e1 < except1.used && except1.array[e1] < i1) e1++;
+      while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) {
         width = 1;
 
@@ -156,11 +156,11 @@ extern "C" {
     for (; i2 < stop2; i2 += width) {
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       // skip past except characters in string2.
-      while (e2 < except2.used && except2.array[e2] < i2) e2++;
+      while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) {
         width = 1;
 
@@ -198,11 +198,11 @@ extern "C" {
       for (j = i1; j < stop1; j += width) {
 
         // skip past NULL in string1.
-        while (j < stop1 && !string1[j]) j++;
+        while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
         // skip past except characters in string1.
-        while (ej < except1.used && except1.array[ej] < j) ej++;
+        while (ej < except1.used && except1.array[ej] < j) ++ej;
 
         if (ej < except1.used && except1.array[ej] == j) {
           width = 1;
@@ -235,11 +235,11 @@ extern "C" {
       for (j = i2; j < stop2; j += width) {
 
         // skip past NULL in string2.
-        while (j < stop2 && !string2[j]) j++;
+        while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
         // skip past except characters in string2.
-        while (ej < except2.used && except2.array[ej] < j) ej++;
+        while (ej < except2.used && except2.array[ej] < j) ++ej;
         if (ej < except2.used && except2.array[ej] == j) {
           width = 1;
           continue;
@@ -272,27 +272,27 @@ extern "C" {
     while (i1 <= last1 && i2 <= last2) {
 
       // skip past NULL in string1.
-      while (i1 <= last1 && !string1[i1]) i1++;
+      while (i1 <= last1 && !string1[i1]) ++i1;
       if (i1 > last1) break;
 
       // skip past NULL in string2.
-      while (i2 <= last2 && !string2[i2]) i2++;
+      while (i2 <= last2 && !string2[i2]) ++i2;
       if (i2 > last2) break;
 
       // skip past except characters in string1.
-      while (e1 < except1.used && except1.array[e1] < i1) e1++;
+      while (e1 < except1.used && except1.array[e1] < i1) ++e1;
 
       if (e1 < except1.used && except1.array[e1] == i1) {
-        i1++;
+        ++i1;
 
         continue;
       }
 
       // skip past except characters in string2.
-      while (e2 < except2.used && except2.array[e2] < i2) e2++;
+      while (e2 < except2.used && except2.array[e2] < i2) ++e2;
 
       if (e2 < except2.used && except2.array[e2] == i2) {
-        i2++;
+        ++i2;
 
         continue;
       }
@@ -301,29 +301,29 @@ extern "C" {
         return F_equal_to_not;
       }
 
-      i1++;
-      i2++;
+      ++i1;
+      ++i2;
     } // while
 
     // only return F_equal_to if all remaining characters are NULL.
-    for (; i1 <= last1; i1++) {
+    for (; i1 <= last1; ++i1) {
 
       if (string1[i1] != 0) {
 
         // skip past except characters in string1.
-        while (e1 < except1.used && except1.array[e1] < i1) e1++;
+        while (e1 < except1.used && except1.array[e1] < i1) ++e1;
         if (e1 < except1.used && except1.array[e1] == i1) continue;
 
         return F_equal_to_not;
       }
     } // for
 
-    for (; i2 <= last2; i2++) {
+    for (; i2 <= last2; ++i2) {
 
       if (string2[i2] != 0) {
 
         // skip past except characters in string1.
-        while (e2 < except2.used && except2.array[e2] < i2) e2++;
+        while (e2 < except2.used && except2.array[e2] < i2) ++e2;
         if (e2 < except2.used && except2.array[e2] == i2) continue;
 
         return F_equal_to_not;
@@ -348,7 +348,7 @@ extern "C" {
     for (; i1 < stop1; i1 += width) {
 
       // skip past NULL in string1.
-      while (i1 < stop1 && !string1[i1]) i1++;
+      while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
       width_max = (stop1 - i1) + 1;
@@ -371,7 +371,7 @@ extern "C" {
     for (; i2 < stop2; i2 += width) {
 
       // skip past NULL in string2.
-      while (i2 < stop2 && !string2[i2]) i2++;
+      while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       width_max = (stop2 - i2) + 1;
@@ -402,7 +402,7 @@ extern "C" {
       for (f_array_length_t j = i1; j < stop1; j += width) {
 
         // skip past NULL in string1.
-        while (j < stop1 && !string1[j]) j++;
+        while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
         width_max = (stop1 - j) + 1;
@@ -420,7 +420,7 @@ extern "C" {
 
         if (status == F_false) {
           last1 = j;
-          size1++;
+          ++size1;
         }
       } // for
 
@@ -428,7 +428,7 @@ extern "C" {
       for (f_array_length_t j = i2; j < stop2; j += width) {
 
         // skip past NULL in string2.
-        while (j < stop2 && !string2[j]) j++;
+        while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
         width_max = (stop2 - j) + 1;
@@ -446,7 +446,7 @@ extern "C" {
 
         if (status == F_false) {
           last2 = j;
-          size2++;
+          ++size2;
         }
       } // for
 
@@ -455,14 +455,14 @@ extern "C" {
       }
     }
 
-    for (; i1 < last1 && i2 < last2; i1++, i2++) {
+    for (; i1 < last1 && i2 < last2; ++i1, ++i2) {
 
       // skip past NULL in string1.
-      while (i1 < last1 && !string1[i1]) i1++;
+      while (i1 < last1 && !string1[i1]) ++i1;
       if (i1 == last1) break;
 
       // skip past NULL in string2.
-      while (i2 < last2 && !string2[i2]) i2++;
+      while (i2 < last2 && !string2[i2]) ++i2;
       if (i2 == last2) break;
 
       if (string1[i1] != string2[i2]) {
@@ -474,13 +474,13 @@ extern "C" {
     while (i1 < last1) {
 
       if (string1[i1] != 0) return F_equal_to_not;
-      i1++;
+      ++i1;
     } // while
 
     while (i2 < last2) {
 
       if (string2[i2] != 0) return F_equal_to_not;
-      i2++;
+      ++i2;
     } // while
 
     return F_equal_to;
@@ -500,7 +500,7 @@ extern "C" {
     for (; *start <= *stop; *start += width) {
 
       // skip past NULL.
-      while (*start < *stop && !source[*start]) (*start)++;
+      while (*start < *stop && !source[*start]) ++(*start);
       if (*start > *stop) break;
 
       status = f_utf_is_whitespace(source + *start, (*stop - *start) + 1);
@@ -518,10 +518,10 @@ extern "C" {
       width = macro_f_utf_byte_width(source[*start]);
     } // for
 
-    for (; *stop > *start; (*stop)--) {
+    for (; *stop > *start; --(*stop)) {
 
       // skip past NULL.
-      while (*stop > *start && !source[*stop]) (*stop)--;
+      while (*stop > *start && !source[*stop]) --(*stop);
 
       if (!source[*stop]) continue;
       if (*stop == *start) break;
@@ -533,7 +533,7 @@ extern "C" {
         width = macro_f_utf_byte_width_is(source[*stop]);
 
         if (width == 1) {
-          (*stop)--;
+          --(*stop);
 
           if (*stop == *start) break;
         }

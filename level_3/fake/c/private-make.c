@@ -481,8 +481,7 @@ extern "C" {
                   }
 
                   // Ensure that the terminating NULL is after the end of the string used size.
-                  data_make->setting_build.environment.array[data_make->setting_build.environment.used].used--;
-                  data_make->setting_build.environment.used++;
+                  --data_make->setting_build.environment.array[data_make->setting_build.environment.used++].used;
                 }
                 else if (main.error.verbosity == f_console_verbosity_verbose) {
                   fprintf(main.output.stream, "%c", f_string_eol_s[0]);
@@ -894,7 +893,7 @@ extern "C" {
         return;
       }
       else {
-        data_make->parameter.verbosity.used++;
+        ++data_make->parameter.verbosity.used;
       }
     }
 
@@ -1382,7 +1381,7 @@ extern "C" {
                 }
               }
 
-              arguments->used++;
+              ++arguments->used;
               unmatched = F_false;
             }
             else {
@@ -1909,7 +1908,7 @@ extern "C" {
           status = f_string_dynamic_terminate_after(&arguments->array[arguments->used]);
 
           if (F_status_is_error_not(status)) {
-            arguments->used++;
+            ++arguments->used;
           }
         }
       }
@@ -3612,7 +3611,7 @@ extern "C" {
     if (operation == fake_make_operation_type_pop) {
       macro_f_string_dynamic_t_delete_simple(data_make->path.stack.array[data_make->path.stack.used - 1]);
 
-      data_make->path.stack.used--;
+      --data_make->path.stack.used;
 
       *status = f_path_change(data_make->path.stack.array[data_make->path.stack.used - 1].string);
 
@@ -4741,10 +4740,10 @@ extern "C" {
               // fifo      = 0x8 (0000 1000) invalid = 0x80 (1000 0000)
               uint8_t type_file = 0;
 
-              for (i = 1; i < arguments.used; i++) {
+              for (i = 1; i < arguments.used; ++i) {
 
                 if (fl_string_dynamic_compare_string(fake_make_operation_argument_if_is_for, arguments.array[i], fake_make_operation_argument_if_is_for_length) == F_equal_to) {
-                  i++;
+                  ++i;
                   break;
                 }
 
@@ -4794,7 +4793,7 @@ extern "C" {
             }
 
             if (i < arguments.used) {
-              for (f_status_t status_file = F_none; i < arguments.used; i++) {
+              for (f_status_t status_file = F_none; i < arguments.used; ++i) {
 
                 status_file = fake_make_assure_inside_project(main, arguments.array[i], data_make);
 

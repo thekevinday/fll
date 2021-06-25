@@ -51,22 +51,22 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
-            objects->used++;
+            ++objects->used;
 
             if (objects_quoted) {
-              objects_quoted->used++;
+              ++objects_quoted->used;
             }
 
             macro_f_fss_content_t_increase(status2, f_fss_default_allocation_step_small, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
-            contents->used++;
+            ++contents->used;
 
             if (contents_quoted) {
               macro_f_fss_quotes_t_increase(status2, f_fss_default_allocation_step_small, contents_quoted->array[contents_quoted->used])
               if (F_status_is_error(status2)) return status2;
 
-              contents_quoted->used++;
+              ++contents_quoted->used;
             }
 
             return FL_fss_found_object_content_not;
@@ -112,16 +112,16 @@ extern "C" {
       if (status == F_none_eos || status == F_none_stop) {
         contents->array[contents->used].used++;
 
-        objects->used++;
-        contents->used++;
+        ++objects->used;
+        ++contents->used;
 
         if (objects_quoted) {
-          objects_quoted->used++;
+          ++objects_quoted->used;
         }
 
         if (contents_quoted) {
-          contents_quoted->array[contents_quoted->used].used++;
-          contents_quoted->used++;
+          ++contents_quoted->array[contents_quoted->used].used;
+          ++contents_quoted->used;
         }
 
         return status;
@@ -148,15 +148,15 @@ extern "C" {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not || status == F_terminated_not_group) {
-          objects->used++;
-          contents->used++;
+          ++objects->used;
+          ++contents->used;
 
           if (objects_quoted) {
-            objects_quoted->used++;
+            ++objects_quoted->used;
           }
 
           if (contents_quoted) {
-            contents_quoted->used++;
+            ++contents_quoted->used;
           }
         }
 
@@ -175,15 +175,15 @@ extern "C" {
         return F_none_stop;
       }
 
-      objects->used++;
-      contents->used++;
+      ++objects->used;
+      ++contents->used;
 
       if (objects_quoted) {
-        objects_quoted->used++;
+        ++objects_quoted->used;
       }
 
       if (contents_quoted) {
-        contents_quoted->used++;
+        ++contents_quoted->used;
       }
 
     } while (range->start < f_string_t_size);
@@ -210,7 +210,7 @@ extern "C" {
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
       uint8_t complete = f_fss_complete_next;
 
-      for (f_array_length_t i = 0; i < contents.used; i++) {
+      for (f_array_length_t i = 0; i < contents.used; ++i) {
 
         if (i + 1 == contents.used) {
           complete = f_fss_complete_end;

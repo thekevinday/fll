@@ -370,7 +370,7 @@ extern "C" {
         f_string_static_t object = f_string_static_t_initialize;
         f_string_static_t content = f_string_static_t_initialize;
 
-        for (f_array_length_t i = 0; i < main->parameters[iki_write_parameter_object].values.used; i++) {
+        for (f_array_length_t i = 0; i < main->parameters[iki_write_parameter_object].values.used; ++i) {
 
           object.string = arguments.argv[main->parameters[iki_write_parameter_object].values.array[i]];
           object.used = strnlen(object.string, f_console_parameter_size);
@@ -416,7 +416,7 @@ extern "C" {
 #ifndef _di_iki_write_main_delete_
   f_status_t iki_write_main_delete(iki_write_main_t *main) {
 
-    for (f_array_length_t i = 0; i < iki_write_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < iki_write_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

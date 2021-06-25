@@ -165,7 +165,7 @@ extern "C" {
     f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
-    for (f_array_length_t i = 0; i < values.used; i++) {
+    for (f_array_length_t i = 0; i < values.used; ++i) {
 
       length = strnlen(argv[values.array[i]], f_console_parameter_size);
 
@@ -182,8 +182,7 @@ extern "C" {
           macro_f_memory_structure_increment(status, (*destination), 1, f_memory_default_allocation_small, macro_f_string_dynamics_t_resize, F_array_too_large);
           if (F_status_is_error(status)) break;
 
-          destination->array[destination->used] = ripped;
-          destination->used++;
+          destination->array[destination->used++] = ripped;
         }
       }
     } // for
@@ -209,7 +208,7 @@ extern "C" {
     f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
-    for (f_array_length_t i = 0; i < values.used; i++) {
+    for (f_array_length_t i = 0; i < values.used; ++i) {
 
       length = strnlen(argv[values.array[i]], f_console_parameter_size);
 
@@ -238,7 +237,7 @@ extern "C" {
     f_array_length_t length = 0;
     const f_array_length_t start = destination->used;
 
-    for (f_array_length_t i = 0; i < values.used; i++) {
+    for (f_array_length_t i = 0; i < values.used; ++i) {
 
       length = strnlen(argv[values.array[i]], f_console_parameter_size);
 
@@ -255,8 +254,7 @@ extern "C" {
           macro_f_string_dynamics_t_increase(status, f_memory_default_allocation_small, (*destination));
           if (F_status_is_error(status)) return status;
 
-          destination->array[destination->used] = ripped;
-          destination->used++;
+          destination->array[destination->used++] = ripped;
         }
       }
     } // for
@@ -283,7 +281,7 @@ extern "C" {
     const f_array_length_t start = destination->used;
     f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
-    for (f_array_length_t i = 0; i < values.used; i++) {
+    for (f_array_length_t i = 0; i < values.used; ++i) {
 
       length = strnlen(argv[values.array[i]], f_console_parameter_size);
 

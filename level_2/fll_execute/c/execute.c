@@ -39,7 +39,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < size; i++) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add_parameter(prefix[i], prefix_length[i], name[i], name_length[i], value[i], value_length[i], arguments);
       if (F_status_is_error(status)) return status;
@@ -57,7 +57,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < size; i++) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add(source[i], length[i], arguments);
       if (F_status_is_error(status)) return status;
@@ -101,7 +101,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < size; i++) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add_parameter(prefix[i].string, prefix[i].used, name[i].string, name[i].used, value[i].string, value[i].used, arguments);
       if (F_status_is_error(status)) return status;
@@ -119,7 +119,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (f_array_length_t i = 0; i < size; i++) {
+    for (f_array_length_t i = 0; i < size; ++i) {
 
       status = private_fll_execute_arguments_add(source[i].string, source[i].used, arguments);
       if (F_status_is_error(status)) return status;

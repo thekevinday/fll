@@ -95,8 +95,7 @@ typedef struct {
   \
   arguments.array[arguments.used].string = argument.string; \
   arguments.array[arguments.used].size   = argument.size; \
-  arguments.array[arguments.used].used   = argument.used; \
-  arguments.used++; \
+  arguments.array[arguments.used++].used = argument.used; \
   \
   macro_f_string_dynamic_t_clear(argument);
 

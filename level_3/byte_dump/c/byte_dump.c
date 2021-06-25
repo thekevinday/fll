@@ -374,7 +374,7 @@ extern "C" {
         {
           f_status_t missing_files = F_none;
 
-          for (f_array_length_t counter = 0; counter < main->remaining.used; counter++) {
+          for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
             status = f_file_exists(arguments.argv[main->remaining.array[counter]]);
 
@@ -397,7 +397,7 @@ extern "C" {
 
         f_file_t file = f_file_t_initialize;
 
-        for (f_array_length_t counter = 0; counter < main->remaining.used; counter++) {
+        for (f_array_length_t counter = 0; counter < main->remaining.used; ++counter) {
 
           status = f_file_stream_open(arguments.argv[main->remaining.array[counter]], 0, &file);
 
@@ -460,7 +460,7 @@ extern "C" {
 #ifndef _di_byte_dump_main_delete_
   f_status_t byte_dump_main_delete(byte_dump_main_t *main) {
 
-    for (f_array_length_t i = 0; i < byte_dump_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < byte_dump_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);

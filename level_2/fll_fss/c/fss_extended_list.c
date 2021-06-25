@@ -34,12 +34,12 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == FL_fss_found_object || status == FL_fss_found_object_content_not) {
-            objects->used++;
+            ++objects->used;
 
             macro_f_fss_content_t_increase(status2, f_fss_default_allocation_step_small, contents->array[contents->used])
             if (F_status_is_error(status2)) return status2;
 
-            contents->used++;
+            ++contents->used;
 
             return FL_fss_found_object_content_not;
           }
@@ -79,9 +79,9 @@ extern "C" {
       } while (status == FL_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
-        contents->array[contents->used].used++;
-        objects->used++;
-        contents->used++;
+        ++contents->array[contents->used].used;
+        ++objects->used;
+        ++contents->used;
 
         return status;
       }
@@ -107,8 +107,8 @@ extern "C" {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == FL_fss_found_object || status == FL_fss_found_content || status == FL_fss_found_content_not || status == FL_fss_found_object_content_not) {
-          objects->used++;
-          contents->used++;
+          ++objects->used;
+          ++contents->used;
         }
 
         if (range->start >= buffer.used) {
@@ -118,8 +118,8 @@ extern "C" {
         return F_none_stop;
       }
 
-      objects->used++;
-      contents->used++;
+      ++objects->used;
+      ++contents->used;
 
     } while (range->start < f_string_t_size);
 

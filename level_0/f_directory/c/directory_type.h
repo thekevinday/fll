@@ -151,7 +151,7 @@ extern "C" {
   #define macro_f_directory_statuss_t_delete_simple(structures) \
     structures.used = structures.size; \
     while (structures.used > 0) { \
-      structures.used--; \
+      --structures.used; \
       macro_f_directory_status_t_delete_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \
@@ -163,7 +163,7 @@ extern "C" {
   #define macro_f_directory_statuss_t_destroy_simple(structures) \
     structures.used = structures.size; \
     while (structures.used > 0) { \
-      structures.used--; \
+      --structures.used; \
       macro_f_directory_status_t_destroy_simple(structures.array[structures.used]); \
     } \
     if (!structures.size) { \

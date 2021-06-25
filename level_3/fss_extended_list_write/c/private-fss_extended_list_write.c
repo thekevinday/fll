@@ -191,7 +191,7 @@ extern "C" {
           }
         }
 
-        for (; range.start <= range.stop; range.start++) {
+        for (; range.start <= range.stop; ++range.start) {
 
           if (block.string[range.start] == fss_extended_list_write_pipe_content_start) {
             state = 0x2;

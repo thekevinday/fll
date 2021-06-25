@@ -1346,7 +1346,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     // reset the environment.
-    for (f_array_length_t i = 0; i < environment->used; i++) {
+    for (f_array_length_t i = 0; i < environment->used; ++i) {
       environment->array[i].name.used = 0;
       environment->array[i].value.used = 0;
     } // for

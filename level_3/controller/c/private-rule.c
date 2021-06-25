@@ -86,7 +86,7 @@ extern "C" {
         return status;
       }
 
-      parameters->used++;
+      ++parameters->used;
     }
 
     if (content && content->used) {
@@ -352,8 +352,7 @@ extern "C" {
 
                 status = controller_rule_parameters_read(global, cache->buffer_item, &cache->object_actions.array[i], &cache->content_actions.array[i], &actions->array[actions->used].parameters);
 
-                actions->array[actions->used].status = controller_status_simplify_error(F_status_set_fine(status));
-                actions->used++;
+                actions->array[actions->used++].status = controller_status_simplify_error(F_status_set_fine(status));
               } // for
 
               range->start = cache->content_action.array[0].start;
@@ -412,8 +411,7 @@ extern "C" {
                 controller_error_print(global.main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, global.thread);
               }
               else {
-                actions->array[actions->used].parameters.used = 1;
-                actions->used++;
+                actions->array[actions->used++].parameters.used = 1;
               }
             }
           }

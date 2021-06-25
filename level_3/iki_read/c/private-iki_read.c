@@ -17,13 +17,13 @@ extern "C" {
 
     range->start = 0;
     if (main->line > 0) {
-      for (; line < main->line && range->start < main->buffer.used; range->start++) {
-        if (main->buffer.string[range->start] == f_string_eol_s[0]) line++;
+      for (; line < main->line && range->start < main->buffer.used; ++range->start) {
+        if (main->buffer.string[range->start] == f_string_eol_s[0]) ++line;
       } // for
     }
 
     if (line == main->line) {
-      for (range->stop = range->start; range->stop < main->buffer.used; range->stop++) {
+      for (range->stop = range->start; range->stop < main->buffer.used; ++range->stop) {
         if (main->buffer.string[range->stop] == f_string_eol_s[0]) break;
       } // for
 
@@ -134,7 +134,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
-        for (f_array_length_t i = 0; i < variable->used; i++) {
+        for (f_array_length_t i = 0; i < variable->used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
@@ -150,7 +150,7 @@ extern "C" {
       f_array_length_t j = 0;
       buffer_range->start = 0;
 
-      for (; i < main->parameters[iki_read_parameter_name].values.used; i++) {
+      for (; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
 
         index = main->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
@@ -160,7 +160,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
 
-          for (f_array_length_t i = 0; i < variable->used; i++) {
+          for (f_array_length_t i = 0; i < variable->used; ++i) {
             macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
@@ -170,7 +170,7 @@ extern "C" {
 
         buffer_range->stop = name.used - 1;
 
-        for (j = 0; j < vocabulary->used; j++) {
+        for (j = 0; j < vocabulary->used; ++j) {
 
           status = fl_string_dynamic_partial_compare(name, main->buffer, *buffer_range, vocabulary->array[j]);
 
@@ -198,7 +198,7 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < ranges->used; i++) {
+      for (; i < ranges->used; ++i) {
 
         if (substitutionss[i].used) {
           iki_read_substitutions_print(*main, *variable, *content, *ranges, substitutionss[i], i, content_only);
@@ -216,7 +216,7 @@ extern "C" {
       status = F_data_not;
     }
 
-    for (f_array_length_t i = 0; i < variable->used; i++) {
+    for (f_array_length_t i = 0; i < variable->used; ++i) {
       macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
@@ -260,7 +260,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         fll_error_print(main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
-        for (f_array_length_t i = 0; i < variable->used; i++) {
+        for (f_array_length_t i = 0; i < variable->used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
@@ -281,12 +281,12 @@ extern "C" {
       f_array_length_t j = 0;
       f_array_length_t length_argument = 0;
 
-      for (f_array_length_t index = 0; i < main->parameters[iki_read_parameter_name].values.used; i++) {
+      for (f_array_length_t index = 0; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
 
         index = main->parameters[iki_read_parameter_name].values.array[i];
         length_argument = strnlen(arguments.argv[index], f_console_parameter_size);
 
-        for (j = 0, name_missed = F_true; j < names.used; j++) {
+        for (j = 0, name_missed = F_true; j < names.used; ++j) {
 
           status = fl_string_compare(arguments.argv[index], names.array[j].string, length_argument, names.array[j].used);
 
@@ -311,12 +311,12 @@ extern "C" {
             break;
           }
 
-          names.used++;
+          ++names.used;
         }
       } // for
 
       if (F_status_is_error(status)) {
-        for (i = 0; i < variable->used; i++) {
+        for (i = 0; i < variable->used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
@@ -350,7 +350,7 @@ extern "C" {
         if (names.used) {
           name_missed = F_true;
 
-          for (k = 0; k < names.used; k++) {
+          for (k = 0; k < names.used; ++k) {
             name_range.stop = names.array[k].used - 1;
 
             status = fl_string_dynamic_partial_compare(main->buffer, names.array[k], vocabulary->array[j], name_range);
@@ -388,7 +388,7 @@ extern "C" {
         }
 
         i = variable->array[j].stop + 1;
-        j++;
+        ++j;
       } // while
 
       if (i <= buffer_range.stop) {
@@ -397,7 +397,7 @@ extern "C" {
       }
     }
 
-    for (f_array_length_t i = 0; i < variable->used; i++) {
+    for (f_array_length_t i = 0; i < variable->used; ++i) {
       macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
@@ -450,7 +450,7 @@ extern "C" {
 
       range.start = 0;
 
-      for (; i < main->parameters[iki_read_parameter_name].values.used; i++) {
+      for (; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
 
         index = main->parameters[iki_read_parameter_name].values.array[i];
         name.used = 0;
@@ -466,11 +466,11 @@ extern "C" {
 
         range.stop = name.used - 1;
 
-        for (j = 0; j < vocabulary->used; j++) {
+        for (j = 0; j < vocabulary->used; ++j) {
 
           status = fl_string_dynamic_partial_compare(name, main->buffer, range, vocabulary->array[j]);
 
-          if (status == F_equal_to) total++;
+          if (status == F_equal_to) ++total;
         } // for
       } // for
 
@@ -510,7 +510,7 @@ extern "C" {
       index = parameter->values.array[i];
       length = strnlen(arguments.argv[index], f_console_parameter_size);
 
-      for (j = 0; j < vocabulary->used; j++) {
+      for (j = 0; j < vocabulary->used; ++j) {
 
         status = fl_string_compare(arguments.argv[index], main->buffer.string + vocabulary->array[j].start, length, (vocabulary->array[j].stop - vocabulary->array[j].start) + 1);
 
@@ -529,7 +529,7 @@ extern "C" {
           substitutionss[j].array[index_2].with.used = strnlen(arguments.argv[index], f_console_parameter_size);
           substitutionss[j].array[index_2].with.size = substitutionss[j].array[index_2].with.used;
 
-          substitutionss[j].used++;
+          ++substitutionss[j].used;
         }
       } // for
     } // for
@@ -547,7 +547,7 @@ extern "C" {
 
     range.start = 0;
 
-    for (; i < substitutions.used; i++) {
+    for (; i < substitutions.used; ++i) {
 
       range.stop = substitutions.array[i].replace.used - 1;
 

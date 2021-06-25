@@ -135,7 +135,7 @@ extern "C" {
       }
 
       if (main->parameters[fss_extended_list_read_parameter_name].result == f_console_result_additional) {
-        for (; position_name < main->parameters[fss_extended_list_read_parameter_name].values.used; position_name++) {
+        for (; position_name < main->parameters[fss_extended_list_read_parameter_name].values.used; ++position_name) {
 
           if (main->parameters[fss_extended_list_read_parameter_name].values.array[position_name] < position_depth) {
             continue;
@@ -358,11 +358,13 @@ extern "C" {
       fprintf(main->output.stream, "%c", fss_extended_list_read_pipe_content_end);
     }
     else {
-      if ((data->option & fss_extended_list_read_data_option_object) && (data->option & fss_extended_list_read_data_option_content)) {
-        fprintf(main->output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
-      }
-      else if ((data->option & fss_extended_list_read_data_option_object) && !(data->option & fss_extended_list_read_data_option_content)) {
-        fprintf(main->output.stream, "%c", f_fss_eol);
+      if (data->option & fss_extended_list_read_data_option_object) {
+        if (data->option & fss_extended_list_read_data_option_content) {
+          fprintf(main->output.stream, "%c%c", f_fss_extended_list_close, f_fss_extended_list_close_end);
+        }
+        else if (!(data->option & fss_extended_list_read_data_option_content)) {
+          fprintf(main->output.stream, "%c", f_fss_eol);
+        }
       }
     }
   }

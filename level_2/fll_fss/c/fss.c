@@ -586,15 +586,15 @@ extern "C" {
         status = f_string_dynamic_partial_append_nulless(buffer, contents.array[i].array[0], &map->name);
         if (F_status_is_error(status)) return status;
 
-        values[j]->used++;
+        ++values[j]->used;
 
         if (indexs) {
           indexs[j]->array[indexs[j]->used] = i;
-          indexs[j]->used++;
+          ++indexs[j]->used;
         }
 
         if (contents.array[i].used > 1) {
-          for (k = 1; k < contents.array[i].used; k++) {
+          for (k = 1; k < contents.array[i].used; ++k) {
 
             status = f_string_dynamic_partial_mash_nulless(glue, glue_length, buffer, contents.array[i].array[k], &map->value);
             if (F_status_is_error(status)) return status;

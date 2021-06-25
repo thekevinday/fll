@@ -861,7 +861,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used) {
-      for (; destination->used; destination->used--) {
+      for (; destination->used; --destination->used) {
 
         if (!destination->string[destination->used - 1]) continue;
         break;

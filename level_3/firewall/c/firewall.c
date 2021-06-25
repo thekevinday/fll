@@ -208,7 +208,7 @@ extern "C" {
 
           f_array_length_t counter = 0;
 
-          for (; counter < main->remaining.used; counter++) {
+          for (; counter < main->remaining.used; ++counter) {
 
             if (strncmp("nat", arguments.argv[main->remaining.array[counter]], 4) != 0) {
               if (strncmp("mangle",  arguments.argv[main->remaining.array[counter]], 7) != 0) {
@@ -349,7 +349,7 @@ extern "C" {
             f_color_print_code(f_type_error, main->context.error);
 
             fprintf(f_type_error, "%s ", firewall_tool_iptables);
-            for (; i < parameters.used; i++) {
+            for (; i < parameters.used; ++i) {
               fprintf(f_type_error, "%s ", parameters.array[i].string);
             } // for
 
@@ -406,13 +406,13 @@ extern "C" {
       {
         f_array_length_t i = 0;
 
-        for (; i < main->devices.used; i++) {
+        for (; i < main->devices.used; ++i) {
           if (fl_string_compare((f_string_t) firewall_device_loop, main->devices.array[i].string, firewall_device_loop_length + 1, main->devices.array[i].used) == F_equal_to) {
             f_string_dynamic_t swap_string = main->devices.array[i];
 
-            main->devices.used--;
+            --main->devices.used;
 
-            for (; i < main->devices.used; i++) {
+            for (; i < main->devices.used; ++i) {
               main->devices.array[i] = main->devices.array[i+1];
             } // for
 
@@ -434,7 +434,7 @@ extern "C" {
           f_array_length_t i = 0;
           f_array_length_t length = 0;
 
-          for (; i < local.chain_objects.used; i++) {
+          for (; i < local.chain_objects.used; ++i) {
             length = local.chain_objects.array[i].stop - local.chain_objects.array[i].start + 1;
 
             if (!reserved.has_stop && fl_string_compare((f_string_t) firewall_group_stop, local.buffer.string + local.chain_objects.array[i].start, firewall_group_stop_length, length) == F_equal_to) {
@@ -581,12 +581,12 @@ extern "C" {
             return status;
           }
 
-          i++;
+          ++i;
         } // while
 
         firewall_delete_local_data(&local);
 
-        for (i = 0; i < main->devices.used; i++) {
+        for (i = 0; i < main->devices.used; ++i) {
           local.device = i;
 
           {
@@ -641,7 +641,7 @@ extern "C" {
           local.is_stop = F_false;
           local.is_lock = F_false;
 
-          for (; j < local.chain_contents.used; j++) {
+          for (; j < local.chain_contents.used; ++j) {
 
             input.start = local.chain_contents.array[j].array[0].start;
             input.stop = local.chain_contents.array[j].array[0].stop;
@@ -701,7 +701,7 @@ extern "C" {
             return status;
           }
 
-          i++;
+          ++i;
         } // while
       }
 
@@ -721,7 +721,7 @@ extern "C" {
 #ifndef _di_firewall_main_delete_
   f_status_t firewall_main_delete(firewall_main_t *main) {
 
-    for (f_array_length_t i = 0; i < firewall_total_parameters; i++) {
+    for (f_array_length_t i = 0; i < firewall_total_parameters; ++i) {
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].locations_sub);
       macro_f_array_lengths_t_delete_simple(main->parameters[i].values);
