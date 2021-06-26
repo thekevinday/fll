@@ -1592,20 +1592,23 @@ extern "C" {
     {
       const f_string_t uint8_name[] = {
         fake_build_setting_name_build_language,
+        fake_build_setting_name_version_file,
         fake_build_setting_name_version_target,
       };
 
       const f_array_length_t uint8_length[] = {
         fake_build_setting_name_build_language_length,
+        fake_build_setting_name_version_file_length,
         fake_build_setting_name_version_target_length,
       };
 
       const uint8_t uint8_value[] = {
         data_make->setting_build.build_language,
+        data_make->setting_build.version_file,
         data_make->setting_build.version_target,
       };
 
-      for (uint8_t i = 0; i < 2; ++i) {
+      for (uint8_t i = 0; i < 3; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(uint8_name[i], data_make->buffer, uint8_length[i], range_name);
 

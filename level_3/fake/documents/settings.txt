@@ -229,6 +229,17 @@ Settings Documentation:
     When "yes", static library paths are searched during compile.
     Both this and search_shared cannot be "no" at the same time.
 
+  version_file\:
+    Designates which version should be used when building the symbolic links.
+    Any version prefixes are used as defined.
+    A Symbolic link is created against this created file such that "libX.so" is a link to "libX.so.A".
+    For all files other than when file is "major", another symbolic link is created against this such that "libX.so.A" is a link to "libX.so.A.X" such that X is the respective "B", "B.C', or "B.C.D" as described below.
+    The default file is "major".
+    When "major" is used, the file created is "libX.so.A", whereas "X" is the "project_name" and "A" is the major version.
+    When "minor" is used, the file created is "libX.so.A.B", whereas "X" is the "project_name" and "A.B" is the major and minor versions, respectively.
+    When "micro" is used, the file created is "libX.so.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
+    When "nano" is used, the file created is "libX.so.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
+
   version_major\:
     The major version number (or in theory any characters allowed in a filename).
     This should generally be a positive number or 0.
@@ -282,10 +293,10 @@ Settings Documentation:
     This is only added if "version_nano" is not empty.
 
   version_target\:
-    Designates which version should be used when building the shared library and creating the respective symbolic links.
+    Designates which version should be used when linking the shared library.
     Any version prefixes are used as defined.
     The default target is "micro".
-    When "major" is used, a shared library is generated with "-Wl,-soname,libX.A", whereas "X" is the "project_name" and "A" is the major version.
-    When "minor" is used, a shared library is generated with "-Wl,-soname,libX.A.B", whereas "X" is the "project_name" and "A.B" is the major and minor versions, respectively.
-    When "micro" is used, a shared library is generated with "-Wl,-soname,libX.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
-    When "nano" is used, a shared library is generated with "-Wl,-soname,libX.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.
+    When "major" is used, a shared library is generated with "-Wl,-soname,libX.so.A", whereas "X" is the "project_name" and "A" is the major version.
+    When "minor" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B", whereas "X" is the "project_name" and "A.B" is the major and minor versions, respectively.
+    When "micro" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C", whereas "X" is the "project_name" and "A.B.C" is the major, minor, and micro versions, respectively.
+    When "nano" is used, a shared library is generated with "-Wl,-soname,libX.so.A.B.C.D", whereas "X" is the "project_name" and "A.B.C.D" is the major, minor, micro, and nano versions, respectively.

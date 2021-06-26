@@ -52,6 +52,7 @@ Settings Specification:
     "search_exclusive": Must only one of: "yes" or "no".
     "search_shared": Must only one of: "yes" or "no".
     "search_static": Must only one of: "yes" or "no".
+    "version_file": Must only be one of: "major", "minor", "micro", or "nano".
     "version_major": Must only be a single value containing valid filename characters.
     "version_major_prefix": Must be zero or more valid filename characters.
     "version_minor": Must only be a single value containing valid filename characters.

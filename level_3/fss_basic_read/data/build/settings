@@ -5,7 +5,8 @@ project_name fss_basic_read
 version_major 0
 version_minor 5
 version_micro 4
-version_target micro
+version_file micro
+version_target minor
 
 environment
 

@@ -1020,21 +1020,30 @@ extern "C" {
       f_array_length_t parameter_linker_length = fake_build_parameter_library_shared_prefix_length;
       f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used;
 
+      if (data_build.setting.version_file == fake_build_version_type_major) {
+        parameter_file_path_length += parameter_file_name_major_length;
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_minor) {
+        parameter_file_path_length += parameter_file_name_minor_length;
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_micro) {
+        parameter_file_path_length += parameter_file_name_micro_length;
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_nano) {
+        parameter_file_path_length += parameter_file_name_nano_length;
+      }
+
       if (data_build.setting.version_target == fake_build_version_type_major) {
         parameter_linker_length += parameter_file_name_major_length;
-        parameter_file_path_length += parameter_file_name_major_length;
       }
       else if (data_build.setting.version_target == fake_build_version_type_minor) {
         parameter_linker_length += parameter_file_name_minor_length;
-        parameter_file_path_length += parameter_file_name_minor_length;
       }
       else if (data_build.setting.version_target == fake_build_version_type_micro) {
         parameter_linker_length += parameter_file_name_micro_length;
-        parameter_file_path_length += parameter_file_name_micro_length;
       }
       else if (data_build.setting.version_target == fake_build_version_type_nano) {
         parameter_linker_length += parameter_file_name_nano_length;
-        parameter_file_path_length += parameter_file_name_nano_length;
       }
 
       char parameter_linker[parameter_linker_length + 1];
@@ -1043,21 +1052,30 @@ extern "C" {
       memcpy(parameter_linker, fake_build_parameter_library_shared_prefix, fake_build_parameter_library_shared_prefix_length);
       memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
 
+      if (data_build.setting.version_file == fake_build_version_type_major) {
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_minor) {
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_micro) {
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
+      }
+      else if (data_build.setting.version_file == fake_build_version_type_nano) {
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_nano, parameter_file_name_nano_length);
+      }
+
       if (data_build.setting.version_target == fake_build_version_type_major) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_major, parameter_file_name_major_length);
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_minor) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_minor, parameter_file_name_minor_length);
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_micro) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_micro, parameter_file_name_micro_length);
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
       }
       else if (data_build.setting.version_target == fake_build_version_type_nano) {
         memcpy(parameter_linker + fake_build_parameter_library_shared_prefix_length, parameter_file_name_nano, parameter_file_name_nano_length);
-        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_nano, parameter_file_name_nano_length);
       }
 
       parameter_linker[parameter_linker_length] = 0;
@@ -1108,52 +1126,7 @@ extern "C" {
       }
     }
 
-    if (data_build.setting.version_target != fake_build_version_type_major && parameter_file_name_major_length) {
-      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_major_length;
-
-      char *link_target = 0;
-      char parameter_file_path[parameter_file_path_length + 1];
-
-      if (data_build.setting.version_target == fake_build_version_type_minor) {
-        link_target = parameter_file_name_minor;
-      }
-      else if (data_build.setting.version_target == fake_build_version_type_micro) {
-        link_target = parameter_file_name_micro;
-      }
-      else if (data_build.setting.version_target == fake_build_version_type_nano) {
-        link_target = parameter_file_name_nano;
-      }
-
-      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
-      memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
-
-      parameter_file_path[parameter_file_path_length] = 0;
-
-      if (fake_signal_received(main)) {
-        *status = F_status_set_error(F_signal);
-
-        return 0;
-      }
-
-      *status = f_file_link(link_target, parameter_file_path);
-
-      if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, link_target, f_string_eol_s[0]);
-      }
-      else if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_file_found) {
-          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
-
-          return 0;
-        }
-
-        fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, link_target, "link", fll_error_file_type_file);
-
-        return 0;
-      }
-    }
-
-    if (F_status_is_error_not(*status) && parameter_file_name_major_length) {
+    if (parameter_file_name_major_length) {
 
       f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_length;
 
@@ -1185,6 +1158,111 @@ extern "C" {
         fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_major, "link", fll_error_file_type_file);
 
         return 0;
+      }
+    }
+
+    if (data_build.setting.version_file != fake_build_version_type_major && parameter_file_name_major_length) {
+
+      f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_major_length;
+
+      char parameter_file_path[parameter_file_path_length + 1];
+
+      memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+      memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_major, parameter_file_name_major_length);
+
+      parameter_file_path[parameter_file_path_length] = 0;
+
+      if (fake_signal_received(main)) {
+        *status = F_status_set_error(F_signal);
+
+        return 0;
+      }
+
+      *status = f_file_link(parameter_file_name_minor, parameter_file_path);
+
+      if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
+        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
+      }
+      else if (F_status_is_error(*status)) {
+        if (F_status_set_fine(*status) == F_file_found) {
+          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+
+          return 0;
+        }
+
+        fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_minor, "link", fll_error_file_type_file);
+
+        return 0;
+      }
+
+      if (data_build.setting.version_file != fake_build_version_type_minor && parameter_file_name_minor_length) {
+
+        f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_minor_length;
+
+        char parameter_file_path[parameter_file_path_length + 1];
+
+        memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+        memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_minor, parameter_file_name_minor_length);
+
+        parameter_file_path[parameter_file_path_length] = 0;
+
+        if (fake_signal_received(main)) {
+          *status = F_status_set_error(F_signal);
+
+          return 0;
+        }
+
+        *status = f_file_link(parameter_file_name_micro, parameter_file_path);
+
+        if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
+          fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
+        }
+        else if (F_status_is_error(*status)) {
+          if (F_status_set_fine(*status) == F_file_found) {
+            fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+
+            return 0;
+          }
+
+          fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_micro, "link", fll_error_file_type_file);
+
+          return 0;
+        }
+
+        if (data_build.setting.version_file != fake_build_version_type_micro && parameter_file_name_micro_length) {
+
+          f_array_length_t parameter_file_path_length = main.path_build_libraries_shared.used + parameter_file_name_micro_length;
+
+          char parameter_file_path[parameter_file_path_length + 1];
+
+          memcpy(parameter_file_path, main.path_build_libraries_shared.string, main.path_build_libraries_shared.used);
+          memcpy(parameter_file_path + main.path_build_libraries_shared.used, parameter_file_name_micro, parameter_file_name_micro_length);
+
+          parameter_file_path[parameter_file_path_length] = 0;
+
+          if (fake_signal_received(main)) {
+            *status = F_status_set_error(F_signal);
+
+            return 0;
+          }
+
+          *status = f_file_link(parameter_file_name_nano, parameter_file_path);
+
+          if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
+            fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
+          }
+          else if (F_status_is_error(*status)) {
+            if (F_status_set_fine(*status) == F_file_found) {
+              fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_path, "link", fll_error_file_type_file);
+
+              return 0;
+            }
+
+            fll_error_file_print(main.error, F_status_set_fine(*status), "f_file_link", F_true, parameter_file_name_nano, "link", fll_error_file_type_file);
+
+            return 0;
+          }
+        }
       }
     }
 
@@ -1537,6 +1615,7 @@ extern "C" {
     f_string_dynamics_t search_exclusive = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_shared = f_string_dynamics_t_initialize;
     f_string_dynamics_t search_static = f_string_dynamics_t_initialize;
+    f_string_dynamics_t version_file = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_major = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_major_prefix = f_string_dynamics_t_initialize;
     f_string_dynamics_t version_micro = f_string_dynamics_t_initialize;
@@ -1590,6 +1669,7 @@ extern "C" {
       fake_build_setting_name_search_exclusive,
       fake_build_setting_name_search_shared,
       fake_build_setting_name_search_static,
+      fake_build_setting_name_version_file,
       fake_build_setting_name_version_major,
       fake_build_setting_name_version_major_prefix,
       fake_build_setting_name_version_micro,
@@ -1644,6 +1724,7 @@ extern "C" {
       fake_build_setting_name_search_exclusive_length,
       fake_build_setting_name_search_shared_length,
       fake_build_setting_name_search_static_length,
+      fake_build_setting_name_version_file_length,
       fake_build_setting_name_version_major_length,
       fake_build_setting_name_version_major_prefix_length,
       fake_build_setting_name_version_micro_length,
@@ -1698,6 +1779,7 @@ extern "C" {
       &search_exclusive,
       &search_shared,
       &search_static,
+      &version_file,
       &version_major,
       &version_major_prefix,
       &version_micro,
@@ -1710,6 +1792,7 @@ extern "C" {
     };
 
     bool settings_matches[] = {
+      F_false,
       F_false,
       F_false,
       F_false,
@@ -1917,6 +2000,7 @@ extern "C" {
         fake_build_setting_name_search_exclusive,
         fake_build_setting_name_search_shared,
         fake_build_setting_name_search_static,
+        fake_build_setting_name_version_file,
         fake_build_setting_name_version_major,
         fake_build_setting_name_version_major_prefix,
         fake_build_setting_name_version_micro,
@@ -1952,6 +2036,7 @@ extern "C" {
         &search_exclusive,
         &search_shared,
         &search_static,
+        &version_file,
         &version_major,
         &version_major_prefix,
         &version_micro,
@@ -2013,6 +2098,7 @@ extern "C" {
         0,
         0,
         0,
+        0,
         &setting->version_major,
         &setting->version_major_prefix,
         &setting->version_micro,
@@ -2053,6 +2139,7 @@ extern "C" {
         0,
         0,
         0,
+        &setting->version_file,
         0,
         0,
         0,
@@ -2062,6 +2149,78 @@ extern "C" {
         0,
         0,
         &setting->version_target,
+      };
+
+      const uint8_t settings_single_version_default[] = {
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        fake_build_version_type_micro,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        fake_build_version_type_major,
+      };
+
+      const char *settings_single_version_default_name[] = {
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        fake_build_version_micro,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        fake_build_version_major,
       };
 
       // 1 = "yes" or "no", 2 = path/, 3 = literal, 4 = "bash", "c", or "c++", 5 = "major", "minor", "micro", or "nano".
@@ -2089,6 +2248,7 @@ extern "C" {
         1,
         1,
         1,
+        5,
         3,
         3,
         3,
@@ -2100,7 +2260,7 @@ extern "C" {
         5,
       };
 
-      for (f_array_length_t i = 0; i < 32; ++i) {
+      for (f_array_length_t i = 0; i < 33; ++i) {
 
         if (!settings_single_source[i]->used) continue;
 
@@ -2191,7 +2351,7 @@ extern "C" {
             *settings_single_version[i] = fake_build_version_type_nano;
           }
           else {
-            *settings_single_version[i] = fake_build_version_type_major;
+            *settings_single_version[i] = settings_single_version_default[i];
 
             if (main.error.verbosity == f_console_verbosity_verbose) {
               fprintf(main.output.stream, "%c", f_string_eol_s[0]);
@@ -2208,7 +2368,7 @@ extern "C" {
               f_color_print(main.output.stream, main.context.set.warning, "', or '");
               f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_nano);
               f_color_print(main.output.stream, main.context.set.warning, "', defaulting to '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
+              f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_version_default_name[i]);
               f_color_print(main.output.stream, main.context.set.warning, "'.");
               fprintf(main.output.stream, "%c", f_string_eol_s[0]);
             }
@@ -2243,6 +2403,40 @@ extern "C" {
         }
       } // for
 
+      if (F_status_is_error_not(*status)) {
+        if (!setting->version_file) {
+          setting->version_file = fake_build_version_type_micro;
+
+          if (main.error.verbosity == f_console_verbosity_verbose) {
+            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
+            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_setting_name_version_file);
+            f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
+            f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
+            f_color_print(main.output.stream, main.context.set.warning, "' is required, defaulting to '");
+            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_micro);
+            f_color_print(main.output.stream, main.context.set.warning, "'.");
+            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          }
+        }
+
+        if (!setting->version_target) {
+          setting->version_target = fake_build_version_type_major;
+
+          if (main.error.verbosity == f_console_verbosity_verbose) {
+            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+            f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
+            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_setting_name_version_target);
+            f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
+            f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
+            f_color_print(main.output.stream, main.context.set.warning, "' is required, defaulting to '");
+            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
+            f_color_print(main.output.stream, main.context.set.warning, "'.");
+            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          }
+        }
+      }
+
       // Provide these defaults only if the Object is not defined (this allows for empty Content to exist if the Object is defined).
       // In the case of the version prefixes, if the associated version is empty, then instead clear the associated version prefix.
       if (F_status_is_error_not(*status)) {
@@ -2261,10 +2455,10 @@ extern "C" {
         };
 
         bool has_prefix_object[] = {
-          settings_matches[43], // version_major_prefix
-          settings_matches[45], // version_minor_prefix
-          settings_matches[47], // version_micro_prefix
-          settings_matches[49], // version_nano_prefix
+          settings_matches[44], // version_major_prefix
+          settings_matches[46], // version_minor_prefix
+          settings_matches[48], // version_micro_prefix
+          settings_matches[50], // version_nano_prefix
         };
 
         const char *name_target[] = {
@@ -2281,7 +2475,20 @@ extern "C" {
           fake_build_setting_name_version_nano,
         };
 
-        for (f_array_length_t i = 0; i < 4; ++i) {
+        const char *setting_name[] = {
+          fake_build_setting_name_version_file,
+          fake_build_setting_name_version_target,
+        };
+
+        const uint8_t setting_target[] = {
+          setting->version_file,
+          setting->version_target,
+        };
+
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+
+        for (; i < 4; ++i) {
 
           if (version[i]->used) {
             if (!has_prefix_object[i]) {
@@ -2298,20 +2505,26 @@ extern "C" {
           else {
             prefix[i]->used = 0;
 
-            if (setting->version_target && i + 1 <= setting->version_target) {
-              if (main.error.verbosity != f_console_verbosity_quiet) {
-                fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-                f_color_print(main.error.to.stream, main.context.set.error, "%sWhen the version target is set to '", fll_error_print_error);
-                f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_target[setting->version_target - 1]);
-                f_color_print(main.error.to.stream, main.context.set.error, "', then the '");
-                f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_object[i]);
-                f_color_print(main.error.to.stream, main.context.set.error, "' Object must have Content.");
-                fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-              }
+            for (j = 0; j < 2; ++j) {
+              if (setting_target[j] && i + 1 <= setting_target[j]) {
+                if (main.error.verbosity != f_console_verbosity_quiet) {
+                  fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+                  f_color_print(main.error.to.stream, main.context.set.error, "%sWhen the '", fll_error_print_error);
+                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", setting_name[j]);
+                  f_color_print(main.error.to.stream, main.context.set.error, "' is set to '");
+                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_target[setting_target[j] - 1]);
+                  f_color_print(main.error.to.stream, main.context.set.error, "', then the '");
+                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_object[i]);
+                  f_color_print(main.error.to.stream, main.context.set.error, "' Object must have Content.");
+                  fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+                }
 
-              *status = F_status_set_error(F_failure);
-              break;
-            }
+                *status = F_status_set_error(F_failure);
+                break;
+              }
+            } // for
+
+            if (F_status_is_error(*status)) break;
           }
         } // for
       }
@@ -2340,6 +2553,7 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(search_exclusive);
     macro_f_string_dynamics_t_delete_simple(search_shared);
     macro_f_string_dynamics_t_delete_simple(search_static);
+    macro_f_string_dynamics_t_delete_simple(version_file);
     macro_f_string_dynamics_t_delete_simple(version_major);
     macro_f_string_dynamics_t_delete_simple(version_major_prefix);
     macro_f_string_dynamics_t_delete_simple(version_micro);

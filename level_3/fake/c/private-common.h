@@ -16,6 +16,7 @@ extern "C" {
   typedef struct {
     uint8_t build_language;
 
+    uint8_t version_file;
     uint8_t version_target;
 
     bool build_script;
@@ -74,6 +75,7 @@ extern "C" {
   } fake_build_setting_t;
 
   #define fake_build_setting_t_initialize { \
+    0, \
     0, \
     0, \
     F_true, \
@@ -212,6 +214,7 @@ extern "C" {
   #define fake_build_setting_name_search_exclusive       "search_exclusive"
   #define fake_build_setting_name_search_shared          "search_shared"
   #define fake_build_setting_name_search_static          "search_static"
+  #define fake_build_setting_name_version_file           "version_file"
   #define fake_build_setting_name_version_major          "version_major"
   #define fake_build_setting_name_version_major_prefix   "version_major_prefix"
   #define fake_build_setting_name_version_micro          "version_micro"
@@ -264,6 +267,7 @@ extern "C" {
   #define fake_build_setting_name_search_exclusive_length       16
   #define fake_build_setting_name_search_shared_length          13
   #define fake_build_setting_name_search_static_length          13
+  #define fake_build_setting_name_version_file_length           12
   #define fake_build_setting_name_version_major_length          13
   #define fake_build_setting_name_version_major_prefix_length   20
   #define fake_build_setting_name_version_micro_length          13
@@ -274,7 +278,7 @@ extern "C" {
   #define fake_build_setting_name_version_nano_prefix_length    19
   #define fake_build_setting_name_version_target_length         14
 
-  #define fake_build_setting_total 51
+  #define fake_build_setting_total 52
 
   #define fake_build_setting_default_version        "0"
   #define fake_build_setting_default_version_prefix "."

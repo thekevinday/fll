@@ -473,43 +473,44 @@ bootstrap_id() {
     "search_exclusive") echo -n 39;;
     "search_shared") echo -n 40;;
     "search_static") echo -n 41;;
-    "version_major") echo -n 42;;
-    "version_major_prefix") echo -n 43;;
-    "version_micro") echo -n 44;;
-    "version_micro_prefix") echo -n 45;;
-    "version_minor") echo -n 46;;
-    "version_minor_prefix") echo -n 47;;
-    "version_nano") echo -n 48;;
-    "version_nano_prefix") echo -n 49;;
-    "version_target") echo -n 50;;
+    "version_file") echo -n 42;;
+    "version_major") echo -n 43;;
+    "version_major_prefix") echo -n 44;;
+    "version_micro") echo -n 45;;
+    "version_micro_prefix") echo -n 46;;
+    "version_minor") echo -n 47;;
+    "version_minor_prefix") echo -n 48;;
+    "version_nano") echo -n 49;;
+    "version_nano_prefix") echo -n 50;;
+    "version_target") echo -n 51;;
 
-    "build_libraries-$mode") echo -n 51;;
-    "build_sources_headers-$mode") echo -n 52;;
-    "build_sources_library-$mode") echo -n 53;;
-    "build_sources_program-$mode") echo -n 54;;
-    "build_sources_script-$mode") echo -n 55;;
-    "build_sources_setting-$mode") echo -n 56;;
-    "defines_all-$mode") echo -n 57;;
-    "defines_library-$mode") echo -n 58;;
-    "defines_program-$mode") echo -n 59;;
-    "defines_shared-$mode") echo -n 60;;
-    "defines_static-$mode") echo -n 61;;
-    "environment-$mode") echo -n 62;;
-    "flags_all-$mode") echo -n 63;;
-    "flags_library-$mode") echo -n 64;;
-    "flags_program-$mode") echo -n 65;;
-    "flags_shared-$mode") echo -n 66;;
-    "flags_static-$mode") echo -n 67;;
+    "build_libraries-$mode") echo -n 52;;
+    "build_sources_headers-$mode") echo -n 53;;
+    "build_sources_library-$mode") echo -n 54;;
+    "build_sources_program-$mode") echo -n 55;;
+    "build_sources_script-$mode") echo -n 56;;
+    "build_sources_setting-$mode") echo -n 57;;
+    "defines_all-$mode") echo -n 58;;
+    "defines_library-$mode") echo -n 59;;
+    "defines_program-$mode") echo -n 60;;
+    "defines_shared-$mode") echo -n 61;;
+    "defines_static-$mode") echo -n 62;;
+    "environment-$mode") echo -n 63;;
+    "flags_all-$mode") echo -n 64;;
+    "flags_library-$mode") echo -n 65;;
+    "flags_program-$mode") echo -n 66;;
+    "flags_shared-$mode") echo -n 67;;
+    "flags_static-$mode") echo -n 68;;
 
-    "has-version_major_prefix") echo -n 68;;
-    "has-version_micro_prefix") echo -n 69;;
-    "has-version_minor_prefix") echo -n 70;;
-    "has-version_nano_prefix") echo -n 71;;
+    "has-version_major_prefix") echo -n 69;;
+    "has-version_micro_prefix") echo -n 70;;
+    "has-version_minor_prefix") echo -n 71;;
+    "has-version_nano_prefix") echo -n 72;;
 
-    "has-version_major_prefix-$mode") echo -n 72;;
-    "has-version_micro_prefix-$mode") echo -n 73;;
-    "has-version_minor_prefix-$mode") echo -n 74;;
-    "has-version_nano_prefix-$mode") echo -n 75;;
+    "has-version_major_prefix-$mode") echo -n 73;;
+    "has-version_micro_prefix-$mode") echo -n 74;;
+    "has-version_minor_prefix-$mode") echo -n 75;;
+    "has-version_nano_prefix-$mode") echo -n 76;;
   esac
 }
 
@@ -600,6 +601,7 @@ bootstrap_operation_build() {
   local micro_prefix=${variables[$(bootstrap_id version_micro_prefix)]}
   local nano=${variables[$(bootstrap_id version_nano)]}
   local nano_prefix=${variables[$(bootstrap_id version_nano_prefix)]}
+  local file=${variables[$(bootstrap_id version_file)]}
   local target=${variables[$(bootstrap_id version_target)]}
   local compiler=${variables[$(bootstrap_id build_compiler)]}
   local indexer=${variables[$(bootstrap_id build_indexer)]}
@@ -631,7 +633,8 @@ bootstrap_operation_build() {
   local flags_static=${variables[$(bootstrap_id flags_static)]}
   local i=
   local n=
-  local version=
+  local version_file=
+  local version_target=
   local alt=$1
   local directory=
   local path_headers=${variables[$(bootstrap_id path_headers)]}
@@ -650,18 +653,32 @@ bootstrap_operation_build() {
     nano_prefix="."
   fi
 
+  if [[ $file == "" ]] ; then
+    file="micro"
+  fi
+
   if [[ $target == "" ]] ; then
-    target="micro"
+    target="major"
+  fi
+
+  if [[ $file == "major" ]] ; then
+    version_file="$major_prefix$major"
+  elif [[ $file == "minor" ]] ; then
+    version_file="$major_prefix$major$minor_prefix$minor"
+  elif [[ $file == "micro" ]] ; then
+    version_file="$major_prefix$major$minor_prefix$minor$micro_prefix$micro"
+  elif [[ $file == "nano" ]] ; then
+    version_file="$major_prefix$major$minor_prefix$minor$micro_prefix$micro$nano_prefix$nano"
   fi
 
   if [[ $target == "major" ]] ; then
-    version="$major_prefix$major"
+    version_target="$major_prefix$major"
   elif [[ $target == "minor" ]] ; then
-    version="$major_prefix$major$minor_prefix$minor"
+    version_target="$major_prefix$major$minor_prefix$minor"
   elif [[ $target == "micro" ]] ; then
-    version="$major_prefix$major$minor_prefix$minor$micro_prefix$micro"
+    version_target="$major_prefix$major$minor_prefix$minor$micro_prefix$micro"
   elif [[ $target == "nano" ]] ; then
-    version="$major_prefix$major$minor_prefix$minor$micro_prefix$micro$nano_prefix$nano"
+    version_target="$major_prefix$major$minor_prefix$minor$micro_prefix$micro$nano_prefix$nano"
   fi
 
   if [[ $sources_library == "" ]] ; then
@@ -933,17 +950,35 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$version $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library
+        echo $compiler $sources -shared -Wl,-soname,lib$name.so.$version_target -o ${path_build}libraries/shared/lib$name.so.$version_file $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library
       fi
 
-      $compiler $sources -shared -Wl,-soname,lib$name.so.$version -o ${path_build}libraries/shared/lib$name.so.$version $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library || failure=1
+      $compiler $sources -shared -Wl,-soname,lib$name.so.$version_target -o ${path_build}libraries/shared/lib$name.so.$version_file $arguments_shared $arguments_include $libraries $flags_all $flags_shared $flags_library $defines_all $defines_shared $defines_library || failure=1
 
       if [[ $failure == "" ]] ; then
-        if [[ $target != "major" ]] ; then
-          ln $verbose -sf lib$name.so.$version ${path_build}libraries/shared/lib$name.so.$major || failure=1
+        if [[ $file != "major" ]] ; then
+          if [[ $file == "minor" ]] ; then
+            ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major || failure=1
+          else
+            ln $verbose -sf lib$name.so.$major_prefix$major$minor_prefix$minor ${path_build}libraries/shared/lib$name.so.$major_prefix$major || failure=1
+
+            if [[ $failure == "" ]] ; then
+              if [[ $file == "micro" ]] ; then
+                ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor || failure=1
+              else
+                ln $verbose -sf lib$name.so.$major_prefix$major$minor_prefix$minor$micro_prefix$micro ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor || failure=1
+
+                if [[ $failure == "" ]] ; then
+                  ln $verbose -sf lib$name.so.$version_file ${path_build}libraries/shared/lib$name.so.$major_prefix$major$minor_prefix$minor_prefix$minor$micro_prefix$micro || failure=1
+                fi
+              fi
+            fi
+          fi
         fi
 
-        ln $verbose -sf lib$name.so.$major ${path_build}libraries/shared/lib$name.so || failure=1
+        if [[ $failure == "" ]] ; then
+          ln $verbose -sf lib$name.so.$major_prefix$major ${path_build}libraries/shared/lib$name.so || failure=1
+        fi
       fi
     fi
 

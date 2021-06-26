@@ -5,6 +5,7 @@ project_name fl_environment
 version_major 0
 version_minor 5
 version_micro 4
+version_file minor
 version_target micro
 
 environment
