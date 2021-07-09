@@ -56,7 +56,16 @@ extern "C" {
   #define iki_read_major_version f_string_ascii_0
   #define iki_read_minor_version f_string_ascii_5
   #define iki_read_micro_version f_string_ascii_4
-  #define iki_read_version iki_read_major_version f_string_ascii_period iki_read_minor_version f_string_ascii_period iki_read_micro_version
+
+  #ifndef iki_read_nano_version_prefix
+    #define iki_read_nano_version_prefix
+  #endif
+
+  #ifndef iki_read_nano_version
+    #define iki_read_nano_version
+  #endif
+
+  #define iki_read_version iki_read_major_version f_string_ascii_period iki_read_minor_version f_string_ascii_period iki_read_micro_version iki_read_nano_version_prefix iki_read_nano_version
 #endif // _di_iki_read_version_
 
 #ifndef _di_iki_read_name_

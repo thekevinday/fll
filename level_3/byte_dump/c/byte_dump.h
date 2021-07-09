@@ -51,7 +51,16 @@ extern "C" {
   #define byte_dump_major_version f_string_ascii_0
   #define byte_dump_minor_version f_string_ascii_5
   #define byte_dump_micro_version f_string_ascii_4
-  #define byte_dump_version byte_dump_major_version f_string_ascii_period byte_dump_minor_version f_string_ascii_period byte_dump_micro_version
+
+  #ifndef byte_dump_nano_version_prefix
+    #define byte_dump_nano_version_prefix
+  #endif
+
+  #ifndef byte_dump_nano_version
+    #define byte_dump_nano_version
+  #endif
+
+  #define byte_dump_version byte_dump_major_version f_string_ascii_period byte_dump_minor_version f_string_ascii_period byte_dump_micro_version byte_dump_nano_version_prefix byte_dump_nano_version
 #endif // _di_byte_dump_version_
 
 #ifndef _di_byte_dump_name_

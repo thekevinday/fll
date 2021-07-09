@@ -47,7 +47,16 @@ extern "C" {
   #define fss_status_code_major_version f_string_ascii_0
   #define fss_status_code_minor_version f_string_ascii_5
   #define fss_status_code_micro_version f_string_ascii_4
-  #define fss_status_code_version fss_status_code_major_version f_string_ascii_period fss_status_code_minor_version f_string_ascii_period fss_status_code_micro_version
+
+  #ifndef fss_status_code_nano_version_prefix
+    #define fss_status_code_nano_version_prefix
+  #endif
+
+  #ifndef fss_status_code_nano_version
+    #define fss_status_code_nano_version
+  #endif
+
+  #define fss_status_code_version fss_status_code_major_version f_string_ascii_period fss_status_code_minor_version f_string_ascii_period fss_status_code_micro_version fss_status_code_nano_version_prefix fss_status_code_nano_version
 #endif // _di_fss_status_code_version_
 
 #ifndef _di_fss_status_code_name_

@@ -94,7 +94,16 @@ extern "C" {
   #define fake_major_version f_string_ascii_0
   #define fake_minor_version f_string_ascii_5
   #define fake_micro_version f_string_ascii_4
-  #define fake_version fake_major_version f_string_ascii_period fake_minor_version f_string_ascii_period fake_micro_version
+
+  #ifndef fake_nano_version_prefix
+    #define fake_nano_version_prefix
+  #endif
+
+  #ifndef fake_nano_version
+    #define fake_nano_version
+  #endif
+
+  #define fake_version fake_major_version f_string_ascii_period fake_minor_version f_string_ascii_period fake_micro_version fake_nano_version_prefix fake_nano_version
 #endif // _di_fake_version_
 
 #ifndef _di_fake_name_

@@ -52,7 +52,16 @@ extern "C" {
   #define firewall_major_version f_string_ascii_0
   #define firewall_minor_version f_string_ascii_5
   #define firewall_micro_version f_string_ascii_4
-  #define firewall_version firewall_major_version f_string_ascii_period firewall_minor_version f_string_ascii_period firewall_micro_version
+
+  #ifndef firewall_nano_version_prefix
+    #define firewall_nano_version_prefix
+  #endif
+
+  #ifndef firewall_nano_version
+    #define firewall_nano_version
+  #endif
+
+  #define firewall_version firewall_major_version f_string_ascii_period firewall_minor_version f_string_ascii_period firewall_micro_version firewall_nano_version_prefix firewall_nano_version
 #endif // _di_firewall_version_
 
 #ifndef _di_firewall_name_

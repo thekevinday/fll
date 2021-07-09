@@ -44,7 +44,16 @@ extern "C" {
   #define control_major_version f_string_ascii_0
   #define control_minor_version f_string_ascii_5
   #define control_micro_version f_string_ascii_4
-  #define control_version control_major_version f_string_ascii_period control_minor_version f_string_ascii_period control_micro_version
+
+  #ifndef control_nano_version_prefix
+    #define control_nano_version_prefix
+  #endif
+
+  #ifndef control_nano_version
+    #define control_nano_version
+  #endif
+
+  #define control_version control_major_version f_string_ascii_period control_minor_version f_string_ascii_period control_micro_version control_nano_version_prefix control_nano_version
 #endif // _di_control_version_
 
 #ifndef _di_control_name_

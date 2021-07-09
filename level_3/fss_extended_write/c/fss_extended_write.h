@@ -46,7 +46,16 @@ extern "C" {
   #define fss_extended_write_major_version f_string_ascii_0
   #define fss_extended_write_minor_version f_string_ascii_5
   #define fss_extended_write_micro_version f_string_ascii_4
-  #define fss_extended_write_version fss_extended_write_major_version f_string_ascii_period fss_extended_write_minor_version f_string_ascii_period fss_extended_write_micro_version
+
+  #ifndef fss_extended_write_nano_version_prefix
+    #define fss_extended_write_nano_version_prefix
+  #endif
+
+  #ifndef fss_extended_write_nano_version
+    #define fss_extended_write_nano_version
+  #endif
+
+  #define fss_extended_write_version fss_extended_write_major_version f_string_ascii_period fss_extended_write_minor_version f_string_ascii_period fss_extended_write_micro_version fss_extended_write_nano_version_prefix fss_extended_write_nano_version
 #endif // _di_fss_extended_write_version_
 
 #ifndef _di_fss_extended_write_name_
