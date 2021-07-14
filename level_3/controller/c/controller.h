@@ -85,7 +85,7 @@ extern "C" {
 #ifndef _di_controller_version_
   #define controller_major_version f_string_ascii_0
   #define controller_minor_version f_string_ascii_5
-  #define controller_micro_version f_string_ascii_4
+  #define controller_micro_version f_string_ascii_5
 
   #ifndef controller_nano_version_prefix
     #define controller_nano_version_prefix

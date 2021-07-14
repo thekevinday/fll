@@ -93,7 +93,7 @@ extern "C" {
 #ifndef _di_fake_version_
   #define fake_major_version f_string_ascii_0
   #define fake_minor_version f_string_ascii_5
-  #define fake_micro_version f_string_ascii_4
+  #define fake_micro_version f_string_ascii_5
 
   #ifndef fake_nano_version_prefix
     #define fake_nano_version_prefix

@@ -4,7 +4,7 @@ project_name f_console
 
 version_major 0
 version_minor 5
-version_micro 4
+version_micro 5
 version_file minor
 version_target micro
 

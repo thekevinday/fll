@@ -43,7 +43,7 @@ extern "C" {
 #ifndef _di_control_version_
   #define control_major_version f_string_ascii_0
   #define control_minor_version f_string_ascii_5
-  #define control_micro_version f_string_ascii_4
+  #define control_micro_version f_string_ascii_5
 
   #ifndef control_nano_version_prefix
     #define control_nano_version_prefix

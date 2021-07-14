@@ -52,7 +52,7 @@ extern "C" {
 #ifndef _di_fss_extended_read_version_
   #define fss_extended_read_major_version f_string_ascii_0
   #define fss_extended_read_minor_version f_string_ascii_5
-  #define fss_extended_read_micro_version f_string_ascii_4
+  #define fss_extended_read_micro_version f_string_ascii_5
 
   #ifndef fss_extended_read_nano_version_prefix
     #define fss_extended_read_nano_version_prefix
