@@ -457,6 +457,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_ascii, length, FL_status_string_ascii_length) == F_equal_to) {
+        *code = F_ascii;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_ascii_not, length, FL_status_string_ascii_not_length) == F_equal_to) {
+        *code = F_ascii_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_block, length, FL_status_string_block_length) == F_equal_to) {
         *code = F_block;
 

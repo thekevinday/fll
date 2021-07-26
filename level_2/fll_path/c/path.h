@@ -20,9 +20,6 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/path.h>
 
-// fll-1 includes
-#include <fll/level_1/string.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

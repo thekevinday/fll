@@ -1,6 +1,6 @@
 # fss-0001
 
-project_name f_string
+project_name fll_print
 
 version_major 0
 version_minor 5
@@ -20,17 +20,17 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lf_memory
-build_sources_library string.c string-common.c private-string.c string_dynamic.c string_map.c string_quantity.c string_range.c string_triple.c
+build_libraries-individual -lfl_print -lf_conversion -lf_memory -lf_print -lf_string -lf_utf
+build_sources_library print.c
 build_sources_program
-build_sources_headers string.h string-common.h string_dynamic.h string_map.h string_quantity.h string_range.h string_triple.h
+build_sources_headers print.h
 build_sources_script
 build_sources_setting
 build_script yes
 build_shared yes
 build_static no
 
-path_headers fll/level_0
+path_headers fll/level_2
 path_headers_preserve no
 path_library_script script
 path_library_shared shared

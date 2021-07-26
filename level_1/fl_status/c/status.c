@@ -231,6 +231,12 @@ extern "C" {
         case F_address_not:
           *string = FL_status_string_address_not;
           break;
+        case F_ascii:
+          *string = FL_status_string_ascii;
+          break;
+        case F_ascii_not:
+          *string = FL_status_string_ascii_not;
+          break;
         case F_block:
           *string = FL_status_string_block;
           break;

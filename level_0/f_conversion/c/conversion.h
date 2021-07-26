@@ -12,6 +12,7 @@
 
 // libc includes
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 // fll-0 includes
@@ -196,14 +197,42 @@ extern "C" {
 /**
  * Convert a signed number into the decimal digit string that it represents.
  *
- * The generated number is appended to the destination string.
+ * The generated number is printed to the file stream.
  *
  * This only supports the following base units: 2 through 16.
+ * This only supports base prefixes for: 2, 8, 10, 12, and 16.
  *
  * @param number
  *   The number to convert.
- * @param base
- *   The base unit, usually 10.
+ * @param data
+ *   The settings designating how to perform the conversion.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none if the number was converted to a string.
+ *
+ *   F_output (with error bit) on fputc() error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc()
+ */
+#ifndef _di_f_conversion_number_signed_to_file_
+  extern f_status_t f_conversion_number_signed_to_file(const f_number_signed_t number, const f_conversion_data_t data, FILE *output);
+#endif // _di_f_conversion_number_signed_to_file_
+
+/**
+ * Convert a signed number into the decimal digit string that it represents.
+ *
+ * The generated number is appended to the destination string.
+ *
+ * This only supports the following base units: 2 through 16.
+ * This only supports base prefixes for: 2, 8, 10, 12, and 16.
+ *
+ * @param number
+ *   The number to convert.
+ * @param data
+ *   The settings designating how to perform the conversion.
  * @param destination
  *   The destination the converted string is saved into.
  *
@@ -211,11 +240,43 @@ extern "C" {
  *   F_none if the number was converted to a string.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_not (with error bit) on out of memory.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_resize()
+ *
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_conversion_number_signed_to_string_
-  extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const uint8_t base, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
 #endif // _di_f_conversion_number_signed_to_string_
+
+/**
+ * Convert an unsigned number into the decimal digit string that it represents.
+ *
+ * The generated number is printed to the file stream.
+ *
+ * This only supports the following base units: 2 through 16.
+ * This only supports base prefixes for: 2, 8, 10, 12, and 16.
+ *
+ * @param number
+ *   The number to convert.
+ *   This number is unsigned to allow for unsigned integers to be used.
+ *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
+ * @param data
+ *   The settings designating how to perform the conversion.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none if the number was converted to a string.
+ *
+ *   F_output (with error bit) on fputc() error.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc()
+ */
+#ifndef _di_f_conversion_number_unsigned_to_file_
+  extern f_status_t f_conversion_number_unsigned_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output);
+#endif // _di_f_conversion_number_unsigned_to_file_
 
 /**
  * Convert an unsigned number into the decimal digit string that it represents.
@@ -223,11 +284,12 @@ extern "C" {
  * The generated number is appended to the destination string.
  *
  * This only supports the following base units: 2 through 16.
+ * This only supports base prefixes for: 2, 8, 10, 12, and 16.
  *
  * @param number
  *   The number to convert.
- * @param base
- *   The base unit, usually 10.
+ * @param data
+ *   The settings designating how to perform the conversion.
  * @param destination
  *   The destination the converted string is saved into.
  *
@@ -235,10 +297,13 @@ extern "C" {
  *   F_none if the number was converted to a string.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_not (with error bit) on out of memory.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_resize()
+ *
+ * @see f_string_dynamic_resize()
  */
 #ifndef _di_f_conversion_number_unsigned_to_string_
-  extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const uint8_t base, f_string_dynamic_t *destination);
+  extern f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t *destination);
 #endif // _di_f_conversion_number_unsigned_to_string_
 
 #ifdef __cplusplus

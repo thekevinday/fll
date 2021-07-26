@@ -924,7 +924,7 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other failure.
  *
- *   Errors (with error bit) from f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *
  * @see cap_free()
  * @see cap_to_name()
@@ -955,7 +955,7 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other failure.
  *
- *   Errors (with error bit) from f_string_dynamic_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
  *
  * @see cap_free()
  * @see cap_to_text()

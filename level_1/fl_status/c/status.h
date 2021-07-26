@@ -169,6 +169,8 @@ extern "C" {
     #define FL_status_string_absolute_not      "F_absolute_not"
     #define FL_status_string_address           "F_address"
     #define FL_status_string_address_not       "F_address_not"
+    #define FL_status_string_ascii             "F_ascii"
+    #define FL_status_string_ascii_not         "F_ascii_not"
     #define FL_status_string_block             "F_block"
     #define FL_status_string_block_not         "F_block_not"
     #define FL_status_string_bound             "F_bound"
@@ -346,6 +348,8 @@ extern "C" {
     #define FL_status_string_absolute_not_length      14
     #define FL_status_string_address_length           9
     #define FL_status_string_address_not_length       13
+    #define FL_status_string_ascii_length             7
+    #define FL_status_string_ascii_not_length         11
     #define FL_status_string_block_length             7
     #define FL_status_string_block_not_length         11
     #define FL_status_string_bound_length             7
