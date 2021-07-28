@@ -117,8 +117,8 @@ extern "C" {
  * f_print_format_flag_*:
  * - align_left:     "-", Use left-justification.
  * - convert:        "#", Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
- * - ignore_index:   "(", Ignore characters in the given positions from a f_array_length_t (only applies to string arguments but not character arguments).
- * - ignore_range:   ")", Ignore characters in the given ranges from a f_string_range_t (only applies to string arguments but not character arguments).
+ * - ignore_index:   ";", Ignore characters in the given positions from a f_array_length_t (only applies to string arguments but not character arguments).
+ * - ignore_range:   ":", Ignore characters in the given ranges from a f_string_range_t (only applies to string arguments but not character arguments).
  * - precision:           Designates that a precision is in use.
  * - sign_always:    "+", Always show the signs (+ or -).
  * - sign_pad:       " ", Add a space where a sign would be if the sign is not displayed.

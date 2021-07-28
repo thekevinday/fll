@@ -5,93 +5,80 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_help_header_
-  f_status_t fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version) {
+  f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
-    fprintf(file.stream, "%c", f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.title, " %s", name);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string(" %q%s%q%c", output.stream, *context.set.title.before, name, *context.set.title.after, f_string_eol_s[0]);
+    fl_print_string("  %qVersion %s%q%c", output.stream, *context.set.notable.before, version, *context.set.notable.after, f_string_eol_s[0]);
 
-    fprintf(file.stream, "%c", f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.notable, "  Version %s", version);
-
-    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.important, " Available Options: ");
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string(" %qAvailable Options:%q ", output.stream, *context.set.important.before, *context.set.important.after);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_status_t fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
-    fprintf(file.stream, "%c  %s", f_string_eol_s[0], symbol_short);
-    f_color_print(file.stream, context.set.standout, option_short);
-
-    fprintf(file.stream, ", %s", symbol_long);
-    f_color_print(file.stream, context.set.standout, option_long);
-
-    fprintf(file.stream, "  %s", description);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string("  %s%q%s%q", output.stream, symbol_short, *context.set.standout.before, option_short, *context.set.standout.after);
+    fl_print_string(", %s%q%s%q", output.stream, symbol_long, *context.set.standout.before, option_long, *context.set.standout.after);
+    fl_print_string("  %S", output.stream, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_status_t fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
+  f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
-    fprintf(file.stream, "%c      %s", f_string_eol_s[0], symbol_long);
-    f_color_print(file.stream, context.set.standout, option_long);
-
-    fprintf(file.stream, "  %s", description);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string("      %s%q%s%q", output.stream, symbol_long, *context.set.standout.before, option_long, *context.set.standout.after);
+    fl_print_string("  %S", output.stream, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_status_t fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
+  f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
-    fprintf(file.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.standout, option_other);
-
-    fprintf(file.stream, "  %s", description);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string("  %q%s%q", output.stream, *context.set.standout.before, option_other, *context.set.standout.after);
+    fl_print_string("  %S", output.stream, description);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_status_t fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
+  f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters) {
 
-    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.important, " Usage:");
+    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string(" %qUsage:%q", output.stream, *context.set.important.before, *context.set.important.after);
 
-    fprintf(file.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(file.stream, context.set.standout, name);
+    f_print_terminated(f_string_eol_s, output.stream);
+    fl_print_string("  %q%S%q", output.stream, *context.set.standout.before, name, *context.set.standout.after);
 
-    fprintf(file.stream, "%s", f_string_space_s);
-    f_color_print(file.stream, context.set.notable, "[");
-
-    fprintf(file.stream, " options ");
-    f_color_print(file.stream, context.set.notable, "]");
+    fl_print_string(" %q[%q options %q]%q", output.stream, *context.set.notable.before, *context.set.notable.after, *context.set.notable.before, *context.set.notable.after);
 
     if (parameters[0] != '\0') {
-      fprintf(file.stream, "%s", f_string_space_s);
-      f_color_print(file.stream, context.set.notable, "[");
-
-      fprintf(file.stream, " %s ", parameters);
-      f_color_print(file.stream, context.set.notable, "]");
+      fl_print_string(" %q[%q%S%q]%q", output.stream, *context.set.notable.before, *context.set.notable.after, parameters, *context.set.notable.before, *context.set.notable.after);
     }
 
-    fprintf(file.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_terminated(f_string_eol_s, output.stream);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const f_file_t file, const f_string_t version) {
+  f_status_t fll_program_print_version(const f_file_t output, const f_string_t version) {
 
-    fprintf(file.stream, "%s%c", version, f_string_eol_s[0]);
+    fl_print_string("%S%c", output.stream, version, f_string_eol_s[0]);
 
     return F_none;
   }

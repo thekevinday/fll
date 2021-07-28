@@ -865,11 +865,11 @@ extern "C" {
 /**
  * This is a variation of fl_print_string() that uses locking.
  *
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param string
  *   The formatted string to process and output.
  *   This is a NULL terminated string.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ...
  *   Additional arguments relating to the string.
  *
@@ -886,16 +886,16 @@ extern "C" {
  * @see fl_print_string()
  */
 #ifndef _di_fll_print_string_
-  extern f_status_t fll_print_string(FILE *output, const f_string_t string, ...);
+  extern f_status_t fll_print_string(const f_string_t string, FILE *output, ...);
 #endif // _di_fll_print_string_
 
 /**
  * This is a variation of fl_print_string_convert() that uses locking.
  *
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param current
  *   The current character position within the string.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable arguments list.
  *
@@ -910,16 +910,16 @@ extern "C" {
  * @see fl_print_string_convert()
  */
 #ifndef _di_fll_print_string_convert_
-  extern f_status_t fll_print_string_convert(FILE *output, char *current, va_list *ap);
+  extern f_status_t fll_print_string_convert(char *current, FILE *output, va_list *ap);
 #endif // _di_fll_print_string_convert_
 
 /**
  * This is a variation of fl_print_string_va() that uses locking.
  *
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param string
  *   The formatted string to process and output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable list.
  *   The va_start(ap, string) and va_end(ap) is required to be called outside this function.
@@ -935,7 +935,7 @@ extern "C" {
  * @see fl_print_string_va()
  */
 #ifndef _di_fll_print_string_va_
-  extern f_status_t fll_print_string_va(FILE *output, const f_string_t string, va_list ap);
+  extern f_status_t fll_print_string_va(const f_string_t string, FILE *output, va_list *ap);
 #endif // _di_fll_print_string_va_
 
 /**
@@ -959,6 +959,717 @@ extern "C" {
 #ifndef _di_fll_print_terminated_
   extern f_status_t fll_print_terminated(const f_string_t string, FILE *output);
 #endif // _di_fll_print_terminated_
+
+/**
+ * This is a variation of fl_print_trim() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim().
+ *
+ *   Errors (with error bit) from: fl_print_trim().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_
+  extern f_status_t fll_print_trim(const f_string_t string, const f_array_length_t length, FILE *output);
+#endif // _di_fll_print_trim_
+
+/**
+ * This is a variation of fl_print_trim_raw() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_raw()
+ */
+#ifndef _di_fll_print_trim_raw_
+  extern f_status_t fll_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *output);
+#endif // _di_fll_print_trim_raw_
+
+/**
+ * This is a variation of fl_print_trim_safely() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_safely()
+ */
+#ifndef _di_fll_print_trim_safely_
+  extern f_status_t fll_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *output);
+#endif // _di_fll_print_trim_safely_
+
+/**
+ * This is a variation of fl_print_trim_dynamic() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_dynamic().
+ *
+ *   Errors (with error bit) from: fl_print_trim_dynamic().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_dynamic()
+ */
+#ifndef _di_fll_print_trim_dynamic_
+  extern f_status_t fll_print_trim_dynamic(const f_string_static_t buffer, FILE *output);
+#endif // _di_fll_print_trim_dynamic_
+
+/**
+ * This is a variation of fl_print_trim_dynamic_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_dynamic_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_dynamic_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_dynamic_raw()
+ */
+#ifndef _di_fll_print_trim_dynamic_raw_
+  extern f_status_t fll_print_trim_dynamic_raw(const f_string_static_t buffer, FILE *output);
+#endif // _di_fll_print_trim_dynamic_raw_
+
+/**
+ * This is a variation of fl_print_trim_dynamic_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_dynamic_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_dynamic_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_dynamic_safely()
+ */
+#ifndef _di_fll_print_trim_dynamic_safely_
+  extern f_status_t fll_print_trim_dynamic_safely(const f_string_static_t buffer, FILE *output);
+#endif // _di_fll_print_trim_dynamic_safely_
+
+/**
+ * This is a variation of fl_print_trim_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_dynamic_partial().
+ *
+ *   Errors (with error bit) from: fl_print_trim_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_dynamic_partial_
+  extern f_status_t fll_print_trim_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+#endif // _di_fll_print_trim_dynamic_partial_
+
+/**
+ * This is a variation of fl_print_trim_dynamic_partial_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_dynamic_partial_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_dynamic_partial_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_dynamic_partial_raw()
+ */
+#ifndef _di_fll_print_trim_dynamic_partial_raw_
+  extern f_status_t fll_print_trim_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+#endif // _di_fll_print_trim_dynamic_partial_raw_
+
+/**
+ * This is a variation of f_print_except_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_dynamic_partial().
+ *
+ *   Errors (with error bit) from: f_print_except_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_dynamic_partial_safely_
+  extern f_status_t fll_print_trim_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
+#endif // _di_fll_print_trim_dynamic_partial_safely_
+
+/**
+ * This is a variation of fl_print_trim_except() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except()
+ */
+#ifndef _di_fll_print_trim_except_
+  extern f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_
+
+/**
+ * This is a variation of fl_print_trim_except_raw() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_raw()
+ */
+#ifndef _di_fll_print_trim_except_raw_
+  extern f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_safely() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_safely()
+ */
+#ifndef _di_fll_print_trim_except_safely_
+  extern f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_safely_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_
+  extern f_status_t fll_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic_raw()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_raw_
+  extern f_status_t fll_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic_safely()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_safely_
+  extern f_status_t fll_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_safely_
+
+/**
+ * This is a variation of fl_print_trim_except_in() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in()
+ */
+#ifndef _di_fll_print_trim_except_in_
+  extern f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_
+
+/**
+ * This is a variation of fl_print_trim_except_in_raw() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_raw()
+ */
+#ifndef _di_fll_print_trim_except_in_raw_
+  extern f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_in_safely() that uses locking.
+ *
+ * @param string
+ *   The string to output.
+ * @param length
+ *   The total number of characters to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_safely()
+ */
+#ifndef _di_fll_print_trim_except_in_safely_
+  extern f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_safely_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_dynamic()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_
+  extern f_status_t fll_print_trim_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_dynamic_raw()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_raw_
+  extern f_status_t fll_print_trim_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_dynamic_safely()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_safely_
+  extern f_status_t fll_print_trim_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_safely_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic_partial().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_in_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_partial_
+  extern f_status_t fll_print_trim_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_partial_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic_partial_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic_partial_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_partial_raw_
+  extern f_status_t fll_print_trim_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_partial_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_in_dynamic_partial_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_in_dynamic_partial_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_except_in_dynamic_partial_safely_
+  extern f_status_t fll_print_trim_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_trim_except_in_dynamic_partial_safely_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic_partial().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_partial_
+  extern f_status_t fll_print_trim_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_partial_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic_partial_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic_partial_raw().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic_partial_raw()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_partial_raw_
+  extern f_status_t fll_print_trim_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_partial_raw_
+
+/**
+ * This is a variation of fl_print_trim_except_dynamic_partial_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: fl_print_trim_except_dynamic_partial_safely().
+ *
+ *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_trim_except_dynamic_partial_safely()
+ */
+#ifndef _di_fll_print_trim_except_dynamic_partial_safely_
+  extern f_status_t fll_print_trim_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_trim_except_dynamic_partial_safely_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  f_status_t private_fl_print_string_convert(char *current, va_list *ap, FILE *output) {
+  f_status_t private_fl_print_string_convert(char *current, FILE *output, va_list *ap) {
 
     // An unpaired '%' character must not be at the end of the string.
     if (!*current) {
@@ -28,10 +28,10 @@ extern "C" {
       else if (*current == f_string_ascii_pound_s[0]) {
         flag |= f_print_format_flag_convert;
       }
-      else if (*current == f_string_ascii_parenthesis_open_s[0]) {
+      else if (*current == f_string_ascii_colon_semi_s[0]) {
         flag |= f_print_format_flag_ignore_index; // @todo
       }
-      else if (*current == f_string_ascii_parenthesis_close_s[0]) {
+      else if (*current == f_string_ascii_colon_s[0]) {
         flag |= f_print_format_flag_ignore_range; // @todo
       }
       else if (*current == f_string_ascii_plus_s[0]) {
@@ -211,14 +211,15 @@ extern "C" {
         }
         else if (*current == f_string_ascii_S_s[0]) {
 
-          // NULL terminated static/dynamic string.
-          const f_string_static_t value = va_arg(*ap, f_string_static_t);
+          // NULL terminated safe string.
+          const f_string_t value = va_arg(*ap, f_string_t);
 
           if (flag & f_print_format_flag_trim) {
-            return private_fl_print_trim(value.string, value.used, output);
+            // @todo: implement a: private_fl_print_trim_safely_teminated().
+            //return private_fl_print_trim_teminated(value, output);
           }
 
-          return f_print_dynamic(value, output);
+          return f_print_safely_terminated(value, output);
         }
         else if (*current == f_string_ascii_u_s[0]) {
           type = f_print_format_type_unsigned;
@@ -467,10 +468,9 @@ extern "C" {
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
-    // @todo resume converting this function.
-    f_array_length_t i = start;
+    f_array_length_t i = 0;
     f_array_length_t j = 0;
     f_array_length_t at = 0;
     f_array_length_t at2 = 0;
@@ -480,7 +480,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // skip past leading whitespace.
-    while (i < stop) {
+    while (i < length) {
 
       if (!string[i]) {
         ++i;
@@ -508,7 +508,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (stop - i) + 1);
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -525,13 +525,7 @@ extern "C" {
 
     f_string_t s = 0;
 
-    while (i < stop) {
-
-      if (!string[i]) {
-        ++i;
-
-        continue;
-      }
+    while (i < length) {
 
       while (at < except_at.used && except_at.array[at] < i) {
         ++at;
@@ -555,7 +549,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, (stop - i) + 1);
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -565,10 +559,12 @@ extern "C" {
         return status;
       }
 
-      if (status == F_true) {
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
 
-        while (j < stop) {
+        while (j < length) {
 
           if (!string[j]) {
             ++j;
@@ -596,7 +592,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (stop - j) + 1);
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
@@ -606,10 +602,10 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false) break;
+          if (status == F_false && string[i]) break;
         } // while
 
-        if (j == stop || status == F_true) break;
+        if (j == length) break;
 
         // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
@@ -640,22 +636,8 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            i = stop;
-            status = F_none;
-            break;
+          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+            return F_status_set_error(F_complete_not_utf_stop);
           }
 
           if (!fputc_unlocked(string[i], output)) {
@@ -683,10 +665,16 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         } // while
 
-        if (i >= stop) break;
+        if (i >= length) break;
+
+        if (!string[i]) {
+          ++i;
+
+          continue;
+        }
       }
 
-      status = f_utf_is_valid(string + i, stop - i);
+      status = f_utf_is_valid(string + i, length - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -696,24 +684,471 @@ extern "C" {
         return status;
       }
 
-      if (F_status_is_error(status) || status == F_false) {
-        if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
+      if (i + macro_f_utf_byte_width(string[i]) >= length) {
+        return F_status_set_error(F_complete_not_utf_stop);
+      }
+
+      if (status == F_false) {
+        return F_status_set_error(F_utf_not);
+      }
+
+      if (!fputc_unlocked(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
+
+      if (macro_f_utf_byte_width(string[i]) > 1) {
+        if (!fputc_unlocked(string[i + 1], output)) {
           return F_status_set_error(F_output);
         }
 
-        if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-          return F_status_set_error(F_output);
-        }
+        if (macro_f_utf_byte_width(string[i]) > 2) {
+          if (!fputc_unlocked(string[i + 2], output)) {
+            return F_status_set_error(F_output);
+          }
 
-        if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-          return F_status_set_error(F_output);
+          if (macro_f_utf_byte_width(string[i]) > 3) {
+            if (!fputc_unlocked(string[i + 3], output)) {
+              return F_status_set_error(F_output);
+            }
+          }
         }
+      }
 
-        i += macro_f_utf_byte_width(string[i]);
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
+
+#if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
+  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t at = 0;
+    f_array_length_t at2 = 0;
+    f_array_length_t in = 0;
+    f_array_length_t in2 = 0;
+
+    f_status_t status = F_none;
+
+    // skip past leading whitespace.
+    while (i < length) {
+
+      if (!string[i]) {
+        ++i;
+
         continue;
       }
 
-      if (i + macro_f_utf_byte_width(string[i]) >= stop) {
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
+
+      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+        ++in;
+      } // while
+
+      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        i = except_in.array[in].stop + 1;
+
+        continue;
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // consider invalid data not-whitespace.
+      if (F_status_is_error(status) || status == F_false) break;
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    f_string_t s = 0;
+
+    while (i < length) {
+
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
+
+      if (in < except_in.used) {
+        while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+          ++in;
+        } // while
+
+        if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          i = except_in.array[in].stop + 1;
+
+          continue;
+        }
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
+        j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
+
+        while (j < length) {
+
+          if (!string[j]) {
+            ++j;
+
+            continue;
+          }
+
+          while (at2 < except_at.used && except_at.array[at2] < j) {
+            ++at2;
+          } // while
+
+          if (at2 < except_at.used && except_at.array[at2] == j) {
+            ++j;
+
+            continue;
+          }
+
+          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop < j) {
+            ++in2;
+          } // while
+
+          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            j = except_in.array[in2].stop + 1;
+
+            continue;
+          }
+
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+
+          if (F_status_is_error(status) || status == F_false && string[i]) break;
+        } // while
+
+        if (j == length) break;
+
+        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        while (i < j) {
+
+          while (at < except_at.used && except_at.array[at] < i) {
+            ++at;
+          } // while
+
+          if (at < except_at.used && except_at.array[at] == i) {
+            ++i;
+
+            continue;
+          }
+
+          while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+            ++in;
+          } // while
+
+          if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+            i = except_in.array[in].stop + 1;
+
+            continue;
+          }
+
+          if (!fputc_unlocked(string[i], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 1 && i + 1 < length) {
+            if (!fputc_unlocked(string[i + 1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (macro_f_utf_byte_width(string[i]) > 2 && i + 2 < length) {
+              if (!fputc_unlocked(string[i + 2], output)) {
+                return F_status_set_error(F_output);
+              }
+
+              if (macro_f_utf_byte_width(string[i]) > 3 && i + 3 < length) {
+                if (!fputc_unlocked(string[i + 3], output)) {
+                  return F_status_set_error(F_output);
+                }
+              }
+            }
+          }
+
+          i += macro_f_utf_byte_width(string[i]);
+        } // while
+
+        if (i >= length) break;
+      }
+
+      if (!fputc_unlocked(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
+
+      if (macro_f_utf_byte_width(string[i]) > 1 && i + 1 < length) {
+        if (!fputc_unlocked(string[i + 1], output)) {
+          return F_status_set_error(F_output);
+        }
+
+        if (macro_f_utf_byte_width(string[i]) > 2 && i + 2 < length) {
+          if (!fputc_unlocked(string[i + 2], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 3 && i + 3 < length) {
+            if (!fputc_unlocked(string[i + 3], output)) {
+              return F_status_set_error(F_output);
+            }
+          }
+        }
+      }
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
+
+#if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
+  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    f_array_length_t at = 0;
+    f_array_length_t at2 = 0;
+    f_array_length_t in = 0;
+    f_array_length_t in2 = 0;
+
+    f_status_t status = F_none;
+
+    f_string_t s = 0;
+
+    // skip past leading whitespace.
+    while (i < length) {
+
+      if (!string[i]) {
+        ++i;
+
+        continue;
+      }
+
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
+
+      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+        ++in;
+      } // while
+
+      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        i = except_in.array[in].stop + 1;
+
+        continue;
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // invalid UTF will not be treated as whitespace.
+      if (F_status_is_error(status) || status == F_false) break;
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    while (i < length) {
+
+      while (at < except_at.used && except_at.array[at] < i) {
+        ++at;
+      } // while
+
+      if (at < except_at.used && except_at.array[at] == i) {
+        ++i;
+
+        continue;
+      }
+
+      if (in < except_in.used) {
+        while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+          ++in;
+        } // while
+
+        if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          i = except_in.array[in].stop + 1;
+
+          continue;
+        }
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
+        j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
+
+        while (j < length) {
+
+          if (!string[j]) {
+            ++j;
+
+            continue;
+          }
+
+          while (at2 < except_at.used && except_at.array[at2] < j) {
+            ++at2;
+          } // while
+
+          if (at2 < except_at.used && except_at.array[at2] == j) {
+            ++j;
+
+            continue;
+          }
+
+          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop < j) {
+            ++in2;
+          } // while
+
+          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            j = except_in.array[in2].stop + 1;
+
+            continue;
+          }
+
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+
+          if (F_status_is_error(status) || status == F_false && string[i]) break;
+        } // while
+
+        if (j == length || status == F_true || !string[i]) break;
+
+        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        while (i < j) {
+
+          while (at < except_at.used && except_at.array[at] < i) {
+            ++at;
+          } // while
+
+          if (at < except_at.used && except_at.array[at] == i) {
+            ++i;
+
+            continue;
+          }
+
+          while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
+            ++in;
+          } // while
+
+          if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+            i = except_in.array[in].stop + 1;
+
+            continue;
+          }
+
+          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+            if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            i = length;
+            status = F_none;
+            break;
+          }
+
+          if (!string[i]) {
+            if (!fputc_unlocked(f_print_sequence_null_s[0], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_null_s[1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_null_s[2], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            ++i;
+            continue;
+          }
+
+          status = f_utf_is_valid(string + i, length - i);
+
+          if (status == F_true) {
+            if (!fputc_unlocked(string[i], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (macro_f_utf_byte_width(string[i]) > 1) {
+              if (!fputc_unlocked(string[i + 1], output)) {
+                return F_status_set_error(F_output);
+              }
+
+              if (macro_f_utf_byte_width(string[i]) > 2) {
+                if (!fputc_unlocked(string[i + 2], output)) {
+                  return F_status_set_error(F_output);
+                }
+
+                if (macro_f_utf_byte_width(string[i]) > 3) {
+                  if (!fputc_unlocked(string[i + 3], output)) {
+                    return F_status_set_error(F_output);
+                  }
+                }
+              }
+            }
+          }
+          else {
+            if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
+              return F_status_set_error(F_output);
+            }
+          }
+
+          i += macro_f_utf_byte_width(string[i]);
+        } // while
+
+        if (i >= length) break;
+      }
+
+      status = f_utf_is_valid(string + i, length - i);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
+
+        return status;
+      }
+
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
         if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
           return F_status_set_error(F_output);
         }
@@ -726,7 +1161,13 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
-        i = stop;
+        if (status == F_false) {
+          i += macro_f_utf_byte_width(string[i]);
+        }
+        else {
+          i = length;
+        }
+
         continue;
       }
 
@@ -754,235 +1195,29 @@ extern "C" {
 
       i += macro_f_utf_byte_width(string[i]);
     } // while
-  }
-#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-
-#if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    f_array_length_t i = start;
-    f_array_length_t j = 0;
-    f_array_length_t at = 0;
-    f_array_length_t at2 = 0;
-    f_array_length_t in = 0;
-    f_array_length_t in2 = 0;
-
-    f_status_t status = F_none;
-    uint8_t width_max = 0;
-
-    // skip past leading whitespace.
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      width_max = (stop - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-
-      i += macro_f_utf_byte_width(string[i]);
-    } // while
-
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      width_max = (stop - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + macro_f_utf_byte_width(string[i]);
-
-        if (j == stop) {
-          return F_none;
-        }
-
-        at2 = at;
-
-        while (j < stop) {
-
-          while (at2 < except_at.used && except_at.array[at2] < j) {
-            ++at2;
-          } // while
-
-          if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
-
-            continue;
-          }
-
-          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
-            ++in2;
-          } // while
-
-          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
-            j = except_in.array[in2].stop + 1;
-
-            continue;
-          }
-
-          width_max = (stop - j) + 1;
-          status = f_utf_is_whitespace(string + j, width_max);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            while (i < j) {
-
-              while (at < except_at.used && except_at.array[at] < i) {
-                ++at;
-              } // while
-
-              if (at < except_at.used && except_at.array[at] == i) {
-                ++i;
-
-                continue;
-              }
-
-              while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-                ++in;
-              } // while
-
-              if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-                i = except_in.array[in].stop + 1;
-
-                continue;
-              }
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-
-              ++i;
-            } // while
-
-            break;
-          }
-
-          j += macro_f_utf_byte_width(string[j]);
-        } // while
-
-        if (status == F_true) break;
-      }
-
-      width_max = macro_f_utf_byte_width(string[i]);
-
-      for (j = 0; j < width_max; ++j) {
-
-        if (!fputc_unlocked(string[i + j], output)) {
-          return F_status_set_error(F_output);
-        }
-      } // for
-
-      i += width_max;
-    } // while
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
+#endif // !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
 
-#if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+#if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
+  f_status_t private_fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *output) {
 
-    f_array_length_t i = start;
+    f_array_length_t i = 0;
     f_array_length_t j = 0;
-    f_array_length_t at = 0;
-    f_array_length_t at2 = 0;
-    f_array_length_t in = 0;
-    f_array_length_t in2 = 0;
 
     f_status_t status = F_none;
 
     // skip past leading whitespace.
-    while (i < stop) {
+    while (i < length) {
 
-      // Consider NULL whitespace for the purposes of trimming (@todo update documentation to describe this behavior).
       if (!string[i]) {
         ++i;
 
         continue;
       }
 
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      status = f_utf_is_whitespace(string + i, (stop - i) + 1);
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -999,114 +1234,306 @@ extern "C" {
 
     f_string_t s = 0;
 
-    while (i < stop) {
+    while (i < length) {
 
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
 
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      if (in < except_in.used) {
-        while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-          ++in;
-        } // while
-
-        if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-          i = except_in.array[in].stop + 1;
-
-          continue;
-        }
-      }
-
-      status = f_utf_is_whitespace(string + i, (stop - i) + 1);
-
-      // invalid UTF-8 characters will be considered non-whitespace.
       if (F_status_is_error(status)) {
-        if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-          return F_status_set_error(F_output);
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
         }
 
-        if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        i += macro_f_utf_byte_width(string[i]);
-        continue;
+        return status;
       }
 
-      if (status == F_true) { // @todo: update to handle NULL as whitespace in this condition.
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
 
-        while (j < stop) {
+        while (j < length) {
 
-          // Consider NULL whitespace for the purposes of trimming (@todo update documentation to describe this behavior).
-          if (!string[i]) {
+          if (!string[j]) {
             ++j;
 
             continue;
           }
 
-          while (at2 < except_at.used && except_at.array[at2] < j) {
-            ++at2;
-          } // while
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
 
-          if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
+          if (F_status_is_error(status)) {
+            if (F_status_set_fine(status) == F_maybe) {
+              return F_status_set_error(F_utf);
+            }
 
-            continue;
+            return status;
           }
 
-          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop < j) {
-            ++in2;
-          } // while
-
-          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
-            j = except_in.array[in2].stop + 1;
-
-            continue;
-          }
-
-          status = f_utf_is_whitespace(string + j, (stop - j) + 1);
-          if (F_status_is_error(status)) break;
-
-          if (status == F_false) break;
+          if (status == F_false && string[i]) break;
         } // while
 
-        if (j == stop || status == F_true) break;
+        if (j == length) break;
 
         // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
 
-          while (at < except_at.used && except_at.array[at] < i) {
-            ++at;
-          } // while
-
-          if (at < except_at.used && except_at.array[at] == i) {
+          if (!string[i]) {
             ++i;
 
             continue;
           }
 
-          while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-            ++in;
-          } // while
+          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+            return F_status_set_error(F_complete_not_utf_stop);
+          }
 
-          if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-            i = except_in.array[in].stop + 1;
+          if (!fputc_unlocked(string[i], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 1) {
+            if (!fputc_unlocked(string[i + 1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (macro_f_utf_byte_width(string[i]) > 2) {
+              if (!fputc_unlocked(string[i + 2], output)) {
+                return F_status_set_error(F_output);
+              }
+
+              if (macro_f_utf_byte_width(string[i]) > 3) {
+                if (!fputc_unlocked(string[i + 3], output)) {
+                  return F_status_set_error(F_output);
+                }
+              }
+            }
+          }
+
+          i += macro_f_utf_byte_width(string[i]);
+        } // while
+
+        if (i >= length) break;
+
+        if (!string[i]) {
+          ++i;
+
+          continue;
+        }
+      }
+
+      status = f_utf_is_valid(string + i, length - i);
+
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
+        }
+
+        return status;
+      }
+
+      if (i + macro_f_utf_byte_width(string[i]) >= length) {
+        return F_status_set_error(F_complete_not_utf_stop);
+      }
+
+      if (status == F_false) {
+        return F_status_set_error(F_utf_not);
+      }
+
+      if (!fputc_unlocked(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
+
+      if (macro_f_utf_byte_width(string[i]) > 1) {
+        if (!fputc_unlocked(string[i + 1], output)) {
+          return F_status_set_error(F_output);
+        }
+
+        if (macro_f_utf_byte_width(string[i]) > 2) {
+          if (!fputc_unlocked(string[i + 2], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 3) {
+            if (!fputc_unlocked(string[i + 3], output)) {
+              return F_status_set_error(F_output);
+            }
+          }
+        }
+      }
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
+
+#if !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
+  f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *output) {
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
+    f_status_t status = F_none;
+
+    // skip past leading whitespace.
+    while (i < length) {
+
+      if (!string[i]) {
+        ++i;
+
+        continue;
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // consider invalid data not-whitespace.
+      if (F_status_is_error(status) || status == F_false) break;
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    f_string_t s = 0;
+
+    while (i < length) {
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
+        j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
+
+        while (j < length) {
+
+          if (!string[j]) {
+            ++j;
 
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+
+          if (F_status_is_error(status) || status == F_false && string[i]) break;
+        } // while
+
+        if (j == length) break;
+
+        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        while (i < j) {
+
+          if (!fputc_unlocked(string[i], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 1 && i + 1 < length) {
+            if (!fputc_unlocked(string[i + 1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (macro_f_utf_byte_width(string[i]) > 2 && i + 2 < length) {
+              if (!fputc_unlocked(string[i + 2], output)) {
+                return F_status_set_error(F_output);
+              }
+
+              if (macro_f_utf_byte_width(string[i]) > 3 && i + 3 < length) {
+                if (!fputc_unlocked(string[i + 3], output)) {
+                  return F_status_set_error(F_output);
+                }
+              }
+            }
+          }
+
+          i += macro_f_utf_byte_width(string[i]);
+        } // while
+
+        if (i >= length) break;
+      }
+
+      if (!fputc_unlocked(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
+
+      if (macro_f_utf_byte_width(string[i]) > 1 && i + 1 < length) {
+        if (!fputc_unlocked(string[i + 1], output)) {
+          return F_status_set_error(F_output);
+        }
+
+        if (macro_f_utf_byte_width(string[i]) > 2 && i + 2 < length) {
+          if (!fputc_unlocked(string[i + 2], output)) {
+            return F_status_set_error(F_output);
+          }
+
+          if (macro_f_utf_byte_width(string[i]) > 3 && i + 3 < length) {
+            if (!fputc_unlocked(string[i + 3], output)) {
+              return F_status_set_error(F_output);
+            }
+          }
+        }
+      }
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
+
+#if !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
+  f_status_t private_fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *output) {
+
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+
+    f_status_t status = F_none;
+
+    f_string_t s = 0;
+
+    // skip past leading whitespace.
+    while (i < length) {
+
+      if (!string[i]) {
+        ++i;
+
+        continue;
+      }
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // invalid UTF will not be treated as whitespace.
+      if (F_status_is_error(status) || status == F_false) break;
+
+      i += macro_f_utf_byte_width(string[i]);
+    } // while
+
+    while (i < length) {
+
+      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+
+      // determine if this is an end of string whitespace that needs to be trimmed.
+      if (status == F_true || !string[i]) {
+        j = i + macro_f_utf_byte_width(string[i]);
+        status = F_none;
+
+        while (j < length) {
+
+          if (!string[j]) {
+            ++j;
+
+            continue;
+          }
+
+          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+
+          if (F_status_is_error(status) || status == F_false && string[i]) break;
+        } // while
+
+        if (j == length || status == F_true || !string[i]) break;
+
+        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        while (i < j) {
+
+          if (i + macro_f_utf_byte_width(string[i]) >= length) {
             if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
               return F_status_set_error(F_output);
             }
@@ -1119,12 +1546,31 @@ extern "C" {
               return F_status_set_error(F_output);
             }
 
-            i = stop;
+            i = length;
             status = F_none;
             break;
           }
 
-          if (string[i]) {
+          if (!string[i]) {
+            if (!fputc_unlocked(f_print_sequence_null_s[0], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_null_s[1], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            if (!fputc_unlocked(f_print_sequence_null_s[2], output)) {
+              return F_status_set_error(F_output);
+            }
+
+            ++i;
+            continue;
+          }
+
+          status = f_utf_is_valid(string + i, length - i);
+
+          if (status == F_true) {
             if (!fputc_unlocked(string[i], output)) {
               return F_status_set_error(F_output);
             }
@@ -1146,1147 +1592,88 @@ extern "C" {
                 }
               }
             }
-
-            i += macro_f_utf_byte_width(string[i]);
           }
           else {
-            if (!fputc_unlocked(f_print_sequence_null_s[0], output)) {
+            if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
               return F_status_set_error(F_output);
             }
 
-            if (!fputc_unlocked(f_print_sequence_null_s[1], output)) {
+            if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
               return F_status_set_error(F_output);
             }
 
-            if (!fputc_unlocked(f_print_sequence_null_s[2], output)) {
+            if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
               return F_status_set_error(F_output);
             }
-
-            ++i;
-          }
-        } // while
-
-        // at this point the invalid character found while looping with j shall be safely printed.
-        if (F_status_is_error(status)) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-            return F_status_set_error(F_output);
           }
 
           i += macro_f_utf_byte_width(string[i]);
-          continue;
-        }
+        } // while
 
-        if (i >= stop) break;
+        if (i >= length) break;
       }
 
-      s = f_print_character_safely_get(string[i]);
+      status = f_utf_is_valid(string + i, length - i);
 
-      if (s) {
-        if (!fputc_unlocked(s[i], output)) {
-          return F_status_set_error(F_output);
+      if (F_status_is_error(status)) {
+        if (F_status_set_fine(status) == F_maybe) {
+          return F_status_set_error(F_utf);
         }
 
-        if (!fputc_unlocked(s[i + 1], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(s[i + 2], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        ++i;
+        return status;
       }
-      else {
-        status = f_utf_is_valid(string + i, stop - i);
 
-        if (F_status_is_error(status) || status == F_false) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
+        if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
+          return F_status_set_error(F_output);
+        }
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
+        if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
+          return F_status_set_error(F_output);
+        }
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-            return F_status_set_error(F_output);
-          }
+        if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
+          return F_status_set_error(F_output);
+        }
 
+        if (status == F_false) {
           i += macro_f_utf_byte_width(string[i]);
-          continue;
+        }
+        else {
+          i = length;
         }
 
-        if (i + macro_f_utf_byte_width(string[i]) >= stop) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+        continue;
+      }
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
+      if (!fputc_unlocked(string[i], output)) {
+        return F_status_set_error(F_output);
+      }
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          i = stop;
-          continue;
-        }
-
-        if (!fputc_unlocked(string[i], output)) {
+      if (macro_f_utf_byte_width(string[i]) > 1) {
+        if (!fputc_unlocked(string[i + 1], output)) {
           return F_status_set_error(F_output);
         }
 
-        if (macro_f_utf_byte_width(string[i]) > 1) {
-          if (!fputc_unlocked(string[i + 1], output)) {
+        if (macro_f_utf_byte_width(string[i]) > 2) {
+          if (!fputc_unlocked(string[i + 2], output)) {
             return F_status_set_error(F_output);
           }
 
-          if (macro_f_utf_byte_width(string[i]) > 2) {
-            if (!fputc_unlocked(string[i + 2], output)) {
+          if (macro_f_utf_byte_width(string[i]) > 3) {
+            if (!fputc_unlocked(string[i + 3], output)) {
               return F_status_set_error(F_output);
             }
-
-            if (macro_f_utf_byte_width(string[i]) > 3) {
-              if (!fputc_unlocked(string[i + 3], output)) {
-                return F_status_set_error(F_output);
-              }
-            }
           }
         }
-
-        i += macro_f_utf_byte_width(string[i]);
       }
+
+      i += macro_f_utf_byte_width(string[i]);
     } // while
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
-
-#if !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_in_utf(const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    f_array_length_t i = start;
-    f_array_length_t j = 0;
-    f_array_length_t at = 0;
-    f_array_length_t at2 = 0;
-    f_array_length_t in = 0;
-    f_array_length_t in2 = 0;
-
-    f_status_t status = F_none;
-
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-
-      ++i;
-    } // while
-
-    while (i < stop) {
-
-      if (!string[i]) {
-        ++i;
-
-        continue;
-      }
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == stop) {
-          return F_none;
-        }
-
-        at2 = at;
-
-        while (j < stop) {
-
-          while (at2 < except_at.used && except_at.array[at2] < j) {
-            ++at2;
-          } // while
-
-          if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
-
-            continue;
-          }
-
-          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
-            ++in2;
-          } // while
-
-          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
-            j = except_in.array[in2].stop + 1;
-
-            continue;
-          }
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            while (i < j) {
-
-              if (!string[i]) {
-                ++i;
-
-                continue;
-              }
-
-              while (at < except_at.used && except_at.array[at] < i) {
-                ++at;
-              } // while
-
-              if (at < except_at.used && except_at.array[at] == i) {
-                ++i;
-
-                continue;
-              }
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-
-              ++i;
-            } // while
-
-            break;
-          }
-
-          ++j;
-        } // while
-
-        if (status == F_true) break;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-
-      ++i;
-    } // while
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_except_in_utf_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_) || !defined(_di_fl_print_trim_except_utf_) || !defined(_di_fl_print_trim_except_utf_dynamic_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_)
-
-#if !defined(_di_fl_print_trim_except_in_utf_raw_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_utf_raw_) || !defined(_di_fl_print_trim_except_utf_dynamic_raw_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_except_in_utf_raw(const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    f_array_length_t i = start;
-    f_array_length_t j = 0;
-    f_array_length_t at = 0;
-    f_array_length_t at2 = 0;
-    f_array_length_t in = 0;
-    f_array_length_t in2 = 0;
-
-    f_status_t status = F_none;
-
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-
-      ++i;
-    } // while
-
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == stop) {
-          return F_none;
-        }
-
-        at2 = at;
-
-        while (j < stop) {
-
-          while (at2 < except_at.used && except_at.array[at2] < j) {
-            ++at2;
-          } // while
-
-          if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
-
-            continue;
-          }
-
-          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
-            ++in2;
-          } // while
-
-          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
-            j = except_in.array[in2].stop + 1;
-
-            continue;
-          }
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            while (i < j) {
-
-              while (at < except_at.used && except_at.array[at] < i) {
-                ++at;
-              } // while
-
-              if (at < except_at.used && except_at.array[at] == i) {
-                ++i;
-
-                continue;
-              }
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-
-              ++i;
-            } // while
-
-            break;
-          }
-
-          ++j;
-        } // while
-
-        if (status == F_true) break;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-
-      ++i;
-    } // while
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_except_in_utf_raw_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_utf_raw_) || !defined(_di_fl_print_trim_except_utf_dynamic_raw_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_raw_)
-
-#if !defined(_di_fl_print_trim_except_in_utf_safely_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_utf_safely_) || !defined(_di_fl_print_trim_except_utf_dynamic_safely_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_except_in_utf_safely(const f_utf_string_t string, const f_array_length_t start, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    f_array_length_t i = start;
-    f_array_length_t j = 0;
-    f_array_length_t at = 0;
-    f_array_length_t at2 = 0;
-    f_array_length_t in = 0;
-    f_array_length_t in2 = 0;
-
-    f_status_t status = F_none;
-
-    while (i < stop) {
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      while (in < except_in.used && except_in.array[in].start < i && except_in.array[in].stop < i) {
-        ++in;
-      } // while
-
-      if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
-        i = except_in.array[in].stop + 1;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-
-      ++i;
-    } // while
-
-    while (i < stop) {
-
-      if (!string[i]) { // @todo each of these needs to be replaced with a get safe check.
-        ++i;
-
-        continue;
-      }
-
-      while (at < except_at.used && except_at.array[at] < i) {
-        ++at;
-      } // while
-
-      if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
-
-        continue;
-      }
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == stop) {
-          return F_none;
-        }
-
-        at2 = at;
-
-        while (j < stop) {
-
-          while (at2 < except_at.used && except_at.array[at2] < j) {
-            ++at2;
-          } // while
-
-          if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
-
-            continue;
-          }
-
-          while (in2 < except_in.used && except_in.array[in2].start < j && except_in.array[in2].stop <= j) {
-            ++in2;
-          } // while
-
-          if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
-            j = except_in.array[in2].stop + 1;
-
-            continue;
-          }
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            while (i < j) {
-
-              if (!string[i]) {
-                ++i;
-
-                continue;
-              }
-
-              while (at < except_at.used && except_at.array[at] < i) {
-                ++at;
-              } // while
-
-              if (at < except_at.used && except_at.array[at] == i) {
-                ++i;
-
-                continue;
-              }
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-
-              ++i;
-            } // while
-
-            break;
-          }
-
-          ++j;
-        } // while
-
-        if (status == F_true) break;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-
-      ++i;
-    } // while
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_except_in_utf_safely_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_utf_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_utf_safely_) || !defined(_di_fl_print_trim_except_utf_dynamic_safely_) || !defined(_di_fl_print_trim_except_utf_dynamic_partial_safely_)
-
-#if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
-  f_status_t private_fl_print_trim(const f_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-    uint8_t width_max = 0;
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      if (!string[i]) continue;
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + macro_f_utf_byte_width(string[i]);
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; j += macro_f_utf_byte_width(string[j])) {
-
-          width_max = (length - j) + 1;
-          status = f_utf_is_whitespace(string + j, width_max);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-              if (!string[i]) continue;
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      width_max = macro_f_utf_byte_width(string[i]);
-
-      for (j = 0; j < width_max; ++j) {
-
-        if (!fputc_unlocked(string[i + j], output)) {
-          return F_status_set_error(F_output);
-        }
-      } // for
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
-
-#if !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-    uint8_t width_max = 0;
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + macro_f_utf_byte_width(string[i]);
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; j += macro_f_utf_byte_width(string[j])) {
-
-          width_max = (length - j) + 1;
-          status = f_utf_is_whitespace(string + j, width_max);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      width_max = macro_f_utf_byte_width(string[i]);
-
-      for (j = 0; j < width_max; ++j) {
-
-        if (!fputc_unlocked(string[i + j], output)) {
-          return F_status_set_error(F_output);
-        }
-      } // for
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
-
-#if !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-    uint8_t width_max = 0;
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; i += macro_f_utf_byte_width(string[i])) {
-
-      if (!string[i]) continue; // @todo each of these needs to be replaced with a get safe check.
-
-      width_max = (length - i) + 1;
-      status = f_utf_is_whitespace(string + i, width_max);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + macro_f_utf_byte_width(string[i]);
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; j += macro_f_utf_byte_width(string[j])) {
-
-          width_max = (length - j) + 1;
-          status = f_utf_is_whitespace(string + j, width_max);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-              if (!string[i]) continue;
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      width_max = macro_f_utf_byte_width(string[i]);
-
-      for (j = 0; j < width_max; ++j) {
-
-        if (!fputc_unlocked(string[i + j], output)) {
-          return F_status_set_error(F_output);
-        }
-      } // for
-    } // for
 
     return F_none;
   }
 #endif // !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
-
-#if !defined(_di_fl_print_trim_utf_) || !defined(_di_fl_print_trim_utf_dynamic_) || !defined(_di_fl_print_trim_utf_dynamic_partial_)
-  f_status_t private_fl_print_trim_utf(const f_utf_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-
-    for (; i < length; ++i) {
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; ++i) {
-
-      if (!string[i]) continue;
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; ++j) {
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-              if (!string[i]) continue;
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_utf_) || !defined(_di_fl_print_trim_utf_dynamic_) || !defined(_di_fl_print_trim_utf_dynamic_partial_)
-
-#if !defined(_di_fl_print_trim_utf_raw_) || !defined(_di_fl_print_trim_utf_dynamic_raw_) || !defined(_di_fl_print_trim_utf_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_utf_raw(const f_utf_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-
-    for (; i < length; ++i) {
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; ++i) {
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; ++j) {
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_utf_raw_) || !defined(_di_fl_print_trim_utf_dynamic_raw_) || !defined(_di_fl_print_trim_utf_dynamic_partial_raw_)
-
-#if !defined(_di_fl_print_trim_utf_safely_) || !defined(_di_fl_print_trim_utf_dynamic_safely_) || !defined(_di_fl_print_trim_utf_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_utf_safely(const f_utf_string_t string, const f_array_length_t length, FILE *output) {
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
-    f_status_t status = F_none;
-
-    f_string_t s = 0;
-
-    for (; i < length; ++i) {
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_false) break;
-    } // for
-
-    for (; i < length; ++i) {
-
-      status = f_utf_character_is_whitespace(string[i]);
-
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
-        }
-
-        return status;
-      }
-
-      if (status == F_true) {
-        j = i + 1;
-
-        if (j == length) {
-          return F_none;
-        }
-
-        for (; j < length; ++j) {
-
-          status = f_utf_character_is_whitespace(string[j]);
-
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
-            }
-
-            return status;
-          }
-
-          // all whitespaces found so far must be printed when a non-whitespace is found.
-          if (status == F_false) {
-            for (; i < j; ++i) {
-
-
-              /* @todo
-              s = f_print_character_safely_get(string[i]); // @todo: in addition to this, the width of the character at string[i] needs to be taken into consideration.
-
-              if (s) {
-                //
-                status = F_false;
-              }
-              */
-
-              if (!string[i]) continue;
-
-              if (!fputc_unlocked(string[i], output)) {
-                return F_status_set_error(F_output);
-              }
-            } // for
-
-            break;
-          }
-        } // for
-
-        if (status == F_true) break;
-      }
-
-      s = f_print_character_safely_get(string[i]); // @todo: in addition to this, the width of the character at string[i] needs to be taken into consideration.
-
-      if (s) {
-        //
-        status = F_false;
-      }
-
-      if (!fputc_unlocked(string[i], output)) {
-        return F_status_set_error(F_output);
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_print_trim_utf_safely_) || !defined(_di_fl_print_trim_utf_dynamic_safely_) || !defined(_di_fl_print_trim_utf_dynamic_partial_safely_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -147,6 +147,8 @@ extern "C" {
  * Will print NULL.
  * Will print up to length 1-byte characters.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
  * @param buffer
@@ -234,6 +236,8 @@ extern "C" {
  * Will not stop at NULL.
  * Will print NULL.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -331,6 +335,8 @@ extern "C" {
  * Will print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -433,6 +439,8 @@ extern "C" {
  * Will print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -538,6 +546,8 @@ extern "C" {
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -653,6 +663,8 @@ extern "C" {
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print up to length 1-byte characters.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
  * @param buffer
@@ -765,6 +777,8 @@ extern "C" {
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print up to length 1-byte characters.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
  * @param buffer
@@ -873,6 +887,8 @@ extern "C" {
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
  * @param buffer
@@ -938,6 +954,8 @@ extern "C" {
  * Will print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -1008,6 +1026,8 @@ extern "C" {
  * Will not stop at NULL.
  * Will print NULL.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -1195,6 +1215,8 @@ extern "C" {
  * Will print NULL.
  * Will print up to length 1-byte characters.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * @param string
  *   The string to output.
  * @param length
@@ -1295,6 +1317,8 @@ extern "C" {
  * Will print NULL.
  * Will print up to length 1-byte characters.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * @param buffer
  *   The string to output.
  * @param id
@@ -1392,6 +1416,8 @@ extern "C" {
  * Will not stop at NULL.
  * Will print NULL.
  * Will print up to the specified range within the buffer.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * @param buffer
  *   The string to output.
@@ -1499,6 +1525,8 @@ extern "C" {
  * Will print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * @param string
  *   The string to output.
@@ -1612,6 +1640,8 @@ extern "C" {
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the length of the buffer.
  *
+ * All UTF-8 characters, invalid or not, are printed as is.
+ *
  * @param buffer
  *   The string to output.
  * @param except
@@ -1721,6 +1751,8 @@ extern "C" {
  * Will print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
+ *
+ * All UTF-8 characters, invalid or not, are printed as is.
  *
  * @param buffer
  *   The string to output.

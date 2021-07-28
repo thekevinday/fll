@@ -22,9 +22,11 @@
 #include <fll/level_0/color.h>
 #include <fll/level_0/console.h>
 #include <fll/level_0/file.h>
+#include <fll/level_0/print.h>
 
 // fll-1 includes
 #include <fll/level_1/string.h>
+#include <fll/level_1/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,8 +35,10 @@ extern "C" {
 /**
  * Print standard help header.
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param context
  *   The color context.
  * @param name
@@ -45,19 +49,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_color_print().
- *
- * @param f_color_print()
+ * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_status_t fll_program_print_help_header(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t version);
+  extern f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
  * Print standard help option.
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param context
  *   The color context.
  * @param option_short
@@ -74,19 +79,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_color_print().
- *
- * @param f_color_print()
+ * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_status_t fll_program_print_help_option(const f_file_t file, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_
 
 /**
  * Print standard help option (long option only).
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param context
  *   The color context.
  * @param option_long
@@ -99,19 +105,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_color_print().
- *
- * @param f_color_print()
+ * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_status_t fll_program_print_help_option_long(const f_file_t file, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
  * Print standard help option (other option only).
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param context
  *   The color context.
  * @param option_other
@@ -122,19 +129,20 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_color_print().
- *
- * @param f_color_print()
+ * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_status_t fll_program_print_help_option_other(const f_file_t file, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
+  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
  * Print standard help usage.
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param context
  *   The color context.
  * @param name
@@ -146,27 +154,30 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_color_print().
- *
- * @param f_color_print()
+ * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_status_t fll_program_print_help_usage(const f_file_t file, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
+  extern f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
  * Print the program version.
  *
- * @param file
- *   The file to output to.
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
  * @param version
  *   The version number of the program.
  *
  * @return
  *   F_none on success.
+ *
+ * @see fl_print_string()
  */
 #ifndef _di_fll_program_print_version_
-  extern f_status_t fll_program_print_version(const f_file_t file, const f_string_t version);
+  extern f_status_t fll_program_print_version(const f_file_t output, const f_string_t version);
 #endif // _di_fll_program_print_version_
 
 /**

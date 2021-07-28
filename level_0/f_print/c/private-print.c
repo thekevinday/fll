@@ -24,7 +24,7 @@ extern "C" {
 #if !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
   f_status_t private_f_print_character_safely(const char character, FILE *output) {
 
-    if (character > 32 && character != 127) {
+    if (character > 31 && character != 127) {
       if (!fputc_unlocked(character, output)) {
         return F_status_set_error(F_output);
       }
@@ -128,9 +128,6 @@ extern "C" {
     else if (character == 31) {
       string = f_print_sequence_unit_separator_s;
     }
-    else if (character == 32) {
-      string = f_print_sequence_space_s;
-    }
     else {
 
       // character == 127.
@@ -156,7 +153,7 @@ extern "C" {
 #if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_to_safely_) || !defined(_di_f_print_dynamic_partial_to_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
   f_string_t private_f_print_character_safely_get(const char character) {
 
-    if (character > 32 && character != 127) {
+    if (character > 31 && character != 127) {
       return 0;
     }
 
@@ -286,10 +283,6 @@ extern "C" {
 
     if (character == 31) {
       return f_print_sequence_unit_separator_s;
-    }
-
-    if (character == 32) {
-      return f_print_sequence_space_s;
     }
 
     // character == 127.
