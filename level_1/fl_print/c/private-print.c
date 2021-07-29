@@ -29,10 +29,10 @@ extern "C" {
         flag |= f_print_format_flag_convert;
       }
       else if (*current == f_string_ascii_colon_semi_s[0]) {
-        flag |= f_print_format_flag_ignore_index; // @todo
+        flag |= f_print_format_flag_ignore_index;
       }
       else if (*current == f_string_ascii_colon_s[0]) {
-        flag |= f_print_format_flag_ignore_range; // @todo
+        flag |= f_print_format_flag_ignore_range;
       }
       else if (*current == f_string_ascii_plus_s[0]) {
         flag |= f_print_format_flag_sign_always;
@@ -43,8 +43,8 @@ extern "C" {
       else if (*current == f_string_ascii_equal_s[0]) {
         flag |= f_print_format_flag_trim;
       }
-      else if (*current == f_string_ascii_0_s[0] || *current == f_string_ascii_1_s[0] || *current == f_string_ascii_2_s[0] || *current == f_string_ascii_3_s[0] || *current == f_string_ascii_4_s[0] || *current == f_string_ascii_5_s[0] || *current == f_string_ascii_6_s[0] || *current == f_string_ascii_7_s[0] || *current == f_string_ascii_8_s[0] || *current == f_string_ascii_9_s[0]) {
-
+      /* @fixme
+      else if (*current > 0x29 && *current < 0x40) {
         if (!(flag & f_print_format_flag_width)) {
           if (*current == f_string_ascii_0_s[0]) {
             flag |= f_print_format_flag_zeros_leading;
@@ -60,7 +60,7 @@ extern "C" {
         else {
           return F_status_set_error(F_valid_not);
         }
-      }
+      }*/
       else if (*current == f_string_ascii_dollar_s[0]) {
         // If followed immediately by a '$' this is ignored.
         // Use '%$' to separate, such as '%l%$l' would allow for '0l' to be printed where '%ll' would interpret the 'l', resulting in a long long.
@@ -86,11 +86,10 @@ extern "C" {
           return F_status_set_error(F_valid_not);
         }
 
-        if (private_fl_print_convert_number(current, ap, &precision)) {
+        // @fixme this looks wrong here, probably needs to handle the current + 1 and not current.
+        /*if (private_fl_print_convert_number(current, ap, &precision)) {
           break;
-        }
-
-        continue;
+        }*/
       }
       else {
         if (*current == f_string_ascii_c_s[0]) {
@@ -170,7 +169,49 @@ extern "C" {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & f_print_format_flag_trim) {
+            if (flag & f_print_format_flag_ignore_index) {
+              if (flag & f_print_format_flag_ignore_range) {
+                f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+                f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+                return private_fl_print_trim_except_in(value.string, value.used, except_at, except_in, output);
+              }
+
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+              return private_fl_print_trim_except_in(value.string, value.used, except_at, except_in, output);
+            }
+
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = f_array_lengths_t_initialize;
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return private_fl_print_trim_except_in(value.string, value.used, except_at, except_in, output);
+            }
+
             return private_fl_print_trim(value.string, value.used, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_index) {
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return f_print_except_in(value.string, value.used, except_at, except_in, output);
+            }
+
+            f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+            f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+            return f_print_except_in(value.string, value.used, except_at, except_in, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_range) {
+            f_array_lengths_t except_at = f_array_lengths_t_initialize;
+            f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+            return f_print_except_in(value.string, value.used, except_at, except_in, output);
           }
 
           return f_print_dynamic(value, output);
@@ -181,7 +222,49 @@ extern "C" {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & f_print_format_flag_trim) {
-            return private_fl_print_trim(value.string, value.used, output);
+            if (flag & f_print_format_flag_ignore_index) {
+              if (flag & f_print_format_flag_ignore_range) {
+                f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+                f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+                return private_fl_print_trim_except_in_safely(value.string, value.used, except_at, except_in, output);
+              }
+
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+              return private_fl_print_trim_except_in_safely(value.string, value.used, except_at, except_in, output);
+            }
+
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = f_array_lengths_t_initialize;
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return private_fl_print_trim_except_in_safely(value.string, value.used, except_at, except_in, output);
+            }
+
+            return private_fl_print_trim_safely(value.string, value.used, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_index) {
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return f_print_except_in_safely(value.string, value.used, except_at, except_in, output);
+            }
+
+            f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+            f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+            return f_print_except_in_safely(value.string, value.used, except_at, except_in, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_range) {
+            f_array_lengths_t except_at = f_array_lengths_t_initialize;
+            f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+            return f_print_except_in_safely(value.string, value.used, except_at, except_in, output);
           }
 
           return f_print_dynamic_safely(value, output);
@@ -192,7 +275,49 @@ extern "C" {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
 
           if (flag & f_print_format_flag_trim) {
-            return private_fl_print_trim(value.string, value.used, output);
+            if (flag & f_print_format_flag_ignore_index) {
+              if (flag & f_print_format_flag_ignore_range) {
+                f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+                f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+                return private_fl_print_trim_except_in_raw(value.string, value.used, except_at, except_in, output);
+              }
+
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+              return private_fl_print_trim_except_in_raw(value.string, value.used, except_at, except_in, output);
+            }
+
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = f_array_lengths_t_initialize;
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return private_fl_print_trim_except_in_raw(value.string, value.used, except_at, except_in, output);
+            }
+
+            return private_fl_print_trim_raw(value.string, value.used, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_index) {
+            if (flag & f_print_format_flag_ignore_range) {
+              f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+              f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+              return f_print_except_in_raw(value.string, value.used, except_at, except_in, output);
+            }
+
+            f_array_lengths_t except_at = va_arg(*ap, f_array_lengths_t);
+            f_string_ranges_t except_in = f_string_ranges_t_initialize;
+
+            return f_print_except_in_raw(value.string, value.used, except_at, except_in, output);
+          }
+
+          if (flag & f_print_format_flag_ignore_range) {
+            f_array_lengths_t except_at = f_array_lengths_t_initialize;
+            f_string_ranges_t except_in = va_arg(*ap, f_string_ranges_t);
+
+            return f_print_except_in_raw(value.string, value.used, except_at, except_in, output);
           }
 
           return f_print_dynamic_raw(value, output);
@@ -202,22 +327,12 @@ extern "C" {
           // NULL terminated string.
           const f_string_t value = va_arg(*ap, f_string_t);
 
-          if (flag & f_print_format_flag_trim) {
-            // @todo: implement a: private_fl_print_trim_teminated().
-            //return private_fl_print_trim_teminated(value, output);
-          }
-
           return f_print_terminated(value, output);
         }
         else if (*current == f_string_ascii_S_s[0]) {
 
           // NULL terminated safe string.
           const f_string_t value = va_arg(*ap, f_string_t);
-
-          if (flag & f_print_format_flag_trim) {
-            // @todo: implement a: private_fl_print_trim_safely_teminated().
-            //return private_fl_print_trim_teminated(value, output);
-          }
 
           return f_print_safely_terminated(value, output);
         }
@@ -288,6 +403,24 @@ extern "C" {
         else if (*current == f_string_ascii_Z_s[0]) {
           type = f_print_format_type_size;
           flag |= f_print_format_flag_uppercase;
+        }
+        else if (*current == f_string_ascii_bracket_open_s[0]) {
+          const f_color_set_t value = va_arg(*ap, f_color_set_t);
+
+          if (value.before) {
+            return f_print_dynamic(*value.before, output);
+          }
+
+          return F_none;
+        }
+        else if (*current == f_string_ascii_bracket_close_s[0]) {
+          const f_color_set_t value = va_arg(*ap, f_color_set_t);
+
+          if (value.after) {
+            return f_print_dynamic(*value.after, output);
+          }
+
+          return F_none;
         }
         else {
           return F_status_set_error(F_valid_not);
@@ -410,7 +543,7 @@ extern "C" {
 
     *number = 0;
 
-    for (current = current + 1; *current; current = current + 1) {
+    for (; *current; current = current + 1) {
 
       if (*current == f_string_ascii_0_s[0]) {
         *number *= 10;
@@ -457,11 +590,17 @@ extern "C" {
         break;
       }
       else {
+
+        // reset position non-number.
+        current = current - 1;
+
         break;
       }
     } // for
 
-    if (!*current) return F_false;
+    if (*current) {
+      return F_false;
+    }
 
     return F_true;
   }

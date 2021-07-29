@@ -117,12 +117,12 @@ extern "C" {
  * f_print_format_flag_*:
  * - align_left:     "-", Use left-justification.
  * - convert:        "#", Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
- * - ignore_index:   ";", Ignore characters in the given positions from a f_array_length_t (only applies to string arguments but not character arguments).
- * - ignore_range:   ":", Ignore characters in the given ranges from a f_string_range_t (only applies to string arguments but not character arguments).
+ * - ignore_index:   ";", Ignore characters in the given positions from a f_array_length_t (only applies to static/dynamic string arguments but not character arguments).
+ * - ignore_range:   ":", Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
  * - precision:           Designates that a precision is in use.
  * - sign_always:    "+", Always show the signs (+ or -).
  * - sign_pad:       " ", Add a space where a sign would be if the sign is not displayed.
- * - trim:           "=", Trim leading and trailing whitespaces (only applies to string arguments but not character arguments).
+ * - trim:           "=", Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).
  * - uppercase:           Display any base units as uppercase.
  * - width:               Designates that a width is in use.
  * - zeros_leading:  "0", Use leading zeros.
@@ -164,6 +164,8 @@ extern "C" {
  * f_print_format_type_*:
  * - character:          "c", type is a 1-byte unsigned character.
  * - character_safe:     "C", type is a 1-byte unsigned character, where control characters and other problems are handled.
+ * - color_after:        "]", type is f_color_set_t such that the f_color_set_t.after is used.
+ * - color_before:       "[", type is f_color_set_t such that the f_color_set_t.begin is used.
  * - long:               "l", "L", type is a signed integer.
  * - long_long:          "ll", "LL", type is a signed integer.
  * - number:             "n", "N", type is an f_number_signed_t.
@@ -188,6 +190,8 @@ extern "C" {
   enum {
     f_print_format_type_character = 1,
     f_print_format_type_character_safe,
+    f_print_format_type_color_after,
+    f_print_format_type_color_before,
     f_print_format_type_long,
     f_print_format_type_long_long,
     f_print_format_type_number,

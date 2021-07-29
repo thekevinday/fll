@@ -58,155 +58,24 @@ extern "C" {
       if (!ap) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    uint8_t i = 0;
+    f_status_t status = F_none;
 
-    char *current = string;
-    char replace = *current;
+    for (char *current = string; *current; current = current + 1) {
 
-    while (*current) {
+      if (*current == f_string_ascii_percent_s[0]) {
+        current = current + 1;
 
-      if (macro_f_utf_byte_width_is(*current)) {
-        if (macro_f_utf_byte_width_is(*current) == 1) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
-        }
-        else {
-          for (i = 0; i < macro_f_utf_byte_width_is(*current) && current[i]; ++i) {
-            // do nothing.
-          } // for
+        status = private_fl_print_string_convert(current, output, ap);
+        if (F_status_is_error(status)) break;
 
-          if (i < macro_f_utf_byte_width_is(*current)) {
-            if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            break;
-          }
-
-          for (i = 0; i < macro_f_utf_byte_width_is(*current); ++i) {
-
-            if (!fputc_unlocked(current[i], output)) {
-              return F_status_set_error(F_output);
-            }
-          } // for
-
-          current = current + (macro_f_utf_byte_width_is(*current) - 1);
-        }
+        if (!*current) break;
       }
-      else {
-        if (*current > 32 && *current != 127) {
-          replace = *current;
-        }
-        else if (replace == 1) {
-          replace = f_print_sequence_start_of_header_s[0];
-        }
-        else if (replace == 2) {
-          replace = f_print_sequence_start_of_text_s[0];
-        }
-        else if (replace == 3) {
-          replace = f_print_sequence_end_of_text_s[0];
-        }
-        else if (replace == 4) {
-          replace = f_print_sequence_end_of_transmission_s[0];
-        }
-        else if (replace == 5) {
-          replace = f_print_sequence_end_of_enquiry_s[0];
-        }
-        else if (replace == 6) {
-          replace = f_print_sequence_acknowledge_s[0];
-        }
-        else if (replace == 7) {
-          replace = f_print_sequence_bell_s[0];
-        }
-        else if (replace == 8) {
-          replace = f_print_sequence_backspace_s[0];
-        }
-        else if (replace == 9) {
-          replace = f_print_sequence_tab_s[0];
-        }
-        else if (replace == 10) {
-          replace = f_print_sequence_new_line_s[0];
-        }
-        else if (replace == 11) {
-          replace = f_print_sequence_tab_vertical_s[0];
-        }
-        else if (replace == 12) {
-          replace = f_print_sequence_form_feed_s[0];
-        }
-        else if (replace == 13) {
-          replace = f_print_sequence_carriage_return_s[0];
-        }
-        else if (replace == 14) {
-          replace = f_print_sequence_shift_out_s[0];
-        }
-        else if (replace == 15) {
-          replace = f_print_sequence_shift_in_s[0];
-        }
-        else if (replace == 16) {
-          replace = f_print_sequence_data_link_escape_s[0];
-        }
-        else if (replace == 17) {
-          replace = f_print_sequence_device_control_1_s[0];
-        }
-        else if (replace == 18) {
-          replace = f_print_sequence_device_control_2_s[0];
-        }
-        else if (replace == 19) {
-          replace = f_print_sequence_device_control_3_s[0];
-        }
-        else if (replace == 20) {
-          replace = f_print_sequence_device_control_4_s[0];
-        }
-        else if (replace == 21) {
-          replace = f_print_sequence_negative_acknowledge_s[0];
-        }
-        else if (replace == 22) {
-          replace = f_print_sequence_synchronous_idle_s[0];
-        }
-        else if (replace == 23) {
-          replace = f_print_sequence_end_of_transmission_block_s[0];
-        }
-        else if (replace == 24) {
-          replace = f_print_sequence_cancel_s[0];
-        }
-        else if (replace == 25) {
-          replace = f_print_sequence_end_of_medium_s[0];
-        }
-        else if (replace == 26) {
-          replace = f_print_sequence_substitute_s[0];
-        }
-        else if (replace == 27) {
-          replace = f_print_sequence_escape_s[0];
-        }
-        else if (replace == 28) {
-          replace = f_print_sequence_file_separator_s[0];
-        }
-        else if (replace == 29) {
-          replace = f_print_sequence_group_separator_s[0];
-        }
-        else if (replace == 30) {
-          replace = f_print_sequence_record_separator_s[0];
-        }
-        else if (replace == 31) {
-          replace = f_print_sequence_unit_separator_s[0];
-        }
-        else if (replace == 32) {
-          replace = f_print_sequence_space_s[0];
-        }
-        else if (replace == 127) {
-          replace = f_print_sequence_delete_s[0];
-        }
-
-        if (!fputc_unlocked(replace, output)) {
-          return F_status_set_error(F_output);
-        }
+      else if (!fputc_unlocked(*current, output)) {
+        return F_status_set_error(F_output);
       }
+    } // for
 
-      current = current + 1;
-    } // while
-
-    return F_none;
+    return status;
   }
 #endif // _di_fl_print_string_va_
 

@@ -23,6 +23,7 @@
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
+#include <fll/level_0/color.h>
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/print.h>
 
@@ -134,7 +135,7 @@ extern "C" {
 /**
  * A formatted print function similar to (but not the same as) the c-library vfprintf() function.
  *
- * @todo add the complex documentation.
+ * This is identical to fl_print_string() except it accepts a va_list as a variable instead of as "...".
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -177,6 +178,7 @@ extern "C" {
  * @see f_print_dynamic_safely()
  * @see f_print_safely()
  * @see f_print_terminated()
+ * @see fl_print_string()
  */
 #ifndef _di_fl_print_string_va_
   extern f_status_t fl_print_string_va(const f_string_t string, FILE *output, va_list *ap);

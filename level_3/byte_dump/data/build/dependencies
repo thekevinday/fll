@@ -13,5 +13,7 @@ f_pipe
 f_print
 fl_console
 fl_conversion
+fl_print
 fll_error
+fll_print
 fll_program

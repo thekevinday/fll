@@ -8,11 +8,11 @@ extern "C" {
   f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version) {
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string(" %q%s%q%c", output.stream, *context.set.title.before, name, *context.set.title.after, f_string_eol_s[0]);
-    fl_print_string("  %qVersion %s%q%c", output.stream, *context.set.notable.before, version, *context.set.notable.after, f_string_eol_s[0]);
+    fl_print_string(" %[%s%]%c", output.stream, context.set.title, name, context.set.title, f_string_eol_s[0]);
+    fl_print_string("  %[Version %s%]%c", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s[0]);
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string(" %qAvailable Options:%q ", output.stream, *context.set.important.before, *context.set.important.after);
+    fl_print_string(" %[Available Options:%] ", output.stream, context.set.important, context.set.important);
 
     return F_none;
   }
@@ -22,8 +22,8 @@ extern "C" {
   f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description) {
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string("  %s%q%s%q", output.stream, symbol_short, *context.set.standout.before, option_short, *context.set.standout.after);
-    fl_print_string(", %s%q%s%q", output.stream, symbol_long, *context.set.standout.before, option_long, *context.set.standout.after);
+    fl_print_string("  %s%[%s%]", output.stream, symbol_short, context.set.standout, option_short, context.set.standout);
+    fl_print_string(", %s%[%s%]", output.stream, symbol_long, context.set.standout, option_long, context.set.standout);
     fl_print_string("  %S", output.stream, description);
 
     return F_none;
@@ -34,7 +34,7 @@ extern "C" {
   f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description) {
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string("      %s%q%s%q", output.stream, symbol_long, *context.set.standout.before, option_long, *context.set.standout.after);
+    fl_print_string("      %s%[%s%]", output.stream, symbol_long, context.set.standout, option_long, context.set.standout);
     fl_print_string("  %S", output.stream, description);
 
     return F_none;
@@ -45,7 +45,7 @@ extern "C" {
   f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description) {
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string("  %q%s%q", output.stream, *context.set.standout.before, option_other, *context.set.standout.after);
+    fl_print_string("  %[%s%]", output.stream, context.set.standout, option_other, context.set.standout);
     fl_print_string("  %S", output.stream, description);
 
     return F_none;
@@ -57,15 +57,15 @@ extern "C" {
 
     f_print_terminated(f_string_eol_s, output.stream);
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string(" %qUsage:%q", output.stream, *context.set.important.before, *context.set.important.after);
+    fl_print_string(" %[Usage:%]", output.stream, context.set.important, context.set.important);
 
     f_print_terminated(f_string_eol_s, output.stream);
-    fl_print_string("  %q%S%q", output.stream, *context.set.standout.before, name, *context.set.standout.after);
+    fl_print_string("  %[%S%]", output.stream, context.set.standout, name, context.set.standout);
 
-    fl_print_string(" %q[%q options %q]%q", output.stream, *context.set.notable.before, *context.set.notable.after, *context.set.notable.before, *context.set.notable.after);
+    fl_print_string(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
 
     if (parameters[0] != '\0') {
-      fl_print_string(" %q[%q%S%q]%q", output.stream, *context.set.notable.before, *context.set.notable.after, parameters, *context.set.notable.before, *context.set.notable.after);
+      fl_print_string(" %[[%]%S%[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
     }
 
     f_print_terminated(f_string_eol_s, output.stream);
@@ -104,16 +104,16 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     // load colors unless told not to.
-    if (decision != choices.id[0]) {
+    if (decision == choices.id[0]) {
+      context->mode = f_color_mode_no_color;
+    }
+    else {
       f_status_t allocation_status = F_none;
 
       macro_f_color_context_t_new(allocation_status, (*context));
       if (F_status_is_error(status)) return status;
 
       status = f_color_load_context(context, decision == choices.id[1]);
-    }
-    else {
-      context->mode = f_color_mode_no_color;
     }
 
     return status;

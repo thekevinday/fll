@@ -72,16 +72,18 @@ extern "C" {
  *
  * This should be called to convert numbers after a '%', such as the field with or precision.
  *
+ * On return the current will point to either the last consecutive character representing a number, the asterisk, or NULL.
+ *
  * @param current
  *   The current character position within the string.
  * @param ap
  *   The variable arguments list.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param number
+ *   The converted number.
  *
  * @return
- *   F_true on success and end of current is found.
- *   F_false on success without reaching the end of current.
+ *   F_true on success and end of string (NULL) is found.
+ *   F_false on success without reaching the end of string (NULL).
  *
  * @see va_arg()
  */

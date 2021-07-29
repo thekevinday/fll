@@ -408,6 +408,8 @@ extern "C" {
     va_end(ap);
 
     funlockfile(output);
+
+    return status;
   }
 #endif // _di_fll_print_string_
 
