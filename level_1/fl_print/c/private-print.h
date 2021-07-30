@@ -64,7 +64,7 @@ extern "C" {
  * @see private_fl_print_convert_number()
  */
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  extern f_status_t private_fl_print_string_convert(char *current, FILE *output, va_list *ap) f_attribute_visibility_internal;
+  extern f_status_t private_fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  * @see va_arg()
  */
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  extern f_status_t private_fl_print_convert_number(char *current, va_list *ap, unsigned int *number) f_attribute_visibility_internal;
+  extern f_status_t private_fl_print_convert_number(f_string_t *current, va_list *ap, unsigned int *number) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 /**

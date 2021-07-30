@@ -18,12 +18,12 @@ extern "C" {
 
     va_start(ap, output);
 
-    for (char *current = string; *current; current = current + 1) {
+    for (f_string_t current = string; *current; current = current + 1) {
 
       if (*current == f_string_ascii_percent_s[0]) {
         current = current + 1;
 
-        status = private_fl_print_string_convert(current, output, &ap);
+        status = private_fl_print_string_convert(&current, output, &ap);
         if (F_status_is_error(status)) break;
 
         if (!*current) break;
@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_fl_print_string_
 
 #ifndef _di_fl_print_string_convert_
-  f_status_t fl_print_string_convert(char *current, FILE *output, va_list *ap) {
+  f_status_t fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
       if (!ap) return F_status_set_error(F_parameter);
@@ -60,12 +60,12 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (char *current = string; *current; current = current + 1) {
+    for (f_string_t current = string; *current; current = current + 1) {
 
       if (*current == f_string_ascii_percent_s[0]) {
         current = current + 1;
 
-        status = private_fl_print_string_convert(current, output, ap);
+        status = private_fl_print_string_convert(&current, output, ap);
         if (F_status_is_error(status)) break;
 
         if (!*current) break;

@@ -276,7 +276,7 @@ extern "C" {
       // @todo: determine what the error is and display it.
       flockfile(main.error.to.stream);
 
-      fl_print_string("%[%Sread() failed for '%]", main.error.to.stream, fll_error_print_error, main.context.set.error, main.context.set.error);
+      fl_print_string("%[%Sread() failed for '%]", main.error.to.stream, main.context.set.error, fll_error_print_error, main.context.set.error);
       fl_print_string("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
       fl_print_string("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
 

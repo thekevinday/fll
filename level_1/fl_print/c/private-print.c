@@ -6,10 +6,10 @@ extern "C" {
 #endif
 
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  f_status_t private_fl_print_string_convert(char *current, FILE *output, va_list *ap) {
+  f_status_t private_fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap) {
 
     // An unpaired '%' character must not be at the end of the string.
-    if (!*current) {
+    if (!**current) {
       return F_status_set_error(F_valid_not);
     }
 
@@ -20,33 +20,32 @@ extern "C" {
     unsigned int width = 1;
     unsigned int precision = 1;
 
-    for (; *current; current = current + 1) {
+    for (; **current; *current = *current + 1) {
 
-      if (*current == f_string_ascii_minus_s[0]) {
+      if (**current == f_string_ascii_minus_s[0]) {
         flag |= f_print_format_flag_align_left;
       }
-      else if (*current == f_string_ascii_pound_s[0]) {
+      else if (**current == f_string_ascii_pound_s[0]) {
         flag |= f_print_format_flag_convert;
       }
-      else if (*current == f_string_ascii_colon_semi_s[0]) {
+      else if (**current == f_string_ascii_colon_semi_s[0]) {
         flag |= f_print_format_flag_ignore_index;
       }
-      else if (*current == f_string_ascii_colon_s[0]) {
+      else if (**current == f_string_ascii_colon_s[0]) {
         flag |= f_print_format_flag_ignore_range;
       }
-      else if (*current == f_string_ascii_plus_s[0]) {
+      else if (**current == f_string_ascii_plus_s[0]) {
         flag |= f_print_format_flag_sign_always;
       }
-      else if (*current == f_string_ascii_space_s[0]) {
+      else if (**current == f_string_ascii_space_s[0]) {
         flag |= f_print_format_flag_sign_pad;
       }
-      else if (*current == f_string_ascii_equal_s[0]) {
+      else if (**current == f_string_ascii_equal_s[0]) {
         flag |= f_print_format_flag_trim;
       }
-      /* @fixme
-      else if (*current > 0x29 && *current < 0x40) {
+      else if (**current > 0x29 && **current < 0x40) {
         if (!(flag & f_print_format_flag_width)) {
-          if (*current == f_string_ascii_0_s[0]) {
+          if (**current == f_string_ascii_0_s[0]) {
             flag |= f_print_format_flag_zeros_leading;
           }
           else {
@@ -60,39 +59,41 @@ extern "C" {
         else {
           return F_status_set_error(F_valid_not);
         }
-      }*/
-      else if (*current == f_string_ascii_dollar_s[0]) {
+      }
+      else if (**current == f_string_ascii_dollar_s[0]) {
         // If followed immediately by a '$' this is ignored.
         // Use '%$' to separate, such as '%l%$l' would allow for '0l' to be printed where '%ll' would interpret the 'l', resulting in a long long.
         return F_none;
       }
-      else if (*current == f_string_ascii_exclamation_s[0]) {
+      else if (**current == f_string_ascii_exclamation_s[0]) {
         base = 2;
       }
-      else if (*current == f_string_ascii_sign_at_s[0]) {
+      else if (**current == f_string_ascii_sign_at_s[0]) {
         base = 8;
       }
-      else if (*current == f_string_ascii_caret_s[0]) {
+      else if (**current == f_string_ascii_caret_s[0]) {
         base = 10;
       }
-      else if (*current == f_string_ascii_ampersand_s[0]) {
+      else if (**current == f_string_ascii_ampersand_s[0]) {
         base = 12;
       }
-      else if (*current == f_string_ascii_underscore_s[0]) {
+      else if (**current == f_string_ascii_underscore_s[0]) {
         base = 16;
       }
-      else if (*current == f_string_ascii_period_s[0]) {
-        if (!*(current + 1)) {
+      else if (**current == f_string_ascii_period_s[0]) {
+        if (!*(*current + 1)) {
           return F_status_set_error(F_valid_not);
         }
 
-        // @fixme this looks wrong here, probably needs to handle the current + 1 and not current.
-        /*if (private_fl_print_convert_number(current, ap, &precision)) {
+        *current = *current + 1;
+
+        // @todo this probably needs to check to see if *current + 1 is in fact a number.
+        if (private_fl_print_convert_number(current, ap, &precision)) {
           break;
-        }*/
+        }
       }
       else {
-        if (*current == f_string_ascii_c_s[0]) {
+        if (**current == f_string_ascii_c_s[0]) {
 
           // char.
           const char value = (char) va_arg(*ap, int);
@@ -103,67 +104,67 @@ extern "C" {
 
           return F_none;
         }
-        else if (*current == f_string_ascii_C_s[0]) {
+        else if (**current == f_string_ascii_C_s[0]) {
 
           // safe character.
           char value[1] = { (char) va_arg(*ap, int) };
 
           return f_print_safely(value, 1, output);
         }
-        else if (*current == f_string_ascii_i_s[0]) {
+        else if (**current == f_string_ascii_i_s[0]) {
           type = f_print_format_type_signed;
 
-          if (*(current + 1) == f_string_ascii_i_s[0]) {
-            if (*(current + 2) == f_string_ascii_i_s[0]) {
+          if (*(*current + 1) == f_string_ascii_i_s[0]) {
+            if (*(*current + 2) == f_string_ascii_i_s[0]) {
               type = f_print_format_type_signed_8;
-              current = current + 2;
+              *current = *current + 2;
             }
             else {
               type = f_print_format_type_signed_16;
-              current = current + 1;
+              *current = *current + 1;
             }
           }
         }
-        else if (*current == f_string_ascii_I_s[0]) {
+        else if (**current == f_string_ascii_I_s[0]) {
           type = f_print_format_type_signed;
           flag |= f_print_format_flag_uppercase;
 
-          if (*(current + 1) == f_string_ascii_I_s[0]) {
-            if (*(current + 2) == f_string_ascii_I_s[0]) {
+          if (*(*current + 1) == f_string_ascii_I_s[0]) {
+            if (*(*current + 2) == f_string_ascii_I_s[0]) {
               type = f_print_format_type_signed_8;
-              current = current + 2;
+              *current = *current + 2;
             }
             else {
               type = f_print_format_type_signed_16;
-              current = current + 1;
+              *current = *current + 1;
             }
           }
         }
-        else if (*current == f_string_ascii_l_s[0]) {
+        else if (**current == f_string_ascii_l_s[0]) {
           type = f_print_format_type_long;
 
-          if (*(current + 1) == f_string_ascii_l_s[0]) {
+          if (*(*current + 1) == f_string_ascii_l_s[0]) {
             type = f_print_format_type_long_long;
-            current = current + 1;
+            *current = *current + 1;
           }
         }
-        else if (*current == f_string_ascii_L_s[0]) {
+        else if (**current == f_string_ascii_L_s[0]) {
           type = f_print_format_type_long;
           flag |= f_print_format_flag_uppercase;
 
-          if (*(current + 1) == f_string_ascii_L_s[0]) {
+          if (*(*current + 1) == f_string_ascii_L_s[0]) {
             type = f_print_format_type_long_long;
-            current = current + 1;
+            *current = *current + 1;
           }
         }
-        else if (*current == f_string_ascii_n_s[0]) {
+        else if (**current == f_string_ascii_n_s[0]) {
           type = f_print_format_type_number;
         }
-        else if (*current == f_string_ascii_N_s[0]) {
+        else if (**current == f_string_ascii_N_s[0]) {
           type = f_print_format_type_number;
           flag |= f_print_format_flag_uppercase;
         }
-        else if (*current == f_string_ascii_q_s[0]) {
+        else if (**current == f_string_ascii_q_s[0]) {
 
           // static/dynamic string.
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
@@ -216,7 +217,7 @@ extern "C" {
 
           return f_print_dynamic(value, output);
         }
-        else if (*current == f_string_ascii_Q_s[0]) {
+        else if (**current == f_string_ascii_Q_s[0]) {
 
           // safe static/dynamic string.
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
@@ -269,7 +270,7 @@ extern "C" {
 
           return f_print_dynamic_safely(value, output);
         }
-        else if (*current == f_string_ascii_r_s[0]) {
+        else if (**current == f_string_ascii_r_s[0]) {
 
           // raw static/dynamic string.
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
@@ -322,89 +323,85 @@ extern "C" {
 
           return f_print_dynamic_raw(value, output);
         }
-        else if (*current == f_string_ascii_s_s[0]) {
+        else if (**current == f_string_ascii_s_s[0]) {
 
           // NULL terminated string.
           const f_string_t value = va_arg(*ap, f_string_t);
 
           return f_print_terminated(value, output);
         }
-        else if (*current == f_string_ascii_S_s[0]) {
+        else if (**current == f_string_ascii_S_s[0]) {
 
           // NULL terminated safe string.
           const f_string_t value = va_arg(*ap, f_string_t);
 
           return f_print_safely_terminated(value, output);
         }
-        else if (*current == f_string_ascii_u_s[0]) {
+        else if (**current == f_string_ascii_u_s[0]) {
           type = f_print_format_type_unsigned;
 
-          if (*(current + 1)) {
-            if (*(current + 1) == f_string_ascii_i_s[0]) {
-              if (*(current + 2) == f_string_ascii_i_s[0]) {
-                type = f_print_format_type_unsigned_8;
-                current = current + 2;
-              }
-              else {
-                type = f_print_format_type_unsigned_16;
-                current = current + 1;
-              }
+          if (*(*current + 1) == f_string_ascii_i_s[0]) {
+            if (*(*current + 2) == f_string_ascii_i_s[0]) {
+              type = f_print_format_type_unsigned_8;
+              *current = *current + 2;
             }
-            else if (*(current + 1) == f_string_ascii_n_s[0]) {
-              if (*(current + 2) == f_string_ascii_l_s[0]) {
-                type = f_print_format_type_unsigned_long_long;
-                current = current + 2;
-              }
-              else {
-                type = f_print_format_type_unsigned_long;
-                current = current + 1;
-              }
-            }
-            else if (*(current + 1) == f_string_ascii_n_s[0]) {
-              type = f_print_format_type_unsigned_number;
-              current = current + 1;
+            else {
+              type = f_print_format_type_unsigned_16;
+              *current = *current + 1;
             }
           }
+          else if (*(*current + 1) == f_string_ascii_l_s[0]) {
+            if (*(*current + 2) == f_string_ascii_l_s[0]) {
+              type = f_print_format_type_unsigned_long_long;
+              *current = *current + 2;
+            }
+            else {
+              type = f_print_format_type_unsigned_long;
+              *current = *current + 1;
+            }
+          }
+          else if (*(*current + 1) == f_string_ascii_n_s[0]) {
+            type = f_print_format_type_unsigned_number;
+            *current = *current + 1;
+          }
         }
-        else if (*current == f_string_ascii_U_s[0]) {
+        else if (**current == f_string_ascii_U_s[0]) {
           type = f_print_format_type_unsigned;
           flag |= f_print_format_flag_uppercase;
 
-          if (*(current + 1)) {
-            if (*(current + 1) == f_string_ascii_I_s[0]) {
-              if (*(current + 2) == f_string_ascii_I_s[0]) {
-                type = f_print_format_type_unsigned_8;
-                current = current + 2;
-              }
-              else {
-                type = f_print_format_type_unsigned_16;
-                current = current + 1;
-              }
+          if (*(*current + 1) == f_string_ascii_I_s[0]) {
+            if (*(*current + 2) == f_string_ascii_I_s[0]) {
+              type = f_print_format_type_unsigned_8;
+              *current = *current + 2;
             }
-            else if (*(current + 1) == f_string_ascii_N_s[0]) {
-              if (*(current + 2) == f_string_ascii_L_s[0]) {
-                type = f_print_format_type_unsigned_long_long;
-                current = current + 2;
-              }
-              else {
-                type = f_print_format_type_unsigned_long;
-                current = current + 1;
-              }
-            }
-            else if (*(current + 1) == f_string_ascii_N_s[0]) {
-              type = f_print_format_type_unsigned_number;
-              current = current + 1;
+            else {
+              type = f_print_format_type_unsigned_16;
+              *current = *current + 1;
             }
           }
+          else if (*(*current + 1) == f_string_ascii_L_s[0]) {
+            if (*(*current + 2) == f_string_ascii_L_s[0]) {
+              type = f_print_format_type_unsigned_long_long;
+              *current = *current + 2;
+            }
+            else {
+              type = f_print_format_type_unsigned_long;
+              *current = *current + 1;
+            }
+          }
+          else if (*(*current + 1) == f_string_ascii_N_s[0]) {
+            type = f_print_format_type_unsigned_number;
+            *current = *current + 1;
+          }
         }
-        else if (*current == f_string_ascii_z_s[0]) {
+        else if (**current == f_string_ascii_z_s[0]) {
           type = f_print_format_type_size;
         }
-        else if (*current == f_string_ascii_Z_s[0]) {
+        else if (**current == f_string_ascii_Z_s[0]) {
           type = f_print_format_type_size;
           flag |= f_print_format_flag_uppercase;
         }
-        else if (*current == f_string_ascii_bracket_open_s[0]) {
+        else if (**current == f_string_ascii_bracket_open_s[0]) {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.before) {
@@ -413,7 +410,7 @@ extern "C" {
 
           return F_none;
         }
-        else if (*current == f_string_ascii_bracket_close_s[0]) {
+        else if (**current == f_string_ascii_bracket_close_s[0]) {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.after) {
@@ -530,7 +527,7 @@ extern "C" {
       }
     } // for
 
-    if (*current) {
+    if (**current) {
       return F_none;
     }
 
@@ -539,52 +536,52 @@ extern "C" {
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  f_status_t private_fl_print_convert_number(char *current, va_list *ap, unsigned int *number) {
+  f_status_t private_fl_print_convert_number(f_string_t *current, va_list *ap, unsigned int *number) {
 
     *number = 0;
 
-    for (; *current; current = current + 1) {
+    for (; **current; *current = *current + 1) {
 
-      if (*current == f_string_ascii_0_s[0]) {
+      if (**current == f_string_ascii_0_s[0]) {
         *number *= 10;
       }
-      else if (*current == f_string_ascii_1_s[0]) {
+      else if (**current == f_string_ascii_1_s[0]) {
         *number *= 10;
         *number += 1;
       }
-      else if (*current == f_string_ascii_2_s[0]) {
+      else if (**current == f_string_ascii_2_s[0]) {
         *number *= 10;
         *number += 2;
       }
-      else if (*current == f_string_ascii_3_s[0]) {
+      else if (**current == f_string_ascii_3_s[0]) {
         *number *= 10;
         *number += 3;
       }
-      else if (*current == f_string_ascii_4_s[0]) {
+      else if (**current == f_string_ascii_4_s[0]) {
         *number *= 10;
         *number += 4;
       }
-      else if (*current == f_string_ascii_5_s[0]) {
+      else if (**current == f_string_ascii_5_s[0]) {
         *number *= 10;
         *number += 5;
       }
-      else if (*current == f_string_ascii_6_s[0]) {
+      else if (**current == f_string_ascii_6_s[0]) {
         *number *= 10;
         *number += 6;
       }
-      else if (*current == f_string_ascii_7_s[0]) {
+      else if (**current == f_string_ascii_7_s[0]) {
         *number *= 10;
         *number += 7;
       }
-      else if (*current == f_string_ascii_8_s[0]) {
+      else if (**current == f_string_ascii_8_s[0]) {
         *number *= 10;
         *number += 8;
       }
-      else if (*current == f_string_ascii_9_s[0]) {
+      else if (**current == f_string_ascii_9_s[0]) {
         *number *= 10;
         *number += 9;
       }
-      else if (*current == f_string_ascii_asterisk_s[0]) {
+      else if (**current == f_string_ascii_asterisk_s[0]) {
         *number = va_arg(*ap, unsigned int);
 
         break;
@@ -592,13 +589,13 @@ extern "C" {
       else {
 
         // reset position non-number.
-        current = current - 1;
+        *current = *current - 1;
 
         break;
       }
     } // for
 
-    if (*current) {
+    if (**current) {
       return F_false;
     }
 

@@ -414,7 +414,7 @@ extern "C" {
 #endif // _di_fll_print_string_
 
 #ifndef _di_fll_print_string_convert_
-  f_status_t fll_print_string_convert(char *current, FILE *output, va_list *ap) {
+  f_status_t fll_print_string_convert(f_string_t *current, FILE *output, va_list *ap) {
 
     flockfile(output);
 

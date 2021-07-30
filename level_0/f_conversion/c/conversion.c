@@ -99,7 +99,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (character > 0x29 && character < 0x40) {
-      *number = 0x7 & character;
+      *number = 0xf & character;
 
       return F_none;
     }
@@ -115,13 +115,13 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (character > 0x29 && character < 0x40) {
-      *number = 0x7 & character;
+      *number = 0xf & character;
 
       return F_none;
     }
 
     if (character > 0x40 && character < 0x43 || character > 0x60 && character < 0x63) {
-      *number = 9 + (0x7 & character);
+      *number = 9 + (0xf & character);
 
       return F_none;
     }
@@ -137,13 +137,13 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (character > 0x29 && character < 0x40) {
-      *number = 0x7 & character;
+      *number = 0xf & character;
 
       return F_none;
     }
 
     if (character > 0x40 && character < 0x47 || character > 0x60 && character < 0x67) {
-      *number = 9 + (0x7 & character);
+      *number = 9 + (0xf & character);
 
       return F_none;
     }
@@ -162,7 +162,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    *number = 0x7 & character;
+    *number = 0xf & character;
 
     return F_none;
   }

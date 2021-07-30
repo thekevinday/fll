@@ -233,7 +233,7 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_width].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
         fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -253,7 +253,7 @@ extern "C" {
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
           fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
@@ -273,7 +273,7 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_first].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
         fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -293,7 +293,7 @@ extern "C" {
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
           fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
@@ -313,7 +313,7 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_last].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
         fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -333,7 +333,7 @@ extern "C" {
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
           fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
@@ -354,7 +354,7 @@ extern "C" {
         if (main->first > main->last) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, fll_error_print_error, main->context.set.error, main->context.set.error);
+          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
           fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
           fl_print_string("%[' value cannot be greater than the parameter '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);

@@ -910,7 +910,7 @@ extern "C" {
  * @see fl_print_string_convert()
  */
 #ifndef _di_fll_print_string_convert_
-  extern f_status_t fll_print_string_convert(char *current, FILE *output, va_list *ap);
+  extern f_status_t fll_print_string_convert(f_string_t *current, FILE *output, va_list *ap);
 #endif // _di_fll_print_string_convert_
 
 /**

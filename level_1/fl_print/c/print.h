@@ -129,7 +129,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_string_convert_
-  extern f_status_t fl_print_string_convert(char *current, FILE *output, va_list *ap);
+  extern f_status_t fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap);
 #endif // _di_fl_print_string_convert_
 
 /**

@@ -10,9 +10,14 @@ extern "C" {
 
     int digits = 0;
 
-    for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
-      remaining /= data.base;
-    } // for
+    if (number) {
+      for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
+        remaining /= data.base;
+      } // for
+    }
+    else {
+      digits = 1;
+    }
 
     if (data.flag & f_conversion_data_flag_base_prepend) {
       const int used = digits + 2 + (data.flag & f_conversion_data_flag_sign_always & f_conversion_data_flag_sign_pad ? 1 : 0);
@@ -96,10 +101,6 @@ extern "C" {
         }
       }
       else if (number) {
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
-          return F_status_set_error(F_output);
-        }
-
         if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
           return F_status_set_error(F_output);
         }
@@ -127,13 +128,13 @@ extern "C" {
     f_number_unsigned_t current = number;
     f_number_unsigned_t work = 0;
 
-    for (char c = 0; power; --power) {
+    for (char c = 0; power; --digits) {
 
       work = current / power;
       current -= work * power;
       power /= data.base;
 
-      switch (number) {
+      switch (work) {
         case 0:
           c = f_string_ascii_0_s[0];
           break;
