@@ -97,6 +97,7 @@ extern "C" {
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * The returned string will either be NULL (for characters that are already safe) or a string representing the replacement.
+ * This can result in a 3-byte character being returned as a string of 3 1-bytes.
  *
  * This should only be called for the first 1-byte character of a multibyte character.
  *

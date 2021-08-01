@@ -898,11 +898,11 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable arguments list.
+ * @param status
+ *   The status is stored here rather then via the return.
  *
  * @return
- *   Success from: fl_print_string_convert().
- *
- *   Errors (with error bit) from: fl_print_string_convert().
+ *   Result from: fl_print_string_convert().
  *
  * @see flockfile()
  * @see funlockfile()
@@ -910,7 +910,7 @@ extern "C" {
  * @see fl_print_string_convert()
  */
 #ifndef _di_fll_print_string_convert_
-  extern f_status_t fll_print_string_convert(f_string_t *current, FILE *output, va_list *ap);
+  extern f_string_t fll_print_string_convert(const f_string_t current, FILE *output, va_list *ap, f_status_t *status);
 #endif // _di_fll_print_string_convert_
 
 /**

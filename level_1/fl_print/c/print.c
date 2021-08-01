@@ -8,8 +8,8 @@ extern "C" {
 #ifndef _di_fl_print_string_
   f_status_t fl_print_string(const f_string_t string, FILE *output, ...) {
     #ifndef _di_level_1_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
-      if (!output) return F_status_set_error(F_parameter);
+      if (!string) return 0;
+      if (!output) return 0;
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
@@ -18,18 +18,18 @@ extern "C" {
 
     va_start(ap, output);
 
-    for (f_string_t current = string; *current; current = current + 1) {
+    for (f_string_t current = string; *current; current += 1) {
 
       if (*current == f_string_ascii_percent_s[0]) {
-        current = current + 1;
+        current += 1;
 
-        status = private_fl_print_string_convert(&current, output, &ap);
+        current = private_fl_print_string_convert(current, output, &ap, &status);
         if (F_status_is_error(status)) break;
-
-        if (!*current) break;
       }
-      else if (!fputc_unlocked(*current, output)) {
-        return F_status_set_error(F_output);
+      else {
+        if (!fputc_unlocked(*current, output)) {
+          break;
+        }
       }
     } // for
 
@@ -40,38 +40,38 @@ extern "C" {
 #endif // _di_fl_print_string_
 
 #ifndef _di_fl_print_string_convert_
-  f_status_t fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap) {
+  f_string_t fl_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
     #ifndef _di_level_1_parameter_checking_
-      if (!output) return F_status_set_error(F_parameter);
-      if (!ap) return F_status_set_error(F_parameter);
+      if (!output) return 0;
+      if (!ap) return 0;
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_print_string_convert(current, output, ap);
+    return private_fl_print_string_convert(string, output, ap, status);
   }
 #endif // _di_fl_print_string_convert_
 
 #ifndef _di_fl_print_string_va_
   f_status_t fl_print_string_va(const f_string_t string, FILE *output, va_list *ap) {
     #ifndef _di_level_1_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
-      if (!output) return F_status_set_error(F_parameter);
-      if (!ap) return F_status_set_error(F_parameter);
+      if (!string) return 0;
+      if (!output) return 0;
+      if (!ap) return 0;
     #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
-    for (f_string_t current = string; *current; current = current + 1) {
+    for (f_string_t current = string; *current; current += 1) {
 
       if (*current == f_string_ascii_percent_s[0]) {
-        current = current + 1;
+        current += 1;
 
-        status = private_fl_print_string_convert(&current, output, ap);
+        current = private_fl_print_string_convert(current, output, ap, &status);
         if (F_status_is_error(status)) break;
-
-        if (!*current) break;
       }
-      else if (!fputc_unlocked(*current, output)) {
-        return F_status_set_error(F_output);
+      else {
+        if (!fputc_unlocked(*current, output)) {
+          break;
+        }
       }
     } // for
 

@@ -21,35 +21,41 @@ extern "C" {
  * This should be called after each first '%' is encountered.
  * This should return only after a single '%' group is fully processed, end of current is reached, or an error occurs.
  *
- * @param current
+ * @param string
  *   The current character position within the string.
  * @param output
  *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable arguments list.
+ * @param status
+ *   The status is stored here rather then via the return.
  *
  * @return
- *   F_none on success.
+ *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
+ *   The caller is expected to increment past this if they wish to continue processing the string.
  *
- *   F_output (with error bit) on failure to print to the output file.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
- *   F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *   The status parameter will be set as follows:
  *
- *   Success from: f_print_dynamic().
- *   Success from: f_print_dynamic_raw().
- *   Success from: f_print_dynamic_safely().
- *   Success from: f_print_safely().
- *   Success from: f_print_terminated().
+ *     F_none on success.
  *
- *   Errors (with error bit) from: f_conversion_number_signed_to_file().
- *   Errors (with error bit) from: f_conversion_number_unsigned_to_file().
- *   Errors (with error bit) from: f_print_dynamic().
- *   Errors (with error bit) from: f_print_dynamic_raw().
- *   Errors (with error bit) from: f_print_dynamic_safely().
- *   Errors (with error bit) from: f_print_safely().
- *   Errors (with error bit) from: f_print_terminated().
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *     F_output (with error bit) on failure to print to the output file.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *     F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *     F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *
+ *     Success from: f_print_dynamic().
+ *     Success from: f_print_dynamic_raw().
+ *     Success from: f_print_dynamic_safely().
+ *     Success from: f_print_safely().
+ *     Success from: f_print_terminated().
+ *
+ *     Errors (with error bit) from: f_conversion_number_signed_to_file().
+ *     Errors (with error bit) from: f_conversion_number_unsigned_to_file().
+ *     Errors (with error bit) from: f_print_dynamic().
+ *     Errors (with error bit) from: f_print_dynamic_raw().
+ *     Errors (with error bit) from: f_print_dynamic_safely().
+ *     Errors (with error bit) from: f_print_safely().
+ *     Errors (with error bit) from: f_print_terminated().
  *
  * @see fputc_unlocked()
  *
@@ -64,7 +70,7 @@ extern "C" {
  * @see private_fl_print_convert_number()
  */
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  extern f_status_t private_fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap) f_attribute_visibility_internal;
+  extern f_string_t private_fl_print_string_convert(f_string_t string, FILE *output, va_list *ap, f_status_t *status) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 /**
@@ -74,7 +80,7 @@ extern "C" {
  *
  * On return the current will point to either the last consecutive character representing a number, the asterisk, or NULL.
  *
- * @param current
+ * @param string
  *   The current character position within the string.
  * @param ap
  *   The variable arguments list.
@@ -88,7 +94,7 @@ extern "C" {
  * @see va_arg()
  */
 #if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  extern f_status_t private_fl_print_convert_number(f_string_t *current, va_list *ap, unsigned int *number) f_attribute_visibility_internal;
+  extern f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int *number, f_status_t *status) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
 
 /**

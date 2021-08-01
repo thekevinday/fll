@@ -31,6 +31,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
+ *   F_block (with error bit) if output is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if output represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -58,6 +63,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
+ *   F_block (with error bit) if output is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if output represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -392,6 +402,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
+ *   F_block (with error bit) if output is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if output represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *

@@ -91,6 +91,7 @@ extern "C" {
   };
 
   #define byte_dump_sequence_acknowledge               "␆"
+  #define byte_dump_sequence_acknowledge_negative      "␕"
   #define byte_dump_sequence_backspace                 "␈"
   #define byte_dump_sequence_bell                      "␇"
   #define byte_dump_sequence_cancel                    "␘"
@@ -111,7 +112,6 @@ extern "C" {
   #define byte_dump_sequence_form_feed                 "␌"
   #define byte_dump_sequence_group_separator           "␝"
   #define byte_dump_sequence_line_feed                 "␊"
-  #define byte_dump_sequence_negative_acknowledge      "␕"
   #define byte_dump_sequence_new_line                  "␤"
   #define byte_dump_sequence_null                      "␀"
   #define byte_dump_sequence_record_separator          "␞"

@@ -49,7 +49,7 @@ defines_all -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags_all -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
 flags_shared
 flags_static
 flags_library -fPIC

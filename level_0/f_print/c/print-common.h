@@ -37,6 +37,7 @@ extern "C" {
  */
 #ifndef _di_f_print_sequences_
   #define f_print_sequence_acknowledge               "␆"
+  #define f_print_sequence_acknowledge_negative      "␕"
   #define f_print_sequence_backspace                 "␈"
   #define f_print_sequence_bell                      "␇"
   #define f_print_sequence_cancel                    "␘"
@@ -47,33 +48,31 @@ extern "C" {
   #define f_print_sequence_device_control_2          "␒"
   #define f_print_sequence_device_control_3          "␓"
   #define f_print_sequence_device_control_4          "␔"
-  #define f_print_sequence_end_of_enquiry            "␅"
   #define f_print_sequence_end_of_medium             "␙"
   #define f_print_sequence_end_of_text               "␃"
   #define f_print_sequence_end_of_transmission       "␄"
   #define f_print_sequence_end_of_transmission_block "␗"
+  #define f_print_sequence_enquiry                   "␅"
   #define f_print_sequence_escape                    "␛"
-  #define f_print_sequence_file_separator            "␜"
   #define f_print_sequence_form_feed                 "␌"
-  #define f_print_sequence_group_separator           "␝"
   #define f_print_sequence_line_feed                 "␊"
-  #define f_print_sequence_negative_acknowledge      "␕"
-  #define f_print_sequence_new_line                  "␤"
   #define f_print_sequence_null                      "␀"
-  #define f_print_sequence_record_separator          "␞"
+  #define f_print_sequence_separator_file            "␜"
+  #define f_print_sequence_separator_group           "␝"
+  #define f_print_sequence_separator_record          "␞"
+  #define f_print_sequence_separator_unit            "␟"
   #define f_print_sequence_shift_in                  "␏"
   #define f_print_sequence_shift_out                 "␎"
-  #define f_print_sequence_space                     "␠"
   #define f_print_sequence_start_of_header           "␁"
   #define f_print_sequence_start_of_text             "␂"
   #define f_print_sequence_substitute                "␚"
   #define f_print_sequence_synchronous_idle          "␖"
   #define f_print_sequence_tab                       "␉"
   #define f_print_sequence_tab_vertical              "␋"
-  #define f_print_sequence_unit_separator            "␟"
   #define f_print_sequence_unknown                   "�"
 
   extern const f_string_t f_print_sequence_acknowledge_s;
+  extern const f_string_t f_print_sequence_acknowledge_negative_s;
   extern const f_string_t f_print_sequence_backspace_s;
   extern const f_string_t f_print_sequence_bell_s;
   extern const f_string_t f_print_sequence_cancel_s;
@@ -84,32 +83,39 @@ extern "C" {
   extern const f_string_t f_print_sequence_device_control_2_s;
   extern const f_string_t f_print_sequence_device_control_3_s;
   extern const f_string_t f_print_sequence_device_control_4_s;
-  extern const f_string_t f_print_sequence_end_of_enquiry_s;
   extern const f_string_t f_print_sequence_end_of_medium_s;
   extern const f_string_t f_print_sequence_end_of_text_s;
   extern const f_string_t f_print_sequence_end_of_transmission_s;
   extern const f_string_t f_print_sequence_end_of_transmission_block_s;
   extern const f_string_t f_print_sequence_escape_s;
-  extern const f_string_t f_print_sequence_file_separator_s;
+  extern const f_string_t f_print_sequence_equiry_s;
   extern const f_string_t f_print_sequence_form_feed_s;
-  extern const f_string_t f_print_sequence_group_separator_s;
   extern const f_string_t f_print_sequence_line_feed_s;
-  extern const f_string_t f_print_sequence_negative_acknowledge_s;
-  extern const f_string_t f_print_sequence_new_line_s;
   extern const f_string_t f_print_sequence_null_s;
-  extern const f_string_t f_print_sequence_record_separator_s;
+  extern const f_string_t f_print_sequence_separator_file_s;
+  extern const f_string_t f_print_sequence_separator_group_s;
+  extern const f_string_t f_print_sequence_separator_record_s;
+  extern const f_string_t f_print_sequence_separator_unit_s;
   extern const f_string_t f_print_sequence_shift_in_s;
   extern const f_string_t f_print_sequence_shift_out_s;
-  extern const f_string_t f_print_sequence_space_s;
   extern const f_string_t f_print_sequence_start_of_header_s;
   extern const f_string_t f_print_sequence_start_of_text_s;
   extern const f_string_t f_print_sequence_substitute_s;
   extern const f_string_t f_print_sequence_synchronous_idle_s;
   extern const f_string_t f_print_sequence_tab_s;
   extern const f_string_t f_print_sequence_tab_vertical_s;
-  extern const f_string_t f_print_sequence_unit_separator_s;
   extern const f_string_t f_print_sequence_unknown_s;
 #endif // _di_f_print_sequences_
+
+/**
+ * A map for converting control ASCII codes into the representation sequences.
+ *
+ * The key should represents the ASCII code.
+ * With the exception being ASCII code 127, which is not present in this map.
+ */
+#ifndef _di_f_print_sequences_set_control_
+  extern const char f_print_sequence_set_control_s[32][3];
+#endif // _di_f_print_sequences_set_control_
 
 /**
  * Provide basic format flags.
@@ -166,23 +172,23 @@ extern "C" {
  * - character_safe:     "C", type is a 1-byte unsigned character, where control characters and other problems are handled.
  * - color_after:        "]", type is f_color_set_t such that the f_color_set_t.after is used.
  * - color_before:       "[", type is f_color_set_t such that the f_color_set_t.begin is used.
- * - long:               "l", "L", type is a signed integer.
- * - long_long:          "ll", "LL", type is a signed integer.
  * - number:             "n", "N", type is an f_number_signed_t.
- * - signed:             "i", "I", type is a signed integer.
- * - signed_16:          "ii", "II", type is a signed int16_t.
- * - signed_8:           "iii", "III", type is a signed integer.
+ * - signed_8:           "iii", "III", type is a int8_t.
+ * - signed_16:          "ii", "II", type is a int16_t.
+ * - signed_32:          "i", "I", type is a int32_t.
+ * - signed_64:          "il", "IL", type is a signed int64_t.
+ * - signed_128:         "ill", "ILL", type is a f_int_128_t.
  * - size:               "z", "Z", type is a size_t.
  * - string_safe:        "S", type is a NULL terminated string, where control characters and other problems are handled.
  * - string_static:      "q", type is an f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
  * - string_static_raw:  "r", type is an f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
  * - string_static_safe: "Q", type is an f_string_static_t or f_string_dynamic_t and NULLs are printed, where control characters and other problems are handled.
- * - unsigned:           "u", "U", type is an unsigned integer.
- * - unsigned_16:        "ui", "UI", type is an uint16_t.
  * - unsigned_8:         "uii", "UII", type is an uint8_t.
- * - unsigned_long:      "ul", "UL", type is an unsigned long.
- * - unsigned_long_long: "ull", "ULL", type is an unsigned long long.
- * - unsigned_number:    "un", "UN", type is an f_number_unsigned_t.
+ * - unsigned_16:        "ui", "UI", type is an uint16_t.
+ * - unsigned_32:        "u", "U", type is an uint32_t.
+ * - unsigned_64:        "ul", "UL", type is an uint64_t.
+ * - unsigned_128:       "ull", "ULL", type is an f_uint_128_t.
+ * - unsigned_number:    "un", "UN", type is an f_number_unsigned_t (which by default is what f_array_length_t is a type of).
  *
  * @see fprintf()
  */
@@ -192,23 +198,23 @@ extern "C" {
     f_print_format_type_character_safe,
     f_print_format_type_color_after,
     f_print_format_type_color_before,
-    f_print_format_type_long,
-    f_print_format_type_long_long,
     f_print_format_type_number,
-    f_print_format_type_signed,
-    f_print_format_type_signed_16,
     f_print_format_type_signed_8,
+    f_print_format_type_signed_16,
+    f_print_format_type_signed_32,
+    f_print_format_type_signed_64,
+    f_print_format_type_signed_128,
     f_print_format_type_size,
     f_print_format_type_string,
     f_print_format_type_string_safe,
     f_print_format_type_string_static,
     f_print_format_type_string_static_raw,
     f_print_format_type_string_static_safe,
-    f_print_format_type_unsigned,
-    f_print_format_type_unsigned_16,
     f_print_format_type_unsigned_8,
-    f_print_format_type_unsigned_long,
-    f_print_format_type_unsigned_long_long,
+    f_print_format_type_unsigned_16,
+    f_print_format_type_unsigned_32,
+    f_print_format_type_unsigned_64,
+    f_print_format_type_unsigned_128,
     f_print_format_type_unsigned_number,
   };
 #endif // _di_f_print_format_type_

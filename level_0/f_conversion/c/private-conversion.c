@@ -8,6 +8,7 @@ extern "C" {
 #if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
   f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE *output) {
 
+    // @fixme this has a performance problems.
     int digits = 0;
 
     if (number) {
@@ -179,7 +180,7 @@ extern "C" {
           c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_A_s[0] : f_string_ascii_a_s[0];
           break;
 
-        case 101:
+        case 11:
           c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
           break;
 
@@ -192,7 +193,7 @@ extern "C" {
           break;
 
         case 14:
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_E_s[0] : f_string_ascii_E_s[0];
+          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_E_s[0] : f_string_ascii_e_s[0];
           break;
 
         case 15:

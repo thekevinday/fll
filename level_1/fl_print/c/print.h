@@ -47,24 +47,8 @@ extern "C" {
  *   Additional arguments relating to the string.
  *
  * @return
- *   F_none on success.
- *
- *   F_output (with error bit) on failure to print to the output file.
- *   F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
- *
- *   Success from: f_print_dynamic().
- *   Success from: f_print_dynamic_raw().
- *   Success from: f_print_dynamic_safely().
- *   Success from: f_print_safely().
- *   Success from: f_print_terminated().
- *
- *   Errors (with error bit) from: f_conversion_number_signed_to_file().
- *   Errors (with error bit) from: f_conversion_number_unsigned_to_file().
- *   Errors (with error bit) from: f_print_dynamic().
- *   Errors (with error bit) from: f_print_dynamic_raw().
- *   Errors (with error bit) from: f_print_dynamic_safely().
- *   Errors (with error bit) from: f_print_safely().
- *   Errors (with error bit) from: f_print_terminated().
+ *   The number of 1-byte characters processed from the string.
+ *   Any error will will result in the current count at the time of the error to be returned.
  *
  * @see fputc_unlocked()
  * @see va_start()
@@ -90,33 +74,42 @@ extern "C" {
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
- * @param current
+ * @param string
  *   The current character position within the string.
  *   This pointer might be updated by this function.
  * @param output
  *   The file stream to output to, including standard streams such as stdout and stderr.
  * @param ap
  *   The variable arguments list.
+ * @param status
+ *   The status is stored here rather then via the return.
  *
  * @return
- *   F_none on success.
+ *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
+ *   The caller is expected to increment past this if they wish to continue processing the string.
  *
- *   F_output (with error bit) on failure to print to the output file.
- *   F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *   The status parameter will be set as follows:
  *
- *   Success from: f_print_dynamic().
- *   Success from: f_print_dynamic_raw().
- *   Success from: f_print_dynamic_safely().
- *   Success from: f_print_safely().
- *   Success from: f_print_terminated().
+ *     F_none on success.
  *
- *   Errors (with error bit) from: f_conversion_number_signed_to_file().
- *   Errors (with error bit) from: f_conversion_number_unsigned_to_file().
- *   Errors (with error bit) from: f_print_dynamic().
- *   Errors (with error bit) from: f_print_dynamic_raw().
- *   Errors (with error bit) from: f_print_dynamic_safely().
- *   Errors (with error bit) from: f_print_safely().
- *   Errors (with error bit) from: f_print_terminated().
+ *     F_output (with error bit) on failure to print to the output file.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *     F_utf_not (with error bit) if character is an invalid UTF-8 character.
+ *     F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *
+ *     Success from: f_print_dynamic().
+ *     Success from: f_print_dynamic_raw().
+ *     Success from: f_print_dynamic_safely().
+ *     Success from: f_print_safely().
+ *     Success from: f_print_terminated().
+ *
+ *     Errors (with error bit) from: f_conversion_number_signed_to_file().
+ *     Errors (with error bit) from: f_conversion_number_unsigned_to_file().
+ *     Errors (with error bit) from: f_print_dynamic().
+ *     Errors (with error bit) from: f_print_dynamic_raw().
+ *     Errors (with error bit) from: f_print_dynamic_safely().
+ *     Errors (with error bit) from: f_print_safely().
+ *     Errors (with error bit) from: f_print_terminated().
  *
  * @see fputc_unlocked()
  *
@@ -129,7 +122,7 @@ extern "C" {
  * @see f_print_terminated()
  */
 #ifndef _di_fl_print_string_convert_
-  extern f_status_t fl_print_string_convert(f_string_t *current, FILE *output, va_list *ap);
+  extern f_string_t fl_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status);
 #endif // _di_fl_print_string_convert_
 
 /**

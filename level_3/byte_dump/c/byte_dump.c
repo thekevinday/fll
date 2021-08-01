@@ -55,14 +55,14 @@ extern "C" {
     fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
 
     f_print_terminated("  When using the ", output.stream);
-    fl_print_string("%[%S%S%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable);
     f_print_terminated(" option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.", output.stream);
 
     f_print_terminated(f_string_eol_s, output.stream);
     f_print_terminated(f_string_eol_s, output.stream);
 
     f_print_terminated("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ", output.stream);
-    fl_print_string("%[%S%S%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable);
     f_print_terminated(" option is used).", output.stream);
 
     f_print_terminated(f_string_eol_s, output.stream);
@@ -74,14 +74,14 @@ extern "C" {
     f_print_terminated(f_string_eol_s, output.stream);
 
     f_print_terminated("  When ", output.stream);
-    fl_print_string("%[%S%S%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable);
     f_print_terminated(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.", output.stream);
 
     f_print_terminated(f_string_eol_s, output.stream);
     f_print_terminated(f_string_eol_s, output.stream);
 
     f_print_terminated("  When using the ", output.stream);
-    fl_print_string("%[%S%S%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable);
     f_print_terminated(" option, invalid Unicode will fallback to being displayed using one of the other modes.", output.stream);
 
     f_print_terminated(f_string_eol_s, output.stream);
@@ -234,7 +234,7 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -254,7 +254,7 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
           fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
@@ -274,7 +274,7 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -294,11 +294,11 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
           fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%llu%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
+          fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
           fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -314,7 +314,7 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -334,11 +334,11 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
           fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%llu%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
+          fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
           fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -355,9 +355,9 @@ extern "C" {
           flockfile(main->error.to.stream);
 
           fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
           fl_print_string("%[' value cannot be greater than the parameter '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%S%S%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
           fl_print_string("%[' value.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -474,6 +474,8 @@ extern "C" {
           }
 
           fl_print_string(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
+
+          funlockfile(main->output.stream);
 
           status = byte_dump_file(*main, arguments.argv[main->remaining.array[counter]], file);
 

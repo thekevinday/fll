@@ -314,7 +314,7 @@ extern "C" {
     }
 
     if (!cell->column) {
-      fl_print_string("%[%016ULL%] ", main.output.stream, main.context.set.notable, (uint64_t) cell->row, main.context.set.notable);
+      fl_print_string("%[%016_UL%] ", main.output.stream, main.context.set.notable, cell->row, main.context.set.notable);
 
       if (*offset) {
         uint8_t offset_to_print = *offset;
@@ -702,7 +702,7 @@ extern "C" {
             f_print_terminated(byte_dump_sequence_device_control_4, main.output.stream);
           }
           else if (output == 21) {
-            f_print_terminated(byte_dump_sequence_negative_acknowledge, main.output.stream);
+            f_print_terminated(byte_dump_sequence_acknowledge_negative, main.output.stream);
           }
           else if (output == 22) {
             f_print_terminated(byte_dump_sequence_synchronous_idle, main.output.stream);

@@ -414,15 +414,15 @@ extern "C" {
 #endif // _di_fll_print_string_
 
 #ifndef _di_fll_print_string_convert_
-  f_status_t fll_print_string_convert(f_string_t *current, FILE *output, va_list *ap) {
+  f_string_t fll_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_string_convert(current, output, ap);
+    f_string_t str = fl_print_string_convert(string, output, ap, status);
 
     funlockfile(output);
 
-    return status;
+    return str;
   }
 #endif // _di_fll_print_string_convert_
 

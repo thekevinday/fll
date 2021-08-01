@@ -466,57 +466,54 @@ extern "C" {
       return F_data_not;
     }
 
-    char *current = string;
+    f_status_t status = F_none;
 
-    f_string_t s = 0;
+    f_array_length_t start = 0;
+    f_array_length_t total = 0;
 
-    while (*current) {
+    for (register f_array_length_t i = 0; string[i]; ) {
 
-      s = private_f_print_character_safely_get(*current);
+      if (string[i] > 0x1f && string[i] != 0x7f || string[i] == 0x09) {
+        ++total;
+        ++i;
 
-      if (s) {
-        if (!fputc_unlocked(s[0], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(s[1], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(s[2], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        current = current + 1;
+        continue;
       }
-      else {
-        // @todo: redo this as done in private_f_print_safely, but add a NULL check as well.
-        if (macro_f_utf_byte_width(current[0]) == 1) {
-          if (!fputc_unlocked(current[0], output)) {
-            return F_status_set_error(F_output);
-          }
+
+      if (total) {
+        if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+          return F_status_set_error(F_output);
         }
-        else {
-          if (!fputc_unlocked(current[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (macro_f_utf_byte_width(current[0]) > 2) {
-            if (!fputc_unlocked(current[2], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (macro_f_utf_byte_width(current[0]) > 3) {
-              if (!fputc_unlocked(current[3], output)) {
-                return F_status_set_error(F_output);
-              }
-            }
-          }
-        }
-
-        current = current + macro_f_utf_byte_width((*current));
       }
-    } // while
+
+      for (; string[i] && (string[i] < 32 && string[i] != 0x09 || string[i] == 0x7f); ++i) {
+
+        status = private_f_print_character_safely(string[i], output);
+        if (F_status_is_error(status)) return status;
+      } // for
+
+      start = i;
+    } // for
+
+    if (total) {
+      if (fwrite_unlocked(string + start, 1, total, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+        return F_status_set_error(F_output);
+      }
+    }
 
     return F_none;
   }
