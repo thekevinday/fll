@@ -32,7 +32,7 @@ extern "C" {
     f_array_length_t character_current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
-    if (main.first > 0) {
+    if (main.first) {
       cell.row = main.first / main.width;
       offset = main.first % main.width;
 
@@ -77,9 +77,7 @@ extern "C" {
             memset(&invalid, 0, sizeof(uint8_t) * main.width);
           }
 
-          character_current = characters.used;
-          ++characters.used;
-
+          character_current = characters.used++;
           invalid[character_current] = 0;
         }
 
@@ -186,7 +184,7 @@ extern "C" {
     flockfile(main.output.stream);
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
-    if (cell.column > 0 && cell.column < main.width) {
+    if (cell.column && cell.column < main.width) {
       previous.bytes = 0;
       previous.invalid = 0;
 
@@ -216,32 +214,32 @@ extern "C" {
         if (cell.column < main.width) {
           if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
             if (!(cell.column % 4)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
           else if (main.mode == byte_dump_mode_hexidecimal) {
             if (!(cell.column % 8)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
           else if (main.mode == byte_dump_mode_duodecimal) {
             if (!(cell.column % 6)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
           else if (main.mode == byte_dump_mode_octal) {
             if (!(cell.column % 6)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
           else if (main.mode == byte_dump_mode_binary) {
             if (!(cell.column % 6)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
           else if (main.mode == byte_dump_mode_decimal) {
             if (!(cell.column % 6)) {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
           }
         }
@@ -251,11 +249,11 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, &previous, &offset);
       }
       else {
-        f_print_terminated(f_string_eol_s, main.output.stream);
+        f_print_character(f_string_eol_s[0], main.output.stream);
       }
     }
 
-    f_print_terminated(f_string_eol_s, main.output.stream);
+    f_print_character(f_string_eol_s[0], main.output.stream);
 
     funlockfile(main.output.stream);
 
@@ -265,7 +263,7 @@ extern "C" {
     if (found_invalid_utf) {
       flockfile(main.error.to.stream);
 
-      fl_print_string("%[Invalid UTF-8 codes were detected for file '%]", main.error.to.stream, main.context.set.error, main.context.set.error);
+      fl_print_color_terminated("Invalid UTF-8 codes were detected for file '", main.context.set.error, main.error.to.stream);
       fl_print_string("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
       fl_print_string("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
 
@@ -276,7 +274,7 @@ extern "C" {
       // @todo: determine what the error is and display it.
       flockfile(main.error.to.stream);
 
-      fl_print_string("%[%Sread() failed for '%]", main.error.to.stream, main.context.set.error, fll_error_print_error, main.context.set.error);
+      fl_print_string("%[%sread() failed for '%]", main.error.to.stream, main.context.set.error, fll_error_print_error, main.context.set.error);
       fl_print_string("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
       fl_print_string("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
 
@@ -347,32 +345,32 @@ extern "C" {
           if (cell->column < main.width) {
             if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
               if (!(cell->column % 4)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
             else if (main.mode == byte_dump_mode_hexidecimal) {
               if (!(cell->column % 8)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
             else if (main.mode == byte_dump_mode_duodecimal) {
               if (!(cell->column % 6)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
             else if (main.mode == byte_dump_mode_octal) {
               if (!(cell->column % 6)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
             else if (main.mode == byte_dump_mode_binary) {
               if (!(cell->column % 4)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
             else if (main.mode == byte_dump_mode_decimal) {
               if (!(cell->column % 6)) {
-                f_print_terminated(f_string_space_s, main.output.stream);
+                f_print_character(f_string_space_s[0], main.output.stream);
               }
             }
           }
@@ -381,6 +379,7 @@ extern "C" {
     }
 
     if (cell->column < main.width) {
+      // @fixme: when unicode is enabled but invalid, the mode and its respective length now matters. This needs to be included in the width calculations.
       if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found && !invalid[character_current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
@@ -444,10 +443,10 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%02&uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_string(" %[%03&uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %02&uii", main.output.stream, (uint8_t) byte);
+            fl_print_string(" %03&uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_octal) {
@@ -476,10 +475,10 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%03uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_string(" %[%3uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %03uii", main.output.stream, (uint8_t) byte);
+            fl_print_string(" %3uii", main.output.stream, (uint8_t) byte);
           }
         }
       }
@@ -500,7 +499,7 @@ extern "C" {
         byte_dump_print_text(main, characters, invalid, previous, offset);
       }
       else {
-        f_print_terminated(f_string_eol_s, main.output.stream);
+        f_print_character(f_string_eol_s[0], main.output.stream);
       }
 
       cell->column = 0;
@@ -518,32 +517,32 @@ extern "C" {
     else {
       if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found) {
         if (!(cell->column % 4)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (main.mode == byte_dump_mode_hexidecimal) {
         if (!(cell->column % 8)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (main.mode == byte_dump_mode_duodecimal) {
         if (!(cell->column % 6)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (main.mode == byte_dump_mode_octal) {
         if (!(cell->column % 6)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (main.mode == byte_dump_mode_binary) {
         if (!(cell->column % 4)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (main.mode == byte_dump_mode_decimal) {
         if (!(cell->column % 6)) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
     }
@@ -556,17 +555,21 @@ extern "C" {
   void byte_dump_print_text(const byte_dump_main_t main, const f_utf_string_static_t characters, const char invalid[], byte_dump_previous_t *previous, uint8_t *offset) {
 
     uint8_t j = 0;
-    uint8_t output = 0;
+    uint8_t c = 0;
     uint8_t width_utf = 0;
     bool printed = F_false;
 
-    fl_print_string("  %[%s%] ", main.output.stream, main.context.set.notable, byte_dump_character_wall, main.context.set.notable);
+    char byte[5] = { 0, 0, 0, 0, 0 };
 
-    if (*offset > 0) {
+    f_print_terminated("  ", main.output.stream);
+    fl_print_color_terminated(byte_dump_character_wall, main.context.set.notable, main.output.stream);
+    f_print_character(f_string_space_s[0], main.output.stream);
+
+    if (*offset) {
       if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-        while (*offset > 0 && j < main.width) {
+        while (*offset && j < main.width) {
 
-          f_print_terminated(f_string_ascii_period_s, main.output.stream);
+          f_print_character(f_string_ascii_period_s[0], main.output.stream);
           --(*offset);
           ++j;
         } // while
@@ -574,13 +577,18 @@ extern "C" {
       else {
         const char *placeholder = f_string_space_s;
 
-        if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-          placeholder = byte_dump_character_placeholder;
-        }
+        while (*offset && j < main.width) {
 
-        while (*offset > 0 && j < main.width) {
+          f_print_terminated("  ", main.output.stream);
 
-          fl_print_string("  %[%s%] ", main.output.stream, main.context.set.warning, placeholder, main.context.set.warning);
+          if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
+            fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
+          }
+          else {
+            fl_print_color_terminated(f_string_space_s, main.context.set.warning, main.output.stream);
+          }
+
+          f_print_character(f_string_space_s[0], main.output.stream);
           --(*offset);
           ++j;
         } // while
@@ -595,29 +603,29 @@ extern "C" {
         bytes_overflow = previous->bytes - 1 - main.width;
       }
 
-      if (previous->bytes > 0) {
+      if (previous->bytes) {
         if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           for (; j < previous->bytes && j < main.width; ++j) {
 
             if (previous->invalid) {
-              fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_placeholder, main.context.set.error);
+              fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.error, main.output.stream);
             }
             else if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-              f_print_terminated(f_string_ascii_period_s, main.output.stream);
+              f_print_character(f_string_ascii_period_s[0], main.output.stream);
             }
             else {
-              fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning);
+              fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
             }
           } // for
         }
         else {
           for (; j < previous->bytes && j < main.width; ++j) {
-            f_print_terminated(f_string_space_s, main.output.stream);
+            f_print_character(f_string_space_s[0], main.output.stream);
           } // for
         }
       }
 
-      if (bytes_overflow > 0) {
+      if (bytes_overflow) {
         previous->bytes = bytes_overflow;
       }
       else {
@@ -628,217 +636,161 @@ extern "C" {
 
     for (uint8_t i = 0; i < characters.used && j < main.width; ++i, ++j) {
 
-      output = macro_f_utf_character_t_to_char_1(characters.string[i]);
-      width_utf = macro_f_utf_byte_width_is(output);
+      c = macro_f_utf_character_t_to_char_1(characters.string[i]);
+      width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
-        fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_incomplete, main.context.set.error);
+        fl_print_color_terminated(byte_dump_character_incomplete, main.context.set.error, main.output.stream);
       }
-      else if (output >= 0 && output <= 32 || output == 127) {
+      else if (f_utf_character_is_control(characters.string[i]) == F_true) {
         if (main.presentation == byte_dump_presentation_normal) {
-          fl_print_string("%[%[", main.output.stream, main.context.set.notable, main.context.set.warning);
+          fl_print_color_before(main.context.set.notable, main.output.stream);
+          fl_print_color_before(main.context.set.warning, main.output.stream);
 
-          if (!output) {
-            f_print_terminated(byte_dump_sequence_null, main.output.stream);
+          if (width_utf) {
+            byte[0] = c;
+
+            if (width_utf > 1) {
+              byte[1] = macro_f_utf_character_t_to_char_2(characters.string[i]);
+
+              if (width_utf > 2) {
+                byte[2] = macro_f_utf_character_t_to_char_3(characters.string[i]);
+
+                if (width_utf > 3) {
+                  byte[3] = macro_f_utf_character_t_to_char_4(characters.string[i]);
+                }
+                else {
+                  byte[3] = 0;
+                }
+              }
+              else {
+                byte[2] = 0;
+              }
+            }
+            else {
+              byte[1] = 0;
+            }
+
+            f_print_safely(byte, width_utf ? width_utf : 1, main.output.stream);
           }
-          else if (output == 1) {
-            f_print_terminated(byte_dump_sequence_start_of_header, main.output.stream);
-          }
-          else if (output == 2) {
-            f_print_terminated(byte_dump_sequence_start_of_text, main.output.stream);
-          }
-          else if (output == 3) {
-            f_print_terminated(byte_dump_sequence_end_of_text, main.output.stream);
-          }
-          else if (output == 4) {
-            f_print_terminated(byte_dump_sequence_end_of_transmission, main.output.stream);
-          }
-          else if (output == 5) {
-            f_print_terminated(byte_dump_sequence_end_of_enquiry, main.output.stream);
-          }
-          else if (output == 6) {
-            f_print_terminated(byte_dump_sequence_acknowledge, main.output.stream);
-          }
-          else if (output == 7) {
-            f_print_terminated(byte_dump_sequence_bell, main.output.stream);
-          }
-          else if (output == 8) {
-            f_print_terminated(byte_dump_sequence_backspace, main.output.stream);
-          }
-          else if (output == 9) {
-            f_print_terminated(byte_dump_sequence_tab, main.output.stream);
-          }
-          else if (output == 10) {
-            f_print_terminated(byte_dump_sequence_new_line, main.output.stream);
-          }
-          else if (output == 11) {
-            f_print_terminated(byte_dump_sequence_tab_vertical, main.output.stream);
-          }
-          else if (output == 12) {
-            f_print_terminated(byte_dump_sequence_form_feed, main.output.stream);
-          }
-          else if (output == 13) {
-            f_print_terminated(byte_dump_sequence_carriage_return, main.output.stream);
-          }
-          else if (output == 14) {
-            f_print_terminated(byte_dump_sequence_shift_out, main.output.stream);
-          }
-          else if (output == 15) {
-            f_print_terminated(byte_dump_sequence_shift_in, main.output.stream);
-          }
-          else if (output == 16) {
-            f_print_terminated(byte_dump_sequence_data_link_escape, main.output.stream);
-          }
-          else if (output == 17) {
-            f_print_terminated(byte_dump_sequence_device_control_1, main.output.stream);
-          }
-          else if (output == 18) {
-            f_print_terminated(byte_dump_sequence_device_control_2, main.output.stream);
-          }
-          else if (output == 19) {
-            f_print_terminated(byte_dump_sequence_device_control_3, main.output.stream);
-          }
-          else if (output == 20) {
-            f_print_terminated(byte_dump_sequence_device_control_4, main.output.stream);
-          }
-          else if (output == 21) {
-            f_print_terminated(byte_dump_sequence_acknowledge_negative, main.output.stream);
-          }
-          else if (output == 22) {
-            f_print_terminated(byte_dump_sequence_synchronous_idle, main.output.stream);
-          }
-          else if (output == 23) {
-            f_print_terminated(byte_dump_sequence_end_of_transmission_block, main.output.stream);
-          }
-          else if (output == 24) {
-            f_print_terminated(byte_dump_sequence_cancel, main.output.stream);
-          }
-          else if (output == 25) {
-            f_print_terminated(byte_dump_sequence_end_of_medium, main.output.stream);
-          }
-          else if (output == 26) {
-            f_print_terminated(byte_dump_sequence_substitute, main.output.stream);
-          }
-          else if (output == 27) {
-            f_print_terminated(byte_dump_sequence_escape, main.output.stream);
-          }
-          else if (output == 28) {
-            f_print_terminated(byte_dump_sequence_file_separator, main.output.stream);
-          }
-          else if (output == 29) {
-            f_print_terminated(byte_dump_sequence_group_separator, main.output.stream);
-          }
-          else if (output == 30) {
-            f_print_terminated(byte_dump_sequence_record_separator, main.output.stream);
-          }
-          else if (output == 31) {
-            f_print_terminated(byte_dump_sequence_unit_separator, main.output.stream);
-          }
-          else if (output == 32) {
-            f_print_terminated(byte_dump_sequence_space, main.output.stream);
-          }
-          else if (output == 127) {
-            f_print_terminated(byte_dump_sequence_delete, main.output.stream);
+          else {
+            f_print_character_safely(c, main.output.stream);
           }
 
-          fl_print_string("%]%]", main.output.stream, main.context.set.warning, main.context.set.notable);
+          fl_print_color_after(main.context.set.warning, main.output.stream);
+          fl_print_color_after(main.context.set.notable, main.output.stream);
         }
         else if (main.presentation == byte_dump_presentation_simple) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
+
+          if (width_utf > 1) {
+            f_print_character(f_string_space_s[0], main.output.stream);
+
+            if (width_utf > 2) {
+              f_print_character(f_string_space_s[0], main.output.stream);
+
+              if (width_utf > 3) {
+                f_print_character(f_string_space_s[0], main.output.stream);
+              }
+            }
+          }
         }
         else if (main.presentation == byte_dump_presentation_classic) {
-          f_print_terminated(f_string_ascii_period_s, main.output.stream);
+          f_print_character(f_string_ascii_period_s[0], main.output.stream);
+
+          if (width_utf > 1) {
+            f_print_character(f_string_ascii_period_s[0], main.output.stream);
+
+            if (width_utf > 2) {
+              f_print_character(f_string_ascii_period_s[0], main.output.stream);
+
+              if (width_utf > 3) {
+                f_print_character(f_string_ascii_period_s[0], main.output.stream);
+              }
+            }
+          }
         }
       }
       else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
         if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-          f_print_terminated(f_string_ascii_period_s, main.output.stream);
+          f_print_character(f_string_ascii_period_s[0], main.output.stream);
         }
         else {
-          fl_print_string("%[%[%s%]%]", main.output.stream, main.context.set.notable, main.context.set.warning, byte_dump_sequence_space, main.context.set.warning, main.context.set.notable);
+          fl_print_color_before(main.context.set.notable, main.output.stream);
+          fl_print_color_terminated(byte_dump_sequence_space, main.context.set.warning, main.output.stream);
+          fl_print_color_after(main.context.set.notable, main.output.stream);
         }
       }
       else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
         if (main.presentation == byte_dump_presentation_classic) {
-          f_print_terminated(f_string_ascii_period_s, main.output.stream);
+          f_print_character(f_string_ascii_period_s[0], main.output.stream);
         }
         else if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
-          fl_print_string("%[%[%s%]%]", main.output.stream, main.context.set.notable, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning, main.context.set.notable);
+          fl_print_color_before(main.context.set.notable, main.output.stream);
+          fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
+          fl_print_color_after(main.context.set.notable, main.output.stream);
         }
         else {
-          f_print_terminated(f_string_space_s, main.output.stream);
-        }
-      }
-      else if (f_utf_character_is_control(characters.string[i]) == F_true) {
-
-        // print a space (or '.') for control characters.
-        if (main.presentation == byte_dump_presentation_classic) {
-          fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, f_string_ascii_period_s, main.context.set.warning);
-        }
-        else {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else if (width_utf == 2 && characters.string[i] == 0xd89d0000) {
 
         // U+061C
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 3 && characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
 
         // Use space to represent Specials codes.
         // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 3 && characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
 
         // Use space to represent Control Pictues codes that are not currently defined but are reserved.
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 3 && characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
 
         // Use space to represent Private Use Area codes.
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 4 && characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
 
         // Use space to represent Vaiation Selectors Supplement codes.
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 4 && characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
 
         // Use space to represent Supplemental Private Use Area-A codes.
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 4 && characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
 
         // Use space to represent Supplemental Private Use Area-B codes.
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       }
       else if (width_utf == 1) {
 
         // print invalid placeholder for invalid UTF-8 widths.
         if (invalid[i]) {
-          fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_incomplete, main.context.set.error);
+          fl_print_color_terminated(byte_dump_character_incomplete, main.context.set.error, main.output.stream);
         }
         else {
-          fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_incomplete, main.context.set.warning);
+          fl_print_color_terminated(byte_dump_character_incomplete, main.context.set.warning, main.output.stream);
         }
       }
-      else if (width_utf > 0) {
-        fl_print_string("%c", main.output.stream, (uint8_t) output);
+      else if (width_utf) {
+        f_print_character(c, main.output.stream);
 
         if (width_utf > 1) {
-          output = macro_f_utf_character_t_to_char_2(characters.string[i]);
-          fl_print_string("%c", main.output.stream, (uint8_t) output);
+          f_print_character(macro_f_utf_character_t_to_char_2(characters.string[i]), main.output.stream);
 
           if (width_utf > 2) {
-            output = macro_f_utf_character_t_to_char_3(characters.string[i]);
-            fl_print_string("%c", main.output.stream, (uint8_t) output);
+            f_print_character(macro_f_utf_character_t_to_char_3(characters.string[i]), main.output.stream);
 
             if (width_utf > 3) {
-              output = macro_f_utf_character_t_to_char_4(characters.string[i]);
-              fl_print_string("%c", main.output.stream, (uint8_t) output);
+              f_print_character(macro_f_utf_character_t_to_char_4(characters.string[i]), main.output.stream);
             }
           }
         }
@@ -848,58 +800,58 @@ extern "C" {
         if (width_utf == 2 && characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
 
           // Thana combining codes: U+07A6 to U+07B0.
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 2 && characters.string[i] >= 0xcc800000 && characters.string[i] <= 0xcdaf0000) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 3 && characters.string[i] >= 0xe1aab000 && characters.string[i] <= 0xe1abbf00) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 3 && characters.string[i] >= 0xe1b78000 && characters.string[i] <= 0xe1b7bf00) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 3 && characters.string[i] >= 0xe2839000 && characters.string[i] <= 0xe283bf00) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 2 && characters.string[i] >= 0xd8900000 && characters.string[i] <= 0xd89a0000) {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 2 && characters.string[i] >= 0xd98b0000 && characters.string[i] <= 0xd99f0000) {
 
           // Arabic, U+064B to U+065F.
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 2 && characters.string[i] >= 0xdb960000 && characters.string[i] <= 0xdb9c0000) {
 
           // Arabic, U+06D6 to U+06DC.
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
         else if (width_utf == 2 && characters.string[i] >= 0xd6910000 && characters.string[i] <= 0xd6bd0000) {
 
           // Hebrew, U+0591 to U+05BD.
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
       }
       else {
-        fl_print_string("%c", main.output.stream, (uint8_t) output);
+        f_print_character(c, main.output.stream);
       }
 
       // When using UTF-8 characters, the character columns will not line up, so print placeholders to simulate the bytes that are not printed, if necessary for alignment.
       if (width_utf > 1 && j + 1 < main.width) {
         if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
           if (invalid[i]) {
-            fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_placeholder, main.context.set.error);
+            fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.error, main.output.stream);
           }
           else if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-            f_print_terminated(f_string_ascii_period_s, main.output.stream);
+            f_print_character(f_string_ascii_period_s[0], main.output.stream);
           }
           else {
-            fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning);
+            fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
           }
         }
         else {
-          f_print_terminated(f_string_space_s, main.output.stream);
+          f_print_character(f_string_space_s[0], main.output.stream);
         }
 
         ++j;
@@ -907,17 +859,17 @@ extern "C" {
         if (width_utf > 2 && j + 1 < main.width) {
           if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
             if (invalid[i]) {
-              fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_placeholder, main.context.set.error);
+              fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.error, main.output.stream);
             }
             else if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-              f_print_terminated(f_string_ascii_period_s, main.output.stream);
+              f_print_character(f_string_ascii_period_s[0], main.output.stream);
             }
             else {
-              fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning);
+              fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
             }
           }
           else {
-            f_print_terminated(f_string_space_s, main.output.stream);
+            f_print_character(f_string_space_s[0], main.output.stream);
           }
 
           ++j;
@@ -925,17 +877,17 @@ extern "C" {
           if (width_utf > 3 && j + 1 < main.width) {
             if (main.parameters[byte_dump_parameter_placeholder].result == f_console_result_found) {
               if (invalid[i]) {
-                fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_placeholder, main.context.set.error);
+                fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.error, main.output.stream);
               }
               else if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-                f_print_terminated(f_string_ascii_period_s, main.output.stream);
+                f_print_character(f_string_ascii_period_s[0], main.output.stream);
               }
               else {
-                fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning);
+                fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
               }
             }
             else {
-              f_print_terminated(f_string_space_s, main.output.stream);
+              f_print_character(f_string_space_s[0], main.output.stream);
             }
 
             ++j;
@@ -949,24 +901,25 @@ extern "C" {
       for (; j < main.width; ++j) {
 
         if (invalid[j]) {
-          fl_print_string("%[%s%]", main.output.stream, main.context.set.error, byte_dump_character_placeholder, main.context.set.error);
+          fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.error, main.output.stream);
         }
         else if (main.parameters[byte_dump_parameter_classic].result == f_console_result_found) {
-          f_print_terminated(f_string_ascii_period_s, main.output.stream);
+          f_print_character(f_string_ascii_period_s[0], main.output.stream);
         }
         else {
-          fl_print_string("%[%s%]", main.output.stream, main.context.set.warning, byte_dump_character_placeholder, main.context.set.warning);
+          fl_print_color_terminated(byte_dump_character_placeholder, main.context.set.warning, main.output.stream);
         }
       } // for
     }
     else {
       for (; j < main.width; ++j) {
-        f_print_terminated(f_string_space_s, main.output.stream);
+        f_print_character(f_string_space_s[0], main.output.stream);
       } // for
     }
 
-    fl_print_string(" %[|%]", main.output.stream, main.context.set.notable, main.context.set.notable);
-    f_print_terminated(f_string_eol_s, main.output.stream);
+    f_print_character(f_string_space_s[0], main.output.stream);
+    fl_print_color_terminated(byte_dump_character_wall, main.context.set.notable, main.output.stream);
+    f_print_character(f_string_eol_s[0], main.output.stream);
   }
 #endif // _di_byte_dump_file_
 

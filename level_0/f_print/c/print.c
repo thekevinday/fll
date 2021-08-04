@@ -19,6 +19,27 @@ extern "C" {
   }
 #endif // _di_f_print_
 
+#ifndef _di_f_print_character_
+  f_status_t f_print_character(const char character, FILE *output) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!output) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (fputc_unlocked(character, output)) {
+      return F_none;
+    }
+
+    if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+    if (errno == EFAULT) return F_status_set_error(F_buffer);
+    if (errno == EINTR) return F_status_set_error(F_interrupt);
+    if (errno == EINVAL) return F_status_set_error(F_parameter);
+    if (errno == EIO) return F_status_set_error(F_input_output);
+    if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+    return F_status_set_error(F_output);
+  }
+#endif // _di_f_print_character_
+
 #ifndef _di_f_print_character_safely_
   f_status_t f_print_character_safely(const char character, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
@@ -471,13 +492,61 @@ extern "C" {
     f_array_length_t start = 0;
     f_array_length_t total = 0;
 
+    uint8_t width = 0;
+
     for (register f_array_length_t i = 0; string[i]; ) {
 
-      if (string[i] > 0x1f && string[i] != 0x7f || string[i] == 0x09) {
-        ++total;
-        ++i;
+      width = macro_f_utf_character_t_width_is(string[i]);
 
-        continue;
+      if (width) {
+        if (width > 1) {
+          if (string[i + 1]) {
+            if (width > 2) {
+              if (string[i + 2]) {
+                if (width > 3) {
+                  if (string[i + 3]) {
+                    status = f_utf_is_control(string + i, 4);
+                  }
+                  else {
+                    status = F_utf;
+                  }
+                }
+                else {
+                  status = f_utf_is_control(string + i, 3);
+                }
+              }
+              else {
+                status = F_utf;
+              }
+            }
+            else {
+              status = f_utf_is_control(string + i, 2);
+            }
+          }
+          else {
+            status = F_utf;
+          }
+        }
+        else {
+          status = f_utf_is_control(string + i, 1);
+        }
+
+        if (status == F_false && total + width < f_print_write_max) {
+          total += width;
+          i += width;
+
+          continue;
+        }
+      }
+      else {
+        if ((string[i] > 0x1f && string[i] != 0x7f) && total < f_print_write_max) {
+          ++total;
+          ++i;
+
+          continue;
+        }
+
+        status = F_none;
       }
 
       if (total) {
@@ -491,13 +560,35 @@ extern "C" {
 
           return F_status_set_error(F_output);
         }
+
+        total = 0;
       }
 
-      for (; string[i] && (string[i] < 32 && string[i] != 0x09 || string[i] == 0x7f); ++i) {
+      if (status == F_true || F_status_set_fine(status) == F_utf) {
+        if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) != -1) {
+          return F_none;
+        }
 
-        status = private_f_print_character_safely(string[i], output);
+        i += width;
+      }
+      else if (status == F_false) {
+        if (fwrite_unlocked(string + start, 1, width, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+          return F_status_set_error(F_output);
+        }
+
+        i += width;
+      }
+      else {
+        status = private_f_print_character_safely(string[i++], output);
         if (F_status_is_error(status)) return status;
-      } // for
+      }
 
       start = i;
     } // for

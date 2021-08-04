@@ -32,6 +32,108 @@ extern "C" {
 #endif
 
 /**
+ * Print the string with the given color set printed before and after as appropriate to the file stream.
+ *
+ * No before/after colors are printed when the string is determined to be empty.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param buffer
+ *   The string to print.
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed.
+ *
+ *   Success from: f_print().
+ *
+ *   Errors (with error bit) from: f_print()
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print()
+ * @see f_print_terminated()
+ */
+#ifndef _di_fl_print_color_
+  extern f_status_t fl_print_color(const f_string_static_t buffer, const f_color_set_t set, FILE *output);
+#endif // _di_fl_print_color_
+
+/**
+ * Print the "after" part of a color set to the given file stream.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed (such as when color code is NULL).
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print_terminated()
+ */
+#ifndef _di_fl_print_color_after_
+  extern f_status_t fl_print_color_after(const f_color_set_t set, FILE *output);
+#endif // _di_fl_print_color_after_
+
+/**
+ * Print the "after" part of a color set to the given file stream.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed (such as when color code is NULL).
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print_terminated()
+ */
+#ifndef _di_fl_print_color_before_
+  extern f_status_t fl_print_color_before(const f_color_set_t set, FILE *output);
+#endif // _di_fl_print_color_before_
+
+/**
+ * Print the NULL-terminated string with the given color set printed before and after as appropriate to the file stream.
+ *
+ * No before/after colors are printed when the string is determined to be empty.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param string
+ *   The string to print.
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed.
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print_terminated()
+ */
+#ifndef _di_fl_print_color_terminated_
+  extern f_status_t fl_print_color_terminated(const f_string_t string, const f_color_set_t set, FILE *output);
+#endif // _di_fl_print_color_terminated_
+
+/**
  * A formatted print function similar to (but not the same as) the c-library fprintf() function.
  *
  * @todo add the complex documentation.

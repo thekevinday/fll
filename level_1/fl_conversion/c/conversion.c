@@ -43,7 +43,7 @@ extern "C" {
             converted += digit;
           }
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
 
           if (negative) {
@@ -54,7 +54,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -93,12 +93,12 @@ extern "C" {
           converted <<= 1;
           converted += digit;
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
           converted = digit;
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -152,7 +152,7 @@ extern "C" {
             converted += digit;
           }
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
 
           if (negative) {
@@ -163,7 +163,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -205,12 +205,12 @@ extern "C" {
           converted *= 10;
           converted += digit;
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
           converted = digit;
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -264,7 +264,7 @@ extern "C" {
             converted += digit;
           }
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
 
           if (negative) {
@@ -275,7 +275,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -317,12 +317,12 @@ extern "C" {
           converted *= 12;
           converted += digit;
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
           converted = digit;
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -376,7 +376,7 @@ extern "C" {
             converted += digit;
           }
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
 
           if (negative) {
@@ -387,7 +387,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -429,12 +429,12 @@ extern "C" {
           converted <<= 4;
           converted += digit;
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
           converted = digit;
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -488,7 +488,7 @@ extern "C" {
             converted += digit;
           }
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
 
           if (negative) {
@@ -499,7 +499,7 @@ extern "C" {
           }
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for
@@ -541,12 +541,12 @@ extern "C" {
           converted <<= 3;
           converted += digit;
         }
-        else if (digit != 0) {
+        else if (digit) {
           digits = 1;
           converted = digit;
         }
       }
-      else if (string[i] != 0) {
+      else if (string[i]) {
         return F_status_set_error(F_number);
       }
     } // for

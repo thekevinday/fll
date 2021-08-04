@@ -5,6 +5,92 @@
 extern "C" {
 #endif
 
+#ifndef _di_fl_print_color_
+  f_status_t fl_print_color(const f_string_static_t buffer, const f_color_set_t set, FILE *output) {
+
+    if (!buffer.used) {
+      return F_data_not;
+    }
+
+    f_status_t status = F_none;
+
+    if (set.before) {
+      status = f_print_terminated(set.before->string, output);
+      if (F_status_is_error(status)) return status;
+    }
+
+    status = f_print(buffer.string, buffer.used, output);
+
+    if (set.after) {
+
+      // attempt to always print the closing color, even on error.
+      if (F_status_is_error(status)) {
+        f_print_terminated(set.after->string, output);
+      }
+      else {
+        status = f_print_terminated(set.after->string, output);
+        if (F_status_is_error(status)) return status;
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fl_print_color_
+
+#ifndef _di_fl_print_color_after_
+  f_status_t fl_print_color_after(const f_color_set_t set, FILE *output) {
+
+    if (set.after) {
+      return f_print_terminated(set.after->string, output);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_fl_print_color_after_
+
+#ifndef _di_fl_print_color_before_
+  f_status_t fl_print_color_before(const f_color_set_t set, FILE *output) {
+
+    if (set.before) {
+      return f_print_terminated(set.before->string, output);
+    }
+
+    return F_data_not;
+  }
+#endif // _di_fl_print_color_before_
+
+#ifndef _di_fl_print_color_terminated_
+  f_status_t fl_print_color_terminated(const f_string_t string, const f_color_set_t set, FILE *output) {
+
+    if (!*string) {
+      return F_data_not;
+    }
+
+    f_status_t status = F_none;
+
+    if (set.before) {
+      status = f_print_terminated(set.before->string, output);
+      if (F_status_is_error(status)) return status;
+    }
+
+    status = f_print_terminated(string, output);
+
+    if (set.after) {
+
+      // attempt to always print the closing color, even on error.
+      if (F_status_is_error(status)) {
+        f_print_terminated(set.after->string, output);
+      }
+      else {
+        status = f_print_terminated(set.after->string, output);
+        if (F_status_is_error(status)) return status;
+      }
+    }
+
+    return status;
+  }
+#endif // _di_fl_print_color_terminated_
+
 #ifndef _di_fl_print_string_
   f_status_t fl_print_string(const f_string_t string, FILE *output, ...) {
     #ifndef _di_level_1_parameter_checking_

@@ -76,6 +76,108 @@ extern "C" {
 #endif // _di_fll_print_character_safely_
 
 /**
+ * This is a variation of fl_print_color() that uses locking.
+ *
+ * @param buffer
+ *   The string to print.
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed.
+ *
+ *   Success from: f_print().
+ *
+ *   Errors (with error bit) from: f_print()
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print()
+ * @see f_print_terminated()
+ * @see fl_print_color()
+ */
+#ifndef _di_fll_print_color_
+  extern f_status_t fll_print_color(const f_string_static_t buffer, const f_color_set_t set, FILE *output);
+#endif // _di_fll_print_color_
+
+/**
+ * This is a variation of fl_print_color_after() that uses locking.
+ *
+ * @param set
+ *   The color set.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed (such as when color code is NULL).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_terminated()
+ * @see fl_print_color_after()
+ */
+#ifndef _di_fll_print_color_after_
+  extern f_status_t fll_print_color_after(const f_color_set_t set, FILE *output);
+#endif // _di_fll_print_color_after_
+
+/**
+ * This is a variation of fl_print_color_before() that uses locking.
+ *
+ * @param set
+ *   The color set.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed (such as when color code is NULL).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_terminated()
+ * @see fl_print_color_before()
+ */
+#ifndef _di_fll_print_color_before_
+  extern f_status_t fll_print_color_before(const f_color_set_t set, FILE *output);
+#endif // _di_fll_print_color_before_
+
+/**
+ * This is a variation of fl_print_color_terminated() that uses locking.
+ *
+ * @param string
+ *   The string to print.
+ * @param set
+ *   The color set to print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_data_not if nothing is printed.
+ *
+ *   Success from: f_print_terminated().
+ *
+ *   Errors (with error bit) from: f_print_terminated().
+ *
+ * @see f_print_terminated()
+ * @see fl_print_color_terminated()
+ */
+#ifndef _di_fll_print_color_terminated_
+  extern f_status_t fll_print_color_terminated(const f_string_t string, const f_color_set_t set, FILE *output);
+#endif // _di_fll_print_color_terminated_
+
+/**
  * This is a variation of f_print_dynamic() that uses locking.
  *
  * @param buffer

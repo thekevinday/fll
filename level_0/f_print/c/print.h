@@ -65,6 +65,26 @@ extern "C" {
 #endif // _di_f_print_
 
 /**
+ * Given a single 1-byte character, print the character.
+ *
+ * @param character
+ *   The character to verify as safe or not and then print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_output (with error bit) on failure.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fputc_unlocked()
+ */
+#ifndef _di_f_print_character_
+  extern f_status_t f_print_character(const char character, FILE *output);
+#endif // _di_f_print_character_
+
+/**
  * Given a single 1-byte character, print the character or a replacement if the character is not considered safe.
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
@@ -94,7 +114,8 @@ extern "C" {
  * Get a safe representation of the character if the character is considered unsafe.
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
- * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ * UTF-8 sequences with a width of 1 are converted to the unknown character '�'.
+ * For all other UTF-8 sequences, 0 is returned because it cannot be processed via a single 8-byte character.
  *
  * The returned string will either be NULL (for characters that are already safe) or a string representing the replacement.
  * This can result in a 3-byte character being returned as a string of 3 1-bytes.
@@ -105,7 +126,7 @@ extern "C" {
  *   The character to verify as safe or not and then print.
  *
  * @return
- *   NULL is returned if the character is already replaced.
+ *   NULL is returned if the character is already safe or if the character has a UTF-8 width of 2 or greater.
  *   A non-NULL string is returned if the character needs safe replacement.
  *   The non-NULL strings returned are NULL terminated.
  *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.

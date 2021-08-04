@@ -27,7 +27,7 @@ extern "C" {
 
     for (; *string; string += 1) {
 
-      if (*string < 0x2d) {
+      if (*string < 0x2c) {
         if (*string == f_string_ascii_space_s[0]) {
           flag |= f_print_format_flag_sign_pad;
 
@@ -80,7 +80,7 @@ extern "C" {
           return string;
         }
       }
-      else if (*string < 0x49) {
+      else if (*string < 0x41) {
         if (*string == f_string_ascii_minus_s[0]) {
           flag |= f_print_format_flag_align_left;
 
@@ -143,20 +143,25 @@ extern "C" {
 
           continue;
         }
-        else if (*string == f_string_ascii_C_s[0]) {
-          char value[1] = { (char) va_arg(*ap, int) };
+        else if (*string == f_string_ascii_sign_at_s[0]) {
+          base = 8;
 
-          *status = f_print_safely(value, 1, output);
-
-          return string;
+          continue;
         }
         else {
           *status = F_status_set_error(F_valid_not);
           return string;
         }
       }
-      else if (*string < 0x5b) {
-        if (*string == f_string_ascii_I_s[0]) {
+      else if (*string < 0x56) {
+        if (*string == f_string_ascii_C_s[0]) {
+          char value[1] = { (char) va_arg(*ap, int) };
+
+          *status = f_print_safely(value, 1, output);
+
+          return string;
+        }
+        else if (*string == f_string_ascii_I_s[0]) {
           type = f_print_format_type_signed_32;
           flag |= f_print_format_flag_uppercase;
 
@@ -287,18 +292,18 @@ extern "C" {
             type = f_print_format_type_unsigned_number;
             string += 1;
           }
-          else if (*string == f_string_ascii_Z_s[0]) {
-            type = f_print_format_type_size;
-            flag |= f_print_format_flag_uppercase;
-          }
         }
         else {
           *status = F_status_set_error(F_valid_not);
           return string;
         }
       }
-      else if (*string < 0x63) {
-        if (*string == f_string_ascii_bracket_open_s[0]) {
+      else if (*string < 0x60) {
+        if (*string == f_string_ascii_Z_s[0]) {
+          type = f_print_format_type_size;
+          flag |= f_print_format_flag_uppercase;
+        }
+        else if (*string == f_string_ascii_bracket_open_s[0]) {
           const f_color_set_t value = va_arg(*ap, f_color_set_t);
 
           if (value.before) {
@@ -323,11 +328,6 @@ extern "C" {
         }
         else if (*string == f_string_ascii_underscore_s[0]) {
           base = 16;
-
-          continue;
-        }
-        else if (*string == f_string_ascii_sign_at_s[0]) {
-          base = 8;
 
           continue;
         }
@@ -1578,6 +1578,7 @@ extern "C" {
         return F_status_set_error(F_utf_not);
       }
 
+      // @todo: change logic to use single fwrite() based on byte width rather than multiple fputc...
       if (!fputc_unlocked(string[i], output)) {
         return F_status_set_error(F_output);
       }

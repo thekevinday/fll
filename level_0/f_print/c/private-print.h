@@ -98,7 +98,7 @@ extern "C" {
  *   The character to verify as safe or not.
  *
  * @return
- *   NULL is returned if the character is already replaced.
+ *   NULL is returned if the character is already safe or if the character has a UTF-8 width of 2 or greater.
  *   A non-NULL string is returned if the character needs safe replacement.
  *   The non-NULL strings returned are NULL terminated.
  *   The non-NULL strings returned are the 3-byte characters used as placeholder symbols.
