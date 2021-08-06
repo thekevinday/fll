@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE *output) {
 
     int digits = 0;
@@ -64,7 +64,14 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
-        if (!fputc(f_string_ascii_0_s[0], output)) {
+        if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
         }
       }
@@ -106,7 +113,14 @@ extern "C" {
         }
       }
       else if (data.width) {
-        if (!fputc(f_string_ascii_0_s[0], output)) {
+        if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
         }
       }
@@ -114,9 +128,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE *output) {
 
     f_number_unsigned_t power = 1;
@@ -125,114 +139,137 @@ extern "C" {
       power *= data.base;
     } // for
 
+    if (data.base == 2) {
+      f_number_unsigned_t work = 0x1 << (digits - 1);
+
+      while (digits--) {
+
+        if (fwrite_unlocked((work & number) ? f_string_ascii_1_s : f_string_ascii_0_s, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+          return F_status_set_error(F_output);
+        }
+
+        work >>= 1;
+      } // while
+
+      return F_none;
+    }
+
     f_number_unsigned_t current = number;
     f_number_unsigned_t work = 0;
 
-    for (char c = 0; power; --digits) {
+    for (char c = 0; digits; --digits) {
 
       work = current / power;
       current -= work * power;
       power /= data.base;
 
-      if (work < 8) {
-        if (work == 0) {
-          c = f_string_ascii_0_s[0];
-        }
-        else if (work == 1) {
-          c = f_string_ascii_1_s[0];
-        }
-        else if (work == 2) {
-          c = f_string_ascii_2_s[0];
-        }
-        else if (work == 3) {
-          c = f_string_ascii_3_s[0];
-        }
-        else if (work == 4) {
-          c = f_string_ascii_4_s[0];
-        }
-        else if (work == 5) {
-          c = f_string_ascii_5_s[0];
-        }
-        else if (work == 6) {
-          c = f_string_ascii_6_s[0];
-        }
-        else {
-          c = f_string_ascii_7_s[0];
-        }
+      if (work < 0xa) {
+        c = 0x30 + work;
       }
       else {
-        if (work == 8) {
-          c = f_string_ascii_8_s[0];
-        }
-        else if (work == 9) {
-          c = f_string_ascii_8_s[0];
-        }
-        else if (work == 10) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_A_s[0] : f_string_ascii_a_s[0];
-        }
-        else if (work == 11) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
-        }
-        else if (work == 12) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_C_s[0] : f_string_ascii_c_s[0];
-        }
-        else if (work == 13) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
-        }
-        else if (work == 14) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_E_s[0] : f_string_ascii_e_s[0];
+        if (data.flag & f_conversion_data_flag_base_upper) {
+          c = 0x37 + work;
         }
         else {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_F_s[0] : f_string_ascii_f_s[0];
+          c = 0x57 + work;
         }
       }
 
-      if (!fputc(c, output)) {
+      if (fwrite_unlocked(&c, 1, 1, output) == -1) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
     } // for
 
     return F_none;
   }
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) {
 
     for (; total; --total) {
 
-      if (!fputc(pad, output)) {
+      if (fwrite_unlocked(&pad, 1, 1, output) == -1) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
     } // for
 
     return F_none;
   }
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE *output) {
 
     if (negative) {
       if (negative == 1) {
-        if (!fputc(f_string_ascii_minus_s[0], output)) {
+        if (fwrite_unlocked(f_string_ascii_minus_s, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
         }
       }
     }
     else if (data.flag & f_conversion_data_flag_sign_always) {
-      if (!fputc(f_string_ascii_plus_s[0], output)) {
+      if (fwrite_unlocked(f_string_ascii_plus_s, 1, 1, output) == -1) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
     }
     else if (data.flag & f_conversion_data_flag_sign_pad) {
-      if (!fputc(f_string_ascii_space_s[0], output)) {
+      if (fwrite_unlocked(f_string_ascii_space_s, 1, 1, output) == -1) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
     }
 
     if (data.flag & f_conversion_data_flag_base_prepend) {
-      if (!fputc(f_string_ascii_0_s[0], output)) {
+      if (fwrite_unlocked(f_string_ascii_0_s, 1, 1, output) == -1) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+        if (errno == EFAULT) return F_status_set_error(F_buffer);
+        if (errno == EINTR) return F_status_set_error(F_interrupt);
+        if (errno == EINVAL) return F_status_set_error(F_parameter);
+        if (errno == EIO) return F_status_set_error(F_input_output);
+        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
 
@@ -263,14 +300,23 @@ extern "C" {
           break;
       }
 
-      if (c && !fputc(c, output)) {
-        return F_status_set_error(F_output);
+      if (c) {
+        if (fwrite_unlocked(&c, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
+          return F_status_set_error(F_output);
+        }
       }
     }
 
     return F_none;
   }
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
   f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t *destination) {
@@ -360,65 +406,36 @@ extern "C" {
       power *= data.base;
     } // for
 
+    if (data.base == 2) {
+      f_number_unsigned_t work = 0x1 << (digits - 1);
+
+      while (digits--) {
+
+        destination->string[destination->used++] = (work & number) ? f_string_ascii_1_s[0] : f_string_ascii_0_s[1];
+        work >>= 1;
+      } // while
+
+      return;
+    }
+
     f_number_unsigned_t current = number;
     f_number_unsigned_t work = 0;
 
-    for (char c = 0; power; --power) {
+    for (char c = 0; digits; --digits) {
 
       work = current / power;
       current -= work * power;
       power /= data.base;
 
-      if (work < 8) {
-        if (work == 0) {
-          c = f_string_ascii_0_s[0];
-        }
-        else if (work == 1) {
-          c = f_string_ascii_1_s[0];
-        }
-        else if (work == 2) {
-          c = f_string_ascii_2_s[0];
-        }
-        else if (work == 3) {
-          c = f_string_ascii_3_s[0];
-        }
-        else if (work == 4) {
-          c = f_string_ascii_4_s[0];
-        }
-        else if (work == 5) {
-          c = f_string_ascii_5_s[0];
-        }
-        else if (work == 6) {
-          c = f_string_ascii_6_s[0];
-        }
-        else {
-          c = f_string_ascii_7_s[0];
-        }
+      if (work < 0xa) {
+        c = 0x30 + work;
       }
       else {
-        if (work == 8) {
-          c = f_string_ascii_8_s[0];
-        }
-        else if (work == 9) {
-          c = f_string_ascii_8_s[0];
-        }
-        else if (work == 10) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_A_s[0] : f_string_ascii_a_s[0];
-        }
-        else if (work == 11) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_B_s[0] : f_string_ascii_b_s[0];
-        }
-        else if (work == 12) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_C_s[0] : f_string_ascii_c_s[0];
-        }
-        else if (work == 13) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_D_s[0] : f_string_ascii_d_s[0];
-        }
-        else if (work == 14) {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_E_s[0] : f_string_ascii_e_s[0];
+        if (data.flag & f_conversion_data_flag_base_upper) {
+          c = 0x37 + work;
         }
         else {
-          c = data.flag & f_conversion_data_flag_base_upper ? f_string_ascii_f_s[0] : f_string_ascii_f_s[0];
+          c = 0x57 + work;
         }
       }
 

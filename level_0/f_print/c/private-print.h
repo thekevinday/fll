@@ -31,15 +31,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_block (with error bit) if output is set to non-block and the write would result in a blocking operation.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if output represents a directory.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on failure.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_print()
  * @see f_print_dynamic()
@@ -63,15 +63,15 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_block (with error bit) if output is set to non-block and the write would result in a blocking operation.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_type_directory (with error bit) if output represents a directory.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
  *   F_input_output (with error bit) on I/O error.
  *   F_interrupt (with error bit) if interrupt was received.
- *   F_output (with error bit) on failure.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_print_character_safely()
  * @see f_print_safely()
@@ -130,10 +130,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_raw()
  * @see f_print_raw_dynamic()
@@ -159,10 +165,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_safely()
  * @see f_print_safely_dynamic()
@@ -194,10 +206,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except()
  * @see f_print_except_dynamic()
@@ -228,10 +246,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except_raw()
  * @see f_print_except_dynamic_raw()
@@ -262,10 +286,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except_safely()
  * @see f_print_except_dynamic_safely()
@@ -300,10 +330,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except_in()
  * @see f_print_except_in_dynamic()
@@ -337,10 +373,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except_in_raw()
  * @see f_print_except_in_dynamic_raw()
@@ -374,10 +416,16 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if length is 0.
  *
- *   F_output (with error bit) on failure.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ *
+ * @see fwrite_unlocked()
  *
  * @see f_print_except_in_safely()
  * @see f_print_except_in_dynamic_safely()
@@ -410,7 +458,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_print_terminated()
  * @see f_print_raw_terminated()

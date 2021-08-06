@@ -49,8 +49,8 @@ extern "C" {
  *     Success from: f_print_safely().
  *     Success from: f_print_terminated().
  *
- *     Errors (with error bit) from: f_conversion_number_signed_to_file().
- *     Errors (with error bit) from: f_conversion_number_unsigned_to_file().
+ *     Errors (with error bit) from: f_conversion_number_signed_print().
+ *     Errors (with error bit) from: f_conversion_number_unsigned_print().
  *     Errors (with error bit) from: f_print_dynamic().
  *     Errors (with error bit) from: f_print_dynamic_raw().
  *     Errors (with error bit) from: f_print_dynamic_safely().
@@ -59,8 +59,8 @@ extern "C" {
  *
  * @see fputc_unlocked()
  *
- * @see f_conversion_number_signed_to_file()
- * @see f_conversion_number_unsigned_to_file()
+ * @see f_conversion_number_signed_print()
+ * @see f_conversion_number_unsigned_print()
  * @see f_print_dynamic()
  * @see f_print_dynamic_raw()
  * @see f_print_dynamic_safely()

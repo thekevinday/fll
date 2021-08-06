@@ -593,51 +593,51 @@ extern "C" {
       }
 
       if (type == f_print_format_type_number) {
-        *status = f_conversion_number_signed_to_file(va_arg(*ap, f_number_signed_t), conversion_data, output);
+        *status = f_conversion_number_signed_print(va_arg(*ap, f_number_signed_t), conversion_data, output);
       }
       else if (type == f_print_format_type_signed_64) {
-        *status = f_conversion_number_signed_to_file((f_number_signed_t) va_arg(*ap, int64_t), conversion_data, output);
+        *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, int64_t), conversion_data, output);
       }
       else if (type == f_print_format_type_signed_128) {
-        *status = f_conversion_number_signed_to_file((f_number_signed_t) va_arg(*ap, f_int_128_t), conversion_data, output);
+        *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, f_int_128_t), conversion_data, output);
       }
       else if (type == f_print_format_type_signed_32) {
-        *status = f_conversion_number_signed_to_file((f_number_signed_t) va_arg(*ap, int32_t), conversion_data, output);
+        *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(*ap, int32_t), conversion_data, output);
       }
       else if (type == f_print_format_type_signed_16) {
         const int16_t value = (int16_t) va_arg(*ap, int);
 
-        *status = f_conversion_number_signed_to_file((f_number_signed_t) value, conversion_data, output);
+        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, output);
       }
       else if (type == f_print_format_type_signed_8) {
         const int8_t value = (int8_t) va_arg(*ap, int);
 
-        *status = f_conversion_number_signed_to_file((f_number_signed_t) value, conversion_data, output);
+        *status = f_conversion_number_signed_print((f_number_signed_t) value, conversion_data, output);
       }
       else if (type == f_print_format_type_size) {
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) va_arg(*ap, size_t), conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, size_t), conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_32) {
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) va_arg(*ap, uint32_t), conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, uint32_t), conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_16) {
         const uint16_t value = (uint16_t) va_arg(*ap, unsigned);
 
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) value, conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) value, conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_8) {
         const uint8_t value = (uint8_t) va_arg(*ap, unsigned);
 
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) value, conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) value, conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_64) {
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) va_arg(*ap, uint64_t), conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, uint64_t), conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_128) {
-        *status = f_conversion_number_unsigned_to_file((f_number_unsigned_t) va_arg(*ap, f_uint_128_t), conversion_data, output);
+        *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(*ap, f_uint_128_t), conversion_data, output);
       }
       else if (type == f_print_format_type_unsigned_number) {
-        *status = f_conversion_number_unsigned_to_file(va_arg(*ap, f_number_unsigned_t), conversion_data, output);
+        *status = f_conversion_number_unsigned_print(va_arg(*ap, f_number_unsigned_t), conversion_data, output);
       }
 
       return string;

@@ -34,20 +34,26 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_output (with error bit) on failure to print to the output file.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  *
- * @see f_conversion_number_signed_to_file()
- * @see f_conversion_number_unsigned_to_file()
+ * @see f_conversion_number_signed_print()
+ * @see f_conversion_number_unsigned_print()
  *
  * @see private_f_conversion_digit_to_file_number()
  * @see private_f_conversion_digit_to_file_pad()
  * @see private_f_conversion_digit_to_file_prefix()
  */
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE *output) f_attribute_visibility_internal;
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
  * Helper function for printing the number to the output file.
@@ -67,16 +73,22 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_output (with error bit) on failure to print to the output file.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  *
- * @see f_conversion_number_signed_to_file()
- * @see f_conversion_number_unsigned_to_file()
+ * @see f_conversion_number_signed_print()
+ * @see f_conversion_number_unsigned_print()
  */
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE *output) f_attribute_visibility_internal;
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
  * Helper function for printing the padding to the output file.
@@ -95,16 +107,22 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_output (with error bit) on failure to print to the output file.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  *
- * @see f_conversion_number_signed_to_file()
- * @see f_conversion_number_unsigned_to_file()
+ * @see f_conversion_number_signed_print()
+ * @see f_conversion_number_unsigned_print()
  */
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const char pad, int total, FILE *output) f_attribute_visibility_internal;
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
  * Helper function for printing the prefix to the output file.
@@ -124,16 +142,22 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_output (with error bit) on failure to print to the output file.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  *
- * @see f_conversion_number_signed_to_file()
- * @see f_conversion_number_unsigned_to_file()
+ * @see f_conversion_number_signed_print()
+ * @see f_conversion_number_unsigned_print()
  */
-#if !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
   extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE *output) f_attribute_visibility_internal;
-#endif // !defined(_di_f_conversion_number_signed_to_file_) || !defined(_di_f_conversion_number_unsigned_to_file_)
+#endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
  * Helper function for performing the entire process of printing to the output file.

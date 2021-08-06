@@ -58,7 +58,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_
   extern f_status_t f_print(const f_string_t string, const f_array_length_t length, FILE *output);
@@ -78,7 +78,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_
   extern f_status_t f_print_character(const char character, FILE *output);
@@ -104,7 +104,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_safely_
   extern f_status_t f_print_character_safely(const char character, FILE *output);
@@ -156,7 +156,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_
   extern f_status_t f_print_dynamic(const f_string_static_t buffer, FILE *output);
@@ -185,7 +185,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_raw_
   extern f_status_t f_print_dynamic_raw(const f_string_static_t buffer, FILE *output);
@@ -215,7 +215,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -246,7 +246,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_
   extern f_status_t f_print_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
@@ -277,7 +277,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_raw_
   extern f_status_t f_print_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, FILE *output);
@@ -309,7 +309,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -344,7 +344,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_
   extern f_status_t f_print_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
@@ -379,7 +379,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_raw_
   extern f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
@@ -415,7 +415,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -448,7 +448,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_
   extern f_status_t f_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
@@ -481,7 +481,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_raw_
   extern f_status_t f_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
@@ -515,7 +515,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -554,7 +554,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_
   extern f_status_t f_print_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -593,7 +593,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_raw_
   extern f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -633,7 +633,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -670,7 +670,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_
   extern f_status_t f_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -707,7 +707,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_raw_
   extern f_status_t f_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -745,7 +745,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -784,7 +784,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
   extern f_status_t f_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -823,7 +823,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
   extern f_status_t f_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
@@ -860,7 +860,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -895,7 +895,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
   extern f_status_t f_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
@@ -930,7 +930,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
   extern f_status_t f_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
@@ -963,7 +963,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
   extern f_status_t f_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
@@ -998,7 +998,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
   extern f_status_t f_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
@@ -1034,7 +1034,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -1067,7 +1067,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_
   extern f_status_t f_print_raw(const f_string_t string, const f_array_length_t length, FILE *output);
@@ -1094,7 +1094,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_terminated_
   extern f_status_t f_print_raw_terminated(const f_string_t string, FILE *output);
@@ -1126,7 +1126,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -1160,7 +1160,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
  */
@@ -1189,7 +1189,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc_unlocked()
+ * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_terminated_
   extern f_status_t f_print_terminated(const f_string_t string, FILE *output);

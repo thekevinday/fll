@@ -6,6 +6,9 @@
  * Licenses: lgplv2.1
  *
  * Provide means to convert one data type to another, such as a string to an integer.
+ *
+ * @fixme Currently these functions are very inefficient.
+ *        These will be improved once I have finished studying on the matter.
  */
 #ifndef _F_conversion_h
 #define _F_conversion_h
@@ -202,6 +205,8 @@ extern "C" {
  * This only supports the following base units: 2 through 16.
  * This only supports base prefixes for: 2, 8, 10, 12, and 16.
  *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
  * @param number
  *   The number to convert.
  * @param data
@@ -212,14 +217,19 @@ extern "C" {
  * @return
  *   F_none if the number was converted to a string.
  *
- *   F_output (with error bit) on fputc() error.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  */
-#ifndef _di_f_conversion_number_signed_to_file_
-  extern f_status_t f_conversion_number_signed_to_file(const f_number_signed_t number, const f_conversion_data_t data, FILE *output);
-#endif // _di_f_conversion_number_signed_to_file_
+#ifndef _di_f_conversion_number_signed_print_
+  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE *output);
+#endif // _di_f_conversion_number_signed_print_
 
 /**
  * Convert a signed number into the decimal digit string that it represents.
@@ -257,6 +267,8 @@ extern "C" {
  * This only supports the following base units: 2 through 16.
  * This only supports base prefixes for: 2, 8, 10, 12, and 16.
  *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
  * @param number
  *   The number to convert.
  *   This number is unsigned to allow for unsigned integers to be used.
@@ -269,14 +281,19 @@ extern "C" {
  * @return
  *   F_none if the number was converted to a string.
  *
- *   F_output (with error bit) on fputc() error.
+ *   F_block (with error bit) if file stream is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fputc()
+ * @see fwrite_unlocked()
  */
-#ifndef _di_f_conversion_number_unsigned_to_file_
-  extern f_status_t f_conversion_number_unsigned_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output);
-#endif // _di_f_conversion_number_unsigned_to_file_
+#ifndef _di_f_conversion_number_unsigned_print_
+  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output);
+#endif // _di_f_conversion_number_unsigned_print_
 
 /**
  * Convert an unsigned number into the decimal digit string that it represents.

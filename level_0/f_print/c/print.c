@@ -25,7 +25,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (fputc_unlocked(character, output)) {
+    if (fwrite_unlocked(&character, 1, 1, output) != -1) {
       return F_none;
     }
 

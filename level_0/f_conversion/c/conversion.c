@@ -168,8 +168,8 @@ extern "C" {
   }
 #endif // _di_f_conversion_character_to_octal_
 
-#ifndef _di_f_conversion_number_signed_to_file_
-  f_status_t f_conversion_number_signed_to_file(const f_number_signed_t number, const f_conversion_data_t data, FILE *output) {
+#ifndef _di_f_conversion_number_signed_print_
+  f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
@@ -181,7 +181,7 @@ extern "C" {
 
     return private_f_conversion_digit_to_file((f_number_unsigned_t) number, data, number ? 0 : 2, output);
   }
-#endif // _di_f_conversion_number_signed_to_file_
+#endif // _di_f_conversion_number_signed_print_
 
 #ifndef _di_f_conversion_number_signed_to_string_
   f_status_t f_conversion_number_signed_to_string(const f_number_signed_t number, const f_conversion_data_t data, f_string_dynamic_t *destination) {
@@ -198,8 +198,8 @@ extern "C" {
   }
 #endif // _di_f_conversion_number_signed_to_string_
 
-#ifndef _di_f_conversion_number_unsigned_to_file_
-  f_status_t f_conversion_number_unsigned_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output) {
+#ifndef _di_f_conversion_number_unsigned_print_
+  f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
       if (data.base < 2 || data.base > 16) return F_status_set_error(F_parameter);
@@ -207,7 +207,7 @@ extern "C" {
 
     return private_f_conversion_digit_to_file(number, data, number ? 0 : 2, output);
   }
-#endif // _di_f_conversion_number_unsigned_to_file_
+#endif // _di_f_conversion_number_unsigned_print_
 
 #ifndef _di_f_conversion_number_unsigned_to_string_
   f_status_t f_conversion_number_unsigned_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, f_string_dynamic_t *destination) {

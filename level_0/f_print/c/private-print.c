@@ -283,7 +283,7 @@ extern "C" {
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
   f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t j = 0;
 
@@ -296,7 +296,14 @@ extern "C" {
       if (j < except.used && except.array[j] == i) continue;
 
       if (string[i]) {
-        if (!fputc_unlocked(string[i], output)) {
+        if (fwrite_unlocked(string + i, 1, 1, output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
         }
       }
@@ -309,7 +316,7 @@ extern "C" {
 #if !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
   f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t j = 0;
 
@@ -321,7 +328,14 @@ extern "C" {
 
       if (j < except.used && except.array[j] == i) continue;
 
-      if (!fputc_unlocked(string[i], output)) {
+      if (fwrite_unlocked(string + i, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
     } // for
@@ -333,7 +347,7 @@ extern "C" {
 #if !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
   f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t j = 0;
 
@@ -355,15 +369,14 @@ extern "C" {
       s = private_f_print_character_safely_get(string[i]);
 
       if (s) {
-        if (!fputc_unlocked(s[i], output)) {
-          return F_status_set_error(F_output);
-        }
+        if (fwrite_unlocked(s + i, 1, 3, output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-        if (!fputc_unlocked(s[i + 1], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(s[i + 2], output)) {
           return F_status_set_error(F_output);
         }
 
@@ -373,15 +386,14 @@ extern "C" {
         status = f_utf_is_valid(string + i, stop - i);
 
         if (F_status_is_error(status) || status == F_false) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+          if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
+              if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+              if (errno == EFAULT) return F_status_set_error(F_buffer);
+              if (errno == EINTR) return F_status_set_error(F_interrupt);
+              if (errno == EINVAL) return F_status_set_error(F_parameter);
+              if (errno == EIO) return F_status_set_error(F_input_output);
+              if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
             return F_status_set_error(F_output);
           }
 
@@ -390,15 +402,14 @@ extern "C" {
         }
 
         if (i + macro_f_utf_byte_width(string[i]) >= stop) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+          if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
+              if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+              if (errno == EFAULT) return F_status_set_error(F_buffer);
+              if (errno == EINTR) return F_status_set_error(F_interrupt);
+              if (errno == EINVAL) return F_status_set_error(F_parameter);
+              if (errno == EIO) return F_status_set_error(F_input_output);
+              if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
             return F_status_set_error(F_output);
           }
 
@@ -406,26 +417,15 @@ extern "C" {
           continue;
         }
 
-        if (!fputc_unlocked(string[i], output)) {
+        if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
-        }
-
-        if (macro_f_utf_byte_width(string[i]) > 1) {
-          if (!fputc_unlocked(string[i + 1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (macro_f_utf_byte_width(string[i]) > 2) {
-            if (!fputc_unlocked(string[i + 2], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (macro_f_utf_byte_width(string[i]) > 3) {
-              if (!fputc_unlocked(string[i + 3], output)) {
-                return F_status_set_error(F_output);
-              }
-            }
-          }
         }
 
         i += macro_f_utf_byte_width(string[i]);
@@ -439,7 +439,7 @@ extern "C" {
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
   f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t at = 0;
     f_array_length_t in = 0;
@@ -469,7 +469,14 @@ extern "C" {
       }
 
       if (string[i]) {
-        if (!fputc_unlocked(string[i], output)) {
+        if (fwrite_unlocked(string + i, 1, 1, output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
         }
       }
@@ -484,7 +491,7 @@ extern "C" {
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
   f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t at = 0;
     f_array_length_t in = 0;
@@ -513,7 +520,14 @@ extern "C" {
         }
       }
 
-      if (!fputc_unlocked(string[i], output)) {
+      if (fwrite_unlocked(string + i, 1, 1, output) == -1) {
+          if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+          if (errno == EFAULT) return F_status_set_error(F_buffer);
+          if (errno == EINTR) return F_status_set_error(F_interrupt);
+          if (errno == EINVAL) return F_status_set_error(F_parameter);
+          if (errno == EIO) return F_status_set_error(F_input_output);
+          if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
         return F_status_set_error(F_output);
       }
 
@@ -527,7 +541,7 @@ extern "C" {
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
   f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
-    // @todo update logic to use fwrite()
+    // @todo update logic to use fwrite_unlocked() with more than 1 byte at a time.
     f_array_length_t i = offset;
     f_array_length_t at = 0;
     f_array_length_t in = 0;
@@ -562,15 +576,14 @@ extern "C" {
       s = private_f_print_character_safely_get(string[i]);
 
       if (s) {
-        if (!fputc_unlocked(s[i], output)) {
-          return F_status_set_error(F_output);
-        }
+        if (fwrite_unlocked(s + i, 1, 3, output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-        if (!fputc_unlocked(s[i + 1], output)) {
-          return F_status_set_error(F_output);
-        }
-
-        if (!fputc_unlocked(s[i + 2], output)) {
           return F_status_set_error(F_output);
         }
 
@@ -580,15 +593,14 @@ extern "C" {
         status = f_utf_is_valid(string + i, stop - i);
 
         if (F_status_is_error(status) || status == F_false) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+          if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
+              if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+              if (errno == EFAULT) return F_status_set_error(F_buffer);
+              if (errno == EINTR) return F_status_set_error(F_interrupt);
+              if (errno == EINVAL) return F_status_set_error(F_parameter);
+              if (errno == EIO) return F_status_set_error(F_input_output);
+              if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
             return F_status_set_error(F_output);
           }
 
@@ -597,15 +609,14 @@ extern "C" {
         }
 
         if (i + macro_f_utf_byte_width(string[i]) >= stop) {
-          if (!fputc_unlocked(f_print_sequence_unknown_s[0], output)) {
-            return F_status_set_error(F_output);
-          }
+          if (fwrite_unlocked(f_print_sequence_unknown_s, 1, 3, output) == -1) {
+              if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+              if (errno == EFAULT) return F_status_set_error(F_buffer);
+              if (errno == EINTR) return F_status_set_error(F_interrupt);
+              if (errno == EINVAL) return F_status_set_error(F_parameter);
+              if (errno == EIO) return F_status_set_error(F_input_output);
+              if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
 
-          if (!fputc_unlocked(f_print_sequence_unknown_s[1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (!fputc_unlocked(f_print_sequence_unknown_s[2], output)) {
             return F_status_set_error(F_output);
           }
 
@@ -613,26 +624,15 @@ extern "C" {
           continue;
         }
 
-        if (!fputc_unlocked(string[i], output)) {
+        if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), output) == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
+            if (errno == EFAULT) return F_status_set_error(F_buffer);
+            if (errno == EINTR) return F_status_set_error(F_interrupt);
+            if (errno == EINVAL) return F_status_set_error(F_parameter);
+            if (errno == EIO) return F_status_set_error(F_input_output);
+            if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
+
           return F_status_set_error(F_output);
-        }
-
-        if (macro_f_utf_byte_width(string[i]) > 1) {
-          if (!fputc_unlocked(string[i + 1], output)) {
-            return F_status_set_error(F_output);
-          }
-
-          if (macro_f_utf_byte_width(string[i]) > 2) {
-            if (!fputc_unlocked(string[i + 2], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (macro_f_utf_byte_width(string[i]) > 3) {
-              if (!fputc_unlocked(string[i + 3], output)) {
-                return F_status_set_error(F_output);
-              }
-            }
-          }
         }
 
         i += macro_f_utf_byte_width(string[i]);

@@ -463,10 +463,10 @@ extern "C" {
         }
         else if (main.mode == byte_dump_mode_binary) {
           if (invalid[character_current]) {
-            fl_print_string(" %[%09!uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_string(" %[%08!uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %09!uii", main.output.stream, (uint8_t) byte);
+            fl_print_string(" %08!uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_decimal) {
