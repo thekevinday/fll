@@ -553,7 +553,7 @@ install_perform_install() {
         fi
       fi
 
-      if [[ $enable_static_programs == "yes" && ! -d ${work}programs/static ]] ; then
+      if [[ $build_sources_program != "" && $enable_static_programs == "yes" && ! -d ${work}programs/static ]] ; then
         mkdir $verbose ${work}programs/static
 
         if [[ $? -ne 0 ]] ; then
@@ -579,7 +579,7 @@ install_perform_install() {
         fi
       fi
 
-      if [[ $enable_shared_libraries == "yes" && ! -d ${work}libraries/shared ]] ; then
+      if [[ $build_sources_library != "" && $enable_shared_libraries == "yes" && ! -d ${work}libraries/shared ]] ; then
         mkdir $verbose ${work}libraries/shared
 
         if [[ $? -ne 0 ]] ; then
@@ -591,7 +591,7 @@ install_perform_install() {
         fi
       fi
 
-      if [[ $enable_static_libraries == "yes" && ! -d ${work}libraries/static ]] ; then
+      if [[ $build_sources_library != "" && $enable_static_libraries == "yes" && ! -d ${work}libraries/static ]] ; then
         mkdir $verbose ${work}libraries/static
 
         if [[ $? -ne 0 ]] ; then
@@ -647,7 +647,7 @@ install_perform_install() {
     fi
   fi
 
-  if [[ $failure == "" && ( $enable_shared_libraries == "yes" || $enable_static_libraries == "yes" ) ]] ; then
+  if [[ $failure == "" && $build_sources_library != "" && ( $enable_shared_libraries == "yes" || $enable_static_libraries == "yes" ) ]] ; then
     if [[ $enable_static_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
@@ -665,7 +665,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ $failure == "" && $enable_shared_libraries == "yes" ]] ; then
+    if [[ $failure == "" && $build_sources_library != "" && $enable_shared_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Libraries to: $c_reset$c_notice$destination_libraries_shared$c_reset${c_highlight}.$c_reset"
@@ -701,7 +701,7 @@ install_perform_install() {
       fi
     fi
 
-    if [[ $failure == "" && $enable_shared_programs == "yes" ]] ; then
+    if [[ $failure == "" && $build_sources_program != "" && $enable_shared_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo -e "${c_highlight}Installing (shared) Programs to: $c_reset$c_notice$destination_programs_shared$c_reset${c_highlight}.$c_reset"
