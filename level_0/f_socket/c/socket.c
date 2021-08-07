@@ -6,8 +6,11 @@ extern "C"{
 
 #ifndef _di_f_socket_file_bind_
   f_status_t f_socket_file_bind(const f_string_t path, const int id, struct sockaddr_un *address) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!address) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
-    memset(&address, 0, sizeof(struct sockaddr_un));
+    memset(address, 0, sizeof(struct sockaddr_un));
     address->sun_family = AF_UNIX;
 
     strncpy(address->sun_path, path, sizeof(address->sun_path) - 1);

@@ -662,52 +662,51 @@ extern "C" {
   f_status_t f_utf_character_to_char(const f_utf_character_t utf_character, f_string_t *character, f_array_length_t *width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (!utf_character) return F_status_set_error(F_parameter);
-      if (!width_max && *character) return F_status_set_error(F_parameter);
-      if (width_max && !*character) return F_status_set_error(F_parameter);
-      if (width_max && *width_max > 4) return F_status_set_error(F_parameter);
+      if (!character) return F_status_set_error(F_parameter);
+      if (!width_max) return F_status_set_error(F_parameter);
+      if (!*width_max) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
+    if (macro_f_utf_character_t_width_is(utf_character)) {
 
-    uint8_t width = macro_f_utf_character_t_width_is(utf_character);
+      // @todo: endianess is compile time so a function is not needed, replace with macros.
+      if (f_utf_is_big_endian()) {
+        memcpy(*character, &utf_character, macro_f_utf_character_t_width_is(utf_character));
+      }
+      else {
+        uint32_t utf = 0;
 
-    if (!width_max) {
-      macro_f_string_t_clear((*character))
-      macro_f_string_t_resize(status, (*character), 0, width)
-      if (F_status_is_error(status)) return status;
+        switch (macro_f_utf_character_t_width_is(utf_character)) {
+          case 1:
+            utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
+            break;
+          case 2:
+            utf = (macro_f_utf_character_t_to_char_2(utf_character) << 24) | (macro_f_utf_character_t_to_char_1(utf_character) << 16);
+            break;
+          case 3:
+            utf = (macro_f_utf_character_t_to_char_3(utf_character) << 24) | (macro_f_utf_character_t_to_char_2(utf_character) << 16) | (macro_f_utf_character_t_to_char_1(utf_character) << 8);
+            break;
+          case 4:
+            utf = (macro_f_utf_character_t_to_char_4(utf_character) << 24) | (macro_f_utf_character_t_to_char_3(utf_character) << 16) | (macro_f_utf_character_t_to_char_2(utf_character) << 8) | macro_f_utf_character_t_to_char_1(utf_character);
+            break;
+          default:
+            return F_status_set_error(F_failure);
+        }
 
-      width = 1;
-      *width_max = 1;
-    }
-    else if (width == 1) {
-      return F_status_is_error(F_utf);
-    }
-    else if (width > *width_max) {
-      return F_status_set_error(F_failure);
-    }
-
-    *width_max = width;
-
-    if (f_utf_is_big_endian()) {
-      memcpy(*character, &utf_character, width);
+        memcpy(*character, &utf, macro_f_utf_character_t_width_is(utf_character));
+      }
     }
     else {
-      uint32_t utf = 0;
 
-      if (width == 1) {
-        utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
+      // @todo: endianess is compile time so a function is not needed, replace with macros.
+      if (f_utf_is_big_endian()) {
+        memcpy(*character, &utf_character, 1);
       }
-      else if (width == 2) {
-        utf = (macro_f_utf_character_t_to_char_2(utf_character) << 24) | (macro_f_utf_character_t_to_char_1(utf_character) << 16);
-      }
-      else if (width == 3) {
-        utf = (macro_f_utf_character_t_to_char_3(utf_character) << 24) | (macro_f_utf_character_t_to_char_2(utf_character) << 16) | (macro_f_utf_character_t_to_char_1(utf_character) << 8);
-      }
-      else if (width == 4) {
-        utf = (macro_f_utf_character_t_to_char_4(utf_character) << 24) | (macro_f_utf_character_t_to_char_3(utf_character) << 16) | (macro_f_utf_character_t_to_char_2(utf_character) << 8) | macro_f_utf_character_t_to_char_1(utf_character);
-      }
+      else {
+        uint32_t utf = macro_f_utf_character_t_to_char_1(utf_character) << 24;
 
-      memcpy(*character, &utf, width);
+        memcpy(*character, &utf, 1);
+      }
     }
 
     return F_none;

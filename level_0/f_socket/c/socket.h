@@ -53,6 +53,7 @@ extern "C"{
  *   F_file_found_not (with error bit) if file not found.
  *   F_memory_not (with error bit) if out of memory.
  *   F_name (with error bit) on path name error.
+ *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if string is too large to store in the buffer.
  *   F_available_not_address (with error bit) if address is unavailable (is non-existent or not local).
  *   F_failure (with error bit) for any other error.

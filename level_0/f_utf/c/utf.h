@@ -669,26 +669,23 @@ extern "C" {
  * Convert a specialized f_utf_character_t type to a uint8_t, stored as a string (character buffer).
  *
  * This will also convert ASCII characters stored in the utf_character array.
+ * This will not resize character.
  *
  * @param utf_character
- *   The UTF-8 characterr to convert from.
+ *   The UTF-8 character to convert from.
  * @param character
  *   A uint8_t representation of the UTF-8 character, stored as a string of width bytes.
- *   If width_max is 0, then this should not be allocated (set the pointer address to 0).
+ *   If width_max is 0, then this should be set to 0.
  * @param width_max
- *   The number of bytes the generated character represents.
- *   If this is set to 0, then the character will be allocated and this will be set to the width of the utf_character.
- *   If this is set to some value greater than 0 (up to 4), then this represents the size of the character array (no allocations are performed).
- *   If this is greater than 0, and the utf_character width is larger than this size, then an error is returned.
+ *   This is set to the max number of bytes available.
+ *   This is then updated to represent the max bytes used if enough space is available.
  *
  * @return
  *   F_none if conversion was successful.
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_memory_not (with error bit) on out of memory.
  *   F_utf (with error bit) if character is an invalid UTF-8 character.
- *   F_failure (with error bit) if width is not long enough to convert.
  */
 #ifndef _di_f_utf_character_to_char_
   extern f_status_t f_utf_character_to_char(const f_utf_character_t utf_character, f_string_t *character, f_array_length_t *width_max);
