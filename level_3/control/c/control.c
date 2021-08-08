@@ -29,6 +29,7 @@ extern "C" {
 
 #ifndef _di_control_main_
   f_status_t control_main(const f_console_arguments_t arguments, control_main_t *main) {
+
     f_status_t status = F_none;
 
     {
@@ -56,7 +57,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            fll_print_terminated(f_string_eol_s, main->error.to.stream);
           }
 
           control_main_delete(main);
@@ -113,7 +114,7 @@ extern "C" {
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+        fll_print_terminated(f_string_eol_s, main->error.to.stream);
       }
     }
 

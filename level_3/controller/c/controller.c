@@ -13,6 +13,8 @@ extern "C" {
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(const f_file_t output, const f_color_context_t context) {
 
+    flockfile(output.stream);
+
     fll_program_print_help_header(output, context, controller_name_long, controller_version);
 
     fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -25,7 +27,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_terminated(f_string_eol_s, output.stream);
 
     fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
@@ -38,12 +40,14 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
-    fprintf(output.stream, "  When both the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_simulate);
-    fprintf(output.stream, " parameter and the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, controller_long_validate);
-    fprintf(output.stream, " parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.");
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_terminated("  When both the ", output.stream);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, context.set.notable);
+    f_print_terminated(" parameter and the ", output.stream);
+    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, context.set.notable);
+    f_print_terminated(" parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.", output.stream);
+    f_print_terminated(f_string_eol_s, output.stream);
+
+    funlockfile(output.stream);
 
     return F_none;
   }
@@ -79,7 +83,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            fll_print_terminated(f_string_eol_s, main->error.to.stream);
           }
 
           controller_main_delete(main);
@@ -129,7 +133,11 @@ extern "C" {
     }
 
     if (main->parameters[controller_parameter_version].result == f_console_result_found) {
+      flockfile(main->output.stream);
+
       fll_program_print_version(main->output, controller_version);
+
+      funlockfile(main->output.stream);
 
       controller_main_delete(main);
       return F_none;
@@ -162,10 +170,13 @@ extern "C" {
 
     if (main->parameters[controller_parameter_settings].result == f_console_result_found) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(main->error.to.stream, "%s%sThe parameter '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-        fprintf(main->error.to.stream, "%s%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_settings, main->error.notable.after->string);
-        fprintf(main->error.to.stream, "%s' was specified, but no value was given.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.notable);
+        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
       }
 
       status = F_status_set_error(F_parameter);
@@ -176,9 +187,7 @@ extern "C" {
       status = fll_path_canonical(arguments.argv[location], &setting.path_setting);
 
       if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
-        }
+        fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
       }
     }
     else {
@@ -190,18 +199,19 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
-        }
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
       }
     }
 
     if (main->parameters[controller_parameter_pid].result == f_console_result_found) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(main->error.to.stream, "%s%sThe parameter '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-        fprintf(main->error.to.stream, "%s%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_pid, main->error.notable.after->string);
-        fprintf(main->error.to.stream, "%s' was specified, but no value was given.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.notable);
+        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
       }
 
       status = F_status_set_error(F_parameter);
@@ -213,17 +223,18 @@ extern "C" {
         status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
-            fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
-          }
+          fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
         }
       }
       else {
         if (main->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(main->warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main->warning.to.stream, "%s%sThe parameter '", main->warning.context.before->string, main->warning.prefix ? main->warning.prefix : f_string_empty_s);
-          fprintf(main->warning.to.stream, "%s%s%s%s%s", main->warning.context.after->string, main->warning.notable.before->string, f_console_symbol_long_enable_s, controller_long_pid, main->warning.notable.after->string);
-          fprintf(main->warning.to.stream, "%s' must be a file path but instead is an empty string, falling back to the default.%s%c", main->warning.context.before->string, main->warning.context.after->string, f_string_eol_s[0]);
+          flockfile(main->warning.to.stream);
+
+          fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+          fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.notable);
+          fl_print_string("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+
+          funlockfile(main->warning.to.stream);
         }
       }
     }
@@ -247,18 +258,19 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
-        }
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_append", F_true);
       }
     }
 
     if (main->parameters[controller_parameter_control].result == f_console_result_found) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(main->error.to.stream, "%s%sThe parameter '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-        fprintf(main->error.to.stream, "%s%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_control, main->error.notable.after->string);
-        fprintf(main->error.to.stream, "%s' was specified, but no value was given.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.notable);
+        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
       }
 
       status = F_status_set_error(F_parameter);
@@ -270,35 +282,32 @@ extern "C" {
         status = fll_path_canonical(arguments.argv[location], &setting.path_control);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
-            fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
-          }
+          fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
         }
         else {
           status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
 
           if (F_status_is_error(status)) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
-            }
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
           }
           else {
             status = f_string_dynamic_terminate_after(&setting.path_control);
 
             if (F_status_is_error(status)) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-              }
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
             }
           }
         }
       }
       else {
         if (main->warning.verbosity == f_console_verbosity_debug) {
-          fprintf(main->warning.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main->warning.to.stream, "%s%sThe parameter '", main->warning.context.before->string, main->warning.prefix ? main->warning.prefix : f_string_empty_s);
-          fprintf(main->warning.to.stream, "%s%s%s%s%s", main->warning.context.after->string, main->warning.notable.before->string, f_console_symbol_long_enable_s, controller_long_control, main->warning.notable.after->string);
-          fprintf(main->warning.to.stream, "%s' must be a file directory path but instead is an empty string, falling back to the default.%s%c", main->warning.context.before->string, main->warning.context.after->string, f_string_eol_s[0]);
+          flockfile(main->warning.to.stream);
+
+          fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+          fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.notable);
+          fl_print_string("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+
+          funlockfile(main->warning.to.stream);
         }
       }
     }
@@ -306,12 +315,14 @@ extern "C" {
     if (main->parameters[controller_parameter_daemon].result == f_console_result_found) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_found) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
-          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-          fprintf(main->error.to.stream, "%s%sThe parameter '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-          fprintf(main->error.to.stream, "%s%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_validate, main->error.notable.after->string);
-          fprintf(main->error.to.stream, "%s' must not be specified with the parameter '", main->error.context.before->string);
-          fprintf(main->error.to.stream, "%s%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, f_console_symbol_long_enable_s, controller_long_daemon, main->error.notable.after->string);
-          fprintf(main->error.to.stream, "%s'.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+          flockfile(main->error.to.stream);
+
+          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_string("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.notable);
+          fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+          funlockfile(main->error.to.stream);
         }
 
         status = F_status_set_error(F_parameter);
@@ -342,25 +353,19 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
-          }
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
         }
         else {
           status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
 
           if (F_status_is_error(status)) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
-            }
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
           }
           else {
             status = f_string_dynamic_terminate_after(&setting.path_control);
 
             if (F_status_is_error(status)) {
-              if (main->error.verbosity != f_console_verbosity_quiet) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
-              }
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
             }
           }
         }

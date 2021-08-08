@@ -239,7 +239,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Success from f_thread_join().
+ *   Success from: f_thread_join().
  *
  *   Errors (with error bit) from: f_thread_join().
  *

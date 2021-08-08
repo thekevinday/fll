@@ -200,10 +200,14 @@ extern "C" {
 
     if (thread) f_thread_mutex_lock(&thread->lock.print);
 
-    fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-    fprintf(print.to.stream, "%s%sThe pid file '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
-    fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, path, print.notable.after->string);
-    fprintf(print.to.stream, "%s' doesn't contain the expected number, not deleting file.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+    flockfile(print.to.stream);
+
+    fl_print_string("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+    fl_print_string("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
+    fl_print_string("%[%S%]", print.to.stream, print.notable, path, print.notable);
+    fl_print_string("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+    funlockfile(print.to.stream);
 
     if (thread) controller_print_unlock_flush(print.to.stream, &thread->lock.print);
   }
@@ -304,25 +308,32 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       f_thread_mutex_lock(&thread->lock.print);
 
-      fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-      fprintf(print.to.stream, "%s%sCritical failure while attempting to establish ", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
-      fprintf(print.to.stream, "%s%s%s lock%s", print.context.after->string, print.notable.before->string, read ? "read" : "write", print.notable.after->string);
+      flockfile(print.to.stream);
+
+      fl_print_string("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+      fl_print_string("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
+      fl_print_string("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
 
       if (status != F_failure) {
-        fprintf(print.to.stream, "%s' due to %s", print.context.before->string, print.context.after->string);
+        fl_print_string(" %['due to%] ", print.to.stream, print.context, print.context);
 
         if (status == F_parameter) {
-          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Invalid Parameter", print.notable.after->string);
+          fl_print_string("%[%s%]", print.to.stream, print.notable, "Invalid Parameter", print.notable);
         }
         else if (status == F_deadlock) {
-          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Deadlock", print.notable.after->string);
+          fl_print_string("%[%s%]", print.to.stream, print.notable, "Deadlock", print.notable);
         }
         else if (status == F_resource_not) {
-          fprintf(print.to.stream, "%s%s%s", print.notable.before->string, "Too Many Locks", print.notable.after->string);
+          fl_print_string("%[%s%]", print.to.stream, print.notable, "Too Many Locks", print.notable);
+        }
+        else {
+          fl_print_string("%[%s%]", print.to.stream, print.notable, "Unknown Error", print.notable);
         }
       }
 
-      fprintf(print.to.stream, "%s.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
+      fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+      funlockfile(print.to.stream);
 
       controller_print_unlock_flush(print.to.stream, &thread->lock.print);
     }

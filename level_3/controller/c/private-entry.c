@@ -15,7 +15,8 @@ extern "C" {
 
     for (;;) {
 
-      f_print_dynamic(stream, action.parameters.array[index]);
+      // @fixme there needs to be a dynamic string equivalent of: f_print_safely_terminated().
+      fll_print_dynamic(stream, action.parameters.array[index]);
 
       ++index;
 
@@ -331,7 +332,7 @@ extern "C" {
         if (global.main->warning.verbosity == f_console_verbosity_debug) {
           fprintf(global.main->warning.to.stream, "%s%sUnknown %s item action '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
           fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-          f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+          fll_print_dynamic(global.main->warning.to.stream, cache->action.name_action); // @todo needs a f_print_safely_terminated().
           fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
           fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
@@ -373,7 +374,11 @@ extern "C" {
         if (global.main->error.verbosity != f_console_verbosity_quiet) {
           fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(global.main->error.to.stream, "%s%sThe %s item action '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-          fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->action.name_action.string, global.main->error.notable.after->string);
+
+          fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+          f_print_safely_terminated(global.main->error.to.stream, cache->action.name_action.string);
+          fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
           fprintf(global.main->error.to.stream, "%s' requires ", global.main->error.context.before->string);
 
           if (at_least == at_most) {
@@ -519,7 +524,11 @@ extern "C" {
 
                     fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                     fprintf(global.main->error.to.stream, "%s%sThe %s item action second parameter '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                    fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[1].string, global.main->error.notable.after->string);
+
+                    fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                    f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[1].string);
+                    fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                     fprintf(global.main->error.to.stream, "%s' must be a base path name, such as '", global.main->error.context.before->string);
                     fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->buffer_path.string, global.main->error.notable.after->string);
                     fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
@@ -575,7 +584,11 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%s', or '", global.main->error.context.before->string);
                   fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_wait_s, global.main->error.notable.after->string);
                   fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
-                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[j].string, global.main->error.notable.after->string);
+
+                  fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                  f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[j].string);
+                  fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                   fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
@@ -624,7 +637,11 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%s', or '", global.main->error.context.before->string);
                 fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_stop_s, global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
-                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+
+                fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[0].string);
+                fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                 fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
               }
             }
@@ -654,7 +671,11 @@ extern "C" {
                 if (global.main->error.verbosity != f_console_verbosity_quiet) {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sThe %s item action parameter '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[1].string, global.main->error.notable.after->string);
+
+                  fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                  f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[1].string);
+                  fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                   fprintf(global.main->error.to.stream, "%s' is not a valid supported number.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
@@ -673,7 +694,11 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%s%sThe %s item action may only have '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
                   fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, controller_string_wait_s, global.main->error.notable.after->string);
                   fprintf(global.main->error.to.stream, "%s' but instead has '", global.main->error.context.before->string);
-                  fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+
+                  fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                  f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[0].string);
+                  fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                   fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
               }
@@ -715,7 +740,11 @@ extern "C" {
 
     if (cache.name_action.used) {
       fprintf(print.to.stream, "action '");
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, cache.name_action.string, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, cache.name_action.string);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' on line ", print.context.before->string);
       fprintf(print.to.stream, "%s%s%llu%s", print.context.after->string, print.notable.before->string, cache.line_action, print.notable.after->string);
       fprintf(print.to.stream, "%s for ", print.context.before->string);
@@ -723,7 +752,11 @@ extern "C" {
 
     if (cache.name_item.used) {
       fprintf(print.to.stream, "%s item '", is_entry ? controller_string_entry_s : controller_string_exit_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, cache.name_item.string, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, cache.name_item.string);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' on line ", print.context.before->string);
       fprintf(print.to.stream, "%s%s%llu%s", print.context.after->string, print.notable.before->string, cache.line_item, print.notable.after->string);
       fprintf(print.to.stream, "%s for ", print.context.before->string);
@@ -731,7 +764,11 @@ extern "C" {
 
     if (cache.name_file.used) {
       fprintf(print.to.stream, "%s file '", is_entry ? controller_string_entry_s : controller_string_exit_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, cache.name_file.string, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, cache.name_file.string);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s'.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
@@ -920,7 +957,11 @@ extern "C" {
 
                 fprintf(global.main->warning.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->warning.to.stream, "%s%sIgnoring duplicate %s item '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fprintf(global.main->warning.to.stream, "%s%s%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string, cache->action.name_file.string, global.main->warning.notable.after->string);
+
+                fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
+                f_print_safely_terminated(global.main->error.to.stream, cache->action.name_file.string);
+                fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
+
                 fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
                 controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
@@ -1064,7 +1105,11 @@ extern "C" {
 
                       fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                       fprintf(global.main->error.to.stream, "%s%sThe required %s item '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                      fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, action->parameters.array[0].string, global.main->error.notable.after->string);
+
+                      fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                      f_print_safely_terminated(global.main->error.to.stream, action->parameters.array[0].string);
+                      fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                       fprintf(global.main->error.to.stream, "%s' does not exist.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
                       controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
@@ -1157,7 +1202,11 @@ extern "C" {
           if (global.main->error.verbosity != f_console_verbosity_quiet) {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sThe %s item setting '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-            fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, cache->action.name_action.string, global.main->error.notable.after->string);
+
+            fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+            f_print_safely_terminated(global.main->error.to.stream, cache->action.name_action.string);
+            fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
             fprintf(global.main->error.to.stream, "%s' requires exactly ", global.main->error.context.before->string);
             fprintf(global.main->error.to.stream, "%s%s%d%s", global.main->error.context.after->string, global.main->error.notable.before->string, 1, global.main->error.notable.after->string);
             fprintf(global.main->error.to.stream, "%s parameter.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
@@ -1176,10 +1225,10 @@ extern "C" {
           if (global.main->warning.verbosity == f_console_verbosity_debug) {
             fprintf(global.main->warning.to.stream, "%s%sUnknown %s item setting value '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-            f_print_dynamic_partial(global.main->warning.to.stream, cache->buffer_file, cache->content_actions.array[i].array[0]);
+            fll_print_dynamic_partial(global.main->warning.to.stream, cache->buffer_file, cache->content_actions.array[i].array[0]);
             fprintf(global.main->warning.to.stream, "%s%s for %s item setting '", global.main->warning.notable.after->string, global.main->warning.context.before->string, is_entry ? controller_string_entry_s : controller_string_exit_s);
             fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-            f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+            fll_print_dynamic(global.main->warning.to.stream, cache->action.name_action); // @todo needs safe print dynamic
             fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
             fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
@@ -1193,7 +1242,7 @@ extern "C" {
         if (global.main->warning.verbosity == f_console_verbosity_debug) {
           fprintf(global.main->warning.to.stream, "%s%sUnknown %s item setting '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
           fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-          f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+          fll_print_dynamic(global.main->warning.to.stream, cache->action.name_action); // @todo needs safe print dynamic
           fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
           fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 

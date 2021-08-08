@@ -10,12 +10,15 @@ extern "C" {
 
     if (status == F_access_denied) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sAccess denied", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SAccess denied", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -23,12 +26,15 @@ extern "C" {
 
     if (status == F_array_too_large) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sMaximum array length reached", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SMaximum array length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -36,12 +42,15 @@ extern "C" {
 
     if (status == F_buffer_too_large) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sMaximum buffer length reached", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SMaximum buffer length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -49,12 +58,15 @@ extern "C" {
 
     if (status == F_memory_not) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sUnable to allocate memory", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SUnable to allocate memory", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -62,12 +74,15 @@ extern "C" {
 
     if (status == F_parameter) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sInvalid parameter", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SInvalid parameter", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -75,12 +90,15 @@ extern "C" {
 
     if (status == F_string_too_large) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sMaximum string length reached", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SMaximum string length reached", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -88,12 +106,15 @@ extern "C" {
 
     if (status == F_utf) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sInvalid UTF-8 character", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SInvalid UTF-8 character", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -101,20 +122,23 @@ extern "C" {
 
     if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sInvalid (incomplete) UTF-8 character found ", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SInvalid (incomplete) UTF-8 character found", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
         if (status == F_complete_not_utf_eos) {
-          fprintf(print.to.stream, " at end of string.%s%c", print.context.after->string, f_string_eol_s[0]);
+          fl_print_string(" at the end of string.%]%c", print.to.stream, print.context, f_string_eol_s[0]);
         }
         else if (status == F_complete_not_utf_stop) {
-          fprintf(print.to.stream, " at stop point of string.%s%c", print.context.after->string, f_string_eol_s[0]);
+          fl_print_string(" at the stop point of string.%]%c", print.to.stream, print.context, f_string_eol_s[0]);
         }
         else {
-          fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+          fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
         }
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -122,12 +146,15 @@ extern "C" {
 
     if (status == F_failure) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%sFailure", print.context.before->string, print.prefix);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%SFailure", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
 
       return F_false;
@@ -135,14 +162,16 @@ extern "C" {
 
     if (fallback && print.verbosity != f_console_verbosity_quiet) {
       if (print.verbosity != f_console_verbosity_quiet) {
-        fprintf(print.to.stream, "%c", f_string_eol_s[0]);
-        fprintf(print.to.stream, "%s%s(", print.context.before->string, print.prefix);
-        fprintf(print.to.stream, "%s%s%hu%s", print.context.after->string, print.notable.before->string, status, print.notable.after->string);
-        fprintf(print.to.stream, "%s)", print.context.before->string);
+        flockfile(print.to.stream);
+
+        fl_print_string("%c%[%S(", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
+        fl_print_string("%[%ui%]%[", print.to.stream, print.notable, status, print.notable, print.context);
 
         private_fll_error_print_function(print, function);
 
-        fprintf(print.to.stream, ".%s%c", print.context.after->string, f_string_eol_s[0]);
+        fl_print_string(").%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
       }
     }
 
@@ -154,9 +183,9 @@ extern "C" {
   void private_fll_error_print_function(const fll_error_print_t print, const f_string_t function) {
 
     if (function) {
-      fprintf(print.to.stream, " when calling function %s", print.context.after->string);
-      fprintf(print.to.stream, "%s%s%s", print.notable.before->string, function, print.notable.after->string);
-      fprintf(print.to.stream, "%s()", print.context.before->string);
+      fl_print_string(" when calling function %]", print.to.stream, print.context);
+      fl_print_string("%[%S%]", print.to.stream, print.notable, function, print.notable);
+      fl_print_string("%[()", print.to.stream, print.context);
     }
   }
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)

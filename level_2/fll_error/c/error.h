@@ -22,9 +22,10 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/color.h>
 #include <fll/level_0/file.h>
+#include <fll/level_0/print.h>
 
 // fll-1 includes
-#include <fll/level_1/string.h>
+#include <fll/level_1/print.h>
 
 // fll-2 error includes
 #include <fll/level_2/error-common.h>

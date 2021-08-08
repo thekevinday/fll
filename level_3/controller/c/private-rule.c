@@ -689,7 +689,7 @@ extern "C" {
       if (cache.name_action.used) {
         fprintf(output.to.stream, "%s '", item ? "action" : "value");
         fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
-        f_print_dynamic(output.to.stream, cache.name_action);
+        fll_print_dynamic(output.to.stream, cache.name_action); // @todo safe dynamic print
         fprintf(output.to.stream, "%s%s' on line ", output.notable.after->string, output.context.before->string);
         fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_action, output.notable.after->string);
         fprintf(output.to.stream, "%s for ", output.context.before->string);
@@ -698,7 +698,7 @@ extern "C" {
       if (cache.name_item.used) {
         fprintf(output.to.stream, "rule %s '", item ? "item" : "setting");
         fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
-        f_print_dynamic(output.to.stream, cache.name_item);
+        fll_print_dynamic(output.to.stream, cache.name_item); // @todo safe dynamic print
         fprintf(output.to.stream, "%s%s' on line ", output.notable.after->string, output.context.before->string);
         fprintf(output.to.stream, "%s%s%llu%s", output.context.after->string, output.notable.before->string, cache.line_item, output.notable.after->string);
         fprintf(output.to.stream, "%s for ", output.context.before->string);
@@ -707,7 +707,7 @@ extern "C" {
       if (cache.name_file.used) {
         fprintf(output.to.stream, "rule file '");
         fprintf(output.to.stream, "%s%s", output.context.after->string, output.notable.before->string);
-        f_print_dynamic(output.to.stream, cache.name_file);
+        fll_print_dynamic(output.to.stream, cache.name_file); // @todo safe dynamic print
         fprintf(output.to.stream, "%s'.%s%c", output.context.before->string, output.context.after->string, f_string_eol_s[0]);
       }
     }
@@ -733,7 +733,10 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to.stream, "%c", f_string_eol_s[0]);
       fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name ? name : f_string_empty_s, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, name);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
         fprintf(print.to.stream, "%s' failed due to a failure to setup the '", print.context.before->string);
@@ -773,7 +776,11 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to.stream, "%c", f_string_eol_s[0]);
       fprintf(print.to.stream, "%s%sThe %s '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, script_is ? controller_string_script_s : controller_string_program_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, name ? name : f_string_empty_s, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, name);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' could not be executed because it was not found.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
@@ -785,7 +792,11 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to.stream, "%c", f_string_eol_s[0]);
       fprintf(print.to.stream, "%s%sThe %s rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s, need_want_wish);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, value, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, value);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' %s.%s%c", print.context.before->string, why, print.context.after->string, f_string_eol_s[0]);
     }
   }
@@ -797,7 +808,11 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to.stream, "%c", f_string_eol_s[0]);
       fprintf(print.to.stream, "%s%sThe rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, alias, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, alias);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' is no longer loaded.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
@@ -809,7 +824,11 @@ extern "C" {
     if (print.verbosity != f_console_verbosity_quiet) {
       fprintf(print.to.stream, "%c", f_string_eol_s[0]);
       fprintf(print.to.stream, "%s%sThe rule '", print.context.before->string, print.prefix ? print.prefix : f_string_empty_s);
-      fprintf(print.to.stream, "%s%s%s%s", print.context.after->string, print.notable.before->string, alias, print.notable.after->string);
+
+      fprintf(print.to.stream, "%s%s", print.context.after->string, print.notable.before->string);
+      f_print_safely_terminated(print.to.stream, alias);
+      fprintf(print.to.stream, "%s", print.notable.after->string);
+
       fprintf(print.to.stream, "%s' is not designating a pid file.%s%c", print.context.before->string, print.context.after->string, f_string_eol_s[0]);
     }
   }
@@ -1142,15 +1161,24 @@ extern "C" {
 
         fprintf(global.main->output.stream, "%c", f_string_eol_s[0]);
         fprintf(global.main->output.stream, "Simulating execution of '");
-        fprintf(global.main->output.stream, "%s%s%s", global.main->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, global.main->context.reset.string);
-        fprintf(global.main->output.stream, "' with the arguments: '%s", global.main->context.important.string);
+
+        fprintf(global.main->output.stream, "%s", global.main->context.title.string);
+        f_print_safely_terminated(global.main->output.stream, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s);
+        fprintf(global.main->output.stream, "%s' with the arguments: '%s", global.main->context.reset.string, global.main->context.important.string);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
-          fprintf(global.main->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
+
+          if (program && i || !program && i > 1) {
+            fprintf(global.main->output.stream, "%c", f_string_space_s[0]);
+          }
+
+          f_print_safely_terminated(global.main->output.stream, arguments.array[i].string);
         } // for
 
         fprintf(global.main->output.stream, "%s' from '", global.main->context.reset.string);
-        fprintf(global.main->output.stream, "%s%s%s", global.main->context.notable.string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, global.main->context.reset.string);
+
+        fprintf(global.main->output.stream, "%s", global.main->context.notable.string);
+        f_print_safely_terminated(global.main->output.stream, process->rule.name.used ? process->rule.name.string : f_string_empty_s);
         fprintf(global.main->output.stream, "%s'.%c", global.main->context.reset.string, f_string_eol_s[0]);
 
         controller_print_unlock_flush(global.main->output.stream, &global.thread->lock.print);
@@ -1385,15 +1413,24 @@ extern "C" {
 
         fprintf(global.main->output.stream, "%c", f_string_eol_s[0]);
         fprintf(global.main->output.stream, "Simulating execution of '");
-        fprintf(global.main->output.stream, "%s%s%s", global.main->context.title.string, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s, global.main->context.reset.string);
-        fprintf(global.main->output.stream, "' with the arguments: '%s", global.main->context.important.string);
+
+        fprintf(global.main->output.stream, "%s", global.main->context.title.string);
+        f_print_safely_terminated(global.main->output.stream, program ? program : arguments.used && arguments.array[0].used ? arguments.array[0].string : f_string_empty_s);
+        fprintf(global.main->output.stream, "%s' with the arguments: '%s", global.main->context.reset.string, global.main->context.important.string);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
-          fprintf(global.main->output.stream, "%s%s", (program && i || !program && i > 1) ? f_string_space_s : "", arguments.array[i].string);
+
+          if (program && i || !program && i > 1) {
+            fprintf(global.main->output.stream, "%c", f_string_space_s[0]);
+          }
+
+          f_print_safely_terminated(global.main->output.stream, arguments.array[i].string);
         } // for
 
         fprintf(global.main->output.stream, "%s' from '", global.main->context.reset.string);
-        fprintf(global.main->output.stream, "%s%s%s", global.main->context.notable.string, process->rule.name.used ? process->rule.name.string : f_string_empty_s, global.main->context.reset.string);
+
+        fprintf(global.main->output.stream, "%s", global.main->context.notable.string);
+        f_print_safely_terminated(global.main->output.stream, process->rule.name.used ? process->rule.name.string : f_string_empty_s);
         fprintf(global.main->output.stream, "%s'.%c", global.main->context.reset.string, f_string_eol_s[0]);
 
         controller_print_unlock_flush(global.main->output.stream, &global.thread->lock.print);
@@ -1713,7 +1750,7 @@ extern "C" {
           fprintf(global.main->warning.to.stream, "%c", f_string_eol_s[0]);
           fprintf(global.main->warning.to.stream, "%s%sUnknown rule item action '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s);
           fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-          f_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
+          fll_print_dynamic(global.main->warning.to.stream, cache->action.name_action);
           fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
           fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
@@ -1734,7 +1771,7 @@ extern "C" {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sFSS Extended List is not allowed for the rule item action '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
             fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-            f_print_dynamic(global.main->error.to.stream, cache->action.name_action);
+            fll_print_dynamic(global.main->error.to.stream, cache->action.name_action);
             fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
             fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -3186,7 +3223,7 @@ extern "C" {
               fprintf(global.main->warning.to.stream, "%c", f_string_eol_s[0]);
               fprintf(global.main->warning.to.stream, "%s%sUnknown rule item '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s);
               fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-              f_print_dynamic(global.main->warning.to.stream, cache->action.name_item);
+              fll_print_dynamic(global.main->warning.to.stream, cache->action.name_item);
               fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
               fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
@@ -3380,7 +3417,7 @@ extern "C" {
           fprintf(global.main->warning.to.stream, "%c", f_string_eol_s[0]);
           fprintf(global.main->warning.to.stream, "%s%sUnknown rule setting '", global.main->warning.context.before->string, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s);
           fprintf(global.main->warning.to.stream, "%s%s", global.main->warning.context.after->string, global.main->warning.notable.before->string);
-          f_print_dynamic(global.main->warning.to.stream, cache->action.name_item);
+          fll_print_dynamic(global.main->warning.to.stream, cache->action.name_item);
           fprintf(global.main->warning.to.stream, "%s", global.main->warning.notable.after->string);
           fprintf(global.main->warning.to.stream, "%s'.%s%c", global.main->warning.context.before->string, global.main->warning.context.after->string, f_string_eol_s[0]);
 
@@ -3529,7 +3566,7 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sRule setting has an unsupported number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                   fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                  f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(global.main->error.to.stream, "%s%s', the number is too large for this system.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
                   controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
@@ -3540,7 +3577,7 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                   fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                  f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(global.main->error.to.stream, "%s%s', only whole numbers are allowed for an affinity value.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
                   controller_print_unlock_flush(global.main->error.to.stream, &global.thread->lock.print);
@@ -3746,7 +3783,7 @@ extern "C" {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sRule setting has an unknown option '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
             fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-            f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+            fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
             fprintf(global.main->error.to.stream, "%s%s'.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
@@ -3909,7 +3946,7 @@ extern "C" {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sUnknown resource limit type '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
             fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-            f_print_dynamic(global.main->error.to.stream, cache->action.name_action);
+            fll_print_dynamic(global.main->error.to.stream, cache->action.name_action);
             fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
             fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4005,14 +4042,14 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sRule setting has an unsupported number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                   fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                  f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(global.main->error.to.stream, "%s%s', the number is too large for this system.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
                 else {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                   fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                  f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                  fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                   fprintf(global.main->error.to.stream, "%s%s', only whole numbers are allowed for a resource limit value.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
                 }
 
@@ -4136,7 +4173,7 @@ extern "C" {
                   fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                   fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid name '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                   fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                  f_print_dynamic(global.main->error.to.stream, *setting_value);
+                  fll_print_dynamic(global.main->error.to.stream, *setting_value);
                   fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                   fprintf(global.main->error.to.stream, "%s', there must be at least 1 graph character.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4281,7 +4318,7 @@ extern "C" {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sRule setting has an unknown scheduler '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
             fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-            f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+            fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
             fprintf(global.main->error.to.stream, "%s%s'.%s%c", global.main->error.notable.after->string, global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
@@ -4320,7 +4357,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
 
                 if (zero_only) {
                   fprintf(global.main->error.to.stream, "%s%s', only ", global.main->error.notable.after->string, global.main->error.context.before->string);
@@ -4519,7 +4556,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid number '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
                 fprintf(global.main->error.to.stream, "%s%s', only the whole numbers inclusively between ", global.main->error.notable.after->string, global.main->error.context.before->string);
                 fprintf(global.main->error.to.stream, "%s%s-20%s", global.main->error.context.after->string, global.main->error.notable.before->string, global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s and ", global.main->error.context.before->string);
@@ -4570,7 +4607,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid user '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because no user was found by that name.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4584,7 +4621,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid user '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because the given ID is too large.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4598,7 +4635,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid user '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[0]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4699,7 +4736,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid group '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because no group was found by that name.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4713,7 +4750,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid group '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because the given ID is too large.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4727,7 +4764,7 @@ extern "C" {
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sRule setting has an invalid group '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
                 fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-                f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
+                fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[j]);
                 fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
                 fprintf(global.main->error.to.stream, "%s' because the given ID is not a valid supported number.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -4951,7 +4988,7 @@ extern "C" {
           fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(global.main->error.to.stream, "%s%sRule setting's first value has '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
           fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-          f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+          fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
           fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
           fprintf(global.main->error.to.stream, "%s' but only supports %s, %s, %s, %s, %s", global.main->error.context.before->string, controller_string_freeze_s, controller_string_kill_s, controller_string_pause_s, controller_string_reload_s, controller_string_restart_s);
           fprintf(global.main->error.to.stream, "%s, %s, %s, and %s.%s%c", controller_string_resume_s, controller_string_start_s, controller_string_stop_s, controller_string_thaw_s, global.main->error.context.after->string, f_string_eol_s[0]);
@@ -5002,7 +5039,7 @@ extern "C" {
             fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
             fprintf(global.main->error.to.stream, "%s%sRule setting's second value has '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
             fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-            f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
+            fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[1]);
             fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
             fprintf(global.main->error.to.stream, "%s' but only supports %s, %s, and %s.%s%c", global.main->error.context.before->string, controller_string_need_s, controller_string_want_s, controller_string_wish_s, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -5106,11 +5143,11 @@ extern "C" {
           fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
           fprintf(global.main->error.to.stream, "%s%sThe rule item action third parameter '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s);
           fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-          f_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[2]);
+          fll_print_dynamic_partial(global.main->error.to.stream, cache->buffer_item, cache->content_actions.array[i].array[2]);
           fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
           fprintf(global.main->error.to.stream, "%s' must be a base path name, such as %llu '", global.main->error.context.before->string, cache->buffer_path.used);
           fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
-          f_print_dynamic(global.main->error.to.stream, cache->buffer_path);
+          fll_print_dynamic(global.main->error.to.stream, cache->buffer_path);
           fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
           fprintf(global.main->error.to.stream, "%s'.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
@@ -5243,7 +5280,7 @@ extern "C" {
 
         if (rule.control_group.groups.array[i].used) {
           fprintf(main->output.stream, "%s", f_string_space_s);
-          f_print_dynamic(main->output.stream, rule.control_group.groups.array[i]);
+          fll_print_dynamic(main->output.stream, rule.control_group.groups.array[i]);
         }
       } // for
     }

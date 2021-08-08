@@ -20,7 +20,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_print -lf_conversion -lf_memory -lf_print -lf_string -lf_utf
+build_libraries-individual -lfl_print -lf_color -lf_conversion -lf_memory -lf_print -lf_string -lf_utf
 build_sources_library print.c
 build_sources_program
 build_sources_headers print.h

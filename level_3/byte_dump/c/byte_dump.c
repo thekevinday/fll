@@ -257,7 +257,7 @@ extern "C" {
           fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[250%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
           fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -297,7 +297,7 @@ extern "C" {
           fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
           fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -337,7 +337,7 @@ extern "C" {
           fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
           fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string("%[ and %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
           fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
           fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
@@ -455,7 +455,7 @@ extern "C" {
           f_print_terminated(f_string_eol_s, main->output.stream);
           fl_print_string("%[Byte Dump of: %]%[", main->output.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
           fll_print_safely_terminated(arguments.argv[main->remaining.array[counter]], main->output.stream);
-          fl_print_string("%]%[ (in ", main->output.stream, main->context.set.notable, main->context.set.title);
+          fl_print_string("%] %[(in ", main->output.stream, main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal) {
             f_print_terminated("Hexidecimal", main->output.stream);

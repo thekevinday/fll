@@ -570,7 +570,11 @@ extern "C" {
 
                     fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                     fprintf(global.main->error.to.stream, "%s%sThe %s item named '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                    fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, entry->items.array[i].name.string, global.main->error.notable.after->string);
+
+                    fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                    f_print_safely_terminated(global.main->error.to.stream, entry->items.array[i].name.string);
+                    fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                     fprintf(global.main->error.to.stream, "%s' cannot be executed because recursion is not allowed.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
                     controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
@@ -633,7 +637,11 @@ extern "C" {
 
                 fprintf(global.main->error.to.stream, "%c", f_string_eol_s[0]);
                 fprintf(global.main->error.to.stream, "%s%sThe %s item named '", global.main->error.context.before->string, global.main->error.prefix ? global.main->error.prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fprintf(global.main->error.to.stream, "%s%s%s%s", global.main->error.context.after->string, global.main->error.notable.before->string, actions->array[cache->ats.array[at_j]].parameters.array[0].string, global.main->error.notable.after->string);
+
+                fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+                f_print_safely_terminated(global.main->error.to.stream, actions->array[cache->ats.array[at_j]].parameters.array[0].string);
+                fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
                 fprintf(global.main->error.to.stream, "%s' does not exist.%s%c", global.main->error.context.before->string, global.main->error.context.after->string, f_string_eol_s[0]);
 
                 controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
@@ -759,7 +767,11 @@ extern "C" {
 
         fprintf(global->main->output.stream, "%c", f_string_eol_s[0]);
         fprintf(global->main->output.stream, "Processing %s%s item '", (failsafe ? "failsafe " : ""), is_entry ? controller_string_entry_s : controller_string_exit_s);
-        fprintf(global->main->output.stream, "%s%s%s", global->main->context.set.title.before->string, cache->action.name_item.string, global->main->context.set.title.after->string);
+
+        fprintf(global.main->error.to.stream, "%s%s", global.main->error.context.after->string, global.main->error.notable.before->string);
+        f_print_safely_terminated(global.main->error.to.stream, cache->action.name_item.string);
+        fprintf(global.main->error.to.stream, "%s", global.main->error.notable.after->string);
+
         fprintf(global->main->output.stream, "'.%c", f_string_eol_s[0]);
 
         controller_print_unlock_flush(global->main->output.stream, &global->thread->lock.print);

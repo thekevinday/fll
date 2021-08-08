@@ -1649,8 +1649,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from f_thread_lock_delete().
- *   Errors (with error bit) from f_thread_mutex_delete().
+ *   Errors (with error bit) from: f_thread_lock_delete().
+ *   Errors (with error bit) from: f_thread_mutex_delete().
  *
  * @see f_thread_lock_delete()
  * @see f_thread_mutex_delete()
@@ -1955,7 +1955,7 @@ extern "C" {
  *   F_none on success.
  *   F_signal on success and signal found.
  *
- *   Success from f_thread_condition_wait_timed().
+ *   Success from: f_thread_condition_wait_timed().
  *
  *   Errors (with error bit) from: f_thread_condition_wait_timed().
  *

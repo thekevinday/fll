@@ -30,10 +30,12 @@
 
 // fll-1 includes
 #include <fll/level_1/console.h>
+#include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 
 // fll-2 includes
 #include <fll/level_2/error.h>
+#include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
 #ifdef __cplusplus
