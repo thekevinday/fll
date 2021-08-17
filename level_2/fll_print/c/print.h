@@ -320,6 +320,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -339,7 +341,7 @@ extern "C" {
  * @see f_print_except()
  */
 #ifndef _di_fll_print_except_
-  extern f_status_t fll_print_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_except_
 
 /**
@@ -347,6 +349,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -366,7 +370,7 @@ extern "C" {
  * @see f_print_except_raw()
  */
 #ifndef _di_fll_print_except_raw_
-  extern f_status_t fll_print_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_except_raw_
 
 /**
@@ -374,6 +378,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -393,7 +399,7 @@ extern "C" {
  * @see f_print_except_safely()
  */
 #ifndef _di_fll_print_except_safely_
-  extern f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_except_safely_
 
 /**
@@ -476,6 +482,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -498,7 +506,7 @@ extern "C" {
  * @see f_print_except_in()
  */
 #ifndef _di_fll_print_except_in_
-  extern f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_except_in_
 
 /**
@@ -506,6 +514,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -528,7 +538,7 @@ extern "C" {
  * @see f_print_except_in_raw()
  */
 #ifndef _di_fll_print_except_in_raw_
-  extern f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_except_in_raw_
 
 /**
@@ -536,6 +546,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -558,7 +570,7 @@ extern "C" {
  * @see f_print_except_in_safely()
  */
 #ifndef _di_fll_print_except_in_safely_
-  extern f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_except_in_safely_
 
 /**
@@ -1277,6 +1289,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -1296,7 +1310,7 @@ extern "C" {
  * @see fl_print_trim_except()
  */
 #ifndef _di_fll_print_trim_except_
-  extern f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_trim_except_
 
 /**
@@ -1304,6 +1318,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -1323,7 +1339,7 @@ extern "C" {
  * @see fl_print_trim_except_raw()
  */
 #ifndef _di_fll_print_trim_except_raw_
-  extern f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_trim_except_raw_
 
 /**
@@ -1331,6 +1347,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -1350,7 +1368,7 @@ extern "C" {
  * @see fl_print_trim_except_safely()
  */
 #ifndef _di_fll_print_trim_except_safely_
-  extern f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_trim_except_safely_
 
 /**
@@ -1433,6 +1451,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -1455,7 +1475,7 @@ extern "C" {
  * @see fl_print_trim_except_in()
  */
 #ifndef _di_fll_print_trim_except_in_
-  extern f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_trim_except_in_
 
 /**
@@ -1463,6 +1483,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -1485,7 +1507,7 @@ extern "C" {
  * @see fl_print_trim_except_in_raw()
  */
 #ifndef _di_fll_print_trim_except_in_raw_
-  extern f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_trim_except_in_raw_
 
 /**
@@ -1493,6 +1515,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -1515,7 +1539,7 @@ extern "C" {
  * @see fl_print_trim_except_in_safely()
  */
 #ifndef _di_fll_print_trim_except_in_safely_
-  extern f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fll_print_trim_except_in_safely_
 
 /**

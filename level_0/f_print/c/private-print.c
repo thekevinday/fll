@@ -13,7 +13,7 @@ extern "C" {
 
     for (register f_array_length_t i = 0; i < length; ) {
 
-      total = strlen(string + start);
+      total = strnlen(string + start, length - start);
 
       if (total) {
         if (fwrite_unlocked(string + start, 1, total, output) == -1) {
@@ -123,7 +123,7 @@ extern "C" {
 
     for (register f_array_length_t i = 0; i < length; ) {
 
-      total = strlen(string + start);
+      total = strnlen(string + start, length - start);
 
       if (total) {
         if (fwrite_unlocked(string + start, 1, total, output) == -1) {

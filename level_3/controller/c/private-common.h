@@ -107,6 +107,7 @@ extern "C" {
   #define controller_string_use           "use"
   #define controller_string_user          "user"
   #define controller_string_utility       "utility"
+  #define controller_string_value         "value"
   #define controller_string_wait          "wait"
   #define controller_string_want          "want"
   #define controller_string_wish          "wish"
@@ -201,6 +202,7 @@ extern "C" {
   #define controller_string_use_length           3
   #define controller_string_user_length          4
   #define controller_string_utility_length       7
+  #define controller_string_value_length         5
   #define controller_string_wait_length          4
   #define controller_string_want_length          4
   #define controller_string_wish_length          4
@@ -296,6 +298,7 @@ extern "C" {
   extern const f_string_t controller_string_use_s;
   extern const f_string_t controller_string_user_s;
   extern const f_string_t controller_string_utility_s;
+  extern const f_string_t controller_string_value_s;
   extern const f_string_t controller_string_wait_s;
   extern const f_string_t controller_string_want_s;
   extern const f_string_t controller_string_wish_s;

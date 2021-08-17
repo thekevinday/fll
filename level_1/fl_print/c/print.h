@@ -616,7 +616,7 @@ extern "C" {
  *
  * Will not stop at NULL.
  * Will not print NULL.
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
  *
@@ -624,9 +624,11 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -647,7 +649,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_
-  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_
 
 /**
@@ -657,7 +659,7 @@ extern "C" {
  *
  * Will not stop at NULL.
  * Will print NULL.
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * All UTF-8 characters, invalid or not, are printed as is, except for trimmed characters.
  * Invalid UTF-8 characters are not considered whitespace for the purpose of trimming.
@@ -668,9 +670,11 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -689,7 +693,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_raw_
-  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_raw_
 
 /**
@@ -700,7 +704,7 @@ extern "C" {
  *
  * Will not stop at NULL.
  * Will print NULL (as a control character symbol).
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
  *
@@ -708,9 +712,11 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -730,7 +736,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_safely_
-  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_safely_
 
 /**
@@ -741,7 +747,7 @@ extern "C" {
  * Will not stop at NULL.
  * Will not print NULL.
  * Will print the entire dynamic string, except for leading/trailing whitespace.
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
  *
@@ -749,7 +755,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -770,7 +776,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_
-  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_dynamic_
 
 /**
@@ -781,7 +787,7 @@ extern "C" {
  * Will not stop at NULL.
  * Will print NULL.
  * Will print the entire dynamic string, except for leading/trailing whitespace.
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * All UTF-8 characters, invalid or not, are printed as is, except for trimmed characters.
  * Invalid UTF-8 characters are not considered whitespace for the purpose of trimming.
@@ -792,7 +798,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -811,7 +817,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_raw_
-  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
 /**
@@ -823,7 +829,7 @@ extern "C" {
  * Will not stop at NULL.
  * Will print NULL (as a control character symbol).
  * Will print the entire dynamic string, except for leading/trailing whitespace.
- * Will not print any 1-byte character at a location specified in except array.
+ * Will not print any 1-byte character at a location specified in except_at array.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
  *
@@ -831,7 +837,7 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param except
+ * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
  * @param output
@@ -851,7 +857,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_dynamic_safely_
-  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
+  extern f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output);
 #endif // _di_fl_print_trim_except_dynamic_safely_
 
 /**
@@ -870,6 +876,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -896,7 +904,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_
-  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fl_print_trim_except_in_
 
 /**
@@ -918,6 +926,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -942,7 +952,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_raw_
-  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fl_print_trim_except_in_raw_
 
 /**
@@ -962,6 +972,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -987,7 +999,7 @@ extern "C" {
  * @see fputc_unlocked()
  */
 #ifndef _di_fl_print_trim_except_in_safely_
-  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_fl_print_trim_except_in_safely_
 
 /**
@@ -1007,6 +1019,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param except_at
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.

@@ -75,7 +75,7 @@ extern "C" {
 #endif // _di_f_conversion_character_is_octal_
 
 #ifndef _di_f_conversion_character_to_binary_
-  f_status_t f_conversion_character_to_binary(const char character, f_number_unsigned_t *number) {
+  f_status_t f_conversion_character_to_binary(const char character, uint8_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -93,7 +93,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_binary_
 
 #ifndef _di_f_conversion_character_to_decimal_
-  f_status_t f_conversion_character_to_decimal(const char character, f_number_unsigned_t *number) {
+  f_status_t f_conversion_character_to_decimal(const char character, uint8_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -109,7 +109,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_decimal_
 
 #ifndef _di_f_conversion_character_to_duodecimal_
-  f_status_t f_conversion_character_to_duodecimal(const char character, f_number_unsigned_t *number) {
+  f_status_t f_conversion_character_to_duodecimal(const char character, uint8_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -131,7 +131,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_duodecimal_
 
 #ifndef _di_f_conversion_character_to_hexidecimal_
-  f_status_t f_conversion_character_to_hexidecimal(const char character, f_number_unsigned_t *number) {
+  f_status_t f_conversion_character_to_hexidecimal(const char character, uint8_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -153,7 +153,7 @@ extern "C" {
 #endif // _di_f_conversion_character_to_hexidecimal_
 
 #ifndef _di_f_conversion_character_to_octal_
-  f_status_t f_conversion_character_to_octal(const char character, f_number_unsigned_t *number) {
+  f_status_t f_conversion_character_to_octal(const char character, uint8_t *number) {
     #ifndef _di_level_0_parameter_checking_
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_

@@ -229,10 +229,13 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             f_thread_mutex_lock(&thread.lock.print);
 
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(main->error.to.stream, "%s%sThe pid file '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-            fprintf(main->error.to.stream, "%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, setting->path_pid.string, main->error.notable.after->string);
-            fprintf(main->error.to.stream, "%s' must not already exist.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_string("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_string("%[%S%]", main->error.to.stream, main->error.notable, setting->path_pid.string, main->error.notable);
+            fl_print_string("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
 
             controller_print_unlock_flush(main->error.to.stream, &thread.lock.print);
           }
@@ -722,10 +725,13 @@ extern "C" {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             f_thread_mutex_lock(&entry->global->thread->lock.print);
 
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-            fprintf(main->error.to.stream, "%s%sThe pid file '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-            fprintf(main->error.to.stream, "%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, entry->setting->path_pid.string, main->error.notable.after->string);
-            fprintf(main->error.to.stream, "%s' must not already exist.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_string("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->setting->path_pid, main->error.notable);
+            fl_print_string("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
 
             controller_print_unlock_flush(main->error.to.stream, &entry->global->thread->lock.print);
           }
@@ -763,10 +769,13 @@ extern "C" {
                 if (main->error.verbosity != f_console_verbosity_quiet) {
                   f_thread_mutex_lock(&entry->global->thread->lock.print);
 
-                  fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-                  fprintf(main->error.to.stream, "%s%sFailed while processing requested failsafe item '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-                  fprintf(main->error.to.stream, "%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name.string, main->error.notable.after->string);
-                  fprintf(main->error.to.stream, "%s'.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+                  flockfile(main->error.to.stream);
+
+                  fl_print_string("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                  fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                  fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+                  funlockfile(main->error.to.stream);
 
                   controller_print_unlock_flush(main->error.to.stream, &entry->global->thread->lock.print);
                 }
@@ -873,10 +882,13 @@ extern "C" {
               if (main->error.verbosity != f_console_verbosity_quiet) {
                 f_thread_mutex_lock(&entry->global->thread->lock.print);
 
-                fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-                fprintf(main->error.to.stream, "%s%sFailed while processing requested failsafe item '", main->error.context.before->string, main->error.prefix ? main->error.prefix : f_string_empty_s);
-                fprintf(main->error.to.stream, "%s%s%s%s", main->error.context.after->string, main->error.notable.before->string, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name.string, main->error.notable.after->string);
-                fprintf(main->error.to.stream, "%s'.%s%c", main->error.context.before->string, main->error.context.after->string, f_string_eol_s[0]);
+                flockfile(main->error.to.stream);
+
+                fl_print_string("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+                funlockfile(main->error.to.stream);
 
                 controller_print_unlock_flush(main->error.to.stream, &entry->global->thread->lock.print);
               }

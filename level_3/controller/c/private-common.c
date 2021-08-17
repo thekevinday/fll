@@ -97,6 +97,7 @@ extern "C" {
   const f_string_t controller_string_use_s = controller_string_use;
   const f_string_t controller_string_user_s = controller_string_user;
   const f_string_t controller_string_utility_s = controller_string_utility;
+  const f_string_t controller_string_value_s = controller_string_value;
   const f_string_t controller_string_wait_s = controller_string_wait;
   const f_string_t controller_string_want_s = controller_string_want;
   const f_string_t controller_string_wish_s = controller_string_wish;

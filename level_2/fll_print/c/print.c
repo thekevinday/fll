@@ -235,11 +235,11 @@ extern "C" {
 #endif // _di_fll_print_dynamic_partial_safely_
 
 #ifndef _di_fll_print_except_
-  f_status_t fll_print_except(const f_string_t buffer, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_except(const f_string_t buffer, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except(buffer, length, except, output);
+    const f_status_t status = f_print_except(buffer, offset, length, except, output);
 
     funlockfile(output);
 
@@ -248,11 +248,11 @@ extern "C" {
 #endif // _di_fll_print_except_
 
 #ifndef _di_fll_print_except_raw_
-  f_status_t fll_print_except_raw(const f_string_t buffer, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_except_raw(const f_string_t buffer, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_raw(buffer, length, except, output);
+    const f_status_t status = f_print_except_raw(buffer, offset, length, except, output);
 
     funlockfile(output);
 
@@ -261,11 +261,11 @@ extern "C" {
 #endif // _di_fll_print_except_raw_
 
 #ifndef _di_fll_print_except_safely_
-  f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_safely(string, length, except, output);
+    const f_status_t status = f_print_except_safely(string, offset, length, except, output);
 
     funlockfile(output);
 
@@ -313,11 +313,11 @@ extern "C" {
 #endif // _di_fll_print_except_dynamic_safely_
 
 #ifndef _di_fll_print_except_in_
-  f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_in(string, length, except_at, except_in, output);
+    const f_status_t status = f_print_except_in(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
@@ -326,11 +326,11 @@ extern "C" {
 #endif // _di_fll_print_except_in_
 
 #ifndef _di_fll_print_except_in_raw_
-  f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_in_raw(string, length, except_at, except_in, output);
+    const f_status_t status = f_print_except_in_raw(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
@@ -339,11 +339,11 @@ extern "C" {
 #endif // _di_fll_print_except_in_raw_
 
 #ifndef _di_fll_print_except_in_safely_
-  f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_in_safely(string, length, except_at, except_in, output);
+    const f_status_t status = f_print_except_in_safely(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
@@ -683,11 +683,11 @@ extern "C" {
 #endif // _di_fll_print_trim_dynamic_partial_safely_
 
 #ifndef _di_fll_print_trim_except_
-  f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except(string, length, except, output);
+    const f_status_t status = fl_print_trim_except(string, offset, length, except, output);
 
     funlockfile(output);
 
@@ -696,11 +696,11 @@ extern "C" {
 #endif // _di_fll_print_trim_except_
 
 #ifndef _di_fll_print_trim_except_raw_
-  f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except_raw(string, length, except, output);
+    const f_status_t status = fl_print_trim_except_raw(string, offset, length, except, output);
 
     funlockfile(output);
 
@@ -709,11 +709,11 @@ extern "C" {
 #endif // _di_fll_print_trim_except_raw_
 
 #ifndef _di_fll_print_trim_except_safely_
-  f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fll_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except_safely(string, length, except, output);
+    const f_status_t status = fl_print_trim_except_safely(string, offset, length, except, output);
 
     funlockfile(output);
 
@@ -761,11 +761,11 @@ extern "C" {
 #endif // _di_fll_print_trim_except_dynamic_safely_
 
 #ifndef _di_fll_print_trim_except_in_
-  f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except_in(string, length, except_at, except_in, output);
+    const f_status_t status = fl_print_trim_except_in(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
@@ -774,11 +774,11 @@ extern "C" {
 #endif // _di_fll_print_trim_except_in_
 
 #ifndef _di_fll_print_trim_except_in_raw_
-  f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except_in_raw(string, length, except_at, except_in, output);
+    const f_status_t status = fl_print_trim_except_in_raw(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
@@ -787,11 +787,11 @@ extern "C" {
 #endif // _di_fll_print_trim_except_in_raw_
 
 #ifndef _di_fll_print_trim_except_in_safely_
-  f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fll_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = fl_print_trim_except_in_safely(string, length, except_at, except_in, output);
+    const f_status_t status = fl_print_trim_except_in_safely(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 

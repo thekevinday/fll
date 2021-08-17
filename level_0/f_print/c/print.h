@@ -320,6 +320,8 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
+ * An offset is provided because the except position is expected to be relative to the start position, without the offset applied.
+ *
  * Will not stop at NULL.
  * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
@@ -329,6 +331,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -347,11 +351,13 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_
-  extern f_status_t f_print_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_f_print_except_
 
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
+ *
+ * An offset is provided because the except position is expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will print NULL.
@@ -364,6 +370,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -382,7 +390,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_raw_
-  extern f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_f_print_except_raw_
 
 /**
@@ -400,6 +408,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except
@@ -420,7 +430,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_safely_
-  extern f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+  extern f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
 #endif // _di_f_print_except_safely_
 
 /**
@@ -526,6 +536,8 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
+ * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
+ *
  * Will not stop at NULL.
  * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
@@ -536,6 +548,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -557,11 +571,13 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_
-  extern f_status_t f_print_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_f_print_except_in_
 
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
+ *
+ * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will print NULL.
@@ -575,6 +591,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -596,7 +614,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_raw_
-  extern f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_f_print_except_in_raw_
 
 /**
@@ -604,6 +622,8 @@ extern "C" {
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
+ *
+ * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will print NULL (as a control character symbol).
@@ -615,6 +635,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -638,7 +660,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_except_in_safely_
-  extern f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+  extern f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
 #endif // _di_f_print_except_in_safely_
 
 /**

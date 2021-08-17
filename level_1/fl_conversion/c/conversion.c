@@ -17,7 +17,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -47,10 +47,10 @@ extern "C" {
           digits = 1;
 
           if (negative) {
-            converted = 0 - digit;
+            converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
-            converted = digit;
+            converted = (f_number_unsigned_t) digit;
           }
         }
       }
@@ -77,7 +77,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -95,7 +95,7 @@ extern "C" {
         }
         else if (digit) {
           digits = 1;
-          converted = digit;
+          converted = (f_number_unsigned_t) digit;
         }
       }
       else if (string[i]) {
@@ -121,7 +121,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -156,10 +156,10 @@ extern "C" {
           digits = 1;
 
           if (negative) {
-            converted = 0 - digit;
+            converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
-            converted = digit;
+            converted = (f_number_unsigned_t) digit;
           }
         }
       }
@@ -186,7 +186,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -207,7 +207,7 @@ extern "C" {
         }
         else if (digit) {
           digits = 1;
-          converted = digit;
+          converted = (f_number_unsigned_t) digit;
         }
       }
       else if (string[i]) {
@@ -233,7 +233,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -268,10 +268,10 @@ extern "C" {
           digits = 1;
 
           if (negative) {
-            converted = 0 - digit;
+            converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
-            converted = digit;
+            converted = (f_number_unsigned_t) digit;
           }
         }
       }
@@ -298,7 +298,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -319,7 +319,7 @@ extern "C" {
         }
         else if (digit) {
           digits = 1;
-          converted = digit;
+          converted = (f_number_unsigned_t) digit;
         }
       }
       else if (string[i]) {
@@ -345,7 +345,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -380,10 +380,10 @@ extern "C" {
           digits = 1;
 
           if (negative) {
-            converted = 0 - digit;
+            converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
-            converted = digit;
+            converted = (f_number_unsigned_t) digit;
           }
         }
       }
@@ -410,7 +410,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -431,7 +431,7 @@ extern "C" {
         }
         else if (digit) {
           digits = 1;
-          converted = digit;
+          converted = (f_number_unsigned_t) digit;
         }
       }
       else if (string[i]) {
@@ -457,7 +457,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -492,10 +492,10 @@ extern "C" {
           digits = 1;
 
           if (negative) {
-            converted = 0 - digit;
+            converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
-            converted = digit;
+            converted = (f_number_unsigned_t) digit;
           }
         }
       }
@@ -522,7 +522,7 @@ extern "C" {
     }
 
     uint8_t digits = 0;
-    f_number_unsigned_t digit = 0;
+    uint8_t digit = 0;
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
@@ -543,7 +543,7 @@ extern "C" {
         }
         else if (digit) {
           digits = 1;
-          converted = digit;
+          converted = (f_number_unsigned_t) digit;
         }
       }
       else if (string[i]) {

@@ -310,7 +310,7 @@ extern "C" {
 #endif // _di_fl_print_trim_dynamic_partial_safely_
 
 #ifndef _di_fl_print_trim_except_
-  f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -321,12 +321,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in(string, length, except, except_in, output);
+    return private_fl_print_trim_except_in(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_
 
 #ifndef _di_fl_print_trim_except_raw_
-  f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -337,12 +337,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_raw(string, length, except, except_in, output);
+    return private_fl_print_trim_except_in_raw(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_raw_
 
 #ifndef _di_fl_print_trim_except_safely_
-  f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -353,12 +353,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_safely(string, length, except, except_in, output);
+    return private_fl_print_trim_except_in_safely(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_safely_
 
 #ifndef _di_fl_print_trim_except_dynamic_
-  f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -369,12 +369,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in(buffer.string, buffer.used, except, except_in, output);
+    return private_fl_print_trim_except_in(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_
 
 #ifndef _di_fl_print_trim_except_dynamic_raw_
-  f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -385,12 +385,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_raw(buffer.string, buffer.used, except, except_in, output);
+    return private_fl_print_trim_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_raw_
 
 #ifndef _di_fl_print_trim_except_dynamic_safely_
-  f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output) {
+  f_status_t fl_print_trim_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -401,12 +401,12 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_safely(buffer.string, buffer.used, except, except_in, output);
+    return private_fl_print_trim_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_safely_
 
 #ifndef _di_fl_print_trim_except_in_
-  f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -415,12 +415,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in(string, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_
 
 #ifndef _di_fl_print_trim_except_in_raw_
-  f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -429,12 +429,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in_raw(string, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in_raw(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_raw_
 
 #ifndef _di_fl_print_trim_except_in_safely_
-  f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
@@ -443,7 +443,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in_safely(string, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in_safely(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_safely_
 
@@ -457,7 +457,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in(buffer.string, buffer.used, except_at, except_in, output);
+    return private_fl_print_trim_except_in(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_
 
@@ -471,7 +471,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in_raw(buffer.string, buffer.used, except_at, except_in, output);
+    return private_fl_print_trim_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_raw_
 
@@ -485,7 +485,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_fl_print_trim_except_in_safely(buffer.string, buffer.used, except_at, except_in, output);
+    return private_fl_print_trim_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_safely_
 
@@ -505,7 +505,7 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_fl_print_trim_except_in(buffer.string + range.start, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in(buffer.string, range.start, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_partial_
 
@@ -525,7 +525,7 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_fl_print_trim_except_in_raw(buffer.string + range.start, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in_raw(buffer.string, range.start, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_partial_raw_
 
@@ -545,7 +545,7 @@ extern "C" {
       length = buffer.used - range.start;
     }
 
-    return private_fl_print_trim_except_in_safely(buffer.string + range.start, length, except_at, except_in, output);
+    return private_fl_print_trim_except_in_safely(buffer.string, range.start, length, except_at, except_in, output);
   }
 #endif // _di_fl_print_trim_except_in_dynamic_partial_safely_
 
@@ -567,7 +567,7 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in(buffer.string + range.start, length, except, except_in, output);
+    return private_fl_print_trim_except_in(buffer.string, range.start, length, except, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_partial_
 
@@ -589,7 +589,7 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_raw(buffer.string + range.start, length, except, except_in, output);
+    return private_fl_print_trim_except_in_raw(buffer.string, range.start, length, except, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_partial_raw_
 
@@ -611,7 +611,7 @@ extern "C" {
 
     const f_string_ranges_t except_in = f_string_ranges_t_initialize;
 
-    return private_fl_print_trim_except_in_safely(buffer.string + range.start, length, except, except_in, output);
+    return private_fl_print_trim_except_in_safely(buffer.string, range.start, length, except, except_in, output);
   }
 #endif // _di_fl_print_trim_except_dynamic_partial_safely_
 

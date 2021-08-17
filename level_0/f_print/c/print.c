@@ -159,7 +159,7 @@ extern "C" {
 #endif // _di_f_print_dynamic_partial_safely_
 
 #ifndef _di_f_print_except_
-  f_status_t f_print_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -168,12 +168,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except(string, 0, length, except, output);
+    return private_f_print_except(string, offset, length, except, output);
   }
 #endif // _di_f_print_except_
 
 #ifndef _di_f_print_except_raw_
-  f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -182,12 +182,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except_raw(string, 0, length, except, output);
+    return private_f_print_except_raw(string, offset, length, except, output);
   }
 #endif // _di_f_print_except_raw_
 
 #ifndef _di_f_print_except_safely_
-  f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+  f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -196,7 +196,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except_safely(string, 0, length, except, output);
+    return private_f_print_except_safely(string, offset, length, except, output);
   }
 #endif // _di_f_print_except_safely_
 
@@ -237,7 +237,7 @@ extern "C" {
 #endif // _di_f_print_except_dynamic_safely_
 
 #ifndef _di_f_print_except_in_
-  f_status_t f_print_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -246,12 +246,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except_in(string, 0, length, except_at, except_in, output);
+    return private_f_print_except_in(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_f_print_except_in_
 
 #ifndef _di_f_print_except_in_raw_
-  f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -260,12 +260,12 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except_in_raw(string, 0, length, except_at, except_in, output);
+    return private_f_print_except_in_raw(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_f_print_except_in_raw_
 
 #ifndef _di_f_print_except_in_safely_
-  f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+  f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
     #ifndef _di_level_0_parameter_checking_
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -274,7 +274,7 @@ extern "C" {
       return F_data_not;
     }
 
-    return private_f_print_except_in_safely(string, 0, length, except_at, except_in, output);
+    return private_f_print_except_in_safely(string, offset, length, except_at, except_in, output);
   }
 #endif // _di_f_print_except_in_safely_
 

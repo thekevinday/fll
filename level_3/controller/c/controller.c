@@ -173,7 +173,7 @@ extern "C" {
         flockfile(main->error.to.stream);
 
         fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.notable);
+        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.set.notable);
         fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
@@ -203,44 +203,46 @@ extern "C" {
       }
     }
 
-    if (main->parameters[controller_parameter_pid].result == f_console_result_found) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
-        flockfile(main->error.to.stream);
+    if (F_status_is_error_not(status)) {
+      if (main->parameters[controller_parameter_pid].result == f_console_result_found) {
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          flockfile(main->error.to.stream);
 
-        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
+          fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        funlockfile(main->error.to.stream);
-      }
-
-      status = F_status_set_error(F_parameter);
-    }
-    else if (main->parameters[controller_parameter_pid].locations.used) {
-      const f_array_length_t location = main->parameters[controller_parameter_pid].values.array[main->parameters[controller_parameter_pid].values.used - 1];
-
-      if (strnlen(arguments.argv[location], f_console_parameter_size)) {
-        status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+          funlockfile(main->error.to.stream);
         }
+
+        status = F_status_set_error(F_parameter);
       }
-      else {
-        if (main->warning.verbosity == f_console_verbosity_debug) {
-          flockfile(main->warning.to.stream);
+      else if (main->parameters[controller_parameter_pid].locations.used) {
+        const f_array_length_t location = main->parameters[controller_parameter_pid].values.array[main->parameters[controller_parameter_pid].values.used - 1];
 
-          fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-          fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.notable);
-          fl_print_string("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+        if (strnlen(arguments.argv[location], f_console_parameter_size)) {
+          status = fll_path_canonical(arguments.argv[location], &setting.path_pid);
 
-          funlockfile(main->warning.to.stream);
+          if (F_status_is_error(status)) {
+            fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+          }
+        }
+        else {
+          if (main->warning.verbosity == f_console_verbosity_debug) {
+            flockfile(main->warning.to.stream);
+
+            fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+            fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
+            fl_print_string("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+
+            funlockfile(main->warning.to.stream);
+          }
         }
       }
     }
 
     // a pid file path is required.
-    if (!setting.path_pid.used) {
+    if (F_status_is_error_not(status) && !setting.path_pid.used) {
 
       if (main->parameters[controller_parameter_init].result == f_console_result_found) {
         status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);
@@ -262,64 +264,66 @@ extern "C" {
       }
     }
 
-    if (main->parameters[controller_parameter_control].result == f_console_result_found) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
-        flockfile(main->error.to.stream);
+    if (F_status_is_error_not(status)) {
+      if (main->parameters[controller_parameter_control].result == f_console_result_found) {
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          flockfile(main->error.to.stream);
 
-        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+          fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        funlockfile(main->error.to.stream);
-      }
-
-      status = F_status_set_error(F_parameter);
-    }
-    else if (main->parameters[controller_parameter_control].locations.used) {
-      const f_array_length_t location = main->parameters[controller_parameter_control].values.array[main->parameters[controller_parameter_control].values.used - 1];
-
-      if (strnlen(arguments.argv[location], f_console_parameter_size)) {
-        status = fll_path_canonical(arguments.argv[location], &setting.path_control);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
+          funlockfile(main->error.to.stream);
         }
-        else {
-          status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
+
+        status = F_status_set_error(F_parameter);
+      }
+      else if (main->parameters[controller_parameter_control].locations.used) {
+        const f_array_length_t location = main->parameters[controller_parameter_control].values.array[main->parameters[controller_parameter_control].values.used - 1];
+
+        if (strnlen(arguments.argv[location], f_console_parameter_size)) {
+          status = fll_path_canonical(arguments.argv[location], &setting.path_control);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "fll_path_canonical", F_true);
           }
           else {
-            status = f_string_dynamic_terminate_after(&setting.path_control);
+            status = f_string_append_assure(f_path_separator, 1, &setting.path_control);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+            }
+            else {
+              status = f_string_dynamic_terminate_after(&setting.path_control);
+
+              if (F_status_is_error(status)) {
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true);
+              }
             }
           }
         }
-      }
-      else {
-        if (main->warning.verbosity == f_console_verbosity_debug) {
-          flockfile(main->warning.to.stream);
+        else {
+          if (main->warning.verbosity == f_console_verbosity_debug) {
+            flockfile(main->warning.to.stream);
 
-          fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-          fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.notable);
-          fl_print_string("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+            fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+            fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+            fl_print_string("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
-          funlockfile(main->warning.to.stream);
+            funlockfile(main->warning.to.stream);
+          }
         }
       }
     }
 
-    if (main->parameters[controller_parameter_daemon].result == f_console_result_found) {
+    if (F_status_is_error_not(status) && main->parameters[controller_parameter_daemon].result == f_console_result_found) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_found) {
         if (main->error.verbosity != f_console_verbosity_quiet) {
           flockfile(main->error.to.stream);
 
           fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
           fl_print_string("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.notable);
+          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.set.notable);
           fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
@@ -376,10 +380,10 @@ extern "C" {
       status = controller_thread_main(main, &setting);
     }
 
-    // ensure a newline is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (!(status == F_child || status == F_signal)) {
       if (F_status_is_error(status) && main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+        f_print_terminated(f_string_eol_s, main->error.to.stream);
       }
     }
 

@@ -166,7 +166,7 @@ extern "C" {
  * @param is_entry
  *   If TRUE, then this loads as an entry.
  *   If FALSE, then this loads as an exit.
- * @param print
+ * @param output
  *   Designates how printing is to be performed.
  * @param cache
  *   The action cache.
@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache) f_attribute_visibility_internal;
+  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t output, const controller_cache_action_t cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_cache_
 
 /**

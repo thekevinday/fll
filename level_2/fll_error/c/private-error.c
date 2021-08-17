@@ -164,12 +164,12 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%S(", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
-        fl_print_string("%[%ui%]%[", print.to.stream, print.notable, status, print.notable, print.context);
+        fl_print_string("%c%[%S(%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_string("%[%ui%]%[)", print.to.stream, print.notable, status, print.notable, print.context);
 
         private_fll_error_print_function(print, function);
 
-        fl_print_string(").%]%c", print.to.stream, print.context, f_string_eol_s[0]);
+        fl_print_string(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -183,7 +183,7 @@ extern "C" {
   void private_fll_error_print_function(const fll_error_print_t print, const f_string_t function) {
 
     if (function) {
-      fl_print_string(" when calling function %]", print.to.stream, print.context);
+      fl_print_string(" when calling function%] ", print.to.stream, print.context);
       fl_print_string("%[%S%]", print.to.stream, print.notable, function, print.notable);
       fl_print_string("%[()", print.to.stream, print.context);
     }

@@ -120,12 +120,15 @@ extern "C" {
 /**
  * Provide basic format flags.
  *
+ * @todo be sure to document that the "/", ";", and ":" use pre-defined orders, so "%/;:Q" and "%:/;Q" would be processed in the same (pre-defined) order (which is 1: static/dynamic string, 2: partial range, 3: ignore ats, 4: ignore ins).
+ *
  * f_print_format_flag_*:
  * - align_left:     "-", Use left-justification.
  * - convert:        "#", Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
  * - ignore_index:   ";", Ignore characters in the given positions from a f_array_length_t (only applies to static/dynamic string arguments but not character arguments).
  * - ignore_range:   ":", Ignore characters in the given ranges from a f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
  * - precision:           Designates that a precision is in use.
+ * - range:          "/", Print only the given range of a string, specified by f_string_range_t (only applies to static/dynamic string arguments but not character arguments).
  * - sign_always:    "+", Always show the signs (+ or -).
  * - sign_pad:       " ", Add a space where a sign would be if the sign is not displayed.
  * - trim:           "=", Trim leading and trailing whitespaces (only applies to static/dynamic string arguments but not character arguments).
@@ -141,12 +144,13 @@ extern "C" {
   #define f_print_format_flag_ignore_index   0x4
   #define f_print_format_flag_ignore_range   0x8
   #define f_print_format_flag_precision      0x10
-  #define f_print_format_flag_sign_always    0x20
-  #define f_print_format_flag_sign_pad       0x40
-  #define f_print_format_flag_trim           0x80
-  #define f_print_format_flag_uppercase      0x100
-  #define f_print_format_flag_width          0x200
-  #define f_print_format_flag_zeros_leading  0x400
+  #define f_print_format_flag_range          0x20
+  #define f_print_format_flag_sign_always    0x40
+  #define f_print_format_flag_sign_pad       0x80
+  #define f_print_format_flag_trim           0x100
+  #define f_print_format_flag_uppercase      0x200
+  #define f_print_format_flag_width          0x400
+  #define f_print_format_flag_zeros_leading  0x800
 #endif // _di_f_print_format_flags_
 
 /**

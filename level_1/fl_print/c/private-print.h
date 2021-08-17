@@ -38,10 +38,11 @@ extern "C" {
  *
  *     F_none on success.
  *
+ *     F_eos (with error bit) on failure because end of string found and cannot process further.
  *     F_output (with error bit) on failure to print to the output file.
  *     F_parameter (with error bit) if a parameter is invalid.
  *     F_utf_not (with error bit) if character is an invalid UTF-8 character.
- *     F_valid_not (with error bit) on invalid syntax (such as terminating the string on a single '%').
+ *     F_valid_not (with error bit) on invalid syntax.
  *
  *     Success from: f_print_dynamic().
  *     Success from: f_print_dynamic_raw().
@@ -104,6 +105,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -137,7 +140,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_partial()
  */
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-  extern f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
 /**
@@ -147,6 +150,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -178,7 +183,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_partial_raw()
  */
 #if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
-  extern f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
 /**
@@ -188,6 +193,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
+ * @param offset
+ *   The inclusive start point to start printing.
  * @param length
  *   The total number of characters to print.
  * @param except_at
@@ -220,7 +227,7 @@ extern "C" {
  * @see fl_print_trim_except_in_dynamic_partial_safely()
  */
 #if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
-  extern f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
+  extern f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) f_attribute_visibility_internal;
 #endif // !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
 
 /**
