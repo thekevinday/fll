@@ -264,8 +264,8 @@ extern "C" {
       flockfile(main.error.to.stream);
 
       fl_print_color_terminated("Invalid UTF-8 codes were detected for file '", main.context.set.error, main.error.to.stream);
-      fl_print_string("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
-      fl_print_string("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
+      fl_print_format("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
+      fl_print_format("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
 
       funlockfile(main.error.to.stream);
     }
@@ -274,9 +274,9 @@ extern "C" {
       // @todo: determine what the error is and display it.
       flockfile(main.error.to.stream);
 
-      fl_print_string("%[%sread() failed for '%]", main.error.to.stream, main.context.set.error, fll_error_print_error, main.context.set.error);
-      fl_print_string("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
-      fl_print_string("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
+      fl_print_format("%[%Sread() failed for '%]", main.error.to.stream, main.context.set.error, main.error.prefix, main.context.set.error);
+      fl_print_format("%[%S%]", main.error.to.stream, main.context.set.notable, file_name ? file_name : "-", main.context.set.notable);
+      fl_print_format("%['.%]%c%c", main.error.to.stream, main.context.set.error, main.context.set.error, f_string_eol_s[0], f_string_eol_s[0]);
 
       funlockfile(main.error.to.stream);
 
@@ -312,7 +312,7 @@ extern "C" {
     }
 
     if (!cell->column) {
-      fl_print_string("%[%016_UL%] ", main.output.stream, main.context.set.notable, cell->row, main.context.set.notable);
+      fl_print_format("%[%016_UL%] ", main.output.stream, main.context.set.notable, cell->row, main.context.set.notable);
 
       if (*offset) {
         uint8_t offset_to_print = *offset;
@@ -412,10 +412,10 @@ extern "C" {
           }
 
           if (width_utf < 4) {
-            fl_print_string(" U+%04_U  ", main.output.stream, unicode);
+            fl_print_format(" U+%04_U  ", main.output.stream, unicode);
           }
           else {
-            fl_print_string(" U+%06_U  ", main.output.stream, unicode);
+            fl_print_format(" U+%06_U  ", main.output.stream, unicode);
           }
         }
         else {
@@ -431,10 +431,10 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%02_uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_format(" %[%02_uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %02_uii", main.output.stream, (uint8_t) byte);
+            fl_print_format(" %02_uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_duodecimal) {
@@ -443,10 +443,10 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%03&uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_format(" %[%03&uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %03&uii", main.output.stream, (uint8_t) byte);
+            fl_print_format(" %03&uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_octal) {
@@ -455,18 +455,18 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%03@uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_format(" %[%03@uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %03@uii", main.output.stream, (uint8_t) byte);
+            fl_print_format(" %03@uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_binary) {
           if (invalid[character_current]) {
-            fl_print_string(" %[%08!uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_format(" %[%08!uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %08!uii", main.output.stream, (uint8_t) byte);
+            fl_print_format(" %08!uii", main.output.stream, (uint8_t) byte);
           }
         }
         else if (main.mode == byte_dump_mode_decimal) {
@@ -475,10 +475,10 @@ extern "C" {
           }
 
           if (invalid[character_current]) {
-            fl_print_string(" %[%3uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
+            fl_print_format(" %[%3uii%]", main.output.stream, main.context.set.error, (uint8_t) byte, main.context.set.error);
           }
           else {
-            fl_print_string(" %3uii", main.output.stream, (uint8_t) byte);
+            fl_print_format(" %3uii", main.output.stream, (uint8_t) byte);
           }
         }
       }

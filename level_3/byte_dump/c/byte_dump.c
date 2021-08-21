@@ -23,7 +23,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Display binary representation.");
     fll_program_print_help_option(output, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display decimal representation.");
@@ -32,21 +32,21 @@ extern "C" {
     fll_program_print_help_option(output, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Display octal representation.");
     fll_program_print_help_option(output, context, byte_dump_short_unicode, byte_dump_long_unicode, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display using Unicode representation for valid Unicode (like: U+0000).");
 
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Start reading at this byte offset.");
     fll_program_print_help_option(output, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Stop reading at this (inclusive) byte offset.");
     fll_program_print_help_option(output, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Set number of columns of Bytes to display.");
 
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Include a column of text when displaying the bytes.");
     fll_program_print_help_option(output, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use a placeholder character instead of a space for placeholders.");
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
-    fl_print_string(" %[Special Options:%] ", output.stream, context.set.important, context.set.important);
+    fl_print_format(" %[Special Options:%] ", output.stream, context.set.important, context.set.important);
 
     fll_program_print_help_option_long(output, context, byte_dump_long_normal, f_console_symbol_long_enable_s, " Display UTF-8 symbols for ASCII control codes.");
     fll_program_print_help_option_long(output, context, byte_dump_long_simple, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
@@ -55,37 +55,37 @@ extern "C" {
     fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
 
     f_print_terminated("  When using the ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable);
     f_print_terminated(" option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.", output.stream);
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     f_print_terminated("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable);
     f_print_terminated(" option is used).", output.stream);
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     f_print_terminated("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.", output.stream);
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     f_print_terminated("  When ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable);
     f_print_terminated(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.", output.stream);
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     f_print_terminated("  When using the ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable);
     f_print_terminated(" option, invalid Unicode will fallback to being displayed using one of the other modes.", output.stream);
 
-    f_print_terminated(f_string_eol_s, output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     funlockfile(output.stream);
 
@@ -95,6 +95,7 @@ extern "C" {
 
 #ifndef _di_byte_dump_main_
   f_status_t byte_dump_main(const f_console_arguments_t arguments, byte_dump_main_t *main) {
+
     f_status_t status = F_none;
 
     {
@@ -110,15 +111,18 @@ extern "C" {
         if (main->context.set.error.before) {
           main->error.context = main->context.set.error;
           main->error.notable = main->context.set.notable;
+
+          main->warning.context = main->context.set.warning;
+          main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
           fll_program_parameter_process_empty(&main->context, sets);
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
 
           byte_dump_main_delete(main);
           return F_status_set_error(status);
@@ -142,15 +146,19 @@ extern "C" {
 
         if (choice == byte_dump_parameter_verbosity_quiet) {
           main->error.verbosity = f_console_verbosity_quiet;
+          main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == byte_dump_parameter_verbosity_normal) {
           main->error.verbosity = f_console_verbosity_normal;
+          main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == byte_dump_parameter_verbosity_verbose) {
           main->error.verbosity = f_console_verbosity_verbose;
+          main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == byte_dump_parameter_verbosity_debug) {
           main->error.verbosity = f_console_verbosity_debug;
+          main->warning.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -233,9 +241,9 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_width].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+        fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
+        fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
 
@@ -253,13 +261,13 @@ extern "C" {
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
-          fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[250%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+          fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[250%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
+          fl_print_format("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
 
@@ -273,9 +281,9 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_first].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+        fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+        fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
 
@@ -293,13 +301,13 @@ extern "C" {
         if (F_status_is_error(status) || number > f_number_t_size_unsigned) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
-          fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
-          fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+          fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
+          fl_print_format("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
 
@@ -313,9 +321,9 @@ extern "C" {
       if (main->parameters[byte_dump_parameter_last].result == f_console_result_found) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+        fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+        fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
 
@@ -333,13 +341,13 @@ extern "C" {
         if (F_status_is_error(status) || number < 0 || number > f_number_t_size_unsigned) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
-          fl_print_string("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_string(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%ul%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
-          fl_print_string("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+          fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, f_number_t_size_unsigned, main->context.set.notable);
+          fl_print_format("%[.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
 
@@ -354,11 +362,11 @@ extern "C" {
         if (main->first > main->last) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%[%sThe parameter '%]", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
-          fl_print_string("%[' value cannot be greater than the parameter '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
-          fl_print_string("%[' value.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
+          fl_print_format("%[%SThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first, main->context.set.notable);
+          fl_print_format("%[' value cannot be greater than the parameter '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, main->context.set.notable);
+          fl_print_format("%[' value.%]%c", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
 
@@ -379,7 +387,7 @@ extern "C" {
         flockfile(main->output.stream);
 
         f_print_terminated(f_string_eol_s, main->output.stream);
-        fl_print_string("%[Piped Byte Dump: (in ", main->output.stream, main->context.set.title);
+        fl_print_format("%[Piped Byte Dump: (in ", main->output.stream, main->context.set.title);
 
         if (main->mode == byte_dump_mode_hexidecimal) {
           f_print_terminated("Hexidecimal", main->output.stream);
@@ -397,7 +405,7 @@ extern "C" {
           f_print_terminated("Decimal", main->output.stream);
         }
 
-        fl_print_string(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
+        fl_print_format(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
 
         funlockfile(main->output.stream);
 
@@ -453,9 +461,9 @@ extern "C" {
           flockfile(main->output.stream);
 
           f_print_terminated(f_string_eol_s, main->output.stream);
-          fl_print_string("%[Byte Dump of: %]%[", main->output.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
+          fl_print_format("%[Byte Dump of: %]%[", main->output.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
           fll_print_safely_terminated(arguments.argv[main->remaining.array[counter]], main->output.stream);
-          fl_print_string("%] %[(in ", main->output.stream, main->context.set.notable, main->context.set.title);
+          fl_print_format("%] %[(in ", main->output.stream, main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal) {
             f_print_terminated("Hexidecimal", main->output.stream);
@@ -473,7 +481,7 @@ extern "C" {
             f_print_terminated("Decimal", main->output.stream);
           }
 
-          fl_print_string(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
+          fl_print_format(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
 
           funlockfile(main->output.stream);
 
@@ -494,7 +502,7 @@ extern "C" {
       }
     }
     else {
-      fll_print_string("%[%sYou failed to specify one or more filenames.%]%c", main->error.to.stream, main->context.set.error, fll_error_print_error, main->context.set.error, f_string_eol_s[0]);
+      fll_print_format("%[%SYou failed to specify one or more filenames.%]%c", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 

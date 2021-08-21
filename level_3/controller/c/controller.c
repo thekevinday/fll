@@ -27,7 +27,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
     fll_program_print_help_option(output, context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
@@ -41,11 +41,11 @@ extern "C" {
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
     f_print_terminated("  When both the ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, context.set.notable);
     f_print_terminated(" parameter and the ", output.stream);
-    fl_print_string("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, context.set.notable);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, context.set.notable);
     f_print_terminated(" parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.", output.stream);
-    f_print_terminated(f_string_eol_s, output.stream);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     funlockfile(output.stream);
 
@@ -172,9 +172,9 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet) {
         flockfile(main->error.to.stream);
 
-        fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-        fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.set.notable);
-        fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings, main->context.set.notable);
+        fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
         funlockfile(main->error.to.stream);
       }
@@ -208,9 +208,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
-          fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
+          fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
         }
@@ -231,9 +231,9 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_debug) {
             flockfile(main->warning.to.stream);
 
-            fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-            fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
-            fl_print_string("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+            fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
+            fl_print_format("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
             funlockfile(main->warning.to.stream);
           }
@@ -269,9 +269,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
-          fl_print_string("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+          fl_print_format("%[' was specified, but no value was given.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
         }
@@ -306,9 +306,9 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_debug) {
             flockfile(main->warning.to.stream);
 
-            fl_print_string("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-            fl_print_string("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
-            fl_print_string("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
+            fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_control, main->context.set.notable);
+            fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
 
             funlockfile(main->warning.to.stream);
           }
@@ -321,10 +321,10 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_string("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_string("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.set.notable);
-          fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_format("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon, main->context.set.notable);
+          fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           funlockfile(main->error.to.stream);
         }

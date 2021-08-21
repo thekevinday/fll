@@ -54,6 +54,28 @@ extern "C" {
 #endif // _di_fll_print_
 
 /**
+ * This is a variation of f_print_character() that uses locking.
+ *
+ * @param character
+ *   The character to verify as safe or not and then print.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_character().
+ *
+ *   Errors (with error bit) from: f_print_character().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_character()
+ */
+#ifndef _di_fll_print_character_
+  extern f_status_t fll_print_character(const char character, FILE *output);
+#endif // _di_fll_print_character_
+
+/**
  * This is a variation of f_print_character_safely() that uses locking.
  *
  * @param character
@@ -200,50 +222,6 @@ extern "C" {
 #endif // _di_fll_print_dynamic_
 
 /**
- * This is a variation of f_print_dynamic_raw() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_dynamic_raw().
- *
- *   Errors (with error bit) from: f_print_dynamic_raw().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_dynamic_raw()
- */
-#ifndef _di_fll_print_dynamic_raw_
-  extern f_status_t fll_print_dynamic_raw(const f_string_static_t buffer, FILE *output);
-#endif // _di_fll_print_dynamic_raw_
-
-/**
- * This is a variation of f_print_dynamic_safely() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_dynamic_safely().
- *
- *   Errors (with error bit) from: f_print_dynamic_safely().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_dynamic_safely()
- */
-#ifndef _di_fll_print_dynamic_safely_
-  extern f_status_t fll_print_dynamic_safely(const f_string_static_t buffer, FILE *output);
-#endif // _di_fll_print_dynamic_safely_
-
-/**
  * This is a variation of f_print_dynamic_partial() that uses locking.
  *
  * @param buffer
@@ -316,6 +294,50 @@ extern "C" {
 #endif // _di_fll_print_dynamic_partial_safely_
 
 /**
+ * This is a variation of f_print_dynamic_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_dynamic_raw().
+ *
+ *   Errors (with error bit) from: f_print_dynamic_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_dynamic_raw()
+ */
+#ifndef _di_fll_print_dynamic_raw_
+  extern f_status_t fll_print_dynamic_raw(const f_string_static_t buffer, FILE *output);
+#endif // _di_fll_print_dynamic_raw_
+
+/**
+ * This is a variation of f_print_dynamic_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_dynamic_safely().
+ *
+ *   Errors (with error bit) from: f_print_dynamic_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_dynamic_safely()
+ */
+#ifndef _di_fll_print_dynamic_safely_
+  extern f_status_t fll_print_dynamic_safely(const f_string_static_t buffer, FILE *output);
+#endif // _di_fll_print_dynamic_safely_
+
+/**
  * This is a variation of f_print_except() that uses locking.
  *
  * @param string
@@ -345,64 +367,6 @@ extern "C" {
 #endif // _di_fll_print_except_
 
 /**
- * This is a variation of f_print_except_raw() that uses locking.
- *
- * @param string
- *   The string to output.
- * @param offset
- *   The inclusive start point to start printing.
- * @param length
- *   The total number of characters to print.
- * @param except
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_raw().
- *
- *   Errors (with error bit) from: f_print_except_raw().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_raw()
- */
-#ifndef _di_fll_print_except_raw_
-  extern f_status_t fll_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_raw_
-
-/**
- * This is a variation of f_print_except_safely() that uses locking.
- *
- * @param string
- *   The string to output.
- * @param offset
- *   The inclusive start point to start printing.
- * @param length
- *   The total number of characters to print.
- * @param except
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_safely().
- *
- *   Errors (with error bit) from: f_print_except_safely().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_safely()
- */
-#ifndef _di_fll_print_except_safely_
-  extern f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_safely_
-
-/**
  * This is a variation of f_print_except_dynamic() that uses locking.
  *
  * @param buffer
@@ -426,6 +390,87 @@ extern "C" {
 #ifndef _di_fll_print_except_dynamic_
   extern f_status_t fll_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output);
 #endif // _di_fll_print_except_dynamic_
+
+/**
+ * This is a variation of f_print_except_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_dynamic_partial().
+ *
+ *   Errors (with error bit) from: f_print_except_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial()
+ */
+#ifndef _di_fll_print_except_dynamic_partial_
+  extern f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_except_dynamic_partial_
+
+/**
+ * This is a variation of f_print_except_dynamic_partial_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_dynamic_partial_raw().
+ *
+ *   Errors (with error bit) from: f_print_except_dynamic_partial_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial_raw()
+ */
+#ifndef _di_fll_print_except_dynamic_partial_raw_
+  extern f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_except_dynamic_partial_raw_
+
+/**
+ * This is a variation of f_print_except_dynamic_partial_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_dynamic_partial_safely().
+ *
+ *   Errors (with error bit) from: f_print_except_dynamic_partial_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_dynamic_partial_safely()
+ */
+#ifndef _di_fll_print_except_dynamic_partial_safely_
+  extern f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_except_dynamic_partial_safely_
 
 /**
  * This is a variation of f_print_except_dynamic_raw() that uses locking.
@@ -602,6 +647,96 @@ extern "C" {
 #endif // _di_fll_print_except_in_dynamic_
 
 /**
+ * This is a variation of f_print_except_in_dynamic_partial() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_in_dynamic_partial().
+ *
+ *   Errors (with error bit) from: f_print_except_in_dynamic_partial().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_in_dynamic_partial()
+ */
+#ifndef _di_fll_print_except_in_dynamic_partial_
+  extern f_status_t fll_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_except_in_dynamic_partial_
+
+/**
+ * This is a variation of f_print_except_in_dynamic_partial_raw() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_in_dynamic_partial_raw().
+ *
+ *   Errors (with error bit) from: f_print_except_in_dynamic_partial_raw().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_in_dynamic_partial_raw()
+ */
+#ifndef _di_fll_print_except_in_dynamic_partial_raw_
+  extern f_status_t fll_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_except_in_dynamic_partial_raw_
+
+/**
+ * This is a variation of f_print_except_in_dynamic_partial_safely() that uses locking.
+ *
+ * @param buffer
+ *   The string to output.
+ * @param range
+ *   The range within the provided string to print.
+ * @param except_at
+ *   An array of locations within the given string to not print.
+ *   The array of locations is required/assumed to be in linear order.
+ * @param except_in
+ *   An array of ranges within the string to not print.
+ *   The array of ranges is required/assumed to be in linear order.
+ * @param output
+ *   The file stream to output to, including standard streams such as stdout and stderr.
+ *
+ * @return
+ *   Success from: f_print_except_in_dynamic_partial_safely().
+ *
+ *   Errors (with error bit) from: f_print_except_in_dynamic_partial_safely().
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see f_print_except_in_dynamic_partial_safely()
+ */
+#ifndef _di_fll_print_except_in_dynamic_partial_safely_
+  extern f_status_t fll_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
+#endif // _di_fll_print_except_in_dynamic_partial_safely_
+
+/**
  * This is a variation of f_print_except_in_dynamic_raw() that uses locking.
  *
  * @param buffer
@@ -658,102 +793,14 @@ extern "C" {
 #endif // _di_fll_print_except_in_dynamic_safely_
 
 /**
- * This is a variation of f_print_except_in_dynamic_partial() that uses locking.
+ * This is a variation of f_print_except_raw() that uses locking.
  *
- * @param buffer
+ * @param string
  *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except_at
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param except_in
- *   An array of ranges within the string to not print.
- *   The array of ranges is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_in_dynamic_partial().
- *
- *   Errors (with error bit) from: f_print_except_in_dynamic_partial().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_in_dynamic_partial()
- */
-#ifndef _di_fll_print_dynamic_except_partial_
-  extern f_status_t fll_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
-#endif // _di_fll_print_except_in_dynamic_partial_
-
-/**
- * This is a variation of f_print_except_in_dynamic_partial_raw() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except_at
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param except_in
- *   An array of ranges within the string to not print.
- *   The array of ranges is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_in_dynamic_partial_raw().
- *
- *   Errors (with error bit) from: f_print_except_in_dynamic_partial_raw().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_in_dynamic_partial_raw()
- */
-#ifndef _di_fll_print_dynamic_except_partial_raw_
-  extern f_status_t fll_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
-#endif // _di_fll_print_except_in_dynamic_partial_raw_
-
-/**
- * This is a variation of f_print_except_in_dynamic_partial_safely() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except_at
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param except_in
- *   An array of ranges within the string to not print.
- *   The array of ranges is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_in_dynamic_partial_safely().
- *
- *   Errors (with error bit) from: f_print_except_in_dynamic_partial_safely().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_in_dynamic_partial_safely()
- */
-#ifndef _di_fll_print_dynamic_except_partial_safely_
-  extern f_status_t fll_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output);
-#endif // _di_fll_print_except_in_dynamic_partial_safely_
-
-/**
- * This is a variation of f_print_except_dynamic_partial() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param length
+ *   The total number of characters to print.
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
@@ -761,26 +808,28 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   Success from: f_print_except_dynamic_partial().
+ *   Success from: f_print_except_raw().
  *
- *   Errors (with error bit) from: f_print_except_dynamic_partial().
+ *   Errors (with error bit) from: f_print_except_raw().
  *
  * @see flockfile()
  * @see funlockfile()
  *
- * @see f_print_except_dynamic_partial()
+ * @see f_print_except_raw()
  */
-#ifndef _di_fll_print_dynamic_except_partial_
-  extern f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_dynamic_partial_
+#ifndef _di_fll_print_except_raw_
+  extern f_status_t fll_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_except_raw_
 
 /**
- * This is a variation of f_print_except_dynamic_partial_raw() that uses locking.
+ * This is a variation of f_print_except_safely() that uses locking.
  *
- * @param buffer
+ * @param string
  *   The string to output.
- * @param range
- *   The range within the provided string to print.
+ * @param offset
+ *   The inclusive start point to start printing.
+ * @param length
+ *   The total number of characters to print.
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
@@ -788,99 +837,69 @@ extern "C" {
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
- *   Success from: f_print_except_dynamic_partial_raw().
+ *   Success from: f_print_except_safely().
  *
- *   Errors (with error bit) from: f_print_except_dynamic_partial_raw().
+ *   Errors (with error bit) from: f_print_except_safely().
  *
  * @see flockfile()
  * @see funlockfile()
  *
- * @see f_print_except_dynamic_partial_raw()
+ * @see f_print_except_safely()
  */
-#ifndef _di_fll_print_dynamic_except_partial_raw_
-  extern f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_dynamic_partial_raw_
+#ifndef _di_fll_print_except_safely_
+  extern f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output);
+#endif // _di_fll_print_except_safely_
 
 /**
- * This is a variation of f_print_except_dynamic_partial() that uses locking.
+ * This is a variation of fl_print_format() that uses locking.
  *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
+ * @param string
+ *   The formatted string to process and output.
+ *   This is a NULL terminated string.
  * @param output
  *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param ...
+ *   Additional arguments relating to the string.
  *
  * @return
- *   Success from: f_print_except_dynamic_partial().
+ *   Success from: fl_print_format().
  *
- *   Errors (with error bit) from: f_print_except_dynamic_partial().
+ *   Errors (with error bit) from: fl_print_format().
  *
  * @see flockfile()
  * @see funlockfile()
+ * @see va_start()
+ * @see va_end()
  *
- * @see f_print_except_dynamic_partial()
+ * @see fl_print_format()
  */
-#ifndef _di_fll_print_dynamic_except_partial_
-  extern f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_dynamic_partial_
+#ifndef _di_fll_print_format_
+  extern f_status_t fll_print_format(const f_string_t string, FILE *output, ...);
+#endif // _di_fll_print_format_
 
 /**
- * This is a variation of f_print_except_dynamic_partial_raw() that uses locking.
+ * This is a variation of fl_print_format_convert() that uses locking.
  *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
+ * @param current
+ *   The current character position within the string.
  * @param output
  *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param ap
+ *   The variable arguments list.
+ * @param status
+ *   The status is stored here rather then via the return.
  *
  * @return
- *   Success from: f_print_except_dynamic_partial_raw().
- *
- *   Errors (with error bit) from: f_print_except_dynamic_partial_raw().
+ *   Result from: fl_print_format_convert().
  *
  * @see flockfile()
  * @see funlockfile()
  *
- * @see f_print_except_dynamic_partial_raw()
+ * @see fl_print_format_convert()
  */
-#ifndef _di_fll_print_dynamic_except_partial_raw_
-  extern f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_dynamic_partial_raw_
-
-/**
- * This is a variation of f_print_except_dynamic_partial_safely() that uses locking.
- *
- * @param buffer
- *   The string to output.
- * @param range
- *   The range within the provided string to print.
- * @param except
- *   An array of locations within the given string to not print.
- *   The array of locations is required/assumed to be in linear order.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- *
- * @return
- *   Success from: f_print_except_dynamic_partial_safely().
- *
- *   Errors (with error bit) from: f_print_except_dynamic_partial_safely().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see f_print_except_dynamic_partial_safely()
- */
-#ifndef _di_fll_print_dynamic_except_partial_safely_
-  extern f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output);
-#endif // _di_fll_print_except_dynamic_partial_safely_
+#ifndef _di_fll_print_format_convert_
+  extern f_string_t fll_print_format_convert(const f_string_t current, FILE *output, va_list *ap, f_status_t *status);
+#endif // _di_fll_print_format_convert_
 
 /**
  * This is a variation of f_print_raw() that uses locking.
@@ -975,57 +994,6 @@ extern "C" {
 #ifndef _di_fll_print_safely_terminated_
   extern f_status_t fll_print_safely_terminated(const f_string_t string, FILE *output);
 #endif // _di_fll_print_safely_terminated_
-
-/**
- * This is a variation of fl_print_string() that uses locking.
- *
- * @param string
- *   The formatted string to process and output.
- *   This is a NULL terminated string.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- * @param ...
- *   Additional arguments relating to the string.
- *
- * @return
- *   Success from: fl_print_string().
- *
- *   Errors (with error bit) from: fl_print_string().
- *
- * @see flockfile()
- * @see funlockfile()
- * @see va_start()
- * @see va_end()
- *
- * @see fl_print_string()
- */
-#ifndef _di_fll_print_string_
-  extern f_status_t fll_print_string(const f_string_t string, FILE *output, ...);
-#endif // _di_fll_print_string_
-
-/**
- * This is a variation of fl_print_string_convert() that uses locking.
- *
- * @param current
- *   The current character position within the string.
- * @param output
- *   The file stream to output to, including standard streams such as stdout and stderr.
- * @param ap
- *   The variable arguments list.
- * @param status
- *   The status is stored here rather then via the return.
- *
- * @return
- *   Result from: fl_print_string_convert().
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see fl_print_string_convert()
- */
-#ifndef _di_fll_print_string_convert_
-  extern f_string_t fll_print_string_convert(const f_string_t current, FILE *output, va_list *ap, f_status_t *status);
-#endif // _di_fll_print_string_convert_
 
 /**
  * This is a variation of fl_print_string_va() that uses locking.

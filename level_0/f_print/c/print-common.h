@@ -176,12 +176,12 @@ extern "C" {
  * - character_safe:     "C", type is a 1-byte unsigned character, where control characters and other problems are handled.
  * - color_after:        "]", type is f_color_set_t such that the f_color_set_t.after is used.
  * - color_before:       "[", type is f_color_set_t such that the f_color_set_t.begin is used.
- * - number:             "n", "N", type is an f_number_signed_t.
  * - signed_8:           "iii", "III", type is a int8_t.
  * - signed_16:          "ii", "II", type is a int16_t.
  * - signed_32:          "i", "I", type is a int32_t.
  * - signed_64:          "il", "IL", type is a signed int64_t.
  * - signed_128:         "ill", "ILL", type is a f_int_128_t.
+ * - number:             "in", "IN", type is an f_number_signed_t.
  * - size:               "z", "Z", type is a size_t.
  * - string_safe:        "S", type is a NULL terminated string, where control characters and other problems are handled.
  * - string_static:      "q", type is an f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
@@ -202,12 +202,12 @@ extern "C" {
     f_print_format_type_character_safe,
     f_print_format_type_color_after,
     f_print_format_type_color_before,
-    f_print_format_type_number,
     f_print_format_type_signed_8,
     f_print_format_type_signed_16,
     f_print_format_type_signed_32,
     f_print_format_type_signed_64,
     f_print_format_type_signed_128,
+    f_print_format_type_signed_number,
     f_print_format_type_size,
     f_print_format_type_string,
     f_print_format_type_string_safe,

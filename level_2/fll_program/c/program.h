@@ -50,7 +50,7 @@ extern "C" {
  *   F_none on success.
  *
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_header_
   extern f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t version);
@@ -80,7 +80,7 @@ extern "C" {
  *   F_none on success.
  *
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_
   extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_t option_short, const f_string_t option_long, const f_string_t symbol_short, const f_string_t symbol_long, const f_string_t description);
@@ -106,7 +106,7 @@ extern "C" {
  *   F_none on success.
  *
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_long_
   extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_t option_long, const f_string_t symbol_long, const f_string_t description);
@@ -130,7 +130,7 @@ extern "C" {
  *   F_none on success.
  *
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_other_
   extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_t option_other, const f_string_t description);
@@ -155,7 +155,7 @@ extern "C" {
  *   F_none on success.
  *
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_usage_
   extern f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_t name, const f_string_t parameters);
@@ -174,7 +174,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_version_
   extern f_status_t fll_program_print_version(const f_file_t output, const f_string_t version);

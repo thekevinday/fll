@@ -91,8 +91,8 @@ extern "C" {
   }
 #endif // _di_fl_print_color_terminated_
 
-#ifndef _di_fl_print_string_
-  f_status_t fl_print_string(const f_string_t string, FILE *output, ...) {
+#ifndef _di_fl_print_format_
+  f_status_t fl_print_format(const f_string_t string, FILE *output, ...) {
     #ifndef _di_level_1_parameter_checking_
       if (!string) return 0;
       if (!output) return 0;
@@ -109,7 +109,7 @@ extern "C" {
       if (*current == f_string_ascii_percent_s[0]) {
         current += 1;
 
-        current = private_fl_print_string_convert(current, output, &ap, &status);
+        current = private_fl_print_format_convert(current, output, &ap, &status);
         if (F_status_is_error(status)) break;
       }
       else {
@@ -123,18 +123,18 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fl_print_string_
+#endif // _di_fl_print_format_
 
-#ifndef _di_fl_print_string_convert_
-  f_string_t fl_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
+#ifndef _di_fl_print_format_convert_
+  f_string_t fl_print_format_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
     #ifndef _di_level_1_parameter_checking_
       if (!output) return 0;
       if (!ap) return 0;
     #endif // _di_level_1_parameter_checking_
 
-    return private_fl_print_string_convert(string, output, ap, status);
+    return private_fl_print_format_convert(string, output, ap, status);
   }
-#endif // _di_fl_print_string_convert_
+#endif // _di_fl_print_format_convert_
 
 #ifndef _di_fl_print_string_va_
   f_status_t fl_print_string_va(const f_string_t string, FILE *output, va_list *ap) {
@@ -151,7 +151,7 @@ extern "C" {
       if (*current == f_string_ascii_percent_s[0]) {
         current += 1;
 
-        current = private_fl_print_string_convert(current, output, ap, &status);
+        current = private_fl_print_format_convert(current, output, ap, &status);
         if (F_status_is_error(status)) break;
       }
       else {

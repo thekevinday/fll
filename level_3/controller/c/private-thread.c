@@ -231,9 +231,9 @@ extern "C" {
 
             flockfile(main->error.to.stream);
 
-            fl_print_string("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-            fl_print_string("%[%S%]", main->error.to.stream, main->error.notable, setting->path_pid.string, main->error.notable);
-            fl_print_string("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, setting->path_pid.string, main->error.notable);
+            fl_print_format("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
 
@@ -727,9 +727,9 @@ extern "C" {
 
             flockfile(main->error.to.stream);
 
-            fl_print_string("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-            fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->setting->path_pid, main->error.notable);
-            fl_print_string("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SThe pid file '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+            fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->setting->path_pid, main->error.notable);
+            fl_print_format("%[' must not already exist.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
 
@@ -771,9 +771,9 @@ extern "C" {
 
                   flockfile(main->error.to.stream);
 
-                  fl_print_string("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-                  fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
-                  fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                  fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                  fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
                   funlockfile(main->error.to.stream);
 
@@ -884,9 +884,9 @@ extern "C" {
 
                 flockfile(main->error.to.stream);
 
-                fl_print_string("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-                fl_print_string("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
-                fl_print_string("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+                fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, entry->global->setting->entry.items.array[entry->global->setting->failsafe_enabled].name, main->error.notable);
+                fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
                 funlockfile(main->error.to.stream);
 

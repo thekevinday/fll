@@ -17,6 +17,19 @@ extern "C" {
   }
 #endif // _di_fll_print_
 
+#ifndef _di_fll_print_character_
+  f_status_t fll_print_character(const char character, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_character(character, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_character_
+
 #ifndef _di_fll_print_character_safely_
   f_status_t fll_print_character_safely(const char character, FILE *output) {
 
@@ -169,32 +182,6 @@ extern "C" {
   }
 #endif // _di_fll_print_dynamic_
 
-#ifndef _di_fll_print_dynamic_raw_
-  f_status_t fll_print_dynamic_raw(const f_string_static_t buffer, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_dynamic_raw(buffer, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_dynamic_raw_
-
-#ifndef _di_fll_print_dynamic_safely_
-  f_status_t fll_print_dynamic_safely(const f_string_static_t buffer, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_dynamic_safely(buffer, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_dynamic_safely_
-
 #ifndef _di_fll_print_dynamic_partial_
   f_status_t fll_print_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, FILE *output) {
 
@@ -234,6 +221,32 @@ extern "C" {
   }
 #endif // _di_fll_print_dynamic_partial_safely_
 
+#ifndef _di_fll_print_dynamic_raw_
+  f_status_t fll_print_dynamic_raw(const f_string_static_t buffer, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_dynamic_raw(buffer, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_dynamic_raw_
+
+#ifndef _di_fll_print_dynamic_safely_
+  f_status_t fll_print_dynamic_safely(const f_string_static_t buffer, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_dynamic_safely(buffer, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_dynamic_safely_
+
 #ifndef _di_fll_print_except_
   f_status_t fll_print_except(const f_string_t buffer, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
 
@@ -247,32 +260,6 @@ extern "C" {
   }
 #endif // _di_fll_print_except_
 
-#ifndef _di_fll_print_except_raw_
-  f_status_t fll_print_except_raw(const f_string_t buffer, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_raw(buffer, offset, length, except, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_raw_
-
-#ifndef _di_fll_print_except_safely_
-  f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_safely(string, offset, length, except, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_safely_
-
 #ifndef _di_fll_print_except_dynamic_
   f_status_t fll_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output) {
 
@@ -285,6 +272,45 @@ extern "C" {
     return status;
   }
 #endif // _di_fll_print_except_dynamic_
+
+#ifndef _di_fll_print_except_dynamic_partial_
+  f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_dynamic_partial(buffer, range, except, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_dynamic_partial_
+
+#ifndef _di_fll_print_except_dynamic_partial_raw_
+  f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_dynamic_partial_raw(buffer, range, except, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_dynamic_partial_raw_
+
+#ifndef _di_fll_print_except_dynamic_partial_safely_
+  f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_dynamic_partial_safely(buffer, range, except, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_dynamic_partial_safely_
 
 #ifndef _di_fll_print_except_dynamic_raw_
   f_status_t fll_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, FILE *output) {
@@ -312,6 +338,32 @@ extern "C" {
   }
 #endif // _di_fll_print_except_dynamic_safely_
 
+#ifndef _di_fll_print_except_raw_
+  f_status_t fll_print_except_raw(const f_string_t buffer, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_raw(buffer, offset, length, except, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_raw_
+
+#ifndef _di_fll_print_except_safely_
+  f_status_t fll_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_safely(string, offset, length, except, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_safely_
+
 #ifndef _di_fll_print_except_in_
   f_status_t fll_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
@@ -325,32 +377,6 @@ extern "C" {
   }
 #endif // _di_fll_print_except_in_
 
-#ifndef _di_fll_print_except_in_raw_
-  f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_in_raw(string, offset, length, except_at, except_in, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_in_raw_
-
-#ifndef _di_fll_print_except_in_safely_
-  f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_in_safely(string, offset, length, except_at, except_in, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_in_safely_
-
 #ifndef _di_fll_print_except_in_dynamic_
   f_status_t fll_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
@@ -363,32 +389,6 @@ extern "C" {
     return status;
   }
 #endif // _di_fll_print_except_in_dynamic_
-
-#ifndef _di_fll_print_except_in_dynamic_raw_
-  f_status_t fll_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_in_dynamic_raw(buffer, except_at, except_in, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_in_dynamic_raw_
-
-#ifndef _di_fll_print_except_in_dynamic_safely_
-  f_status_t fll_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
-
-    flockfile(output);
-
-    const f_status_t status = f_print_except_in_dynamic_safely(buffer, except_at, except_in, output);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_except_in_dynamic_safely_
 
 #ifndef _di_fll_print_except_in_dynamic_partial_
   f_status_t fll_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
@@ -429,44 +429,89 @@ extern "C" {
   }
 #endif // _di_fll_print_except_in_dynamic_partial_safely_
 
-#ifndef _di_fll_print_except_dynamic_partial_
-  f_status_t fll_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+#ifndef _di_fll_print_except_in_dynamic_raw_
+  f_status_t fll_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_dynamic_partial(buffer, range, except, output);
+    const f_status_t status = f_print_except_in_dynamic_raw(buffer, except_at, except_in, output);
 
     funlockfile(output);
 
     return status;
   }
-#endif // _di_fll_print_except_dynamic_partial_
+#endif // _di_fll_print_except_in_dynamic_raw_
 
-#ifndef _di_fll_print_except_dynamic_partial_raw_
-  f_status_t fll_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+#ifndef _di_fll_print_except_in_dynamic_safely_
+  f_status_t fll_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_dynamic_partial_raw(buffer, range, except, output);
+    const f_status_t status = f_print_except_in_dynamic_safely(buffer, except_at, except_in, output);
 
     funlockfile(output);
 
     return status;
   }
-#endif // _di_fll_print_except_dynamic_partial_raw_
+#endif // _di_fll_print_except_in_dynamic_safely_
 
-#ifndef _di_fll_print_except_dynamic_partial_safely_
-  f_status_t fll_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, FILE *output) {
+#ifndef _di_fll_print_except_in_raw_
+  f_status_t fll_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
 
     flockfile(output);
 
-    const f_status_t status = f_print_except_dynamic_partial_safely(buffer, range, except, output);
+    const f_status_t status = f_print_except_in_raw(string, offset, length, except_at, except_in, output);
 
     funlockfile(output);
 
     return status;
   }
-#endif // _di_fll_print_except_dynamic_partial_safely_
+#endif // _di_fll_print_except_in_raw_
+
+#ifndef _di_fll_print_except_in_safely_
+  f_status_t fll_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
+
+    flockfile(output);
+
+    const f_status_t status = f_print_except_in_safely(string, offset, length, except_at, except_in, output);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_except_in_safely_
+
+#ifndef _di_fll_print_format_
+  f_status_t fll_print_format(const f_string_t string, FILE *output, ...) {
+
+    flockfile(output);
+
+    va_list ap;
+
+    va_start(ap, output);
+
+    const f_status_t status = fl_print_string_va(string, output, &ap);
+
+    va_end(ap);
+
+    funlockfile(output);
+
+    return status;
+  }
+#endif // _di_fll_print_format_
+
+#ifndef _di_fll_print_format_convert_
+  f_string_t fll_print_format_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
+
+    flockfile(output);
+
+    f_string_t str = fl_print_format_convert(string, output, ap, status);
+
+    funlockfile(output);
+
+    return str;
+  }
+#endif // _di_fll_print_format_convert_
 
 #ifndef _di_fll_print_raw_
   f_status_t fll_print_raw(const f_string_t string, const f_array_length_t length, FILE *output) {
@@ -519,38 +564,6 @@ extern "C" {
     return status;
   }
 #endif // _di_fll_print_safely_terminated_
-
-#ifndef _di_fll_print_string_
-  f_status_t fll_print_string(const f_string_t string, FILE *output, ...) {
-
-    flockfile(output);
-
-    va_list ap;
-
-    va_start(ap, output);
-
-    const f_status_t status = fl_print_string_va(string, output, &ap);
-
-    va_end(ap);
-
-    funlockfile(output);
-
-    return status;
-  }
-#endif // _di_fll_print_string_
-
-#ifndef _di_fll_print_string_convert_
-  f_string_t fll_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
-
-    flockfile(output);
-
-    f_string_t str = fl_print_string_convert(string, output, ap, status);
-
-    funlockfile(output);
-
-    return str;
-  }
-#endif // _di_fll_print_string_convert_
 
 #ifndef _di_fll_print_string_va_
   f_status_t fll_print_string_va(const f_string_t string, FILE *output, va_list *ap) {

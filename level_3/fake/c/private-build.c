@@ -169,9 +169,7 @@ extern "C" {
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Copying %s.", label);
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Copying %S.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, label, main.context.set.important, f_string_eol_s[0]);
     }
 
      macro_f_string_dynamic_t_resize(*status, path_source, source.used);
@@ -347,7 +345,7 @@ extern "C" {
         }
 
         if (main.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(main.output.stream, "Copied file '%s' to '%s'.%c", path_source.string, destination_file.string, f_string_eol_s[0]);
+          fll_print_format("Copied file '%Q' to '%Q'.%c", main.output.stream, path_source, destination_file, f_string_eol_s[0]);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -421,9 +419,7 @@ extern "C" {
     };
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Creating base build directories.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Creating base build directories.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     for (uint8_t i = 0; i < 15; ++i) {
@@ -475,7 +471,7 @@ extern "C" {
       }
 
       if (main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Created directory '%s'.%c", directorys[i]->string, f_string_eol_s[0]);
+        fll_print_format("Created directory '%Q'.%c", main.output.stream, directorys[i], f_string_eol_s[0]);
       }
     } // for
 
@@ -699,11 +695,13 @@ extern "C" {
         if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_failure) {
             if (main.error.verbosity != f_console_verbosity_quiet) {
-              fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main.error.to.stream, main.error.context, "%sFailed to execute script: ", main.error.prefix);
-              f_color_print(main.error.to.stream, main.error.notable, "%s", path.string);
-              f_color_print(main.error.to.stream, main.error.context, ".");
-              fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+              flockfile(main.error.to.stream);
+
+              fl_print_format("%c%[%SFailed to execute script: '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+              fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, path, main.error.notable);
+              fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+              funlockfile(main.error.to.stream);
             }
           }
           else {
@@ -778,9 +776,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Compiling shared library.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Compiling shared library.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -1122,7 +1118,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1157,7 +1153,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1191,7 +1187,7 @@ extern "C" {
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
         if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
+          fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
         }
         else if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_file_found) {
@@ -1225,7 +1221,7 @@ extern "C" {
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
           if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(main.output.stream, "Linked file '%s' to '%s'.%c", parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
+            fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
           }
           else if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found) {
@@ -1255,9 +1251,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Compiling static library.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Compiling static library.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -1430,13 +1424,15 @@ extern "C" {
     if (environment->used + data_build.setting.environment.used > environment->size) {
       if (environment->used + data_build.setting.environment.used > f_environment_max_length) {
         if (main.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe values for the setting '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", fake_build_setting_name_environment);
-          f_color_print(main.error.to.stream, main.context.set.error, "' of setting file '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", main.file_data_build_settings.string);
-          f_color_print(main.error.to.stream, main.context.set.error, "' is too large.");
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+          flockfile(main.error.to.stream);
+
+          fl_print_format("%c%[%SThe values for the setting '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment, main.error.notable);
+          fl_print_format("%[' of setting file '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_environment, main.error.notable);
+          fl_print_format("%[' is too large.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+          flockfile(main.error.to.stream);
         }
 
         *status = F_status_set_error(F_array_too_large);
@@ -1532,13 +1528,15 @@ extern "C" {
       for (uint8_t i = 0; i < 1; ++i) {
 
         if (!settings[i]->used) {
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe setting '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", names[i]);
-          f_color_print(main.error.to.stream, main.context.set.error, "' is required but is not specified in the settings file '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", setting_file.used ? path_file : main.file_data_build_settings.string);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.");
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+          flockfile(main.error.to.stream);
+
+          fl_print_format("%c%[%SThe setting '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, names[i], main.error.notable);
+          fl_print_format("%[' is required but is not specified in the settings file '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, setting_file.used ? path_file : main.file_data_build_settings.string, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+          funlockfile(main.error.to.stream);
 
           failed = F_true;
         }
@@ -1858,13 +1856,15 @@ extern "C" {
 
         if (found == F_false) {
           if (main.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main.error.to.stream, main.context.set.error, "%sThe specified mode '", fll_error_print_error);
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s", modes->array[i].string);
-            f_color_print(main.error.to.stream, main.context.set.error, "' is not a valid mode, according to '");
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s", path_file);
-            f_color_print(main.error.to.stream, main.context.set.error, "'.");
-            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+            flockfile(main.error.to.stream);
+
+            fl_print_format("%c%[%SThe specified mode '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+            fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, modes->array[i], main.error.notable);
+            fl_print_format("%[' is not a valid mode, according to '%]", main.error.to.stream, main.error.context, main.error.context);
+            fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, path_file, main.error.notable);
+            fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+            funlockfile(main.error.to.stream);
           }
 
           error_printed = F_true;
@@ -1909,7 +1909,7 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      // "build_libaries" is appended after all modes to help assist with static linker file issues (@todo there should likely be more options to have a postfix linker parameter that can be added here instead, such as "build_libraries_last").
+      // "build_libraries" is appended after all modes to help assist with static linker file issues (@todo there should likely be more options to have a postfix linker parameter that can be added here instead, such as "build_libraries_last").
       if (total_build_libraries) {
         f_string_dynamic_t temporary[total_build_libraries];
 
@@ -1939,12 +1939,14 @@ extern "C" {
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
         if (main.error.verbosity != f_console_verbosity_quiet) {
+          funlockfile(main.error.to.stream);
+
           // @todo update FSS functions to return which setting index the problem happened on.
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sA setting in the build setting file '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", path_file);
-          f_color_print(main.error.to.stream, main.context.set.error, "' is too long.");
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+          fl_print_format("%c%[%SA setting in the build setting file '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, path_file, main.error.notable);
+          fl_print_format("%[' is too long.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+          funlockfile(main.error.to.stream);
         }
       }
       else if (!error_printed) {
@@ -2241,16 +2243,18 @@ extern "C" {
         if (!settings_single_source[i]->used) continue;
 
         if (settings_single_source[i]->used > 1) {
-          if (main.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-            f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_name[i]);
-            f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-            f_color_print(main.output.stream, main.context.set.warning, "' may only have a single property, only using the first: '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_source[i]->array[0].string);
-            f_color_print(main.output.stream, main.context.set.warning, "'.");
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          if (main.warning.verbosity == f_console_verbosity_verbose) {
+            flockfile(main.warning.to.stream);
+
+            fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, settings_single_name[i], main.warning.notable);
+            fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+            fl_print_format("%[' may only have a single property, only using the first: '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%Q%]", main.warning.to.stream, main.warning.notable, settings_single_source[i]->array[0], main.warning.notable);
+            fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+            funlockfile(main.warning.to.stream);
           }
         }
 
@@ -2264,20 +2268,22 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            if (main.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-              f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_name[i]);
-              f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-              f_color_print(main.output.stream, main.context.set.warning, "' may be either '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_common_setting_bool_yes);
-              f_color_print(main.output.stream, main.context.set.warning, "' or '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_common_setting_bool_no);
-              f_color_print(main.output.stream, main.context.set.warning, "', defaulting to '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_common_setting_bool_yes);
-              f_color_print(main.output.stream, main.context.set.warning, "'.");
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+            if (main.warning.verbosity == f_console_verbosity_verbose) {
+              flockfile(main.warning.to.stream);
+
+              fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, settings_single_name[i], main.warning.notable);
+              fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+              fl_print_format("%[' may be either '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes, main.warning.notable);
+              fl_print_format("%[' or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_no, main.warning.notable);
+              fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_common_setting_bool_yes, main.warning.notable);
+              fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+              funlockfile(main.warning.to.stream);
             }
           }
         }
@@ -2294,22 +2300,24 @@ extern "C" {
           else {
             *settings_single_language[i] = fake_build_language_type_c;
 
-            if (main.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-              f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_name[i]);
-              f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-              f_color_print(main.output.stream, main.context.set.warning, "' may only be one of '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_language_bash);
-              f_color_print(main.output.stream, main.context.set.warning, "', '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_language_c);
-              f_color_print(main.output.stream, main.context.set.warning, "', or '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_language_cpp);
-              f_color_print(main.output.stream, main.context.set.warning, "', defaulting to '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_language_c);
-              f_color_print(main.output.stream, main.context.set.warning, "'.");
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+            if (main.warning.verbosity == f_console_verbosity_verbose) {
+              flockfile(main.warning.to.stream);
+
+              fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, settings_single_name[i], main.warning.notable);
+              fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+              fl_print_format("%[' may only be one of '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_bash, main.warning.notable);
+              fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c, main.warning.notable);
+              fl_print_format("%[', or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_cpp, main.warning.notable);
+              fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_language_c, main.warning.notable);
+              fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+              funlockfile(main.warning.to.stream);
             }
           }
         }
@@ -2329,24 +2337,26 @@ extern "C" {
           else {
             *settings_single_version[i] = settings_single_version_default[i];
 
-            if (main.error.verbosity == f_console_verbosity_verbose) {
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-              f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_name[i]);
-              f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-              f_color_print(main.output.stream, main.context.set.warning, "' may only be one of '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
-              f_color_print(main.output.stream, main.context.set.warning, "', '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_minor);
-              f_color_print(main.output.stream, main.context.set.warning, "', '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_micro);
-              f_color_print(main.output.stream, main.context.set.warning, "', or '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_nano);
-              f_color_print(main.output.stream, main.context.set.warning, "', defaulting to '");
-              f_color_print(main.output.stream, main.context.set.notable, "%s", settings_single_version_default_name[i]);
-              f_color_print(main.output.stream, main.context.set.warning, "'.");
-              fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+            if (main.warning.verbosity == f_console_verbosity_verbose) {
+              flockfile(main.warning.to.stream);
+
+              fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, settings_single_name[i], main.warning.notable);
+              fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+              fl_print_format("%[' may only be one of '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major, main.warning.notable);
+              fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_minor, main.warning.notable);
+              fl_print_format("%[', '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro, main.warning.notable);
+              fl_print_format("%[', or '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_nano, main.warning.notable);
+              fl_print_format("%[', defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+              fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, settings_single_version_default_name[i], main.warning.notable);
+              fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+              funlockfile(main.warning.to.stream);
             }
           }
         }
@@ -2383,32 +2393,36 @@ extern "C" {
         if (!setting->version_file) {
           setting->version_file = fake_build_version_type_micro;
 
-          if (main.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_setting_name_version_file);
-            f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-            f_color_print(main.output.stream, main.context.set.warning, "' is required, defaulting to '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_micro);
-            f_color_print(main.output.stream, main.context.set.warning, "'.");
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          if (main.warning.verbosity == f_console_verbosity_verbose) {
+            flockfile(main.warning.to.stream);
+
+            fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_file, main.warning.notable);
+            fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+            fl_print_format("%[' is required, defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_micro, main.warning.notable);
+            fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+            funlockfile(main.warning.to.stream);
           }
         }
 
         if (!setting->version_target) {
           setting->version_target = fake_build_version_type_major;
 
-          if (main.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main.output.stream, main.context.set.warning, "%sthe setting '", fll_error_print_warning);
-            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_setting_name_version_target);
-            f_color_print(main.output.stream, main.context.set.warning, "' in the file '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", path_file);
-            f_color_print(main.output.stream, main.context.set.warning, "' is required, defaulting to '");
-            f_color_print(main.output.stream, main.context.set.notable, "%s", fake_build_version_major);
-            f_color_print(main.output.stream, main.context.set.warning, "'.");
-            fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          if (main.warning.verbosity == f_console_verbosity_verbose) {
+            flockfile(main.warning.to.stream);
+
+            fl_print_format("%c%[%SThe setting '%]", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, fake_build_setting_name_version_target, main.warning.notable);
+            fl_print_format("%[' in the file '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%S%]", main.warning.to.stream, main.warning.notable, path_file, main.warning.notable);
+            fl_print_format("%[' is required, defaulting to '%]", main.warning.to.stream, main.warning.context, main.warning.context);
+            fl_print_format("%[%s%]", main.warning.to.stream, main.warning.notable, fake_build_version_major, main.warning.notable);
+            fl_print_format("%['.%]%c", main.warning.to.stream, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+            funlockfile(main.warning.to.stream);
           }
         }
       }
@@ -2482,17 +2496,20 @@ extern "C" {
             prefix[i]->used = 0;
 
             for (j = 0; j < 2; ++j) {
+
               if (setting_target[j] && i + 1 <= setting_target[j]) {
                 if (main.error.verbosity != f_console_verbosity_quiet) {
-                  fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-                  f_color_print(main.error.to.stream, main.context.set.error, "%sWhen the '", fll_error_print_error);
-                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", setting_name[j]);
-                  f_color_print(main.error.to.stream, main.context.set.error, "' is set to '");
-                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_target[setting_target[j] - 1]);
-                  f_color_print(main.error.to.stream, main.context.set.error, "', then the '");
-                  f_color_print(main.error.to.stream, main.context.set.notable, "%s", name_object[i]);
-                  f_color_print(main.error.to.stream, main.context.set.error, "' Object must have Content.");
-                  fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+                  flockfile(main.error.to.stream);
+
+                  fl_print_format("%c%[%SWhen the '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+                  fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, setting_name[j], main.error.notable);
+                  fl_print_format("%[' is set to '%]", main.error.to.stream, main.error.context, main.error.context);
+                  fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, name_target[setting_target[j] - 1], main.error.notable);
+                  fl_print_format("%[' then the '%]", main.error.to.stream, main.error.context, main.error.context);
+                  fl_print_format("%[%S%]", main.error.to.stream, main.error.notable, name_object[i], main.error.notable);
+                  fl_print_format("%[' Object must have Content.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+                  funlockfile(main.error.to.stream);
                 }
 
                 *status = F_status_set_error(F_failure);
@@ -2606,23 +2623,18 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (main.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.output.stream, main.context.set.error, "%sthe parameters '", fll_error_print_warning);
-          f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_disabled);
-          f_color_print(main.output.stream, main.context.set.error, "' and '");
-          f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_enabled);
-          f_color_print(main.output.stream, main.context.set.error, "' contradict, defaulting to '");
+        if (main.error.verbosity != f_console_verbosity_quiet) {
+          flockfile(main.error.to.stream);
 
-          if (setting->build_shared) {
-            f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_enabled);
-          }
-          else {
-            f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_shared_disabled);
-          }
+          fl_print_format("%c%[%SThe parameters '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled, main.error.notable);
+          fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled, main.error.notable);
+          fl_print_format("%[' contradict, defaulting to '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled : fake_long_shared_disabled, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
-          f_color_print(main.output.stream, main.context.set.error, "'.");
-          fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          funlockfile(main.error.to.stream);
         }
       }
       else {
@@ -2647,22 +2659,17 @@ extern "C" {
         }
 
         if (main.error.verbosity == f_console_verbosity_verbose) {
-          fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.output.stream, main.context.set.error, "%sthe parameters '", fll_error_print_warning);
-          f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_disabled);
-          f_color_print(main.output.stream, main.context.set.error, "' and '");
-          f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_enabled);
-          f_color_print(main.output.stream, main.context.set.error, "' contradict, defaulting to '");
+          flockfile(main.error.to.stream);
 
-          if (setting->build_static) {
-            f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_enabled);
-          }
-          else {
-            f_color_print(main.output.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_static_disabled);
-          }
+          fl_print_format("%c%[%SThe parameters '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled, main.error.notable);
+          fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled, main.error.notable);
+          fl_print_format("%[' contradict, defaulting to '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled : fake_long_static_disabled, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
-          f_color_print(main.output.stream, main.context.set.error, "'.");
-          fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+          funlockfile(main.error.to.stream);
         }
       }
       else {
@@ -2678,22 +2685,17 @@ extern "C" {
     if (setting->build_language == fake_build_language_type_c || setting->build_language == fake_build_language_type_cpp) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (main.error.verbosity != f_console_verbosity_quiet) {
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe build settings '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", fake_build_setting_name_build_shared);
-          f_color_print(main.error.to.stream, main.context.set.error, "' and '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s", fake_build_setting_name_build_static);
-          f_color_print(main.error.to.stream, main.context.set.error, "' cannot both be false when using the language '");
+          flockfile(main.error.to.stream);
 
-          if (setting->build_language == fake_build_language_type_c) {
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s", fake_build_language_c);
-          }
-          else {
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s", fake_build_language_cpp);
-          }
+          fl_print_format("%c%[%SThe build settings '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_shared, main.error.notable);
+          fl_print_format("%[' and '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, fake_build_setting_name_build_static, main.error.notable);
+          fl_print_format("%[' cannot both be false when using the language '%]", main.error.to.stream, main.error.context, main.error.context);
+          fl_print_format("%[%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, setting->build_language == fake_build_language_type_c ? fake_build_language_c : fake_build_language_cpp, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
-          f_color_print(main.error.to.stream, main.context.set.error, "'.");
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+          funlockfile(main.error.to.stream);
         }
 
         *status = F_status_set_error(F_failure);
@@ -2852,9 +2854,7 @@ extern "C" {
     if (!data_build.setting.build_sources_library.used) return 0;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Compiling static objects.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Compiling static objects.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -2941,11 +2941,13 @@ extern "C" {
 
         if (*status == F_false) {
           if (main.error.verbosity != f_console_verbosity_quiet) {
-            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main.error.to.stream, main.context.set.error, "%sThe path '", fll_error_print_error);
-            f_color_print(main.error.to.stream, main.context.set.notable, "%s", destination_path.string);
-            f_color_print(main.error.to.stream, main.context.set.error, "' exists but is not a directory.");
-            fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+            flockfile(main.error.to.stream);
+
+            fl_print_format("%c%[%SThe path '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+            fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, destination_path, main.error.notable);
+            fl_print_format("%[' exists but is not a directory.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+            funlockfile(main.error.to.stream);
           }
 
           *status = F_status_set_error(F_failure);
@@ -2956,11 +2958,13 @@ extern "C" {
 
           if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found_not) {
-              fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-              f_color_print(main.error.to.stream, main.context.set.error, "%sThe path '", fll_error_print_error);
-              f_color_print(main.error.to.stream, main.context.set.notable, "%s", destination_path.string);
-              f_color_print(main.error.to.stream, main.context.set.error, "' could not be created, a parent directory does not exist.");
-              fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
+              flockfile(main.error.to.stream);
+
+              fl_print_format("%c%[%SThe path '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+              fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, destination_path, main.error.notable);
+              fl_print_format("%[' could not be created, a parent directory does not exist.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+              funlockfile(main.error.to.stream);
             }
             else {
               fll_error_file_print(main.error, F_status_set_fine(*status), "f_directory_create", F_true, destination_path.string, "create", fll_error_file_type_directory);
@@ -2970,7 +2974,7 @@ extern "C" {
           }
 
           if (main.error.verbosity == f_console_verbosity_verbose) {
-            fprintf(main.output.stream, "Directory '%s' created.%c", destination_path.string, f_string_eol_s[0]);
+            fll_print_format("Directory '%S' created.%c", main.output.stream, destination_path, f_string_eol_s[0]);
           }
         }
         else if (F_status_is_error(*status)) {
@@ -3066,17 +3070,13 @@ extern "C" {
 
     if (F_status_is_fine(status)) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->output.stream, "%c", f_string_eol_s[0]);
-        f_color_print(main->output.stream, main->context.set.important, "Building project%c", data_build.setting.project_name.used ? ' ' : 0);
+        flockfile(main->output.stream);
 
-        if (data_build.setting.project_name.used) {
-          f_color_print_code(main->output.stream, main->context.notable);
-          f_print_dynamic(main->output.stream, data_build.setting.project_name);
-          f_color_print_code(main->output.stream, main->context.reset);
-        }
+        fl_print_format("%c%[Building project%] ", main->output.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
+        fl_print_format("%[%Q%]", main->output.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
+        fl_print_format("%[.%]%c", main->output.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
 
-        f_color_print(main->output.stream, main->context.set.important, ".");
-        fprintf(main->output.stream, "%c", f_string_eol_s[0]);
+        funlockfile(main->output.stream);
       }
     }
 
@@ -3188,9 +3188,7 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Compiling shared program.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Compiling shared program.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -3293,9 +3291,7 @@ extern "C" {
     if (!data_build.setting.build_sources_program.used) return 0;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Compiling static program.");
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+      fll_print_format("%c%[Compiling static program.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;

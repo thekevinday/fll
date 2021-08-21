@@ -132,7 +132,7 @@ Fakefile Documentation:
       The second Content may be either 'success' or 'failure' to designate on whether or not to exit as success or failure.
 
       When set to "failure" this will trigger a failure message.
-      When set to "failure", the fail state will be forcibly changed to "fail" regardless of the currrent fail state.
+      When set to "failure", the fail state will be forcibly changed to "fail" regardless of the current fail state.
 
     - fail\:
       Toggle how the to handle an operation failure.

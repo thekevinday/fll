@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  f_string_t private_fl_print_string_convert(f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
+  f_string_t private_fl_print_format_convert(f_string_t string, FILE *output, va_list *ap, f_status_t *status) {
 
     const f_string_t start = string;
 
@@ -97,7 +97,7 @@ extern "C" {
             return string;
           }
 
-          string += 1;
+          ++string;
 
           if (*string < 0x30 || *string > 0x39) {
             *status = F_status_set_error(F_valid_not);
@@ -181,27 +181,28 @@ extern "C" {
           if (*(string + 1) == f_string_ascii_I_s[0]) {
             if (*(string + 2) == f_string_ascii_I_s[0]) {
               type = f_print_format_type_signed_8;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_signed_16;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_L_s[0]) {
             if (*(string + 2) == f_string_ascii_L_s[0]) {
               type = f_print_format_type_signed_128;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_signed_64;
-              string += 1;
+              ++string;
             }
           }
-        }
-        else if (*string == f_string_ascii_N_s[0]) {
-          type = f_print_format_type_number;
-          flag |= f_print_format_flag_uppercase;
+          else if (*(string + 1) == f_string_ascii_N_s[0]) {
+            type = f_print_format_type_signed_number;
+            flag |= f_print_format_flag_uppercase;
+            ++string;
+          }
         }
         else if (*string == f_string_ascii_Q_s[0]) {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
@@ -334,26 +335,26 @@ extern "C" {
           if (*(string + 1) == f_string_ascii_I_s[0]) {
             if (*(string + 2) == f_string_ascii_I_s[0]) {
               type = f_print_format_type_unsigned_8;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_unsigned_16;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_L_s[0]) {
             if (*(string + 2) == f_string_ascii_L_s[0]) {
               type = f_print_format_type_unsigned_128;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_unsigned_64;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_N_s[0]) {
             type = f_print_format_type_unsigned_number;
-            string += 1;
+            ++string;
           }
         }
         else {
@@ -417,26 +418,27 @@ extern "C" {
           if (*(string + 1) == f_string_ascii_i_s[0]) {
             if (*(string + 2) == f_string_ascii_i_s[0]) {
               type = f_print_format_type_signed_8;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_signed_16;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_l_s[0]) {
             if (*(string + 2) == f_string_ascii_l_s[0]) {
               type = f_print_format_type_signed_128;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_signed_64;
-              string += 1;
+              ++string;
             }
           }
-        }
-        else if (*string == f_string_ascii_n_s[0]) {
-          type = f_print_format_type_number;
+          else if (*(string + 1) == f_string_ascii_n_s[0]) {
+            type = f_print_format_type_signed_number;
+            ++string;
+          }
         }
         else if (*string == f_string_ascii_q_s[0]) {
           const f_string_static_t value = va_arg(*ap, f_string_static_t);
@@ -692,26 +694,26 @@ extern "C" {
           if (*(string + 1) == f_string_ascii_i_s[0]) {
             if (*(string + 2) == f_string_ascii_i_s[0]) {
               type = f_print_format_type_unsigned_8;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_unsigned_16;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_l_s[0]) {
             if (*(string + 2) == f_string_ascii_l_s[0]) {
               type = f_print_format_type_unsigned_128;
-              string = string + 2;
+              string += 2;
             }
             else {
               type = f_print_format_type_unsigned_64;
-              string += 1;
+              ++string;
             }
           }
           else if (*(string + 1) == f_string_ascii_n_s[0]) {
             type = f_print_format_type_unsigned_number;
-            string += 1;
+            ++string;
           }
         }
         else if (*string == f_string_ascii_z_s[0]) {
@@ -757,7 +759,7 @@ extern "C" {
         conversion_data.width = precision;
       }
 
-      if (type == f_print_format_type_number) {
+      if (type == f_print_format_type_signed_number) {
         *status = f_conversion_number_signed_print(va_arg(*ap, f_number_signed_t), conversion_data, output);
       }
       else if (type == f_print_format_type_signed_64) {
@@ -812,9 +814,9 @@ extern "C" {
 
     return string;
   }
-#endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
-#if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
   f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int *number, f_status_t *status) {
 
     for (*number = 0; *string; string += 1) {
@@ -835,7 +837,7 @@ extern "C" {
 
     return string;
   }
-#endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
   f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE *output) {
@@ -1447,18 +1449,6 @@ extern "C" {
           }
 
           if (!string[i]) {
-            if (!fputc_unlocked(f_print_sequence_null_s[0], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_null_s[1], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_null_s[2], output)) {
-              return F_status_set_error(F_output);
-            }
-
             ++i;
             continue;
           }
@@ -1923,18 +1913,6 @@ extern "C" {
           }
 
           if (!string[i]) {
-            if (!fputc_unlocked(f_print_sequence_null_s[0], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_null_s[1], output)) {
-              return F_status_set_error(F_output);
-            }
-
-            if (!fputc_unlocked(f_print_sequence_null_s[2], output)) {
-              return F_status_set_error(F_output);
-            }
-
             ++i;
             continue;
           }

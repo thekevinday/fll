@@ -14,6 +14,8 @@ extern "C" {
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(const f_file_t output, const f_color_context_t context) {
 
+    flockfile(output.stream);
+
     fll_program_print_help_header(output, context, fake_name_long, fake_version);
 
     fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -26,7 +28,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, fake_short_define, fake_long_define, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Append an additional define after defines from settings file.");
     fll_program_print_help_option(output, context, fake_short_fakefile, fake_long_fakefile, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use this fakefile.");
@@ -34,16 +36,14 @@ extern "C" {
     fll_program_print_help_option(output, context, fake_short_process, fake_long_process, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Process name for storing build states.");
     fll_program_print_help_option(output, context, fake_short_settings, fake_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use this settings file.");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, fake_short_path_build, fake_long_path_build, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a custom build directory.");
     fll_program_print_help_option(output, context, fake_short_path_data, fake_long_path_data, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Specify a custom path to the data files.");
     fll_program_print_help_option(output, context, fake_short_path_sources, fake_long_path_sources, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Specify a custom path to the source files.");
     fll_program_print_help_option(output, context, fake_short_path_work, fake_long_path_work, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Use includes/libraries/programs from this directory instead of system.");
 
-    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-
-    f_color_print(output.stream, context.set.important, " Special Options: ");
+    fl_print_format("%c%c %[Special Options:%] ", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
 
     fll_program_print_help_option_long(output, context, fake_long_documents_disabled, f_console_symbol_long_enable_s, "   Forcibly do not build documents files.");
     fll_program_print_help_option_long(output, context, fake_long_documents_enabled, f_console_symbol_long_enable_s, "    Forcibly do build documents files.");
@@ -52,9 +52,7 @@ extern "C" {
     fll_program_print_help_option_long(output, context, fake_long_static_disabled, f_console_symbol_long_enable_s, "Forcibly do not build static files.");
     fll_program_print_help_option_long(output, context, fake_long_static_enabled, f_console_symbol_long_enable_s, " Forcibly do build static files.");
 
-    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-
-    f_color_print(output.stream, context.set.important, " Operations: ");
+    fl_print_format("%c%c %[Operations:%] ", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
 
     fll_program_print_help_option_other(output, context, fake_other_operation_build, "   Build or compile the code based on build settings file.");
     fll_program_print_help_option_other(output, context, fake_other_operation_clean, "   Delete all build files.");
@@ -63,37 +61,33 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, fake_name, "operation");
 
-    fprintf(output.stream, "  When performing the ");
-    f_color_print(output.stream, context.set.notable, "%s", fake_other_operation_build);
-    fprintf(output.stream, " operation, the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fake_long_mode);
-    fprintf(output.stream, " parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.");
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_terminated("  When performing the ", output.stream);
+    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_other_operation_build, context.set.notable);
+    f_print_terminated("  operation, the ", output.stream);
+    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_mode, context.set.notable);
+    fl_print_format(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%c", output.stream, f_string_eol_s[0]);
 
-    fprintf(output.stream, "  For example, when a ");
-    f_color_print(output.stream, context.set.notable, "%s", fake_long_mode);
-    fprintf(output.stream, " of 'fll_monolithic' is specified, build libaries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').");
+    f_print_terminated("  For example, when a ", output.stream);
+    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_mode, context.set.notable);
+    fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+    f_print_terminated("  When specifying the ", output.stream);
+    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_fakefile, context.set.notable);
+    f_print_terminated("  or the ", output.stream);
+    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_settings, context.set.notable);
+    fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%c", output.stream, f_string_eol_s[0]);
 
-    fprintf(output.stream, "  When specifying the ");
-    f_color_print(output.stream, context.set.notable, "%s", fake_long_fakefile);
-    fprintf(output.stream, " or the ");
-    f_color_print(output.stream, context.set.notable, "%s", fake_long_settings);
-    fprintf(output.stream, " parameters, the filenames are relative to the data build directory, unless a path is used.");
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_terminated("  For example, with '", output.stream);
+    fl_print_format("%[%s%s my_fakefile%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
+    f_print_terminated("' the fakefile at '", output.stream);
+    fl_print_format("%[./%s%smy_fakefile%]", output.stream, context.set.notable, fake_default_path_data, fake_default_path_build, context.set.notable);
+    f_print_terminated("' would be used, however with '", output.stream);
+    fl_print_format("%[%s%s ./my_fakefile%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
+    f_print_terminated("' the fakefile at '", output.stream);
+    fl_print_format("%[./my_fakefile%]", output.stream, context.set.notable, context.set.notable);
+    fl_print_format("' would be used.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  For example, with '");
-    f_color_print(output.stream, context.set.notable, "%s%s my_fakefile", f_console_symbol_long_enable_s, fake_long_fakefile);
-    fprintf(output.stream, "' the fakefile at '");
-    f_color_print(output.stream, context.set.notable, "./%s%smy_fakefile", fake_default_path_data, fake_default_path_build);
-    fprintf(output.stream, " would be used, however with '");
-    f_color_print(output.stream, context.set.notable, "%s%s ./my_fakefile", f_console_symbol_long_enable_s, fake_long_fakefile);
-    fprintf(output.stream, "' the fakefile at '");
-    f_color_print(output.stream, context.set.notable, "./my_fakefile", fake_default_path_data, fake_default_path_build);
-    fprintf(output.stream, " would be used.");
-
-    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
+    funlockfile(output.stream);
 
     return F_none;
   }
@@ -117,9 +111,12 @@ extern "C" {
         if (main->context.set.error.before) {
           main->error.context = main->context.set.error;
           main->error.notable = main->context.set.notable;
+
+          main->warning.context = main->context.set.warning;
+          main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
           fll_program_parameter_process_empty(&main->context, sets);
         }
@@ -149,15 +146,19 @@ extern "C" {
 
         if (choice == fake_parameter_verbosity_quiet) {
           main->error.verbosity = f_console_verbosity_quiet;
+          main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fake_parameter_verbosity_normal) {
           main->error.verbosity = f_console_verbosity_normal;
+          main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fake_parameter_verbosity_verbose) {
           main->error.verbosity = f_console_verbosity_verbose;
+          main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fake_parameter_verbosity_debug) {
           main->error.verbosity = f_console_verbosity_debug;
+          main->warning.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -338,10 +339,13 @@ extern "C" {
         }
         else if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-            f_color_print(main->error.to.stream, main->error.context, "%sThe operation '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->error.notable, "%s", operations_name);
-            f_color_print(main->error.to.stream, main->error.context, "' failed.%c", f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%SThe operation '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%s%]", main->error.to.stream, main->error.notable, operations_name, main->error.notable);
+            fl_print_format("%[' failed.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
           }
 
           break;
@@ -351,18 +355,16 @@ extern "C" {
       // ensure a newline is always put at the end of the program execution, unless in quiet mode.
       if (main->error.verbosity != f_console_verbosity_quiet) {
         if (F_status_is_error(status) || status == F_signal) {
-          fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+          fll_print_character(f_string_eol_s[0], main->error.to.stream);
         }
         else if (status != F_child) {
-          fprintf(main->output.stream, "%cAll operations complete.%c%c", f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
+          fll_print_format("%cAll operations complete.%c%c", main->output.stream, f_string_eol_s[0], f_string_eol_s[0], f_string_eol_s[0]);
         }
       }
     }
     else {
       if (main->error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(main->error.to.stream, main->error.context, "%sYou failed to specify an operation.%c", fll_error_print_error, f_string_eol_s[0]);
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+        fll_print_format("%c%[%SYou failed to specify an operation.%]%c%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0], f_string_eol_s[0]);
       }
 
       status = F_status_set_error(F_parameter);

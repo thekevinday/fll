@@ -164,9 +164,9 @@ extern "C" {
  * @see f_print_safely()
  * @see f_print_terminated()
  */
-#ifndef _di_fl_print_string_
-  extern f_status_t fl_print_string(const f_string_t string, FILE *output, ...);
-#endif // _di_fl_print_string_
+#ifndef _di_fl_print_format_
+  extern f_status_t fl_print_format(const f_string_t string, FILE *output, ...);
+#endif // _di_fl_print_format_
 
 /**
  * Convert and print a single part of a formatted string represented by the '%'.
@@ -223,14 +223,14 @@ extern "C" {
  * @see f_print_safely()
  * @see f_print_terminated()
  */
-#ifndef _di_fl_print_string_convert_
-  extern f_string_t fl_print_string_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status);
-#endif // _di_fl_print_string_convert_
+#ifndef _di_fl_print_format_convert_
+  extern f_string_t fl_print_format_convert(const f_string_t string, FILE *output, va_list *ap, f_status_t *status);
+#endif // _di_fl_print_format_convert_
 
 /**
  * A formatted print function similar to (but not the same as) the c-library vfprintf() function.
  *
- * This is identical to fl_print_string() except it accepts a va_list as a variable instead of as "...".
+ * This is identical to fl_print_format() except it accepts a va_list as a variable instead of as "...".
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -273,7 +273,7 @@ extern "C" {
  * @see f_print_dynamic_safely()
  * @see f_print_safely()
  * @see f_print_terminated()
- * @see fl_print_string()
+ * @see fl_print_format()
  */
 #ifndef _di_fl_print_string_va_
   extern f_status_t fl_print_string_va(const f_string_t string, FILE *output, va_list *ap);
@@ -353,11 +353,11 @@ extern "C" {
 /**
  * Print a string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
@@ -461,11 +461,11 @@ extern "C" {
 /**
  * Print a dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print the entire dynamic string, except for leading/trailing whitespace.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
@@ -574,11 +574,11 @@ extern "C" {
 /**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
@@ -699,11 +699,11 @@ extern "C" {
 /**
  * Print a string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
  *
  * NULL characters are treated as whitespace for the purpose of trimming.
@@ -823,11 +823,11 @@ extern "C" {
 /**
  * Print a dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print the entire dynamic string, except for leading/trailing whitespace.
  * Will not print any 1-byte character at a location specified in except_at array.
  *
@@ -958,11 +958,11 @@ extern "C" {
 /**
  * Print a string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
  *
@@ -1096,11 +1096,11 @@ extern "C" {
 /**
  * Print a dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print the entire dynamic string, except for leading/trailing whitespace.
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
@@ -1233,11 +1233,11 @@ extern "C" {
 /**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
@@ -1364,11 +1364,11 @@ extern "C" {
 /**
  * Print a partial dynamic string, stripping leading and trailing whitespace.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print the only the buffer range specified by range, except for leading/trailing whitespace.
  *

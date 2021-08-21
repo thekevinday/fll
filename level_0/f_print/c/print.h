@@ -194,11 +194,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this prints a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to length 1-byte characters.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -286,11 +286,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to the specified range within the buffer.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -396,11 +396,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
  *
@@ -500,11 +500,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this prints a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
  *
@@ -620,13 +620,13 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print up to length 1-byte characters.
@@ -738,11 +738,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this prints a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except_at array.
  * Will not print any 1-byte character within the ranges specified in except_in array.
  * Will print up to the length of the buffer.
@@ -1029,11 +1029,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range in a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
  *
@@ -1125,11 +1125,11 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to length 1-byte characters.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -1159,7 +1159,7 @@ extern "C" {
 /**
  * Similar to a c-library printf.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will stop at NULL.
@@ -1290,11 +1290,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to length 1-byte characters.
  *
  * @param string
@@ -1390,11 +1390,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this prints a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to length 1-byte characters.
  *
  * @param buffer
@@ -1492,11 +1492,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range in a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will print up to length 1-byte characters.
  *
  * @param buffer
@@ -1604,11 +1604,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to length 1-byte characters.
  *
@@ -1716,11 +1716,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this prints a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the length of the buffer.
  *
@@ -1830,11 +1830,11 @@ extern "C" {
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range in a given dynamic string.
  *
- * Control characters are converted to the Unicode control character symbols, including NULL.
+ * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
  * Will not stop at NULL.
- * Will print NULL (as a control character symbol).
+ * Will not print NULL.
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
  *

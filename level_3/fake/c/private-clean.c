@@ -16,10 +16,13 @@ extern "C" {
     f_status_t status = F_none;
 
     if (main.error.verbosity != f_console_verbosity_quiet) {
-      fprintf(main.output.stream, "%c", f_string_eol_s[0]);
-      f_color_print(main.output.stream, main.context.set.important, "Deleting all files within build directory '");
-      f_color_print(main.output.stream, main.context.set.notable, "%s", main.path_build.string);
-      f_color_print(main.output.stream, main.context.set.important, "'.%c", f_string_eol_s[0]);
+      flockfile(main.output.stream);
+
+      fl_print_format("%c%[Deleting all files within build directory '%]", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important);
+      fl_print_format("%[%Q%]", main.output.stream, main.context.set.notable, main.path_build, main.context.set.notable);
+      fl_print_format("%[.%]%c", main.output.stream, main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+
+      funlockfile(main.output.stream);
     }
 
     if (fake_signal_received(main)) {
@@ -35,7 +38,13 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not) {
       if (main.error.verbosity == f_console_verbosity_verbose) {
-        fprintf(main.output.stream, "The build directory '%s' does not exist.%c", main.path_build.string, f_string_eol_s[0]);
+        flockfile(main.output.stream);
+
+        f_print_terminated("The build directory '", main.output.stream);
+        fl_print_format("%[%Q%]", main.output.stream, main.context.set.notable, main.path_build, main.context.set.notable);
+        fl_print_format("' does not exist.%c", main.output.stream, f_string_eol_s[0]);
+
+        funlockfile(main.output.stream);
       }
 
       status = F_none;
@@ -61,7 +70,7 @@ extern "C" {
     if (!result) {
 
       // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
-      printf("Removed '%s'.%c", path, f_string_eol_s[0]);
+      fll_print_format("Removed '%S'.%c", stdout, path, f_string_eol_s[0]);
     }
 
     return result;

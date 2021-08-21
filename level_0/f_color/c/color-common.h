@@ -418,7 +418,7 @@ extern "C" {
     macro_f_string_dynamic_t_clear(context.normal_reset)
 
   #define macro_f_color_context_t_new(status, context) \
-     macro_f_string_dynamic_t_resize(status, context.reset, f_color_max_size + 1) \
+    macro_f_string_dynamic_t_resize(status, context.reset, f_color_max_size + 1) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.warning, f_color_max_size + 1) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.error, f_color_max_size + 1) \
     if (F_status_is_error_not(status)) macro_f_string_dynamic_t_resize(status, context.title, f_color_max_size + 1) \

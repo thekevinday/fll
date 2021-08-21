@@ -14,4 +14,5 @@ fl_console
 fl_print
 fl_string
 fll_error
+fll_print
 fll_program

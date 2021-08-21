@@ -203,10 +203,10 @@ extern "C" {
 
     flockfile(print.to.stream);
 
-    fl_print_string("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
-    fl_print_string("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
-    fl_print_string("%[%S%]", print.to.stream, print.notable, path, print.notable);
-    fl_print_string("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+    fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+    fl_print_format("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, path, print.notable);
+    fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
     funlockfile(print.to.stream);
 
@@ -311,28 +311,28 @@ extern "C" {
 
       flockfile(print.to.stream);
 
-      fl_print_string("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
-      fl_print_string("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
-      fl_print_string("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
+      fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+      fl_print_format("%['Critical failure while attempting to establish '%]", print.to.stream, print.context, print.context);
+      fl_print_format("%[%s lock%]", print.to.stream, print.notable, read ? "read" : "write", print.notable);
 
       if (status != F_failure) {
-        fl_print_string(" %['due to%] ", print.to.stream, print.context, print.context);
+        fl_print_format(" %['due to%] ", print.to.stream, print.context, print.context);
 
         if (status == F_parameter) {
-          fl_print_string("%[%s%]", print.to.stream, print.notable, "Invalid Parameter", print.notable);
+          fl_print_format("%[%s%]", print.to.stream, print.notable, "Invalid Parameter", print.notable);
         }
         else if (status == F_deadlock) {
-          fl_print_string("%[%s%]", print.to.stream, print.notable, "Deadlock", print.notable);
+          fl_print_format("%[%s%]", print.to.stream, print.notable, "Deadlock", print.notable);
         }
         else if (status == F_resource_not) {
-          fl_print_string("%[%s%]", print.to.stream, print.notable, "Too Many Locks", print.notable);
+          fl_print_format("%[%s%]", print.to.stream, print.notable, "Too Many Locks", print.notable);
         }
         else {
-          fl_print_string("%[%s%]", print.to.stream, print.notable, "Unknown Error", print.notable);
+          fl_print_format("%[%s%]", print.to.stream, print.notable, "Unknown Error", print.notable);
         }
       }
 
-      fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+      fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
       funlockfile(print.to.stream);
 

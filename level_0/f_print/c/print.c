@@ -586,8 +586,13 @@ extern "C" {
         i += width;
       }
       else {
-        status = private_f_print_character_safely(string[i++], output);
-        if (F_status_is_error(status)) return status;
+        if (string[i]) {
+          status = private_f_print_character_safely(string[i++], output);
+          if (F_status_is_error(status)) return status;
+        }
+        else {
+          ++i;
+        }
       }
 
       start = i;

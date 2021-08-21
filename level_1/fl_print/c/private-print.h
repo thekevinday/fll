@@ -70,9 +70,9 @@ extern "C" {
  *
  * @see private_fl_print_convert_number()
  */
-#if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
-  extern f_string_t private_fl_print_string_convert(f_string_t string, FILE *output, va_list *ap, f_status_t *status) f_attribute_visibility_internal;
-#endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
+  extern f_string_t private_fl_print_format_convert(f_string_t string, FILE *output, va_list *ap, f_status_t *status) f_attribute_visibility_internal;
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 /**
  * Helper function for processing the number in a convert string.
@@ -94,9 +94,9 @@ extern "C" {
  *
  * @see va_arg()
  */
-#if !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
   extern f_string_t private_fl_print_convert_number(f_string_t string, va_list *ap, unsigned int *number, f_status_t *status) f_attribute_visibility_internal;
-#endif // !defined(_di_fl_print_string_convert_) || !defined(_di_fl_print_string_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 /**
  * Private implementation of fl_print_trim_except().

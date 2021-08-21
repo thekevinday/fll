@@ -28,9 +28,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SAccess denied while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SAccess denied while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -42,9 +42,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SCurrent user is not allowed to use the given group while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SCurrent user is not allowed to use the given group while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -56,9 +56,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SCurrent user is not allowed to use the given owner while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SCurrent user is not allowed to use the given owner while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -70,9 +70,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SInvalid directory while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SInvalid directory while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -84,9 +84,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', not empty.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', not empty.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -98,9 +98,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', failed to close.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', failed to close.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -112,9 +112,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', is closed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', is closed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -126,9 +126,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', found.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', found.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -140,9 +140,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', could not find.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', could not find.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -154,9 +154,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', already open.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', already open.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -168,9 +168,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SFile descriptor error while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SFile descriptor error while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -182,9 +182,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SMax file descriptors reached while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SMax file descriptors reached while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -196,9 +196,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SInvalid file descriptor while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SInvalid file descriptor while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -210,9 +210,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', %s is empty.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', %s is empty.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -224,9 +224,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', flush failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', flush failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -238,9 +238,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SMax open files reached while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SMax open files reached while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -252,9 +252,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SOverflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SOverflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -266,9 +266,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', purge failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', purge failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -280,9 +280,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SRead failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SRead failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -294,9 +294,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SSeek failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SSeek failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -308,9 +308,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SStat failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SStat failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -322,9 +322,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SSynchronize failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SSynchronize failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -336,9 +336,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUTF failure while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUTF failure while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -350,9 +350,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SInvalid UTF while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SInvalid UTF while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -364,9 +364,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SUnderflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SUnderflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -378,9 +378,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%[', write failure.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', write failure.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -392,9 +392,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SLoop while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SLoop while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -406,9 +406,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SInvalid %S name '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SInvalid %S name '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -420,9 +420,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SNumber overflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SNumber overflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -434,9 +434,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SNumber underflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SNumber underflow while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -448,13 +448,13 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SInvalid parameter", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
+        fl_print_format("%c%[%SInvalid parameter", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
-        fl_print_string(" for the %S '%]", print.to.stream, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format(" for the %S '%]", print.to.stream, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -466,9 +466,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SProhibited by system while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SProhibited by system while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -481,9 +481,9 @@ extern "C" {
         if (print.verbosity != f_console_verbosity_quiet) {
           flockfile(print.to.stream);
 
-          fl_print_string("%c%[%SInvalid or missing directory in path while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-          fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-          fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SInvalid or missing directory in path while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+          fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+          fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
           funlockfile(print.to.stream);
         }
@@ -496,9 +496,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -511,9 +511,9 @@ extern "C" {
         if (print.verbosity != f_console_verbosity_quiet) {
           flockfile(print.to.stream);
 
-          fl_print_string("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-          fl_print_string("%[%S%]", print.to.stream, print.notable, name, print.notable);
-          fl_print_string("%[' due to an invalid directory in the path.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+          fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+          fl_print_format("%[' due to an invalid directory in the path.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
           funlockfile(print.to.stream);
         }
@@ -533,9 +533,9 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument for the parameter '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%[' must not be an empty string.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument for the parameter '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%[' must not be an empty string.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -547,11 +547,11 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, argument, print.notable);
-        fl_print_string("%[' is not a valid number for the parameter '%]", print.to.stream, print.context, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, argument, print.notable);
+        fl_print_format("%[' is not a valid number for the parameter '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -563,11 +563,11 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, argument, print.notable);
-        fl_print_string("%[' is negative, which is not allowed for the parameter '%]", print.to.stream, print.context, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, argument, print.notable);
+        fl_print_format("%[' is negative, which is not allowed for the parameter '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -579,11 +579,11 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, argument, print.notable);
-        fl_print_string("%[' is too large for the parameter '%]", print.to.stream, print.context, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, argument, print.notable);
+        fl_print_format("%[' is too large for the parameter '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -595,11 +595,11 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, argument, print.notable);
-        fl_print_string("%[' is positive, which is not allowed for the parameter '%]", print.to.stream, print.context, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, argument, print.notable);
+        fl_print_format("%[' is positive, which is not allowed for the parameter '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -611,11 +611,11 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
 
-        fl_print_string("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, argument, print.notable);
-        fl_print_string("%[' is too small for the parameter '%]", print.to.stream, print.context, print.context);
-        fl_print_string("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
-        fl_print_string("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SThe argument '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, argument, print.notable);
+        fl_print_format("%[' is too small for the parameter '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, parameter, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }

@@ -457,7 +457,7 @@ extern "C" {
 
         flockfile(global.main->warning.to.stream);
 
-        fl_print_string("%c%[%SAction is empty, nothing to do.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
+        fl_print_format("%c%[%SAction is empty, nothing to do.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
 
         controller_rule_error_print_cache(global.main->warning, cache->action, F_true);
 
@@ -691,29 +691,29 @@ extern "C" {
   void controller_rule_error_print_cache(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) {
 
     if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_string("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
+      fl_print_format("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
 
       if (cache.name_action.used) {
-        fl_print_string("%s '%]", output.to.stream, output.context, item ? controller_string_action_s : controller_string_value_s, output.context);
-        fl_print_string("%[%Q%]", output.to.stream, output.notable, cache.name_action, output.notable);
-        fl_print_string("%[ on line %]", output.to.stream, output.context, output.context);
-        fl_print_string("%[%ul%]", output.to.stream, output.notable, cache.line_action, output.notable);
-        fl_print_string("%[ for ", output.to.stream, output.context);
+        fl_print_format("%s '%]", output.to.stream, output.context, item ? controller_string_action_s : controller_string_value_s, output.context);
+        fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_action, output.notable);
+        fl_print_format("%[ on line %]", output.to.stream, output.context, output.context);
+        fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_action, output.notable);
+        fl_print_format("%[ for ", output.to.stream, output.context);
       }
 
       if (cache.name_item.used) {
-        fl_print_string("rule %s '%]", output.to.stream, output.context, item ? controller_string_item_s : controller_string_setting_s, output.context);
-        fl_print_string("%[%Q%]", output.to.stream, output.notable, cache.name_item, output.notable);
-        fl_print_string("%[ on line %]", output.to.stream, output.context, output.context);
-        fl_print_string("%[%ul%]", output.to.stream, output.notable, cache.line_item, output.notable);
-        fl_print_string("%[ for ", output.to.stream, output.context);
+        fl_print_format("rule %s '%]", output.to.stream, output.context, item ? controller_string_item_s : controller_string_setting_s, output.context);
+        fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_item, output.notable);
+        fl_print_format("%[ on line %]", output.to.stream, output.context, output.context);
+        fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_item, output.notable);
+        fl_print_format("%[ for ", output.to.stream, output.context);
       }
 
       if (cache.name_file.used) {
-        fl_print_string("rule file '%]%[%Q%]%['", output.to.stream, output.context, output.notable, cache.name_file, output.notable, output.context);
+        fl_print_format("rule file '%]%[%Q%]%['", output.to.stream, output.context, output.notable, cache.name_file, output.notable, output.context);
       }
 
-      fl_print_string(".%]%c", output.to.stream, output.context, f_string_eol_s[0]);
+      fl_print_format(".%]%c", output.to.stream, output.context, f_string_eol_s[0]);
     }
   }
 #endif // _di_controller_rule_error_print_cache_
@@ -737,11 +737,11 @@ extern "C" {
     if (output.verbosity != f_console_verbosity_quiet) {
       flockfile(output.to.stream);
 
-      fl_print_string("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
-      fl_print_string("%[%S%]", output.to.stream, output.notable, name, output.notable);
+      fl_print_format("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
+      fl_print_format("%[%S%]", output.to.stream, output.notable, name, output.notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
-        fl_print_string("%[' failed due to a failure to setup the '%]", output.to.stream, output.context, output.context);
+        fl_print_format("%[' failed due to a failure to setup the '%]", output.to.stream, output.context, output.context);
         fl_print_color_before(output.notable, output.to.stream);
 
         if (status == F_control_group) {
@@ -758,15 +758,15 @@ extern "C" {
         }
 
         fl_print_color_after(output.notable, output.to.stream);
-        fl_print_string("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_format("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
       }
       else if (code) {
-        fl_print_string("%[' failed with the exit code '%]", output.to.stream, output.context, output.context);
-        fl_print_string("%[%i%]", output.to.stream, output.notable, code, output.notable);
-        fl_print_string("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_format("%[' failed with the exit code '%]", output.to.stream, output.context, output.context);
+        fl_print_format("%[%i%]", output.to.stream, output.notable, code, output.notable);
+        fl_print_format("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
       }
       else {
-        fl_print_string("%[' failed.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_format("%[' failed.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
       }
 
       funlockfile(output.to.stream);
@@ -780,9 +780,9 @@ extern "C" {
     if (output.verbosity != f_console_verbosity_quiet) {
       flockfile(output.to.stream);
 
-      fl_print_string("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
-      fl_print_string("%[%S%]", output.to.stream, output.notable, name, output.notable);
-      fl_print_string("%[' could not be executed because it was not found.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+      fl_print_format("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
+      fl_print_format("%[%S%]", output.to.stream, output.notable, name, output.notable);
+      fl_print_format("%[' could not be executed because it was not found.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
 
       funlockfile(output.to.stream);
     }
@@ -795,9 +795,9 @@ extern "C" {
     if (output.verbosity != f_console_verbosity_quiet) {
       flockfile(output.to.stream);
 
-      fl_print_string("%c%[%SThe %s rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, need_want_wish, output.context);
-      fl_print_string("%[%S%]", output.to.stream, output.notable, value, output.notable);
-      fl_print_string("%[' %S.%]%c", output.to.stream, output.context, why, output.context, f_string_eol_s[0]);
+      fl_print_format("%c%[%SThe %s rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, need_want_wish, output.context);
+      fl_print_format("%[%S%]", output.to.stream, output.notable, value, output.notable);
+      fl_print_format("%[' %S.%]%c", output.to.stream, output.context, why, output.context, f_string_eol_s[0]);
 
       funlockfile(output.to.stream);
     }
@@ -810,9 +810,9 @@ extern "C" {
     if (output.verbosity != f_console_verbosity_quiet) {
       flockfile(output.to.stream);
 
-      fl_print_string("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
-      fl_print_string("%[%S%]", output.to.stream, output.notable, alias, output.notable);
-      fl_print_string("%[' is no longer loaded.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+      fl_print_format("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
+      fl_print_format("%[%S%]", output.to.stream, output.notable, alias, output.notable);
+      fl_print_format("%[' is no longer loaded.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
 
       funlockfile(output.to.stream);
     }
@@ -825,9 +825,9 @@ extern "C" {
     if (output.verbosity != f_console_verbosity_quiet) {
       flockfile(output.to.stream);
 
-      fl_print_string("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
-      fl_print_string("%[%S%]", output.to.stream, output.notable, alias, output.notable);
-      fl_print_string("%[' is not designating a pid file.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+      fl_print_format("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
+      fl_print_format("%[%S%]", output.to.stream, output.notable, alias, output.notable);
+      fl_print_format("%[' is not designating a pid file.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
 
       funlockfile(output.to.stream);
     }
@@ -1069,7 +1069,7 @@ extern "C" {
 
             flockfile(global.main->warning.to.stream);
 
-            fl_print_string("%c%[%SAction type is unknown, ignoring.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SAction type is unknown, ignoring.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->warning, process->cache.action, F_true);
 
@@ -1164,7 +1164,7 @@ extern "C" {
 
         flockfile(global.main->output.stream);
 
-        fl_print_string("%cSimulating execution of '%[", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title);
+        fl_print_format("%cSimulating execution of '%[", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title);
 
         if (program) {
           f_print_safely_terminated(program, global.main->output.stream);
@@ -1173,7 +1173,7 @@ extern "C" {
           f_print_dynamic_safely(arguments.array[0], global.main->output.stream);
         }
 
-        fl_print_string("%]' with the arguments: '%[", global.main->output.stream, global.main->context.set.title, global.main->context.set.important);
+        fl_print_format("%]' with the arguments: '%[", global.main->output.stream, global.main->context.set.title, global.main->context.set.important);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
 
@@ -1184,8 +1184,8 @@ extern "C" {
           f_print_dynamic_safely(arguments.array[i], global.main->output.stream);
         } // for
 
-        fl_print_string("%]' from '", global.main->output.stream, global.main->context.set.important);
-        fl_print_string("%[%Q%]'.%c", global.main->output.stream, global.main->context.set.notable, process->rule.name, global.main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("%]' from '", global.main->output.stream, global.main->context.set.important);
+        fl_print_format("%[%Q%]'.%c", global.main->output.stream, global.main->context.set.notable, process->rule.name, global.main->context.set.notable, f_string_eol_s[0]);
 
         funlockfile(global.main->output.stream);
 
@@ -1421,7 +1421,7 @@ extern "C" {
 
         flockfile(global.main->error.to.stream);
 
-        fl_print_string("%cSimulating execution of '%[", global.main->error.to.stream, f_string_eol_s[0], global.main->context.set.title);
+        fl_print_format("%cSimulating execution of '%[", global.main->error.to.stream, f_string_eol_s[0], global.main->context.set.title);
 
         if (program) {
           f_print_safely_terminated(program, global.main->error.to.stream);
@@ -1430,7 +1430,7 @@ extern "C" {
           f_print_dynamic_safely(arguments.array[0], global.main->error.to.stream);
         }
 
-        fl_print_string("%]' with the arguments: '%[", global.main->error.to.stream, global.main->context.set.title, global.main->context.set.important);
+        fl_print_format("%]' with the arguments: '%[", global.main->error.to.stream, global.main->context.set.title, global.main->context.set.important);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
 
@@ -1441,8 +1441,8 @@ extern "C" {
           f_print_dynamic_safely(arguments.array[i], global.main->error.to.stream);
         } // for
 
-        fl_print_string("%]' from '", global.main->error.to.stream, global.main->context.set.important);
-        fl_print_string("%[%Q%]'.%c", global.main->error.to.stream, global.main->context.set.notable, process->rule.name, global.main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("%]' from '", global.main->error.to.stream, global.main->context.set.important);
+        fl_print_format("%[%Q%]'.%c", global.main->error.to.stream, global.main->context.set.notable, process->rule.name, global.main->context.set.notable, f_string_eol_s[0]);
 
         funlockfile(global.main->error.to.stream);
 
@@ -1762,9 +1762,9 @@ extern "C" {
 
           flockfile(global.main->warning.to.stream);
 
-          fl_print_string("%c%[%SUnknown rule item action '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-          fl_print_string("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-          fl_print_string("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SUnknown rule item action '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+          fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
+          fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->warning, cache->action, F_true);
 
@@ -1784,9 +1784,9 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
+            fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
             funlockfile(global.main->error.to.stream);
 
@@ -1991,9 +1991,9 @@ extern "C" {
 
           flockfile(global.main->error.to.stream);
 
-          fl_print_string("%c%[%SUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_string("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
-          fl_print_string("%[' while attempting to execute rule.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
+          fl_print_format("%[' while attempting to execute rule.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->error, process->cache.action, F_true);
 
@@ -2421,11 +2421,11 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
-            fl_print_string("%[' has no '%]", global.main->error.to.stream, global.main->error.context, process->rule.name, global.main->error.context);
-            fl_print_string("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
-            fl_print_string("%[' action to execute.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
+            fl_print_format("%[' has no '%]", global.main->error.to.stream, global.main->error.context, process->rule.name, global.main->error.context);
+            fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
+            fl_print_format("%[' action to execute.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, process->cache.action, F_true);
 
@@ -2868,9 +2868,9 @@ extern "C" {
 
               flockfile(global.main->error.to.stream);
 
-              fl_print_string("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-              fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.alias, global.main->error.notable);
-              fl_print_string("%[' is already on the execution dependency stack, this recursion is prohibited.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.alias, global.main->error.notable);
+              fl_print_format("%[' is already on the execution dependency stack, this recursion is prohibited.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
               controller_rule_error_print_cache(global.main->error, process->cache.action, F_true);
 
@@ -3246,9 +3246,9 @@ extern "C" {
 
               flockfile(global.main->warning.to.stream);
 
-              fl_print_string("%c%[%SUnknown rule item '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-              fl_print_string("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-              fl_print_string("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+              fl_print_format("%c%[%SUnknown rule item '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+              fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
+              fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
 
               controller_rule_error_print_cache(global.main->warning, cache->action, F_true);
 
@@ -3448,9 +3448,9 @@ extern "C" {
 
           flockfile(global.main->warning.to.stream);
 
-          fl_print_string("%c%[%SUnknown rule setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
-          fl_print_string("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
-          fl_print_string("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SUnknown rule setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context);
+          fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_item, global.main->warning.notable);
+          fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->warning, cache->action, F_false);
 
@@ -3475,7 +3475,7 @@ extern "C" {
 
           flockfile(global.main->warning.to.stream);
 
-          fl_print_string("%c%[%SEmpty rule setting.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SEmpty rule setting.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->warning, cache->action, F_false);
 
@@ -3541,7 +3541,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires one or more Content.%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires one or more Content.%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -3605,14 +3605,14 @@ extern "C" {
                 flockfile(global.main->error.to.stream);
 
                 if (status == F_number_overflow || status == F_number_underflow) {
-                  fl_print_string("%c%[%SRule setting has an unsupported number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                  fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
-                  fl_print_string("%[', the number is too large for this system.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SRule setting has an unsupported number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                  fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
+                  fl_print_format("%[', the number is too large for this system.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
                 }
                 else {
-                  fl_print_string("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                  fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
-                  fl_print_string("%[' only whole numbers are allowed for an affinity value.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                  fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
+                  fl_print_format("%[' only whole numbers are allowed for an affinity value.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
                 }
 
                 controller_rule_error_print_cache(global.main->error, cache->action, F_false);
@@ -3662,7 +3662,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires exactly two Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires exactly two Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -3785,7 +3785,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires two or more Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires two or more Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             // get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -3826,9 +3826,9 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting has an unknown option '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-            fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting has an unknown option '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+            fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -3919,7 +3919,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires three Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires three Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -3996,9 +3996,9 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SUnknown resource limit type '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SUnknown resource limit type '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
+            fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_true);
 
@@ -4029,7 +4029,7 @@ extern "C" {
 
               flockfile(global.main->error.to.stream);
 
-              fl_print_string("%c%[%SThe resource limit type is already specified%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%c%[%SThe resource limit type is already specified%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
               controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4097,14 +4097,14 @@ extern "C" {
                 flockfile(global.main->error.to.stream);
 
                 if (status == F_number_overflow || status == F_number_underflow) {
-                  fl_print_string("%c%[%SRule setting has an unsupported number'%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                  fl_print_string("%[%S%]", global.main->error.to.stream, global.main->error.notable, cache->content_actions.array[i].array[j], global.main->error.notable);
-                  fl_print_string("%[' the number is too large for this system.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SRule setting has an unsupported number'%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                  fl_print_format("%[%S%]", global.main->error.to.stream, global.main->error.notable, cache->content_actions.array[i].array[j], global.main->error.notable);
+                  fl_print_format("%[' the number is too large for this system.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
                 }
                 else {
-                  fl_print_string("%c%[%SRule setting has an invalid number'%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                  fl_print_string("%[%S%]", global.main->error.to.stream, global.main->error.notable, cache->content_actions.array[i].array[j], global.main->error.notable);
-                  fl_print_string("%[' only whole numbers are allowed for a resource limit value.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SRule setting has an invalid number'%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                  fl_print_format("%[%S%]", global.main->error.to.stream, global.main->error.notable, cache->content_actions.array[i].array[j], global.main->error.notable);
+                  fl_print_format("%[' only whole numbers are allowed for a resource limit value.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
                 }
 
                 controller_rule_error_print_cache(global.main->error, cache->action, F_false);
@@ -4173,7 +4173,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires exactly one Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires exactly one Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4234,9 +4234,9 @@ extern "C" {
 
                   flockfile(global.main->error.to.stream);
 
-                  fl_print_string("%c%[%SRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                  fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, *setting_value, global.main->error.notable);
-                  fl_print_string("%[', there must be at least 1 graph character.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                  fl_print_format("%c%[%SRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                  fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, *setting_value, global.main->error.notable);
+                  fl_print_format("%[', there must be at least 1 graph character.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                   controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4323,7 +4323,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires either one or two Content.'%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires either one or two Content.'%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4376,9 +4376,9 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting has an unknown scheduler '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-            fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting has an unknown scheduler '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+            fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4418,20 +4418,20 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+                fl_print_format("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
 
                 if (zero_only) {
-                  fl_print_string("%[', only%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-                  fl_print_string("%[0%]%[ is", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context);
+                  fl_print_format("%[', only%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+                  fl_print_format("%[0%]%[ is", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context);
                 }
                 else {
-                  fl_print_string("%[', only the whole numbers inclusively between%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-                  fl_print_string("%[1%] %[and%] ", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context, global.main->error.context);
-                  fl_print_string("%[99%] %[are", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context);
+                  fl_print_format("%[', only the whole numbers inclusively between%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+                  fl_print_format("%[1%] %[and%] ", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context, global.main->error.context);
+                  fl_print_format("%[99%] %[are", global.main->error.to.stream, global.main->error.notable, global.main->error.notable, global.main->error.context);
                 }
 
-                fl_print_string(" allowed for the designated scheduler.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format(" allowed for the designated scheduler.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4480,7 +4480,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires exactly one Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires exactly one Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4590,7 +4590,7 @@ extern "C" {
 
               flockfile(global.main->error.to.stream);
 
-              fl_print_string("%c%[%SRule setting failed to process the capabilities.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%c%[%SRule setting failed to process the capabilities.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
               controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4628,13 +4628,13 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-                fl_print_string("%[', only the whole numbers inclusively between%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-                fl_print_string("%[-20%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
-                fl_print_string(" %[and%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-                fl_print_string("%[19%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
-                fl_print_string(" %[are allowed.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid number '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+                fl_print_format("%[', only the whole numbers inclusively between%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+                fl_print_format("%[-20%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
+                fl_print_format(" %[and%] ", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+                fl_print_format("%[19%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
+                fl_print_format(" %[are allowed.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4681,9 +4681,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-                fl_print_string("%[' because no user was found by that name.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+                fl_print_format("%[' because no user was found by that name.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4696,9 +4696,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-                fl_print_string("%[' because the given ID is too large.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+                fl_print_format("%[' because the given ID is too large.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4711,9 +4711,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
-                fl_print_string("%[' because the given ID is not a valid supported number.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid user '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[0], global.main->error.notable);
+                fl_print_format("%[' because the given ID is not a valid supported number.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4753,7 +4753,7 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting requires one or more Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting requires one or more Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -4811,9 +4811,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
-                fl_print_string("%[' because no group was found by that name.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
+                fl_print_format("%[' because no group was found by that name.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4826,9 +4826,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
-                fl_print_string("%[' because the given ID is too large.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
+                fl_print_format("%[' because the given ID is too large.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4841,9 +4841,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
-                fl_print_string("%[' because the given ID is not a valid supported number.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid group '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[j], global.main->error.notable);
+                fl_print_format("%[' because the given ID is not a valid supported number.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 funlockfile(global.main->error.to.stream);
 
@@ -4965,9 +4965,9 @@ extern "C" {
 
                 flockfile(global.main->error.to.stream);
 
-                fl_print_string("%c%[%SRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-                fl_print_string("%[%Q%]", global.main->error.to.stream, global.main->error.notable, setting_values->array[setting_values->used], global.main->error.notable);
-                fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%c%[%SRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+                fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, setting_values->array[setting_values->used], global.main->error.notable);
+                fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -5018,7 +5018,7 @@ extern "C" {
 
           flockfile(global.main->error.to.stream);
 
-          fl_print_string("%c%[%SRule setting requires exactly four Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SRule setting requires exactly four Content.%]%c", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -5075,10 +5075,10 @@ extern "C" {
 
           flockfile(global.main->error.to.stream);
 
-          fl_print_string("%c%[%SRule setting's first value has '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
-          fl_print_string("%[' but only supports %s, %s, %s, %s, %s", global.main->error.to.stream, global.main->error.context, controller_string_freeze_s, controller_string_kill_s, controller_string_pause_s, controller_string_reload_s, controller_string_restart_s);
-          fl_print_string("%s, %s, %s, and %s.%]%c", global.main->error.to.stream, controller_string_resume_s, controller_string_start_s, controller_string_stop_s, controller_string_thaw_s, global.main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SRule setting's first value has '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+          fl_print_format("%[' but only supports %s, %s, %s, %s, %s", global.main->error.to.stream, global.main->error.context, controller_string_freeze_s, controller_string_kill_s, controller_string_pause_s, controller_string_reload_s, controller_string_restart_s);
+          fl_print_format("%s, %s, %s, and %s.%]%c", global.main->error.to.stream, controller_string_resume_s, controller_string_start_s, controller_string_stop_s, controller_string_thaw_s, global.main->error.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -5128,9 +5128,9 @@ extern "C" {
 
             flockfile(global.main->error.to.stream);
 
-            fl_print_string("%c%[%SRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
-            fl_print_string("%[' but only supports %s, %s, and %s.%s.%]%c", global.main->error.to.stream, global.main->error.context, controller_string_need_s, controller_string_want_s, controller_string_wish_s, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%c%[%SRule setting's second value has '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+            fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->error.notable);
+            fl_print_format("%[' but only supports %s, %s, and %s.%s.%]%c", global.main->error.to.stream, global.main->error.context, controller_string_need_s, controller_string_want_s, controller_string_wish_s, global.main->error.context, f_string_eol_s[0]);
 
             controller_rule_error_print_cache(global.main->error, cache->action, F_false);
 
@@ -5227,11 +5227,11 @@ extern "C" {
 
           flockfile(global.main->error.to.stream);
 
-          fl_print_string("%c%[%SThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_string("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->error.notable);
-          fl_print_string("%[' must be a base path name, such as %ul '.%]", global.main->error.to.stream, global.main->error.context, cache->buffer_path.used, global.main->error.context);
-          fl_print_string("%[%Q%]", global.main->error.to.stream, cache->buffer_path, global.main->error.notable);
-          fl_print_string("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+          fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->error.notable);
+          fl_print_format("%[' must be a base path name, such as %un '.%]", global.main->error.to.stream, global.main->error.context, cache->buffer_path.used, global.main->error.context);
+          fl_print_format("%[%Q%]", global.main->error.to.stream, cache->buffer_path, global.main->error.notable);
+          fl_print_format("%['.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
           funlockfile(global.main->error.to.stream);
 
@@ -5288,9 +5288,9 @@ extern "C" {
         if (main->error.verbosity != f_console_verbosity_quiet) {
           flockfile(main->error.to.stream);
 
-          fl_print_string("%c%[%SUnsupported action type '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
-          fl_print_string("%[%q%]", main->error.to.stream, main->error.notable, controller_rule_action_type_name(action), main->error.notable);
-          fl_print_string("%[' while attempting to validate rule execution.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+          fl_print_format("%c%[%SUnsupported action type '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix ? main->error.prefix : f_string_empty_s, main->error.context);
+          fl_print_format("%[%q%]", main->error.to.stream, main->error.notable, controller_rule_action_type_name(action), main->error.notable);
+          fl_print_format("%[' while attempting to validate rule execution.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
           controller_rule_error_print_cache(main->error, cache->action, F_true);
 
@@ -5323,11 +5323,11 @@ extern "C" {
       if (missing) {
         flockfile(main->output.stream);
 
-        fl_print_string("%cRule '", main->output.stream, f_string_eol_s[0]);
-        fl_print_string("%[%Q%]' has no '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
-        fl_print_string("%[%q%]' action to execute and would '", main->output.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
-        fl_print_string("%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
-        fl_print_string("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("%[%Q%]' has no '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
+        fl_print_format("%[%q%]' action to execute and would '", main->output.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
+        fl_print_format("%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
+        fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
 
         funlockfile(main->output.stream);
       }
@@ -5335,11 +5335,11 @@ extern "C" {
 
     flockfile(main->output.stream);
 
-    fl_print_string("%cRule %[%Q%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
-    fl_print_string("  %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
-    fl_print_string("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_how_s, main->context.set.important, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
-    fl_print_string("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes : controller_string_no_s, f_string_eol_s[0]);
-    fl_print_string("  %[%s%] ", main->output.stream, main->context.set.important, controller_string_capability_s, main->context.set.important);
+    fl_print_format("%cRule %[%Q%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_how_s, main->context.set.important, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes : controller_string_no_s, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] ", main->output.stream, main->context.set.important, controller_string_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {
       if (rule.capability) {
@@ -5353,29 +5353,29 @@ extern "C" {
       f_print_terminated(f_string_eol_s, main->output.stream);
     }
     else {
-      fl_print_string("%[(unsupported)%]%c", main->output.stream, main->context.set.warning, controller_string_capability_s, main->context.set.warning, f_string_eol_s[0]);
+      fl_print_format("%[(unsupported)%]%c", main->output.stream, main->context.set.warning, controller_string_capability_s, main->context.set.warning, f_string_eol_s[0]);
     }
 
-    fl_print_string("  %[%s%]", main->output.stream, main->context.set.important, controller_string_control_group_s, main->context.set.important);
+    fl_print_format("  %[%s%]", main->output.stream, main->context.set.important, controller_string_control_group_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_control_group) {
-      fl_print_string(" %s", main->output.stream, rule.control_group.as_new ? controller_string_new_s : controller_string_existing_s);
+      fl_print_format(" %s", main->output.stream, rule.control_group.as_new ? controller_string_new_s : controller_string_existing_s);
 
       for (i = 0; i < rule.control_group.groups.used; ++i) {
 
         if (rule.control_group.groups.array[i].used) {
-          fl_print_string(" %Q", main->output.stream, rule.control_group.groups.array[i]);
+          fl_print_format(" %Q", main->output.stream, rule.control_group.groups.array[i]);
         }
       } // for
     }
 
-    fl_print_string("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_nice_s, main->context.set.important);
+    fl_print_format("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_nice_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_nice) {
-      fl_print_string(" %i", main->output.stream, rule.nice);
+      fl_print_format(" %i", main->output.stream, rule.nice);
     }
 
-    fl_print_string("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_scheduler_s, main->context.set.important);
+    fl_print_format("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_scheduler_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_scheduler) {
       f_string_t policy = "";
@@ -5399,70 +5399,70 @@ extern "C" {
         policy = controller_string_round_robin_s;
       }
 
-      fl_print_string(" %s %i", main->output.stream, policy, rule.scheduler.priority);
+      fl_print_format(" %s %i", main->output.stream, policy, rule.scheduler.priority);
     }
 
-    fl_print_string("%c  %[%s%] %Q%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
-    fl_print_string("  %[%s%]", main->output.stream, main->context.set.important, controller_string_user_s, main->context.set.important);
+    fl_print_format("%c  %[%s%] %Q%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
+    fl_print_format("  %[%s%]", main->output.stream, main->context.set.important, controller_string_user_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_user) {
-      fl_print_string(" %i", main->output.stream, rule.user);
+      fl_print_format(" %i", main->output.stream, rule.user);
     }
 
-    fl_print_string("%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_affinity_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_affinity_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.affinity.used; ++i) {
-      fl_print_string("    %i%c", main->output.stream, rule.affinity.array[i], f_string_eol_s[0]);
+      fl_print_format("    %i%c", main->output.stream, rule.affinity.array[i], f_string_eol_s[0]);
     } // for
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_define_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_define_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.define.used; ++i) {
 
       if (rule.define.array[i].name.used && rule.define.array[i].value.used) {
-        fl_print_string("    %Q %[=%] %Q%c", main->output.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s[0]);
+        fl_print_format("    %Q %[=%] %Q%c", main->output.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_environment_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_environment_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.environment.used; ++i) {
 
       if (rule.environment.array[i].used) {
-        fl_print_string("    %Q%c", main->output.stream, rule.environment.array[i], f_string_eol_s[0]);
+        fl_print_format("    %Q%c", main->output.stream, rule.environment.array[i], f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.parameter.used; ++i) {
 
       if (rule.parameter.array[i].name.used && rule.parameter.array[i].value.used) {
-        fl_print_string("    %Q %[=%] %Q%c", main->output.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s[0]);
+        fl_print_format("    %Q %[=%] %Q%c", main->output.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_group_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_group_s, main->context.set.important, f_string_eol_s[0]);
 
     if (rule.has & controller_rule_has_group) {
-      fl_print_string("    %i%c", main->output.stream, rule.group, f_string_eol_s[0]);
+      fl_print_format("    %i%c", main->output.stream, rule.group, f_string_eol_s[0]);
 
       for (i = 0; i < rule.groups.used; ++i) {
-        fl_print_string("    %i%c", main->output.stream, rule.groups.array[i], f_string_eol_s[0]);
+        fl_print_format("    %i%c", main->output.stream, rule.groups.array[i], f_string_eol_s[0]);
       } // for
     }
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_limit_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_limit_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.limits.used; ++i) {
-      fl_print_string("    %Q %[=%] %ul %ul%c", main->output.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s[0]);
+      fl_print_format("    %Q %[=%] %un %un%c", main->output.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s[0]);
     } // for
 
-    fl_print_string("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_on_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_on_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.ons.used; ++i) {
 
-      fl_print_string("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
 
       {
         f_string_t action = "";
@@ -5495,40 +5495,40 @@ extern "C" {
           action = controller_string_thaw_s;
         }
 
-        fl_print_string("      %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, action, f_string_eol_s[0]);
+        fl_print_format("      %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, action, f_string_eol_s[0]);
       }
 
-      fl_print_string("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_need_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_need_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].need.used; ++j) {
 
         if (rule.ons.array[i].need.array[j].used) {
-          fl_print_string("        %Q%c", main->output.stream, rule.ons.array[i].need.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].need.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_string("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_want_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_want_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].want.used; ++j) {
 
         if (rule.ons.array[i].want.array[j].used) {
-          fl_print_string("        %Q%c", main->output.stream, rule.ons.array[i].want.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].want.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_string("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_wish_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_wish_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].wish.used; ++j) {
 
         if (rule.ons.array[i].wish.array[j].used) {
-          fl_print_string("        %Q%c", main->output.stream, rule.ons.array[i].wish.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].wish.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_string("      }%c    }%c", main->output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+      fl_print_format("      }%c    }%c", main->output.stream, f_string_eol_s[0], f_string_eol_s[0]);
     } // for
 
-    fl_print_string("  }%c", main->output.stream, f_string_eol_s[0]);
+    fl_print_format("  }%c", main->output.stream, f_string_eol_s[0]);
 
     if (rule.items.used) {
       controller_rule_action_t *action = 0;
@@ -5542,18 +5542,18 @@ extern "C" {
 
         item = &rule.items.array[i];
 
-        fl_print_string("  %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_item_s, main->context.set.important, f_string_eol_s[0]);
-        fl_print_string("    %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s[0]);
+        fl_print_format("  %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_item_s, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("    %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s[0]);
 
         for (j = 0; j < item->actions.used; ++j) {
 
           action = &item->actions.array[j];
 
-          fl_print_string("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
-          fl_print_string("      %[%s%] %q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
+          fl_print_format("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
+          fl_print_format("      %[%s%] %q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
 
           if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
-            fl_print_string("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
+            fl_print_format("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
             parameter = &action->parameters.array[0];
 
@@ -5576,22 +5576,22 @@ extern "C" {
               f_print_terminated(f_string_eol_s, main->output.stream);
             }
 
-            fl_print_string("      }%c", main->output.stream, f_string_eol_s[0]);
+            fl_print_format("      }%c", main->output.stream, f_string_eol_s[0]);
           }
           else {
             for (k = 0; k < action->parameters.used; ++k) {
-              fl_print_string("      %s%s%s %Q%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
+              fl_print_format("      %s%s%s %Q%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
             } // for
           }
 
-          fl_print_string("    }%c", main->output.stream, f_string_eol_s[0]);
+          fl_print_format("    }%c", main->output.stream, f_string_eol_s[0]);
         } // for
 
-        fl_print_string("  }%c", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("  }%c", main->output.stream, f_string_eol_s[0]);
       } // for
     }
 
-    fl_print_string("}%c", main->output.stream, f_string_eol_s[0]);
+    fl_print_format("}%c", main->output.stream, f_string_eol_s[0]);
 
     funlockfile(main->output.stream);
 

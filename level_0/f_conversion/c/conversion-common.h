@@ -100,6 +100,24 @@ extern "C" {
 #endif // _di_f_conversion_data_t_
 
 /**
+ * The defines for conversion data.
+ *
+ * f_conversion_data_base_*:
+ * - 2:  Basic base-2 conversion structure.
+ * - 8:  Basic base-8 conversion structure.
+ * - 10: Basic base-10 conversion structure.
+ * - 12: Basic base-12 conversion structure.
+ * - 16: Basic base-16 conversion structure.
+ */
+#ifndef _di_f_conversion_data_t_defines_
+  extern const f_conversion_data_t f_conversion_data_base_2_s;
+  extern const f_conversion_data_t f_conversion_data_base_8_s;
+  extern const f_conversion_data_t f_conversion_data_base_10_s;
+  extern const f_conversion_data_t f_conversion_data_base_12_s;
+  extern const f_conversion_data_t f_conversion_data_base_16_s;
+#endif // _di_f_conversion_data_t_defines_
+
+/**
  * Define flags used by f_conversion_data_t.
  *
  * f_conversion_data_flag_*:
