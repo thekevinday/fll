@@ -107,6 +107,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_print(main.error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);
+
         return status;
       }
     }
@@ -130,6 +131,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             fll_error_parameter_integer_print(main.error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_depth, arguments.argv[values_order[i]]);
+
             return status;
           }
         }
@@ -166,6 +168,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_print(main.error, F_status_set_fine(status), "fl_string_rip", F_true);
+
               return status;
             }
           }
@@ -174,6 +177,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               fll_error_print(main.error, F_status_set_fine(status), "f_string_append", F_true);
+
               return status;
             }
           }
@@ -188,24 +192,30 @@ extern "C" {
       for (j = i + 1; j < depths->used; ++j) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe value '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may only be specified once for the parameter '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          flockfile(main.error.to.stream);
+
+          fl_print_format("%c%[%sThe value '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%ul%]", main.error.to.stream, main.error.notable, depths->array[i].depth, main.error.notable);
+          fl_print_format("%[' may only be specified once for the parameter '%]", main.error.to.stream, main.error.notable, main.error.notable);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+          funlockfile(main.error.to.stream);
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-          f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
-          f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' may not have the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[i].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "' before the value '");
-          f_color_print(main.error.to.stream, main.context.set.notable, "%llu", depths->array[j].depth);
-          f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+          flockfile(main.error.to.stream);
+
+          fl_print_format("%c%[%sThe parameter '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+          fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth, main.error.notable);
+          fl_print_format("%[' may not have the value '%]", main.error.to.stream, main.error.notable, main.error.notable);
+          fl_print_format("%[%ul%]", main.error.to.stream, main.error.notable, depths->array[i].depth, main.error.notable);
+          fl_print_format("%[' before the value '%]", main.error.to.stream, main.error.notable, main.error.notable);
+          fl_print_format("%[%ul%]", main.error.to.stream, main.error.notable, depths->array[j].depth, main.error.notable);
+          fl_print_format("%['.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+          funlockfile(main.error.to.stream);
 
           return F_status_set_error(F_parameter);
         }
@@ -240,7 +250,8 @@ extern "C" {
         macro_f_string_dynamic_t_delete_simple(main->buffer);
 
         if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-          fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+          fll_print_format("0%c", main->output.stream, f_string_eol_s[0]);
+
           return F_none;
         }
 
@@ -268,7 +279,8 @@ extern "C" {
     // Requested depths cannot be greater than contents depth.
     if (depths.used > main->nest.used) {
       if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-        fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+        fll_print_format("0%c", main->output.stream, f_string_eol_s[0]);
+
         return F_none;
       }
 
@@ -286,6 +298,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_select, arguments.argv[index]);
+
           return status;
         }
 
@@ -306,6 +319,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, fss_embedded_list_read_long_line, arguments.argv[index]);
+
         return status;
       }
     }
@@ -481,33 +495,37 @@ extern "C" {
           ++total;
         } // for
 
-        fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+        fl_print_format("%lu%c", main->output.stream, total, f_string_eol_s[0]);
 
         return F_none;
       }
 
-      f_status_t (*print_object)(FILE *, const f_string_static_t, const f_string_range_t, const f_array_lengths_t) = &f_print_except_dynamic_partial;
+      f_status_t (*print_object)(const f_string_static_t, const f_string_range_t, const f_array_lengths_t, FILE *) = &f_print_except_dynamic_partial;
 
       if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
         print_object = &fl_print_trim_except_dynamic_partial;
       }
 
+      flockfile(main->output.stream);
+
       for (i = 0; i < items->used; ++i) {
 
         if (skip[i]) continue;
 
-        print_object(main->output.stream, main->buffer, items->array[i].object, *objects_delimits);
+        print_object(main->buffer, items->array[i].object, *objects_delimits, main->output.stream);
 
         if (main->parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
           fss_embedded_list_read_print_object_end(*main);
 
           if (items->array[i].content.used) {
-            f_print_except_dynamic_partial(main->output.stream, main->buffer, items->array[i].content.array[0], *contents_delimits);
+            f_print_except_dynamic_partial(main->buffer, items->array[i].content.array[0], *contents_delimits, main->output.stream);
           }
         }
 
         fss_embedded_list_read_print_set_end(*main);
       } // for
+
+      funlockfile(main->output.stream);
 
       return F_none;
     }
@@ -544,12 +562,15 @@ extern "C" {
         } // for
       } // for
 
-      fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+      fll_print_format("%lu%c", main->output.stream, total, f_string_eol_s[0]);
+
       return F_none;
     }
 
     if (main->parameters[fss_embedded_list_read_parameter_line].result == f_console_result_additional) {
       f_array_length_t line_current = 0;
+
+      flockfile(main->output.stream);
 
       for (; i < items->used; ++i) {
 
@@ -592,19 +613,23 @@ extern "C" {
             if (!main->buffer.string[j]) continue;
 
             if (main->buffer.string[j] == f_string_eol_s[0]) {
-              fprintf(main->output.stream, "%c", f_string_eol_s[0]);
+              f_print_character(f_string_eol_s[0], main->output.stream);
               break;
             }
 
-            fprintf(main->output.stream, "%c", main->buffer.string[j]);
+            f_print_character(main->buffer.string[j], main->output.stream);
           } // for
 
           break;
         }
       } // for
 
+      funlockfile(main->output.stream);
+
       return F_none;
     }
+
+    flockfile(main->output.stream);
 
     for (i = 0; i < items->used; ++i) {
 
@@ -618,12 +643,14 @@ extern "C" {
         continue;
       }
 
-      f_print_except_dynamic_partial(main->output.stream, main->buffer, items->array[i].content.array[0], *contents_delimits);
+      f_print_except_dynamic_partial(main->buffer, items->array[i].content.array[0], *contents_delimits, main->output.stream);
 
       if (main->parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-        fprintf(main->output.stream, "%c", fss_embedded_list_read_pipe_content_end);
+        f_print_character(fss_embedded_list_read_pipe_content_end, main->output.stream);
       }
     } // for
+
+    funlockfile(main->output.stream);
 
     return F_none;
   }
@@ -633,14 +660,15 @@ extern "C" {
   void fss_embedded_list_read_print_object_end(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_embedded_list_read_pipe_content_start);
+      f_print_character(fss_embedded_list_read_pipe_content_start, main.output.stream);
     }
     else {
       if (main.parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main.parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
-        fprintf(main.output.stream, "%c%c", f_fss_embedded_list_open, f_fss_embedded_list_open_end);
+        f_print_character(f_fss_embedded_list_open, main.output.stream);
+        f_print_character(f_fss_embedded_list_open_end, main.output.stream);
       }
       else {
-        fprintf(main.output.stream, "%c", f_fss_eol);
+        f_print_character(f_fss_eol, main.output.stream);
       }
     }
   }
@@ -650,7 +678,7 @@ extern "C" {
   void fss_embedded_list_read_print_content_ignore(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_embedded_list_read_pipe_content_ignore);
+      f_print_character(fss_embedded_list_read_pipe_content_ignore, main.output.stream);
     }
   }
 #endif // _di_fss_embedded_list_read_print_content_ignore_
@@ -659,14 +687,15 @@ extern "C" {
   void fss_embedded_list_read_print_set_end(const fss_embedded_list_read_main_t main) {
 
     if (main.parameters[fss_embedded_list_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main.output.stream, "%c", fss_embedded_list_read_pipe_content_end);
+      f_print_character(fss_embedded_list_read_pipe_content_end, main.output.stream);
     }
     else {
       if (main.parameters[fss_embedded_list_read_parameter_object].result == f_console_result_found && main.parameters[fss_embedded_list_read_parameter_content].result == f_console_result_found) {
-        fprintf(main.output.stream, "%c%c", f_fss_embedded_list_close, f_fss_embedded_list_close_end);
+        f_print_character(f_fss_embedded_list_close, main.output.stream);
+        f_print_character(f_fss_embedded_list_close_end, main.output.stream);
       }
       else {
-        fprintf(main.output.stream, "%c", f_fss_eol);
+        f_print_character(f_fss_eol, main.output.stream);
       }
     }
   }

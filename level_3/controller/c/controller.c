@@ -40,12 +40,8 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, controller_name, "entry");
 
-    f_print_terminated("  When both the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, context.set.notable);
-    f_print_terminated(" parameter and the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, context.set.notable);
-    f_print_terminated(" parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.", output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    fl_print_format("  When both the %[%s%s%] parameter and the", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     funlockfile(output.stream);
 

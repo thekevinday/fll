@@ -35,6 +35,7 @@
 // fll-1 includes
 #include <fll/level_1/console.h>
 #include <fll/level_1/string.h>
+#include <fll/level_1/print.h>
 
 // fll-2 includes
 #include <fll/level_2/error.h>
@@ -42,6 +43,7 @@
 #include <fll/level_2/fss_basic.h>
 #include <fll/level_2/fss_basic_list.h>
 #include <fll/level_2/fss_extended.h>
+#include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
 #ifdef __cplusplus
@@ -225,7 +227,6 @@ extern "C" {
     firewall_parameter_verbosity_normal,
     firewall_parameter_verbosity_verbose,
     firewall_parameter_verbosity_debug,
-
     firewall_parameter_version,
 
     firewall_parameter_command_start,
@@ -261,8 +262,8 @@ extern "C" {
       f_console_parameter_t_initialize(f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_normal_s, f_console_standard_long_normal_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, 0, 0, f_console_type_inverse), \
-      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(f_console_standard_short_debug_s, f_console_standard_long_debug_s, 0, 0, f_console_type_inverse), \
+      f_console_parameter_t_initialize(f_console_standard_short_version_s, f_console_standard_long_version_s, 0, 0, f_console_type_inverse), \
       f_console_parameter_t_initialize(0, 0, firewall_command_start, F_false, f_console_type_other), \
       f_console_parameter_t_initialize(0, 0, firewall_command_stop, F_false, f_console_type_other), \
       f_console_parameter_t_initialize(0, 0, firewall_command_restart, F_false, f_console_type_other), \
@@ -282,6 +283,7 @@ extern "C" {
 
     f_file_t output;
     fll_error_print_t error;
+    fll_error_print_t warning;
 
     f_string_dynamics_t chains;
     f_string_dynamics_t devices;
@@ -296,6 +298,7 @@ extern "C" {
       F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      macro_fll_error_print_t_initialize_warning(), \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_color_context_t_initialize, \

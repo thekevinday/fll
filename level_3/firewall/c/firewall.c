@@ -15,6 +15,8 @@ extern "C" {
 #ifndef _di_firewall_print_help_
   f_status_t firewall_print_help(const f_file_t output, const f_color_context_t context) {
 
+    flockfile(output.stream);
+
     fll_program_print_help_header(output, context, firewall_name_long, firewall_version);
 
     fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -27,30 +29,16 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fprintf(output.stream, "%c%c", f_string_eol_s[0], f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.important, " Available Commands: ");
-
-    fprintf(output.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.standout, firewall_command_start);
-    fprintf(output.stream, "    Turn on the firewall");
-
-    fprintf(output.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.standout, firewall_command_stop);
-    fprintf(output.stream, "     Turn off the firewall");
-
-    fprintf(output.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.standout, firewall_command_restart);
-    fprintf(output.stream, "  Turn off and then turn on the firewall");
-
-    fprintf(output.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.standout, firewall_command_lock);
-    fprintf(output.stream, "     Prevent all communication");
-
-    fprintf(output.stream, "%c  ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.standout, firewall_command_show);
-    fprintf(output.stream, "     Show active firewall settings");
+    fl_print_format("%c%c %[Available Commands:%] ", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%c  %[%s%]  Turn on the firewall.", output.stream, context.set.standout, firewall_command_start, context.set.standout);
+    fl_print_format("%c  %[%s%]  Turn off the firewall.", output.stream, context.set.standout, firewall_command_stop, context.set.standout);
+    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", output.stream, context.set.standout, firewall_command_restart, context.set.standout);
+    fl_print_format("%c  %[%s%]  Prevent all communication.", output.stream, context.set.standout, firewall_command_lock, context.set.standout);
+    fl_print_format("%c  %[%s%]  Show active firewall settings.", output.stream, context.set.standout, firewall_command_show, context.set.standout);
 
     fll_program_print_help_usage(output, context, firewall_name, "command");
+
+    funlockfile(output.stream);
 
     return F_none;
   }
@@ -72,9 +60,12 @@ extern "C" {
         if (main->context.set.error.before) {
           main->error.context = main->context.set.error;
           main->error.notable = main->context.set.notable;
+
+          main->warning.context = main->context.set.warning;
+          main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
           fll_program_parameter_process_empty(&main->context, sets);
         }
@@ -100,15 +91,19 @@ extern "C" {
 
         if (choice == firewall_parameter_verbosity_quiet) {
           main->error.verbosity = f_console_verbosity_quiet;
+          main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == firewall_parameter_verbosity_normal) {
           main->error.verbosity = f_console_verbosity_normal;
+          main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == firewall_parameter_verbosity_verbose) {
           main->error.verbosity = f_console_verbosity_verbose;
+          main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == firewall_parameter_verbosity_debug) {
           main->error.verbosity = f_console_verbosity_debug;
+          main->warning.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -213,7 +208,14 @@ extern "C" {
             if (strncmp("nat", arguments.argv[main->remaining.array[counter]], 4) != 0) {
               if (strncmp("mangle",  arguments.argv[main->remaining.array[counter]], 7) != 0) {
                 if (strncmp("ports",  arguments.argv[main->remaining.array[counter]], 6) != 0) {
-                  f_color_print(f_type_warning, main->context.set.warning, "%s'%s' is not a valid show option%c", fll_error_print_warning, arguments.argv[main->remaining.array[counter]], f_string_eol_s[0]);
+                  flockfile(main->warning.to.stream);
+
+                  fl_print_format("%c%[%S'%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix, main->warning.context);
+                  fl_print_format("%[%S%]", main->warning.to.stream, main->warning.notable, arguments.argv[main->remaining.array[counter]], main->warning.notable);
+                  fl_print_format("%[' is not a valid show option.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
+
+                  funlockfile(main->warning.to.stream);
+                  fflush(main->warning.to.stream);
                 }
                 else {
                   show_ports = F_true;
@@ -232,7 +234,7 @@ extern "C" {
         macro_f_string_dynamics_t_resize(status, parameters, 7);
 
         if (F_status_is_error(status)) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+          firewall_print_error_on_allocation_failure(main->error);
 
           firewall_delete_local_data(&local);
           firewall_main_delete(main);
@@ -240,9 +242,7 @@ extern "C" {
         }
 
         if (show_nat) {
-          f_color_print(main->output.stream, main->context.set.standout, "=========================== ");
-          f_color_print(main->output.stream, main->context.set.title, "NAT");
-          f_color_print(main->output.stream, main->context.set.standout, " ============================%c", f_string_eol_s[0]);
+          fll_print_format("%[===========================%] %[NAT%] %[============================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
           fflush(main->output.stream);
 
           parameters.used = 6;
@@ -268,14 +268,12 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(main->output.stream, "\n");
+          fll_print_character(f_string_eol_s[0], main->output.stream);
           fflush(main->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
-          f_color_print(main->output.stream, main->context.set.standout, "========================== ");
-          f_color_print(main->output.stream, main->context.set.title, "MANGLE");
-          f_color_print(main->output.stream, main->context.set.standout, " ==========================%c", f_string_eol_s[0]);
+          fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
           fflush(main->output.stream);
 
           parameters.used = 6;
@@ -301,14 +299,12 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(main->output.stream, "\n");
+          fll_print_character(f_string_eol_s[0], main->output.stream);
           fflush(main->output.stream);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
-          f_color_print(main->output.stream, main->context.set.standout, "========================== ");
-          f_color_print(main->output.stream, main->context.set.title, "FILTER");
-          f_color_print(main->output.stream, main->context.set.standout, " ==========================%c", f_string_eol_s[0]);
+          fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
           fflush(main->output.stream);
 
           parameters.used = 4;
@@ -330,7 +326,7 @@ extern "C" {
             exit(return_code);
           }
 
-          fprintf(main->output.stream, "\n");
+          fll_print_character(f_string_eol_s[0], main->output.stream);
           fflush(main->output.stream);
         }
 
@@ -338,23 +334,10 @@ extern "C" {
           status = F_status_set_fine(status);
 
           if (status == F_memory_not) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+            firewall_print_error_on_allocation_failure(main->error);
           }
           else {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol_s[0]);
-            fprintf(f_type_error, "  ");
-
-            f_array_length_t i = 0;
-
-            f_color_print_code(f_type_error, main->context.error);
-
-            fprintf(f_type_error, "%s ", firewall_tool_iptables);
-            for (; i < parameters.used; ++i) {
-              fprintf(f_type_error, "%s ", parameters.array[i].string);
-            } // for
-
-            f_color_print_code(f_type_error, main->context.reset);
-            fprintf(f_type_error, "\n");
+            firewall_print_error_on_operation(main->error, firewall_tool_iptables, parameters);
           }
 
           status = F_status_set_error(status);
@@ -387,14 +370,16 @@ extern "C" {
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
 
-        if (status == F_memory_not) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-        }
-        else if (status == F_data_not) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sCould not find any network devices%c", fll_error_print_error, f_string_eol_s[0]);
-        }
-        else if (status == F_failure) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to read the device directory '%s'%c", fll_error_print_error, network_devices, f_string_eol_s[0]);
+        if (main->error.verbosity != f_console_verbosity_quiet) {
+          if (status == F_memory_not) {
+            firewall_print_error_on_allocation_failure(main->error);
+          }
+          else if (status == F_data_not) {
+            fll_print_format("%c%[%sCould not find any network devices.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
+          }
+          else if (status == F_failure) {
+            fll_print_format("%c%[%sFailed to read the device directory '%s'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_devices, main->error.context, f_string_eol_s[0]);
+          }
         }
 
         firewall_delete_local_data(&local);
@@ -407,6 +392,7 @@ extern "C" {
         f_array_length_t i = 0;
 
         for (; i < main->devices.used; ++i) {
+
           if (fl_string_compare((f_string_t) firewall_device_loop, main->devices.array[i].string, firewall_device_loop_length + 1, main->devices.array[i].used) == F_equal_to) {
             f_string_dynamic_t swap_string = main->devices.array[i];
 
@@ -477,7 +463,10 @@ extern "C" {
             return status;
           }
           else {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform lock request because the lock instructions are missing from: %s.%c", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
+
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              fll_print_format("%c%[%sFailed to perform lock request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path firewall_file_other, main->error.context, f_string_eol_s[0]);
+            }
 
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
@@ -517,7 +506,9 @@ extern "C" {
             }
           }
           else {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform stop request because the lock instructions are missing from: %s.", fll_error_print_error, network_path firewall_file_other, f_string_eol_s[0]);
+            if (main->error.verbosity != f_console_verbosity_quiet) {
+              fll_print_format("%c%[%sFailed to perform stop request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path firewall_file_other, main->error.context, f_string_eol_s[0]);
+            }
 
             firewall_delete_local_data(&local);
             firewall_main_delete(main);
@@ -595,7 +586,8 @@ extern "C" {
             macro_f_string_dynamic_t_resize(status, file_path, network_path_length + main->devices.array[i].used + firewall_file_suffix_length + 1);
 
             if (F_status_is_error(status)) {
-              f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+              firewall_print_error_on_allocation_failure(main->error);
+
               firewall_delete_local_data(&local);
               firewall_main_delete(main);
               return status;
@@ -709,7 +701,10 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sYou did not pass a command%c", fll_error_print_error, f_string_eol_s[0]);
+      if (main->error.verbosity != f_console_verbosity_quiet) {
+        fll_print_format("%c%[%sYou did not pass a command.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
+      }
+
       status = F_status_set_error(F_parameter);
     }
 

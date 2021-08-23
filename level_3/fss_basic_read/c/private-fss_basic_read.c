@@ -139,9 +139,13 @@ extern "C" {
 
           if (!data->depths.array[i].value_name.used) {
             if (main->error.verbosity != f_console_verbosity_quiet) {
-              f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_name);
-              f_color_print(main->error.to.stream, main->context.set.error, "' must not be an empty string.%c", f_string_eol_s[0]);
+              flockfile(main->error.to.stream);
+
+              fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, main->error.notable);
+              fl_print_format("%[' must not be an empty string.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+              funlockfile(main->error.to.stream);
             }
 
             return F_status_set_error(F_parameter);
@@ -156,24 +160,32 @@ extern "C" {
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[i].depth);
-            f_color_print(main->error.to.stream, main->context.set.error, "' may only be specified once for the parameter '");
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-            f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
+            fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, main->error.notable);
+            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
           }
 
           return F_status_set_error(F_parameter);
         }
         else if (data->depths.array[i].depth > data->depths.array[j].depth) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_basic_read_long_depth);
-            f_color_print(main->error.to.stream, main->context.set.error, "' may not have the value '");
-            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[i].depth);
-            f_color_print(main->error.to.stream, main->context.set.error, "' before the value '");
-            f_color_print(main->error.to.stream, main->context.set.notable, "%llu", data->depths.array[j].depth);
-            f_color_print(main->error.to.stream, main->context.set.error, "'.%c", f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, main->error.notable);
+            fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
+            fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[j].depth, main->error.notable);
+            fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
           }
 
           return F_status_set_error(F_parameter);
@@ -260,12 +272,14 @@ extern "C" {
     }
 
     if ((data->option & fss_basic_read_data_option_object) || (data->option & fss_basic_read_data_option_content) && (data->contents.array[at].used || (data->option & fss_basic_read_data_option_empty))) {
+      flockfile(main->output.stream);
+
       if (data->option & fss_basic_read_data_option_object) {
         if (data->option & fss_basic_read_data_option_trim) {
-          fl_print_trim_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+          fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
         }
         else {
-          f_print_except_dynamic_partial(main->output.stream, data->buffer, data->objects.array[at], delimits_object);
+          f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
         }
 
         if (data->option & fss_basic_read_data_option_content) {
@@ -274,10 +288,12 @@ extern "C" {
       }
 
       if ((data->option & fss_basic_read_data_option_content) && data->contents.array[at].used) {
-        f_print_except_dynamic_partial(main->output.stream, data->buffer, data->contents.array[at].array[0], delimits_content);
+        f_print_except_dynamic_partial(data->buffer, data->contents.array[at].array[0], delimits_content, main->output.stream);
       }
 
       fss_basic_read_print_set_end(main);
+
+      funlockfile(main->output.stream);
     }
   }
 #endif // _di_fss_basic_read_print_at_
@@ -286,17 +302,18 @@ extern "C" {
   void fss_basic_read_print_object_end(fss_basic_read_main_t * const main) {
 
     if (main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main->output.stream, "%c", fss_basic_read_pipe_content_start);
+      f_print_character(fss_basic_read_pipe_content_start, main->output.stream);
     }
     else {
-      fprintf(main->output.stream, "%c", f_fss_space);
+      f_print_character(f_fss_space, main->output.stream);
     }
   }
 #endif // _di_fss_basic_read_print_object_end_
 
 #ifndef _di_fss_basic_read_print_one_
   void fss_basic_read_print_one(fss_basic_read_main_t * const main) {
-    fprintf(main->output.stream, "1%c", f_string_eol_s[0]);
+    f_print_character(f_string_ascii_1_s[0], main->output.stream);
+    f_print_character(f_string_eol_s[0], main->output.stream);
   }
 #endif // _di_fss_basic_read_print_one_
 
@@ -304,17 +321,18 @@ extern "C" {
   void fss_basic_read_print_set_end(fss_basic_read_main_t * const main) {
 
     if (main->parameters[fss_basic_read_parameter_pipe].result == f_console_result_found) {
-      fprintf(main->output.stream, "%c", fss_basic_read_pipe_content_end);
+      f_print_character(fss_basic_read_pipe_content_end, main->output.stream);
     }
     else {
-      fprintf(main->output.stream, "%c", f_fss_eol);
+      f_print_character(f_string_eol_s[0], main->output.stream);
     }
   }
 #endif // _di_fss_basic_read_print_set_end_
 
 #ifndef _di_fss_basic_read_print_zero_
   void fss_basic_read_print_zero(fss_basic_read_main_t * const main) {
-    fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+    f_print_character(f_string_ascii_0_s[0], main->output.stream);
+    f_print_character(f_string_eol_s[0], main->output.stream);
   }
 #endif // _di_fss_basic_read_print_zero_
 

@@ -72,8 +72,9 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     // process chain rule
     if (length >= firewall_chain_length && fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_chain, length, firewall_chain_length) == F_equal_to) {
       if (chain == firewall_chain_custom_id) {
+
         // custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
-        fprintf(f_type_warning, "%sAt line %llu, the chain option is meaningle ss inside of a custom chain.", fll_error_print_warning, i);
+        fll_print_format("%c%[%sAt line %ul, the chain option is meaningless inside of a custom chain.%]%c", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, f_string_eol_s[0]);
         continue;
       }
 
@@ -282,36 +283,38 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
     }
     // process rule rule, if the remaining rule does not match as firewall_rule, then it is an invalid rule.
     else if (length < firewall_rule_length || fl_string_compare(local.buffer.string + local.rule_objects.array[i].start, (f_string_t) firewall_rule, length, firewall_rule_length) == F_equal_to_not) {
-      if (length > 0) {
-        f_color_print_code(f_type_warning, main.context.warning);
-        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
-        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
-        fprintf(f_type_warning, "' is invalid");
-        f_color_print_code(f_type_warning, main.context.reset);
+      if (length) {
+        flockfile(main.warning.to.stream);
+
+        fl_print_format("%c%[%sAt line %ul, the object '%]%[", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, main.warning.notable);
+        f_print(local.buffer.string + local.rule_objects.array[i].start, length, main.warning.to.stream);
+        fl_print_format("%]%[' is invalid.%]%c", main.warning.to.stream, main.warning.notable, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+        funlockfile(main.warning.to.stream);
       }
       else {
-        fprintf(f_type_warning, "%sAt line %llu, the object is missing", fll_error_print_warning, i);
+        fll_print_format("%c%[%sAt line %ul, the object is missing.%]%c", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, f_string_eol_s[0]);
       }
 
-      fprintf(f_type_warning, "\n");
       continue;
     }
 
     if (invalid) {
       length = macro_firewall_structure_size(local.rule_objects, i);
 
-      if (length > 0) {
-        f_color_print_code(f_type_warning, main.context.warning);
-        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
-        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
-        fprintf(f_type_warning, "' has invalid content '");
-        f_print(f_type_warning, local.buffer.string + local.rule_contents.array[i].array[0].start, macro_firewall_structure_size(local.rule_contents.array[i], 0));
-        fprintf(f_type_warning, "'");
-        f_color_print_code(f_type_warning, main.context.reset);
-        fprintf(f_type_warning, "\n");
+      if (length) {
+        flockfile(main.warning.to.stream);
+
+        fl_print_format("%c%[%sAt line %ul, the object '%]%[", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, main.warning.notable);
+        f_print(local.buffer.string + local.rule_objects.array[i].start, length, main.warning.to.stream);
+        fl_print_format("%]%[' has invalid content '%]%[", main.warning.to.stream, main.warning.notable, main.warning.context, main.warning.context, main.warning.notable);
+        f_print(local.buffer.string + local.rule_contents.array[i].array[0].start, macro_firewall_structure_size(local.rule_contents.array[i], 0), main.warning.to.stream);
+        fl_print_format("%]%['.%]%c", main.warning.to.stream, main.warning.notable, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+        funlockfile(main.warning.to.stream);
       }
       else {
-        f_color_print(f_type_warning, main.context.set.warning, "%sAt line %llu, the object has no content%c", fll_error_print_warning, i, f_string_eol_s[0]);
+        fll_print_format("%c%[%sAt line %ul, the object has no content.%]%c", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, f_string_eol_s[0]);
       }
 
       continue;
@@ -554,12 +557,13 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
       else {
         length = macro_firewall_structure_size(local.rule_objects, i);
 
-        f_color_print_code(f_type_warning, main.context.warning);
-        fprintf(f_type_warning, "%sAt line %llu, the object '", fll_error_print_warning, i);
-        f_print(f_type_warning, local.buffer.string + local.rule_objects.array[i].start, length);
-        fprintf(f_type_warning, "' has no content");
-        f_color_print_code(f_type_warning, main.context.reset);
-        fprintf(f_type_warning, "\n");
+        flockfile(main.warning.to.stream);
+
+        fl_print_format("%c%[%sAt line %ul, the object '%]%[", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, i, main.warning.context, main.warning.notable);
+        f_print(local.buffer.string + local.rule_objects.array[i].start, length, main.warning.to.stream);
+        fl_print_format("%]%[' has no content.%]%c", main.warning.to.stream, main.warning.notable, main.warning.context, main.warning.context, f_string_eol_s[0]);
+
+        funlockfile(main.warning.to.stream);
 
         break;
       }
@@ -589,24 +593,34 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             status = F_status_set_fine(status);
 
             if (status == F_parameter) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling f_file_open()%c", fll_error_print_error, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                firewall_print_error_on_invalid_parameter(main.error, "f_file_open");
+              }
             }
             else if (status == F_file_found_not) {
+
               // the file does not have to exist
-              f_color_print(f_type_warning, main.context.set.warning, "%sCannot find the file '%.*s'%c", fll_error_print_warning, file_path.used, file_path.string, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_verbose || main.error.verbosity == f_console_verbosity_debug) {
+                fll_print_format("%c%[%sCannot find the file '%Q'.%]%c", main.warning.to.stream, f_string_eol_s[0], main.warning.context, main.warning.prefix, file_path, main.warning.context, f_string_eol_s[0]);
+              }
+
               status = F_none;
             }
             else if (status == F_file_open) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to open the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                fll_print_format("%c%[%sUnable to open the file '%Q'.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+              }
             }
             else if (status == F_file_descriptor) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sFile descriptor error while trying to open the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                fll_print_format("%c%[%sFile descriptor error while trying to open the file '%Q'.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+              }
             }
             else if (status == F_memory_not) {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+              firewall_print_error_on_allocation_failure(main.error);
             }
             else {
-              f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open()%c", fll_error_print_error, status, f_string_eol_s[0]);
+              firewall_print_error_on_unhandled(main.error, "f_file_open", status);
             }
 
             if (status != F_file_found_not) {
@@ -623,26 +637,28 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
             if (F_status_is_error(status)) {
               status = F_status_set_fine(status);
 
-              if (status == F_parameter) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling f_file_read()%c", fll_error_print_error, f_string_eol_s[0]);
-              }
-              else if (status == F_number_overflow) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sInteger overflow while trying to buffer the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
-              }
-              else if (status == F_file_closed) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sThe file '%.*s' is no longer open%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
-              }
-              else if (status == F_file_seek) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sA seek error occurred while accessing the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
-              }
-              else if (status == F_file_read) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sA read error occurred while accessing the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
-              }
-              else if (status == F_memory_not) {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-              }
-              else {
-                f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_read()%c", fll_error_print_error, status, f_string_eol_s[0]);
+              if (main.error.verbosity != f_console_verbosity_quiet) {
+                if (status == F_parameter) {
+                  firewall_print_error_on_invalid_parameter(main.error, "f_file_read");
+                }
+                else if (status == F_number_overflow) {
+                  fll_print_format("%c%[%sInteger overflow while trying to buffer the file '%Q'.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+                }
+                else if (status == F_file_closed) {
+                  fll_print_format("%c%[%sThe file '%Q' is no longer open.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+                }
+                else if (status == F_file_seek) {
+                  fll_print_format("%c%[%sA seek error occurred while accessing the file '%Q'.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+                }
+                else if (status == F_file_read) {
+                  fll_print_format("%c%[%sA read error occurred while accessing the file '%Q'.%]%c", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, file_path, main.error.context, f_string_eol_s[0]);
+                }
+                else if (status == F_memory_not) {
+                  firewall_print_error_on_allocation_failure(main.error);
+                }
+                else {
+                  firewall_print_error_on_unhandled(main.error, "f_file_read", status);
+                }
               }
 
               status = F_status_set_error(status);
@@ -661,16 +677,16 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                 status = F_status_set_fine(status);
 
                 if (status == F_parameter) {
-                  f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_fss_basic_read() for the file '%.*s'%c", fll_error_print_error, file_path.used, file_path.string, f_string_eol_s[0]);
+                  firewall_print_error_on_invalid_parameter_for_file(main.error, "fll_fss_basic_read", file_path.used ? file_path.string : "");
                 }
                 else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
                   // empty files are to be silently ignored
                 }
                 else if (status == F_memory_not) {
-                  f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+                  firewall_print_error_on_allocation_failure(main.error);
                 }
                 else {
-                  f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_read() for the file '%.*s'%c", fll_error_print_error, status, file_path.used, file_path.string, f_string_eol_s[0]);
+                  firewall_print_error_on_unhandled_for_file(main.error, "fll_fss_basic_read", status, file_path.used ? file_path.string : "");
                 }
 
                 status = F_status_set_error(status);
@@ -712,7 +728,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                 }
 
                 if (F_status_is_error(status)) {
-                  f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+                  firewall_print_error_on_allocation_failure(main.error);
 
                   macro_f_string_dynamic_t_delete_simple(ip_list_action);
                 }
@@ -733,7 +749,8 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                      macro_f_string_dynamic_t_resize(status, ip_argument, ip_length);
 
                     if (F_status_is_error(status)) {
-                      f_color_print(main.error.to.stream, main.context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+                      firewall_print_error_on_allocation_failure(main.error);
+
                       break;
                     }
 
@@ -743,17 +760,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                     macro_firewall_append_argument_to_arguments(status, arguments, ip_argument)
                     if (F_status_is_error(status)) break;
 
-                    if (main.error.verbosity == f_console_verbosity_debug) {
-                      f_color_print_code(f_type_debug, main.context.warning);
-                      fprintf(f_type_debug, "%s ", current_tool);
-
-                      for (f_array_length_t i = 0; i < arguments.used; ++i) {
-                        fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-                      } // for
-
-                      f_color_print_code(f_type_debug, main.context.reset);
-                      fprintf(f_type_debug, "\n");
-                    }
+                    firewall_print_debug_tool(main.warning, current_tool, arguments);
 
                     status = fll_execute_program((f_string_t) current_tool, arguments, 0, 0, (void *) &return_code);
 
@@ -763,18 +770,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                     }
 
                     if (status == F_failure) {
-                      f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, current_tool, f_string_eol_s[0]);
-                      fprintf(f_type_error, "  ");
-
-                      f_color_print_code(f_type_error, main.context.error);
-
-                      fprintf(f_type_error, "%s ", current_tool);
-                      for (f_array_length_t i = 0; i < arguments.used; ++i) {
-                        fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-                      } // for
-
-                      f_color_print_code(f_type_error, main.context.reset);
-                      fprintf(f_type_error, "\n");
+                      firewall_print_error_on_operation(main.error, current_tool, arguments);
 
                       // remove ip_argument from arguments string.
                       macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
@@ -782,7 +778,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
                       break;
                     }
                     else if (status == F_parameter) {
-                      f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+                      firewall_print_error_on_invalid_parameter(main.error, "fll_execute_program");
 
                       // remove ip_argument from arguments string.
                       macro_f_string_dynamic_t_delete_simple(arguments.array[arguments.used--]);
@@ -813,17 +809,7 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           if (status == F_failure || status == F_parameter) break;
         }
         else {
-          if (main.error.verbosity == f_console_verbosity_debug) {
-            f_color_print_code(f_type_debug, main.context.warning);
-            fprintf(f_type_debug, "%s ", current_tool);
-
-            for (f_array_length_t i = 0; i < arguments.used; ++i) {
-              fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-            } // for
-
-            f_color_print_code(f_type_debug, main.context.reset);
-            fprintf(f_type_debug, "\n");
-          }
+          firewall_print_debug_tool(main.warning, current_tool, arguments);
 
           status = fll_execute_program(current_tool, arguments, 0, 0, (void *) &return_code);
 
@@ -833,22 +819,13 @@ f_status_t firewall_perform_commands(const firewall_local_data_t local, const fi
           }
 
           if (status == F_failure) {
-            f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, current_tool, f_string_eol_s[0]);
-            fprintf(f_type_error, "  ");
-            f_color_print_code(f_type_error, main.context.error);
-
-            fprintf(f_type_error, "%s ", current_tool);
-            for (f_array_length_t i = 0; i < arguments.used; ++i) {
-              fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-            } // for
-
-            f_color_print_code(f_type_error, main.context.reset);
-            fprintf(f_type_error, "\n");
+            firewall_print_error_on_operation(main.error, current_tool, arguments);
 
             break;
           }
           else if (status == F_parameter) {
-            f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+            firewall_print_error_on_invalid_parameter(main.error, "fll_execute_program");
+
             break;
           }
         }
@@ -892,7 +869,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
   status = f_string_dynamics_resize(2, &arguments);
   if (F_status_is_error(status)) return status;
 
-  status = f_string_dynamic_resize(firewall_chain_create_command_length, &arguments.array[0]);
+  status = f_string_dynamic_resize(firewall_chain_create_command_length + 1, &arguments.array[0]);
 
   if (F_status_is_error(status)) {
     macro_f_string_dynamics_t_delete_simple(arguments);
@@ -903,6 +880,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
   macro_firewall_concat_string(arguments.array[0].string, firewall_chain_create_command, firewall_chain_create_command_length);
 
   arguments.array[0].used = firewall_chain_create_command_length;
+  arguments.array[0].string[firewall_chain_create_command_length] = 0;
 
   status = f_string_dynamic_increase(f_memory_default_allocation_small, &arguments.array[1]);
 
@@ -999,7 +977,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
 
       arguments.array[1].used = 0;
       if (length > arguments.array[1].size) {
-        macro_f_string_dynamic_t_resize(status, arguments.array[1], length);
+        macro_f_string_dynamic_t_resize(status, arguments.array[1], length + 1);
 
         if (F_status_is_error(status)) {
           macro_f_string_dynamics_t_delete_simple(arguments);
@@ -1008,7 +986,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         }
       }
 
-       macro_f_string_dynamic_t_resize(status, main->chains.array[main->chains.used], length);
+       macro_f_string_dynamic_t_resize(status, main->chains.array[main->chains.used], length + 1);
 
       if (F_status_is_error(status)) {
         macro_f_string_dynamics_t_delete_simple(arguments);
@@ -1018,7 +996,6 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
 
       main->chains.array[main->chains.used].used = 0;
       local->chain_ids.array[i] = main->chains.used;
-      arguments.array[1].used = 0;
       j = local->chain_objects.array[i].start;
 
       // copy the string character by character, ignoring placeholders.
@@ -1033,6 +1010,9 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         arguments.array[1].string[arguments.array[1].used++] = local->buffer.string[j];
         ++j;
       } // while
+
+      arguments.array[1].string[arguments.array[1].used] = 0;
+      main->chains.array[main->chains.used].string[main->chains.array[main->chains.used].used] = 0;
 
       if (fl_string_compare(arguments.array[1].string, firewall_chain_forward, arguments.array[1].used, firewall_chain_forward_length) == F_equal_to) {
         create_chain = F_false;
@@ -1051,17 +1031,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
       }
 
       if (create_chain) {
-        if (main->error.verbosity == f_console_verbosity_debug) {
-          f_color_print_code(f_type_debug, main->context.warning);
-          fprintf(f_type_debug, "%s ", firewall_tool_iptables);
-
-          for (f_array_length_t i = 0; i < arguments.used; ++i) {
-            fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-          } // for
-
-          f_color_print_code(f_type_debug, main->context.reset);
-          fprintf(f_type_debug, "\n");
-        }
+        firewall_print_debug_tool(main->warning, firewall_tool_iptables, arguments);
 
         tool = firewall_program_iptables;
         status = fll_execute_program((f_string_t) firewall_tool_iptables, arguments, 0, 0, (void *) &return_code);
@@ -1072,17 +1042,7 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
         }
 
         if (F_status_is_error_not(status)) {
-          if (main->error.verbosity == f_console_verbosity_debug) {
-            f_color_print_code(f_type_debug, main->context.warning);
-            fprintf(f_type_debug, "%s ", firewall_tool_ip6tables);
-
-            for (f_array_length_t i = 0; i < arguments.used; ++i) {
-              fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-            } // for
-
-            f_color_print_code(f_type_debug, main->context.reset);
-            fprintf(f_type_debug, "\n");
-          }
+          firewall_print_debug_tool(main->warning, firewall_tool_ip6tables, arguments);
 
           tool = firewall_program_ip6tables;
           status = fll_execute_program((f_string_t) firewall_tool_ip6tables, arguments, 0, 0, (void *) &return_code);
@@ -1097,35 +1057,13 @@ f_status_t firewall_create_custom_chains(firewall_reserved_chains_t *reserved, f
           status = F_status_set_fine(status);
 
           if (status == F_failure) {
-            if (tool == firewall_program_iptables) {
-              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_iptables, f_string_eol_s[0]);
-            }
-            else if (tool == firewall_program_ip6tables) {
-              f_color_print(main->error.to.stream, main->context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, firewall_tool_ip6tables, f_string_eol_s[0]);
-            }
-
-            fprintf(f_type_error, "  ");
-            f_color_print_code(f_type_error, main->context.error);
-
-            if (tool == firewall_program_iptables) {
-              fprintf(f_type_error, "%s ", firewall_tool_iptables);
-            }
-            else if (tool == firewall_program_ip6tables) {
-              fprintf(f_type_error, "%s ", firewall_tool_ip6tables);
-            }
-
-            for (f_array_length_t i = 0; i < arguments.used; ++i) {
-              fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-            } // for
-
-            f_color_print_code(f_type_error, main->context.reset);
-            fprintf(f_type_error, "\n");
+            firewall_print_error_on_operation(main->error, tool == firewall_program_iptables ? firewall_tool_iptables : firewall_tool_ip6tables, arguments);
           }
           else if (status == F_parameter) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+            firewall_print_error_on_invalid_parameter(main->error, "fll_execute_program");
           }
           else {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_execute_program()%c", fll_error_print_error, status, f_string_eol_s[0]);
+            firewall_print_error_on_unhandled(main->error, "fll_execute_program", status);
           }
 
           macro_f_string_dynamics_t_delete_simple(arguments);
@@ -1161,17 +1099,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
     arguments.size = 1;
     arguments.used = 1;
 
-    if (main.error.verbosity == f_console_verbosity_debug) {
-      f_color_print_code(f_type_debug, main.context.warning);
-      fprintf(f_type_debug, "%s ", tools[i]);
-
-      for (f_array_length_t i = 0; i < arguments.used; ++i) {
-        fprintf(f_type_debug, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-      } // for
-
-      f_color_print_code(f_type_debug, main.context.reset);
-      fprintf(f_type_debug, "\n");
-    }
+    firewall_print_debug_tool(main.warning, tools[i], arguments);
 
     status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
@@ -1184,24 +1112,13 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
       status = F_status_set_fine(status);
 
       if (status == F_failure) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, tools[i], f_string_eol_s[0]);
-
-        fprintf(f_type_error, "  ");
-        f_color_print_code(f_type_error, main.context.error);
-
-        fprintf(f_type_error, "%s ", tools[i]);
-        for (f_array_length_t i = 0; i < arguments.used; ++i) {
-          fprintf(f_type_error, "%.*s ", arguments.array[i].used, arguments.array[i].string);
-        } // for
-
-        f_color_print_code(f_type_error, main.context.reset);
-        fprintf(f_type_error, "\n");
+        firewall_print_error_on_operation(main.error, tools[i], arguments);
       }
       else if (status == F_parameter) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+        firewall_print_error_on_invalid_parameter(main.error, "fll_execute_program");
       }
       else {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_execute_program()%c", fll_error_print_error, status, f_string_eol_s[0]);
+        firewall_print_error_on_unhandled(main.error, "fll_execute_program", status);
       }
 
       return status;
@@ -1221,17 +1138,7 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
     arguments.size = 1;
     arguments.used = 1;
 
-    if (main.error.verbosity == f_console_verbosity_debug) {
-      f_color_print_code(f_type_debug, main.context.warning);
-      fprintf(f_type_debug, "%s ", tools[i]);
-
-      for (f_array_length_t j = 0; j < arguments.used; ++j) {
-        fprintf(f_type_debug, "%.*s ", arguments.array[j].used, arguments.array[j].string);
-      } // for
-
-      f_color_print_code(f_type_debug, main.context.reset);
-      fprintf(f_type_debug, "\n");
-    }
+    firewall_print_debug_tool(main.warning, tools[i], arguments);
 
     status = fll_execute_program(tools[i], arguments, 0, 0, (void *) &return_code);
 
@@ -1244,24 +1151,13 @@ f_status_t firewall_delete_chains(const firewall_main_t main) {
       status = F_status_set_fine(status);
 
       if (status == F_failure) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, tools[i], f_string_eol_s[0]);
-
-        fprintf(f_type_error, "  ");
-        f_color_print_code(f_type_error, main.context.error);
-
-        fprintf(f_type_error, "%s ", tools[i]);
-        for (f_array_length_t j = 0; j < arguments.used; ++j) {
-          fprintf(f_type_error, "%.*s ", arguments.array[j].used, arguments.array[j].string);
-        } // for
-
-        f_color_print_code(f_type_error, main.context.reset);
-        fprintf(f_type_error, "\n");
+        firewall_print_error_on_operation(main.error, tools[i], arguments);
       }
       else if (status == F_parameter) {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+        firewall_print_error_on_invalid_parameter(main.error, "fll_execute_program");
       }
       else {
-        f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_execute_program()%c", fll_error_print_error, status, f_string_eol_s[0]);
+        firewall_print_error_on_unhandled(main.error, "fll_execute_program", status);
       }
 
       return status;
@@ -1302,18 +1198,7 @@ f_status_t firewall_default_lock(const firewall_main_t main) {
     for (f_array_length_t j = 0; j < 2; ++j) {
       int return_code = 0;
 
-      // print command when debugging.
-      if (main.error.verbosity == f_console_verbosity_debug) {
-        f_color_print_code(f_type_debug, main.context.warning);
-        fprintf(f_type_debug, "%s ", tools[j]);
-
-        for (f_array_length_t k = 0; k < arguments.used; k++) {
-          fprintf(f_type_debug, "%.*s ", arguments.array[k].used, arguments.array[k].string);
-        } // for
-
-        f_color_print_code(f_type_debug, main.context.reset);
-        fprintf(f_type_debug, "\n");
-      }
+      firewall_print_debug_tool(main.warning, tools[j], arguments);
 
       status = fll_execute_program(tools[j], arguments, 0, 0, (void *) &return_code);
 
@@ -1326,24 +1211,13 @@ f_status_t firewall_default_lock(const firewall_main_t main) {
         status = F_status_set_fine(status);
 
         if (status == F_failure) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sFailed to perform requested %s operation:%c", fll_error_print_error, tools[j], f_string_eol_s[0]);
-
-          fprintf(f_type_error, "  ");
-          f_color_print_code(f_type_error, main.context.error);
-
-          fprintf(f_type_error, "%s ", tools[j]);
-          for (f_array_length_t k = 0; k < arguments.used; k++) {
-            fprintf(f_type_error, "%.*s ", arguments.array[k].used, arguments.array[k].string);
-          } // for
-
-          f_color_print_code(f_type_error, main.context.reset);
-          fprintf(f_type_error, "\n");
+          firewall_print_error_on_operation(main.error, tools[j], arguments);
         }
         else if (status == F_parameter) {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sInvalid parameter when calling fll_execute_program()%c", fll_error_print_error, f_string_eol_s[0]);
+          firewall_print_error_on_invalid_parameter(main.error, "fll_execute_program");
         }
         else {
-          f_color_print(main.error.to.stream, main.context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_execute_program()%c", fll_error_print_error, status, f_string_eol_s[0]);
+          firewall_print_error_on_unhandled(main.error, "fll_execute_program", status);
         }
 
         return status;
@@ -1362,28 +1236,30 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);
 
-    if (optional) {
-      if (status == F_parameter) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sInvalid parameter when calling f_file_open().%c", fll_error_print_error, f_string_eol_s[0]);
-      }
-      else if (status != F_file_found_not && status != F_file_open && status != F_file_descriptor) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open().%c", fll_error_print_error, status, f_string_eol_s[0]);
-      }
-    } else {
-      if (status == F_parameter) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sInvalid parameter when calling f_file_open().%c", fll_error_print_error, f_string_eol_s[0]);
-      }
-      else if (status == F_file_found_not) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to find the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-      }
-      else if (status == F_file_open) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to open the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-      }
-      else if (status == F_file_descriptor) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sFile descriptor error while trying to open the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-      }
-      else {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_open().%c", fll_error_print_error, status, f_string_eol_s[0]);
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (optional) {
+        if (status == F_parameter) {
+          firewall_print_error_on_invalid_parameter(main->error, "f_file_open");
+        }
+        else if (status != F_file_found_not && status != F_file_open && status != F_file_descriptor) {
+          firewall_print_error_on_unhandled(main->error, "f_file_open", status);
+        }
+      } else {
+        if (status == F_parameter) {
+          firewall_print_error_on_invalid_parameter(main->error, "f_file_open");
+        }
+        else if (status == F_file_found_not) {
+          fll_print_format("%c%[%sUnable to find the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+        }
+        else if (status == F_file_open) {
+          fll_print_format("%c%[%sUnable to open the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+        }
+        else if (status == F_file_descriptor) {
+          fll_print_format("%c%[%sFile descriptor error while trying to open the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+        }
+        else {
+          firewall_print_error_on_unhandled(main->error, "f_file_open", status);
+        }
       }
     }
 
@@ -1397,26 +1273,28 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);
 
-    if (status == F_parameter) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sInvalid parameter when calling f_file_read().%c", fll_error_print_error, f_string_eol_s[0]);
-    }
-    else if (status == F_number_overflow) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sInteger overflow while trying to buffer the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_file_closed) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sThe file '%s' is no longer open.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_file_seek) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sA seek error occurred while accessing the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_file_read) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sA read error occurred while accessing the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_memory_not) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-    }
-    else {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling f_file_read().%c", fll_error_print_error, status, f_string_eol_s[0]);
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (status == F_parameter) {
+        firewall_print_error_on_invalid_parameter(main->error, "f_file_read");
+      }
+      else if (status == F_number_overflow) {
+        fll_print_format("%c%[%sInteger overflow while trying to buffer the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+      }
+      else if (status == F_file_closed) {
+        fll_print_format("%c%[%sThe file '%S' is no longer open.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+      }
+      else if (status == F_file_seek) {
+        fll_print_format("%c%[%sA seek error occurred while accessing the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+      }
+      else if (status == F_file_read) {
+        fll_print_format("%c%[%sA read error occurred while accessing the file '%S'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+      }
+      else if (status == F_memory_not) {
+        firewall_print_error_on_allocation_failure(main->error);
+      }
+      else {
+        firewall_print_error_on_unhandled(main->error, "f_file_read", status);
+      }
     }
 
     return status;
@@ -1435,17 +1313,19 @@ f_status_t firewall_buffer_rules(const f_string_t filename, const bool optional,
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);
 
-    if (status == F_parameter) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sInvalid parameter when calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sNo relevant main was found within the file '%s'.%c", fll_error_print_error, filename, f_string_eol_s[0]);
-    }
-    else if (status == F_memory_not) {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
-    }
-    else {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling fll_fss_basic_list_read() for the file '%s'.%c", fll_error_print_error, status, filename, f_string_eol_s[0]);
+    if (main->error.verbosity != f_console_verbosity_quiet) {
+      if (status == F_parameter) {
+        firewall_print_error_on_invalid_parameter_for_file(main->error, "fll_fss_basic_list_read", filename);
+      }
+      else if (status == F_data_not_eos || status == F_data_not || status == F_data_not_stop) {
+        fll_print_format("%c%[%sNo relevant main was found within the file '%s'.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, filename, main->error.context, f_string_eol_s[0]);
+      }
+      else if (status == F_memory_not) {
+        firewall_print_error_on_allocation_failure(main->error);
+      }
+      else {
+        firewall_print_error_on_unhandled_for_file(main->error, "fll_fss_basic_read", status, filename);
+      }
     }
   }
   else {
@@ -1490,13 +1370,13 @@ f_status_t firewall_process_rules(f_string_range_t *range, firewall_local_data_t
       status = F_status_set_fine(status);
 
       if (status == F_memory_not) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sUnable to allocate memory.%c", fll_error_print_error, f_string_eol_s[0]);
+        firewall_print_error_on_allocation_failure(main->error);
       }
       else if (status == F_failure) {
         // the error message has already been displayed.
       }
       else {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sAn unhandled error (%u) has occurred while calling firewall_perform_commands().%c", fll_error_print_error, status, f_string_eol_s[0]);
+        firewall_print_error_on_unhandled(main->error, "firewall_perform_commands", status);
       }
 
       macro_f_fss_objects_t_delete_simple(local->rule_objects);

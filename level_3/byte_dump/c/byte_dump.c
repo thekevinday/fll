@@ -54,38 +54,15 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
 
-    f_print_terminated("  When using the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable);
-    f_print_terminated(" option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.", output.stream);
+    fl_print_format("  When using the %[%s%s%] option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    fl_print_format("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the %[%s%s%] option is used).%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    f_print_terminated("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable);
-    f_print_terminated(" option is used).", output.stream);
+    fl_print_format("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    fl_print_format("  When %[%s%s%] is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    f_print_terminated("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.", output.stream);
-
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
-
-    f_print_terminated("  When ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable);
-    f_print_terminated(" is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.", output.stream);
-
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
-
-    f_print_terminated("  When using the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable);
-    f_print_terminated(" option, invalid Unicode will fallback to being displayed using one of the other modes.", output.stream);
-
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    fl_print_format("  When using the %[%s%s%] option, invalid Unicode will fallback to being displayed using one of the other modes.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     funlockfile(output.stream);
 

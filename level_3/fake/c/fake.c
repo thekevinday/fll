@@ -61,31 +61,19 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, fake_name, "operation");
 
-    f_print_terminated("  When performing the ", output.stream);
-    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_other_operation_build, context.set.notable);
-    f_print_terminated("  operation, the ", output.stream);
-    fl_print_format("%[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_mode, context.set.notable);
-    fl_print_format(" parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  When performing the %[%s%] operation, the", output.stream, context.set.notable, fake_other_operation_build, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_mode, context.set.notable, f_string_eol_s[0]);
 
-    f_print_terminated("  For example, when a ", output.stream);
-    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_mode, context.set.notable);
+    fl_print_format("  For example, when a %[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_mode, context.set.notable);
     fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    f_print_terminated("  When specifying the ", output.stream);
-    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_fakefile, context.set.notable);
-    f_print_terminated("  or the ", output.stream);
-    fl_print_format("%[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_settings, context.set.notable);
+    fl_print_format("  When specifying the %[%s%]  or the %[%s%]", output.stream, context.set.notable, fake_make_parameter_variable_fakefile, context.set.notable, context.set.notable, fake_make_parameter_variable_settings, context.set.notable);
     fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%c", output.stream, f_string_eol_s[0]);
 
-    f_print_terminated("  For example, with '", output.stream);
-    fl_print_format("%[%s%s my_fakefile%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
-    f_print_terminated("' the fakefile at '", output.stream);
-    fl_print_format("%[./%s%smy_fakefile%]", output.stream, context.set.notable, fake_default_path_data, fake_default_path_build, context.set.notable);
-    f_print_terminated("' would be used, however with '", output.stream);
-    fl_print_format("%[%s%s ./my_fakefile%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
-    f_print_terminated("' the fakefile at '", output.stream);
-    fl_print_format("%[./my_fakefile%]", output.stream, context.set.notable, context.set.notable);
-    fl_print_format("' would be used.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  For example, with '%[%s%s my_fakefile%]' the fakefile at", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
+    fl_print_format(" '%[./%s%smy_fakefile%]' would be used, however with", output.stream, context.set.notable, fake_default_path_data, fake_default_path_build, context.set.notable);
+    fl_print_format(" '%[%s%s ./my_fakefile%]' the fakefile at", output.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile, context.set.notable);
+    fl_print_format(" '%[./my_fakefile%]' would be used.%c%c", output.stream, context.set.notable, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     funlockfile(output.stream);
 

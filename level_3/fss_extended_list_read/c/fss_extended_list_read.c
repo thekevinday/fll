@@ -9,6 +9,8 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_print_help_
   f_status_t fss_extended_list_read_print_help(const f_file_t output, const f_color_context_t context) {
 
+    flockfile(output.stream);
+
     fll_program_print_help_header(output, context, fss_extended_list_read_name_long, fss_extended_list_read_version);
 
     fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -21,7 +23,7 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, fss_extended_list_read_short_at, fss_extended_list_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select Object at this numeric index.");
     fll_program_print_help_option(output, context, fss_extended_list_read_short_content, fss_extended_list_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Content (default).");
@@ -39,153 +41,75 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, fss_extended_list_read_name, "filename(s)");
 
-    f_color_print(output.stream, context.set.important, " Notes:");
+    fl_print_format(" %[Notes:%]%c", output.stream, context.set.important, context.set.important, f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  This program will print the Content associated with the given Object and Content main based on the FSS-0003 Extended List standard.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  This program will print the Content associated with the given Object and Content main based on the FSS-0003 Extended List standard.%c", f_string_eol_s[0]);
+    fl_print_format("  All numeric positions (indexes) start at 0 instead of 1.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  For example, a file of 17 lines would range from 0 to 16.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  When using the %[%s%s%] option, an order of operations is enforced on the parameters.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_depth, context.set.notable, f_string_eol_s[0]);
 
-    fprintf(output.stream, "  All numeric positions (indexes) start at 0 instead of 1.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  For example, a file of 17 lines would range from 0 to 16.%c", f_string_eol_s[0]);
+    fl_print_format("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", output.stream, f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: An Object index at the specified depth.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_at, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: A new depth within the specified depth, indexed from the root.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_depth, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: An Object name at the specified depth.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  When using the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_depth);
-    fprintf(output.stream, " option, an order of operations is enforced on the parameters.%c", f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] must be in numeric order, but values in between may be skipped.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_depth, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] selects a Content column.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "    ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_at);
-    fprintf(output.stream, ": An Object index at the specified depth.%c", f_string_eol_s[0]);
+    fl_print_format("  Specify both %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_object, context.set.notable);
+    fl_print_format(" and the %[%s%s%] parameters to get the total objects.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_total, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "    ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_depth);
-    fprintf(output.stream, ": A new depth within the specified depth, indexed from the root.%c", f_string_eol_s[0]);
+    fl_print_format("  When both %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_at, context.set.notable);
+    fl_print_format(" and %[%s%s%] parameters are specified (at the same depth),", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_name, context.set.notable);
+    fl_print_format(" the %[%s%s%] parameter value will be treated as a position relative to the specified", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_at, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter value.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "    ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_name);
-    fprintf(output.stream, ": An Object name at the specified depth.%c", f_string_eol_s[0]);
+    fl_print_format("  This program may support parameters, such as %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_depth, context.set.notable);
+    fl_print_format(" or %[%s%s%], even if not supported by the standard.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  This is done to help ensure consistency for scripting.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  For parameters like %[%s%s%],", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_depth, context.set.notable);
+    fl_print_format(" if the standard doesn't support nested Content, then only a depth of 0 would be valid.%c", output.stream, f_string_eol_s[0]);
 
-    fprintf(output.stream, "  The parameter ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_depth);
-    fprintf(output.stream, " must be in numeric order, but values in between may be skipped.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", f_string_eol_s[0]);
-    fprintf(output.stream, "    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c", f_string_eol_s[0]);
+    fl_print_format("  For parameters like %[%s%s%],", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select, context.set.notable);
+    fl_print_format(" if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_trim, context.set.notable);
+    fl_print_format(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  The parameter ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_select);
-    fprintf(output.stream, " selects a Content column.%c", f_string_eol_s[0]);
+    fl_print_format("  When specifying both the %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_object, context.set.notable);
+    fl_print_format(" parameter and the %[%s%s%] parameter, the entire Object and Content are printed, including the formatting.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_content, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  Both the Object and Content printed are already escaped.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  Both the Object and Content are separated by an EOL.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] accepts the following:%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: Do not apply delimits.%c", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_none, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: (default) Apply all delimits.%c", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_all, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: Apply delimits for Objects.%c", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_object, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or greater, followed by a %[%s%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%c", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_greater, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or lesser, followed by a %[%s%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%c%c", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_lesser, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  Specify both ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_object);
-    fprintf(output.stream, " and the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_total);
-    fprintf(output.stream, " parameters to get the total objects.%c", f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%] parameter may be specified multiple times to customize the delimit behavior.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit, context.set.notable, f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit, context.set.notable);
+    fl_print_format(" values %[%s%]", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_none, context.set.notable);
+    fl_print_format(" and %[%s%],", output.stream, context.set.notable, fss_extended_list_read_delimit_mode_name_all, context.set.notable);
+    fl_print_format(" overrule all other delimit values.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  When both ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_at);
-    fprintf(output.stream, " and ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_name);
-    fprintf(output.stream, " parameters are specified (at the same depth), the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_at);
-    fprintf(output.stream, " parameter value will be treated as a position relative to the specified ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_name);
-    fprintf(output.stream, " parameter value.%c", f_string_eol_s[0]);
+    fl_print_format("  The parameters %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_columns, context.set.notable);
+    fl_print_format(" and %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select, context.set.notable);
+    fl_print_format(" refer to a Content column.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  This is not to be confused with a depth.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  This program may support parameters, such as ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_depth);
-    fprintf(output.stream, " or ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_select);
-    fprintf(output.stream, ", even if not supported by the standard.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  This is done to help ensure consistency for scripting.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  For parameters like ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_depth);
-    fprintf(output.stream, ", if the standard doesn't support nested Content, then only a depth of 0 would be valid.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  For parameters like ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_select);
-    fprintf(output.stream, ", if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  The parameter ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_trim);
-    fprintf(output.stream, " will remove leading and trailing whitespaces when selecting objects or when printing objects.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  When specifying both the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_object);
-    fprintf(output.stream, " parameter and the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_content);
-    fprintf(output.stream, " parameter, the entire Object and Content are printed, including the formatting.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  Both the Object and Content printed are already escaped.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  Both the Object and Content are separated by an EOL.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  The parameter ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit);
-    fprintf(output.stream, " accepts the following:%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_none);
-    fprintf(output.stream, ": Do not apply delimits.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_all);
-    fprintf(output.stream, ": (default) Apply all delimits.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_object);
-    fprintf(output.stream, ": Apply delimits for Objects.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - A number, 0 or greater: apply delimits for Content at the specified depth.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - A number, 0 or greater, followed by a ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_greater);
-    fprintf(output.stream, ": (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  - A number, 0 or greater, followed by a ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_lesser);
-    fprintf(output.stream, ": (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  The ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit);
-    fprintf(output.stream, " parameter may be specified multiple times to customize the delimit behavior.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  The ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit);
-    fprintf(output.stream, " values ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_none);
-    fprintf(output.stream, " and ");
-    f_color_print(output.stream, context.set.notable, "%s", fss_extended_list_read_delimit_mode_name_all);
-    fprintf(output.stream, ", overrule all other delimit values.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  The parameters ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_columns);
-    fprintf(output.stream, " and ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_select);
-    fprintf(output.stream, " refer to a Content column.%c", f_string_eol_s[0]);
-    fprintf(output.stream, " The word \"column\" is being loosely defined to refer to a specific Content.%c", f_string_eol_s[0]);
-    fprintf(output.stream, " This is not to be confused with a depth.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    funlockfile(output.stream);
 
     return F_none;
   }
@@ -208,9 +132,12 @@ extern "C" {
         if (main->context.set.error.before) {
           main->error.context = main->context.set.error;
           main->error.notable = main->context.set.notable;
+
+          main->warning.context = main->context.set.warning;
+          main->warning.notable = main->context.set.notable;
         }
         else {
-          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, 0 };
+          f_color_set_t *sets[] = { &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
           fll_program_parameter_process_empty(&main->context, sets);
         }
@@ -236,15 +163,19 @@ extern "C" {
 
         if (choice == fss_extended_list_read_parameter_verbosity_quiet) {
           main->error.verbosity = f_console_verbosity_quiet;
+          main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_extended_list_read_parameter_verbosity_normal) {
           main->error.verbosity = f_console_verbosity_normal;
+          main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_extended_list_read_parameter_verbosity_verbose) {
           main->error.verbosity = f_console_verbosity_verbose;
+          main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_extended_list_read_parameter_verbosity_debug) {
           main->error.verbosity = f_console_verbosity_debug;
+          main->warning.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -309,9 +240,13 @@ extern "C" {
         for (f_array_length_t i = 0; i < 6; ++i) {
 
           if (main->parameters[parameter_code[i]].result == f_console_result_found) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter_name[i]);
-            f_color_print(main->error.to.stream, main->context.set.error, "' requires a %s.%c", parameter_message[i], f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
+            fl_print_format("%[' requires a %s.%]%c", main->error.to.stream, main->error.context, parameter_message[i], main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
             break;
@@ -347,11 +282,15 @@ extern "C" {
         for (f_array_length_t i = 0; i < 5; ++i) {
 
           if (main->parameters[parameter_code[i]].result == parameter_match[i]) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_columns);
-            f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, parameter_name[i]);
-            f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_columns, main->error.notable);
+            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
+            fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
             break;
@@ -361,20 +300,28 @@ extern "C" {
 
       if (F_status_is_error_not(status) && main->parameters[fss_extended_list_read_parameter_pipe].result == f_console_result_found) {
         if (main->parameters[fss_extended_list_read_parameter_total].result == f_console_result_found) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_pipe);
-          f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_total);
-          f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+          flockfile(main->error.to.stream);
+
+          fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_pipe, main->error.notable);
+          fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_total, main->error.notable);
+          fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+          funlockfile(main->error.to.stream);
 
           status = F_status_set_error(F_parameter);
         }
         else if (main->parameters[fss_extended_list_read_parameter_line].result == f_console_result_additional) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the '", fll_error_print_error);
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_pipe);
-          f_color_print(main->error.to.stream, main->context.set.error, "' parameter with the '");
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_line);
-          f_color_print(main->error.to.stream, main->context.set.error, "' parameter.%c", f_string_eol_s[0]);
+          flockfile(main->error.to.stream);
+
+          fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_pipe, main->error.notable);
+          fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_line, main->error.notable);
+          fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+          funlockfile(main->error.to.stream);
 
           status = F_status_set_error(F_parameter);
         }
@@ -393,9 +340,13 @@ extern "C" {
           length = strnlen(arguments->argv[location], f_console_parameter_size);
 
           if (!length) {
-            f_color_print(main->error.to.stream, main->context.set.error, "%sThe value for the parameter '", fll_error_print_error);
-            f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit);
-            f_color_print(main->error.to.stream, main->context.set.error, "' must not be empty.%c", f_string_eol_s[0]);
+            flockfile(main->error.to.stream);
+
+            fl_print_format("%c%[%sThe value for the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_delimit, main->error.notable);
+            fl_print_format("%[' must not be empty.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+            funlockfile(main->error.to.stream);
 
             status = F_status_set_error(F_parameter);
             break;
@@ -522,9 +473,13 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->parameters[fss_extended_list_read_parameter_select].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe '", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_list_read_long_select);
-        f_color_print(main->error.to.stream, main->context.set.error, "' parameter requires a positive number.%c", f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select, main->error.notable);
+        fl_print_format("%[' parameter requires a positive number.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
 
         fss_extended_list_read_depths_resize(0, &data.depths);
 
@@ -640,7 +595,7 @@ extern "C" {
       fss_extended_list_read_data_delete_simple(&data);
     }
     else {
-      f_color_print(main->error.to.stream, main->context.set.error, "%sYou failed to specify one or more files.%c", fll_error_print_error, f_string_eol_s[0]);
+      fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 
