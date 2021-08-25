@@ -13,14 +13,17 @@ extern "C" {
       return;
     }
 
-    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(main.error.to.stream, main.context.set.error, "%sMust specify the '", fll_error_print_error);
-    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_object);
-    f_color_print(main.error.to.stream, main.context.set.error, "' parameter at least once and the '");
-    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_content);
-    f_color_print(main.error.to.stream, main.context.set.error, "' parameter one or more times when not specifying the ");
-    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_extended_write_long_partial);
-    f_color_print(main.error.to.stream, main.context.set.error, "' parameter.%c", f_string_eol_s[0]);
+    flockfile(main.error.to.stream);
+
+    fl_print_format("%c%[%sMust specify the '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object, main.error.notable);
+    fl_print_format("%[' parameter and the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content, main.error.notable);
+    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main.error.to.stream, main.error.context, main.error.prefix, main.error.context);
+    fl_print_format("%[%s%s%]", main.error.to.stream, main.error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial, main.error.notable);
+    fl_print_format("%[' parameter.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+    funlockfile(main.error.to.stream);
   }
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
@@ -31,10 +34,13 @@ extern "C" {
       return;
     }
 
-    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(main.error.to.stream, main.context.set.error, "%sThe parameter '", fll_error_print_error);
-    f_color_print(main.error.to.stream, main.context.set.notable, "%s%s", symbol, parameter);
-    f_color_print(main.error.to.stream, main.context.set.error, "' was specified, but no value was given.%c", f_string_eol_s[0]);
+    flockfile(main.error.to.stream);
+
+    fl_print_format("%c%[%sThe parameter '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+    fl_print_format("%[%S%S%]", main.error.to.stream, main.error.notable, symbol, parameter, main.error.notable);
+    fl_print_format("%[' was specified, but no value was given.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+    funlockfile(main.error.to.stream);
   }
 #endif // _di_fss_extended_write_error_parameter_value_missing_print_
 
@@ -45,10 +51,13 @@ extern "C" {
       return;
     }
 
-    fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-    f_color_print(main.error.to.stream, main.context.set.error, "%sThis standard does not support end of line character '", fll_error_print_error);
-    f_color_print(main.error.to.stream, main.context.set.notable, "\\n");
-    f_color_print(main.error.to.stream, main.context.set.error, "'.%c", f_string_eol_s[0]);
+    flockfile(main.error.to.stream);
+
+    fl_print_format("%c%[%sThis standard does not support end of line character '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+    fl_print_format("%[\\n%]", main.error.to.stream, main.error.notable, main.error.notable);
+    fl_print_format("%[' in objects.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+    funlockfile(main.error.to.stream);
   }
 #endif // _di_fss_extended_write_error_parameter_unsupported_eol_print_
 
@@ -134,7 +143,7 @@ extern "C" {
       }
     }
 
-    f_print_dynamic(output.stream, *buffer);
+    fll_print_dynamic(*buffer, output.stream);
 
     buffer->used = 0;
     return status;

@@ -17,8 +17,11 @@ f_print
 fl_console
 fl_conversion
 fl_fss
+fl_print
 fl_status
+fl_string
 fll_error
 fll_file
 fll_fss
+fll_print
 fll_program

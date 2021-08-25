@@ -30,12 +30,14 @@
 // fll-1 includes
 #include <fll/level_1/console.h>
 #include <fll/level_1/fss_basic_list.h>
+#include <fll/level_1/print.h>
 #include <fll/level_1/status.h>
 #include <fll/level_1/string.h>
 
 // fll-2 includes
 #include <fll/level_2/error.h>
 #include <fll/level_2/fss_status.h>
+#include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
 #ifdef __cplusplus
@@ -144,6 +146,7 @@ extern "C" {
 
     f_file_t output;
     fll_error_print_t error;
+    fll_error_print_t warning;
     f_string_static_t prepend;
 
     f_color_context_t context;
@@ -156,6 +159,7 @@ extern "C" {
       F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
+      macro_fll_error_print_t_initialize_warning(), \
       f_string_static_t_initialize, \
       f_color_context_t_initialize, \
     }

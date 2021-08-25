@@ -20,7 +20,7 @@ build_compiler gcc
 build_indexer ar
 build_language c
 build_libraries -lc
-build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_program -lfl_console -lfl_conversion -lfl_directory -lfl_fss -lfl_status -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_console -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_status -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_string -lf_type_array -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 build_sources_library fss_embedded_list_write.c private-common.c private-fss_embedded_list_write.c
@@ -51,7 +51,7 @@ defines_all
 defines_static
 defines_shared
 
-flags_all -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
+flags_all -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-logical-op-parentheses -Wno-parentheses
 flags_shared
 flags_static
 flags_library -fPIC

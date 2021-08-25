@@ -636,9 +636,8 @@ extern "C" {
           else {
             range.stop = data->contents.array[at].array[0].stop;
 
-            //f_print_except_in_dynamic_partial(main->output.stream, data->buffer, range, delimits_content, data->comments);
-            //f_print_character(f_string_eol_s[0], main->output.stream);
-            fl_print_format("%/:;Q%c", main->output.stream, data->buffer, range, delimits_content, data->comments, f_string_eol_s[0]);
+            f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.stream);
+            f_print_character(f_string_eol_s[0], main->output.stream);
           }
 
           funlockfile(main->output.stream);
