@@ -6,6 +6,9 @@
  * Licenses: lgplv2.1
  *
  * Some console input/output commands.
+ *
+ * @todo It may be a good idea to provide a standard parameter process process disable sequence.
+ *       This does not yet exist, so "--help" would always be a parameter, but would if there was something like "-/ --help" where this help does not designate the help option?
  */
 #ifndef _F_console_h
 #define _F_console_h

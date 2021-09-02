@@ -137,6 +137,8 @@ extern "C" {
         console_short = f_console_none;
       }
 
+      found = F_false;
+
       if (console_short != f_console_none) {
 
         // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
@@ -144,9 +146,7 @@ extern "C" {
 
           for (i = 0; i < parameters.used; ++i) {
 
-            if (parameters.parameter[i].type != console_type) {
-              continue;
-            }
+            if (parameters.parameter[i].type != console_type) continue;
 
             if (result == console_short) {
               if (!parameters.parameter[i].symbol_short) continue;
@@ -216,6 +216,8 @@ extern "C" {
               return status;
             }
 
+            found = F_true;
+
             parameters.parameter[i].locations.array[parameters.parameter[i].locations.used++] = location;
 
             parameters.parameter[i].result = f_console_result_found;
@@ -253,8 +255,6 @@ extern "C" {
         } // while
       }
       else {
-        found = F_false;
-
         for (i = 0; i < parameters.used; ++i) {
 
           if (parameters.parameter[i].type != f_console_type_other) continue;
@@ -305,20 +305,21 @@ extern "C" {
           found = F_true;
           break;
         } // for
+      }
 
-        if (!found) {
+      if (!found) {
 
-          // populate list of remaining parameters.parameter not associated with anything.
-          if (remaining->used == remaining->size) {
-            macro_f_memory_structure_increment(status, (*remaining), 1, f_memory_default_allocation_small, macro_f_array_lengths_t_resize, F_array_too_large);
-            if (F_status_is_error(status)) {
-              macro_f_array_lengths_t_delete_simple(needs_value);
-              return status;
-            }
+        // populate list of remaining parameters.parameter not associated with anything.
+        if (remaining->used == remaining->size) {
+          macro_f_memory_structure_increment(status, (*remaining), 1, f_memory_default_allocation_small, macro_f_array_lengths_t_resize, F_array_too_large);
+
+          if (F_status_is_error(status)) {
+            macro_f_array_lengths_t_delete_simple(needs_value);
+            return status;
           }
-
-          remaining->array[remaining->used++] = location;
         }
+
+        remaining->array[remaining->used++] = location;
       }
 
       ++location;
