@@ -463,7 +463,11 @@ extern "C" {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_extended_list_read_data_option_columns | fss_extended_list_read_data_option_total)) {
+        flockfile(main->output.stream);
+
         fss_extended_list_read_print_zero(main);
+
+        funlockfile(main->output.stream);
       }
 
       return F_none;
@@ -488,16 +492,20 @@ extern "C" {
           if (status == F_success) return F_none;
         }
         else if (data->option & fss_extended_list_read_data_option_columns) {
-          fprintf(main->output.stream, "%llu%c", data->contents.array[i].used, f_string_eol_s[0]);
+          fll_print_format("%ul%c", main->output.stream, data->contents.array[i].used, f_string_eol_s[0]);
         }
         else if (data->option & fss_extended_list_read_data_option_total) {
           if ((data->option & fss_extended_list_read_data_option_object) && !(data->option & fss_extended_list_read_data_option_content)) {
+            flockfile(main->output.stream);
+
             if (data->contents.array[i].used) {
               fss_extended_list_read_print_one(main);
             }
             else {
               fss_extended_list_read_print_zero(main);
             }
+
+            funlockfile(main->output.stream);
           }
           else {
             f_array_length_t total = 0;
@@ -539,7 +547,7 @@ extern "C" {
               }
             } // for
 
-            fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+            fll_print_format("%ul%c", main->output.stream, total, f_string_eol_s[0]);
           }
         }
         else {
@@ -553,7 +561,11 @@ extern "C" {
     } // for
 
     if (data->option & fss_extended_list_read_data_option_total) {
+      flockfile(main->output.stream);
+
       fss_extended_list_read_print_zero(main);
+
+      funlockfile(main->output.stream);
     }
 
     return F_none;
@@ -564,7 +576,11 @@ extern "C" {
   f_status_t fss_extended_list_read_process_columns(fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data, bool names[]) {
 
     if (!(data->option & fss_extended_list_read_data_option_content)) {
+      flockfile(main->output.stream);
+
       fss_extended_list_read_print_zero(main);
+
+      funlockfile(main->output.stream);
 
       return F_none;
     }
@@ -580,7 +596,7 @@ extern "C" {
       }
     } // for
 
-    fprintf(main->output.stream, "%llu%c", max, f_string_eol_s[0]);
+    fll_print_format("%ul%c", main->output.stream, max, f_string_eol_s[0]);
 
     return F_none;
   }
@@ -590,13 +606,18 @@ extern "C" {
   f_status_t fss_extended_list_read_process_at_line(const f_array_length_t at, const f_array_lengths_t delimits_object, const f_array_lengths_t delimits_content, fss_extended_list_read_main_t * const main, fss_extended_list_read_data_t *data, f_array_length_t *line) {
 
     if (data->option & fss_extended_list_read_data_option_object) {
+
       if (*line == data->line) {
+        flockfile(main->output.stream);
+
         if (data->option & fss_extended_list_read_data_option_total) {
           fss_extended_list_read_print_one(main);
         }
         else {
           fss_extended_list_read_print_at_object(main, data, at, delimits_object);
         }
+
+        funlockfile(main->output.stream);
 
         return F_success;
       }
@@ -627,12 +648,16 @@ extern "C" {
           if (*line == data->line) {
             range.stop = i;
 
+            flockfile(main->output.stream);
+
             if (data->option & fss_extended_list_read_data_option_total) {
               fss_extended_list_read_print_one(main);
             }
             else {
               f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.stream);
             }
+
+            funlockfile(main->output.stream);
 
             return F_success;
           }
@@ -650,6 +675,8 @@ extern "C" {
         ++(*line);
 
         if (*line == data->line) {
+          flockfile(main->output.stream);
+
           if (data->option & fss_extended_list_read_data_option_total) {
             fss_extended_list_read_print_one(main);
           }
@@ -657,8 +684,10 @@ extern "C" {
             range.stop = data->contents.array[at].array[0].stop;
 
             f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.stream);
-            fprintf(main->output.stream, "%c", f_string_eol_s[0]);
+            f_print_character(f_string_eol_s[0], main->output.stream);
           }
+
+          funlockfile(main->output.stream);
 
           return F_success;
         }
@@ -828,6 +857,8 @@ extern "C" {
       }
     } // for
 
+    flockfile(main->output.stream);
+
     if (data->option & fss_extended_list_read_data_option_line) {
       if (data->line < total) {
         fss_extended_list_read_print_one(main);
@@ -837,8 +868,10 @@ extern "C" {
       }
     }
     else {
-      fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+      fl_print_format("%ul%c", main->output.stream, total, f_string_eol_s[0]);
     }
+
+    funlockfile(main->output.stream);
 
     return F_none;
   }

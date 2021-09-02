@@ -357,21 +357,33 @@ extern "C" {
 
     if (data->option & fss_extended_read_data_option_select) {
       if (data->option & fss_extended_read_data_option_object) {
+        flockfile(main->output.stream);
+
         fss_extended_read_print_one(main);
+
+        funlockfile(main->output.stream);
 
         return F_success;
       }
 
       if (data->select < data->contents.array[at].used) {
         if (data->contents.array[at].array[data->select].start <= data->contents.array[at].array[data->select].stop || (data->option & fss_extended_read_data_option_empty)) {
+          flockfile(main->output.stream);
+
           fss_extended_read_print_one(main);
+
+          funlockfile(main->output.stream);
 
           return F_success;
         }
       }
     }
     else if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_empty)) {
+      flockfile(main->output.stream);
+
       fss_extended_read_print_one(main);
+
+      funlockfile(main->output.stream);
 
       return F_success;
     }
@@ -379,7 +391,11 @@ extern "C" {
       for (f_array_length_t j = 0; j < data->contents.array[at].used; ++j) {
 
         if (data->contents.array[at].array[j].start <= data->contents.array[at].array[j].stop) {
+          flockfile(main->output.stream);
+
           fss_extended_read_print_one(main);
+
+          funlockfile(main->output.stream);
 
           return F_success;
         }
@@ -428,7 +444,6 @@ extern "C" {
       f_print_character(fss_extended_read_pipe_content_end, main->output.stream);
     }
     else {
-      fprintf(main->output.stream, "%c", f_fss_eol);
       f_print_character(f_fss_eol, main->output.stream);
     }
   }
@@ -491,7 +506,11 @@ extern "C" {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_extended_read_data_option_columns | fss_extended_read_data_option_total)) {
+        flockfile(main->output.stream);
+
         fss_extended_read_print_zero(main);
+
+        funlockfile(main->output.stream);
       }
 
       return F_none;
@@ -501,7 +520,11 @@ extern "C" {
     if (data->option & fss_extended_read_data_option_line) {
       if (data->line) {
         if (data->option & fss_extended_read_data_option_total) {
+          flockfile(main->output.stream);
+
           fss_extended_read_print_zero(main);
+
+          funlockfile(main->output.stream);
         }
 
         return F_none;
@@ -534,7 +557,7 @@ extern "C" {
           }
         }
         else if (data->option & fss_extended_read_data_option_columns) {
-          fprintf(main->output.stream, "%llu%c", data->contents.array[i].used, f_string_eol_s[0]);
+          fll_print_format("%ul%c", main->output.stream, data->contents.array[i].used, f_string_eol_s[0]);
         }
         else if (data->option & fss_extended_read_data_option_total) {
           if (fss_extended_read_print_at_total(i, main, data) == F_none) {
@@ -552,7 +575,11 @@ extern "C" {
     } // for
 
     if (data->option & fss_extended_read_data_option_total) {
+      flockfile(main->output.stream);
+
       fss_extended_read_print_zero(main);
+
+      funlockfile(main->output.stream);
     }
 
     return F_none;
@@ -563,7 +590,11 @@ extern "C" {
   f_status_t fss_extended_read_process_columns(fss_extended_read_main_t * const main, fss_extended_read_data_t *data, bool names[]) {
 
     if (!(data->option & fss_extended_read_data_option_content)) {
+      flockfile(main->output.stream);
+
       fss_extended_read_print_zero(main);
+
+      funlockfile(main->output.stream);
 
       return F_none;
     }
@@ -579,7 +610,7 @@ extern "C" {
       }
     } // for
 
-    fprintf(main->output.stream, "%llu%c", max, f_string_eol_s[0]);
+    fll_print_format("%ul%c", main->output.stream, max, f_string_eol_s[0]);
 
     return F_none;
   }
@@ -602,7 +633,11 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (data->option & fss_extended_read_data_option_empty) {
             if (line == data->line) {
+              flockfile(main->output.stream);
+
               fss_extended_read_print_set_end(main);
+
+              funlockfile(main->output.stream);
 
               break;
             }
@@ -769,6 +804,8 @@ extern "C" {
       } // for
     }
 
+    flockfile(main->output.stream);
+
     if (data->option & fss_extended_read_data_option_line) {
       if (data->line < total) {
         fss_extended_read_print_one(main);
@@ -778,52 +815,14 @@ extern "C" {
       }
     }
     else {
-      fprintf(main->output.stream, "%llu%c", total, f_string_eol_s[0]);
+      fl_print_format("%ul%c", main->output.stream, total, f_string_eol_s[0]);
     }
+
+    funlockfile(main->output.stream);
 
     return F_none;
   }
 #endif // _di_fss_extended_read_process_total_
-
-
-
-#ifndef _di_fss_extended_read_process_total_content_
-  f_status_t fss_extended_read_process_total_content(const f_array_length_t at, fss_extended_read_main_t * const main, fss_extended_read_data_t *data, f_array_length_t *total) {
-
-    if (data->option & fss_extended_read_data_option_select) {
-      if (data->option & fss_extended_read_data_option_object) {
-        fss_extended_read_print_one(main);
-
-        return F_success;
-      }
-
-      if (data->select < data->contents.array[at].used) {
-        if (data->contents.array[at].array[data->select].start <= data->contents.array[at].array[data->select].stop || (data->option & fss_extended_read_data_option_empty)) {
-          fss_extended_read_print_one(main);
-
-          return F_success;
-        }
-      }
-    }
-    else if ((data->option & fss_extended_read_data_option_object) || (data->option & fss_extended_read_data_option_empty)) {
-      fss_extended_read_print_one(main);
-
-      return F_success;
-    }
-    else if (data->contents.array[at].used) {
-      for (f_array_length_t j = 0; j < data->contents.array[at].used; ++j) {
-
-        if (data->contents.array[at].array[j].start <= data->contents.array[at].array[j].stop) {
-          fss_extended_read_print_one(main);
-
-          return F_success;
-        }
-      } // for
-    }
-
-    return F_none;
-  }
-#endif // _di_fss_extended_read_process_total_content_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -495,7 +495,7 @@ extern "C" {
           ++total;
         } // for
 
-        fl_print_format("%lu%c", main->output.stream, total, f_string_eol_s[0]);
+        fll_print_format("%lu%c", main->output.stream, total, f_string_eol_s[0]);
 
         return F_none;
       }

@@ -446,7 +446,7 @@ extern "C" {
             // Skip past empty files.
             if (!main->quantity.total) {
               if (main->parameters[fss_embedded_list_read_parameter_total].result == f_console_result_found) {
-                fprintf(main->output.stream, "0%c", f_string_eol_s[0]);
+                fll_print_format("0%c", main->output.stream, f_string_eol_s[0]);
               }
 
               f_file_stream_close(F_true, &file);
@@ -487,7 +487,7 @@ extern "C" {
       macro_f_fss_comments_t_delete_simple(comments);
     }
     else {
-      fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
+      fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 

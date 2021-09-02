@@ -595,7 +595,7 @@ extern "C" {
       fss_extended_read_data_delete_simple(&data);
     }
     else {
-      fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
+      fll_print_format("%c%[%sYou failed to specify one or more files.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context, f_string_eol_s[0]);
       status = F_status_set_error(F_parameter);
     }
 
