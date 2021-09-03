@@ -120,44 +120,44 @@ extern "C" {
 
     if (main->parameters[status_code_parameter_is_error].result == f_console_result_found) {
       if (main->parameters[status_code_parameter_is_warning].result == f_console_result_found) {
-        flockfile(main->output.stream);
+        flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_error, main->error.notable);
-        fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
         fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_warning, main->error.notable);
         fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->error.to.stream);
 
         status_code_main_delete(main);
         return F_status_set_error(status);
       }
       else if (main->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-        flockfile(main->output.stream);
+        flockfile(main->error.to.stream);
 
         fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_error, main->error.notable);
-        fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
         fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_fine, main->error.notable);
         fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->error.to.stream);
 
         status_code_main_delete(main);
         return F_status_set_error(status);
       }
     }
     else if (main->parameters[status_code_parameter_is_warning].result == f_console_result_found && main->parameters[status_code_parameter_is_fine].result == f_console_result_found) {
-      flockfile(main->output.stream);
+      flockfile(main->error.to.stream);
 
       fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
       fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_warning, main->error.notable);
-      fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+      fl_print_format("%[' cannot be used with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
       fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_is_fine, main->error.notable);
       fl_print_format("%['.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
-      funlockfile(main->output.stream);
+      funlockfile(main->error.to.stream);
 
       status_code_main_delete(main);
       return F_status_set_error(status);
@@ -198,6 +198,8 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        flockfile(main->output.stream);
+
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
           status2 = status_code_process_number(*main, arguments.argv[main->remaining.array[i]]);
@@ -206,6 +208,8 @@ extern "C" {
             status = status2;
           }
         } // for
+
+        funlockfile(main->output.stream);
       }
     }
     else {
@@ -214,6 +218,8 @@ extern "C" {
       }
 
       if (main->remaining.used > 0) {
+        flockfile(main->output.stream);
+
         for (f_array_length_t i = 0; i < main->remaining.used; ++i) {
 
           status2 = status_code_process_normal(*main, arguments.argv[main->remaining.array[i]]);
@@ -222,6 +228,8 @@ extern "C" {
             status = status2;
           }
         } // for
+
+        funlockfile(main->output.stream);
       }
     }
 

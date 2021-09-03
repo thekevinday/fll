@@ -9,6 +9,8 @@ extern "C" {
 #ifndef _di_fss_identify_print_help_
   f_status_t fss_identify_print_help(const f_file_t output, const f_color_context_t context) {
 
+    flockfile(output.stream);
+
     fll_program_print_help_header(output, context, fss_identify_name_long, fss_identify_version);
 
     fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -21,12 +23,12 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, fss_identify_short_content, fss_identify_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier content (the 4-digit hexidecimal type code).");
     fll_program_print_help_option(output, context, fss_identify_short_object, fss_identify_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Identifier object (the name).");
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], output.stream);
 
     fll_program_print_help_option(output, context, fss_identify_short_line, fss_identify_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the Identifier at the given line.");
     fll_program_print_help_option(output, context, fss_identify_short_name, fss_identify_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
@@ -34,38 +36,22 @@ extern "C" {
 
     fll_program_print_help_usage(output, context, fss_identify_name, "filename(s)");
 
-    fprintf(output.stream, "  The ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_line);
-    fprintf(output.stream, " parameter refers to the output lines and not the lines in a given file.%c", f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%] parameter refers to the output lines and not the lines in a given file.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  If neither the %[%s%s%] nor", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
+    fl_print_format(" %[%s%s%] are specified, then the default behavior is to print both.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  If neither the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
-    fprintf(output.stream, " nor ", f_string_eol_s[0]);
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
-    fprintf(output.stream, " are specified, then the default behavior is to print both.%c", f_string_eol_s[0]);
+    fl_print_format("  When specifying the %[%s%s%] parameter, neither the", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_total, context.set.notable);
+    fl_print_format(" %[%s%s%] nor the", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter may be specified.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    fl_print_format("  An FSS file is identified by the following format: '%[# Object-Content%]'", output.stream, context.set.notable, context.set.notable);
+    fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  Whitespace must follow this pound character.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  There may be multiple Object and Content pairs, separated by whitspace, such as: \"# fss-0002 fss-0000 iki-0002\".%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fprintf(output.stream, "  When specifying the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
-    fprintf(output.stream, " parameter, neither the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
-    fprintf(output.stream, " nor the ");
-    f_color_print(output.stream, context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
-    fprintf(output.stream, " parameter may be specified.%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "  An FSS file is identified by the following format: '");
-    f_color_print(output.stream, context.set.notable, "# Object-Content");
-    fprintf(output.stream, "' where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  Whitespace must follow this pound character.%c", f_string_eol_s[0]);
-    fprintf(output.stream, "  There may be multiple Object and Content pairs, separated by whitspace, such as: \"# fss-0002 fss-0000 iki-0002\".%c", f_string_eol_s[0]);
-
-    fprintf(output.stream, "%c", f_string_eol_s[0]);
+    funlockfile(output.stream);
 
     return F_none;
   }
@@ -100,7 +86,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-            fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+            fll_print_character(f_string_eol_s[0], main->error.to.stream);
           }
 
           fss_identify_main_delete(main);
@@ -125,15 +111,19 @@ extern "C" {
 
         if (choice == fss_identify_parameter_verbosity_quiet) {
           main->error.verbosity = f_console_verbosity_quiet;
+          main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_identify_parameter_verbosity_normal) {
           main->error.verbosity = f_console_verbosity_normal;
+          main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_identify_parameter_verbosity_verbose) {
           main->error.verbosity = f_console_verbosity_verbose;
+          main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_identify_parameter_verbosity_debug) {
           main->error.verbosity = f_console_verbosity_debug;
+          main->warning.verbosity = f_console_verbosity_debug;
         }
       }
 
@@ -160,9 +150,13 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[fss_identify_parameter_line].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_line);
-        f_color_print(main->error.to.stream, main->context.set.error, " requires a positive number.%c", f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_line, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
 
         status = F_status_set_error(F_parameter);
       }
@@ -180,20 +174,28 @@ extern "C" {
 
     if (F_status_is_error_not(status) && main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
       if (main->parameters[fss_identify_parameter_object].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the ", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_object);
-        f_color_print(main->error.to.stream, main->context.set.error, " parameter with the ");
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
-        f_color_print(main->error.to.stream, main->context.set.error, " parameter.%c", f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_object, main->error.notable);
+        fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_total, main->error.notable);
+        fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
 
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters[fss_identify_parameter_content].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sCannot specify the ", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_content);
-        f_color_print(main->error.to.stream, main->context.set.error, " parameter with the ");
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_total);
-        f_color_print(main->error.to.stream, main->context.set.error, " parameter.%c", f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_content, main->error.notable);
+        fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_total, main->error.notable);
+        fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
 
         status = F_status_set_error(F_parameter);
       }
@@ -201,9 +203,13 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[fss_identify_parameter_name].result == f_console_result_found) {
-        f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
-        f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
-        f_color_print(main->error.to.stream, main->context.set.error, " requires a string.%c", f_string_eol_s[0]);
+        flockfile(main->error.to.stream);
+
+        fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name, main->error.notable);
+        fl_print_format("%[' requires a string.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+        funlockfile(main->error.to.stream);
 
         status = F_status_set_error(F_parameter);
       }
@@ -213,9 +219,13 @@ extern "C" {
         const f_string_range_t range = macro_f_string_range_t_initialize(length);
 
         if (length == 0) {
-          f_color_print(main->error.to.stream, main->context.set.error, "%sThe parameter ", fll_error_print_error);
-          f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
-          f_color_print(main->error.to.stream, main->context.set.error, " does not allow zero length strings.%c", f_string_eol_s[0]);
+          flockfile(main->error.to.stream);
+
+          fl_print_format("%c%[%sThe parameter '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name, main->error.notable);
+          fl_print_format("%[' does not allow zero length strings.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+          funlockfile(main->error.to.stream);
 
           status = F_status_set_error(F_parameter);
         }
@@ -239,11 +249,15 @@ extern "C" {
               break;
             }
             else if (status == F_false) {
-              f_color_print(main->error.to.stream, main->context.set.error, "%sThe value '", fll_error_print_error);
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s", arguments.argv[index]);
-              f_color_print(main->error.to.stream, main->context.set.error, "' for the parameter ", fll_error_print_error);
-              f_color_print(main->error.to.stream, main->context.set.notable, "%s%s", f_console_symbol_long_enable_s, fss_identify_long_name);
-              f_color_print(main->error.to.stream, main->context.set.error, " may only contain word characters.%c", f_string_eol_s[0]);
+              flockfile(main->error.to.stream);
+
+              fl_print_format("%c%[%sThe value '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
+              fl_print_format("%[%S%]", main->error.to.stream, main->error.notable, arguments.argv[index], main->error.notable);
+              fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
+              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name, main->error.notable);
+              fl_print_format("%[' may only contain word characters.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
+
+              funlockfile(main->error.to.stream);
 
               status = F_status_set_error(F_parameter);
 
@@ -307,14 +321,14 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
-        fprintf(main->output.stream, "%llu%c", data.total, f_string_eol_s[0]);
+        fll_print_format("%ul%c", main->output.stream, data.total, f_string_eol_s[0]);
       }
     }
 
     // ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->error.verbosity != f_console_verbosity_quiet) {
       if (F_status_is_error(status)) {
-        fprintf(main->error.to.stream, "%c", f_string_eol_s[0]);
+        fll_print_character(f_string_eol_s[0], main->error.to.stream);
       }
     }
 

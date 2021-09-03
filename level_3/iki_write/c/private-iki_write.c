@@ -11,10 +11,13 @@ extern "C" {
 
     if (!object.used) {
       if (main.error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(main.error.to.stream, main.context.set.error, "%sThe object is missing, it must not have a length of ", fll_error_print_error);
-        f_color_print(main.error.to.stream, main.context.set.notable, "0");
-        f_color_print(main.error.to.stream, main.context.set.error, ".%c", f_string_eol_s[0]);
+        flockfile(main.error.to.stream);
+
+        fl_print_format("%c%[%sThe object is missing, it must not have a length of %]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+        fl_print_format("%[0%]", main.error.to.stream, main.error.notable, main.error.notable);
+        fl_print_format("%[.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
+
+        funlockfile(main.error.to.stream);
       }
 
       return F_status_set_error(F_failure);
@@ -24,14 +27,13 @@ extern "C" {
 
     if (status == F_false) {
       if (main.error.verbosity != f_console_verbosity_quiet) {
-        fprintf(main.error.to.stream, "%c", f_string_eol_s[0]);
-        f_color_print(main.error.to.stream, main.context.set.error, "%sThe object '", fll_error_print_error);
+        flockfile(main.error.to.stream);
 
-        f_color_print_code(main.error.to.stream, main.context.notable);
-        f_print_dynamic(main.error.to.stream, object);
-        f_color_print_code(main.error.to.stream, main.context.reset);
+        fl_print_format("%c%[%sThe object '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
+        fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, object, main.error.notable);
+        fl_print_format("%[' is not a valid IKI object.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 
-        f_color_print(main.error.to.stream, main.context.set.error, "' is not a valid IKI object.%c", f_string_eol_s[0]);
+        funlockfile(main.error.to.stream);
       }
 
       return F_status_set_error(F_failure);
@@ -52,7 +54,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fprintf(output.stream, "%s%c%c%s%c", object.string, f_iki_syntax_separator, quote, escaped->string, quote);
+    fl_print_format("%Q%c%c%Q%c", output.stream, object, f_iki_syntax_separator, quote, *escaped, quote);
 
     return F_none;
   }

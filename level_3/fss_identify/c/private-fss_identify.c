@@ -55,25 +55,23 @@ extern "C" {
 #ifndef _di_fss_identify_print_
   void fss_identify_print(const fss_identify_main_t main, f_fll_id_t id) {
 
+    flockfile(main.output.stream);
+
     if (main.parameters[fss_identify_parameter_object].result == f_console_result_found || main.parameters[fss_identify_parameter_content].result != f_console_result_found) {
-      f_string_static_t part = f_string_static_t_initialize;
-
-      part.string = id.name;
-      part.used = id.used;
-      part.size = part.used;
-
-      f_print_dynamic(main.output.stream, part);
+      f_print(id.name, id.used, main.output.stream);
 
       if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
-        fprintf(main.output.stream, "%c", f_fss_type_header_part5);
+        f_print_character(f_fss_type_header_part5, main.output.stream);
       }
     }
 
     if (main.parameters[fss_identify_parameter_object].result != f_console_result_found || main.parameters[fss_identify_parameter_content].result == f_console_result_found) {
-      fprintf(main.output.stream, "%04x", id.type);
+      fl_print_format("%04_ui", main.output.stream, id.type);
     }
 
-    fprintf(main.output.stream, "%c", f_string_eol_s[0]);
+    f_print_character(f_string_eol_s[0], main.output.stream);
+
+    funlockfile(main.output.stream);
   }
 #endif // _di_fss_identify_print_
 

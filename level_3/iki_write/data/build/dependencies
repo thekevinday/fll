@@ -13,6 +13,9 @@ f_pipe
 f_print
 fl_console
 fl_iki
+fl_print
+fl_string
 fll_iki
 fll_error
+fll_print
 fll_program
