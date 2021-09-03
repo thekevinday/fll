@@ -8,7 +8,7 @@ extern "C" {
 #if !defined(_di_f_type_statuss_adjust_) || !defined(_di_f_type_statuss_decimate_by_)
   f_status_t private_f_type_statuss_adjust(const f_array_length_t length, f_statuss_t *statuss) {
 
-    const f_status_t status = f_memory_adjust(statuss->size, length, sizeof(f_statuss_t), (void **) & statuss->array);
+    const f_status_t status = f_memory_adjust(statuss->size, length, sizeof(f_status_t), (void **) & statuss->array);
 
     if (F_status_is_error_not(status)) {
       statuss->size = length;
@@ -43,7 +43,7 @@ extern "C" {
 #if !defined(_di_f_type_statuss_resize_) || !defined(_di_f_type_statuss_append_) || !defined(_di_f_type_statuss_decimate_by_) || !defined(_di_f_type_statusss_append_)
   f_status_t private_f_type_statuss_resize(const f_array_length_t length, f_statuss_t *statuss) {
 
-    const f_status_t status = f_memory_resize(statuss->size, length, sizeof(f_statuss_t), (void **) & statuss->array);
+    const f_status_t status = f_memory_resize(statuss->size, length, sizeof(f_status_t), (void **) & statuss->array);
 
     if (F_status_is_error_not(status)) {
       statuss->size = length;
@@ -116,7 +116,7 @@ extern "C" {
 #if !defined(_di_f_type_states_adjust_) || !defined(_di_f_type_states_decimate_by_)
   f_status_t private_f_type_states_adjust(const f_array_length_t length, f_states_t *states) {
 
-    const f_status_t status = f_memory_adjust(states->size, length, sizeof(f_states_t), (void **) & states->array);
+    const f_status_t status = f_memory_adjust(states->size, length, sizeof(f_state_t), (void **) & states->array);
 
     if (F_status_is_error_not(status)) {
       states->size = length;
@@ -151,7 +151,7 @@ extern "C" {
 #if !defined(_di_f_type_states_resize_) || !defined(_di_f_type_states_append_) || !defined(_di_f_type_states_decimate_by_) || !defined(_di_f_type_statess_append_)
   f_status_t private_f_type_states_resize(const f_array_length_t length, f_states_t *states) {
 
-    const f_status_t status = f_memory_resize(states->size, length, sizeof(f_states_t), (void **) & states->array);
+    const f_status_t status = f_memory_resize(states->size, length, sizeof(f_state_t), (void **) & states->array);
 
     if (F_status_is_error_not(status)) {
       states->size = length;
@@ -224,7 +224,7 @@ extern "C" {
 #if !defined(_di_f_type_cells_adjust_) || !defined(_di_f_type_cells_decimate_by_)
   f_status_t private_f_type_cells_adjust(const f_array_length_t length, f_cells_t *cells) {
 
-    const f_status_t status = f_memory_adjust(cells->size, length, sizeof(f_cells_t), (void **) & cells->array);
+    const f_status_t status = f_memory_adjust(cells->size, length, sizeof(f_cell_t), (void **) & cells->array);
 
     if (F_status_is_error_not(status)) {
       cells->size = length;
@@ -259,7 +259,7 @@ extern "C" {
 #if !defined(_di_f_type_cells_resize_) || !defined(_di_f_type_cells_append_) || !defined(_di_f_type_cells_decimate_by_) || !defined(_di_f_type_cellss_append_)
   f_status_t private_f_type_cells_resize(const f_array_length_t length, f_cells_t *cells) {
 
-    const f_status_t status = f_memory_resize(cells->size, length, sizeof(f_cells_t), (void **) & cells->array);
+    const f_status_t status = f_memory_resize(cells->size, length, sizeof(f_cell_t), (void **) & cells->array);
 
     if (F_status_is_error_not(status)) {
       cells->size = length;
@@ -332,7 +332,7 @@ extern "C" {
 #if !defined(_di_f_type_fll_ids_adjust_) || !defined(_di_f_type_fll_ids_decimate_by_)
   f_status_t private_f_type_fll_ids_adjust(const f_array_length_t length, f_fll_ids_t *ids) {
 
-    const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_ids_t), (void **) & ids->array);
+    const f_status_t status = f_memory_adjust(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
 
     if (F_status_is_error_not(status)) {
       ids->size = length;
@@ -367,7 +367,7 @@ extern "C" {
 #if !defined(_di_f_type_fll_ids_resize_) || !defined(_di_f_type_fll_ids_append_) || !defined(_di_f_type_fll_ids_decimate_by_) || !defined(_di_f_type_fll_idss_append_)
   f_status_t private_f_type_fll_ids_resize(const f_array_length_t length, f_fll_ids_t *ids) {
 
-    const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_ids_t), (void **) & ids->array);
+    const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_fll_id_t), (void **) & ids->array);
 
     if (F_status_is_error_not(status)) {
       ids->size = length;
@@ -440,7 +440,7 @@ extern "C" {
 #if !defined(_di_f_type_array_lengths_adjust_) || !defined(_di_f_type_array_lengths_decimate_by_)
   f_status_t private_f_type_array_lengths_adjust(const f_array_length_t length, f_array_lengths_t *array_lengths) {
 
-    const f_status_t status = f_memory_adjust(array_lengths->size, length, sizeof(f_array_lengths_t), (void **) & array_lengths->array);
+    const f_status_t status = f_memory_adjust(array_lengths->size, length, sizeof(f_array_length_t), (void **) & array_lengths->array);
 
     if (F_status_is_error_not(status)) {
       array_lengths->size = length;
@@ -475,7 +475,7 @@ extern "C" {
 #if !defined(_di_f_type_array_lengths_resize_) || !defined(_di_f_type_array_lengths_append_) || !defined(_di_f_type_array_lengths_decimate_by_) || !defined(_di_f_type_array_lengthss_append_)
   f_status_t private_f_type_array_lengths_resize(const f_array_length_t length, f_array_lengths_t *lengths) {
 
-    const f_status_t status = f_memory_resize(lengths->size, length, sizeof(f_array_lengths_t), (void **) & lengths->array);
+    const f_status_t status = f_memory_resize(lengths->size, length, sizeof(f_array_length_t), (void **) & lengths->array);
 
     if (F_status_is_error_not(status)) {
       lengths->size = length;
@@ -548,7 +548,7 @@ extern "C" {
 #if !defined(_di_f_type_int8s_adjust_) || !defined(_di_f_type_int8s_decimate_by_)
   f_status_t private_f_type_int8s_adjust(const f_array_length_t length, f_int8s_t *int8s) {
 
-    const f_status_t status = f_memory_adjust(int8s->size, length, sizeof(f_int8s_t), (void **) & int8s->array);
+    const f_status_t status = f_memory_adjust(int8s->size, length, sizeof(int8_t), (void **) & int8s->array);
 
     if (F_status_is_error_not(status)) {
       int8s->size = length;
@@ -583,7 +583,7 @@ extern "C" {
 #if !defined(_di_f_type_int8s_resize_) || !defined(_di_f_type_int8s_append_) || !defined(_di_f_type_int8s_decimate_by_) || !defined(_di_f_type_int8ss_append_)
   f_status_t private_f_type_int8s_resize(const f_array_length_t length, f_int8s_t *int8s) {
 
-    const f_status_t status = f_memory_resize(int8s->size, length, sizeof(f_int8s_t), (void **) & int8s->array);
+    const f_status_t status = f_memory_resize(int8s->size, length, sizeof(int8_t), (void **) & int8s->array);
 
     if (F_status_is_error_not(status)) {
       int8s->size = length;
@@ -656,7 +656,7 @@ extern "C" {
 #if !defined(_di_f_type_uint8s_adjust_) || !defined(_di_f_type_uint8s_decimate_by_)
   f_status_t private_f_type_uint8s_adjust(const f_array_length_t length, f_uint8s_t *uint8s) {
 
-    const f_status_t status = f_memory_adjust(uint8s->size, length, sizeof(f_uint8s_t), (void **) & uint8s->array);
+    const f_status_t status = f_memory_adjust(uint8s->size, length, sizeof(uint8_t), (void **) & uint8s->array);
 
     if (F_status_is_error_not(status)) {
       uint8s->size = length;
@@ -691,7 +691,7 @@ extern "C" {
 #if !defined(_di_f_type_uint8s_resize_) || !defined(_di_f_type_uint8s_append_) || !defined(_di_f_type_uint8s_decimate_by_) || !defined(_di_f_type_uint8ss_append_)
   f_status_t private_f_type_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s) {
 
-    const f_status_t status = f_memory_resize(uint8s->size, length, sizeof(f_uint8s_t), (void **) & uint8s->array);
+    const f_status_t status = f_memory_resize(uint8s->size, length, sizeof(uint8_t), (void **) & uint8s->array);
 
     if (F_status_is_error_not(status)) {
       uint8s->size = length;
@@ -764,7 +764,7 @@ extern "C" {
 #if !defined(_di_f_type_int16s_adjust_) || !defined(_di_f_type_int16s_decimate_by_)
   f_status_t private_f_type_int16s_adjust(const f_array_length_t length, f_int16s_t *int16s) {
 
-    const f_status_t status = f_memory_adjust(int16s->size, length, sizeof(f_int16s_t), (void **) & int16s->array);
+    const f_status_t status = f_memory_adjust(int16s->size, length, sizeof(int16_t), (void **) & int16s->array);
 
     if (F_status_is_error_not(status)) {
       int16s->size = length;
@@ -799,7 +799,7 @@ extern "C" {
 #if !defined(_di_f_type_int16s_resize_) || !defined(_di_f_type_int16s_append_) || !defined(_di_f_type_int16s_decimate_by_) || !defined(_di_f_type_int16ss_append_)
   f_status_t private_f_type_int16s_resize(const f_array_length_t length, f_int16s_t *int16s) {
 
-    const f_status_t status = f_memory_resize(int16s->size, length, sizeof(f_int16s_t), (void **) & int16s->array);
+    const f_status_t status = f_memory_resize(int16s->size, length, sizeof(int16_t), (void **) & int16s->array);
 
     if (F_status_is_error_not(status)) {
       int16s->size = length;
@@ -872,7 +872,7 @@ extern "C" {
 #if !defined(_di_f_type_uint16s_adjust_) || !defined(_di_f_type_uint16s_decimate_by_)
   f_status_t private_f_type_uint16s_adjust(const f_array_length_t length, f_uint16s_t *uint16s) {
 
-    const f_status_t status = f_memory_adjust(uint16s->size, length, sizeof(f_uint16s_t), (void **) & uint16s->array);
+    const f_status_t status = f_memory_adjust(uint16s->size, length, sizeof(uint16_t), (void **) & uint16s->array);
 
     if (F_status_is_error_not(status)) {
       uint16s->size = length;
@@ -907,7 +907,7 @@ extern "C" {
 #if !defined(_di_f_type_uint16s_resize_) || !defined(_di_f_type_uint16s_append_) || !defined(_di_f_type_uint16s_decimate_by_) || !defined(_di_f_type_uint16ss_append_)
   f_status_t private_f_type_uint16s_resize(const f_array_length_t length, f_uint16s_t *uint16s) {
 
-    const f_status_t status = f_memory_resize(uint16s->size, length, sizeof(f_uint16s_t), (void **) & uint16s->array);
+    const f_status_t status = f_memory_resize(uint16s->size, length, sizeof(uint16_t), (void **) & uint16s->array);
 
     if (F_status_is_error_not(status)) {
       uint16s->size = length;
@@ -980,7 +980,7 @@ extern "C" {
 #if !defined(_di_f_type_int32s_adjust_) || !defined(_di_f_type_int32s_decimate_by_)
   f_status_t private_f_type_int32s_adjust(const f_array_length_t length, f_int32s_t *int32s) {
 
-    const f_status_t status = f_memory_adjust(int32s->size, length, sizeof(f_int32s_t), (void **) & int32s->array);
+    const f_status_t status = f_memory_adjust(int32s->size, length, sizeof(int32_t), (void **) & int32s->array);
 
     if (F_status_is_error_not(status)) {
       int32s->size = length;
@@ -1015,7 +1015,7 @@ extern "C" {
 #if !defined(_di_f_type_int32s_resize_) || !defined(_di_f_type_int32s_append_) || !defined(_di_f_type_int32s_decimate_by_) || !defined(_di_f_type_int32ss_append_)
   f_status_t private_f_type_int32s_resize(const f_array_length_t length, f_int32s_t *int32s) {
 
-    const f_status_t status = f_memory_resize(int32s->size, length, sizeof(f_int32s_t), (void **) & int32s->array);
+    const f_status_t status = f_memory_resize(int32s->size, length, sizeof(int32_t), (void **) & int32s->array);
 
     if (F_status_is_error_not(status)) {
       int32s->size = length;
@@ -1088,7 +1088,7 @@ extern "C" {
 #if !defined(_di_f_type_uint32s_adjust_) || !defined(_di_f_type_uint32s_decimate_by_)
   f_status_t private_f_type_uint32s_adjust(const f_array_length_t length, f_uint32s_t *uint32s) {
 
-    const f_status_t status = f_memory_adjust(uint32s->size, length, sizeof(f_uint32s_t), (void **) & uint32s->array);
+    const f_status_t status = f_memory_adjust(uint32s->size, length, sizeof(uint32_t), (void **) & uint32s->array);
 
     if (F_status_is_error_not(status)) {
       uint32s->size = length;
@@ -1123,7 +1123,7 @@ extern "C" {
 #if !defined(_di_f_type_uint32s_resize_) || !defined(_di_f_type_uint32s_append_) || !defined(_di_f_type_uint32s_decimate_by_) || !defined(_di_f_type_uint32ss_append_)
   f_status_t private_f_type_uint32s_resize(const f_array_length_t length, f_uint32s_t *uint32s) {
 
-    const f_status_t status = f_memory_resize(uint32s->size, length, sizeof(f_uint32s_t), (void **) & uint32s->array);
+    const f_status_t status = f_memory_resize(uint32s->size, length, sizeof(uint32_t), (void **) & uint32s->array);
 
     if (F_status_is_error_not(status)) {
       uint32s->size = length;
@@ -1196,7 +1196,7 @@ extern "C" {
 #if !defined(_di_f_type_int64s_adjust_) || !defined(_di_f_type_int64s_decimate_by_)
   f_status_t private_f_type_int64s_adjust(const f_array_length_t length, f_int64s_t *int64s) {
 
-    const f_status_t status = f_memory_adjust(int64s->size, length, sizeof(f_int64s_t), (void **) & int64s->array);
+    const f_status_t status = f_memory_adjust(int64s->size, length, sizeof(int64_t), (void **) & int64s->array);
 
     if (F_status_is_error_not(status)) {
       int64s->size = length;
@@ -1231,7 +1231,7 @@ extern "C" {
 #if !defined(_di_f_type_int64s_resize_) || !defined(_di_f_type_int64s_append_) || !defined(_di_f_type_int64s_decimate_by_) || !defined(_di_f_type_int64ss_append_)
   f_status_t private_f_type_int64s_resize(const f_array_length_t length, f_int64s_t *int64s) {
 
-    const f_status_t status = f_memory_resize(int64s->size, length, sizeof(f_int64s_t), (void **) & int64s->array);
+    const f_status_t status = f_memory_resize(int64s->size, length, sizeof(int64_t), (void **) & int64s->array);
 
     if (F_status_is_error_not(status)) {
       int64s->size = length;
@@ -1304,7 +1304,7 @@ extern "C" {
 #if !defined(_di_f_type_uint64s_adjust_) || !defined(_di_f_type_uint64s_decimate_by_)
   f_status_t private_f_type_uint64s_adjust(const f_array_length_t length, f_uint64s_t *uint64s) {
 
-    const f_status_t status = f_memory_adjust(uint64s->size, length, sizeof(f_uint64s_t), (void **) & uint64s->array);
+    const f_status_t status = f_memory_adjust(uint64s->size, length, sizeof(uint64_t), (void **) & uint64s->array);
 
     if (F_status_is_error_not(status)) {
       uint64s->size = length;
@@ -1339,7 +1339,7 @@ extern "C" {
 #if !defined(_di_f_type_uint64s_resize_) || !defined(_di_f_type_uint64s_append_) || !defined(_di_f_type_uint64s_decimate_by_) || !defined(_di_f_type_uint64ss_append_)
   f_status_t private_f_type_uint64s_resize(const f_array_length_t length, f_uint64s_t *uint64s) {
 
-    const f_status_t status = f_memory_resize(uint64s->size, length, sizeof(f_uint64s_t), (void **) & uint64s->array);
+    const f_status_t status = f_memory_resize(uint64s->size, length, sizeof(uint64_t), (void **) & uint64s->array);
 
     if (F_status_is_error_not(status)) {
       uint64s->size = length;
@@ -1412,7 +1412,7 @@ extern "C" {
 #if !defined(_di_f_type_int128s_adjust_) || !defined(_di_f_type_int128s_decimate_by_)
   f_status_t private_f_type_int128s_adjust(const f_array_length_t length, f_int128s_t *int128s) {
 
-    const f_status_t status = f_memory_adjust(int128s->size, length, sizeof(f_int128s_t), (void **) & int128s->array);
+    const f_status_t status = f_memory_adjust(int128s->size, length, sizeof(f_int128_t), (void **) & int128s->array);
 
     if (F_status_is_error_not(status)) {
       int128s->size = length;
@@ -1447,7 +1447,7 @@ extern "C" {
 #if !defined(_di_f_type_int128s_resize_) || !defined(_di_f_type_int128s_append_) || !defined(_di_f_type_int128s_decimate_by_) || !defined(_di_f_type_int128ss_append_)
   f_status_t private_f_type_int128s_resize(const f_array_length_t length, f_int128s_t *int128s) {
 
-    const f_status_t status = f_memory_resize(int128s->size, length, sizeof(f_int128s_t), (void **) & int128s->array);
+    const f_status_t status = f_memory_resize(int128s->size, length, sizeof(f_int128_t), (void **) & int128s->array);
 
     if (F_status_is_error_not(status)) {
       int128s->size = length;
@@ -1520,7 +1520,7 @@ extern "C" {
 #if !defined(_di_f_type_uint128s_adjust_) || !defined(_di_f_type_uint128s_decimate_by_)
   f_status_t private_f_type_uint128s_adjust(const f_array_length_t length, f_uint128s_t *uint128s) {
 
-    const f_status_t status = f_memory_adjust(uint128s->size, length, sizeof(f_uint128s_t), (void **) & uint128s->array);
+    const f_status_t status = f_memory_adjust(uint128s->size, length, sizeof(f_uint128_t), (void **) & uint128s->array);
 
     if (F_status_is_error_not(status)) {
       uint128s->size = length;
@@ -1555,7 +1555,7 @@ extern "C" {
 #if !defined(_di_f_type_uint128s_resize_) || !defined(_di_f_type_uint128s_append_) || !defined(_di_f_type_uint128s_decimate_by_) || !defined(_di_f_type_uint128ss_append_)
   f_status_t private_f_type_uint128s_resize(const f_array_length_t length, f_uint128s_t *uint128s) {
 
-    const f_status_t status = f_memory_resize(uint128s->size, length, sizeof(f_uint128s_t), (void **) & uint128s->array);
+    const f_status_t status = f_memory_resize(uint128s->size, length, sizeof(f_uint128_t), (void **) & uint128s->array);
 
     if (F_status_is_error_not(status)) {
       uint128s->size = length;
