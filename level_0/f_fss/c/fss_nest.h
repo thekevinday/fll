@@ -116,7 +116,7 @@ extern "C" {
  * Each array row represents the nesting depth.
  * The top-level will not have any parent, so "parent" must be ignored on anything at index 0.
  * The parent identifier is expected to reference a position in the nesting depth immediately above it.
- * @todo: consider instead of using a "parent", have setting set to 0 to represent no data.
+ * @todo consider instead of using a "parent", have setting set to 0 to represent no data.
  *
  * depth: An array of f_fss_items_t, with each index representing the depth.
  * size:  Total amount of allocated space.

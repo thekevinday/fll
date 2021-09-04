@@ -669,7 +669,7 @@ extern "C" {
 
     if (macro_f_utf_character_t_width_is(utf_character)) {
 
-      // @todo: endianess is compile time so a function is not needed, replace with macros.
+      // @todo endianess is compile time so a function is not needed, replace with macros.
       if (f_utf_is_big_endian()) {
         memcpy(*character, &utf_character, macro_f_utf_character_t_width_is(utf_character));
       }
@@ -698,7 +698,7 @@ extern "C" {
     }
     else {
 
-      // @todo: endianess is compile time so a function is not needed, replace with macros.
+      // @todo endianess is compile time so a function is not needed, replace with macros.
       if (f_utf_is_big_endian()) {
         memcpy(*character, &utf_character, 1);
       }

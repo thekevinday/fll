@@ -70,7 +70,7 @@ extern "C" {
           continue;
         }
         else if (*string == f_string_ascii_asterisk_s[0]) {
-          // @fixme: what should I do here? review the fprintf() docs.
+          // @fixme what should I do here? review the fprintf() docs.
           continue;
         }
         else if (*string == f_string_ascii_plus_s[0]) {
@@ -1699,7 +1699,7 @@ extern "C" {
         return F_status_set_error(F_utf_not);
       }
 
-      // @todo: change logic to use single fwrite() based on byte width rather than multiple fputc...
+      // @todo change logic to use single fwrite() based on byte width rather than multiple fputc...
       if (!fputc_unlocked(string[i], output)) {
         return F_status_set_error(F_output);
       }

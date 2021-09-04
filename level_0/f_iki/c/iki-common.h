@@ -73,7 +73,7 @@ extern "C" {
   extern const f_string_t iki_vocabulary_0002_parameter_s;
 #endif // _di_iki_vocabulary_0002_s_
 
-// @todo: consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
+// @todo consider IKI-0003 = vocabulary based on context from HTML5 and accessibility-related?
 
 /**
  * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.

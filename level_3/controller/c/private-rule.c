@@ -3054,7 +3054,7 @@ extern "C" {
       rule->status[i] = F_known_not;
     } // for
 
-    // @todo: timeouts may be passed from entry, consider to or not to initialize in a more consistent manner.
+    // @todo timeouts may be passed from entry, consider to or not to initialize in a more consistent manner.
     //rule->timeout_kill = 2;
     //rule->timeout_start = 2;
     //rule->timeout_stop = 2;

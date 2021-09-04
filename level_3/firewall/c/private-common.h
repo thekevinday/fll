@@ -85,7 +85,6 @@ typedef struct {
   (structure.array[index].stop - structure.array[index].start) + 1
 
 // TODO: temporarily added, convert this to a function below.
-// TODO: also report: f_color_print(main.error.to.stream, main.context.set.error, "CRITICAL ERROR: Unable to allocate memory.%c", f_string_eol_s[0]);
 #define macro_firewall_append_argument_to_arguments(status, arguments, argument) \
   if (arguments.used == arguments.size) { \
     macro_f_string_dynamics_t_resize(status, arguments, arguments.used + firewall_default_allocation_step); \

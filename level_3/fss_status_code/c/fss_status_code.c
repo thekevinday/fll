@@ -174,7 +174,7 @@ extern "C" {
 
     if (main->parameters[fss_status_code_parameter_is_error].result == f_console_result_found || main->parameters[fss_status_code_parameter_is_warning].result == f_console_result_found || main->parameters[fss_status_code_parameter_is_fine].result == f_console_result_found) {
       if (main->process_pipe) {
-        // @todo: call fss_status_code_process_check() here for all main from pipe that is space separated.
+        // @todo call fss_status_code_process_check() here for all main from pipe that is space separated.
       }
 
       if (main->remaining.used > 0) {
@@ -194,7 +194,7 @@ extern "C" {
     }
     else if (main->parameters[fss_status_code_parameter_number].result == f_console_result_found) {
       if (main->process_pipe) {
-        // @todo: call fss_status_code_process_number() here for all main from pipe that is space separated.
+        // @todo call fss_status_code_process_number() here for all main from pipe that is space separated.
       }
 
       if (main->remaining.used > 0) {
@@ -214,7 +214,7 @@ extern "C" {
     }
     else {
       if (main->process_pipe) {
-        // @todo: call fss_status_code_process_normal() here for all main from pipe that is space separated.
+        // @todo call fss_status_code_process_normal() here for all main from pipe that is space separated.
       }
 
       if (main->remaining.used > 0) {

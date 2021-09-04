@@ -271,7 +271,7 @@ extern "C" {
     }
 
     if (ferror(file.stream)) {
-      // @todo: determine what the error is and display it.
+      // @todo determine what the error is and display it.
       flockfile(main.error.to.stream);
 
       fl_print_format("%[%Sread() failed for '%]", main.error.to.stream, main.context.set.error, main.error.prefix, main.context.set.error);
@@ -379,7 +379,7 @@ extern "C" {
     }
 
     if (cell->column < main.width) {
-      // @fixme: when unicode is enabled but invalid, the mode and its respective length now matters. This needs to be included in the width calculations.
+      // @fixme when unicode is enabled but invalid, the mode and its respective length now matters. This needs to be included in the width calculations.
       if (main.parameters[byte_dump_parameter_unicode].result == f_console_result_found && !invalid[character_current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
@@ -795,7 +795,7 @@ extern "C" {
           }
         }
 
-        // @todo: implement a function in f_utf, such as f_utf_is_combining(), for detecting these combining characters.
+        // @todo implement a function in f_utf, such as f_utf_is_combining(), for detecting these combining characters.
         // print a space for combining characters to combine into, thereby allowing it to be safely and readably displayed.
         if (width_utf == 2 && characters.string[i] >= 0xdea60000 && characters.string[i] <= 0xdeb00000) {
 

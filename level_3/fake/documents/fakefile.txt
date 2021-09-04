@@ -297,7 +297,7 @@ Fakefile Documentation:
     - shell\:
       Manually execute a remote program or script using a specific path to the program or script.
       This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
-      @todo: consider relaxing this restriction on the relativeness of the path, possibly adding a configurable setting to allow enabling/disabling this restriction.
+      @todo consider relaxing this restriction on the relativeness of the path, possibly adding a configurable setting to allow enabling/disabling this restriction.
 
       The first Content represents the program or script name.
       All Content after the first are passed to the program or script when running.

@@ -1171,8 +1171,8 @@ extern "C" {
       return F_true;
     }
 
-    // @todo: add letter UTF-8 numbers.
-    // @todo: add other UTF-8 numbers.
+    // @todo add letter UTF-8 numbers.
+    // @todo add other UTF-8 numbers.
 
     if (width == 3) {
 
@@ -1944,7 +1944,7 @@ extern "C" {
     // reduce the number of checks by grouping checks by first byte.
     //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
-    // @todo: handle all Unicode "symbol".
+    // @todo handle all Unicode "symbol".
 
     return F_false;
   }
@@ -1956,14 +1956,14 @@ extern "C" {
     // reduce the number of checks by grouping checks by first byte.
     //const uint8_t byte_first = macro_f_utf_character_t_to_char_1(character);
 
-    // @todo: Basic Multilingual Plane
-    // @todo: handle all unassigned UTF-8 spaces.
-    // @todo: Supplementary Multilingual Plane.
-    // @todo: Supplementary Ideographic Plane.
-    // @todo: Tertiary Ideographic Plane
-    // @todo: Planes 4–13
-    // @todo: Supplementary Special-purpose Plane
-    // @todo: Supplement­ary Private Use Area planes
+    // @todo Basic Multilingual Plane
+    // @todo handle all unassigned UTF-8 spaces.
+    // @todo Supplementary Multilingual Plane.
+    // @todo Supplementary Ideographic Plane.
+    // @todo Tertiary Ideographic Plane
+    // @todo Planes 4–13
+    // @todo Supplementary Special-purpose Plane
+    // @todo Supplement­ary Private Use Area planes
 
     return F_false;
   }

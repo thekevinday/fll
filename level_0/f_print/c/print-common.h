@@ -120,8 +120,6 @@ extern "C" {
 /**
  * Provide basic format flags.
  *
- * @todo be sure to document that the "/", ";", and ":" use pre-defined orders, so "%/;:Q" and "%:/;Q" would be processed in the same (pre-defined) order (which is 1: static/dynamic string, 2: partial range, 3: ignore ats, 4: ignore ins).
- *
  * f_print_format_flag_*:
  * - align_left:     "-", Use left-justification.
  * - convert:        "#", Use alternate form conversion (prefixing 0b/0B, 0o/0O, 0t/0T, 0d/0D, 0x/0X).
@@ -154,45 +152,35 @@ extern "C" {
 #endif // _di_f_print_format_flags_
 
 /**
- * Provide base format flags.
- *
- * f_print_format_base_*:
- * - binary:      "!", Display number in Binary notation.
- * - octal:       "@", Display number in Octal notation.
- * - decimal:     "^", Display number in Octal notation.
- * - duodecimal:  "&", Display number in Duodecimal notation.
- * - hexidecimal: "_", Display number in Hexidecimal notation.
- *
- * @see fprintf()
- */
-
-/**
  * Provide type format flags.
  *
- * The uppercase "I", "L", "LL", "UL", "ULL" designates setting the uppercase flag.
+ * @todo float and double support will likely be something like: "%d", "%dl", and "%dll" for float, double, and long double, respectively.
+ * @todo there may be support in the future for min/max type sizes, such that "%n" = min, "%m" = max, and "%niii" = min int8_t.
  *
  * f_print_format_type_*:
- * - character:          "c", type is a 1-byte unsigned character.
- * - character_safe:     "C", type is a 1-byte unsigned character, where control characters and other problems are handled.
- * - color_after:        "]", type is f_color_set_t such that the f_color_set_t.after is used.
- * - color_before:       "[", type is f_color_set_t such that the f_color_set_t.begin is used.
- * - signed_8:           "iii", "III", type is a int8_t.
- * - signed_16:          "ii", "II", type is a int16_t.
- * - signed_32:          "i", "I", type is a int32_t.
- * - signed_64:          "il", "IL", type is a signed int64_t.
- * - signed_128:         "ill", "ILL", type is a f_int_128_t.
- * - number:             "in", "IN", type is an f_number_signed_t.
- * - size:               "z", "Z", type is a size_t.
- * - string_safe:        "S", type is a NULL terminated string, where control characters and other problems are handled.
- * - string_static:      "q", type is an f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
- * - string_static_raw:  "r", type is an f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
- * - string_static_safe: "Q", type is an f_string_static_t or f_string_dynamic_t and NULLs are printed, where control characters and other problems are handled.
- * - unsigned_8:         "uii", "UII", type is an uint8_t.
- * - unsigned_16:        "ui", "UI", type is an uint16_t.
- * - unsigned_32:        "u", "U", type is an uint32_t.
- * - unsigned_64:        "ul", "UL", type is an uint64_t.
- * - unsigned_128:       "ull", "ULL", type is an f_uint_128_t.
- * - unsigned_number:    "un", "UN", type is an f_number_unsigned_t (which by default is what f_array_length_t is a type of).
+ * - character:              "c",          Type is a 1-byte unsigned character.
+ * - character_safe:         "C",          Type is a 1-byte unsigned character, where control characters and invalid UTF-8 are replaced.
+ * - color_after:            "]",          Type is a f_color_set_t such that the f_color_set_t.after is used.
+ * - color_before:           "[",          Type is a f_color_set_t such that the f_color_set_t.begin is used.
+ * - signed_8:               "iii", "III", Type is a int8_t digit.
+ * - signed_16:              "ii", "II",   Type is a int16_t digit.
+ * - signed_32:              "i", "I",     Type is a int32_t digit.
+ * - signed_64:              "il", "IL",   Type is a signed int64_t digit.
+ * - signed_128:             "ill", "ILL", Type is a f_int_128_t digit.
+ * - number:                 "in", "IN",   Type is a f_number_signed_t digit.
+ * - size:                   "z", "Z",     Type is a size_t digit.
+ * - string:                 "s",          Type is a NULL terminated string, where the string is printed as-is.
+ * - string_safe:            "S",          Type is a NULL terminated string, where control characters and other problems are handled.
+ * - string_static:          "q",          Type is a f_string_static_t or f_string_dynamic_t and NULLs are ignored (not printed).
+ * - string_static_raw:      "r",          Type is a f_string_static_t or f_string_dynamic_t and NULLs (and all other control characters) are printed.
+ * - string_static_safe:     "Q",          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, where control characters and other problems are handled.
+ * - string_static_safe_raw: "R",          Type is a f_string_static_t or f_string_dynamic_t and NULLs are printed, where control characters and other problems are handled.
+ * - unsigned_8:             "uii", "UII", Type is a uint8_t digit.
+ * - unsigned_16:            "ui", "UI",   Type is a uint16_t digit.
+ * - unsigned_32:            "u", "U",     Type is a uint32_t digit.
+ * - unsigned_64:            "ul", "UL",   Type is a uint64_t digit.
+ * - unsigned_128:           "ull", "ULL", Type is a f_uint_128_t digit.
+ * - unsigned_number:        "un", "UN",   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
  *
  * @see fprintf()
  */
@@ -214,6 +202,7 @@ extern "C" {
     f_print_format_type_string_static,
     f_print_format_type_string_static_raw,
     f_print_format_type_string_static_safe,
+    f_print_format_type_string_static_safe_raw, // @todo not yet implemented.
     f_print_format_type_unsigned_8,
     f_print_format_type_unsigned_16,
     f_print_format_type_unsigned_32,

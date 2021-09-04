@@ -39,7 +39,7 @@ int main(const int argc, const f_string_t *argv) {
     }
   }
 
-  // @fixme: bad design in POSIX where there is no get umask without setting it.
+  // @fixme bad design in POSIX where there is no get umask without setting it.
   data.umask = umask(0);
 
   // restore umask.

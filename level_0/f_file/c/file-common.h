@@ -20,8 +20,8 @@ extern "C" {
  * Provide common file-typ specific data types.
  */
 #ifndef _di_f_file_types_
-  #define f_file_default_read_size  8192 // default to 8k read sizes. // @fixme: rename and move into _di_f_file_type_
-  #define f_file_default_write_size 8192 // default to 8k write sizes. // @fixme: rename and move into _di_f_file_type_
+  #define f_file_default_read_size  8192 // default to 8k read sizes. // @fixme rename and move into _di_f_file_type_
+  #define f_file_default_write_size 8192 // default to 8k write sizes. // @fixme rename and move into _di_f_file_type_
 #endif // _di_f_file_types_
 
 /**

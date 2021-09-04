@@ -242,7 +242,7 @@ extern "C" {
       status = fll_fss_embedded_list_read(main->buffer, state, &input, &main->nest, objects_delimits, contents_delimits, comments);
 
       if (F_status_is_error(status)) {
-        // @todo: detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
+        // @todo detect and replace fll_error_file_type_file with fll_error_file_type_pipe as appropriate.
         fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_embedded_list_read", F_true, filename, "process", fll_error_file_type_file);
       }
       else if (status == F_data_not_stop || status == F_data_not_eos) {
