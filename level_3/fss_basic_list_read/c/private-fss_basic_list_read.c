@@ -486,7 +486,7 @@ extern "C" {
         if (data->option & fss_basic_list_read_data_option_line) {
           f_array_length_t line = 0;
 
-          status = fss_basic_list_read_process_at_line(at, *delimits_object, *delimits_content, main, data, &line);
+          status = fss_basic_list_read_process_at_line(i, *delimits_object, *delimits_content, main, data, &line);
           if (status == F_success) return F_none;
         }
         else if (data->option & fss_basic_list_read_data_option_columns) {
