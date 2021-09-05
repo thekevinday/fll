@@ -19,6 +19,8 @@ Featureless Settings Specification: 0003 - Extended List:
   Each delimit slash in a delimitable open-brace is treated as a potential delimit such that two slashes represents a single delimited slash ('\\\{' would represent '\{').
   Only the first delimit slash in a delimitable close-brace is treated as a potential delimit ('\\\}' would represent '\\}').
 
+  Empty Objects are allowed, that is, the length of the object may be 0.
+
   Key\:
     \s = whitespace, except newline.
     \o = any printable character, except unescaped '{'.

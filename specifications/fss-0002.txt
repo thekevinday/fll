@@ -13,6 +13,8 @@ Featureless Settings Specification: 0002 - Basic List:
   There is no single-quote or double-quote delimitation in this specification.
   Only the colon that would result in a valid Object can be delimited.
 
+  Empty Objects are allowed, that is, the length of the object may be 0.
+
   Key\:
     \s = whitespace, except newline.
     \o = any printable character, except unescaped ':'.

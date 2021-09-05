@@ -163,20 +163,6 @@ extern "C" {
 
             return status;
           }
-
-          if (!data->depths.array[i].value_name.used) {
-            if (main->error.verbosity != f_console_verbosity_quiet) {
-              flockfile(main->error.to.stream);
-
-              fl_print_format("%c%[%sThe '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_read_long_name, main->error.notable);
-              fl_print_format("%[' must not be an empty string.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
-
-              funlockfile(main->error.to.stream);
-            }
-
-            return F_status_set_error(F_parameter);
-          }
         } // for
       }
     } // for
