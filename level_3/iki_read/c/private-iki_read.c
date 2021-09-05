@@ -148,6 +148,7 @@ extern "C" {
       f_array_length_t index = 0;
       f_array_length_t i = 0;
       f_array_length_t j = 0;
+      f_array_length_t matches = 0;
       buffer_range->start = 0;
 
       for (; i < main->parameters[iki_read_parameter_name].values.used; ++i) {
@@ -179,6 +180,10 @@ extern "C" {
           if (status == F_equal_to) {
             unmatched = F_false;
 
+            if (main->parameters[iki_read_parameter_at].result == f_console_result_additional) {
+              if (matches++ != main->at) continue;
+            }
+
             if (substitutionss[j].used) {
               iki_read_substitutions_print(*main, *variable, *content, *ranges, substitutionss[j], j, content_only);
             }
@@ -199,26 +204,46 @@ extern "C" {
       else status = F_none;
     }
     else if (ranges->used) {
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
+      if (main->parameters[iki_read_parameter_at].result == f_console_result_additional) {
+        if (main->at < ranges->used) {
+          flockfile(main->output.stream);
 
-      flockfile(main->output.stream);
+          if (substitutionss[main->at].used) {
+            iki_read_substitutions_print(*main, *variable, *content, *ranges, substitutionss[main->at], main->at, content_only);
+          }
+          else {
+            f_print_dynamic_partial(main->buffer, ranges->array[main->at], main->output.stream);
+          }
 
-      for (; i < ranges->used; ++i) {
+          f_print_character(f_string_eol_s[0], main->output.stream);
 
-        if (substitutionss[i].used) {
-          iki_read_substitutions_print(*main, *variable, *content, *ranges, substitutionss[i], i, content_only);
+          funlockfile(main->output.stream);
+
+          status = F_none;
         }
         else {
-          f_print_dynamic_partial(main->buffer, ranges->array[i], main->output.stream);
+          status = F_data_not;
         }
+      }
+      else {
+        flockfile(main->output.stream);
 
-        f_print_character(f_string_eol_s[0], main->output.stream);
-      } // for
+        for (f_array_length_t i = 0; i < ranges->used; ++i) {
 
-      funlockfile(main->output.stream);
+          if (substitutionss[i].used) {
+            iki_read_substitutions_print(*main, *variable, *content, *ranges, substitutionss[i], i, content_only);
+          }
+          else {
+            f_print_dynamic_partial(main->buffer, ranges->array[i], main->output.stream);
+          }
 
-      status = F_none;
+          f_print_character(f_string_eol_s[0], main->output.stream);
+        } // for
+
+        funlockfile(main->output.stream);
+
+        status = F_none;
+      }
     }
     else {
       status = F_data_not;
@@ -337,13 +362,14 @@ extern "C" {
       f_array_length_t i = buffer_range.start;
       f_array_length_t j = 0;
       f_array_length_t k = 0;
+      f_array_length_t stop = variable->used;
 
       range = buffer_range;
       name_range.start = 0;
 
       flockfile(main->output.stream);
 
-      while (i <= range.stop && j < variable->used) {
+      while (i <= range.stop && j < stop) {
 
         if (i < variable->array[j].start) {
           range.start = i;
@@ -490,6 +516,16 @@ extern "C" {
     }
     else {
       total = variable->used;
+    }
+
+    // if that at position is within the actual total, then the total at the given position is 1, otherwise is 0.
+    if (main->parameters[iki_read_parameter_at].result == f_console_result_additional) {
+      if (main->at < total) {
+        total = 1;
+      }
+      else {
+        total = 0;
+      }
     }
 
     fll_print_format("%ul%c", main->output.stream, total, f_string_eol_s[0]);

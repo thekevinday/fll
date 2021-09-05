@@ -176,21 +176,21 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_at, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, f_console_symbol_long_enable iki_read_long_at, arguments.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
 
         main->at = number;
 
-        if (main->parameters[iki_read_parameter_total].result == f_console_result_found) {
+        if (main->parameters[iki_read_parameter_whole].result == f_console_result_found) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%c%[%sCannot specify the '%]", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_at, main->error.notable);
             fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_total, main->error.notable);
+            fl_print_format("%[%s%s%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_read_long_whole, main->error.notable);
             fl_print_format("%[' parameter.%]%c", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s[0]);
 
             funlockfile(main->error.to.stream);
@@ -222,7 +222,7 @@ extern "C" {
         status = fl_conversion_string_to_number_unsigned(arguments.argv[index], range, &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, iki_read_long_line, arguments.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true, f_console_symbol_long_enable iki_read_long_line, arguments.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
