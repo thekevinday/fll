@@ -84,6 +84,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used || range1.start > range1.stop) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_
@@ -94,6 +105,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_dynamic_
@@ -103,6 +125,17 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
+
+    if (!length1) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
 
     return private_fl_string_compare(string1, string2.string, 0, range2.start, length1, range2.stop + 1);
   }
@@ -115,6 +148,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used || range1.start > range1.stop) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_except(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1, except1, except2);
   }
 #endif // _di_fl_string_dynamic_partial_compare_except_
@@ -125,6 +169,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_except(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1, except1, except2);
   }
 #endif // _di_fl_string_dynamic_partial_compare_except_dynamic_
@@ -134,6 +189,17 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
+
+    if (!length1) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
 
     return private_fl_string_compare_except(string1, string2.string, 0, range2.start, length1, range2.stop + 1, except1, except2);
   }
@@ -146,6 +212,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used || range1.start > range1.stop) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_except_trim(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1, except1, except2);
   }
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_
@@ -156,6 +233,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_except_trim(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1, except1, except2);
   }
 #endif // _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
@@ -165,6 +253,17 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
+
+    if (!length1) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
 
     return private_fl_string_compare_except_trim(string1, string2.string, 0, range2.start, length1, range2.stop + 1, except1, except2);
   }
@@ -177,6 +276,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used || range1.start > range1.stop) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_trim(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_trim_
@@ -187,6 +297,17 @@ extern "C" {
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
+    if (!string1.used) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
+
     return private_fl_string_compare_trim(string1.string, string2.string, 0, range2.start, string1.used, range2.stop + 1);
   }
 #endif // _di_fl_string_dynamic_partial_compare_trim_dynamic_
@@ -196,6 +317,17 @@ extern "C" {
     #ifndef _di_level_1_parameter_checking_
       if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
+
+    if (!length1) {
+      if (!string2.used || range2.start > range2.stop) {
+        return F_equal_to;
+      }
+
+      return F_equal_to_not;
+    }
+    else if (!string2.used || range2.start > range2.stop) {
+      return F_equal_to_not;
+    }
 
     return private_fl_string_compare_trim(string1, string2.string, 0, range2.start, length1, range2.stop + 1);
   }
