@@ -18,6 +18,7 @@ extern "C" {
     macro_f_fss_contents_t_delete_simple(data->contents);
     macro_f_fss_objects_t_delete_simple(data->objects);
     macro_f_fss_delimits_t_delete_simple(data->delimits);
+    macro_f_fss_quotes_t_delete_simple(data->quotes);
   }
 #endif // _di_fss_basic_read_data_delete_simple_
 

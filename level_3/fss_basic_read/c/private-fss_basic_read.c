@@ -204,8 +204,9 @@ extern "C" {
     f_string_range_t input = macro_f_string_range_t_initialize(data->buffer.used);
 
     data->delimits.used = 0;
+    data->quotes.used = 0;
 
-    const f_status_t status = fll_fss_basic_read(data->buffer, state, &input, &data->objects, &data->contents, 0, &data->delimits, 0);
+    const f_status_t status = fll_fss_basic_read(data->buffer, state, &input, &data->objects, &data->contents, &data->quotes, &data->delimits, 0);
 
     if (F_status_is_error(status)) {
       const f_string_t file_name = fss_basic_read_file_identify(input.start, data->files);
@@ -262,10 +263,36 @@ extern "C" {
 
       if (data->option & fss_basic_read_data_option_object) {
         if (data->option & fss_basic_read_data_option_trim) {
-          fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
+          if (data->option & fss_basic_read_data_option_raw) {
+            if (data->quotes.array[at]) {
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.stream);
+            }
+
+            fl_print_trim_dynamic_partial(data->buffer, data->objects.array[at], main->output.stream);
+
+            if (data->quotes.array[at]) {
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.stream);
+            }
+          }
+          else {
+            fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
+          }
         }
         else {
-          f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
+          if (data->option & fss_basic_read_data_option_raw) {
+            if (data->quotes.array[at]) {
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.stream);
+            }
+
+            f_print_dynamic_partial(data->buffer, data->objects.array[at], main->output.stream);
+
+            if (data->quotes.array[at]) {
+              f_print_character_safely(data->quotes.array[at] == f_fss_quote_type_single ? f_fss_quote_single_s[0] : f_fss_quote_double_s[0], main->output.stream);
+            }
+          }
+          else {
+            f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.stream);
+          }
         }
 
         if (data->option & fss_basic_read_data_option_content) {
@@ -274,7 +301,12 @@ extern "C" {
       }
 
       if ((data->option & fss_basic_read_data_option_content) && data->contents.array[at].used) {
-        f_print_except_dynamic_partial(data->buffer, data->contents.array[at].array[0], delimits_content, main->output.stream);
+        if (data->option & fss_basic_read_data_option_raw) {
+          f_print_dynamic_partial(data->buffer, data->contents.array[at].array[0], main->output.stream);
+        }
+        else {
+          f_print_except_dynamic_partial(data->buffer, data->contents.array[at].array[0], delimits_content, main->output.stream);
+        }
       }
 
       fss_basic_read_print_set_end(main);
@@ -616,6 +648,10 @@ extern "C" {
 
     if (main->parameters[fss_basic_read_parameter_object].result == f_console_result_found) {
       data->option |= fss_basic_read_data_option_object;
+    }
+
+    if (main->parameters[fss_basic_read_parameter_raw].result == f_console_result_found) {
+      data->option |= fss_basic_read_data_option_raw;
     }
 
     if (main->parameters[fss_basic_read_parameter_select].result == f_console_result_additional) {

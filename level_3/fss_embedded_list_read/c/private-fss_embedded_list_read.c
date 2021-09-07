@@ -328,6 +328,13 @@ extern "C" {
 
     const fss_embedded_list_read_skip_t parents = fss_embedded_list_read_skip_t_initialize;
 
+
+    if (main->parameters[fss_embedded_list_read_parameter_raw].result == f_console_result_found) {
+      f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
+
+      return fss_embedded_list_read_main_process_for_depth(arguments, filename, depths, 0, line, parents, main, &except_none, &except_none);
+    }
+
     return fss_embedded_list_read_main_process_for_depth(arguments, filename, depths, 0, line, parents, main, objects_delimits, contents_delimits);
   }
 #endif // _di_fss_embedded_list_read_main_process_file_

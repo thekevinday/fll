@@ -433,6 +433,11 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
 
+    if (data->option & fss_extended_list_read_data_option_raw) {
+      delimits_object = &except_none;
+      delimits_content = &except_none;
+    }
+
     for (f_array_length_t i = 0; i < data->contents.used; ++i) {
 
       if (!names[i]) continue;
@@ -462,6 +467,11 @@ extern "C" {
     f_array_lengths_t except_none = f_array_lengths_t_initialize;
     f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
+
+    if (data->option & fss_extended_list_read_data_option_raw) {
+      delimits_object = &except_none;
+      delimits_content = &except_none;
+    }
 
     f_array_length_t at = 0;
     f_status_t status = F_none;
@@ -691,6 +701,11 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_extended_list_read_delimit_object_is(0, data) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_extended_list_read_delimit_content_is(0, data) ? &data->delimits_content : &except_none;
 
+    if (data->option & fss_extended_list_read_data_option_raw) {
+      delimits_object = &except_none;
+      delimits_content = &except_none;
+    }
+
     f_array_length_t line = 0;
     f_status_t status = F_none;
 
@@ -766,6 +781,10 @@ extern "C" {
 
     if (main->parameters[fss_extended_list_read_parameter_object].result == f_console_result_found) {
       data->option |= fss_extended_list_read_data_option_object;
+    }
+
+    if (main->parameters[fss_extended_list_read_parameter_raw].result == f_console_result_found) {
+      data->option |= fss_extended_list_read_data_option_raw;
     }
 
     if (main->parameters[fss_extended_list_read_parameter_select].result == f_console_result_additional) {

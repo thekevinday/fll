@@ -135,6 +135,7 @@ extern "C" {
  *   - line:    A specific Content at a given line is to be selected (Think of this as select a row for some Content).
  *   - name:    A specific Object name has been requested.
  *   - object:  The Object is to be printed.
+ *   - raw:     Enable raw printing, where the quotes are printed and no delimits are applied.
  *   - select:  A specific Content at a given position is to be selected (Think of this as select a column for some Content).
  *   - total:   The total lines found and selected is printed instead of the Content.
  *   - trim:    Empty space before and after Objects and Content will not be printed (They will be trimmed).
@@ -159,9 +160,10 @@ extern "C" {
   #define fss_basic_read_data_option_line    0x10
   #define fss_basic_read_data_option_name    0x20
   #define fss_basic_read_data_option_object  0x40
-  #define fss_basic_read_data_option_select  0x80
-  #define fss_basic_read_data_option_total   0x100
-  #define fss_basic_read_data_option_trim    0x200
+  #define fss_basic_read_data_option_raw     0x80
+  #define fss_basic_read_data_option_select  0x100
+  #define fss_basic_read_data_option_total   0x200
+  #define fss_basic_read_data_option_trim    0x400
 
   typedef struct {
     uint16_t option;
@@ -177,6 +179,7 @@ extern "C" {
     f_fss_objects_t objects;
     f_fss_contents_t contents;
     f_fss_delimits_t delimits;
+    f_fss_quotes_t quotes;
   } fss_basic_read_data_t;
 
   #define fss_basic_read_data_t_initialize \
@@ -192,6 +195,7 @@ extern "C" {
       f_fss_objects_t_initialize, \
       f_fss_contents_t_initialize, \
       f_fss_delimits_t_initialize, \
+      f_fss_quotes_t_initialize, \
     }
 #endif // _di_fss_basic_read_data_t_
 
