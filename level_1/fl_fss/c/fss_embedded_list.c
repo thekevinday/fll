@@ -317,17 +317,26 @@ extern "C" {
 
     f_array_lengths_t positions_start = f_array_lengths_t_initialize;
 
-    macro_f_array_lengths_t_clear(positions_start)
     macro_f_array_lengths_t_resize(status, positions_start, state.step_small)
     if (F_status_is_error(status)) return status;
 
     f_fss_objects_t objects = f_fss_objects_t_initialize;
 
-    macro_f_fss_objects_t_clear(objects)
     macro_f_fss_objects_t_resize(status, objects, state.step_small)
 
     if (F_status_is_error(status)) {
       macro_f_array_lengths_t_delete_simple(positions_start);
+
+      return status;
+    }
+
+    f_array_lengths_t slashes = f_array_lengths_t_initialize;
+
+    macro_f_array_lengths_t_resize(status, slashes, state.step_small)
+
+    if (F_status_is_error(status)) {
+      macro_f_array_lengths_t_delete_simple(positions_start);
+      macro_f_fss_objects_t_delete_simple(objects);
 
       return status;
     }
@@ -345,7 +354,6 @@ extern "C" {
 
     f_array_length_t slash_first = 0;
     f_array_length_t slash_last = 0;
-    f_array_length_t slash_count = 0;
 
     f_array_length_t before_list_open = position_previous;
 
@@ -357,6 +365,9 @@ extern "C" {
     // positions_start.used is used as a max depth (such that positions_start.used == max depth + 1).
     positions_start.array[0] = range->start;
     positions_start.used = 1;
+
+    slashes.array[0] = 0;
+    slashes.used = 1;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
@@ -381,11 +392,11 @@ extern "C" {
         position_previous = range->start++;
         graph_first = 0x1;
 
-        if (depth > 0) {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+        if (depth) {
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
-          private_macro_fl_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop);
+          private_macro_fl_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, slashes, F_none_eos, F_none_stop);
         }
 
         line_start = range->start;
@@ -395,12 +406,9 @@ extern "C" {
       if (buffer.string[range->start] == f_fss_delimit_slash) {
         slash_first = range->start;
         slash_last = range->start;
-        slash_count = 1;
+        slashes.array[depth] = 1;
 
-        position_previous = range->start;
-
-        status = f_utf_buffer_increment(buffer, range, 1);
-        if (F_status_is_error(status)) break;
+        position_previous = range->start++;
 
         while (range->start <= range->stop && range->start < buffer.used && (buffer.string[range->start] == f_fss_delimit_placeholder || buffer.string[range->start] == f_fss_delimit_slash)) {
 
@@ -417,19 +425,21 @@ extern "C" {
 
           if (buffer.string[range->start] == f_fss_delimit_slash) {
             slash_last = range->start++;
+            ++slashes.array[depth];
           }
-
-          status = f_utf_buffer_increment(buffer, range, 1);
-          if (F_status_is_error(status)) break;
+          else {
+            status = f_utf_buffer_increment(buffer, range, 1);
+            if (F_status_is_error(status)) break;
+          }
         } // while
 
         if (F_status_is_error(status)) break;
 
-        if (depth > 0) {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+        if (depth) {
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop);
         }
 
         // All slashes for an open are delimited (because it could represent a slash in the object name).
@@ -501,11 +511,11 @@ extern "C" {
 
           if (F_status_is_error(status)) break;
 
-          if (depth > 0) {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+          if (depth) {
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
           }
           else {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop);
           }
 
           // this is a valid object open/close that has been delimited, save the slash delimit positions.
@@ -517,24 +527,22 @@ extern "C" {
             if (is_open) {
               bool is_object = F_false;
 
-              if (slash_count % 2 == 0) {
+              if (slashes.array[depth] % 2 == 0) {
                 is_object = F_true;
               }
 
               range->start = slash_first;
 
-              macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
+              macro_f_fss_delimits_t_increase_by(status, (*delimits), (slashes.array[depth] / 2) + 1);
               if (F_status_is_error(status)) break;
 
               // apply slash delimits, only slashes and placeholders should be present.
-              while (slash_count > 0) {
+              while (slashes.array[depth]) {
 
                 if (buffer.string[range->start] == f_fss_delimit_slash) {
-                  if (slash_count % 2 == 1) {
+                  if (slashes.array[depth]-- % 2 == 1) {
                     delimits->array[delimits->used++] = range->start;
                   }
-
-                  --slash_count;
                 }
 
                 // Delimit slashes and placeholders are required to be in the ASCII range.
@@ -550,16 +558,25 @@ extern "C" {
                 if (depth > positions_start.size) {
                   macro_f_array_lengths_t_resize(status, positions_start, positions_start.size + state.step_small);
                   if (F_status_is_error(status)) break;
+
+                  macro_f_fss_objects_t_resize(status, objects, objects.size + state.step_small);
+                  if (F_status_is_error(status)) break;
+
+                  macro_f_array_lengths_t_resize(status, slashes, slashes.size + state.step_small);
+                  if (F_status_is_error(status)) break;
                 }
 
                 if (positions_start.used < depth) {
                   positions_start.used = depth;
+                  slashes.used = depth;
                 }
 
                 positions_start.array[depth] = newline_last + 1;
 
                 objects.array[depth].start = line_start;
                 objects.array[depth].stop = before_list_open;
+
+                slashes.array[depth] = 0;
               }
             }
             else {
@@ -616,11 +633,11 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        if (depth > 0) {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+        if (depth) {
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop);
         }
 
         if (buffer.string[range->start] == f_fss_eol) {
@@ -632,16 +649,22 @@ extern "C" {
 
             macro_f_fss_objects_t_resize(status, objects, objects.size + state.step_small);
             if (F_status_is_error(status)) break;
+
+            macro_f_array_lengths_t_resize(status, slashes, slashes.size + state.step_small);
+            if (F_status_is_error(status)) break;
           }
 
           if (positions_start.used <= depth) {
             positions_start.used = depth + 1;
+            slashes.used = depth + 1;
           }
 
           positions_start.array[depth] = range->start + 1;
 
           objects.array[depth].start = line_start;
           objects.array[depth].stop = before_list_open;
+
+          slashes.array[depth] = 0;
 
           if (graph_first == 0x2) {
             macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
@@ -696,11 +719,11 @@ extern "C" {
 
           if (F_status_is_error(status)) break;
 
-          if (depth > 0) {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+          if (depth) {
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
           }
           else {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop);
           }
         }
       }
@@ -739,11 +762,11 @@ extern "C" {
 
         if (F_status_is_error(status)) break;
 
-        if (depth > 0) {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
+        if (depth) {
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop);
         }
         else {
-          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop);
+          private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop);
         }
 
         if (buffer.string[range->start] == f_fss_eol) {
@@ -797,10 +820,11 @@ extern "C" {
             status = f_utf_buffer_increment(buffer, range, 1);
             if (F_status_is_error(status)) break;
 
-            private_macro_fl_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, F_none_eos, F_none_stop)
+            private_macro_fl_fss_nest_return_on_overflow_delimited((buffer), (*range), (*found), positions_start, objects, slashes, F_none_eos, F_none_stop)
 
             macro_f_array_lengths_t_delete_simple(positions_start);
             macro_f_fss_objects_t_delete_simple(objects);
+            macro_f_array_lengths_t_delete_simple(slashes);
 
             return FL_fss_found_content;
           }
@@ -843,11 +867,11 @@ extern "C" {
 
           if (F_status_is_error(status)) break;
 
-          if (depth > 0) {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_terminated_not_nest_eos, F_terminated_not_nest_stop)
+          if (depth) {
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_terminated_not_nest_eos, F_terminated_not_nest_stop)
           }
           else {
-            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, F_data_not_eos, F_data_not_stop)
+            private_macro_fl_fss_nest_return_on_overflow((buffer), (*range), (*found), (*delimits), delimits_used, (*comments), comments_used, positions_start, objects, slashes, F_data_not_eos, F_data_not_stop)
           }
         }
       }
@@ -909,6 +933,7 @@ extern "C" {
 
     macro_f_array_lengths_t_delete_simple(positions_start);
     macro_f_fss_objects_t_delete_simple(objects);
+    macro_f_array_lengths_t_delete_simple(slashes);
 
     delimits->used = delimits_used;
     comments->used = comments_used;

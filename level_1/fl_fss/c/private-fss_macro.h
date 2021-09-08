@@ -83,12 +83,13 @@ extern "C" {
 #endif // _di_macro_fl_fss_content_return_on_overflow_delimited_
 
 #ifndef _di_macro_fl_fss_nest_return_on_overflow_
-  #define private_macro_fl_fss_nest_return_on_overflow(buffer, range, found, delimits, delimits_used, comments, comments_used, positions, objects, eos_status, stop_status) \
+  #define private_macro_fl_fss_nest_return_on_overflow(buffer, range, found, delimits, delimits_used, comments, comments_used, positions, objects, slashes, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       delimits.used = delimits_used; \
       comments.used = comments_used; \
       macro_f_array_lengths_t_delete_simple(positions); \
       macro_f_fss_objects_t_delete_simple(objects); \
+      macro_f_array_lengths_t_delete_simple(slashes); \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
@@ -96,20 +97,23 @@ extern "C" {
       comments.used = comments_used; \
       macro_f_array_lengths_t_delete_simple(positions); \
       macro_f_fss_objects_t_delete_simple(objects); \
+      macro_f_array_lengths_t_delete_simple(slashes); \
       return stop_status; \
     }
 #endif // _di_macro_fl_fss_nest_return_on_overflow_
 
 #ifndef _di_macro_fl_fss_nest_return_on_overflow_delimited_
-  #define private_macro_fl_fss_nest_return_on_overflow_delimited(buffer, range, found, positions, objects, eos_status, stop_status) \
+  #define private_macro_fl_fss_nest_return_on_overflow_delimited(buffer, range, found, positions, objects, slashes, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       macro_f_array_lengths_t_delete_simple(positions); \
       macro_f_fss_objects_t_delete_simple(objects); \
+      macro_f_array_lengths_t_delete_simple(slashes); \
       return eos_status; \
     } \
     else if (range.start > range.stop) { \
       macro_f_array_lengths_t_delete_simple(positions); \
       macro_f_fss_objects_t_delete_simple(objects); \
+      macro_f_array_lengths_t_delete_simple(slashes); \
       return stop_status; \
     }
 #endif // _di_macro_fl_fss_nest_return_on_overflow_delimited_
