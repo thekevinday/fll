@@ -396,9 +396,7 @@ extern "C" {
         }
       }
       else {
-
         if (main->parameters[fss_embedded_list_read_parameter_trim].result == f_console_result_found) {
-
           for (i = 0; i < items->used; ++i) {
 
             if (skip[i]) continue;
@@ -409,7 +407,6 @@ extern "C" {
           } // for
         }
         else {
-
           for (i = 0; i < items->used; ++i) {
 
             if (skip[i]) continue;
@@ -422,17 +419,17 @@ extern "C" {
 
         if (depths.array[depths_index].index_at) {
 
-        // all other non-"at" parameters must be FALSE.
-        for (i = 0, j = 0; i < items->used; ++i) {
+          // all other non-"at" parameters must be FALSE.
+          for (i = 0, j = 0; i < items->used; ++i) {
 
-          if (skip[i]) continue;
+            if (skip[i]) continue;
 
-          if (j != depths.array[depths_index].value_at) {
-            skip[i] = F_true;
-          }
+            if (j != depths.array[depths_index].value_at) {
+              skip[i] = F_true;
+            }
 
-          ++j;
-        } // for
+            ++j;
+          } // for
         }
       }
     }
