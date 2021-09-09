@@ -53,7 +53,7 @@ extern "C" {
 #ifndef _di_firewall_version_
   #define firewall_major_version f_string_ascii_0
   #define firewall_minor_version f_string_ascii_5
-  #define firewall_micro_version f_string_ascii_5
+  #define firewall_micro_version f_string_ascii_6
 
   #ifndef firewall_nano_version_prefix
     #define firewall_nano_version_prefix
