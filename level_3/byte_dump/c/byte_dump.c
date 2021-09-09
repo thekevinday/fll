@@ -405,12 +405,16 @@ extern "C" {
 
             status = f_file_exists(arguments.argv[main->remaining.array[counter]]);
 
-            if (status == F_false || F_status_is_error(status)) {
+            if (status == F_false) {
+              status = F_status_set_error(F_file_found_not);
+            }
+
+            if (F_status_is_error(status)) {
               if (missing_files == F_none) {
                 missing_files = status;
               }
 
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[main->remaining.array[counter]], "find", fll_error_file_type_file);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, arguments.argv[main->remaining.array[counter]], "open", fll_error_file_type_file);
             }
           } // for
 

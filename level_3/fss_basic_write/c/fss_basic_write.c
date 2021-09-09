@@ -44,7 +44,7 @@ extern "C" {
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%c", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '%[%s%s%]'", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend, context.set.notable);
+    fl_print_format("  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '%[%s%s%]'", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_write_long_prepend, context.set.notable);
     fl_print_format(" does nothing.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
     fl_print_format("  This program does not use the parameter '%[%s%s%]', which therefore does nothing.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_write_long_ignore, context.set.notable, f_string_eol_s[0]);
