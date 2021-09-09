@@ -30,11 +30,11 @@ extern "C" {
     fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
     fl_print_format("%c%c %[Available Commands:%] ", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
-    fl_print_format("%c  %[%s%]  Turn on the firewall.", output.stream, context.set.standout, firewall_command_start, context.set.standout);
-    fl_print_format("%c  %[%s%]  Turn off the firewall.", output.stream, context.set.standout, firewall_command_stop, context.set.standout);
-    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", output.stream, context.set.standout, firewall_command_restart, context.set.standout);
-    fl_print_format("%c  %[%s%]  Prevent all communication.", output.stream, context.set.standout, firewall_command_lock, context.set.standout);
-    fl_print_format("%c  %[%s%]  Show active firewall settings.", output.stream, context.set.standout, firewall_command_show, context.set.standout);
+    fl_print_format("%c  %[%s%]    Turn on the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_start, context.set.standout);
+    fl_print_format("%c  %[%s%]     Turn off the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_stop, context.set.standout);
+    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_restart, context.set.standout);
+    fl_print_format("%c  %[%s%]     Prevent all communication.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_lock, context.set.standout);
+    fl_print_format("%c  %[%s%]     Show active firewall settings.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_show, context.set.standout);
 
     fll_program_print_help_usage(output, context, firewall_name, "command");
 
