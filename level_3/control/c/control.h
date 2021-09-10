@@ -142,7 +142,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process.
  * @param main
- *   The program main.
+ *   The program main data.
  *
  * @return
  *   F_none on success.
@@ -161,7 +161,7 @@ extern "C" {
  * Be sure to call this after executing control_main().
  *
  * @param main
- *   The program main.
+ *   The program main data.
  *
  * @return
  *   F_none on success.
