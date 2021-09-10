@@ -142,23 +142,25 @@ extern "C" {
   #define controller_path_settings_length 10
   #define controller_path_suffix_length   4
 
-  #define controller_short_control       "c"
-  #define controller_short_daemon        "d"
-  #define controller_short_init          "I"
-  #define controller_short_interruptable "i"
-  #define controller_short_pid           "p"
-  #define controller_short_settings      "s"
-  #define controller_short_simulate      "S"
-  #define controller_short_validate      "v"
+  #define controller_short_control         "c"
+  #define controller_short_daemon          "d"
+  #define controller_short_init            "I"
+  #define controller_short_interruptable   "i"
+  #define controller_short_pid             "p"
+  #define controller_short_settings        "s"
+  #define controller_short_simulate        "S"
+  #define controller_short_uninterruptable "U"
+  #define controller_short_validate        "v"
 
-  #define controller_long_control       "control"
-  #define controller_long_daemon        "daemon"
-  #define controller_long_init          "init"
-  #define controller_long_interruptable "interruptable"
-  #define controller_long_pid           "pid"
-  #define controller_long_settings      "settings"
-  #define controller_long_simulate      "simulate"
-  #define controller_long_validate      "validate"
+  #define controller_long_control         "control"
+  #define controller_long_daemon          "daemon"
+  #define controller_long_init            "init"
+  #define controller_long_interruptable   "interruptable"
+  #define controller_long_pid             "pid"
+  #define controller_long_settings        "settings"
+  #define controller_long_simulate        "simulate"
+  #define controller_long_uninterruptable "uninterruptable"
+  #define controller_long_validate        "validate"
 
   enum {
     controller_parameter_help,
@@ -178,6 +180,7 @@ extern "C" {
     controller_parameter_pid,
     controller_parameter_settings,
     controller_parameter_simulate,
+    controller_parameter_uninterruptable,
     controller_parameter_validate,
   };
 
@@ -199,10 +202,11 @@ extern "C" {
       f_console_parameter_t_initialize(controller_short_pid, controller_long_pid, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_settings, controller_long_settings, 0, 1, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_simulate, controller_long_simulate, 0, 0, f_console_type_normal), \
+      f_console_parameter_t_initialize(controller_short_uninterruptable, controller_long_uninterruptable, 0, 0, f_console_type_normal), \
       f_console_parameter_t_initialize(controller_short_validate, controller_long_validate, 0, 0, f_console_type_normal), \
     }
 
-  #define controller_total_parameters 17
+  #define controller_total_parameters 18
 #endif // _di_controller_defines_
 
 #ifndef _di_controller_main_t_

@@ -29,19 +29,22 @@ extern "C" {
 
     f_print_character(f_string_eol_s[0], main.output.stream);
 
-    fll_program_print_help_option(main.output, main.context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
-    fll_program_print_help_option(main.output, main.context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run in daemon only mode (do not process the entry).");
-    fll_program_print_help_option(main.output, main.context, controller_short_init, controller_long_init, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         The program will run as an init replacement.");
-    fll_program_print_help_option(main.output, main.context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program can be interrupted.");
-    fll_program_print_help_option(main.output, main.context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "          Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
-    fll_program_print_help_option(main.output, main.context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Specify a custom settings path, such as '" controller_path_settings "'.");
-    fll_program_print_help_option(main.output, main.context, controller_short_simulate, controller_long_simulate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Run as a simulation.");
-    fll_program_print_help_option(main.output, main.context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Validate the settings (entry and rules) without running (does not simulate).");
+    fll_program_print_help_option(main.output, main.context, controller_short_control, controller_long_control, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Specify a custom control group file path, such as '" f_control_group_path_system_prefix f_control_group_path_system_default "'.");
+    fll_program_print_help_option(main.output, main.context, controller_short_daemon, controller_long_daemon, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
+    fll_program_print_help_option(main.output, main.context, controller_short_init, controller_long_init, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
+    fll_program_print_help_option(main.output, main.context, controller_short_interruptable, controller_long_interruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
+    fll_program_print_help_option(main.output, main.context, controller_short_pid, controller_long_pid, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as '" controller_path_pid controller_string_default controller_path_suffix "'.");
+    fll_program_print_help_option(main.output, main.context, controller_short_settings, controller_long_settings, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as '" controller_path_settings "'.");
+    fll_program_print_help_option(main.output, main.context, controller_short_simulate, controller_long_simulate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
+    fll_program_print_help_option(main.output, main.context, controller_short_uninterruptable, controller_long_uninterruptable, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
+    fll_program_print_help_option(main.output, main.context, controller_short_validate, controller_long_validate, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
     fll_program_print_help_usage(main.output, main.context, main.program_name, "entry");
 
     fl_print_format("  When both the %[%s%s%] parameter and the", main.output.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_simulate, main.context.set.notable);
     fl_print_format(" %[%s%s%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%c%c", main.output.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_validate, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+
+    fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptable : controller_long_interruptable, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
     funlockfile(main.output.stream);
 
@@ -329,6 +332,18 @@ extern "C" {
         }
 
         status = F_status_set_error(F_parameter);
+      }
+    }
+
+    // when a default setting is not provided, then make the program interruptable by default.
+    if (main->setting_default.used) {
+      if (main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
+        setting.interruptable = F_true;
+      }
+    }
+    else {
+      if (main->parameters[controller_parameter_uninterruptable].result == f_console_result_none) {
+        setting.interruptable = F_true;
       }
     }
 

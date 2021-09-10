@@ -991,8 +991,7 @@ extern "C" {
         if (errno == EAGAIN) continue;
       }
 
-      if (global->main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
-
+      if (global->setting->interruptable) {
         if (information.si_signo == F_signal_interrupt || information.si_signo == F_signal_abort || information.si_signo == F_signal_quit || information.si_signo == F_signal_termination) {
 
           global->thread->signal = information.si_signo;
