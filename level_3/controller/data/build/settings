@@ -13,7 +13,7 @@ environment
 process_pre
 process_post
 
-modes individual level monolithic
+modes individual level monolithic as_init
 modes_default monolithic
 
 build_compiler gcc
@@ -49,6 +49,7 @@ search_static yes
 
 #defines_all -D_di_libcap_ -D_di_thread_support_
 defines_all -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines_all-as_init -D_controller_as_init_
 defines_static
 defines_shared
 

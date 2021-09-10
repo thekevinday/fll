@@ -34,6 +34,18 @@ int main(const int argc, const f_string_t *argv) {
   // restore umask.
   umask(data.umask);
 
+  // when run as "init" by default, provide the default system-level init path.
+  // this change must only exist within this main file so that the change only exists within the program rather than the library.
+  #ifdef _controller_as_init_
+    data.program_name = controller_name_init;
+    data.program_name_long = controller_name_init_long;
+    data.setting_default.string = controller_path_settings_init;
+    data.setting_default.used = controller_path_settings_init_length;
+  #else // _controller_as_init_
+    data.program_name = controller_name;
+    data.program_name_long = controller_name_long;
+  #endif // _controller_as_init_
+
   status = controller_main(arguments, &data);
 
   // flush output pipes before closing.

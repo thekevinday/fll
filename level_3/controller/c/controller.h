@@ -103,6 +103,9 @@ extern "C" {
 #ifndef _di_controller_name_
   #define controller_name      "controller"
   #define controller_name_long "Controller Program"
+
+  #define controller_name_init      "init"
+  #define controller_name_init_long "Init Program"
 #endif // _di_controller_name_
 
 #ifndef _di_controller_defines_
@@ -218,6 +221,10 @@ extern "C" {
     int child;
     f_signal_t signal;
 
+    f_string_t program_name;
+    f_string_t program_name_long;
+    f_string_static_t setting_default;
+
     f_color_context_t context;
   } controller_main_t;
 
@@ -233,6 +240,9 @@ extern "C" {
       0, \
       0, \
       f_signal_t_initialize, \
+      f_string_t_initialize, \
+      f_string_t_initialize, \
+      f_string_static_t_initialize, \
       f_color_context_t_initialize, \
     }
 #endif // _di_controller_main_t_
@@ -240,16 +250,14 @@ extern "C" {
 /**
  * Print help.
  *
- * @param output
- *   The file to print to.
- * @param context
- *   The color context settings.
+ * @param main
+ *   The program main data.
  *
  * @return
  *   F_none on success.
  */
 #ifndef _di_controller_print_help_
-  extern f_status_t controller_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t controller_print_help(const controller_main_t main);
 #endif // _di_controller_print_help_
 
 /**
@@ -260,7 +268,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process.
  * @param main
- *   The program main.
+ *   The program main data.
  *
  * @return
  *   F_none on success.
@@ -279,7 +287,7 @@ extern "C" {
  * Be sure to call this after executing controller_main().
  *
  * @param main
- *   The program main.
+ *   The program main data.
  *
  * @return
  *   F_none on success.
