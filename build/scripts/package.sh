@@ -303,7 +303,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to create directory $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -312,7 +312,7 @@ package_create_base_files() {
       echo -e "${c_error}ERROR: The build directory $c_notice${path_build}documents$c_error cannot be found or is invalid.$c_reset"
     fi
 
-    failure=1
+    let failure=1
   fi
 
   if [[ $failure == "" ]] ; then
@@ -323,7 +323,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -336,7 +336,7 @@ package_create_base_files() {
           echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}licenses$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
       fi
     elif [[ -d ${path_build}../licenses ]] ; then
       cp $verbose -R ${path_build}../licenses $package
@@ -346,14 +346,14 @@ package_create_base_files() {
           echo -e "${c_error}ERROR: Failed to copy directory $c_notice${path_build}../licenses$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
       fi
     else
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_error}ERROR: neither directory $c_notice${path_build}licenses$c_error nor $c_notice${path_build}../licenses$c_error can be found or are invalid.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -365,7 +365,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to copy script $c_notice${path_build}bootstrap.sh$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
 
     if [[ $failure == "" ]] ; then
@@ -376,7 +376,7 @@ package_create_base_files() {
           echo -e "${c_error}ERROR: Failed to set executable permissions on script $c_notice${package}bootstrap.sh$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -388,7 +388,7 @@ package_create_base_files() {
           echo -e "${c_error}ERROR: Failed to copy script $c_notice${path_build}install.sh$c_error to $c_notice$package$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -400,7 +400,7 @@ package_create_base_files() {
           echo -e "${c_error}ERROR: Failed to set executable permissions on script $c_notice${package}install.sh$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -413,7 +413,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}build$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -425,7 +425,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}sources$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -437,7 +437,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}documents$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -449,7 +449,7 @@ package_create_base_files() {
         echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}licenses$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -496,7 +496,7 @@ package_dependencies_individual() {
         echo -e "${c_error}ERROR: cannot build dependencies, failed to find $c_notice${directory}/data/build/dependencies$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       return
     fi
 
@@ -505,7 +505,7 @@ package_dependencies_individual() {
         echo -e "${c_error}ERROR: cannot build dependencies for $c_reset$c_notice${name}$c_reset${c_error}, failed to find $c_notice${directory}/data/build/settings$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       return
     fi
 
@@ -545,7 +545,7 @@ package_dependencies_individual() {
           echo -e "${c_error}ERROR: Failed to find dependency data directory $c_notice${path_sources}${level}/${dependency}/data/build/$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         return
       fi
 
@@ -572,7 +572,7 @@ package_dependencies_individual() {
             echo -e "${c_error}ERROR: Failed to find dependency data directory $c_notice${path_sources}${sub_level}/${sub_dependency}/data/build/$c_error.$c_reset"
           fi
 
-          failure=1
+          let failure=1
           return
         fi
 
@@ -639,7 +639,7 @@ package_dependencies_individual() {
         echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       return
     fi
 
@@ -659,7 +659,7 @@ package_dependencies_individual() {
           echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         return
       fi
     fi
@@ -674,7 +674,7 @@ package_dependencies_individual() {
           echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         return
       fi
 
@@ -686,7 +686,7 @@ package_dependencies_individual() {
           echo -e "${c_error}ERROR: Failed to update settings file $c_notice${settings}$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         return
       fi
     fi
@@ -705,7 +705,7 @@ package_dependencies_individual_append() {
       echo -e "${c_error}ERROR: Failed to find dependency settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -806,7 +806,7 @@ package_dependencies_level_update() {
         echo -e "${c_error}ERROR: Failed to find settings file $c_notice$settings$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       return
     fi
 
@@ -842,7 +842,7 @@ package_dependencies_level_update() {
       echo -e "${c_error}ERROR: Failed to find settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -856,7 +856,7 @@ package_dependencies_level_update() {
       echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -876,7 +876,7 @@ package_dependencies_level_update() {
       echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -896,7 +896,7 @@ package_dependencies_level_update() {
       echo -e "${c_error}ERROR: Failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -1040,7 +1040,7 @@ package_dependencies_monolithic() {
       echo -e "${c_error}ERROR: Failed to update libraries for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 
@@ -1070,7 +1070,7 @@ package_dependencies_monolithic() {
       echo -e "${c_error}ERROR: Failed to update headers for settings file $c_notice$settings$c_error.$c_reset"
     fi
 
-    failure=1
+    let failure=1
     return
   fi
 }
@@ -1112,8 +1112,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to copy the data directory $c_notice${package}sources/data$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
 
     rm $verbose -Rf ${package}sources/data
@@ -1123,9 +1123,11 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
+
+    package_operation_create_config_stubs
   fi
 
   if [[ -d ${package}sources/documents/ ]] ; then
@@ -1136,8 +1138,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to move sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
 
     rm $verbose -Rf ${package}sources/documents/
@@ -1147,8 +1149,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to remove sources documents directory $c_notice${path_sources}sources/documents$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
   fi
 
@@ -1160,8 +1162,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to move sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
 
     rm $verbose -Rf ${package}sources/licenses/
@@ -1171,8 +1173,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to remove sources licenses directory $c_notice${path_sources}sources/licenses$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
   fi
 
@@ -1184,8 +1186,8 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to move sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
     fi
 
     rm $verbose -Rf ${package}sources/specifications/
@@ -1195,8 +1197,127 @@ package_operation_copy_package() {
         echo -e "${c_error}ERROR: Failed to remove sources specifications directory $c_notice${path_sources}sources/specifications$c_error to $c_notice$package$c_error.$c_reset"
       fi
 
-      failure=1
-      break
+      let failure=1
+      return $failure
+    fi
+  fi
+}
+
+package_operation_create_config_stubs() {
+  if [[ -f ${package}data/build/settings ]] ; then
+    if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.c ]] ; then
+      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.c |" ${package}data/build/settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.c |" ${package}data/build/settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to insert the config.c into $c_notice${package}data/build/settings$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      fi
+
+      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        echo > ${package}sources/c/config.c
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to create the config.c at $c_notice${package}sources/c/config.c$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      fi
+    elif [[ $(grep -soP '^\s*\bbuild_language\b\s+c\+\+\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.cpp ]] ; then
+      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        sed -i -E -e "s|^\s*\bbuild_sources_program\s+|&config.cpp |" ${package}data/build/settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      elif [[ $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        sed -i -E -e "s|^\s*\bbuild_sources_library\s+|&config.cpp |" ${package}data/build/settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to insert the config.cpp into $c_notice${package}data/build/settings$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      fi
+
+      if [[ $(grep -soP '^\s*\bbuild_sources_program\b\s+\S' ${package}data/build/settings) != "" || $(grep -soP '^\s*\bbuild_sources_library\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        echo > ${package}sources/c++/config.cpp
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.cpp$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+      fi
+    fi
+
+    if [[ ( $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c/config.h ) || ( $(grep -soP '^\s*\bbuild_language\b\s+c\+\+\s*$' ${package}data/build/settings) != "" && ! -f ${package}sources/c++/config.h ) ]] ; then
+      if [[ $(grep -soP '^\s*\bbuild_sources_headers\b\s+\S' ${package}data/build/settings) != "" ]] ; then
+        sed -i -E -e "s|^\s*\bbuild_sources_headers\s+|&config.h |" ${package}data/build/settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to insert the config.h into $c_notice${package}data/build/settings$c_error.$c_reset"
+          fi
+
+          let failure=1
+          return $failure
+        fi
+
+        if [[ $(grep -soP '^\s*\bbuild_language\b\s+c\s*$' ${package}data/build/settings) != "" ]] ; then
+          echo > ${package}sources/c/config.h
+
+          if [[ $? -ne 0 ]] ; then
+            if [[ $verbosity != "quiet" ]] ; then
+              echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c/config.h$c_error.$c_reset"
+            fi
+
+            let failure=1
+            return $failure
+          fi
+        else
+          echo > ${package}sources/c++/config.h
+
+          if [[ $? -ne 0 ]] ; then
+            if [[ $verbosity != "quiet" ]] ; then
+              echo -e "${c_error}ERROR: Failed to create the config.cpp at $c_notice${package}sources/c++/config.h$c_error.$c_reset"
+            fi
+
+            let failure=1
+            return $failure
+          fi
+        fi
+      fi
     fi
   fi
 }
@@ -1262,7 +1383,7 @@ package_operation_individual() {
         echo -e "${c_error}ERROR: Failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       break
     fi
 
@@ -1296,7 +1417,7 @@ package_operation_level() {
         echo -e "${c_error}ERROR: build settings directory $c_notice$path_build$level$c_error is invalid or missing.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       break
     fi
 
@@ -1310,7 +1431,7 @@ package_operation_level() {
           echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}data$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         break
       fi
     fi
@@ -1326,7 +1447,7 @@ package_operation_level() {
         echo -e "${c_error}ERROR: Failed to move the directory $c_notice$path_build$level$c_error as $c_notice$path_build${level}build$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       break
     fi
 
@@ -1338,7 +1459,7 @@ package_operation_level() {
           echo -e "${c_error}ERROR: Failed to create directory $c_notice${package}sources$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         break
       fi
     fi
@@ -1351,7 +1472,7 @@ package_operation_level() {
           echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         break
       fi
 
@@ -1362,7 +1483,7 @@ package_operation_level() {
           echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
         fi
 
-        failure=1
+        let failure=1
         break
       fi
 
@@ -1463,7 +1584,7 @@ package_operation_monolithic() {
                 echo -e "${c_error}ERROR: Failed to create package data directory $c_notice${package}data/$level$c_error.$c_reset"
               fi
 
-              failure=1
+              let failure=1
               break
             fi
           fi
@@ -1475,7 +1596,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/data$level$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
 
@@ -1486,7 +1607,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data/build$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
 
@@ -1498,7 +1619,7 @@ package_operation_monolithic() {
                 echo -e "${c_error}ERROR: Failed to copy the data directory $c_notice${package}sources/data/$level/data$c_error to $c_notice${package}data/$level$c_error.$c_reset"
               fi
 
-              failure=1
+              let failure=1
               break
             fi
           fi
@@ -1510,7 +1631,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to remove directory $c_notice${package}sources/data$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
         elif [[ $pathname == "documents" ]] ; then
@@ -1521,7 +1642,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/documents$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
         elif [[ $pathname == "licenses" ]] ; then
@@ -1532,7 +1653,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/licenses$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
         elif [[ $pathname == "specifications" ]] ; then
@@ -1543,7 +1664,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to copy files from data directory $c_notice$subdirectory$c_error to $c_notice${package}sources/specifications$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
         else
@@ -1555,7 +1676,7 @@ package_operation_monolithic() {
                 echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
               fi
 
-              failure=1
+              let failure=1
               break
             fi
           fi
@@ -1567,7 +1688,7 @@ package_operation_monolithic() {
               echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$subdirectory$c_error to $c_notice${package}sources/$pathname/$level$c_error.$c_reset"
             fi
 
-            failure=1
+            let failure=1
             break
           fi
         fi
@@ -1582,6 +1703,10 @@ package_operation_monolithic() {
       break;
     fi
   done
+
+  if [[ $failure == "" ]] ; then
+    package_operation_create_config_stubs
+  fi
 
   if [[ $failure != "" ]] ; then
     package_cleanup
@@ -1626,7 +1751,7 @@ package_operation_program() {
         echo -e "${c_error}ERROR: Failed to copy sources directory $c_notice$directory$c_error to $c_notice${package}sources$c_error.$c_reset"
       fi
 
-      failure=1
+      let failure=1
       break
     fi
 
@@ -1652,6 +1777,7 @@ package_cleanup() {
   unset package_dependencies_monolithic
   unset package_operation_clean
   unset package_operation_copy_package
+  unset package_operation_create_config_stubs
   unset package_operation_individual
   unset package_operation_level
   unset package_operation_monolithic
