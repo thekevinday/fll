@@ -2974,7 +2974,7 @@ extern "C" {
           }
 
           if (main.error.verbosity == f_console_verbosity_verbose) {
-            fll_print_format("Directory '%S' created.%c", main.output.stream, destination_path, f_string_eol_s[0]);
+            fll_print_format("Directory '%Q' created.%c", main.output.stream, destination_path, f_string_eol_s[0]);
           }
         }
         else if (F_status_is_error(*status)) {
