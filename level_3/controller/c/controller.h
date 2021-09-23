@@ -114,6 +114,9 @@ extern "C" {
   #if defined(_override_controller_path_pid_init_) && defined(_override_controller_path_pid_init_length_)
     #define controller_path_pid_init         _override_controller_path_pid_init_
     #define controller_path_pid_init_length  _override_controller_path_pid_init_length_
+  #elif defined(_controller_as_init_)
+    #define controller_path_pid_init        "/var/run/init/init-"
+    #define controller_path_pid_init_length 19
   #else
     #define controller_path_pid_init        "/var/run/controller/controller-"
     #define controller_path_pid_init_length 31
@@ -123,6 +126,9 @@ extern "C" {
   #if defined(_override_controller_path_settings_init_) && defined(_override_controller_path_settings_init_length_)
     #define controller_path_settings_init        _override_controller_path_settings_init_
     #define controller_path_settings_init_length _override_controller_path_settings_init_length_
+  #elif defined(_controller_as_init_)
+    #define controller_path_settings_init "/etc/init"
+    #define controller_path_settings_init_length 9
   #else
     #define controller_path_settings_init "/etc/controller"
     #define controller_path_settings_init_length 15
@@ -228,6 +234,7 @@ extern "C" {
     f_string_t program_name;
     f_string_t program_name_long;
     f_string_static_t setting_default;
+    f_string_static_t path_pid;
 
     f_color_context_t context;
   } controller_main_t;
@@ -246,6 +253,7 @@ extern "C" {
       f_signal_t_initialize, \
       f_string_t_initialize, \
       f_string_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_color_context_t_initialize, \
     }

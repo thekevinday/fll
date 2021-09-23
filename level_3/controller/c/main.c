@@ -41,9 +41,13 @@ int main(const int argc, const f_string_t *argv) {
     data.program_name_long = controller_name_init_long;
     data.setting_default.string = controller_path_settings_init;
     data.setting_default.used = controller_path_settings_init_length;
+    data.path_pid.string = controller_path_pid_init;
+    data.path_pid.used = controller_path_pid_init_length;
   #else // _controller_as_init_
     data.program_name = controller_name;
     data.program_name_long = controller_name_long;
+    data.path_pid.string = controller_path_pid;
+    data.path_pid.used = controller_path_pid_length;
   #endif // _controller_as_init_
 
   status = controller_main(arguments, &data);

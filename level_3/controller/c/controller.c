@@ -250,7 +250,7 @@ extern "C" {
         status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);
       }
       else {
-        status = f_string_append(controller_path_pid, controller_path_pid_length, &setting.path_pid);
+        status = f_string_append(main->path_pid.string, main->path_pid.used, &setting.path_pid);
       }
 
       if (F_status_is_error_not(status)) {
