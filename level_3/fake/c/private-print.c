@@ -368,10 +368,10 @@ extern "C" {
     flockfile(main.error.to.stream);
 
     fl_print_format("%c%[%SThe section operation '%]", main.error.to.stream, f_string_eol_s[0], main.error.context, main.error.prefix, main.error.context);
-    fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, operation_name, main.error.notable);
+    fl_print_format("%[%/Q%]", main.error.to.stream, main.error.notable, buffer, operation_name, main.error.notable);
     fl_print_format("%[' from section '%]", main.error.to.stream, main.error.context, main.error.context);
-    fl_print_format("%[%Q%]", main.error.to.stream, main.error.notable, section_name, main.error.notable);
-    fl_print_format("%[' on line %]", main.error.to.stream, main.error.context, main.error.context);
+    fl_print_format("%[%/Q%]", main.error.to.stream, main.error.notable, buffer, section_name, main.error.notable);
+    fl_print_format("%[' on line%] ", main.error.to.stream, main.error.context, main.error.context);
     fl_print_format("%[%un%]", main.error.to.stream, main.error.notable, line, main.error.notable);
     fl_print_format(" %[failed.%]%c", main.error.to.stream, main.error.context, main.error.context, f_string_eol_s[0]);
 

@@ -2,27 +2,28 @@
 #
 # Rule for the terminal programs.
 #
+# -m = don't prompt for login.
 
 setting:
   name "System Terminal"
   capability "all="
 
-service:
-  pid_file /var/run/tty/tty1.pid
+command:
+  #pid_file /var/run/tty/tty1.pid
 
-  start qingy tty1 -d -l -n -t
+  start agetty -8 9600 tty1 linux
 
-service:
-  pid_file /var/run/tty/tty2.pid
+command:
+  #pid_file /var/run/tty/tty2.pid
 
-  start qingy tty2 -d -l -n -t
+  start agetty -8 9600 tty2 linux
 
-service:
-  pid_file /var/run/tty/tty3.pid
+command:
+  #pid_file /var/run/tty/tty3.pid
 
-  start qingy tty3 -d -l -n -t
+  start agetty -8 9600 tty3 linux
 
-service:
-  pid_file /var/run/tty/tty4.pid
+command:
+  #pid_file /var/run/tty/tty4.pid
 
-  start qingy tty4 -d -l -n -t
+  start agetty -8 9600 tty4 linux

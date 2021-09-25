@@ -319,16 +319,16 @@ extern "C" {
         fl_print_format(" %['due to%] ", print.to.stream, print.context, print.context);
 
         if (status == F_parameter) {
-          fl_print_format("%[%s%]", print.to.stream, print.notable, "Invalid Parameter", print.notable);
+          fl_print_format("%[Invalid Parameter%]", print.to.stream, print.notable, print.notable);
         }
         else if (status == F_deadlock) {
-          fl_print_format("%[%s%]", print.to.stream, print.notable, "Deadlock", print.notable);
+          fl_print_format("%[Deadlock%]", print.to.stream, print.notable, print.notable);
         }
         else if (status == F_resource_not) {
-          fl_print_format("%[%s%]", print.to.stream, print.notable, "Too Many Locks", print.notable);
+          fl_print_format("%[Too Many Locks%]", print.to.stream, print.notable, print.notable);
         }
         else {
-          fl_print_format("%[%s%]", print.to.stream, print.notable, "Unknown Error", print.notable);
+          fl_print_format("%[Unknown Error%]", print.to.stream, print.notable, print.notable);
         }
       }
 

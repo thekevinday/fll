@@ -1,0 +1,7 @@
+# fss-0005
+#
+# A boot to bash process.
+#
+
+main:
+  execute bash --login

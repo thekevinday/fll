@@ -425,7 +425,6 @@ extern "C" {
             controller_error_print(global.main->error, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
           }
           else {
-
             actions->array[actions->used].type = type;
             actions->array[actions->used].line += ++item->line;
             actions->array[actions->used].parameters.used = 0;
@@ -694,17 +693,17 @@ extern "C" {
       fl_print_format("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
 
       if (cache.name_action.used) {
-        fl_print_format("%s '%]", output.to.stream, output.context, item ? controller_string_action_s : controller_string_value_s, output.context);
+        fl_print_format("%s '%]", output.to.stream, item ? controller_string_action_s : controller_string_value_s, output.context);
         fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_action, output.notable);
-        fl_print_format("%[ on line %]", output.to.stream, output.context, output.context);
+        fl_print_format("%[' on line%] ", output.to.stream, output.context, output.context);
         fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_action, output.notable);
         fl_print_format("%[ for ", output.to.stream, output.context);
       }
 
       if (cache.name_item.used) {
-        fl_print_format("rule %s '%]", output.to.stream, output.context, item ? controller_string_item_s : controller_string_setting_s, output.context);
+        fl_print_format("rule %s '%]", output.to.stream, item ? controller_string_item_s : controller_string_setting_s, output.context);
         fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_item, output.notable);
-        fl_print_format("%[ on line %]", output.to.stream, output.context, output.context);
+        fl_print_format("%[' on line%] ", output.to.stream, output.context, output.context);
         fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_item, output.notable);
         fl_print_format("%[ for ", output.to.stream, output.context);
       }
@@ -5580,7 +5579,7 @@ extern "C" {
           }
           else {
             for (k = 0; k < action->parameters.used; ++k) {
-              fl_print_format("      %s%s%s %Q%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
+              fl_print_format("      %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
             } // for
           }
 

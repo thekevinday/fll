@@ -46,6 +46,8 @@ extern "C" {
 
     fl_print_format(" The default interrupt behavior is to operate as if the %[%s%s%] parameter is passed.%c%c", main.output.stream, main.context.set.notable, f_console_symbol_long_enable_s, main.setting_default.used ? controller_long_uninterruptable : controller_long_interruptable, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
+    fl_print_format(" Specify an empty string for the %[%s%s%] parameter to disable pid file creation for this program.%c%c", main.output.stream, main.context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main.context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+
     funlockfile(main.output.stream);
 
     return F_none;
@@ -230,21 +232,12 @@ extern "C" {
           }
         }
         else {
-          if (main->warning.verbosity == f_console_verbosity_debug) {
-            flockfile(main->warning.to.stream);
-
-            fl_print_format("%c%[%SThe parameter '%]", main->warning.to.stream, f_string_eol_s[0], main->warning.context, main->warning.prefix ? main->warning.prefix : f_string_empty_s, main->warning.context);
-            fl_print_format("%[%s%s%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid, main->context.set.notable);
-            fl_print_format("%[' must be a file path but instead is an empty string, falling back to the default.%]%c", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s[0]);
-
-            funlockfile(main->warning.to.stream);
-          }
+          main->process_pid = F_false;
         }
       }
     }
 
-    // a pid file path is required.
-    if (F_status_is_error_not(status) && !setting.path_pid.used) {
+    if (F_status_is_error_not(status) && !setting.path_pid.used && main->process_pid) {
 
       if (main->parameters[controller_parameter_init].result == f_console_result_found) {
         status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);

@@ -19,7 +19,6 @@ main:
 boot:
   start boot filesystem require
   start boot modules require
-  start boot devices require
 
   start service logger wait
   start service dbus asynchronous
@@ -40,8 +39,4 @@ console:
   start service mouse
 
 maintenance:
-  timeout start 2
-  timeout stop 2
-  timeout kill 2
-
-  start maintenance console
+  execute bash --login

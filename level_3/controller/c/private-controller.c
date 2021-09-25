@@ -413,7 +413,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
-    if (is_entry && global.main->parameters[controller_parameter_validate].result == f_console_result_none) {
+    if (is_entry && global.main->parameters[controller_parameter_validate].result == f_console_result_none && global.main->process_pid) {
 
       status = controller_file_pid_create(global.main->pid, global.setting->path_pid);
 
@@ -575,7 +575,7 @@ extern "C" {
 
                     fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.prefix, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, entry->items.array[i].name, global.main->error.notable);
-                    fl_print_format("%[' cannot be executed because recursion is not allowed.%]%c", global.main->error.to.stream, global.main->error.context, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context, f_string_eol_s[0]);
+                    fl_print_format("%[' cannot be executed because recursion is not allowed.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                     controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
@@ -641,7 +641,7 @@ extern "C" {
 
                 fl_print_format("%c%[%SThe %s item named '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.prefix, global.main->error.context);
                 fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, actions->array[cache->ats.array[at_j]].parameters.array[0], global.main->error.notable);
-                fl_print_format("%[' does not exist.%]%c", global.main->error.to.stream, global.main->error.context, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context, f_string_eol_s[0]);
+                fl_print_format("%[' does not exist.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
 
                 controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
@@ -836,7 +836,7 @@ extern "C" {
 
               flockfile(output->to.stream);
 
-              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, output->context);
               fl_print_format("%[%Q%]", output->to.stream, output->notable, cache->action.name_action, output->notable);
 
               if (entry_action->parameters.used) {
@@ -873,7 +873,7 @@ extern "C" {
 
               flockfile(output->to.stream);
 
-              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, output->context);
               fl_print_format("%[%Q%]", output->to.stream, output->notable, cache->action.name_action, output->notable);
 
               if (entry_action->parameters.used) {
@@ -1250,7 +1250,7 @@ extern "C" {
 
                 fl_print_format("%c%[%SExecution failed, unable to find program or script '%]", global->main->error.to.stream, f_string_eol_s[0], global->main->error.context, global->main->error.prefix ? global->main->error.prefix : f_string_empty_s, global->main->error.context);
                 fl_print_format("%[%Q%]", global->main->error.to.stream, global->main->error.notable, entry_action->parameters.array[0], global->main->error.notable);
-                fl_print_format("$['.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
+                fl_print_format("%['.%]%c", global->main->error.to.stream, global->main->error.context, global->main->error.context, f_string_eol_s[0]);
 
                 controller_entry_error_print_cache(is_entry, global->main->error, cache->action);
 

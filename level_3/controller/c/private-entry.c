@@ -735,7 +735,7 @@ extern "C" {
 
     if (cache.name_action.used) {
       fl_print_format("action '%]", output.to.stream, output.context);
-      fl_print_format("%[%Q%]", output.to.stream, output.context, cache.name_action, output.context);
+      fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_action, output.notable);
       fl_print_format("%[' on line%] ", output.to.stream, output.context, output.context);
       fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_action, output.notable);
       fl_print_format("%[ for ", output.to.stream, output.context);

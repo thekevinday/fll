@@ -1,9 +1,0 @@
-# fss-000d
-#
-# Rule for initializing the device files.
-#
-
-setting:
-  name "Setup System Devices"
-
-  on start need boot modules
