@@ -1594,7 +1594,8 @@ extern "C" {
  * @param type
  *   A valid file type code from the fll_error_file_type enum.
  * @param thread
- *   The thread data.
+ *   (optional) The thread data.
+ *   Set to NULL to disable locking on the thread (this should be done only if the lock is already in place).
  *
  * @see fll_error_file_print()
  */
@@ -1635,7 +1636,8 @@ extern "C" {
  * @param fallback
  *   Set to F_true to print the fallback error message for unknown errors.
  * @param thread
- *   The thread data.
+ *   (optional) The thread data.
+ *   Set to NULL to disable locking on the thread (this should be done only if the lock is already in place).
  *
  * @see fll_error_print()
  */
@@ -1916,20 +1918,44 @@ extern "C" {
 #endif // _di_controller_pids_resize_
 
 /**
+ * Lock the mutex and the stream.
+ *
+ * This is implemented as a compliment to controller_print_unlock_flush() for consistency reasons.
+ *
+ * @param to
+ *   The file stream to lock.
+ * @param thread
+ *   The thread containing the print mutex to lock.
+ *
+ * @see flockfile()
+ *
+ * @see f_thread_mutex_unlock()
+ */
+#ifndef _di_controller_print_lock_
+  extern void controller_print_lock(const f_file_t to, controller_thread_t * const thread) f_attribute_visibility_internal;
+#endif // _di_controller_print_lock_
+
+/**
  * Flush the stream buffer and then unlock the mutex.
+ *
+ * This unlocks both the stream and the mutex locks.
  *
  * Weird behavior was observed when piping data from this program.
  * The behavior appears related to how this handles locks in addition to the file streams own locking mechanisms.
  *
  * As a work-around, this performs a flush immediately before unlocking the print mutex.
  *
- * @param stream
- *   The output stream to flush.
- * @param mutex
- *   The print mutex to unlock.
+ * @param to
+ *   The file stream to unlock and flush.
+ * @param thread
+ *   The thread containing the print mutex to unlock.
+ *
+ * @see funlockfile()
+ *
+ * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_print_unlock_flush_
-  void controller_print_unlock_flush(FILE * const stream, f_thread_mutex_t *mutex) f_attribute_visibility_internal;
+  void controller_print_unlock_flush(const f_file_t to, controller_thread_t * const thread) f_attribute_visibility_internal;
 #endif // _di_controller_print_unlock_flush_
 
 /**

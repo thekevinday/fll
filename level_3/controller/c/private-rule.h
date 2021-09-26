@@ -245,8 +245,8 @@ extern "C" {
  *
  * This is explicitly intended to be used in addition to the error message.
  *
- * @param output
- *   The error or warning output structure.
+ * @param print
+ *   The error or warning print structure.
  * @param cache
  *   A structure for containing and caching relevant data.
  * @param item
@@ -258,7 +258,7 @@ extern "C" {
  * @see controller_rule_error_print_cache()
  */
 #ifndef _di_controller_rule_item_error_print_
-  extern void controller_rule_item_error_print(const fll_error_print_t output, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_
 
 /**
@@ -275,9 +275,11 @@ extern "C" {
  *   The code returned by the executed program or script.
  * @param status
  *   The status code representing the failure (without the error bit set).
+ * @param thread
+ *   The thread data.
  */
 #ifndef _di_controller_rule_item_error_print_execute_
-  extern void controller_rule_item_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_execute_
 
 /**
