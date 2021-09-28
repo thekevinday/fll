@@ -211,7 +211,7 @@ extern "C" {
     } // while
 
     {
-      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(F_true, global.thread);
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
       f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large, controller_common_allocation_small, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
