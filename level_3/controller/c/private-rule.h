@@ -222,7 +222,7 @@ extern "C" {
  *
  * This neither locks the thread nor does it check to see if output is enabled or disabled.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param cache
  *   A structure for containing and caching relevant data.
@@ -237,7 +237,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_cache_
-  extern void controller_rule_error_print_cache(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) f_attribute_visibility_internal;
+  extern void controller_rule_error_print_cache(const fll_error_print_t print, const controller_cache_action_t cache, const bool item) f_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_cache_
 
 /**
@@ -252,19 +252,21 @@ extern "C" {
  * @param item
  *   If TRUE, then this error is associated with an item.
  *   If FALSE, then this error is associated with a rule setting.
+ * @param status
+ *   The status code representing the failure (without the error bit set).
  * @param thread
  *   The thread data.
  *
  * @see controller_rule_error_print_cache()
  */
 #ifndef _di_controller_rule_item_error_print_
-  extern void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_
 
 /**
  * Print an error or warning message related to the failed execution of some program or script.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param script_is
  *   If TRUE, then this represents a script.
@@ -279,14 +281,14 @@ extern "C" {
  *   The thread data.
  */
 #ifndef _di_controller_rule_item_error_print_execute_
-  extern void controller_rule_item_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_execute(const fll_error_print_t print, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_execute_
 
 /**
  * Print an error or warning message related to the failed execution of some program or script for when the program or script is not found.
  *
- * @param output
- *   The error or warning output structure.
+ * @param print
+ *   The error or warning print structure.
  * @param script_is
  *   If TRUE, then this represents a script.
  *   If FALSE, then this represents a program.
@@ -294,13 +296,13 @@ extern "C" {
  *   The code returned by the executed program or script.
  */
 #ifndef _di_controller_rule_item_error_print_execute_not_found_
-  extern void controller_rule_item_error_print_execute_not_found(const fll_error_print_t output, const bool script_is, const f_string_t name) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_execute_not_found(const fll_error_print_t print, const bool script_is, const f_string_t name) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_execute_not_found_
 
 /**
  * Print an error or warning message related to need/want/wish settings of some rule.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param need_want_wish
  *   The appropriate string, such as "needs", "wants", or "wishes for" to output when describing this error/warning.
@@ -311,31 +313,31 @@ extern "C" {
  *   A short explanation on why this is an error or warning.
  */
 #ifndef _di_controller_rule_item_error_print_need_want_wish_
-  extern void controller_rule_item_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_need_want_wish(const fll_error_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_need_want_wish_
 
 /**
  * Print an error or warning message about some rule not being loaded.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param alias
  *   The rule alias of the rule that is not loaded.
  */
 #ifndef _di_controller_rule_item_error_print_rule_not_loaded_
-  extern void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t output, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t print, const f_string_t alias) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 /**
  * Print an error or warning message about some rule not having the pid file information.
  *
- * @param output
+ * @param print
  *   The error or warning output structure.
  * @param alias
  *   The rule alias of the rule that is missing the pid file designation.
  */
 #ifndef _di_controller_rule_action_error_missing_pid_
-  extern void controller_rule_action_error_missing_pid(const fll_error_print_t output, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_action_error_missing_pid(const fll_error_print_t print, const f_string_t alias) f_attribute_visibility_internal;
 #endif // _di_controller_rule_action_error_missing_pid_
 
 /**

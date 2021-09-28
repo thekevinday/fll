@@ -186,18 +186,17 @@ extern "C" {
 #ifndef _di_controller_error_file_print_
   void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity == f_console_verbosity_quiet) return;
 
-      // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
-      if (thread) {
-        f_thread_mutex_lock(&thread->lock.print);
-      }
+    // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
+    if (thread) {
+      f_thread_mutex_lock(&thread->lock.print);
+    }
 
-      fll_error_file_print(print, status, function, fallback, name, operation, type);
+    fll_error_file_print(print, status, function, fallback, name, operation, type);
 
-      if (thread) {
-        f_thread_mutex_unlock(&thread->lock.print);
-      }
+    if (thread) {
+      f_thread_mutex_unlock(&thread->lock.print);
     }
   }
 #endif // _di_controller_error_file_print_
@@ -205,34 +204,34 @@ extern "C" {
 #ifndef _di_controller_error_pid_bad_match_print_
   void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
-      controller_print_lock(print.to, thread);
+    if (print.verbosity == f_console_verbosity_quiet) return;
 
-      fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
-      fl_print_format("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
-      fl_print_format("%[%S%]", print.to.stream, print.notable, path, print.notable);
-      fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+    controller_print_lock(print.to, thread);
 
-      controller_print_unlock_flush(print.to, thread);
-    }
+    fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
+    fl_print_format("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, path, print.notable);
+    fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+    controller_print_unlock_flush(print.to, thread);
   }
 #endif // _di_controller_error_pid_bad_match_print_
 
 #ifndef _di_controller_error_print_
   void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (status == F_interrupt) return;
 
-      // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
-      if (thread) {
-        f_thread_mutex_lock(&thread->lock.print);
-      }
+    // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
+    if (thread) {
+      f_thread_mutex_lock(&thread->lock.print);
+    }
 
-      fll_error_print(print, status, function, fallback);
+    fll_error_print(print, status, function, fallback);
 
-      if (thread) {
-        f_thread_mutex_unlock(&thread->lock.print);
-      }
+    if (thread) {
+      f_thread_mutex_unlock(&thread->lock.print);
     }
   }
 #endif // _di_controller_error_print_

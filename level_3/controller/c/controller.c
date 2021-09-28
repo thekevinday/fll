@@ -169,6 +169,14 @@ extern "C" {
       return status;
     }
 
+    if (main->parameters[controller_parameter_init].result == f_console_result_found) {
+      main->as_init = F_true;
+    }
+
+    if (main->as_init) {
+      setting.mode = controller_setting_mode_service;
+    }
+
     if (main->parameters[controller_parameter_settings].result == f_console_result_found) {
       if (main->error.verbosity != f_console_verbosity_quiet) {
         flockfile(main->error.to.stream);

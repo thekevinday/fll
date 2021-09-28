@@ -222,6 +222,7 @@ extern "C" {
     f_array_lengths_t remaining;
     bool process_pipe;
     bool process_pid;
+    bool as_init;
 
     f_file_t output;
     fll_error_print_t error;
@@ -246,6 +247,7 @@ extern "C" {
       f_array_lengths_t_initialize, \
       F_false, \
       F_true, \
+      F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fll_error_print_t_initialize, \
       macro_fll_error_print_t_initialize_warning(), \

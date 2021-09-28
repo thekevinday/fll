@@ -719,19 +719,19 @@ extern "C" {
 #ifndef _di_controller_entry_error_print_
   void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (status == F_interrupt) return;
 
-      // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
-      f_thread_mutex_lock(&thread->lock.print);
+    // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
+    f_thread_mutex_lock(&thread->lock.print);
 
-      fll_error_print(print, status, function, fallback);
+    fll_error_print(print, status, function, fallback);
 
-      flockfile(print.to.stream);
+    flockfile(print.to.stream);
 
-      controller_entry_error_print_cache(is_entry, print, cache);
+    controller_entry_error_print_cache(is_entry, print, cache);
 
-      controller_print_unlock_flush(print.to, thread);
-    }
+    controller_print_unlock_flush(print.to, thread);
   }
 #endif // _di_controller_entry_error_print_
 
@@ -1002,11 +1002,13 @@ extern "C" {
           status = controller_entry_actions_read(is_entry, *range, global, cache, &entry->items.array[at].actions);
 
           if (F_status_is_error(status)) {
-            controller_print_lock(global.main->error.to, global.thread);
+            if (F_status_set_fine(status) != F_interrupt) {
+              controller_print_lock(global.main->error.to, global.thread);
 
-            controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
+              controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
-            controller_print_unlock_flush(global.main->error.to, global.thread);
+              controller_print_unlock_flush(global.main->error.to, global.thread);
+            }
 
             if (F_status_set_fine(status) == F_memory_not) {
               break;
@@ -1114,7 +1116,9 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
+      if (F_status_set_fine(status) != F_interrupt) {
+        controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
+      }
 
       entry->status = controller_status_simplify_error(F_status_set_fine(status));
     }

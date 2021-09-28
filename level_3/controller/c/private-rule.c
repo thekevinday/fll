@@ -662,154 +662,154 @@ extern "C" {
 #ifndef _di_controller_rule_error_print_
   void controller_rule_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (status == F_interrupt) return;
 
-      // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
-      f_thread_mutex_lock(&thread->lock.print);
+    // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
+    f_thread_mutex_lock(&thread->lock.print);
 
-      fll_error_print(print, status, function, fallback);
+    fll_error_print(print, status, function, fallback);
 
-      flockfile(print.to.stream);
+    flockfile(print.to.stream);
 
-      controller_rule_error_print_cache(print, cache, item);
+    controller_rule_error_print_cache(print, cache, item);
 
-      controller_print_unlock_flush(print.to, thread);
-    }
+    controller_print_unlock_flush(print.to, thread);
   }
 #endif // _di_controller_rule_error_print_
 
 #ifndef _di_controller_rule_error_print_cache_
-  void controller_rule_error_print_cache(const fll_error_print_t output, const controller_cache_action_t cache, const bool item) {
+  void controller_rule_error_print_cache(const fll_error_print_t print, const controller_cache_action_t cache, const bool item) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_format("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
+    if (print.verbosity == f_console_verbosity_quiet) return;
 
-      if (cache.name_action.used) {
-        fl_print_format("%s '%]", output.to.stream, item ? controller_string_action_s : controller_string_value_s, output.context);
-        fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_action, output.notable);
-        fl_print_format("%[' on line%] ", output.to.stream, output.context, output.context);
-        fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_action, output.notable);
-        fl_print_format("%[ for ", output.to.stream, output.context);
-      }
+    fl_print_format("%c%[%SWhile processing ", print.to.stream, f_string_eol_s[0], print.context, print.prefix);
 
-      if (cache.name_item.used) {
-        fl_print_format("rule %s '%]", output.to.stream, item ? controller_string_item_s : controller_string_setting_s, output.context);
-        fl_print_format("%[%Q%]", output.to.stream, output.notable, cache.name_item, output.notable);
-        fl_print_format("%[' on line%] ", output.to.stream, output.context, output.context);
-        fl_print_format("%[%un%]", output.to.stream, output.notable, cache.line_item, output.notable);
-        fl_print_format("%[ for ", output.to.stream, output.context);
-      }
-
-      if (cache.name_file.used) {
-        fl_print_format("rule file '%]%[%Q%]%['", output.to.stream, output.context, output.notable, cache.name_file, output.notable, output.context);
-      }
-
-      fl_print_format(".%]%c", output.to.stream, output.context, f_string_eol_s[0]);
+    if (cache.name_action.used) {
+      fl_print_format("%s '%]", print.to.stream, item ? controller_string_action_s : controller_string_value_s, print.context);
+      fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_action, print.notable);
+      fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
+      fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_action, print.notable);
+      fl_print_format("%[ for ", print.to.stream, print.context);
     }
+
+    if (cache.name_item.used) {
+      fl_print_format("rule %s '%]", print.to.stream, item ? controller_string_item_s : controller_string_setting_s, print.context);
+      fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_item, print.notable);
+      fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
+      fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_item, print.notable);
+      fl_print_format("%[ for ", print.to.stream, print.context);
+    }
+
+    if (cache.name_file.used) {
+      fl_print_format("rule file '%]%[%Q%]%['", print.to.stream, print.context, print.notable, cache.name_file, print.notable, print.context);
+    }
+
+    fl_print_format(".%]%c", print.to.stream, print.context, f_string_eol_s[0]);
   }
 #endif // _di_controller_rule_error_print_cache_
 
 #ifndef _di_controller_rule_item_error_print_
-  void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, controller_thread_t *thread) {
+  void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) {
 
-    if (print.verbosity != f_console_verbosity_quiet) {
+    if (print.verbosity == f_console_verbosity_quiet) return;
+    if (status == F_interrupt) return;
 
-      // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
-      f_thread_mutex_lock(&thread->lock.print);
+    // fll_error_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_print_lock().
+    f_thread_mutex_lock(&thread->lock.print);
 
-      controller_rule_error_print_cache(print, cache, item);
+    controller_rule_error_print_cache(print, cache, item);
 
-      flockfile(print.to.stream);
+    flockfile(print.to.stream);
 
-      controller_print_unlock_flush(print.to, thread);
-    }
+    controller_print_unlock_flush(print.to, thread);
   }
 #endif // _di_controller_rule_item_error_print_
 
 #ifndef _di_controller_rule_item_error_print_execute_
-  void controller_rule_item_error_print_execute(const fll_error_print_t output, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) {
+  void controller_rule_item_error_print_execute(const fll_error_print_t print, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      controller_print_lock(output.to, thread);
+    if (print.verbosity != f_console_verbosity_quiet) {
+      controller_print_lock(print.to, thread);
 
-      fl_print_format("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
-      fl_print_format("%[%S%]", output.to.stream, output.notable, name, output.notable);
+      fl_print_format("%c%[%SThe %s '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, script_is ? controller_string_script_s : controller_string_program_s, print.context);
+      fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
-        fl_print_format("%[' failed due to a failure to setup the '%]", output.to.stream, output.context, output.context);
-        fl_print_color_before(output.notable, output.to.stream);
+        fl_print_format("%[' failed due to a failure to setup the '%]", print.to.stream, print.context, print.context);
+        fl_print_color_before(print.notable, print.to.stream);
 
         if (status == F_control_group) {
-          f_print_terminated(controller_string_control_group_s, output.to.stream);
+          f_print_terminated(controller_string_control_group_s, print.to.stream);
         }
         else if (status == F_limit) {
-          f_print_terminated(controller_string_limit_s, output.to.stream);
+          f_print_terminated(controller_string_limit_s, print.to.stream);
         }
         else if (status == F_processor) {
-          f_print_terminated(controller_string_processor_s, output.to.stream);
+          f_print_terminated(controller_string_processor_s, print.to.stream);
         }
         else if (status == F_schedule) {
-          f_print_terminated(controller_string_scheduler_s, output.to.stream);
+          f_print_terminated(controller_string_scheduler_s, print.to.stream);
         }
 
-        fl_print_color_after(output.notable, output.to.stream);
-        fl_print_format("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_color_after(print.notable, print.to.stream);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
       }
       else if (code) {
-        fl_print_format("%[' failed with the exit code '%]", output.to.stream, output.context, output.context);
-        fl_print_format("%[%i%]", output.to.stream, output.notable, code, output.notable);
-        fl_print_format("%['.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_format("%[' failed with the exit code '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[%i%]", print.to.stream, print.notable, code, print.notable);
+        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
       }
       else {
-        fl_print_format("%[' failed.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
+        fl_print_format("%[' failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
       }
 
-      controller_print_unlock_flush(output.to, thread);
+      controller_print_unlock_flush(print.to, thread);
     }
   }
 #endif // _di_controller_rule_item_error_print_execute_
 
 #ifndef _di_controller_rule_item_error_print_execute_not_found_
-  void controller_rule_item_error_print_execute_not_found(const fll_error_print_t output, const bool script_is, const f_string_t name) {
+  void controller_rule_item_error_print_execute_not_found(const fll_error_print_t print, const bool script_is, const f_string_t name) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_format("%c%[%SThe %s '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, script_is ? controller_string_script_s : controller_string_program_s, output.context);
-      fl_print_format("%[%S%]", output.to.stream, output.notable, name, output.notable);
-      fl_print_format("%[' could not be executed because it was not found.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
-    }
+    if (print.verbosity == f_console_verbosity_quiet) return;
+
+    fl_print_format("%c%[%SThe %s '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, script_is ? controller_string_script_s : controller_string_program_s, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+    fl_print_format("%[' could not be executed because it was not found.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
   }
 #endif // _di_controller_rule_item_error_print_execute_not_found_
 
 #ifndef _di_controller_rule_item_error_print_need_want_wish_
-  void controller_rule_item_error_print_need_want_wish(const fll_error_print_t output, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
+  void controller_rule_item_error_print_need_want_wish(const fll_error_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_format("%c%[%SThe %s rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, need_want_wish, output.context);
-      fl_print_format("%[%S%]", output.to.stream, output.notable, value, output.notable);
-      fl_print_format("%[' %S.%]%c", output.to.stream, output.context, why, output.context, f_string_eol_s[0]);
-    }
+    if (print.verbosity == f_console_verbosity_quiet) return;
+
+    fl_print_format("%c%[%SThe %s rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, need_want_wish, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, value, print.notable);
+    fl_print_format("%[' %S.%]%c", print.to.stream, print.context, why, print.context, f_string_eol_s[0]);
   }
 #endif // _di_controller_rule_item_error_print_need_want_wish_
 
 #ifndef _di_controller_rule_item_error_print_rule_not_loaded_
-  void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t output, const f_string_t alias) {
+  void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t print, const f_string_t alias) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_format("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
-      fl_print_format("%[%S%]", output.to.stream, output.notable, alias, output.notable);
-      fl_print_format("%[' is no longer loaded.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
-    }
+    if (print.verbosity == f_console_verbosity_quiet) return;
+
+    fl_print_format("%c%[%SThe rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
+    fl_print_format("%[' is no longer loaded.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
   }
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 #ifndef _di_controller_rule_action_error_missing_pid_
-  void controller_rule_action_error_missing_pid(const fll_error_print_t output, const f_string_t alias) {
+  void controller_rule_action_error_missing_pid(const fll_error_print_t print, const f_string_t alias) {
 
-    if (output.verbosity != f_console_verbosity_quiet) {
-      fl_print_format("%c%[%SThe rule '%]", output.to.stream, f_string_eol_s[0], output.context, output.prefix, output.context);
-      fl_print_format("%[%S%]", output.to.stream, output.notable, alias, output.notable);
-      fl_print_format("%[' is not designating a pid file.%]%c", output.to.stream, output.context, output.context, f_string_eol_s[0]);
-    }
+    if (print.verbosity == f_console_verbosity_quiet) return;
+
+    fl_print_format("%c%[%SThe rule '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, print.context);
+    fl_print_format("%[%S%]", print.to.stream, print.notable, alias, print.notable);
+    fl_print_format("%[' is not designating a pid file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
   }
 #endif // _di_controller_rule_action_error_missing_pid_
 
@@ -1642,6 +1642,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_extended_list_object_read", F_true, global.thread);
+
         break;
       }
 
@@ -1658,6 +1659,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_error_print(global.main->error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true, global.thread);
+
           break;
         }
 
@@ -2399,7 +2401,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          controller_rule_item_error_print(global.main->error, process->cache.action, F_true, global.thread);
+          controller_rule_item_error_print(global.main->error, process->cache.action, F_true, F_status_set_fine(status), global.thread);
         }
       }
     }
@@ -2529,7 +2531,7 @@ extern "C" {
 
       if (status == F_signal || F_status_is_error(status)) {
         controller_lock_error_critical_print(global.main->error, F_status_set_fine(status), F_true, global.thread);
-        controller_rule_item_error_print(global.main->error, cache.action, F_false, global.thread);
+        controller_rule_item_error_print(global.main->error, cache.action, F_false, F_status_set_fine(status), global.thread);
 
         f_thread_unlock(&global.thread->lock.process);
 
@@ -3241,7 +3243,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      controller_rule_item_error_print(global.main->error, cache->action, for_item, global.thread);
+      controller_rule_item_error_print(global.main->error, cache->action, for_item, F_status_set_fine(status), global.thread);
 
       rule->status[0] = controller_status_simplify_error(F_status_set_fine(status));
 
@@ -3330,7 +3332,7 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+        controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
         continue;
       }
@@ -3448,7 +3450,7 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+        controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
         if (F_status_set_fine(status) == F_memory_not) {
           status_return = status;
@@ -3630,7 +3632,7 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
           continue;
         }
@@ -3658,7 +3660,7 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
           continue;
         }
@@ -3692,7 +3694,7 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
           continue;
         }
@@ -3811,7 +3813,7 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
           continue;
         }
@@ -3973,7 +3975,7 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
           continue;
         }
@@ -4107,7 +4109,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4151,7 +4153,7 @@ extern "C" {
                   status_return = status;
                 }
 
-                controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+                controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
               }
 
               setting_value->used = 0;
@@ -4192,7 +4194,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4581,7 +4583,7 @@ extern "C" {
               controller_rule_error_print(global.main->error, cache->action, status, "f_account_id_user_by_name", F_true, F_false, global.thread);
             }
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             if (F_status_is_error_not(status_return)) {
               status_return = F_status_set_error(status);
@@ -4648,7 +4650,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4701,7 +4703,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             if (F_status_is_error_not(status_return)) {
               status_return = F_status_set_error(status);
@@ -4746,7 +4748,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4784,7 +4786,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4829,7 +4831,7 @@ extern "C" {
 
             setting_values->array[setting_values->used].used = 0;
 
-            controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+            controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
             continue;
           }
@@ -4996,7 +4998,7 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+        controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
         continue;
       }
@@ -5021,7 +5023,7 @@ extern "C" {
 
         cache->action.line_action = ++cache->action.line_item;
 
-        controller_rule_item_error_print(global.main->error, cache->action, F_false, global.thread);
+        controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
         continue;
       }
@@ -5105,7 +5107,6 @@ extern "C" {
         break;
 
       default:
-
         if (main->error.verbosity != f_console_verbosity_quiet) {
           controller_print_lock(main->error.to, global.thread);
 

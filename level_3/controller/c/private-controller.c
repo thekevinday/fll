@@ -1094,11 +1094,13 @@ extern "C" {
             if (F_status_is_error(status)) {
 
               if (global->main->error.verbosity != f_console_verbosity_quiet) {
-                controller_print_lock(global->main->output, global->thread);
+                if (F_status_set_fine(status) != F_interrupt) {
+                  controller_print_lock(global->main->output, global->thread);
 
-                controller_entry_error_print_cache(is_entry, global->main->error, cache->action);
+                  controller_entry_error_print_cache(is_entry, global->main->error, cache->action);
 
-                controller_print_unlock_flush(global->main->output, global->thread);
+                  controller_print_unlock_flush(global->main->output, global->thread);
+                }
               }
 
               if (global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {

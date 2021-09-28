@@ -44,7 +44,8 @@ int main(const int argc, const f_string_t *argv) {
     data.setting_default.used = controller_path_settings_init_length;
     data.path_pid.string = controller_path_pid_init;
     data.path_pid.used = controller_path_pid_init_length;
-  #else // _controller_as_init_
+    data.as_init = F_true;
+  #else
     data.program_name = controller_name;
     data.program_name_long = controller_name_long;
     data.path_pid.string = controller_path_pid;
