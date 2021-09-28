@@ -2378,11 +2378,28 @@ extern "C" {
           if (global.main->error.verbosity != f_console_verbosity_quiet) {
             controller_print_lock(global.main->error.to, global.thread);
 
-            fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
-            fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
-            fl_print_format("%[' has no '%]", global.main->error.to.stream, global.main->error.context, process->rule.name, global.main->error.context);
-            fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
-            fl_print_format("%[' action to execute.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            if (process->rule.items.used) {
+              fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
+              fl_print_format("%[' has no '%]", global.main->error.to.stream, global.main->error.context, process->rule.name, global.main->error.context);
+              fl_print_format("%[%q%]", global.main->error.to.stream, global.main->error.notable, controller_rule_action_type_name(process->action), global.main->error.notable);
+              fl_print_format("%[' action to execute.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            }
+            else {
+              fl_print_format("%c%[%SThe rule '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, global.main->error.context);
+              fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, process->rule.name, global.main->error.notable);
+              fl_print_format("%[ has no known '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%s %s%]", global.main->error.to.stream, global.main->error.notable, controller_string_rule_s, controller_string_type_s, global.main->error.notable);
+              fl_print_format("%[' (such as '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_string_command_s, global.main->error.notable);
+              fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_string_service_s, global.main->error.notable);
+              fl_print_format("%[', '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_string_script_s, global.main->error.notable);
+              fl_print_format("%[', or '%]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+              fl_print_format("%[%s%]", global.main->error.to.stream, global.main->error.notable, controller_string_utility_s, global.main->error.notable);
+              fl_print_format("%[') to execute.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            }
 
             controller_rule_error_print_cache(global.main->error, process->cache.action, F_true);
 
@@ -5143,11 +5160,24 @@ extern "C" {
       if (missing) {
         controller_print_lock(main->output, global.thread);
 
-        fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
-        fl_print_format("%[%Q%]' has no '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
-        fl_print_format("%[%q%]' action to execute and would '", main->output.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
-        fl_print_format("%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
-        fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+        if (rule.items.used) {
+          fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
+          fl_print_format("%[%Q%]' has no '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
+          fl_print_format("%[%q%]' action to execute and would '", main->output.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
+          fl_print_format("%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
+          fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+        }
+        else {
+          fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
+          fl_print_format("%[%Q%]' has no known '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
+          fl_print_format("%[%s %s%]' (such as ", main->output.stream, main->context.set.title, controller_string_rule_s, controller_string_type_s, main->context.set.title);
+          fl_print_format("'%[%s%]', ", main->output.stream, main->context.set.title, controller_string_command_s, main->context.set.title);
+          fl_print_format("'%[%s%]', ", main->output.stream, main->context.set.title, controller_string_service_s, main->context.set.title);
+          fl_print_format("'%[%s%]', or ", main->output.stream, main->context.set.title, controller_string_script_s, main->context.set.title);
+          fl_print_format("'%[%s%]'", main->output.stream, main->context.set.title, controller_string_utility_s, main->context.set.title);
+          fl_print_format(") and would '%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
+          fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+        }
 
         controller_print_unlock_flush(main->output, global.thread);
       }
