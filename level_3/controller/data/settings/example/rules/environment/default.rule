@@ -1,0 +1,15 @@
+# fss-000d
+
+setting:
+  name "Environment default"
+  script bash
+
+script:
+  start {
+    echo
+    echo "==================================="
+    echo "Environment using default settings."
+    echo "==================================="
+
+    env
+  }

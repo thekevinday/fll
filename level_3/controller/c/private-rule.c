@@ -836,7 +836,7 @@ extern "C" {
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
 
-    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
+    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, process->rule.has & controller_rule_has_environment ? &environment : 0, &signals, 0, fl_execute_as_t_initialize);
 
     if (process->rule.affinity.used) {
       execute_set.as.affinity = &process->rule.affinity;
@@ -1168,7 +1168,7 @@ extern "C" {
 
       const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
@@ -1421,7 +1421,7 @@ extern "C" {
 
       const f_string_static_t simulated_program = macro_f_string_static_t_initialize(f_string_empty_s, 0);
       const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, execute_set->parameter.environment, execute_set->parameter.signals, &simulated_program);
+      fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &simulated_program);
 
       status = fll_execute_program(controller_default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, simulated_parameter.option & fl_execute_parameter_option_return ? (void *) &id_child : (void *) &result);
     }
@@ -3302,6 +3302,7 @@ extern "C" {
     f_array_length_t j = 0;
     uint8_t type = 0;
     uint8_t action = 0;
+    bool empty_disallow = F_true;
 
     // save the current name item and line number to restore on return.
     const f_array_length_t line_item = cache->action.line_item;
@@ -3354,6 +3355,8 @@ extern "C" {
         continue;
       }
 
+      empty_disallow = F_true;
+
       if (fl_string_dynamic_compare_string(controller_string_affinity_s, cache->action.name_item, controller_string_affinity_length) == F_equal_to) {
         type = controller_rule_setting_type_affinity;
       }
@@ -3368,6 +3371,7 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare_string(controller_string_environment_s, cache->action.name_item, controller_string_environment_length) == F_equal_to) {
         type = controller_rule_setting_type_environment;
+        empty_disallow = F_false;
       }
       else if (fl_string_dynamic_compare_string(controller_string_group_s, cache->action.name_item, controller_string_group_length) == F_equal_to) {
         type = controller_rule_setting_type_group;
@@ -3422,8 +3426,24 @@ extern "C" {
         continue;
       }
 
-      if (!cache->content_actions.array[i].used) {
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
+      if (cache->content_actions.array[i].used) {
+        range2.start = cache->content_actions.array[i].array[0].start;
+        range2.stop = cache->content_actions.array[i].array[cache->content_actions.array[i].used - 1].stop;
+
+        status = f_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->action.name_action);
+
+        if (F_status_is_error(status)) {
+          controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, global.thread);
+        }
+        else {
+          status = f_string_dynamic_terminate_after(&cache->action.name_action);
+
+          if (F_status_is_error(status)) {
+            controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, global.thread);
+          }
+        }
+
+        if (F_status_is_error(status)) {
 
           // get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -3431,54 +3451,41 @@ extern "C" {
 
           cache->action.line_action = ++cache->action.line_item;
 
-          controller_print_lock(global.main->warning.to, global.thread);
+          controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
 
-          fl_print_format("%c%[%SEmpty rule setting.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
+          if (F_status_set_fine(status) == F_memory_not) {
+            status_return = status;
+            break;
+          }
 
-          controller_rule_error_print_cache(global.main->warning, cache->action, F_false);
+          if (F_status_is_error_not(status_return)) {
+            status_return = status;
+          }
 
-          controller_print_unlock_flush(global.main->warning.to, global.thread);
+          continue;
         }
-
-        continue;
-      }
-
-      range2.start = cache->content_actions.array[i].array[0].start;
-      range2.stop = cache->content_actions.array[i].array[cache->content_actions.array[i].used - 1].stop;
-
-      status = f_string_dynamic_partial_append_nulless(cache->buffer_item, range2, &cache->action.name_action);
-
-      if (F_status_is_error(status)) {
-        controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true, F_false, global.thread);
       }
       else {
-        status = f_string_dynamic_terminate_after(&cache->action.name_action);
+        if (empty_disallow) {
+          if (global.main->warning.verbosity == f_console_verbosity_debug) {
 
-        if (F_status_is_error(status)) {
-          controller_rule_error_print(global.main->error, cache->action, F_status_set_fine(status), "f_string_dynamic_terminate_after", F_true, F_false, global.thread);
+            // get the current line number within the settings item.
+            cache->action.line_item = line_item;
+            f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
+
+            cache->action.line_action = ++cache->action.line_item;
+
+            controller_print_lock(global.main->warning.to, global.thread);
+
+            fl_print_format("%c%[%SEmpty rule setting.%]%c", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, global.main->warning.context, f_string_eol_s[0]);
+
+            controller_rule_error_print_cache(global.main->warning, cache->action, F_false);
+
+            controller_print_unlock_flush(global.main->warning.to, global.thread);
+          }
+
+          continue;
         }
-      }
-
-      if (F_status_is_error(status)) {
-
-        // get the current line number within the settings item.
-        cache->action.line_item = line_item;
-        f_fss_count_lines(cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
-
-        cache->action.line_action = ++cache->action.line_item;
-
-        controller_rule_item_error_print(global.main->error, cache->action, F_false, F_status_set_fine(status), global.thread);
-
-        if (F_status_set_fine(status) == F_memory_not) {
-          status_return = status;
-          break;
-        }
-
-        if (F_status_is_error_not(status_return)) {
-          status_return = status;
-        }
-
-        continue;
       }
 
       if (type == controller_rule_setting_type_affinity) {
@@ -4855,6 +4862,8 @@ extern "C" {
 
           ++setting_values->used;
         } // for
+
+        rule->has |= controller_rule_has_environment;
 
         continue;
       }

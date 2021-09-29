@@ -1,0 +1,16 @@
+# fss-000d
+
+setting:
+  name "Environment set to nothing"
+  environment
+  script bash
+
+script:
+  start {
+    echo
+    echo "============================="
+    echo "Environment allowing nothing."
+    echo "============================="
+
+    env
+  }

@@ -782,10 +782,11 @@ extern "C" {
 
   // bitwise codes representing properties on controller_rule_t that have been found in the rule file.
   #define controller_rule_has_control_group 0x1
-  #define controller_rule_has_group         0x2
-  #define controller_rule_has_nice          0x4
-  #define controller_rule_has_scheduler     0x8
-  #define controller_rule_has_user          0x10
+  #define controller_rule_has_environment   0x2
+  #define controller_rule_has_group         0x4
+  #define controller_rule_has_nice          0x8
+  #define controller_rule_has_scheduler     0x10
+  #define controller_rule_has_user          0x20
 
   typedef struct {
     f_status_t status[controller_rule_action_type__enum_size];
