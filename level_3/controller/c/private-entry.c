@@ -376,7 +376,7 @@ extern "C" {
           flockfile(global.main->error.to.stream);
 
           fl_print_format("%c%[%SThe %s item action '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context);
-          fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.context, cache->action.name_action, global.main->error.context);
+          fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
           fl_print_format("%[' requires ", global.main->error.to.stream, global.main->error.context);
 
           if (at_least == at_most) {
@@ -386,16 +386,16 @@ extern "C" {
           fl_print_format("%]%[%un%]", global.main->error.to.stream, global.main->error.context, global.main->error.notable, at_least, global.main->error.notable);
 
           if (action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(action->type)) {
-            fl_print_format("%[' or more parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+            fl_print_format("%[ or more parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
           }
           else {
             if (at_least == at_most) {
-              fl_print_format("%[' parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[ parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
             }
             else {
               fl_print_format("%[ to %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
               fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, at_most, global.main->error.notable);
-              fl_print_format("%[' parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
+              fl_print_format("%[ parameters.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
             }
           }
 
