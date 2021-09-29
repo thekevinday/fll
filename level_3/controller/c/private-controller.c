@@ -401,7 +401,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // only create pid file when not in validate mode.
-    if (is_entry && global.main->parameters[controller_parameter_validate].result == f_console_result_none && global.main->process_pid) {
+    if (is_entry && global.main->parameters[controller_parameter_validate].result == f_console_result_none && global.setting->path_pid.used) {
 
       status = controller_file_pid_create(global.main->pid, global.setting->path_pid);
 

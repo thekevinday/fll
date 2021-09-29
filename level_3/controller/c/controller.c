@@ -240,12 +240,12 @@ extern "C" {
           }
         }
         else {
-          main->process_pid = F_false;
+          setting.path_pid.used = 0;
         }
       }
     }
 
-    if (F_status_is_error_not(status) && !setting.path_pid.used && main->process_pid) {
+    if (F_status_is_error_not(status) && !setting.path_pid.used && !main->parameters[controller_parameter_pid].locations.used) {
 
       if (main->parameters[controller_parameter_init].result == f_console_result_found) {
         status = f_string_append(controller_path_pid_init, controller_path_pid_init_length, &setting.path_pid);
