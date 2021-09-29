@@ -200,7 +200,7 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters[controller_parameter_init].result == f_console_result_found) {
+      if (main->parameters[controller_parameter_init].result == f_console_result_found && !main->as_init) {
         status = f_string_append(controller_path_settings_init, controller_path_settings_init_length, &setting.path_setting);
       }
       else if (main->setting_default.used) {
@@ -336,14 +336,14 @@ extern "C" {
       }
     }
 
-    // when a default setting is not provided, then make the program interruptable by default.
-    if (main->setting_default.used) {
-      if (main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
+    // The interruptable default is dependent on the "as init" execution state.
+    if (main->as_init) {
+      if (main->parameters[controller_parameter_uninterruptable].result == f_console_result_none) {
         setting.interruptable = F_true;
       }
     }
     else {
-      if (main->parameters[controller_parameter_uninterruptable].result == f_console_result_none) {
+      if (main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         setting.interruptable = F_true;
       }
     }
