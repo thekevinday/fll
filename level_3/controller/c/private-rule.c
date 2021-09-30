@@ -2156,6 +2156,7 @@ extern "C" {
                 controller_print_lock(global.main->warning.to, global.thread);
 
                 controller_rule_item_error_print_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j].string, "was not found");
+
                 controller_rule_error_print_cache(global.main->warning, process->cache.action, F_true);
 
                 controller_print_unlock_flush(global.main->warning.to, global.thread);
@@ -2254,6 +2255,7 @@ extern "C" {
                       controller_print_lock(global.main->warning.to, global.thread);
 
                       controller_rule_item_error_print_need_want_wish(global.main->warning, strings[i], alias_other_buffer, "failed during execution");
+
                       controller_rule_error_print_cache(global.main->warning, process->cache.action, F_true);
 
                       controller_print_unlock_flush(global.main->warning.to, global.thread);

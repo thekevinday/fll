@@ -200,23 +200,6 @@ extern "C" {
     }
   }
 #endif // _di_controller_error_file_print_
-
-#ifndef _di_controller_error_pid_bad_match_print_
-  void controller_error_pid_bad_match_print(const fll_error_print_t print, const f_string_t path, controller_thread_t *thread) {
-
-    if (print.verbosity == f_console_verbosity_quiet) return;
-
-    controller_print_lock(print.to, thread);
-
-    fl_print_format("%c%[%SThe pid file '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix ? print.prefix : f_string_empty_s, print.context);
-    fl_print_format("%[' must not be specified with the parameter '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%S%]", print.to.stream, print.notable, path, print.notable);
-    fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
-
-    controller_print_unlock_flush(print.to, thread);
-  }
-#endif // _di_controller_error_pid_bad_match_print_
-
 #ifndef _di_controller_error_print_
   void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 

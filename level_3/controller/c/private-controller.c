@@ -428,9 +428,14 @@ extern "C" {
         if (global.main->warning.verbosity == f_console_verbosity_debug) {
           controller_print_lock(global.main->warning.to, global.thread);
 
-          controller_error_file_print(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
-
-          flockfile(global.main->warning.to.stream);
+          if (F_status_set_fine(status) == F_read_only) {
+            fl_print_format("%c%[%SThe pid file '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, global.main->warning.context);
+            fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, global.setting->path_pid, global.main->warning.notable);
+            fl_print_format("%[' could not be written because the destination is read only.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+          }
+          else {
+            controller_error_file_print(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
+          }
 
           controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
 
