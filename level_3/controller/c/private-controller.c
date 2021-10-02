@@ -778,68 +778,33 @@ extern "C" {
         }
 
         if (F_status_is_error(entry_action->status)) {
-          if (controller_entry_action_type_is_rule(entry_action->type)) {
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet) {
-                controller_print_lock(global->main->output, global->thread);
+          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found) {
+            if (global->main->error.verbosity != f_console_verbosity_quiet) {
+              controller_print_lock(global->main->output, global->thread);
 
-                fl_print_format("%cThe %s item action '", global->main->output.stream, f_string_eol_s[0], is_entry ? controller_string_entry_s : controller_string_exit_s);
-                fl_print_format("%[%Q%]", global->main->output.stream, global->main->context.set.title, cache->action.name_action, global->main->context.set.title);
-
-                if (entry_action->parameters.used) {
-                  fl_print_format(" %[", global->main->output.stream, global->main->context.set.notable);
-
-                  controller_entry_action_parameters_print(global->main->output.stream, *entry_action);
-
-                  fl_print_format("%]", global->main->output.stream, global->main->context.set.notable);
-                }
-
-                fl_print_format("' is %s and is in a %[failed%] state, skipping execution.%c", global->main->output.stream, entry_action->code & controller_entry_rule_code_require ? "required" : "optional", f_string_eol_s[0]);
-
-                controller_print_unlock_flush(global->main->output, global->thread);
-              }
-            }
-            else if ((entry_action->code & controller_entry_rule_code_require) && global->main->error.verbosity != f_console_verbosity_quiet || global->main->warning.verbosity == f_console_verbosity_verbose || global->main->warning.verbosity == f_console_verbosity_debug) {
-              fll_error_print_t *output = 0;
-
-              if (entry_action->code & controller_entry_rule_code_require) {
-                output = &global->main->error;
-              }
-              else {
-                output = &global->main->warning;
-              }
-
-              controller_print_lock(output->to, global->thread);
-
-              fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, output->context);
-              fl_print_format("%[%Q%]", output->to.stream, output->notable, cache->action.name_action, output->notable);
+              fl_print_format("%cThe %s item action '", global->main->output.stream, f_string_eol_s[0], is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fl_print_format("%[%Q%]", global->main->output.stream, global->main->context.set.title, cache->action.name_action, global->main->context.set.title);
 
               if (entry_action->parameters.used) {
-                fl_print_format(" %[", output->to.stream, global->main->context.set.notable);
+                fl_print_format(" %[", global->main->output.stream, global->main->context.set.notable);
 
-                controller_entry_action_parameters_print(output->to.stream, *entry_action);
+                controller_entry_action_parameters_print(global->main->output.stream, *entry_action);
 
-                fl_print_format("%]", output->to.stream, global->main->context.set.notable);
+                fl_print_format("%]", global->main->output.stream, global->main->context.set.notable);
               }
 
-              fl_print_format("%[' is%] %[required%]", output->to.stream, output->context, output->context, output->notable, output->notable);
-              fl_print_format(" %[and is in a%] %[failed%]", output->to.stream, output->context, output->context, output->notable, output->notable);
-              fl_print_format(" %[state, skipping execution.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+              fl_print_format("' is %[%s%] and is in a ", global->main->output.stream, global->main->context.set.notable, entry_action->code & controller_entry_rule_code_require ? "required" : "optional", global->main->context.set.notable);
 
-              controller_entry_error_print_cache(is_entry, *output, cache->action);
+              fl_print_format("%[failed%] state, skipping.%c", global->main->output.stream, global->main->context.set.notable, global->main->context.set.notable, global->main->context.set.notable, f_string_eol_s[0]);
 
-              controller_print_unlock_flush(output->to, global->thread);
-
-              if (entry_action->code & controller_entry_rule_code_require) {
-                return F_status_is_error(F_require);
-              }
+              controller_print_unlock_flush(global->main->output, global->thread);
             }
           }
           else {
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found && global->main->error.verbosity != f_console_verbosity_quiet || global->main->warning.verbosity == f_console_verbosity_debug || global->main->error.verbosity == f_console_verbosity_verbose) {
+            if ((entry_action->code & controller_entry_rule_code_require) && global->main->error.verbosity != f_console_verbosity_quiet || !(entry_action->code & controller_entry_rule_code_require) && (global->main->warning.verbosity == f_console_verbosity_verbose || global->main->warning.verbosity == f_console_verbosity_debug)) {
               fll_error_print_t *output = 0;
 
-              if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found && global->main->error.verbosity != f_console_verbosity_quiet) {
+              if (entry_action->code & controller_entry_rule_code_require) {
                 output = &global->main->error;
               }
               else {
@@ -851,6 +816,7 @@ extern "C" {
               fl_print_format("%c%[%SThe %s item action '%]", output->to.stream, f_string_eol_s[0], output->context, output->prefix ? output->prefix : f_string_empty_s, is_entry ? controller_string_entry_s : controller_string_exit_s, output->context);
               fl_print_format("%[%Q%]", output->to.stream, output->notable, cache->action.name_action, output->notable);
 
+
               if (entry_action->parameters.used) {
                 fl_print_format(" %[", output->to.stream, global->main->context.set.notable);
 
@@ -859,12 +825,29 @@ extern "C" {
                 fl_print_format("%]", output->to.stream, global->main->context.set.notable);
               }
 
-              fl_print_format(" %[is in a%] %[failed%]", output->to.stream, output->context, output->context, output->notable, output->notable);
-              fl_print_format(" %[state, skipping.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+              if (entry_action->code & controller_entry_rule_code_require) {
+                fl_print_format("%[' is%] %[required%]", output->to.stream, output->context, output->context, output->notable, output->notable);
+              }
+              else {
+                fl_print_format("%[' is%] %[optional%]", output->to.stream, output->context, output->context, output->notable, output->notable);
+              }
+
+              fl_print_format(" %[and is in a%] %[failed%]", output->to.stream, output->context, output->context, output->notable, output->notable);
+
+              if (entry_action->code & controller_entry_rule_code_require) {
+                fl_print_format(" %[state, aborting.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+              }
+              else {
+                fl_print_format(" %[state, skipping.%]%c", output->to.stream, output->context, output->context, f_string_eol_s[0]);
+              }
 
               controller_entry_error_print_cache(is_entry, *output, cache->action);
 
               controller_print_unlock_flush(output->to, global->thread);
+            }
+
+            if (controller_entry_action_type_is_rule(entry_action->type) && entry_action->code & controller_entry_rule_code_require) {
+              return F_status_is_error(F_require);
             }
           }
 
@@ -1097,7 +1080,6 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-
               if (global->main->error.verbosity != f_console_verbosity_quiet) {
                 if (F_status_set_fine(status) != F_interrupt) {
                   controller_print_lock(global->main->output, global->thread);
@@ -1108,9 +1090,17 @@ extern "C" {
                 }
               }
 
+              // Designate the action as failed.
+              entry_action->status = F_status_set_error(F_failure);
+
               if (global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
                 f_thread_unlock(&global->thread->lock.rule);
 
+                if (entry_action->code & controller_entry_rule_code_require) {
+                  return F_status_set_error(F_require);
+                }
+
+                ++cache->ats.array[at_j];
                 break;
               }
             }
