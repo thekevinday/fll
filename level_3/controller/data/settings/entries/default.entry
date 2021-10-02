@@ -17,10 +17,13 @@ main:
   item console
 
 boot:
-  start boot filesystem require
-  start boot modules require
+  start boot root require
+  start boot proc asynchronous require
+  start boot dev asynchronous require
+  start boot filesystem asynchronous
+  start boot modules wait
 
-  start service logger wait
+  start service logger
   start service dbus asynchronous
 
   ready
@@ -35,8 +38,8 @@ keyboard:
   start task keyboard asynchronous
 
 console:
+  start service mouse asynchronous
   start program terminal require wait
-  start service mouse
 
 maintenance:
-  execute bash --login
+  execute /bin/bash --login

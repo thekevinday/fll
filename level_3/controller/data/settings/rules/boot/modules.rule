@@ -6,17 +6,23 @@
 setting:
   name "Setup Kernel Modules"
 
-  on start need boot filesystem
+  on start need boot root
+  on start need boot proc
+  on start want boot filesystem
 
 script:
   start {
     if [[ ! -f /proc/modules ]] ; then
-      exit 0;
+      exit 0
     fi
 
-    if [[ ! -e /lib/modules/$(uname -r)/modules.dep ]] ; then
-      depmod;
+    if [[ -d /modules ]] ; then
+      if [[ ! -e /modules/$(uname -r)/modules.dep ]] ; then
+        depmod
+      else
+        depmod -A
+      fi
     fi
 
-    return 0;
+    exit 0
   }

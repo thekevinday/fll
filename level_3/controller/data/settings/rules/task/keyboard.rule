@@ -5,5 +5,4 @@
 
 setting:
   name "System Keyboard"
-  capability "all="
   nice 15

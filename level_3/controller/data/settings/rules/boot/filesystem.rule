@@ -6,9 +6,16 @@
 setting:
   name "Setup Filesystem"
 
+  on start need boot root
+  on start need boot proc
+  on start need boot devices
+
+  on stop need boot proc
+  on stop need boot devices
+
 command:
-  start mount -a -O no_netdev
-  stop umount -arf -O no_netdev
+  start mount -n -a -O no_netdev
+  stop umount -n -arf -O no_netdev
 
 command:
   start swapon -a

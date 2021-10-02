@@ -5,6 +5,7 @@
 
 setting:
   name "System Network"
+  capability cap_net_admin=
 
 command:
   start network start

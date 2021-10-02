@@ -5,25 +5,20 @@
 # -m = don't prompt for login.
 
 setting:
-  name "System Terminal"
-  capability "all="
+  name "System Terminals"
 
 command:
-  #pid_file /var/run/tty/tty1.pid
-
-  start agetty -8 9600 tty1 linux
-
-command:
-  #pid_file /var/run/tty/tty2.pid
-
   start agetty -8 9600 tty2 linux
 
 command:
-  #pid_file /var/run/tty/tty3.pid
-
   start agetty -8 9600 tty3 linux
 
 command:
-  #pid_file /var/run/tty/tty4.pid
-
   start agetty -8 9600 tty4 linux
+
+# Wait for things to complete before opening the terminal on tty1.
+command:
+  start sleep 3s
+
+command:
+  start agetty -8 9600 tty1 linux

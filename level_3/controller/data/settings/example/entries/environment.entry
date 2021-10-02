@@ -4,3 +4,4 @@ main:
   start environment default
   start environment exported
   start environment empty
+  start environment exporting

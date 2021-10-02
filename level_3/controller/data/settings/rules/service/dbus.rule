@@ -5,7 +5,7 @@
 
 setting:
   name "D-BUS"
-  capability "all="
+  capability all=
   nice 15
 
 service:
