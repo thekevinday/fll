@@ -756,9 +756,9 @@ extern "C" {
         fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
       }
       else if (code) {
-        fl_print_format("%[' failed with the exit code '%]", print.to.stream, print.context, print.context);
+        fl_print_format("%[' failed with the exit code %]", print.to.stream, print.context, print.context);
         fl_print_format("%[%i%]", print.to.stream, print.notable, code, print.notable);
-        fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+        fl_print_format("%[.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
       }
       else {
         fl_print_format("%[' failed.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
