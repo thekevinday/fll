@@ -362,7 +362,15 @@ extern "C" {
  * @param option
  *   A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
  *   If fl_execute_parameter_option_exit: this will call exit() at the end of execution (be it success or failure).
- *   If fl_execute_parameter_option_path: use the whole program path (such as "/bin/bash" instead "bash" when populated argument[0].
+ *   If fl_execute_parameter_option_path: use the whole program path (such as "/bin/bash" instead "bash" when populating argument[0].
+ * @param environment
+ *   (optional) An map of strings representing the environment variable names and their respective values.
+ *   Completely clears the environment and then creates environment variables for each name and value pair in this map.
+ *   Set to an empty map (set map used length to 0).
+ *   Set to NULL to not make any changes to the environment.
+ *   Be careful, when executing without the full path (such as "bash" rather than "/bin/bash") either set this to NULL or be sure to include the PATH in this map.
+ *   Be careful, scripts might return and the environment will have changed when this is not NULL.
+ *   Be careful, if this returns F_failure, the environment will have changed when this is not NULL.
  * @param result
  *   The code returned after finishing execution of program.
  *
@@ -378,18 +386,13 @@ extern "C" {
  * @see strnlen()
  */
 #ifndef _di_fll_execute_into_
-  extern f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result);
+  extern f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result);
 #endif // _di_fll_execute_into_
 
 /**
  * Execute a program given by program name found in the PATH environment (such as "bash") or program path (such as "/bin/bash").
  *
  * The program will be executed via a forked child process.
- *
- * If parameter.names is specified:
- *   Uses the provided environment array to designate the environment for the program being executed.
- *   The environment is defined by the names and values pair.
- *   This requires paramete.values to also be specified with the same used length as parameter.names.
  *
  * When the path has a slash "/" or the environment is to be cleared, then this does validate the path to the program.
  * Otherwise, this does not validate the path to the program.
@@ -412,10 +415,11 @@ extern "C" {
  *   (optional) This and most of its fields are optional and are disabled when set to 0.
  *   option:
  *     A bitwise set of options, such as: fl_execute_parameter_option_exit and fl_execute_parameter_option_path.
- *   names:
- *     An array of strings representing the environment variable names.
- *     At most names.used variables are created.
- *     Duplicate names are overwritten.
+ *   environment:
+ *     An map of strings representing the environment variable names and their respective values.
+ *     Completely clears the environment and then creates environment variables for each name and value pair in this map.
+ *     Set to an empty map (set map used length to 0).
+ *     Set to NULL to not make any changes to the environment.
  *   values:
  *     An array of strings representing the environment variable names.
  *     The values.used must be of at least names.used.

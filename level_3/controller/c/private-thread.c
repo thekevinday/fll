@@ -222,7 +222,6 @@ extern "C" {
     }
     else {
       if (main->parameters[controller_parameter_daemon].result == f_console_result_found) {
-
         setting->ready = controller_setting_ready_done;
 
         if (f_file_exists(setting->path_pid.string) == F_true) {
@@ -241,7 +240,6 @@ extern "C" {
         }
       }
       else if (global.setting->name_entry.used) {
-
         const controller_main_entry_t entry = macro_controller_main_entry_t_initialize(&global, global.setting);
 
         status = f_thread_create(0, &thread.id_entry, &controller_thread_entry, (void *) &entry);
@@ -262,7 +260,6 @@ extern "C" {
 
     // only make the rule and control threads available once any/all pre-processing and are completed.
     if (F_status_is_error_not(status) && status != F_signal && status != F_failure && status != F_child && thread.enabled == controller_thread_enabled) {
-
       if (main->parameters[controller_parameter_validate].result == f_console_result_none) {
 
         // wait for the entry thread to complete before starting the rule thread.

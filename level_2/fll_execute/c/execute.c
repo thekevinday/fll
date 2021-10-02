@@ -130,7 +130,7 @@ extern "C" {
 #endif // _di_fll_execute_arguments_dynamic_add_set_
 
 #ifndef _di_fll_execute_into_
-  f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, int *result) {
+  f_status_t fll_execute_into(const f_string_t program, const f_string_statics_t arguments, const uint8_t option, const f_string_maps_t *environment, int *result) {
     #ifndef _di_level_2_parameter_checking_
       if (!program && !arguments.used) return F_status_set_error(F_parameter);
       if (!result) return F_status_set_error(F_parameter);
@@ -248,9 +248,25 @@ extern "C" {
 
       fixed_arguments[0] = program_path;
 
+      if (environment) {
+        clearenv();
+
+        for (f_array_length_t i = 0; i < environment->used; ++i) {
+          f_environment_set_dynamic(environment->array[i].name, environment->array[i].value, F_true);
+        } // for
+      }
+
       code = execv(program_path, fixed_arguments);
     }
     else {
+      if (environment) {
+        clearenv();
+
+        for (f_array_length_t i = 0; i < environment->used; ++i) {
+          f_environment_set_dynamic(environment->array[i].name, environment->array[i].value, F_true);
+        } // for
+      }
+
       code = last_slash ? execv(program ? program : arguments.array[0].string, fixed_arguments) : execvp(program ? program : arguments.array[0].string, fixed_arguments);
     }
 

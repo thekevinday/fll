@@ -1180,7 +1180,7 @@ extern "C" {
 
           int result = 0;
 
-          status = fll_execute_into(0, entry_action->parameters, fl_execute_parameter_option_path, &result);
+          status = fll_execute_into(0, entry_action->parameters, fl_execute_parameter_option_path, 0, &result);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_file_found_not) {
