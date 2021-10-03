@@ -5199,7 +5199,7 @@ extern "C" {
     fl_print_format("%cRule %[%Q%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
     fl_print_format("  %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
     fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_how_s, main->context.set.important, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes : controller_string_no_s, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes_s : controller_string_no_s, f_string_eol_s[0]);
     fl_print_format("  %[%s%] ", main->output.stream, main->context.set.important, controller_string_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {

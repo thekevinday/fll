@@ -3,6 +3,10 @@
 # A very basic boot process.
 #
 
+setting:
+  pid ready
+  show init
+
 main:
   timeout start 7
   timeout stop 7
@@ -39,7 +43,13 @@ keyboard:
 
 console:
   start service mouse asynchronous
-  start program terminal require wait
+
+  start terminal two asynchronous
+  start terminal three asynchronous
+  start terminal four asynchronous
+  start terminal one require wait
+
 
 maintenance:
+  #execute /bin/agetty -8 -i -J - linux
   execute /bin/bash --login

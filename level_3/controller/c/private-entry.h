@@ -263,6 +263,57 @@ extern "C" {
   extern f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_settings_read_
 
+/**
+ * Print a message for when an entry setting action has the incorrect number of parameters.
+ *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
+ * @param global
+ *   The global data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param total
+ *   The expected number of arguments.
+ */
+#ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
+  extern void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) f_attribute_visibility_internal;
+#endif // _di_controller_entry_settings_read_print_setting_requires_exactly_
+
+/**
+ * Print a message for when an entry setting action is unknown.
+ *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
+ * @param global
+ *   The global data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ */
+#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
+  extern void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) f_attribute_visibility_internal;
+#endif // _di_controller_entry_settings_read_print_setting_unknown_action_
+
+/**
+ * Print a message for when an entry setting action has an unknown value.
+ *
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
+ * @param global
+ *   The global data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param total
+ *   The expected number of arguments.
+ * @param index
+ *   The location in the content actions array representing the action value.
+ */
+#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
+  extern void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) f_attribute_visibility_internal;
+#endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

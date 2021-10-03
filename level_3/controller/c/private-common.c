@@ -27,11 +27,12 @@ extern "C" {
   const f_string_t controller_string_deadline_s = controller_string_deadline;
   const f_string_t controller_string_default_s = controller_string_default;
   const f_string_t controller_string_define_s = controller_string_define;
+  const f_string_t controller_string_disable_s = controller_string_disable;
   const f_string_t controller_string_entry_s = controller_string_entry;
   const f_string_t controller_string_entries_s = controller_string_entries;
   const f_string_t controller_string_environment_s = controller_string_environment;
-  const f_string_t controller_string_existing_s = controller_string_existing;
   const f_string_t controller_string_execute_s = controller_string_execute;
+  const f_string_t controller_string_existing_s = controller_string_existing;
   const f_string_t controller_string_exit_s = controller_string_exit;
   const f_string_t controller_string_exits_s = controller_string_exits;
   const f_string_t controller_string_fail_s = controller_string_fail;
@@ -45,6 +46,7 @@ extern "C" {
   const f_string_t controller_string_how_s = controller_string_how;
   const f_string_t controller_string_idle_s = controller_string_idle;
   const f_string_t controller_string_item_s = controller_string_item;
+  const f_string_t controller_string_init_s = controller_string_init;
   const f_string_t controller_string_kill_s = controller_string_kill;
   const f_string_t controller_string_limit_s = controller_string_limit;
   const f_string_t controller_string_locks_s = controller_string_locks;
@@ -59,13 +61,16 @@ extern "C" {
   const f_string_t controller_string_nice_s = controller_string_nice;
   const f_string_t controller_string_no_s = controller_string_no;
   const f_string_t controller_string_nofile_s = controller_string_nofile;
+  const f_string_t controller_string_normal_s = controller_string_normal;
   const f_string_t controller_string_nproc_s = controller_string_nproc;
   const f_string_t controller_string_on_s = controller_string_on;
   const f_string_t controller_string_optional_s = controller_string_optional;
   const f_string_t controller_string_other_s = controller_string_other;
   const f_string_t controller_string_parameter_s = controller_string_parameter;
+  const f_string_t controller_string_parameters_s = controller_string_parameters;
   const f_string_t controller_string_path_s = controller_string_path;
   const f_string_t controller_string_pause_s = controller_string_pause;
+  const f_string_t controller_string_pid_s = controller_string_pid;
   const f_string_t controller_string_pid_file_s = controller_string_pid_file;
   const f_string_t controller_string_processor_s = controller_string_processor;
   const f_string_t controller_string_program_s = controller_string_program;
@@ -85,6 +90,7 @@ extern "C" {
   const f_string_t controller_string_script_s = controller_string_script;
   const f_string_t controller_string_service_s = controller_string_service;
   const f_string_t controller_string_setting_s = controller_string_setting;
+  const f_string_t controller_string_show_s = controller_string_show;
   const f_string_t controller_string_sigpending_s = controller_string_sigpending;
   const f_string_t controller_string_stack_s = controller_string_stack;
   const f_string_t controller_string_start_s = controller_string_start;

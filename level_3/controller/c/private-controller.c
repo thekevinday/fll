@@ -398,55 +398,54 @@ extern "C" {
 #ifndef _di_controller_perform_ready_
   f_status_t controller_perform_ready(const bool is_entry, controller_global_t global, controller_cache_t *cache) {
 
-    f_status_t status = F_none;
+    // Only create pid file when not in validate mode.
+    if (!is_entry || global.setting->entry.pid == controller_entry_pid_disable || global.main->parameters[controller_parameter_validate].result != f_console_result_none || !global.setting->path_pid.used) {
+      return F_none;
+    }
 
-    // only create pid file when not in validate mode.
-    if (is_entry && global.main->parameters[controller_parameter_validate].result == f_console_result_none && global.setting->path_pid.used) {
+    f_status_t status = controller_file_pid_create(global.main->pid, global.setting->path_pid);
 
-      status = controller_file_pid_create(global.main->pid, global.setting->path_pid);
+    // Report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
+    if (F_status_is_error(status)) {
 
-      // report pid file error but because this could be an "init" program, consider the pid file as optional and continue on.
-      if (F_status_is_error(status)) {
+      // Always return immediately on memory errors.
+      if (F_status_set_fine(status) == F_memory_not) {
+        if (global.main->error.verbosity != f_console_verbosity_quiet) {
+          controller_print_lock(global.main->error.to, global.thread);
 
-        // always return immediately on memory errors.
-        if (F_status_set_fine(status) == F_memory_not) {
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
-            controller_print_lock(global.main->error.to, global.thread);
+          controller_error_file_print(global.main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
 
-            controller_error_file_print(global.main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
+          flockfile(global.main->error.to.stream);
 
-            flockfile(global.main->error.to.stream);
+          controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
 
-            controller_entry_error_print_cache(is_entry, global.main->error, cache->action);
-
-            controller_print_unlock_flush(global.main->error.to, global.thread);
-          }
-
-          return status;
+          controller_print_unlock_flush(global.main->error.to, global.thread);
         }
 
-        if (global.main->warning.verbosity == f_console_verbosity_debug) {
-          controller_print_lock(global.main->warning.to, global.thread);
+        return status;
+      }
 
-          if (F_status_set_fine(status) == F_read_only) {
-            fl_print_format("%c%[%SThe pid file '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, global.main->warning.context);
-            fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, global.setting->path_pid, global.main->warning.notable);
-            fl_print_format("%[' could not be written because the destination is read only.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
-          }
-          else {
-            controller_error_file_print(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
-          }
+      if (global.main->warning.verbosity == f_console_verbosity_debug) {
+        controller_print_lock(global.main->warning.to, global.thread);
 
-          controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
-
-          controller_print_unlock_flush(global.main->warning.to, global.thread);
+        if (F_status_set_fine(status) == F_read_only) {
+          fl_print_format("%c%[%SThe pid file '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix ? global.main->warning.prefix : f_string_empty_s, global.main->warning.context);
+          fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, global.setting->path_pid, global.main->warning.notable);
+          fl_print_format("%[' could not be written because the destination is read only.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+        }
+        else {
+          controller_error_file_print(global.main->warning, F_status_set_fine(status), "controller_file_pid_create", F_true, global.setting->path_pid.string, "create", fll_error_file_type_file, 0);
         }
 
-        status = F_none;
+        controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
+
+        controller_print_unlock_flush(global.main->warning.to, global.thread);
       }
-      else {
-        global.setting->pid_created = F_true;
-      }
+
+      status = F_none;
+    }
+    else {
+      global.setting->pid_created = F_true;
     }
 
     return status;
@@ -470,7 +469,7 @@ extern "C" {
 
     uint8_t error_has = F_false;
 
-    // this effectively sets the read for an entry and resets the ready for an exit.
+    // This effectively sets the read for an entry and resets the ready for an exit.
     // @todo should there be a ready_exit instead?
     // @todo the global.setting->ready in this function may need mutex lock protection.
     global.setting->ready = controller_setting_ready_no;
@@ -718,11 +717,6 @@ extern "C" {
     cache->action.name_action.used = 0;
     cache->action.name_item.used = 0;
 
-    if (global->setting->ready == controller_setting_ready_yes) {
-      status = controller_perform_ready(is_entry, *global, cache);
-      if (F_status_is_error(status)) return status;
-    }
-
     macro_f_array_lengths_t_increase_by(status, cache->ats, controller_common_allocation_small)
 
     if (F_status_is_error(status)) {
@@ -855,8 +849,8 @@ extern "C" {
         }
 
         if (entry_action->type == controller_entry_action_type_ready) {
-          if (entry_action->code & controller_entry_rule_code_wait) {
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose) {
+          if ((entry_action->code & controller_entry_rule_code_wait) || global->setting->ready == controller_setting_ready_wait) {
+            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || entry->show == controller_entry_show_init) {
               if (global->main->error.verbosity != f_console_verbosity_quiet) {
                 controller_print_lock(global->main->output, global->thread);
 
@@ -873,37 +867,26 @@ extern "C" {
             }
           }
 
-          if (global->setting->ready == controller_setting_ready_wait) {
+          if (global->setting->ready == controller_setting_ready_yes) {
             if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose) {
               if (global->main->error.verbosity != f_console_verbosity_quiet) {
                 controller_print_lock(global->main->output, global->thread);
 
-                fl_print_format("%cWaiting before processing %s item action '", global->main->output.stream, f_string_eol_s[0], is_entry ? controller_string_entry_s : controller_string_exit_s);
+                fl_print_format("%cIgnoring %s item action '", global->main->output.stream, f_string_eol_s[0], is_entry ? controller_string_entry_s : controller_string_exit_s);
                 fl_print_format("%[%s%]", global->main->output.stream, global->main->context.set.title, controller_string_ready_s, global->main->context.set.title);
-                fl_print_format("'.%c", global->main->output.stream, f_string_eol_s[0]);
+                fl_print_format("', state already is ready.%c", global->main->output.stream, f_string_eol_s[0]);
 
                 controller_print_unlock_flush(global->main->output, global->thread);
               }
             }
-
-            if (global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
-              status = controller_perform_ready(is_entry, *global, cache);
-
-              if (F_status_is_error(status)) return status;
-            }
-
-            global->setting->ready = controller_setting_ready_yes;
           }
-          else if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose) {
-            if (global->main->error.verbosity != f_console_verbosity_quiet) {
-              controller_print_lock(global->main->output, global->thread);
-
-              fl_print_format("%cIgnoring %s item action '", global->main->output.stream, f_string_eol_s[0], is_entry ? controller_string_entry_s : controller_string_exit_s);
-              fl_print_format("%[%s%]", global->main->output.stream, global->main->context.set.title, controller_string_ready_s, global->main->context.set.title);
-              fl_print_format("', state already is ready.%c", global->main->output.stream, f_string_eol_s[0]);
-
-              controller_print_unlock_flush(global->main->output, global->thread);
+          else {
+            if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose || entry->show == controller_entry_show_init) && global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
+              fl_print_format("%cState is now '%[%s%]'.%c", global->main->output.stream, f_string_eol_s[0], global->main->context.set.notable, controller_string_ready_s, global->main->context.set.notable, f_string_eol_s[0]);
             }
+
+            status = controller_perform_ready(is_entry, *global, cache);
+            if (F_status_is_error(status)) return status;
           }
         }
         else if (entry_action->type == controller_entry_action_type_item) {
@@ -972,7 +955,6 @@ extern "C" {
           break;
         }
         else if (entry_action->type == controller_entry_action_type_consider || controller_entry_action_type_is_rule(entry_action->type)) {
-
           status_lock = controller_lock_write(is_entry, global->thread, &global->thread->lock.rule);
 
           if (status_lock == F_signal || F_status_is_error(status_lock)) {
@@ -1012,13 +994,26 @@ extern "C" {
 
           f_thread_unlock(&global->thread->lock.rule);
 
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose) {
+          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || (entry->show == controller_entry_show_init && entry_action->type != controller_entry_action_type_consider)) {
             if (global->main->error.verbosity != f_console_verbosity_quiet) {
               controller_print_lock(global->main->output, global->thread);
 
-              fl_print_format("%c%s %s item rule '", global->main->output.stream, f_string_eol_s[0], entry_action->type == controller_entry_action_type_consider ? "Considering" : "Processing", is_entry ? controller_string_entry_s : controller_string_exit_s);
-              fl_print_format("%[%Q%]", global->main->output.stream, global->main->context.set.title, alias_rule, global->main->context.set.title);
-              fl_print_format("'.%c", global->main->output.stream, f_string_eol_s[0]);
+              fl_print_format("%c%s %s item rule ", global->main->output.stream, f_string_eol_s[0], entry_action->type == controller_entry_action_type_consider ? "Considering" : "Processing", is_entry ? controller_string_entry_s : controller_string_exit_s);
+              fl_print_format("'%[%Q%]'", global->main->output.stream, global->main->context.set.title, alias_rule, global->main->context.set.title);
+
+              if (entry->show == controller_entry_show_init && global->main->parameters[controller_parameter_simulate].result == f_console_result_none) {
+                fl_print_format(" [%[%s%]]", global->main->output.stream, global->main->context.set.notable, entry_action->code == controller_entry_rule_code_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, global->main->context.set.notable);
+
+                if (entry_action->code == controller_entry_rule_code_wait) {
+                  fl_print_format(" [%[%s%]]", global->main->output.stream, global->main->context.set.notable, controller_string_wait_s, global->main->context.set.notable);
+                }
+
+                if (entry_action->code == controller_entry_rule_code_require) {
+                  fl_print_format(" [%[%s%]]", global->main->output.stream, global->main->context.set.notable, controller_string_required_s, global->main->context.set.notable);
+                }
+              }
+
+              fl_print_format(".%c", global->main->output.stream, f_string_eol_s[0]);
 
               controller_print_unlock_flush(global->main->output, global->thread);
             }
@@ -1151,7 +1146,7 @@ extern "C" {
           }
         }
         else if (entry_action->type == controller_entry_action_type_execute) {
-          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose) {
+          if (global->main->parameters[controller_parameter_simulate].result == f_console_result_found || global->main->error.verbosity == f_console_verbosity_verbose || entry->show == controller_entry_show_init) {
             if (global->main->error.verbosity != f_console_verbosity_quiet) {
               controller_print_lock(global->main->output, global->thread);
 

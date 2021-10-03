@@ -1132,6 +1132,7 @@ extern "C" {
 
 #ifndef _di_controller_entry_settings_read_
   f_status_t controller_entry_settings_read(const bool is_entry, const f_string_range_t content_range, controller_global_t global, controller_cache_t *cache) {
+
     f_status_t status = F_none;
 
     {
@@ -1162,6 +1163,8 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t line = 0;
 
+    controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
+
     for (; i < cache->object_actions.used; ++i) {
 
       status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
@@ -1172,6 +1175,7 @@ extern "C" {
       }
 
       line = ++cache->action.line_action;
+      cache->action.name_action.used = 0;
 
       status = controller_string_dynamic_rip_nulless_terminated(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
 
@@ -1182,17 +1186,7 @@ extern "C" {
 
       if (is_entry && fl_string_dynamic_compare_string(controller_string_mode_s, cache->action.name_action, controller_string_mode_length) == F_equal_to) {
         if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
-          if (global.main->error.verbosity != f_console_verbosity_quiet) {
-            controller_print_lock(global.main->error.to, global.thread);
-
-            fl_print_format("%c%[%SThe %s item setting '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context);
-            fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache->action.name_action, global.main->error.notable);
-            fl_print_format("%[' requires exactly %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
-            fl_print_format("%[1%]", global.main->error.to.stream, global.main->error.notable, global.main->error.notable);
-            fl_print_format("%[' parameter.%]%c", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s[0]);
-
-            controller_print_unlock_flush(global.main->error.to, global.thread);
-          }
+          controller_entry_settings_read_print_setting_requires_exactly(is_entry, global, *cache, 1);
 
           continue;
         }
@@ -1204,32 +1198,55 @@ extern "C" {
           global.setting->mode = controller_setting_mode_program;
         }
         else {
-          if (global.main->warning.verbosity == f_console_verbosity_debug) {
-            controller_print_lock(global.main->warning.to, global.thread);
+          controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
 
-            fl_print_format("%c%[%Sfor %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->warning.context);
-            fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-            fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+          continue;
+        }
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_pid_s, cache->action.name_action, controller_string_pid_length) == F_equal_to) {
+        if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
+          controller_entry_settings_read_print_setting_requires_exactly(is_entry, global, *cache, 1);
 
-            controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
+          continue;
+        }
 
-            controller_print_unlock_flush(global.main->warning.to, global.thread);
-          }
+        if (fl_string_dynamic_partial_compare_string(controller_string_disable_s, cache->buffer_file, controller_string_disable_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->pid = controller_entry_pid_disable;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_ready_s, cache->buffer_file, controller_string_ready_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->pid = controller_entry_pid_ready;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_require_s, cache->buffer_file, controller_string_require_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->pid = controller_entry_pid_require;
+        }
+        else {
+          controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
+
+          continue;
+        }
+      }
+      else if (fl_string_dynamic_compare_string(controller_string_show_s, cache->action.name_action, controller_string_show_length) == F_equal_to) {
+        if (cache->content_actions.array[i].used < 0 || cache->content_actions.array[i].used > 1) {
+          controller_entry_settings_read_print_setting_requires_exactly(is_entry, global, *cache, 1);
+
+          continue;
+        }
+
+        if (fl_string_dynamic_partial_compare_string(controller_string_normal_s, cache->buffer_file, controller_string_normal_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->show = controller_entry_show_normal;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_string_init_s, cache->buffer_file, controller_string_init_length, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          entry->show = controller_entry_show_init;
+        }
+        else {
+          controller_entry_settings_read_print_setting_unknown_action_value(is_entry, global, *cache, i);
 
           continue;
         }
       }
       else {
         if (global.main->warning.verbosity == f_console_verbosity_debug) {
-          controller_print_lock(global.main->warning.to, global.thread);
-
-          fl_print_format("%c%[%SUnknown %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->warning.context);
-          fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache->action.name_action, global.main->warning.notable);
-          fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
-
-          controller_entry_error_print_cache(is_entry, global.main->warning, cache->action);
-
-          controller_print_unlock_flush(global.main->warning.to, global.thread);
+          controller_entry_settings_read_print_setting_unknown_action(is_entry, global, *cache);
         }
 
         continue;
@@ -1237,6 +1254,61 @@ extern "C" {
     } // for
   }
 #endif // _di_controller_entry_settings_read_
+
+#ifndef _di_controller_entry_settings_read_print_setting_requires_exactly_
+  void controller_entry_settings_read_print_setting_requires_exactly(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_number_unsigned_t total) {
+
+    if (global.main->error.verbosity == f_console_verbosity_quiet) return;
+
+    controller_print_lock(global.main->error.to, global.thread);
+
+    fl_print_format("%c%[%SThe %s item setting '%]", global.main->error.to.stream, f_string_eol_s[0], global.main->error.context, global.main->error.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->error.context);
+    fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache.action.name_action, global.main->error.notable);
+    fl_print_format("%[' requires exactly %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
+    fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, total, global.main->error.notable);
+    fl_print_format("%[' %s.%]%c", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_string_parameters_s : controller_string_parameter_s, global.main->error.context, f_string_eol_s[0]);
+
+    controller_entry_error_print_cache(is_entry, global.main->error, cache.action);
+
+    controller_print_unlock_flush(global.main->error.to, global.thread);
+  }
+#endif // _di_controller_entry_settings_read_print_setting_requires_exactly_
+
+#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_
+  void controller_entry_settings_read_print_setting_unknown_action(const bool is_entry, const controller_global_t global, const controller_cache_t cache) {
+
+    if (global.main->warning.verbosity != f_console_verbosity_debug) return;
+
+    controller_print_lock(global.main->warning.to, global.thread);
+
+    fl_print_format("%c%[%SUnknown %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->warning.context);
+    fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+
+    controller_entry_error_print_cache(is_entry, global.main->warning, cache.action);
+
+    controller_print_unlock_flush(global.main->warning.to, global.thread);
+  }
+#endif // _di_controller_entry_settings_read_print_setting_unknown_action_
+
+#ifndef _di_controller_entry_settings_read_print_setting_unknown_action_value_
+  void controller_entry_settings_read_print_setting_unknown_action_value(const bool is_entry, const controller_global_t global, const controller_cache_t cache, const f_array_length_t index) {
+
+    if (global.main->warning.verbosity != f_console_verbosity_debug) return;
+
+    controller_print_lock(global.main->warning.to, global.thread);
+
+    fl_print_format("%c%[%SThe %s item setting '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->warning.context);
+    fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.action.name_action, global.main->warning.notable);
+    fl_print_format("%[' has an unknown value '%]", global.main->warning.to.stream, f_string_eol_s[0], global.main->warning.context, global.main->warning.prefix, is_entry ? controller_string_entry_s : controller_string_exit_s, global.main->warning.context);
+    fl_print_format("%[%Q%]", global.main->warning.to.stream, global.main->warning.notable, cache.content_actions.array[index].array[0], global.main->warning.notable);
+    fl_print_format("%['.%]%c", global.main->warning.to.stream, global.main->warning.context, global.main->warning.context, f_string_eol_s[0]);
+
+    controller_entry_error_print_cache(is_entry, global.main->warning, cache.action);
+
+    controller_print_unlock_flush(global.main->warning.to, global.thread);
+  }
+#endif // _di_controller_entry_settings_read_print_setting_unknown_action_value_
 
 #ifdef __cplusplus
 } // extern "C"

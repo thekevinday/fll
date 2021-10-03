@@ -37,6 +37,7 @@ extern "C" {
   #define controller_string_deadline      "deadline"
   #define controller_string_default       "default"
   #define controller_string_define        "define"
+  #define controller_string_disable       "disable"
   #define controller_string_entry         "entry"
   #define controller_string_entries       "entries"
   #define controller_string_environment   "environment"
@@ -55,6 +56,7 @@ extern "C" {
   #define controller_string_how           "how"
   #define controller_string_idle          "idle"
   #define controller_string_item          "item"
+  #define controller_string_init          "init"
   #define controller_string_kill          "kill"
   #define controller_string_limit         "limit"
   #define controller_string_locks         "locks"
@@ -69,13 +71,16 @@ extern "C" {
   #define controller_string_nice          "nice"
   #define controller_string_no            "no"
   #define controller_string_nofile        "nofile"
+  #define controller_string_normal        "normal"
   #define controller_string_nproc         "nproc"
   #define controller_string_on            "on"
   #define controller_string_optional      "optional"
   #define controller_string_other         "other"
   #define controller_string_parameter     "parameter"
+  #define controller_string_parameters    "parameters"
   #define controller_string_path          "path"
   #define controller_string_pause         "pause"
+  #define controller_string_pid           "pid"
   #define controller_string_pid_file      "pid_file"
   #define controller_string_processor     "processor"
   #define controller_string_program       "program"
@@ -96,6 +101,7 @@ extern "C" {
   #define controller_string_service       "service"
   #define controller_string_setting       "setting"
   #define controller_string_sigpending    "sigpending"
+  #define controller_string_show          "show"
   #define controller_string_stack         "stack"
   #define controller_string_start         "start"
   #define controller_string_stop          "stop"
@@ -131,8 +137,9 @@ extern "C" {
   #define controller_string_cpu_length           3
   #define controller_string_data_length          4
   #define controller_string_deadline_length      8
-  #define controller_string_define_length        6
   #define controller_string_default_length       7
+  #define controller_string_define_length        6
+  #define controller_string_disable_length       7
   #define controller_string_entry_length         5
   #define controller_string_entries_length       7
   #define controller_string_environment_length   11
@@ -147,8 +154,10 @@ extern "C" {
   #define controller_string_fsize_length         5
   #define controller_string_full_path_length     9
   #define controller_string_group_length         5
+  #define controller_string_groups_length        6
   #define controller_string_how_length           3
   #define controller_string_idle_length          4
+  #define controller_string_init_length          4
   #define controller_string_item_length          4
   #define controller_string_kill_length          4
   #define controller_string_limit_length         5
@@ -164,13 +173,16 @@ extern "C" {
   #define controller_string_nice_length          4
   #define controller_string_no_length            2
   #define controller_string_nofile_length        6
+  #define controller_string_normal_length        6
   #define controller_string_nproc_length         5
   #define controller_string_on_length            2
   #define controller_string_optional_length      8
   #define controller_string_other_length         5
   #define controller_string_parameter_length     9
+  #define controller_string_parameters_length    10
   #define controller_string_path_length          4
   #define controller_string_pause_length         5
+  #define controller_string_pid_length           3
   #define controller_string_pid_file_length      8
   #define controller_string_processor_length     9
   #define controller_string_program_length       7
@@ -190,6 +202,7 @@ extern "C" {
   #define controller_string_script_length        6
   #define controller_string_service_length       7
   #define controller_string_setting_length       7
+  #define controller_string_show_length          4
   #define controller_string_sigpending_length    10
   #define controller_string_stack_length         5
   #define controller_string_start_length         5
@@ -222,12 +235,13 @@ extern "C" {
   extern const f_string_t controller_string_consider_s;
   extern const f_string_t controller_string_control_s;
   extern const f_string_t controller_string_control_group_s;
-  extern const f_string_t controller_string_cpu_s;
   extern const f_string_t controller_string_core_s;
+  extern const f_string_t controller_string_cpu_s;
   extern const f_string_t controller_string_data_s;
   extern const f_string_t controller_string_deadline_s;
   extern const f_string_t controller_string_default_s;
   extern const f_string_t controller_string_define_s;
+  extern const f_string_t controller_string_disable_s;
   extern const f_string_t controller_string_entry_s;
   extern const f_string_t controller_string_entries_s;
   extern const f_string_t controller_string_environment_s;
@@ -245,6 +259,7 @@ extern "C" {
   extern const f_string_t controller_string_groups_s;
   extern const f_string_t controller_string_how_s;
   extern const f_string_t controller_string_idle_s;
+  extern const f_string_t controller_string_init_s;
   extern const f_string_t controller_string_item_s;
   extern const f_string_t controller_string_kill_s;
   extern const f_string_t controller_string_limit_s;
@@ -260,13 +275,16 @@ extern "C" {
   extern const f_string_t controller_string_nice_s;
   extern const f_string_t controller_string_no_s;
   extern const f_string_t controller_string_nofile_s;
+  extern const f_string_t controller_string_normal_s;
   extern const f_string_t controller_string_nproc_s;
   extern const f_string_t controller_string_on_s;
   extern const f_string_t controller_string_optional_s;
   extern const f_string_t controller_string_other_s;
   extern const f_string_t controller_string_parameter_s;
+  extern const f_string_t controller_string_parameters_s;
   extern const f_string_t controller_string_path_s;
   extern const f_string_t controller_string_pause_s;
+  extern const f_string_t controller_string_pid_s;
   extern const f_string_t controller_string_pid_file_s;
   extern const f_string_t controller_string_processor_s;
   extern const f_string_t controller_string_program_s;
@@ -286,6 +304,7 @@ extern "C" {
   extern const f_string_t controller_string_script_s;
   extern const f_string_t controller_string_service_s;
   extern const f_string_t controller_string_setting_s;
+  extern const f_string_t controller_string_show_s;
   extern const f_string_t controller_string_sigpending_s;
   extern const f_string_t controller_string_stack_s;
   extern const f_string_t controller_string_start_s;
@@ -1210,18 +1229,45 @@ extern "C" {
  * Entry and Exit files are essentially the same structure with minor differences in settings and behavior.
  * The structure is identical and due to lacking any particularly good name to represent both "entry" or "exit", the name "entry" is being used for both.
  *
+ * controller_entry_pid_*:
+ *   - disable: Do not check for or create a PID file to represent the entry execution.
+ *   - require: Check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
+ *   - ready:   When "ready" create a pid file, display error on failure and then fail (does not check if PID file exists).
+ *
+ * controller_entry_show_*:
+ *   - normal: Do not print anything other than warnings and errors, but allow executed programs and scripts to output however they like.
+ *   - init:   Print like an init program, printing status of entry and rules as they are being started, stopped, etc...
+ *
  * status: The overall status.
+ * pid:    The PID file generation setting.
+ * show:   The show setting for controlling what to show when executing entry items and rules.
  * items:  The array of entry items.
  */
 #ifndef _di_controller_entry_t_
+  enum {
+    controller_entry_pid_disable = 0,
+    controller_entry_pid_require,
+    controller_entry_pid_ready,
+  };
+
+  enum {
+    controller_entry_show_normal = 0,
+    controller_entry_show_init,
+  };
+
   typedef struct {
     f_status_t status;
+
+    uint8_t pid;
+    uint8_t show;
 
     controller_entry_items_t items;
   } controller_entry_t;
 
   #define controller_entry_t_initialize { \
     F_known_not, \
+    controller_entry_pid_require, \
+    controller_entry_show_normal, \
     controller_entry_items_t_initialize, \
   }
 #endif // _di_controller_entry_t_

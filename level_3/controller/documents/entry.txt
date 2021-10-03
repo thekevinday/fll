@@ -12,7 +12,7 @@ Entry Documentation:
 
   The "setting" Item Object represents settings and is not an "item" that can be executed.
   A number of settings are supported, but if this Item Object is not specified, then defaults are used.
-  The following settings are available: "mode".
+  The following settings are available: "mode", "pid", and "show".
 
   The "mode" setting represents the mode in which the Entry is operating in.
   The following modes are supported: "program" and "service".
@@ -27,6 +27,18 @@ Entry Documentation:
     Will call the "exit" with the same name as this Entry, but with the extension "exit", such as "default.exit".
     Does not support the Item Action "execute".
     This is the default mode.
+
+  The "pid" setting represents how the entry pid file is generated or not.
+  The following modes are supported: "disable", "require", and "ready".
+  For "disable", not pid file representing the entry is created.
+  For "require", check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
+  For "ready", when "ready" create a pid file, display error on failure and then fail (does not check if PID file exists).
+
+  The "show" setting represents the way entry processing presents information to the screen.
+  This applies only to the entry and rule processing itself and does not handle the output of programs and scripts being executed by some entry or rule.
+  The following show options are supported: "normal" and "init".
+  For "normal", will not report the start or stop of some entry or rule execution but will report any errors or warnings as appropriate.
+  For "init", will report when starting programs and may include reporting success and failure status.
 
   Each "item" supports the following Action Names: "consider", "execute", "failsafe", "freeze", "item", "kill", "pause", "reload", "restart", "ready", "resume", "start", "stop", and "timeout".
   Of those types, the following are considered a "rule" Action: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".

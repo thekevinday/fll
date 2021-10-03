@@ -714,7 +714,7 @@ extern "C" {
     if (F_status_is_error_not(*status) && *status != F_signal && *status != F_child) {
       if (main->parameters[controller_parameter_validate].result == f_console_result_none || main->parameters[controller_parameter_simulate].result == f_console_result_found) {
 
-        if (f_file_exists(entry->setting->path_pid.string) == F_true) {
+        if (entry->setting->entry.pid == controller_entry_pid_require && f_file_exists(entry->setting->path_pid.string) == F_true) {
           if (main->error.verbosity != f_console_verbosity_quiet) {
             controller_print_lock(main->error.to, entry->global->thread);
 
@@ -735,7 +735,6 @@ extern "C" {
             entry->setting->ready = controller_setting_ready_fail;
 
             if ((F_status_set_fine(*status) == F_execute || F_status_set_fine(*status) == F_require) && entry->global->setting->failsafe_enabled) {
-
               const uint8_t original_enabled = entry->global->thread->enabled;
 
               // restore operating mode so that the failsafe can execute.

@@ -20,3 +20,10 @@ command:
 command:
   start swapon -a
   stop swapoff -a
+
+script:
+  start {
+    if [[ ! -d /var/run/init ]] ; then
+      mkdir /var/run/init
+    fi
+  }

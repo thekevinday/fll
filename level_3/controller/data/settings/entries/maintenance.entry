@@ -3,5 +3,10 @@
 # A boot to bash process.
 #
 
+setting:
+  pid disable
+  show init
+
 main:
-  execute bash --login
+  #execute /bin/agetty -8 -i -J - linux
+  execute /bin/bash --login

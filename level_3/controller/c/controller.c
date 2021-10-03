@@ -336,8 +336,11 @@ extern "C" {
       }
     }
 
-    // The interruptable default is dependent on the "as init" execution state.
+    // Handle defaults dependent on the "as init" execution state.
     if (main->as_init) {
+      setting.entry.pid = controller_entry_pid_disable;
+      setting.entry.show = controller_entry_show_init;
+
       if (main->parameters[controller_parameter_interruptable].result == f_console_result_found) {
         setting.interruptable = F_true;
       }

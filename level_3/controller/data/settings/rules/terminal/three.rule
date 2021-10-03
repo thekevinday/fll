@@ -1,0 +1,13 @@
+# fss-000d
+#
+# Rule for the terminal programs.
+#
+# -m = don't prompt for login.
+# -J = don't clear on start, good for debugging.
+# 9600 and 115200 are common frequencies.
+
+setting:
+  name "System Terminal 3"
+
+command:
+  start agetty -8 tty3 linux

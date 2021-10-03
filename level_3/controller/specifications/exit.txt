@@ -15,7 +15,9 @@ Exit Specification:
 
   The Items:
     "main": required.
-    "setting": optional, but not Actions are currently supported.
+    "setting": optional, Actions may be one of:
+      - "pid": either "disable", "optional", or "require".
+      - "show": either "normal" or "init".
 
     The Exit file may have any other valid Item Objects, but only the above are reserved.
 
