@@ -5,7 +5,8 @@
  * API Version: 0.5
  * Licenses: lgplv2.1
  *
- * Provide means to convert one data type to another, such as a string to an integer.
+ * These are provided for internal reduction in redundant code.
+ * These should not be exposed/used outside of this project.
  */
 #ifndef _PRIVATE_F_conversion_h
 #define _PRIVATE_F_conversion_h

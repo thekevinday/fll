@@ -1,4 +1,5 @@
 #include "conversion.h"
+#include "private-conversion.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,59 +13,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
-        if (digits) {
-          ++digits;
-
-          if (negative) {
-            if (digits > f_conversion_digits_binary_signed) {
-              return F_status_set_error(F_number_underflow);
-            }
-
-            converted <<= 1;
-            converted -= digit;
-          }
-          else {
-            if (digits > f_conversion_digits_binary_signed) {
-              return F_status_set_error(F_number_overflow);
-            }
-
-            converted <<= 1;
-            converted += digit;
-          }
-        }
-        else if (digit) {
-          digits = 1;
-
-          if (negative) {
-            converted = (f_number_unsigned_t) (0 - digit);
-          }
-          else {
-            converted = (f_number_unsigned_t) digit;
-          }
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_binary_signed(string, range, negative, number);
   }
 #endif // _di_fl_conversion_string_to_binary_signed_
 
@@ -76,43 +25,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
-        if (digits) {
-          ++digits;
-
-          if (digits > f_conversion_digits_binary_unsigned) {
-            return F_status_set_error(F_number_overflow);
-          }
-
-          converted <<= 1;
-          converted += digit;
-        }
-        else if (digit) {
-          digits = 1;
-          converted = (f_number_unsigned_t) digit;
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_binary_unsigned(string, range, number);
   }
 #endif // _di_fl_conversion_string_to_binary_unsigned_
 
@@ -124,64 +37,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (negative) {
-            if (digits > f_conversion_digits_decimal_signed) {
-              if ((converted * 10) - digit < f_number_t_size_negative || (converted * 10) - digit > converted) {
-                return F_status_set_error(F_number_underflow);
-              }
-            }
-
-            converted *= 10;
-            converted -= digit;
-          }
-          else {
-            if (digits > f_conversion_digits_decimal_signed) {
-              if ((converted * 10) + digit > f_number_t_size_positive || (converted * 10) + digit < converted) {
-                return F_status_set_error(F_number_overflow);
-              }
-            }
-
-            converted *= 10;
-            converted += digit;
-          }
-        }
-        else if (digit) {
-          digits = 1;
-
-          if (negative) {
-            converted = (f_number_unsigned_t) (0 - digit);
-          }
-          else {
-            converted = (f_number_unsigned_t) digit;
-          }
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_decimal_signed(string, range, negative, number);
   }
 #endif // _di_fl_conversion_string_to_decimal_signed_
 
@@ -193,46 +49,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (digits > f_conversion_digits_decimal_unsigned) {
-            if ((converted * 10) + digit > f_number_t_size_unsigned || (converted * 10) + digit < converted) {
-              return F_status_set_error(F_number_overflow);
-            }
-          }
-
-          converted *= 10;
-          converted += digit;
-        }
-        else if (digit) {
-          digits = 1;
-          converted = (f_number_unsigned_t) digit;
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_decimal_unsigned(string, range, number);
   }
 #endif // _di_fl_conversion_string_to_decimal_unsigned_
 
@@ -244,64 +61,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (negative) {
-            if (digits > f_conversion_digits_duodecimal_signed) {
-              if ((converted * 12) - digit < f_number_t_size_negative || (converted * 12) - digit > converted) {
-                return F_status_set_error(F_number_underflow);
-              }
-            }
-
-            converted *= 12;
-            converted -= digit;
-          }
-          else {
-            if (digits > f_conversion_digits_duodecimal_signed) {
-              if ((converted * 12) + digit > f_number_t_size_positive || (converted * 12) + digit < converted) {
-                return F_status_set_error(F_number_overflow);
-              }
-            }
-
-            converted *= 12;
-            converted += digit;
-          }
-        }
-        else if (digit) {
-          digits = 1;
-
-          if (negative) {
-            converted = (f_number_unsigned_t) (0 - digit);
-          }
-          else {
-            converted = (f_number_unsigned_t) digit;
-          }
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_duodecimal_signed(string, range, negative, number);
   }
 #endif // _di_fl_conversion_string_to_duodecimal_signed_
 
@@ -313,46 +73,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (digits > f_conversion_digits_duodecimal_unsigned) {
-            if ((converted * 12) + digit > f_number_t_size_unsigned || (converted * 12) + digit < converted) {
-              return F_status_set_error(F_number_overflow);
-            }
-          }
-
-          converted *= 12;
-          converted += digit;
-        }
-        else if (digit) {
-          digits = 1;
-          converted = (f_number_unsigned_t) digit;
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_duodecimal_unsigned(string, range, number);
   }
 #endif // _di_fl_conversion_string_to_duodecimal_unsigned_
 
@@ -364,64 +85,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (negative) {
-            if (digits > f_conversion_digits_hexidecimal_signed) {
-              if ((converted << 4) - digit < f_number_t_size_negative || (converted << 4) - digit > converted) {
-                return F_status_set_error(F_number_underflow);
-              }
-            }
-
-            converted <<= 4;
-            converted -= digit;
-          }
-          else {
-            if (digits > f_conversion_digits_hexidecimal_signed) {
-              if ((converted << 4) + digit > f_number_t_size_positive || (converted << 4) + digit < converted) {
-                return F_status_set_error(F_number_overflow);
-              }
-            }
-
-            converted <<= 4;
-            converted += digit;
-          }
-        }
-        else if (digit) {
-          digits = 1;
-
-          if (negative) {
-            converted = (f_number_unsigned_t) (0 - digit);
-          }
-          else {
-            converted = (f_number_unsigned_t) digit;
-          }
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_hexidecimal_signed(string, range, negative, number);
   }
 #endif // _di_fl_conversion_string_to_hexidecimal_signed_
 
@@ -433,46 +97,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (digits > f_conversion_digits_hexidecimal_unsigned) {
-            if ((converted << 4) + digit > f_number_t_size_unsigned || (converted << 4) + digit < converted) {
-              return F_status_set_error(F_number_overflow);
-            }
-          }
-
-          converted <<= 4;
-          converted += digit;
-        }
-        else if (digit) {
-          digits = 1;
-          converted = (f_number_unsigned_t) digit;
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_hexidecimal_unsigned(string, range, number);
   }
 #endif // _di_fl_conversion_string_to_hexidecimal_unsigned_
 
@@ -484,64 +109,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (negative) {
-            if (digits > f_conversion_digits_octal_signed) {
-              if ((converted << 3) - digit < f_number_t_size_negative || (converted << 3) - digit > converted) {
-                return F_status_set_error(F_number_underflow);
-              }
-            }
-
-            converted <<= 3;
-            converted -= digit;
-          }
-          else {
-            if (digits > f_conversion_digits_octal_signed) {
-              if ((converted << 3) + digit > f_number_t_size_positive || (converted << 3) + digit < converted) {
-                return F_status_set_error(F_number_overflow);
-              }
-            }
-
-            converted <<= 3;
-            converted += digit;
-          }
-        }
-        else if (digit) {
-          digits = 1;
-
-          if (negative) {
-            converted = (f_number_unsigned_t) (0 - digit);
-          }
-          else {
-            converted = (f_number_unsigned_t) digit;
-          }
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_octal_signed(string, range, negative, number);
   }
 #endif // _di_fl_conversion_string_to_octal_signed_
 
@@ -553,46 +121,7 @@ extern "C" {
       if (!number) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 
-    if (!string[0]) {
-      return F_data_not;
-    }
-
-    uint8_t digits = 0;
-    uint8_t digit = 0;
-    f_number_unsigned_t converted = 0;
-
-    for (f_array_length_t i = range.start; i <= range.stop; ++i) {
-
-      if (string[i] == 0x2e) {
-        return F_status_set_error(F_number_decimal);
-      }
-
-      if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
-
-        if (digits) {
-          ++digits;
-
-          if (digits > f_conversion_digits_octal_unsigned) {
-            if ((converted << 3) + digit > f_number_t_size_unsigned || (converted << 3) + digit < converted) {
-              return F_status_set_error(F_number_overflow);
-            }
-          }
-
-          converted <<= 3;
-          converted += digit;
-        }
-        else if (digit) {
-          digits = 1;
-          converted = (f_number_unsigned_t) digit;
-        }
-      }
-      else if (string[i]) {
-        return F_status_set_error(F_number);
-      }
-    } // for
-
-    *number = converted;
-    return F_none;
+    return private_fl_conversion_string_to_octal_unsigned(string, range, number);
   }
 #endif // _di_fl_conversion_string_to_octal_unsigned_
 
@@ -739,22 +268,22 @@ extern "C" {
     }
 
     if (mode == 10) {
-      return fl_conversion_string_to_decimal_signed(string, location_offset, vector == -1, number);
+      return private_fl_conversion_string_to_decimal_signed(string, location_offset, vector == -1, number);
     }
 
     if (mode == 16) {
-      return fl_conversion_string_to_hexidecimal_signed(string, location_offset, vector == -1, number);
+      return private_fl_conversion_string_to_hexidecimal_signed(string, location_offset, vector == -1, number);
     }
 
     if (mode == 12) {
-      return fl_conversion_string_to_duodecimal_signed(string, location_offset, vector == -1, number);
+      return private_fl_conversion_string_to_duodecimal_signed(string, location_offset, vector == -1, number);
     }
 
     if (mode == 8) {
-      return fl_conversion_string_to_octal_signed(string, location_offset, vector == -1, number);
+      return private_fl_conversion_string_to_octal_signed(string, location_offset, vector == -1, number);
     }
 
-    return fl_conversion_string_to_binary_signed(string, location_offset, vector == -1, number);
+    return private_fl_conversion_string_to_binary_signed(string, location_offset, vector == -1, number);
   }
 #endif // _di_fl_conversion_string_to_number_signed_
 
@@ -889,19 +418,19 @@ extern "C" {
     }
 
     if (mode == 10) {
-      status = fl_conversion_string_to_decimal_unsigned(string, location_offset, number);
+      status = private_fl_conversion_string_to_decimal_unsigned(string, location_offset, number);
     }
     else if (mode == 16) {
-      status = fl_conversion_string_to_hexidecimal_unsigned(string, location_offset, number);
+      status = private_fl_conversion_string_to_hexidecimal_unsigned(string, location_offset, number);
     }
     else if (mode == 12) {
-      status = fl_conversion_string_to_duodecimal_unsigned(string, location_offset, number);
+      status = private_fl_conversion_string_to_duodecimal_unsigned(string, location_offset, number);
     }
     else if (mode == 8) {
-      status = fl_conversion_string_to_octal_unsigned(string, location_offset, number);
+      status = private_fl_conversion_string_to_octal_unsigned(string, location_offset, number);
     }
     else {
-      status = fl_conversion_string_to_binary_unsigned(string, location_offset, number);
+      status = private_fl_conversion_string_to_binary_unsigned(string, location_offset, number);
     }
 
     // +/- signs are not allowed.
