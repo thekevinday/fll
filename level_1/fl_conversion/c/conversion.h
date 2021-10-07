@@ -48,6 +48,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -76,6 +77,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -105,6 +107,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -133,6 +136,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -162,6 +166,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -190,6 +195,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -219,6 +225,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -247,6 +254,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -276,6 +284,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -303,6 +312,7 @@ extern "C" {
  *   F_data_not if string starts with a null (length is 0).
  *
  *   F_number (with error bit) if no conversion was made due to non-octal values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -343,6 +353,7 @@ extern "C" {
  *
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -387,6 +398,7 @@ extern "C" {
  *
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_negative (with error bit) on negative value.
  *   F_number_positive (with error bit) on positive value (has a +, such as '+1', when only '1' is valid here).
  *   F_number_overflow (with error bit) on integer overflow.

@@ -22,6 +22,10 @@ extern "C" {
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
+
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
           ++digits;
@@ -82,6 +86,10 @@ extern "C" {
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
+
       if (f_conversion_character_to_binary(string[i], &digit) == F_none) {
         if (digits) {
           ++digits;
@@ -125,6 +133,10 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
 
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
@@ -191,6 +203,10 @@ extern "C" {
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
+
       if (f_conversion_character_to_decimal(string[i], &digit) == F_none) {
 
         if (digits) {
@@ -237,6 +253,10 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
 
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
@@ -303,6 +323,10 @@ extern "C" {
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
+
       if (f_conversion_character_to_duodecimal(string[i], &digit) == F_none) {
 
         if (digits) {
@@ -349,6 +373,10 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
 
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
@@ -415,6 +443,10 @@ extern "C" {
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
 
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
+
       if (f_conversion_character_to_hexidecimal(string[i], &digit) == F_none) {
 
         if (digits) {
@@ -461,6 +493,10 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
 
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
@@ -526,6 +562,10 @@ extern "C" {
     f_number_unsigned_t converted = 0;
 
     for (f_array_length_t i = range.start; i <= range.stop; ++i) {
+
+      if (string[i] == 0x2e) {
+        return F_status_set_error(F_number_decimal);
+      }
 
       if (f_conversion_character_to_octal(string[i], &digit) == F_none) {
 
@@ -645,6 +685,9 @@ extern "C" {
         else if (string[j] == 0x62 || string[j] == 0x42) {
           mode = 2;
           offset += 2;
+        }
+        else if (string[j] == 0x2e) {
+          return F_status_set_error(F_number_decimal);
         }
         else {
           return F_status_set_error(F_number);
@@ -804,6 +847,9 @@ extern "C" {
         else if (string[j] == 0x62 || string[j] == 0x42) {
           mode = 2;
           offset += 2;
+        }
+        else if (string[j] == 0x2e) {
+          return F_status_set_error(F_number_decimal);
         }
         else {
           return F_status_set_error(F_number);
