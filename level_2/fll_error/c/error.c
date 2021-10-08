@@ -122,48 +122,6 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_file_found) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%[', found.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_found_not) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%[', could not find.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_file_open) {
-      if (print.verbosity != f_console_verbosity_quiet) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
-        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
-        fl_print_format("%[', already open.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
     if (status == F_file_descriptor) {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
@@ -234,6 +192,48 @@ extern "C" {
       return F_false;
     }
 
+    if (status == F_file_found) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', found.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_found_not) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', could not find.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_file_open) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', already open.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
     if (status == F_file_open_max) {
       if (print.verbosity != f_console_verbosity_quiet) {
         flockfile(print.to.stream);
@@ -283,6 +283,20 @@ extern "C" {
         fl_print_format("%c%[%SRead failed while trying to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
         fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
         fl_print_format("%['.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_read_only) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', %S is read only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
@@ -381,6 +395,20 @@ extern "C" {
         fl_print_format("%c%[%SFailed to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
         fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
         fl_print_format("%[', write failure.%]%c", print.to.stream, print.context, print.context, f_string_eol_s[0]);
+
+        funlockfile(print.to.stream);
+      }
+
+      return F_false;
+    }
+
+    if (status == F_write_only) {
+      if (print.verbosity != f_console_verbosity_quiet) {
+        flockfile(print.to.stream);
+
+        fl_print_format("%c%[%SUnable to %S %S '%]", print.to.stream, f_string_eol_s[0], print.context, print.prefix, operation, type_name, print.context);
+        fl_print_format("%[%S%]", print.to.stream, print.notable, name, print.notable);
+        fl_print_format("%[', %S is write only.%]%c", print.to.stream, print.context, type_name, print.context, f_string_eol_s[0]);
 
         funlockfile(print.to.stream);
       }
