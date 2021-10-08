@@ -13,6 +13,26 @@ extern "C" {
 #endif
 
 /**
+ * Given a string whose range represents a number, seek past the first positive or negative sign.
+ *
+ * This will stop at the first non-NULL, non-'+' and non-'-' characters.
+ *
+ * Only the first '+' or '-' are processed.
+ *
+ * @param buffer
+ *   The string referenced by the range.
+ * @param range
+ *   The range within the buffer to process.
+ *
+ * @return
+ *   The string range.
+ *   The start range will be past the stop range on overflow or on any failure.
+ */
+#ifndef _di_controller_range_after_number_sign_
+  extern f_string_range_t controller_range_after_number_sign(const f_string_static_t buffer, const f_string_range_t range) f_attribute_visibility_internal;
+#endif // _di_controller_range_after_number_sign_
+
+/**
  * Rip a string fromt he source and then add a NULL after the end of the string.
  *
  * @param source
@@ -361,6 +381,28 @@ extern "C" {
 #ifndef _di_controller_process_entry_
   extern f_status_t controller_process_entry(const bool failsafe, const bool is_entry, controller_global_t *global, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_process_entry_
+
+/**
+ * Print message regarding the population of a setting when in simulation or verbose mode.
+ *
+ * @param is_entry
+ *   If TRUE, then this operate as an entry.
+ *   If FALSE, then this operate as an exit.
+ * @param global
+ *   The global data.
+ * @param name
+ *   The Object name of the setting being populated.
+ * @param name_sub
+ *   (optional) A sub-name associated with the setting being populated.
+ *   Set to NULL to disable.
+ * @param value
+ *   The value being set.
+ * @param suffix
+ *   An additional message to append at the end (before the final period).
+ */
+#ifndef _di_controller_process_entry_print_simulate_setting_value_
+  extern void controller_process_entry_print_simulate_setting_value(const bool is_entry, const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) f_attribute_visibility_internal;
+#endif // _di_controller_process_entry_print_simulate_setting_value_
 
 /**
  * Prepare the process.

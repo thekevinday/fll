@@ -796,6 +796,7 @@ extern "C" {
     controller_rule_setting_type_path,
     controller_rule_setting_type_scheduler,
     controller_rule_setting_type_script,
+    controller_rule_setting_type_timeout,
     controller_rule_setting_type_user,
   };
 
@@ -806,6 +807,11 @@ extern "C" {
   #define controller_rule_has_nice          0x8
   #define controller_rule_has_scheduler     0x10
   #define controller_rule_has_user          0x20
+
+  // Designate codes for timeout settings to be used during the loading of the rule timeout settings.
+  #define controller_rule_timeout_code_kill  1
+  #define controller_rule_timeout_code_start 2
+  #define controller_rule_timeout_code_stop  3
 
   typedef struct {
     f_status_t status[controller_rule_action_type__enum_size];
@@ -1090,11 +1096,6 @@ extern "C" {
  *   - require:      Require Rule operations to succeed or the Entry/Exit will fail.
  *   - wait:         Wait for all existing asynchronous processes to finish before operating Rule.
  *
- * controller_entry_timeout_code_*:
- *   - kill:  Designate time to wait before killing.
- *   - start: Designate time to wait before starting.
- *   - stop:  Designate time to wait before stopping.
- *
  * type:       The type of Action.
  * code:       A single code or sub-type associated with the Action.
  * line:       The line number where the Entry Item begins.
@@ -1238,10 +1239,13 @@ extern "C" {
  *   - normal: Do not print anything other than warnings and errors, but allow executed programs and scripts to output however they like.
  *   - init:   Print like an init program, printing status of entry and rules as they are being started, stopped, etc...
  *
- * status: The overall status.
- * pid:    The PID file generation setting.
- * show:   The show setting for controlling what to show when executing entry items and rules.
- * items:  The array of entry items.
+ * status:        The overall status.
+ * pid:           The PID file generation setting.
+ * show:          The show setting for controlling what to show when executing entry items and rules.
+ * timeout_kill:  The timeout to wait relating to using a kill signal.
+ * timeout_start: The timeout to wait relating to starting a process.
+ * timeout_stop:  The timeout to wait relating to stopping a process.
+ * items:         The array of entry items.
  */
 #ifndef _di_controller_entry_t_
   enum {
@@ -1261,6 +1265,10 @@ extern "C" {
     uint8_t pid;
     uint8_t show;
 
+    f_number_unsigned_t timeout_kill;
+    f_number_unsigned_t timeout_start;
+    f_number_unsigned_t timeout_stop;
+
     controller_entry_items_t items;
   } controller_entry_t;
 
@@ -1268,6 +1276,9 @@ extern "C" {
     F_known_not, \
     controller_entry_pid_require, \
     controller_entry_show_normal, \
+    0, \
+    0, \
+    0, \
     controller_entry_items_t_initialize, \
   }
 #endif // _di_controller_entry_t_
@@ -1289,9 +1300,6 @@ extern "C" {
  *
  * interruptable:    TRUE if the program responds to interrupt signals, FALSE to block/ignore interrupt signals.
  * ready:            State representing if the settings are all loaded and is ready to run program operations.
- * timeout_kill:     The timeout to wait relating to using a kill signal.
- * timeout_start:    The timeout to wait relating to starting a process.
- * timeout_stop:     The timeout to wait relating to stopping a process.
  * failsafe_enabled: TRUE if failsafe execution is enabled, FALSE otherwise.
  * failsafe_item_id: The Entry Item ID to execute when failsafe execution is enabled.
  * path_control:     File path to the control socket.
@@ -1321,10 +1329,6 @@ extern "C" {
     uint8_t ready;
     uint8_t mode;
 
-    f_number_unsigned_t timeout_kill;
-    f_number_unsigned_t timeout_start;
-    f_number_unsigned_t timeout_stop;
-
     bool failsafe_enabled;
     f_array_length_t failsafe_item_id;
 
@@ -1344,9 +1348,6 @@ extern "C" {
     F_false, \
     0, \
     0, \
-    3, \
-    3, \
-    3, \
     F_false, \
     0, \
     f_string_dynamic_t_initialize, \

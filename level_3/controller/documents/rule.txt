@@ -9,7 +9,7 @@ Rule Documentation:
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
   The "setting" Rule Type has the following FSS-0001 (Extended) Content\:
-    "affinity": Define one ore more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
+    "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
     "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
     "control_group": Define a control group (cgroup) in which everything within this rule executes under.
     "define": Define a custom environment variable with a given variable, and automatically expose it to processes executed within this rule. @todo make sure this is implemented.
@@ -23,6 +23,7 @@ Rule Documentation:
     "path": A single Content used to set a custom PATH environment variable value.
     "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     "scheduler": A valid name of a scheduler to use followed by an optional priority number.
+    "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
     "user": A single user name or ID to execute as.
 
   In the case of "capability"\:
@@ -72,6 +73,16 @@ Rule Documentation:
     For example, non-real-time schedulers (such as "idle") only support a value of 0 whereas real-time schedulers (such as "fifo") only support an inclusive range of 1 to 99.
     Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
     Supported real-time schedulers are: "deadline", "fifo", "round_robin".
+
+  In the case of "timeout"\:
+    The "timeout" Item Action provides default global settings for each of the three special situations: "kill", "start", and "stop".
+    Each of these may only have a single one exist at a time (one "kill", one "start", one "stop", and one "wait").
+    Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
+    Each of these accepts a single Action Parameter that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+    For "kill", this represents the number of MegaTime to wait after stopping some rule and that rule has not yet stopped to forcefully stop the rule (aka kill the rule).
+    For "start", this represents the number of MegaTime to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
+    For "stop", this represents the number of MegaTime to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.
+    A value of 0 disables this (prevents the timeout action).
 
   There are four available Rule Types to choose from: "command", "service", "script", and "utility".
 

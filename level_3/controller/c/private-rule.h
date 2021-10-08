@@ -751,6 +751,8 @@ extern "C" {
  *   The global data.
  * @param cache
  *   A structure for containing and caching relevant data.
+ * @param entry
+ *   The entry containing the rule being read.
  * @param rule
  *   The processed rule.
  *   The rule status will be updated by this function.
@@ -770,7 +772,7 @@ extern "C" {
  * @see fll_fss_basic_list_read().
  */
 #ifndef _di_controller_rule_read_
-  extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t alias, controller_global_t global, controller_cache_t *cache, controller_rule_t *rule) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t alias, controller_global_t global, controller_cache_t *cache, controller_entry_t *entry, controller_rule_t *rule) f_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
 
 /**
@@ -814,6 +816,97 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_
   extern f_status_t controller_rule_setting_read(const bool is_normal, const controller_global_t global, const controller_setting_t setting, controller_cache_t *cache, controller_rule_t *rule) f_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_
+
+/**
+ * Print message regarding the population of a setting when in simulation or verbose mode.
+ *
+ * @param global
+ *   The global data.
+ * @param name
+ *   The Object name of the setting being populated.
+ * @param name_sub
+ *   (optional) A sub-name associated with the setting being populated.
+ *   Set to NULL to disable.
+ * @param value
+ *   The value being set.
+ * @param suffix
+ *   An additional message to append at the end (before the final period).
+ */
+#ifndef _di_controller_rule_setting_read_print_value_
+  extern void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_t name, const f_string_t name_sub, const f_string_static_t value, const f_string_t suffix) f_attribute_visibility_internal;
+#endif // _di_controller_rule_setting_read_print_value_
+
+/**
+ * Print message regarding the population of a setting when in simulation or verbose mode.
+ *
+ * This handles the case where there are multiple values stored in the buffer_item at a given content_actions position.
+ *
+ * @param global
+ *   The global data.
+ * @param name
+ *   The Object name of the setting being populated.
+ * @param index
+ *   Position within the content_actions range cache array.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ */
+#ifndef _di_controller_rule_setting_read_print_values_
+  extern void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_t name, const f_array_length_t index, controller_cache_t *cache) f_attribute_visibility_internal;
+#endif // _di_controller_rule_setting_read_print_values_
+
+/**
+ * Print a message about a rule setting problem.
+ *
+ * This is intended to be explicitly called by controller_rule_setting_read().
+ * This is intended only to be used for simple messages.
+ *
+ * @param print
+ *   The error or warning output structure.
+ * @param message
+ *   The string to append to the message being printed.
+ * @param index
+ *   The position in the object actions cache representing the object.
+ * @param line_item
+ *   The current line number.
+ * @param thread
+ *   The thread data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ *
+ * @see controller_rule_setting_read()
+ */
+#ifndef _di_controller_rule_setting_read_problem_print_
+  extern void controller_rule_setting_read_problem_print(const fll_error_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+#endif // _di_controller_rule_setting_read_problem_print_
+
+/**
+ * Print a message about a rule setting problem, with additional messages about value.
+ *
+ * This is intended to be explicitly called by controller_rule_setting_read().
+ * This is intended only to be used for simple messages.
+ *
+ * @param print
+ *   The error or warning output structure.
+ * @param before
+ *   The string to append to the message being printed (before the value).
+ * @param range
+ *   The range within the cache item buffer representing the value.
+ * @param after
+ *   The string to append to the message being printed (after the value).
+ * @param index
+ *   The position in the object actions cache representing the object.
+ * @param line_item
+ *   The current line number.
+ * @param thread
+ *   The thread data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ *
+ * @see controller_rule_setting_read()
+ */
+#ifndef _di_controller_rule_setting_read_problem_print_with_range_
+  extern void controller_rule_setting_read_problem_print_with_range(const fll_error_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+#endif // _di_controller_rule_setting_read_problem_print_with_range_
 
 /**
  * Perform a simulated execution of the given rule.
