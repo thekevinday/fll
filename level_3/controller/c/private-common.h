@@ -37,6 +37,7 @@ extern "C" {
   #define controller_string_deadline      "deadline"
   #define controller_string_default       "default"
   #define controller_string_define        "define"
+  #define controller_string_delay         "delay"
   #define controller_string_disable       "disable"
   #define controller_string_entry         "entry"
   #define controller_string_entries       "entries"
@@ -47,6 +48,7 @@ extern "C" {
   #define controller_string_exits         "exits"
   #define controller_string_fail          "fail"
   #define controller_string_failsafe      "failsafe"
+  #define controller_string_failure       "failure"
   #define controller_string_fifo          "fifo"
   #define controller_string_freeze        "freeze"
   #define controller_string_fsize         "fsize"
@@ -61,6 +63,7 @@ extern "C" {
   #define controller_string_limit         "limit"
   #define controller_string_locks         "locks"
   #define controller_string_main          "main"
+  #define controller_string_max           "max"
   #define controller_string_memlock       "memlock"
   #define controller_string_method        "method"
   #define controller_string_mode          "mode"
@@ -88,6 +91,8 @@ extern "C" {
   #define controller_string_reload        "reload"
   #define controller_string_require       "require"
   #define controller_string_required      "required"
+  #define controller_string_rerun         "rerun"
+  #define controller_string_reset         "reset"
   #define controller_string_restart       "restart"
   #define controller_string_resume        "resume"
   #define controller_string_round_robin   "round_robin"
@@ -106,6 +111,7 @@ extern "C" {
   #define controller_string_start         "start"
   #define controller_string_stop          "stop"
   #define controller_string_succeed       "succeed"
+  #define controller_string_success       "success"
   #define controller_string_synchronous   "synchronous"
   #define controller_string_thaw          "thaw"
   #define controller_string_timeout       "timeout"
@@ -139,6 +145,7 @@ extern "C" {
   #define controller_string_deadline_length      8
   #define controller_string_default_length       7
   #define controller_string_define_length        6
+  #define controller_string_delay_length         5
   #define controller_string_disable_length       7
   #define controller_string_entry_length         5
   #define controller_string_entries_length       7
@@ -148,6 +155,7 @@ extern "C" {
   #define controller_string_exit_length          4
   #define controller_string_exits_length         5
   #define controller_string_fail_length          4
+  #define controller_string_failure_length       7
   #define controller_string_failsafe_length      8
   #define controller_string_fifo_length          4
   #define controller_string_freeze_length        6
@@ -163,6 +171,7 @@ extern "C" {
   #define controller_string_limit_length         5
   #define controller_string_locks_length         5
   #define controller_string_main_length          4
+  #define controller_string_max_length           3
   #define controller_string_memlock_length       7
   #define controller_string_method_length        6
   #define controller_string_mode_length          4
@@ -190,6 +199,8 @@ extern "C" {
   #define controller_string_reload_length        6
   #define controller_string_require_length       7
   #define controller_string_required_length      8
+  #define controller_string_rerun_length         5
+  #define controller_string_reset_length         5
   #define controller_string_restart_length       7
   #define controller_string_resume_length        6
   #define controller_string_round_robin_length   11
@@ -208,6 +219,7 @@ extern "C" {
   #define controller_string_start_length         5
   #define controller_string_stop_length          4
   #define controller_string_succeed_length       7
+  #define controller_string_success_length       7
   #define controller_string_synchronous_length   11
   #define controller_string_thaw_length          4
   #define controller_string_timeout_length       7
@@ -241,6 +253,7 @@ extern "C" {
   extern const f_string_t controller_string_deadline_s;
   extern const f_string_t controller_string_default_s;
   extern const f_string_t controller_string_define_s;
+  extern const f_string_t controller_string_delay_s;
   extern const f_string_t controller_string_disable_s;
   extern const f_string_t controller_string_entry_s;
   extern const f_string_t controller_string_entries_s;
@@ -251,6 +264,7 @@ extern "C" {
   extern const f_string_t controller_string_exits_s;
   extern const f_string_t controller_string_fail_s;
   extern const f_string_t controller_string_failsafe_s;
+  extern const f_string_t controller_string_failure_s;
   extern const f_string_t controller_string_fifo_s;
   extern const f_string_t controller_string_freeze_s;
   extern const f_string_t controller_string_fsize_s;
@@ -265,6 +279,7 @@ extern "C" {
   extern const f_string_t controller_string_limit_s;
   extern const f_string_t controller_string_locks_s;
   extern const f_string_t controller_string_main_s;
+  extern const f_string_t controller_string_max_s;
   extern const f_string_t controller_string_memlock_s;
   extern const f_string_t controller_string_method_s;
   extern const f_string_t controller_string_mode_s;
@@ -292,6 +307,8 @@ extern "C" {
   extern const f_string_t controller_string_reload_s;
   extern const f_string_t controller_string_require_s;
   extern const f_string_t controller_string_required_s;
+  extern const f_string_t controller_string_rerun_s;
+  extern const f_string_t controller_string_reset_s;
   extern const f_string_t controller_string_restart_s;
   extern const f_string_t controller_string_resume_s;
   extern const f_string_t controller_string_round_robin_s;
@@ -310,6 +327,7 @@ extern "C" {
   extern const f_string_t controller_string_start_s;
   extern const f_string_t controller_string_stop_s;
   extern const f_string_t controller_string_succeed_s;
+  extern const f_string_t controller_string_success_s;
   extern const f_string_t controller_string_synchronous_s;
   extern const f_string_t controller_string_thaw_s;
   extern const f_string_t controller_string_timeout_s;
@@ -526,6 +544,67 @@ extern "C" {
 #endif // _di_controller_mutex_t_
 
 /**
+ * The Rule "rerun" item for controlling re-execution.
+ *
+ * count: A count of the number of executions.
+ * delay: The time to wait before attempting to re-run.
+ * max:   The maximum number of times to re-run (with 0 representing re-run infinitely) for executions.
+ */
+#ifndef _di_controller_rule_rerun_item_t_
+  typedef struct {
+    bool reset;
+
+    f_number_unsigned_t count;
+    f_number_unsigned_t delay;
+    f_number_unsigned_t max;
+  } controller_rule_rerun_item_t;
+
+  #define controller_rule_rerun_item_initialize { \
+    F_false, \
+    0, \
+    5000, \
+    0, \
+  }
+#endif // _di_controller_rule_rerun_item_t_
+
+/**
+ * The Rule "rerun" values for controlling re-execution.
+ *
+ * controller_rule_rerun_is_*:
+ *   - failure:       The success re-run is enabled.
+ *   - failure_reset: Reset success counter when failure is returned.
+ *   - success:       The success re-run is enabled.
+ *   - success_reset: Reset failure counter when success is returned.
+ *
+ * is:            A bitwise set of options to designate whether rerun is enabled or not and other options.
+ * count_failure: A count of the number of failed executions.
+ * count_success: A count of the number of successful executions.
+ * delay_failure: The time to wait before attempting to "rerun" for failed executions.
+ * delay_success: The time to wait before attempting to "rerun" for successful executions.
+ * max_failure:   The maximum number of times to "rerun" (with 0 representing "rerun" infinitely) for failed executions.
+ * max_success:   The maximum number of times to "rerun" (with 0 representing "rerun" infinitely) for successful executions.
+ */
+#ifndef _di_controller_rule_rerun_t_
+  #define controller_rule_rerun_is_failure       0x1
+  #define controller_rule_rerun_is_failure_reset 0x2
+  #define controller_rule_rerun_is_success       0x4
+  #define controller_rule_rerun_is_success_reset 0x8
+
+  typedef struct {
+    uint8_t is;
+
+    controller_rule_rerun_item_t failure;
+    controller_rule_rerun_item_t success;
+  } controller_rule_rerun_t;
+
+  #define controller_rule_rerun_initialize { \
+    0, \
+    controller_rule_rerun_item_initialize, \
+    controller_rule_rerun_item_initialize, \
+  }
+#endif // _di_controller_rule_rerun_t_
+
+/**
  * A Rule Action.
  *
  * controller_rule_action_method_*:
@@ -538,6 +617,7 @@ extern "C" {
  *   - kill:     The Kill execution instructions.
  *   - pause:    The Pause execution instructions.
  *   - pid_file: The PID file setting.
+ *   - rerun:    The Re-run execution after success or failure.
  *   - reload:   The Reload execution instructions.
  *   - restart:  The Restart execution instructions.
  *   - resume:   The Resume execution instructions.
@@ -571,6 +651,7 @@ extern "C" {
     controller_rule_action_type_pause,
     controller_rule_action_type_pid_file,
     controller_rule_action_type_reload,
+    controller_rule_action_type_rerun,
     controller_rule_action_type_restart,
     controller_rule_action_type_resume,
     controller_rule_action_type_start,
@@ -581,6 +662,21 @@ extern "C" {
 
     // designate the largest value in the enum, the '__' is intended.
     controller_rule_action_type__enum_size,
+  };
+
+  enum {
+    controller_rule_action_type_execute_freeze = 0,
+    controller_rule_action_type_execute_kill,
+    controller_rule_action_type_execute_pause,
+    controller_rule_action_type_execute_reload,
+    controller_rule_action_type_execute_restart,
+    controller_rule_action_type_execute_resume,
+    controller_rule_action_type_execute_start,
+    controller_rule_action_type_execute_stop,
+    controller_rule_action_type_execute_thaw,
+
+    // designate the largest value in the enum, the '__' is intended.
+    controller_rule_action_type_execute__enum_size,
   };
 
   typedef struct {
@@ -632,7 +728,9 @@ extern "C" {
  *   - utility: A Utility to execute.
  *
  * type:    The type of the Rule Item.
+ * with:    A bitwise number representing execute "with" options.
  * line:    The line number where the Rule Item begins.
+ * reruns:  An array designating rerun settings for each execution type available.
  * actions: The actions associated with the Rule Item.
  */
 #ifndef _di_controller_rule_item_t_
@@ -646,8 +744,11 @@ extern "C" {
 
   typedef struct {
     uint8_t type;
+    uint8_t with;
     f_array_length_t line;
 
+    f_string_dynamic_t pid_file;
+    controller_rule_rerun_t reruns[controller_rule_action_type_execute__enum_size];
     controller_rule_actions_t actions;
   } controller_rule_item_t;
 
@@ -655,6 +756,19 @@ extern "C" {
     { \
       0, \
       0, \
+      0, \
+      f_string_dynamic_t_initialize, \
+      { \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+        controller_rule_rerun_t_initialize, \
+      }, \
       controller_rule_actions_t_initialize, \
     }
 #endif // _di_controller_rule_item_t_
@@ -850,6 +964,7 @@ extern "C" {
 
   #define controller_rule_t_initialize { \
       { \
+        F_known_not, \
         F_known_not, \
         F_known_not, \
         F_known_not, \

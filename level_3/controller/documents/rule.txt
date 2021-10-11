@@ -36,7 +36,7 @@ Rule Documentation:
     The first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
   In the case of "group" and "user"\:
-    Only users and groups that the user the controller program is being run as may be used.
+    Only users and groups that the user the controller program is being run as is allowed to use may be used.
 
   In the case of "limit"\:
     The first parameter must be one of: "as", "core", "cpu", "data", "fsize", "locks", "memlock", "msgqueue", "nice", "nofile", "nproc", "rss", "rtprio", "rttime", "sigpending", or "stack".
@@ -100,14 +100,24 @@ Rule Documentation:
 
   The "utility" Rule Type provides a "script" accompanied with a PID file (Process Identifier file).
 
-  There are nine Rule Actions used to execute ("freeze", "kill", "pause", "restart", "resume", "reload", "start", "stop", and "thaw")\:
+  There are nine Rule Actions used to execute ("freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw")\:
     When "restart" Object's Content is not provided, then "start" and "stop" is called when the rule is executed using the restart Action, if both "start" and "stop" are provided.
     When "reload", "start", or "stop" Object's Content are not provided, then no respective Action is performed.
 
     Commands are conditionally available depending on the presence of these, such as if "stop" is not provided then "stop" (and "restart") will not be available for the "control" program(s) to use.
 
-  Thee are additional Rule Actions not used to execute ("pid_file" and "with")\:
+  Thee are additional Rule Actions not used to execute ("pid_file", "rerun", and "with")\:
     The "pid_file" Object's Content designates the path to the PID file created by the called program.
+
+    The "rerun" Object's Content designates how to re-run a given execution Rule type.
+    The first Content represents the execution type, which may be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
+    The second Content represents when to run this re-run is triggered, which is either "success" (return code of 0) or "failure" (return code is not 0).
+    The third Content and more represent additional options for fine tuning how the re-run is perforrmed\:
+      When "delay", followed by a number of MegaTime (MT) (equivalent to milliseconds) in which to wait before attempting the re-run.
+      When "max", followed by a positive number or the number 0 designating the maximum number of re-runs to perform.
+      When "reset", the "max" re-run counter is reset for the opposite re-run when this re-run is triggered, such as\:
+        A "rerun start success reset" and a "rerun failure max 10", the failure counter would reset to 0 when the "success" re-run is performed and not when the "failure" re-run is performed.
+      A "max" of 0 designates that the re-run will happen infinitely.
 
     The "with" Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
     The following flags are supported:

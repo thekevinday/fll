@@ -11,3 +11,6 @@ setting:
 
 command:
   start agetty -8 tty3 linux
+
+  rerun start success delay 1000 reset
+  rerun start failure delay 5000 max 100

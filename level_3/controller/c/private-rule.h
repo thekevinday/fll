@@ -560,6 +560,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_valid_not (with error bit) on invalid data.
  *
  *   Errors (with error bit) from: f_fss_count_lines().
  *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
@@ -774,6 +775,37 @@ extern "C" {
 #ifndef _di_controller_rule_read_
   extern f_status_t controller_rule_read(const bool is_normal, const f_string_static_t alias, controller_global_t global, controller_cache_t *cache, controller_entry_t *entry, controller_rule_t *rule) f_attribute_visibility_internal;
 #endif // _di_controller_rule_read_
+
+/**
+ * Process a number from a rule file, incrementing index as necessary.
+ *
+ * This prints error messages as necessary.
+ *
+ * This is intended to be called by controller_rule_action_read().
+ *
+ * @param global
+ *   The global data.
+ * @param name
+ *   The name representing the value whose number is being processed.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param index
+ *   The position within the content action array for some rule to process.
+ * @param number
+ *   The processed number will be saved here.
+ *
+ * @return
+ *   F_none on success.
+ *   F_valid_not (with error bit) on failure due to invalid value.
+ *
+ *   Errors (with error bit) from: fl_conversion_string_to_number_signed().
+ *
+ * @see controller_rule_action_read()
+ * @see fl_conversion_string_to_number_signed()
+ */
+#ifndef _di_controller_rule_action_read_rerun_number_
+  extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t *cache, f_array_length_t *index, f_number_unsigned_t *number) f_attribute_visibility_internal;
+#endif // _di_controller_rule_action_read_rerun_number_
 
 /**
  * Read the content within the buffer, extracting all valid settings.

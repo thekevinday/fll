@@ -27,6 +27,7 @@ extern "C" {
   const f_string_t controller_string_deadline_s = controller_string_deadline;
   const f_string_t controller_string_default_s = controller_string_default;
   const f_string_t controller_string_define_s = controller_string_define;
+  const f_string_t controller_string_delay_s = controller_string_delay;
   const f_string_t controller_string_disable_s = controller_string_disable;
   const f_string_t controller_string_entry_s = controller_string_entry;
   const f_string_t controller_string_entries_s = controller_string_entries;
@@ -37,6 +38,7 @@ extern "C" {
   const f_string_t controller_string_exits_s = controller_string_exits;
   const f_string_t controller_string_fail_s = controller_string_fail;
   const f_string_t controller_string_failsafe_s = controller_string_failsafe;
+  const f_string_t controller_string_failure_s = controller_string_failure;
   const f_string_t controller_string_fifo_s = controller_string_fifo;
   const f_string_t controller_string_freeze_s = controller_string_freeze;
   const f_string_t controller_string_fsize_s = controller_string_fsize;
@@ -51,6 +53,7 @@ extern "C" {
   const f_string_t controller_string_limit_s = controller_string_limit;
   const f_string_t controller_string_locks_s = controller_string_locks;
   const f_string_t controller_string_main_s = controller_string_main;
+  const f_string_t controller_string_max_s = controller_string_max;
   const f_string_t controller_string_memlock_s = controller_string_memlock;
   const f_string_t controller_string_method_s = controller_string_method;
   const f_string_t controller_string_mode_s = controller_string_mode;
@@ -78,6 +81,8 @@ extern "C" {
   const f_string_t controller_string_reload_s = controller_string_reload;
   const f_string_t controller_string_require_s = controller_string_require;
   const f_string_t controller_string_required_s = controller_string_required;
+  const f_string_t controller_string_rerun_s = controller_string_rerun;
+  const f_string_t controller_string_reset_s = controller_string_reset;
   const f_string_t controller_string_restart_s = controller_string_restart;
   const f_string_t controller_string_resume_s = controller_string_resume;
   const f_string_t controller_string_round_robin_s = controller_string_round_robin;
@@ -96,6 +101,7 @@ extern "C" {
   const f_string_t controller_string_start_s = controller_string_start;
   const f_string_t controller_string_stop_s = controller_string_stop;
   const f_string_t controller_string_succeed_s = controller_string_succeed;
+  const f_string_t controller_string_success_s = controller_string_success;
   const f_string_t controller_string_synchronous_s = controller_string_synchronous;
   const f_string_t controller_string_thaw_s = controller_string_thaw;
   const f_string_t controller_string_timeout_s = controller_string_timeout;
@@ -731,6 +737,8 @@ extern "C" {
 
 #ifndef _di_controller_rule_item_delete_simple_
   void controller_rule_item_delete_simple(controller_rule_item_t *item) {
+
+    f_string_dynamic_resize(0, &item->pid_file);
 
     controller_rule_actions_delete_simple(&item->actions);
   }
