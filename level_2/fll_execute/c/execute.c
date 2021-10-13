@@ -271,8 +271,35 @@ extern "C" {
     }
 
     // generally this does not return, but in some cases (such as with scripts) this does return so handle the results.
+    if (code < 0) {
+      if (errno == EACCES) code = F_execute_access;
+      else if (errno == E2BIG) code = F_execute_too_large;
+      else if (errno == EAGAIN) code = F_execute_resource_not;
+      else if (errno == EFAULT) code = F_execute_buffer;
+      else if (errno == EINVAL) code = F_execute_parameter;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == EISDIR) code = F_execute_file_type_directory;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == ELIBBAD) code = F_execute_valid_not;
+      else if (errno == ELOOP) code = F_execute_loop;
+      else if (errno == EMFILE) code = F_execute_resource_not;
+      else if (errno == ENAMETOOLONG) code = F_execute_name_not;
+      else if (errno == ENFILE) code = F_execute_resource_not;
+      else if (errno == ENOENT) code = F_execute_file_found_not;
+      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOMEM) code = F_execute_memory_not;
+      else if (errno == ENOTDIR) code = F_execute_directory_not;
+      else if (errno == EPERM) code = F_execute_prohibited;
+      else if (errno == ETXTBSY) code = F_execute_busy;
+      else code = F_execute_failure;
+    }
+    else {
+      code = 0;
+    }
+
     if (result) {
-      *result = code;
+      int *r = (int *) result;
+      *r = code;
     }
 
     if (option & fl_execute_parameter_option_exit) {

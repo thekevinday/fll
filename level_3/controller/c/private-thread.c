@@ -361,6 +361,9 @@ extern "C" {
       controller_thread_delete_simple(thread);
       controller_setting_delete_simple(setting);
       controller_main_delete(main);
+
+      // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
+      exit(main->child);
     }
   }
 #endif // _di_controller_thread_process_
@@ -799,6 +802,11 @@ extern "C" {
       controller_thread_delete_simple(entry->global->thread);
       controller_setting_delete_simple(entry->global->setting);
       controller_main_delete(entry->global->main);
+
+      const int code = main->child;
+
+      // According to the manpages, pthread_exit() calls exit(0), which is not good because a non-zero exit code may be returned.
+      exit(main->child);
 
       return 0;
     }

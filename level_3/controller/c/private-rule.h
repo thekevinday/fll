@@ -80,6 +80,22 @@ extern "C" {
 #endif // _di_controller_rule_parameters_read_
 
 /**
+ * Convert the action type to an action execute type.
+ *
+ * @param type
+ *   The action type to convert from.
+ *
+ * @return
+ *   The converted action type, converted into an action execute type.
+ *
+ *   The code controller_rule_action_type_execute__enum_size is returned for unknown types.
+ *
+ */
+#ifndef _di_controller_rule_action_type_to_action_execute_type_
+  extern uint8_t controller_rule_action_type_to_action_execute_type(const uint8_t type) f_attribute_visibility_internal;
+#endif // _di_controller_rule_action_type_to_action_execute_type_
+
+/**
  * Get a string representing the rule action type.
  *
  * @param type
@@ -92,6 +108,20 @@ extern "C" {
 #ifndef _di_controller_rule_action_type_name_
   extern f_string_static_t controller_rule_action_type_name(const uint8_t type) f_attribute_visibility_internal;
 #endif // _di_controller_rule_action_type_name_
+
+/**
+ * Get a string representing the rule action execute type.
+ *
+ * @param type
+ *   The rule action type execute code.
+ *
+ * @return
+ *   The string with used > 0 on success.
+ *   The string with used == 0 if no match was found.
+ */
+#ifndef _di_controller_rule_action_type_execute_name_
+  extern f_string_static_t controller_rule_action_type_execute_name(const uint8_t type) f_attribute_visibility_internal;
+#endif // _di_controller_rule_action_type_execute_name_
 
 /**
  * Increase the size of the rule actions array by the specified amount, but only if necessary.
@@ -285,21 +315,6 @@ extern "C" {
 #endif // _di_controller_rule_item_error_print_execute_
 
 /**
- * Print an error or warning message related to the failed execution of some program or script for when the program or script is not found.
- *
- * @param print
- *   The error or warning print structure.
- * @param script_is
- *   If TRUE, then this represents a script.
- *   If FALSE, then this represents a program.
- * @param code
- *   The code returned by the executed program or script.
- */
-#ifndef _di_controller_rule_item_error_print_execute_not_found_
-  extern void controller_rule_item_error_print_execute_not_found(const fll_error_print_t print, const bool script_is, const f_string_t name) f_attribute_visibility_internal;
-#endif // _di_controller_rule_item_error_print_execute_not_found_
-
-/**
  * Print an error or warning message related to need/want/wish settings of some rule.
  *
  * @param print
@@ -478,6 +493,31 @@ extern "C" {
 #ifndef _di_controller_rule_execute_pid_with_
   extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const uint8_t with, const controller_global_t global, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
+
+/**
+ * Determine whether or not an execute rule should be re-run, applying a delay as requested.
+ *
+ * @param global
+ *   The global data.
+ * @param action
+ *   The action type.
+ * @param process
+ *   The process data for processing this rule.
+ * @param item
+ *   The rule item being executed.
+ *
+ * @return
+ *   A positive number to designate re-run.
+ *   0 to designate do not re-run.
+ *   -1 to designate an error from nanosleep(), with errno set to values like:
+ *     - EFAULT: Designates that there was a problem copying information from user space.
+ *     - EINTR:  Consider this having returned F_signal.
+ *     - EINVAL: Consider this having returned F_status_set_error(F_parameter);
+ *   -2 to designate exit due to signal/disabled thread.
+ */
+#ifndef _di_controller_rule_execute_rerun_
+  extern int8_t controller_rule_execute_rerun(const controller_global_t global, const uint8_t action, controller_process_t *process, controller_rule_item_t *item) f_attribute_visibility_internal;
+#endif // _di_controller_rule_execute_rerun_
 
 /**
  * Construct an id from two distinct strings found within a single given source.

@@ -21,7 +21,7 @@ build_indexer ar
 build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
-build_sources_library
+build_sources_library execute.c
 build_sources_program
 build_sources_headers execute.h execute-common.h
 build_sources_script

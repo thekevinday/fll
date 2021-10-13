@@ -681,6 +681,12 @@ extern "C" {
         case F_time_not:
           *string = FL_status_string_time_not;
           break;
+        case F_too_large:
+          *string = FL_status_string_too_large;
+          break;
+        case F_too_small:
+          *string = FL_status_string_too_small;
+          break;
         case F_known:
           *string = FL_status_string_known;
           break;

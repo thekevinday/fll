@@ -1,0 +1,7 @@
+# fss-0005
+
+setting:
+  mode program
+
+main:
+  start command htop

@@ -122,12 +122,11 @@ extern "C" {
       errno = 0;
 
       if (nice(*as.nice) == -1 && errno == -1) {
-        *result = -1;
-
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
+          exit(F_execute_nice);
         }
 
+        *result = F_execute_nice;
         return F_status_set_error(F_nice);
       }
     }
@@ -136,48 +135,45 @@ extern "C" {
       const f_status_t status = f_capability_process_set(as.capability);
 
       if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
-        *result = -1;
-
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
+          exit(F_execute_capability);
         }
 
+        *result = F_execute_capability;
         return F_status_set_error(F_capability);
       }
     }
 
     if (as.id_groups) {
       if (setgroups(as.id_groups->used, (const gid_t *) as.id_groups->array) == -1) {
-        *result = -1;
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
+          exit(F_execute_group);
         }
 
+        *result = F_execute_group;
         return F_status_set_error(F_group);
       }
     }
 
     if (as.id_group) {
       if (setgid(*as.id_group) == -1) {
-        *result = -1;
-
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
+          exit(F_execute_group);
         }
 
+        *result = F_execute_group;
         return F_status_set_error(F_group);
       }
     }
 
     if (as.id_user) {
       if (setuid(*as.id_user) == -1) {
-        *result = -1;
-
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(*result);
+          exit(F_execute_user);
         }
 
+        *result = F_execute_user;
         return F_status_set_error(F_user);
       }
     }
@@ -355,11 +351,11 @@ extern "C" {
 
         if (result) {
           int *r = (int *) result;
-          *r = -1;
+          *r = F_execute_failure;
         }
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
-          exit(-1);
+          exit(F_execute_failure);
         }
 
         return F_child;
@@ -403,7 +399,33 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+
+    if (code < 0) {
+      if (errno == EACCES) code = F_execute_access;
+      else if (errno == E2BIG) code = F_execute_too_large;
+      else if (errno == EAGAIN) code = F_execute_resource_not;
+      else if (errno == EFAULT) code = F_execute_buffer;
+      else if (errno == EINVAL) code = F_execute_parameter;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == EISDIR) code = F_execute_file_type_directory;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == ELIBBAD) code = F_execute_valid_not;
+      else if (errno == ELOOP) code = F_execute_loop;
+      else if (errno == EMFILE) code = F_execute_resource_not;
+      else if (errno == ENAMETOOLONG) code = F_execute_name_not;
+      else if (errno == ENFILE) code = F_execute_resource_not;
+      else if (errno == ENOENT) code = F_execute_file_found_not;
+      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOMEM) code = F_execute_memory_not;
+      else if (errno == ENOTDIR) code = F_execute_directory_not;
+      else if (errno == EPERM) code = F_execute_prohibited;
+      else if (errno == ETXTBSY) code = F_execute_busy;
+      else code = F_execute_failure;
+    }
+    else {
+      code = 0;
+    }
 
     if (result) {
       int *r = (int *) result;
@@ -523,8 +545,8 @@ extern "C" {
         close(descriptors[0]);
 
         if (result) {
-          int *r = (int *) result;
-          *r = -1;
+          f_status_t *r = (f_status_t *) result;
+          *r = F_status_set_error(F_failure);
         }
 
         if (parameter && parameter->option & fl_execute_parameter_option_exit) {
@@ -570,10 +592,41 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    const int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
+    int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
     // close the write pipe for the child when done.
     close(descriptors[0]);
+
+    if (code < 0) {
+      if (errno == EACCES) code = F_execute_access;
+      else if (errno == E2BIG) code = F_execute_too_large;
+      else if (errno == EAGAIN) code = F_execute_resource_not;
+      else if (errno == EFAULT) code = F_execute_buffer;
+      else if (errno == EINVAL) code = F_execute_parameter;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == EISDIR) code = F_execute_file_type_directory;
+      else if (errno == EIO) code = F_execute_input_output;
+      else if (errno == ELIBBAD) code = F_execute_valid_not;
+      else if (errno == ELOOP) code = F_execute_loop;
+      else if (errno == EMFILE) code = F_execute_resource_not;
+      else if (errno == ENAMETOOLONG) code = F_execute_name_not;
+      else if (errno == ENFILE) code = F_execute_resource_not;
+      else if (errno == ENOENT) code = F_execute_file_found_not;
+      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOMEM) code = F_execute_memory_not;
+      else if (errno == ENOTDIR) code = F_execute_directory_not;
+      else if (errno == EPERM) code = F_execute_prohibited;
+      else if (errno == ETXTBSY) code = F_execute_busy;
+      else code = F_execute_failure;
+    }
+    else {
+      code = 0;
+    }
+
+    if (result) {
+      int *r = (int *) result;
+      *r = code;
+    }
 
     if (result) {
       int *r = (int *) result;

@@ -1077,6 +1077,7 @@ extern "C" {
  * - control: The process is started from a control operation.
  *
  * id:           The ID of this process relative to the processes array.
+ * result:       The last return code from an execution of a process.
  * status:       The last execution status of the process.
  * state:        The state of the process.
  * action:       The action being performed.
@@ -1122,6 +1123,8 @@ extern "C" {
     uint8_t options;
     uint8_t type;
 
+    int result;
+
     f_thread_id_t id_thread;
     f_thread_lock_t lock;
     f_thread_lock_t active;
@@ -1142,6 +1145,7 @@ extern "C" {
   } controller_process_t;
 
   #define controller_process_t_initialize { \
+    0, \
     0, \
     0, \
     0, \
@@ -2436,6 +2440,19 @@ extern "C" {
 #ifndef _di_controller_time_
   void controller_time(const time_t seconds, const long nanoseconds, struct timespec *time) f_attribute_visibility_internal;
 #endif // _di_controller_time_
+
+/**
+ * Convert microseconds to nanoseconds.
+ *
+ * @param microseconds
+ *   The number of microseconds.
+ *
+ * @return
+ *   A time structure suitable for passing to nanosleep() and similar functions.
+ */
+#ifndef _di_controller_time_micro_
+  extern struct timespec controller_time_micro(const f_number_unsigned_t microseconds) f_attribute_visibility_internal;
+#endif // _di_controller_time_micro_
 
 #ifdef __cplusplus
 } // extern "C"

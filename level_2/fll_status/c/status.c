@@ -1393,6 +1393,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_too_large, length, FL_status_string_too_large_length) == F_equal_to) {
+        *code = F_too_large;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_too_small, length, FL_status_string_too_small_length) == F_equal_to) {
+        *code = F_too_small;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_user, length, FL_status_string_user_length) == F_equal_to) {
         *code = F_user;
 

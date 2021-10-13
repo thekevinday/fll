@@ -305,6 +305,8 @@ extern "C" {
       F_thread_not,
       F_time,
       F_time_not,
+      F_too_large,
+      F_too_small,
       F_user,
       F_user_not,
       F_utf,
@@ -548,7 +550,7 @@ extern "C" {
     #endif // _di_F_status_access_
 
     // Required.
-    F_status_code_last
+    F_status_code_last,
   }; // enum
 #endif // _di_F_status_codes_
 

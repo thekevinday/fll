@@ -919,6 +919,17 @@ extern "C" {
   }
 #endif // _di_controller_time_
 
+#ifndef _di_controller_time_micro_
+  struct timespec controller_time_micro(const f_number_unsigned_t microseconds) {
+
+    struct timespec time;
+    time.tv_sec = microseconds / 1000;
+    time.tv_nsec = (time.tv_sec ? microseconds - time.tv_sec : microseconds) * 1000;
+
+    return time;
+  }
+#endif // _di_controller_time_micro_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

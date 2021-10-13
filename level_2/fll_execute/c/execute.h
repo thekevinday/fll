@@ -433,7 +433,7 @@ extern "C" {
  * @param as
  *   (optional) This and most of its fields are optional and are disabled when set to NULL.
  * @param result
- *   (optional) The code returned after finishing execution of program.
+ *   (optional) The execute status code returned after finishing or attempting to finish execution of program.
  *   When fl_execute_parameter_option_return is passed via parameter.option, then this instead stores the child process id (PID).
  *   This is should be of (int *) except when fl_execute_parameter_option_return this should instead be (pid_t *).
  *   Set to NULL to not use.
