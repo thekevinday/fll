@@ -23,7 +23,7 @@ main:
 boot:
   start boot root require
   start boot proc asynchronous require
-  start boot dev asynchronous require
+  start boot devices asynchronous require
   start boot filesystem asynchronous
   start boot modules wait
 
