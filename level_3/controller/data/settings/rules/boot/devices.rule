@@ -8,8 +8,9 @@ setting:
 
   on start need boot root
 
-command:
-  start mount /dev
+# Newer kernels automount a devpts filesystem on /dev, so this may not be needed.
+#command:
+#  start mount /dev
 
 script:
   start {
