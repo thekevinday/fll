@@ -286,7 +286,7 @@ extern "C" {
       else if (errno == ENAMETOOLONG) code = F_execute_name_not;
       else if (errno == ENFILE) code = F_execute_resource_not;
       else if (errno == ENOENT) code = F_execute_file_found_not;
-      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOEXEC) code = F_execute_bad;
       else if (errno == ENOMEM) code = F_execute_memory_not;
       else if (errno == ENOTDIR) code = F_execute_directory_not;
       else if (errno == EPERM) code = F_execute_prohibited;

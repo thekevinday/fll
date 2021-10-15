@@ -207,6 +207,8 @@ extern "C" {
       F_failure_not,
       F_fork,
       F_fork_not,
+      F_format,
+      F_format_not,
       F_found,
       F_found_not,
       F_full,

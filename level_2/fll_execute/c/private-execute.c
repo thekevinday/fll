@@ -364,12 +364,9 @@ extern "C" {
 
     if (parameter && parameter->signals) {
       #ifdef _di_pthread_support_
-
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
-
       #else // _di_pthread_support_
-
         if (parameter->option & fl_execute_parameter_option_threadsafe) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
@@ -378,7 +375,6 @@ extern "C" {
           f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
-
       #endif // _di_pthread_support_
     }
 
@@ -401,7 +397,7 @@ extern "C" {
 
     int code = direct ? execv(program, fixed_arguments) : execvp(program, fixed_arguments);
 
-    if (code < 0) {
+    if (code == -1) {
       if (errno == EACCES) code = F_execute_access;
       else if (errno == E2BIG) code = F_execute_too_large;
       else if (errno == EAGAIN) code = F_execute_resource_not;
@@ -416,15 +412,15 @@ extern "C" {
       else if (errno == ENAMETOOLONG) code = F_execute_name_not;
       else if (errno == ENFILE) code = F_execute_resource_not;
       else if (errno == ENOENT) code = F_execute_file_found_not;
-      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOEXEC) code = F_execute_bad;
       else if (errno == ENOMEM) code = F_execute_memory_not;
       else if (errno == ENOTDIR) code = F_execute_directory_not;
       else if (errno == EPERM) code = F_execute_prohibited;
       else if (errno == ETXTBSY) code = F_execute_busy;
       else code = F_execute_failure;
     }
-    else {
-      code = 0;
+    else if (code < 0) {
+      code = F_execute_failure;
     }
 
     if (result) {
@@ -559,12 +555,9 @@ extern "C" {
 
     if (parameter && parameter->signals) {
       #ifdef _di_pthread_support_
-
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
-
       #else // _di_pthread_support_
-
         if (parameter->option & fl_execute_parameter_option_threadsafe) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
@@ -573,7 +566,6 @@ extern "C" {
           f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
-
       #endif // _di_pthread_support_
     }
 
@@ -612,20 +604,15 @@ extern "C" {
       else if (errno == ENAMETOOLONG) code = F_execute_name_not;
       else if (errno == ENFILE) code = F_execute_resource_not;
       else if (errno == ENOENT) code = F_execute_file_found_not;
-      else if (errno == ENOEXEC) code = F_execute_off;
+      else if (errno == ENOEXEC) code = F_execute_bad;
       else if (errno == ENOMEM) code = F_execute_memory_not;
       else if (errno == ENOTDIR) code = F_execute_directory_not;
       else if (errno == EPERM) code = F_execute_prohibited;
       else if (errno == ETXTBSY) code = F_execute_busy;
       else code = F_execute_failure;
     }
-    else {
-      code = 0;
-    }
-
-    if (result) {
-      int *r = (int *) result;
-      *r = code;
+    else if (code < 0) {
+      code = F_execute_failure;
     }
 
     if (result) {

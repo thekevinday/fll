@@ -227,6 +227,8 @@ extern "C" {
     #define FL_status_string_failure_not       "F_failure_not"
     #define FL_status_string_fork              "F_fork"
     #define FL_status_string_fork_not          "F_fork_not"
+    #define FL_status_string_format            "F_format"
+    #define FL_status_string_format_not        "F_format_not"
     #define FL_status_string_found             "F_found"
     #define FL_status_string_found_not         "F_found_not"
     #define FL_status_string_full              "F_full"
@@ -408,6 +410,8 @@ extern "C" {
     #define FL_status_string_failure_not_length       13
     #define FL_status_string_fork_length              6
     #define FL_status_string_fork_not_length          10
+    #define FL_status_string_format_length            8
+    #define FL_status_string_format_not_length        12
     #define FL_status_string_found_length             7
     #define FL_status_string_found_not_length         11
     #define FL_status_string_full_length              6

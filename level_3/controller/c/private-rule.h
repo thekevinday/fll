@@ -296,8 +296,6 @@ extern "C" {
 /**
  * Print an error or warning message related to the failed execution of some program or script.
  *
- * @param print
- *   The error or warning output structure.
  * @param script_is
  *   If TRUE, then this represents a script.
  *   If FALSE, then this represents a program.
@@ -307,11 +305,11 @@ extern "C" {
  *   The code returned by the executed program or script.
  * @param status
  *   The status code representing the failure (without the error bit set).
- * @param thread
- *   The thread data.
+ * @param process
+ *   The process to use.
  */
 #ifndef _di_controller_rule_item_error_print_execute_
-  extern void controller_rule_item_error_print_execute(const fll_error_print_t print, const bool script_is, const f_string_t name, const int code, const f_status_t status, controller_thread_t * const thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_execute(const bool script_is, const f_string_t name, const f_status_t status, controller_process_t * const process) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_execute_
 
 /**
@@ -402,16 +400,7 @@ extern "C" {
  * This requires that a read lock be set on process->lock before being called.
  *
  * @param type
- *   The item type ID.
- * @param action
- *   The action to perform based on the action type codes.
- *
- *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
+ *   The item type code.
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
@@ -419,8 +408,6 @@ extern "C" {
  * @param options
  *   Process options to consider when executing.
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
- * @param global
- *   The global data.
  * @param execute_set
  *   The execute parameter and as settings.
  * @param process
@@ -438,7 +425,7 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_foreground_
-  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const controller_global_t global, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_foreground(const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_foreground_
 
 /**
@@ -453,15 +440,6 @@ extern "C" {
  *   The path to the PID file.
  * @param type
  *   The item type code.
- * @param action
- *   The action to perform based on the action type codes.
- *
- *   Only subset of the action type codes are supported:
- *   - controller_rule_action_type_kill
- *   - controller_rule_action_type_reload
- *   - controller_rule_action_type_restart
- *   - controller_rule_action_type_start
- *   - controller_rule_action_type_stop
  * @param program
  *   The program to use (such as "bash").
  * @param arguments
@@ -471,8 +449,6 @@ extern "C" {
  *   If bit controller_process_option_simulate, then the rule execution is in simulation mode (printing a message that the rule would be executed but does not execute the rule).
  * @param with
  *   The "with" option flags.
- * @param global
- *   The global data.
  * @param execute_set
  *   The execute parameter and as settings.
  * @param process
@@ -491,14 +467,12 @@ extern "C" {
  * @see fll_execute_program()
  */
 #ifndef _di_controller_rule_execute_pid_with_
-  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const controller_rule_action_t action, const f_string_t program, const f_string_dynamics_t arguments, const uint8_t options, const uint8_t with, const controller_global_t global, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
+  extern f_status_t controller_rule_execute_pid_with(const f_string_dynamic_t pid_file, const uint8_t type, const f_string_t program, const f_string_statics_t arguments, const uint8_t options, const uint8_t with, controller_execute_set_t * const execute_set, controller_process_t *process) f_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_pid_with_
 
 /**
  * Determine whether or not an execute rule should be re-run, applying a delay as requested.
  *
- * @param global
- *   The global data.
  * @param action
  *   The action type.
  * @param process
@@ -516,7 +490,7 @@ extern "C" {
  *   -2 to designate exit due to signal/disabled thread.
  */
 #ifndef _di_controller_rule_execute_rerun_
-  extern int8_t controller_rule_execute_rerun(const controller_global_t global, const uint8_t action, controller_process_t *process, controller_rule_item_t *item) f_attribute_visibility_internal;
+  extern int8_t controller_rule_execute_rerun(const uint8_t action, controller_process_t *process, controller_rule_item_t *item) f_attribute_visibility_internal;
 #endif // _di_controller_rule_execute_rerun_
 
 /**

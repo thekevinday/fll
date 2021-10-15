@@ -405,6 +405,12 @@ extern "C" {
         case F_fork_not:
           *string = FL_status_string_fork_not;
           break;
+        case F_format:
+          *string = FL_status_string_format;
+          break;
+        case F_format_not:
+          *string = FL_status_string_format_not;
+          break;
         case F_found:
           *string = FL_status_string_found;
           break;

@@ -805,6 +805,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_compare(string, FL_status_string_format, length, FL_status_string_format_length) == F_equal_to) {
+        *code = F_format;
+
+        return F_none;
+      }
+
+      if (fl_string_compare(string, FL_status_string_format_not, length, FL_status_string_format_not_length) == F_equal_to) {
+        *code = F_format_not;
+
+        return F_none;
+      }
+
       if (fl_string_compare(string, FL_status_string_found, length, FL_status_string_found_length) == F_equal_to) {
         *code = F_found;
 

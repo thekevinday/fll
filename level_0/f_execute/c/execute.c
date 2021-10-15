@@ -40,7 +40,7 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_execute_not) {
-      return F_execute_off;
+      return F_execute_bad;
     }
 
     if (F_status_set_fine(status) == F_failure) {
@@ -53,6 +53,14 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_type_directory) {
       return F_execute_file_type_directory;
+    }
+
+    if (F_status_set_fine(status) == F_fork_not) {
+      return F_execute_fork_not;
+    }
+
+    if (F_status_set_fine(status) == F_format_not) {
+      return F_execute_format_not;
     }
 
     if (F_status_set_fine(status) == F_group) {
@@ -134,6 +142,10 @@ extern "C" {
       return F_access;
     }
 
+    if (status == F_execute_bad) {
+      return F_execute_not;
+    }
+
     if (status == F_execute_buffer) {
       return F_buffer;
     }
@@ -170,6 +182,14 @@ extern "C" {
       return F_file_type_directory;
     }
 
+    if (status == F_execute_fork_not) {
+      return F_fork_not;
+    }
+
+    if (status == F_execute_format_not) {
+      return F_format_not;
+    }
+
     if (status == F_execute_group) {
       return F_group;
     }
@@ -196,10 +216,6 @@ extern "C" {
 
     if (status == F_execute_nice) {
       return F_nice;
-    }
-
-    if (status == F_execute_off) {
-      return F_execute_not;
     }
 
     if (status == F_execute_parameter) {
