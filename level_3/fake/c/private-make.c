@@ -45,7 +45,7 @@ extern "C" {
 #endif // _di_fake_make_assure_inside_project_
 
 #ifndef _di_fake_make_get_id_group_
-  f_status_t fake_make_get_id_group(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, gid_t *id) {
+  f_status_t fake_make_get_id_group(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, gid_t *id) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
 
@@ -60,7 +60,7 @@ extern "C" {
         status = f_account_id_group_by_name(buffer.string, id);
 
         if (F_status_is_error(status)) {
-          fll_error_print(error, F_status_set_fine(status), "f_account_id_group_by_name", F_true);
+          fll_error_print(print, F_status_set_fine(status), "f_account_id_group_by_name", F_true);
 
           return F_status_set_error(status);
         }
@@ -81,7 +81,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(error, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
+      fll_error_print(print, F_status_set_fine(status), "fl_conversion_string_to_number_unsigned", F_true);
       return F_status_set_error(status);
     }
     else if (number > f_type_size_32_unsigned) {
@@ -102,10 +102,10 @@ extern "C" {
 #endif // _di_fake_make_get_id_group_
 
 #ifndef _di_fake_make_get_id_mode_
-  f_status_t fake_make_get_id_mode(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
+  f_status_t fake_make_get_id_mode(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
 
     if (!buffer.used) {
-      fll_error_print(error, F_parameter, "fake_make_get_id_mode", F_true);
+      fll_error_print(print, F_parameter, "fake_make_get_id_mode", F_true);
 
       return F_status_set_error(F_parameter);
     }
@@ -124,7 +124,7 @@ extern "C" {
           funlockfile(main.error.to.stream);
         }
         else {
-          fll_error_print(error, status, "f_file_mode_from_string", F_true);
+          fll_error_print(print, status, "f_file_mode_from_string", F_true);
         }
       }
 
@@ -136,7 +136,7 @@ extern "C" {
 #endif // _di_fake_make_get_id_mode_
 
 #ifndef _di_fake_make_get_id_owner_
-  f_status_t fake_make_get_id_owner(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, uid_t *id) {
+  f_status_t fake_make_get_id_owner(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, uid_t *id) {
 
     const f_string_range_t range = macro_f_string_range_t_initialize(buffer.used);
 
@@ -151,7 +151,7 @@ extern "C" {
         status = f_account_id_user_by_name(buffer.string, id);
 
         if (F_status_is_error(status)) {
-          fll_error_print(error, status, "f_account_id_user_by_name", F_true);
+          fll_error_print(print, status, "f_account_id_user_by_name", F_true);
 
           return F_status_set_error(status);
         }
@@ -172,7 +172,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(error, status, "fl_conversion_string_to_number_unsigned", F_true);
+      fll_error_print(print, status, "fl_conversion_string_to_number_unsigned", F_true);
       return F_status_set_error(status);
     }
     else if (number > f_type_size_32_unsigned) {
@@ -1159,7 +1159,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       macro_fake_make_data_t_delete_simple(data_make);
 
-      // signal is set with error code only to prevent further execution above, return without the error bit set.
+      // signal is set with print code only to prevent further execution above, return without the print bit set.
       if (F_status_set_fine(status) == F_signal) {
         return F_signal;
       }
@@ -1168,22 +1168,29 @@ extern "C" {
     }
 
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit) {
-      data_make.error.prefix = fll_error_print_error_s;
+      data_make.error.prefix = fl_print_error_s;
+      data_make.error.suffix = 0;
       data_make.error.context = main->context.set.error;
       data_make.error.notable = main->context.set.notable;
       data_make.error.to.stream = f_type_error;
       data_make.error.to.id = f_type_descriptor_error;
+      data_make.error.set = &main->context.set;
     }
     else if (data_make.setting_make.fail == fake_make_operation_fail_type_warn) {
-      data_make.error.prefix = fll_error_print_warning_s;
+      data_make.error.prefix = fl_print_warning_s;
+      data_make.error.suffix = 0;
       data_make.error.context = main->context.set.warning;
       data_make.error.notable = main->context.set.notable;
       data_make.error.to.stream = f_type_warning;
       data_make.error.to.id = f_type_descriptor_warning;
+      data_make.error.set = &main->context.set;
     }
     else {
       data_make.error.to.stream = 0;
+      data_make.error.prefix = 0;
+      data_make.error.suffix = 0;
       data_make.error.to.id = -1;
+      data_make.error.set = &main->context.set;
     }
 
     {
@@ -2250,11 +2257,13 @@ extern "C" {
         // break acts identical to fail when at the top of the stack.
         if (F_status_set_fine(*status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_type_exit;
-          data_make->error.prefix = fll_error_print_error;
+          data_make->error.prefix = fl_print_error_s;
+          data_make->error.suffix = 0;
           data_make->error.context = main->context.set.error;
           data_make->error.notable = main->context.set.notable;
           data_make->error.to.stream = f_type_error;
           data_make->error.to.id = f_type_descriptor_error;
+          data_make->error.set = &main->context.set;
         }
 
         fake_print_message_section_operation_failed(*main, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
@@ -2735,11 +2744,13 @@ extern "C" {
 
         // forcing exit forces fail mode.
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
-        data_make->error.prefix = fll_error_print_error;
+        data_make->error.prefix = fl_print_error_s;
+        data_make->error.suffix = 0;
         data_make->error.context = main->context.set.error;
         data_make->error.notable = main->context.set.notable;
         data_make->error.to.stream = f_type_error;
         data_make->error.to.id = f_type_descriptor_error;
+        data_make->error.set = &main->context.set;
       }
       else {
         return 0;
@@ -2756,19 +2767,23 @@ extern "C" {
 
       if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit, arguments.array[0], fake_make_operation_argument_exit_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_exit;
-        data_make->error.prefix = fll_error_print_error;
+        data_make->error.prefix = fl_print_error_s;
+        data_make->error.suffix = 0;
         data_make->error.context = main->context.set.error;
         data_make->error.notable = main->context.set.notable;
         data_make->error.to.stream = f_type_error;
         data_make->error.to.id = f_type_descriptor_error;
+        data_make->error.set = &main->context.set;
       }
       else if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_warn;
-        data_make->error.prefix = fll_error_print_warning;
+        data_make->error.prefix = fl_print_warning_s;
+        data_make->error.suffix = 0;
         data_make->error.context = main->context.set.warning;
         data_make->error.notable = main->context.set.notable;
         data_make->error.to.stream = f_type_warning;
         data_make->error.to.id = f_type_descriptor_warning;
+        data_make->error.set = &main->context.set;
       }
       else if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_type_ignore;

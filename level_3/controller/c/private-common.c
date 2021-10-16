@@ -196,7 +196,7 @@ extern "C" {
 #endif // _di_controller_entry_items_delete_simple_
 
 #ifndef _di_controller_error_file_print_
-  void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
+  void controller_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) {
 
     if (print.verbosity == f_console_verbosity_quiet) return;
 
@@ -213,7 +213,7 @@ extern "C" {
   }
 #endif // _di_controller_error_file_print_
 #ifndef _di_controller_error_print_
-  void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
+  void controller_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
     if (print.verbosity == f_console_verbosity_quiet) return;
     if (status == F_interrupt) return;
@@ -303,7 +303,7 @@ extern "C" {
 #endif // _di_controller_lock_delete_simple_
 
 #ifndef _di_controller_lock_error_critical_print_
-  void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) {
+  void controller_lock_error_critical_print(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) {
 
     // A signal is not an error.
     if (status == F_signal) {

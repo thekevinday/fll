@@ -22,10 +22,10 @@ build_language c
 build_libraries -lc -lcap
 build_libraries-level -lfll_0
 build_libraries-level_threadless -lfll_0
-build_sources_library console.c control_group.c conversion.c private-conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c iki.c print.c private-print.c signal.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
+build_sources_library console.c control_group.c conversion.c private-conversion.c directory.c private-directory.c environment.c private-fss.c fss_basic.c fss_basic_list.c fss_embedded_list.c fss_extended.c fss_extended_list.c iki.c print.c print-common.c private-print.c signal.c status.c string.c private-string.c utf.c private-utf.c utf_file.c private-utf_file.c
 build_sources_library-level
 build_sources_program
-build_sources_headers console.h control_group.h conversion.h directory.h environment.h execute.h execute-common.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h print.h signal.h signal-common.h status.h string.h utf.h utf_file.h
+build_sources_headers console.h control_group.h conversion.h directory.h environment.h execute.h execute-common.h fss.h fss_basic.h fss_basic_list.h fss_embedded_list.h fss_extended.h fss_extended_list.h fss_status.h iki.h print.h print-common.h signal.h signal-common.h status.h string.h utf.h utf_file.h
 build_sources_headers-level
 build_sources_script
 build_sources_setting

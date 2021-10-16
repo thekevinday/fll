@@ -101,8 +101,8 @@ extern "C" {
     bool process_pipe;
 
     f_file_t output;
-    fll_error_print_t error;
-    fll_error_print_t warning;
+    fl_print_t error;
+    fl_print_t warning;
 
     f_color_context_t context;
   } control_main_t;
@@ -113,8 +113,8 @@ extern "C" {
       f_array_lengths_t_initialize, \
       F_false, \
       macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
-      fll_error_print_t_initialize, \
-      macro_fll_error_print_t_initialize_warning(), \
+      fl_print_t_initialize, \
+      macro_fl_print_t_initialize_warning(), \
       f_color_context_t_initialize, \
     }
 #endif // _di_control_data_t_

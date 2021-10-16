@@ -8,16 +8,14 @@
  * Provides some standard printing functions not available in a libc.
  *
  * Functions provided here are UTF-8 aware.
- *
- * @fixme the except_in and except_at only apply to 1-byte characters, so what happens if a single except byte is only a part of a single multibyte character?
  */
 #ifndef _FL_print_h
 #define _FL_print_h
 
-// libc includes
+// libc includes.
 #include <stdio.h>
 
-// fll-0 includes
+// fll-0 includes.
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
@@ -25,7 +23,11 @@
 #include <fll/level_0/utf.h>
 #include <fll/level_0/color.h>
 #include <fll/level_0/conversion.h>
+#include <fll/level_0/file.h>
 #include <fll/level_0/print.h>
+
+// fll-1 print includes.
+#include <fll/level_1/print-common.h>
 
 #ifdef __cplusplus
 extern "C" {

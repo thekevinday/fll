@@ -97,7 +97,7 @@ extern "C" {
  *
  * @param main
  *   The main data.
- * @param error
+ * @param print
  *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
@@ -107,7 +107,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_message_section_operation_failed_
-  extern void fake_print_message_section_operation_failed(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_failed(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  *
  * @param main
  *   The main data.
- * @param error
+ * @param print
  *   Designates how the section error/warning should be printed.
  * @param status
  *   The status code representing an error.
@@ -125,7 +125,7 @@ extern "C" {
  *   The path that is outside of the project path.
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(const fake_main_t main, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_outside(const fake_main_t main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -144,7 +144,7 @@ extern "C" {
  *   The path to the directory.
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(const fake_main_t main, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_path_stack_max(const fake_main_t main, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**
@@ -152,7 +152,7 @@ extern "C" {
  *
  * @param main
  *   The main data.
- * @param error
+ * @param print
  *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
@@ -164,7 +164,7 @@ extern "C" {
  *   The max stack depth.
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  extern void fake_print_message_section_operation_stack_max(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) f_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_stack_max(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 /**
@@ -172,7 +172,7 @@ extern "C" {
  *
  * @param main
  *   The main data.
- * @param error
+ * @param print
  *   Designates how the section error/warning should be printed.
  * @param buffer
  *   The buffer containing the fakefile data.
@@ -182,7 +182,7 @@ extern "C" {
  *   The range within the buffer representing the operation name within the section.
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
-  extern void fake_print_message_section_operation_unknown(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
+  extern void fake_print_message_section_operation_unknown(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) f_attribute_visibility_internal;
 #endif // _di_fake_print_message_section_operation_unknown_
 
 /**

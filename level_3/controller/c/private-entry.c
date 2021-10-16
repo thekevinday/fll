@@ -717,7 +717,7 @@ extern "C" {
 #endif // _di_controller_entry_actions_read_
 
 #ifndef _di_controller_entry_error_print_
-  void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
+  void controller_entry_error_print(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) {
 
     if (print.verbosity == f_console_verbosity_quiet) return;
     if (status == F_interrupt) return;
@@ -736,7 +736,7 @@ extern "C" {
 #endif // _di_controller_entry_error_print_
 
 #ifndef _di_controller_entry_error_print_cache_
-  void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t output, const controller_cache_action_t cache) {
+  void controller_entry_error_print_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) {
 
     fl_print_format("%c%[%SWhile processing ", output.to.stream, f_string_eol_s[0], output.context, output.prefix);
 

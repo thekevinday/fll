@@ -357,9 +357,9 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_too_many_
 
 #ifndef _di_fake_print_message_section_operation_failed_
-  void fake_print_message_section_operation_failed(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
+  void fake_print_message_section_operation_failed(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
+    if (main.error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
 
     f_array_length_t line = 1;
 
@@ -380,9 +380,9 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_failed_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  void fake_print_message_section_operation_path_outside(const fake_main_t main, const fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) {
+  void fake_print_message_section_operation_path_outside(const fake_main_t main, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
+    if (main.error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
 
     flockfile(main.error.to.stream);
 
@@ -400,9 +400,9 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(const fake_main_t main, fll_error_print_t error, const f_status_t status, const f_string_t function, const f_string_t path) {
+  void fake_print_message_section_operation_path_stack_max(const fake_main_t main, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_t path) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
+    if (main.error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
 
     if (status == F_array_too_large) {
       flockfile(main.error.to.stream);
@@ -421,15 +421,15 @@ extern "C" {
       funlockfile(main.error.to.stream);
     }
     else {
-      fll_error_file_print(error, status, function, F_true, path, "change path to", fll_error_file_type_directory);
+      fll_error_file_print(print, status, function, F_true, path, "change path to", fll_error_file_type_directory);
     }
   }
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  void fake_print_message_section_operation_stack_max(const fake_main_t main, fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
+  void fake_print_message_section_operation_stack_max(const fake_main_t main, fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
+    if (main.error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
 
     f_array_length_t line = 1;
 
@@ -452,9 +452,9 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 #ifndef _di_fake_print_message_section_operation_unknown_
-  void fake_print_message_section_operation_unknown(const fake_main_t main, const fll_error_print_t error, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
+  void fake_print_message_section_operation_unknown(const fake_main_t main, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (main.error.verbosity == f_console_verbosity_quiet || !error.to.stream) return;
+    if (main.error.verbosity == f_console_verbosity_quiet || !print.to.stream) return;
 
     f_array_length_t line = 1;
 

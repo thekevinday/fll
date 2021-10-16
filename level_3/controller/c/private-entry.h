@@ -153,7 +153,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_entry_error_print_
-  extern void controller_entry_error_print(const bool is_entry, const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_entry_error_print(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see controller_entry_read()
  */
 #ifndef _di_controller_entry_error_print_cache_
-  extern void controller_entry_error_print_cache(const bool is_entry, const fll_error_print_t output, const controller_cache_action_t cache) f_attribute_visibility_internal;
+  extern void controller_entry_error_print_cache(const bool is_entry, const fl_print_t output, const controller_cache_action_t cache) f_attribute_visibility_internal;
 #endif // _di_controller_entry_error_print_cache_
 
 /**

@@ -1767,7 +1767,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_controller_error_file_print_
-  extern void controller_error_file_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_t name, const f_string_t operation, const uint8_t type, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_error_file_print_
 
 /**
@@ -1790,7 +1790,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_controller_error_print_
-  extern void controller_error_print(const fll_error_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_error_print_
 
 /**
@@ -1867,7 +1867,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_lock_error_critical_print_
-  extern void controller_lock_error_critical_print(const fll_error_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_lock_error_critical_print(const fl_print_t print, const f_status_t status, const bool read, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_lock_error_critical_print_
 
 /**

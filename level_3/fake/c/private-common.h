@@ -790,7 +790,7 @@ extern "C" {
     fake_make_parameter_t parameter;
     fake_make_path_t path; // @todo review this, check if path.current is used anymore.
 
-    fll_error_print_t error;
+    fl_print_t error;
 
     f_fss_nameds_t fakefile;
 
@@ -806,7 +806,7 @@ extern "C" {
     f_string_maps_t_initialize, \
     fake_make_parameter_t_initialize, \
     fake_make_path_t_initialize, \
-    fll_error_print_t_initialize, \
+    fl_print_t_initialize, \
     f_fss_nameds_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \

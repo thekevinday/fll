@@ -816,7 +816,7 @@ extern "C" {
           }
           else {
             if ((entry_action->code & controller_entry_rule_code_require) && global->main->error.verbosity != f_console_verbosity_quiet || !(entry_action->code & controller_entry_rule_code_require) && (global->main->warning.verbosity == f_console_verbosity_verbose || global->main->warning.verbosity == f_console_verbosity_debug)) {
-              fll_error_print_t *output = 0;
+              fl_print_t *output = 0;
 
               if (entry_action->code & controller_entry_rule_code_require) {
                 output = &global->main->error;

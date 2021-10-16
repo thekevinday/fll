@@ -108,7 +108,7 @@ typedef struct {
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_debug_tool(const fll_error_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
+extern void firewall_print_debug_tool(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
 
 /**
  * Print an memory allocation error.
@@ -116,7 +116,7 @@ extern void firewall_print_debug_tool(const fll_error_print_t output, const f_st
  * @param output
  *   The output to print to.
  */
-extern void firewall_print_error_on_allocation_failure(const fll_error_print_t output) f_attribute_visibility_internal;
+extern void firewall_print_error_on_allocation_failure(const fl_print_t output) f_attribute_visibility_internal;
 
 /**
  * Print an invalid parameter error for the given function.
@@ -126,7 +126,7 @@ extern void firewall_print_error_on_allocation_failure(const fll_error_print_t o
  * @param function
  *   The function that failed.
  */
-extern void firewall_print_error_on_invalid_parameter(const fll_error_print_t output, const f_string_t function) f_attribute_visibility_internal;
+extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) f_attribute_visibility_internal;
 
 /**
  * Print an invalid parameter error for the given function.
@@ -138,7 +138,7 @@ extern void firewall_print_error_on_invalid_parameter(const fll_error_print_t ou
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_invalid_parameter_for_file(const fll_error_print_t output, const f_string_t function, const f_string_t filename) f_attribute_visibility_internal;
+extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_t filename) f_attribute_visibility_internal;
 
 /**
  * Print an error about the given operation failed.
@@ -150,7 +150,7 @@ extern void firewall_print_error_on_invalid_parameter_for_file(const fll_error_p
  * @param arguments
  *   The arguments passed to the tool.
  */
-extern void firewall_print_error_on_operation(const fll_error_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
+extern void firewall_print_error_on_operation(const fl_print_t output, const f_string_t tool, const f_string_dynamics_t arguments) f_attribute_visibility_internal;
 
 /**
  * Print an unhandled error for the given function.
@@ -162,7 +162,7 @@ extern void firewall_print_error_on_operation(const fll_error_print_t output, co
  * @param status
  *   The failure status code.
  */
-extern void firewall_print_error_on_unhandled(const fll_error_print_t output, const f_string_t function, const f_status_t status) f_attribute_visibility_internal;
+extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) f_attribute_visibility_internal;
 
 /**
  * Print an unhandled error for the given function for some given file.
@@ -176,7 +176,7 @@ extern void firewall_print_error_on_unhandled(const fll_error_print_t output, co
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_unhandled_for_file(const fll_error_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) f_attribute_visibility_internal;
+extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_t filename) f_attribute_visibility_internal;
 
 #ifdef __cplusplus
 } // extern "C"

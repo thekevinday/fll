@@ -242,7 +242,7 @@ extern "C" {
  * @see controller_entry_error_print_cache()
  */
 #ifndef _di_controller_rule_error_print_
-  extern void controller_rule_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_error_print(const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_
 
 /**
@@ -267,7 +267,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_error_print_cache_
-  extern void controller_rule_error_print_cache(const fll_error_print_t print, const controller_cache_action_t cache, const bool item) f_attribute_visibility_internal;
+  extern void controller_rule_error_print_cache(const fl_print_t print, const controller_cache_action_t cache, const bool item) f_attribute_visibility_internal;
 #endif // _di_controller_rule_error_print_cache_
 
 /**
@@ -290,7 +290,7 @@ extern "C" {
  * @see controller_rule_error_print_cache()
  */
 #ifndef _di_controller_rule_item_error_print_
-  extern void controller_rule_item_error_print(const fll_error_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print(const fl_print_t print, const controller_cache_action_t cache, const bool item, const f_status_t status, controller_thread_t *thread) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  *   A short explanation on why this is an error or warning.
  */
 #ifndef _di_controller_rule_item_error_print_need_want_wish_
-  extern void controller_rule_item_error_print_need_want_wish(const fll_error_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_need_want_wish(const fl_print_t print, const f_string_t need_want_wish, const f_string_t value, const f_string_t why) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_need_want_wish_
 
 /**
@@ -338,7 +338,7 @@ extern "C" {
  *   The rule alias of the rule that is not loaded.
  */
 #ifndef _di_controller_rule_item_error_print_rule_not_loaded_
-  extern void controller_rule_item_error_print_rule_not_loaded(const fll_error_print_t print, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_item_error_print_rule_not_loaded(const fl_print_t print, const f_string_t alias) f_attribute_visibility_internal;
 #endif // _di_controller_rule_item_error_print_rule_not_loaded_
 
 /**
@@ -350,7 +350,7 @@ extern "C" {
  *   The rule alias of the rule that is missing the pid file designation.
  */
 #ifndef _di_controller_rule_action_error_missing_pid_
-  extern void controller_rule_action_error_missing_pid(const fll_error_print_t print, const f_string_t alias) f_attribute_visibility_internal;
+  extern void controller_rule_action_error_missing_pid(const fl_print_t print, const f_string_t alias) f_attribute_visibility_internal;
 #endif // _di_controller_rule_action_error_missing_pid_
 
 /**
@@ -922,7 +922,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_problem_print_
-  extern void controller_rule_setting_read_problem_print(const fll_error_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_problem_print(const fl_print_t print, const f_string_t message, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_problem_print_
 
 /**
@@ -951,7 +951,7 @@ extern "C" {
  * @see controller_rule_setting_read()
  */
 #ifndef _di_controller_rule_setting_read_problem_print_with_range_
-  extern void controller_rule_setting_read_problem_print_with_range(const fll_error_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
+  extern void controller_rule_setting_read_problem_print_with_range(const fl_print_t print, const f_string_t before, const f_string_range_t range, const f_string_t after, const f_array_length_t index, const f_array_length_t line_item, controller_thread_t *thread, controller_cache_t *cache) f_attribute_visibility_internal;
 #endif // _di_controller_rule_setting_read_problem_print_with_range_
 
 /**
