@@ -15,23 +15,23 @@ extern "C" {
     if (F_status_is_error(*status)) return 1;
 
     if (main.error.verbosity == f_console_verbosity_verbose) {
-      flockfile(main.output.stream);
+      flockfile(main.output.to.stream);
 
-      f_print_dynamic(program, main.output.stream);
+      f_print_dynamic(program, main.output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
         if (!arguments.array[i].used) continue;
 
-        fl_print_format(" %Q", main.output.stream, arguments.array[i]);
+        fl_print_format(" %Q", main.output.to.stream, arguments.array[i]);
       } // for
 
-      f_print_character(f_string_eol_s[0], main.output.stream);
+      f_print_character(f_string_eol_s[0], main.output.to.stream);
 
-      funlockfile(main.output.stream);
+      funlockfile(main.output.to.stream);
 
       // flush to stdout before executing command.
-      fflush(main.output.stream);
+      fflush(main.output.to.stream);
     }
 
     if (fake_signal_received(main)) {

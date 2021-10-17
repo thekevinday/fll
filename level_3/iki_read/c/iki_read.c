@@ -7,59 +7,59 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_print_help_
-  f_status_t iki_read_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t iki_read_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, iki_read_name_long, iki_read_version);
+    fll_program_print_help_header(file, context, iki_read_name_long, iki_read_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
-    fll_program_print_help_option(output, context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
-    fll_program_print_help_option(output, context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
-    fll_program_print_help_option(output, context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
+    fll_program_print_help_option(file, context, iki_read_short_at, iki_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
+    fll_program_print_help_option(file, context, iki_read_short_line, iki_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
+    fll_program_print_help_option(file, context, iki_read_short_name, iki_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
+    fll_program_print_help_option(file, context, iki_read_short_whole, iki_read_long_whole, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable content (default).");
-    fll_program_print_help_option(output, context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
-    fll_program_print_help_option(output, context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
-    fll_program_print_help_option(output, context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
+    fll_program_print_help_option(file, context, iki_read_short_content, iki_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable content (default).");
+    fll_program_print_help_option(file, context, iki_read_short_literal, iki_read_long_literal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
+    fll_program_print_help_option(file, context, iki_read_short_object, iki_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
+    fll_program_print_help_option(file, context, iki_read_short_total, iki_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the entire variable for the given name and content value with the given string.");
+    fll_program_print_help_option(file, context, iki_read_short_substitute, iki_read_long_substitute, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the entire variable for the given name and content value with the given string.");
 
-    fll_program_print_help_usage(output, context, iki_read_name, "filename(s)");
+    fll_program_print_help_usage(file, context, iki_read_name, "filename(s)");
 
-    fl_print_format(" %[Notes:%]%c", output.stream, context.set.important, context.set.important, f_string_eol_s[0]);
-    fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format(" %[Notes:%]%c", file.stream, context.set.important, context.set.important, f_string_eol_s[0]);
+    fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  This %[%s%s%] option, requires 3 additional parameters:", output.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", output.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%]", output.stream, context.set.notable, context.set.notable, iki_read_substitution_replace, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%s%[>%].%c", output.stream, context.set.notable, context.set.notable, iki_read_substitution_with, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  This %[%s%s%] option, requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace, context.set.notable, context.set.notable);
+    fl_print_format(" %[<%]%s%[>%].%c", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with, context.set.notable, context.set.notable, f_string_eol_s[0]);
 
-    fl_print_format("    %[%s%]: The name of the vocabulary whose content is to be substituted.%c", output.stream, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%]: The content matching this exact string will be substituted.%c", output.stream, context.set.notable, iki_read_substitution_replace, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%]: The new string to use as the substitute.%c%c", output.stream, context.set.notable, iki_read_substitution_with, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The name of the vocabulary whose content is to be substituted.%c", file.stream, context.set.notable, iki_read_substitution_vocabulary, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The content matching this exact string will be substituted.%c", file.stream, context.set.notable, iki_read_substitution_replace, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%]: The new string to use as the substitute.%c%c", file.stream, context.set.notable, iki_read_substitution_with, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The default behavior is to only display content portion of the IKI variable.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The default behavior is to only display content portion of the IKI variable.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -119,18 +119,22 @@ extern "C" {
         }
 
         if (choice == iki_read_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == iki_read_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == iki_read_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == iki_read_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -140,14 +144,14 @@ extern "C" {
     }
 
     if (main->parameters[iki_read_parameter_help].result == f_console_result_found) {
-      iki_read_print_help(main->output, main->context);
+      iki_read_print_help(main->output.to, main->context);
 
       iki_read_main_delete(main);
       return F_none;
     }
 
     if (main->parameters[iki_read_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, iki_read_version);
+      fll_program_print_version(main->output.to, iki_read_version);
 
       iki_read_main_delete(main);
       return F_none;

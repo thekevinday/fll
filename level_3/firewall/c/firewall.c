@@ -13,32 +13,32 @@ extern "C" {
 #endif
 
 #ifndef _di_firewall_print_help_
-  f_status_t firewall_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t firewall_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, firewall_name_long, firewall_version);
+    fll_program_print_help_header(file, context, firewall_name_long, firewall_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    fl_print_format("%c%c %[Available Commands:%] ", output.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
-    fl_print_format("%c  %[%s%]    Turn on the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_start, context.set.standout);
-    fl_print_format("%c  %[%s%]     Turn off the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_stop, context.set.standout);
-    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_restart, context.set.standout);
-    fl_print_format("%c  %[%s%]     Prevent all communication.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_lock, context.set.standout);
-    fl_print_format("%c  %[%s%]     Show active firewall settings.", output.stream, f_string_eol_s[0], context.set.standout, firewall_command_show, context.set.standout);
+    fl_print_format("%c%c %[Available Commands:%] ", file.stream, f_string_eol_s[0], f_string_eol_s[0], context.set.important, context.set.important);
+    fl_print_format("%c  %[%s%]    Turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_start, context.set.standout);
+    fl_print_format("%c  %[%s%]     Turn off the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_stop, context.set.standout);
+    fl_print_format("%c  %[%s%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_restart, context.set.standout);
+    fl_print_format("%c  %[%s%]     Prevent all communication.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_lock, context.set.standout);
+    fl_print_format("%c  %[%s%]     Show active firewall settings.", file.stream, f_string_eol_s[0], context.set.standout, firewall_command_show, context.set.standout);
 
-    fll_program_print_help_usage(output, context, firewall_name, "command");
+    fll_program_print_help_usage(file, context, firewall_name, "command");
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -90,18 +90,22 @@ extern "C" {
         }
 
         if (choice == firewall_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == firewall_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == firewall_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == firewall_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -111,14 +115,14 @@ extern "C" {
     }
 
     if (main->parameters[firewall_parameter_help].result == f_console_result_found) {
-      firewall_print_help(main->output, main->context);
+      firewall_print_help(main->output.to, main->context);
 
       firewall_main_delete(main);
       return F_none;
     }
 
     if (main->parameters[firewall_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, firewall_version);
+      fll_program_print_version(main->output.to, firewall_version);
 
       firewall_main_delete(main);
       return F_none;
@@ -242,8 +246,8 @@ extern "C" {
         }
 
         if (show_nat) {
-          fll_print_format("%[===========================%] %[NAT%] %[============================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
-          fflush(main->output.stream);
+          fll_print_format("%[===========================%] %[NAT%] %[============================%]%c", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
+          fflush(main->output.to.stream);
 
           parameters.used = 6;
 
@@ -268,13 +272,13 @@ extern "C" {
             exit(return_code);
           }
 
-          fll_print_character(f_string_eol_s[0], main->output.stream);
-          fflush(main->output.stream);
+          fll_print_character(f_string_eol_s[0], main->output.to.stream);
+          fflush(main->output.to.stream);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
-          fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
-          fflush(main->output.stream);
+          fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%c", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
+          fflush(main->output.to.stream);
 
           parameters.used = 6;
 
@@ -299,13 +303,13 @@ extern "C" {
             exit(return_code);
           }
 
-          fll_print_character(f_string_eol_s[0], main->output.stream);
-          fflush(main->output.stream);
+          fll_print_character(f_string_eol_s[0], main->output.to.stream);
+          fflush(main->output.to.stream);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
-          fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%c", main->output.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
-          fflush(main->output.stream);
+          fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%c", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s[0]);
+          fflush(main->output.to.stream);
 
           parameters.used = 4;
 
@@ -326,8 +330,8 @@ extern "C" {
             exit(return_code);
           }
 
-          fll_print_character(f_string_eol_s[0], main->output.stream);
-          fflush(main->output.stream);
+          fll_print_character(f_string_eol_s[0], main->output.to.stream);
+          fflush(main->output.to.stream);
         }
 
         if (F_status_is_error(status)) {
@@ -463,7 +467,6 @@ extern "C" {
             return status;
           }
           else {
-
             if (main->error.verbosity != f_console_verbosity_quiet) {
               fll_print_format("%c%[%sFailed to perform lock request because the lock instructions are missing from: %s.%]%c", main->error.to.stream, f_string_eol_s[0], main->error.context, main->error.prefix, network_path firewall_file_other, main->error.context, f_string_eol_s[0]);
             }

@@ -7,53 +7,53 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_embedded_list_write_print_help_
-  f_status_t fss_embedded_list_write_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t fss_embedded_list_write_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, fss_embedded_list_write_name_long, fss_embedded_list_write_version);
+    fll_program_print_help_header(file, context, fss_embedded_list_write_name_long, fss_embedded_list_write_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_file, fss_embedded_list_write_long_file, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send output to.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_content, fss_embedded_list_write_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to output.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_double, fss_embedded_list_write_long_double, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_ignore, fss_embedded_list_write_long_ignore, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_object, fss_embedded_list_write_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to output.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_partial, fss_embedded_list_write_long_partial, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not output end of Object/Content character.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_prepend, fss_embedded_list_write_long_prepend, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given whitespace characters to the start of each multi-line Content.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_single, fss_embedded_list_write_long_single, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
-    fll_program_print_help_option(output, context, fss_embedded_list_write_short_trim, fss_embedded_list_write_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_file, fss_embedded_list_write_long_file, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send file to.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_content, fss_embedded_list_write_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to file.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_double, fss_embedded_list_write_long_double, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_ignore, fss_embedded_list_write_long_ignore, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_object, fss_embedded_list_write_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to file.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_partial, fss_embedded_list_write_long_partial, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not file end of Object/Content character.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_prepend, fss_embedded_list_write_long_prepend, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given whitespace characters to the start of each multi-line Content.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_single, fss_embedded_list_write_long_single, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_trim, fss_embedded_list_write_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
 
-    fll_program_print_help_usage(output, context, fss_embedded_list_write_name, f_string_empty_s);
+    fll_program_print_help_usage(file, context, fss_embedded_list_write_name, f_string_empty_s);
 
-    fl_print_format("  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%c", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%c", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range (use this both before and after the range).%c", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
-    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%c", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  The end of the pipe represents the end of any Object or Content.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%c", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%c", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range (use this both before and after the range).%c", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
+    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%c", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  The end of the pipe represents the end of any Object or Content.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The FSS-0008 (Embedded List) specification does not support quoted names, therefore the parameters '%[%s%s%]'", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_single, context.set.notable);
-    fl_print_format(" and '%[%s%s%]' do nothing.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_double, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The FSS-0008 (Embedded List) specification does not support quoted names, therefore the parameters '%[%s%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_single, context.set.notable);
+    fl_print_format(" and '%[%s%s%]' do nothing.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_double, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameter '%[%s%s%]' designates to not escape any valid nested Object or Content within some Content.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_ignore, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  This parameter requires two values.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  This parameter is not used for ignoring anything from the input pipe.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  This parameter must be specified after a '%[%s%s%]'", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content, context.set.notable);
-    fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%s%s%]' parameter.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameter '%[%s%s%]' designates to not escape any valid nested Object or Content within some Content.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_ignore, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  This parameter requires two values.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  This parameter is not used for ignoring anything from the input pipe.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  This parameter must be specified after a '%[%s%s%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content, context.set.notable);
+    fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%s%s%]' parameter.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_embedded_list_write_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -105,18 +105,22 @@ extern "C" {
         }
 
         if (choice == fss_embedded_list_write_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_embedded_list_write_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_embedded_list_write_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_embedded_list_write_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -126,14 +130,14 @@ extern "C" {
     }
 
     if (main->parameters[fss_embedded_list_write_parameter_help].result == f_console_result_found) {
-      fss_embedded_list_write_print_help(main->output, main->context);
+      fss_embedded_list_write_print_help(main->output.to, main->context);
 
       fss_embedded_list_write_main_delete(main);
       return status;
     }
 
     if (main->parameters[fss_embedded_list_write_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, fss_embedded_list_write_version);
+      fll_program_print_version(main->output.to, fss_embedded_list_write_version);
 
       fss_embedded_list_write_main_delete(main);
       return status;

@@ -1580,33 +1580,33 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
-        controller_print_lock(main->output, thread);
+      if (main->output.verbosity != f_console_verbosity_quiet) {
+        controller_print_lock(main->output.to, thread);
 
-        fl_print_format("%cSimulating execution of '%[", main->output.stream, f_string_eol_s[0], main->context.set.title);
+        fl_print_format("%cSimulating execution of '%[", main->output.to.stream, f_string_eol_s[0], main->context.set.title);
 
         if (program) {
-          f_print_safely_terminated(program, main->output.stream);
+          f_print_safely_terminated(program, main->output.to.stream);
         }
         else {
-          f_print_dynamic_safely(arguments.array[0], main->output.stream);
+          f_print_dynamic_safely(arguments.array[0], main->output.to.stream);
         }
 
-        fl_print_format("%]' with the arguments: '%[", main->output.stream, main->context.set.title, main->context.set.important);
+        fl_print_format("%]' with the arguments: '%[", main->output.to.stream, main->context.set.title, main->context.set.important);
 
         for (f_array_length_t i = program ? 0 : 1; i < arguments.used; ++i) {
 
           if (program && i || !program && i > 1) {
-            f_print_terminated(f_string_space_s, main->output.stream);
+            f_print_terminated(f_string_space_s, main->output.to.stream);
           }
 
-          f_print_dynamic_safely(arguments.array[i], main->output.stream);
+          f_print_dynamic_safely(arguments.array[i], main->output.to.stream);
         } // for
 
-        fl_print_format("%]' from '", main->output.stream, main->context.set.important);
-        fl_print_format("%[%Q%]'.%c", main->output.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("%]' from '", main->output.to.stream, main->context.set.important);
+        fl_print_format("%[%Q%]'.%c", main->output.to.stream, main->context.set.notable, process->rule.name, main->context.set.notable, f_string_eol_s[0]);
 
-        controller_print_unlock_flush(main->output, thread);
+        controller_print_unlock_flush(main->output.to, thread);
       }
 
       // sleep for less than a second to better show simulation of synchronous vs asynchronous.
@@ -2019,30 +2019,30 @@ extern "C" {
 
       if (!rerun_item->max || rerun_item->count < rerun_item->max) {
         if (main->error.verbosity == f_console_verbosity_debug) {
-          controller_print_lock(main->output, thread);
+          controller_print_lock(main->output.to, thread);
 
-          fl_print_format("%cRe-running '", main->output.stream, f_string_eol_s[0]);
-          fl_print_format("%[%q%]", main->output.stream, main->context.set.title, process->rule.alias, main->context.set.title);
-          f_print_terminated("' '", main->output.stream);
-          fl_print_format("%[%q%]", main->output.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
-          f_print_terminated("' with a ", main->output.stream);
-          fl_print_format("%[%s%]", main->output.stream, main->context.set.notable, controller_string_delay_s, main->context.set.notable);
-          f_print_terminated(" of ", main->output.stream);
-          fl_print_format("%[%ul%] MegaTime", main->output.stream, main->context.set.notable, rerun_item->delay, main->context.set.notable);
+          fl_print_format("%cRe-running '", main->output.to.stream, f_string_eol_s[0]);
+          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.title, process->rule.alias, main->context.set.title);
+          f_print_terminated("' '", main->output.to.stream);
+          fl_print_format("%[%q%]", main->output.to.stream, main->context.set.notable, controller_rule_action_type_execute_name(action), main->context.set.notable);
+          f_print_terminated("' with a ", main->output.to.stream);
+          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.notable, controller_string_delay_s, main->context.set.notable);
+          f_print_terminated(" of ", main->output.to.stream);
+          fl_print_format("%[%ul%] MegaTime", main->output.to.stream, main->context.set.notable, rerun_item->delay, main->context.set.notable);
 
           if (rerun_item->max) {
-            f_print_terminated(" for ", main->output.stream);
-            fl_print_format("%[%ul%]", main->output.stream, main->context.set.notable, rerun_item->count, main->context.set.notable);
-            f_print_terminated(" of ", main->output.stream);
-            fl_print_format("%[%s%] ", main->output.stream, main->context.set.notable, controller_string_max_s, main->context.set.notable);
-            fl_print_format("%[%ul%]", main->output.stream, main->context.set.notable, rerun_item->max, main->context.set.notable);
-            fl_print_format(".%c", main->output.stream, f_string_eol_s[0]);
+            f_print_terminated(" for ", main->output.to.stream);
+            fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->count, main->context.set.notable);
+            f_print_terminated(" of ", main->output.to.stream);
+            fl_print_format("%[%s%] ", main->output.to.stream, main->context.set.notable, controller_string_max_s, main->context.set.notable);
+            fl_print_format("%[%ul%]", main->output.to.stream, main->context.set.notable, rerun_item->max, main->context.set.notable);
+            fl_print_format(".%c", main->output.to.stream, f_string_eol_s[0]);
           }
           else {
-            fl_print_format(" with no %[%s%].%c", main->output.stream, main->context.set.notable, controller_string_max_s, main->context.set.notable, f_string_eol_s[0]);
+            fl_print_format(" with no %[%s%].%c", main->output.to.stream, main->context.set.notable, controller_string_max_s, main->context.set.notable, f_string_eol_s[0]);
           }
 
-          controller_print_unlock_flush(main->output, thread);
+          controller_print_unlock_flush(main->output.to, thread);
         }
 
         if (rerun_item->delay) {
@@ -4719,7 +4719,6 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if ((zero_only && number) || (!zero_only && (number < 1 || number > 99)) || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_negative || status == F_number_positive) {
-
               if (global.main->error.verbosity != f_console_verbosity_quiet) {
 
                 // get the current line number within the settings item.
@@ -5368,11 +5367,11 @@ extern "C" {
         }
         else {
           if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
-            controller_print_lock(global.main->output, global.thread);
+            controller_print_lock(global.main->output.to, global.thread);
 
-            fl_print_format("%cProcessing rule item action '%[%s%]' setting value to an empty set.%c", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title, controller_string_environment_s, global.main->context.set.title, f_string_eol_s[0]);
+            fl_print_format("%cProcessing rule item action '%[%s%]' setting value to an empty set.%c", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, controller_string_environment_s, global.main->context.set.title, f_string_eol_s[0]);
 
-            controller_print_unlock_flush(global.main->output, global.thread);
+            controller_print_unlock_flush(global.main->output.to, global.thread);
           }
         }
 
@@ -5597,14 +5596,14 @@ extern "C" {
       }
 
       if (global.main->error.verbosity == f_console_verbosity_debug || (global.main->error.verbosity == f_console_verbosity_verbose && global.main->parameters[controller_parameter_simulate].result == f_console_result_found)) {
-        controller_print_lock(global.main->output, global.thread);
+        controller_print_lock(global.main->output.to, global.thread);
 
-        fl_print_format("%cProcessing rule item action '%[%S%]', adding ", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title, controller_string_on_s, global.main->context.set.title);
-        fl_print_format("'%[%/Q%]' of ", global.main->output.stream, global.main->context.set.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->context.set.notable);
-        fl_print_format("'%[%/Q%]/", global.main->output.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->context.set.important);
-        fl_print_format("%[%/Q%]'.%c", global.main->output.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[3], global.main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("%cProcessing rule item action '%[%S%]', adding ", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, controller_string_on_s, global.main->context.set.title);
+        fl_print_format("'%[%/Q%]' of ", global.main->output.to.stream, global.main->context.set.notable, cache->buffer_item, cache->content_actions.array[i].array[1], global.main->context.set.notable);
+        fl_print_format("'%[%/Q%]/", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->context.set.important);
+        fl_print_format("%[%/Q%]'.%c", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[i].array[3], global.main->context.set.important, f_string_eol_s[0]);
 
-        controller_print_unlock_flush(global.main->output, global.thread);
+        controller_print_unlock_flush(global.main->output.to, global.thread);
       }
     } // for
 
@@ -5627,21 +5626,21 @@ extern "C" {
       return;
     }
 
-    controller_print_lock(global.main->output, global.thread);
+    controller_print_lock(global.main->output.to, global.thread);
 
-    fl_print_format("%cProcessing rule item action '%[%S%]' setting ", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%cProcessing rule item action '%[%S%]' setting ", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, name, global.main->context.set.title);
 
     if (name_sub) {
-      fl_print_format("'%[%S%]'", global.main->output.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
+      fl_print_format("'%[%S%]'", global.main->output.to.stream, global.main->context.set.notable, name_sub, global.main->context.set.notable);
     }
     else {
-      f_print_terminated("value", global.main->output.stream);
+      f_print_terminated("value", global.main->output.to.stream);
     }
 
-    fl_print_format(" to '%[%Q%]'", global.main->output.stream, global.main->context.set.important, value, global.main->context.set.important);
-    fl_print_format("%S.%c", global.main->output.stream, suffix, f_string_eol_s[0]);
+    fl_print_format(" to '%[%Q%]'", global.main->output.to.stream, global.main->context.set.important, value, global.main->context.set.important);
+    fl_print_format("%S.%c", global.main->output.to.stream, suffix, f_string_eol_s[0]);
 
-    controller_print_unlock_flush(global.main->output, global.thread);
+    controller_print_unlock_flush(global.main->output.to, global.thread);
   }
 #endif // _di_controller_rule_setting_read_print_value_
 
@@ -5652,29 +5651,29 @@ extern "C" {
       return;
     }
 
-    controller_print_lock(global.main->output, global.thread);
+    controller_print_lock(global.main->output.to, global.thread);
 
-    fl_print_format("%cProcessing rule item action '%[%S%]' setting value to", global.main->output.stream, f_string_eol_s[0], global.main->context.set.title, name, global.main->context.set.title);
+    fl_print_format("%cProcessing rule item action '%[%S%]' setting value to", global.main->output.to.stream, f_string_eol_s[0], global.main->context.set.title, name, global.main->context.set.title);
 
     for (f_array_length_t j = 0; j < cache->content_actions.array[index].used; ++j) {
 
-      fl_print_format(" '%[%/Q%]'", global.main->output.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[index].array[j], global.main->context.set.important);
+      fl_print_format(" '%[%/Q%]'", global.main->output.to.stream, global.main->context.set.important, cache->buffer_item, cache->content_actions.array[index].array[j], global.main->context.set.important);
 
       if (j + 2 == cache->content_actions.array[index].used) {
         if (cache->content_actions.array[index].used > 2) {
-          f_print_terminated(",", global.main->output.stream);
+          f_print_terminated(",", global.main->output.to.stream);
         }
 
-        f_print_terminated(" and", global.main->output.stream);
+        f_print_terminated(" and", global.main->output.to.stream);
       }
       else if (j + 1 < cache->content_actions.array[index].used) {
-        f_print_terminated(",", global.main->output.stream);
+        f_print_terminated(",", global.main->output.to.stream);
       }
     } // for
 
-    fl_print_format(".%c", global.main->output.stream, f_string_eol_s[0]);
+    fl_print_format(".%c", global.main->output.to.stream, f_string_eol_s[0]);
 
-    controller_print_unlock_flush(global.main->output, global.thread);
+    controller_print_unlock_flush(global.main->output.to, global.thread);
   }
 #endif // _di_controller_rule_setting_read_print_value_
 
@@ -5774,74 +5773,74 @@ extern "C" {
       } // for
 
       if (missing) {
-        controller_print_lock(main->output, global.thread);
+        controller_print_lock(main->output.to, global.thread);
 
         if (rule.items.used) {
-          fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
-          fl_print_format("%[%Q%]' has no '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
-          fl_print_format("%[%q%]' action to execute and would '", main->output.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
-          fl_print_format("%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
-          fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+          fl_print_format("%cRule '", main->output.to.stream, f_string_eol_s[0]);
+          fl_print_format("%[%Q%]' has no '", main->output.to.stream, main->context.set.title, rule.name, main->context.set.title);
+          fl_print_format("%[%q%]' action to execute and would '", main->output.to.stream, main->context.set.title, controller_rule_action_type_name(action), main->context.set.title);
+          fl_print_format("%[%s%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
+          fl_print_format("%[%s%]'.%c", main->output.to.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
         }
         else {
-          fl_print_format("%cRule '", main->output.stream, f_string_eol_s[0]);
-          fl_print_format("%[%Q%]' has no known '", main->output.stream, main->context.set.title, rule.name, main->context.set.title);
-          fl_print_format("%[%s %s%]' (such as ", main->output.stream, main->context.set.title, controller_string_rule_s, controller_string_type_s, main->context.set.title);
-          fl_print_format("'%[%s%]', ", main->output.stream, main->context.set.title, controller_string_command_s, main->context.set.title);
-          fl_print_format("'%[%s%]', ", main->output.stream, main->context.set.title, controller_string_service_s, main->context.set.title);
-          fl_print_format("'%[%s%]', or ", main->output.stream, main->context.set.title, controller_string_script_s, main->context.set.title);
-          fl_print_format("'%[%s%]'", main->output.stream, main->context.set.title, controller_string_utility_s, main->context.set.title);
-          fl_print_format(") and would '%[%s%]' because it is '", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
-          fl_print_format("%[%s%]'.%c", main->output.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
+          fl_print_format("%cRule '", main->output.to.stream, f_string_eol_s[0]);
+          fl_print_format("%[%Q%]' has no known '", main->output.to.stream, main->context.set.title, rule.name, main->context.set.title);
+          fl_print_format("%[%s %s%]' (such as ", main->output.to.stream, main->context.set.title, controller_string_rule_s, controller_string_type_s, main->context.set.title);
+          fl_print_format("'%[%s%]', ", main->output.to.stream, main->context.set.title, controller_string_command_s, main->context.set.title);
+          fl_print_format("'%[%s%]', ", main->output.to.stream, main->context.set.title, controller_string_service_s, main->context.set.title);
+          fl_print_format("'%[%s%]', or ", main->output.to.stream, main->context.set.title, controller_string_script_s, main->context.set.title);
+          fl_print_format("'%[%s%]'", main->output.to.stream, main->context.set.title, controller_string_utility_s, main->context.set.title);
+          fl_print_format(") and would '%[%s%]' because it is '", main->output.to.stream, main->context.set.important, options & controller_process_option_require ? controller_string_fail_s : controller_string_succeed_s, main->context.set.important);
+          fl_print_format("%[%s%]'.%c", main->output.to.stream, main->context.set.important, options & controller_process_option_require ? controller_string_required_s : controller_string_optional_s, main->context.set.important, f_string_eol_s[0]);
         }
 
-        controller_print_unlock_flush(main->output, global.thread);
+        controller_print_unlock_flush(main->output.to, global.thread);
       }
     }
 
-    controller_print_lock(main->output, global.thread);
+    controller_print_lock(main->output.to, global.thread);
 
-    fl_print_format("%cRule %[%Q%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_how_s, main->context.set.important, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes_s : controller_string_no_s, f_string_eol_s[0]);
-    fl_print_format("  %[%s%] ", main->output.stream, main->context.set.important, controller_string_capability_s, main->context.set.important);
+    fl_print_format("%cRule %[%Q%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_string_name_s, main->context.set.important, rule.name, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_string_how_s, main->context.set.important, options & controller_process_option_asynchronous ? controller_string_asynchronous_s : controller_string_synchronous_s, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_string_wait_s, main->context.set.important, options & controller_process_option_wait ? controller_string_yes_s : controller_string_no_s, f_string_eol_s[0]);
+    fl_print_format("  %[%s%] ", main->output.to.stream, main->context.set.important, controller_string_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {
       if (rule.capability) {
         cache->action.generic.used = 0;
 
         if (F_status_is_error_not(f_capability_to_text(rule.capability, &cache->action.generic))) {
-          f_print_dynamic_safely(cache->action.generic, main->output.stream);
+          f_print_dynamic_safely(cache->action.generic, main->output.to.stream);
         }
       }
 
-      f_print_terminated(f_string_eol_s, main->output.stream);
+      f_print_terminated(f_string_eol_s, main->output.to.stream);
     }
     else {
-      fl_print_format("%[(unsupported)%]%c", main->output.stream, main->context.set.warning, controller_string_capability_s, main->context.set.warning, f_string_eol_s[0]);
+      fl_print_format("%[(unsupported)%]%c", main->output.to.stream, main->context.set.warning, controller_string_capability_s, main->context.set.warning, f_string_eol_s[0]);
     }
 
-    fl_print_format("  %[%s%]", main->output.stream, main->context.set.important, controller_string_control_group_s, main->context.set.important);
+    fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_string_control_group_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_control_group) {
-      fl_print_format(" %s", main->output.stream, rule.control_group.as_new ? controller_string_new_s : controller_string_existing_s);
+      fl_print_format(" %s", main->output.to.stream, rule.control_group.as_new ? controller_string_new_s : controller_string_existing_s);
 
       for (i = 0; i < rule.control_group.groups.used; ++i) {
 
         if (rule.control_group.groups.array[i].used) {
-          fl_print_format(" %Q", main->output.stream, rule.control_group.groups.array[i]);
+          fl_print_format(" %Q", main->output.to.stream, rule.control_group.groups.array[i]);
         }
       } // for
     }
 
-    fl_print_format("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_nice_s, main->context.set.important);
+    fl_print_format("%c  %[%s%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_nice_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_nice) {
-      fl_print_format(" %i", main->output.stream, rule.nice);
+      fl_print_format(" %i", main->output.to.stream, rule.nice);
     }
 
-    fl_print_format("%c  %[%s%]", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_scheduler_s, main->context.set.important);
+    fl_print_format("%c  %[%s%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_scheduler_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_scheduler) {
       f_string_t policy = "";
@@ -5865,70 +5864,70 @@ extern "C" {
         policy = controller_string_round_robin_s;
       }
 
-      fl_print_format(" %s %i", main->output.stream, policy, rule.scheduler.priority);
+      fl_print_format(" %s %i", main->output.to.stream, policy, rule.scheduler.priority);
     }
 
-    fl_print_format("%c  %[%s%] %Q%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
-    fl_print_format("  %[%s%]", main->output.stream, main->context.set.important, controller_string_user_s, main->context.set.important);
+    fl_print_format("%c  %[%s%] %Q%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_script_s, main->context.set.important, rule.script, f_string_eol_s[0]);
+    fl_print_format("  %[%s%]", main->output.to.stream, main->context.set.important, controller_string_user_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_user) {
-      fl_print_format(" %i", main->output.stream, rule.user);
+      fl_print_format(" %i", main->output.to.stream, rule.user);
     }
 
-    fl_print_format("%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_affinity_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_affinity_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.affinity.used; ++i) {
-      fl_print_format("    %i%c", main->output.stream, rule.affinity.array[i], f_string_eol_s[0]);
+      fl_print_format("    %i%c", main->output.to.stream, rule.affinity.array[i], f_string_eol_s[0]);
     } // for
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_define_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_define_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.define.used; ++i) {
 
       if (rule.define.array[i].name.used && rule.define.array[i].value.used) {
-        fl_print_format("    %Q %[=%] %Q%c", main->output.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s[0]);
+        fl_print_format("    %Q %[=%] %Q%c", main->output.to.stream, rule.define.array[i].name, main->context.set.important, main->context.set.important, rule.define.array[i].value, f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_environment_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_environment_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.environment.used; ++i) {
 
       if (rule.environment.array[i].used) {
-        fl_print_format("    %Q%c", main->output.stream, rule.environment.array[i], f_string_eol_s[0]);
+        fl_print_format("    %Q%c", main->output.to.stream, rule.environment.array[i], f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.parameter.used; ++i) {
 
       if (rule.parameter.array[i].name.used && rule.parameter.array[i].value.used) {
-        fl_print_format("    %Q %[=%] %Q%c", main->output.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s[0]);
+        fl_print_format("    %Q %[=%] %Q%c", main->output.to.stream, rule.parameter.array[i].name, main->context.set.important, main->context.set.important, rule.parameter.array[i].value, f_string_eol_s[0]);
       }
     } // for
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_group_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_group_s, main->context.set.important, f_string_eol_s[0]);
 
     if (rule.has & controller_rule_has_group) {
-      fl_print_format("    %i%c", main->output.stream, rule.group, f_string_eol_s[0]);
+      fl_print_format("    %i%c", main->output.to.stream, rule.group, f_string_eol_s[0]);
 
       for (i = 0; i < rule.groups.used; ++i) {
-        fl_print_format("    %i%c", main->output.stream, rule.groups.array[i], f_string_eol_s[0]);
+        fl_print_format("    %i%c", main->output.to.stream, rule.groups.array[i], f_string_eol_s[0]);
       } // for
     }
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_limit_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_limit_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.limits.used; ++i) {
-      fl_print_format("    %Q %[=%] %un %un%c", main->output.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s[0]);
+      fl_print_format("    %Q %[=%] %un %un%c", main->output.to.stream, controller_rule_setting_limit_type_name(rule.limits.array[i].type), main->context.set.important, main->context.set.important, rule.limits.array[i].value.rlim_cur, rule.limits.array[i].value.rlim_max, f_string_eol_s[0]);
     } // for
 
-    fl_print_format("  }%c  %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_on_s, main->context.set.important, f_string_eol_s[0]);
+    fl_print_format("  }%c  %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_on_s, main->context.set.important, f_string_eol_s[0]);
 
     for (i = 0; i < rule.ons.used; ++i) {
 
-      fl_print_format("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
 
       {
         f_string_t action = "";
@@ -5961,40 +5960,40 @@ extern "C" {
           action = controller_string_thaw_s;
         }
 
-        fl_print_format("      %[%s%] %s%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, action, f_string_eol_s[0]);
+        fl_print_format("      %[%s%] %s%c", main->output.to.stream, main->context.set.important, controller_string_type_s, main->context.set.important, action, f_string_eol_s[0]);
       }
 
-      fl_print_format("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_need_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_need_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].need.used; ++j) {
 
         if (rule.ons.array[i].need.array[j].used) {
-          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].need.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.to.stream, rule.ons.array[i].need.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_format("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_want_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      }%c      %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_want_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].want.used; ++j) {
 
         if (rule.ons.array[i].want.array[j].used) {
-          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].want.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.to.stream, rule.ons.array[i].want.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_format("      }%c      %[%s%] {%c", main->output.stream, f_string_eol_s[0], main->context.set.important, controller_string_wish_s, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("      }%c      %[%s%] {%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, controller_string_wish_s, main->context.set.important, f_string_eol_s[0]);
 
       for (j = 0; j < rule.ons.array[i].wish.used; ++j) {
 
         if (rule.ons.array[i].wish.array[j].used) {
-          fl_print_format("        %Q%c", main->output.stream, rule.ons.array[i].wish.array[j], f_string_eol_s[0]);
+          fl_print_format("        %Q%c", main->output.to.stream, rule.ons.array[i].wish.array[j], f_string_eol_s[0]);
         }
       } // for
 
-      fl_print_format("      }%c    }%c", main->output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+      fl_print_format("      }%c    }%c", main->output.to.stream, f_string_eol_s[0], f_string_eol_s[0]);
     } // for
 
-    fl_print_format("  }%c", main->output.stream, f_string_eol_s[0]);
+    fl_print_format("  }%c", main->output.to.stream, f_string_eol_s[0]);
 
     if (rule.items.used) {
       controller_rule_action_t *action = 0;
@@ -6009,10 +6008,10 @@ extern "C" {
 
         item = &rule.items.array[i];
 
-        fl_print_format("  %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_item_s, main->context.set.important, f_string_eol_s[0]);
-        fl_print_format("    %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s[0]);
+        fl_print_format("  %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_item_s, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("    %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_item_type_name(item->type), f_string_eol_s[0]);
 
-        fl_print_format("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_rerun_s, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_rerun_s, main->context.set.important, f_string_eol_s[0]);
         for (j = 0; j < controller_rule_action_type_execute__enum_size; ++j) {
 
           for (k = 0; k < 2; ++k) {
@@ -6027,121 +6026,121 @@ extern "C" {
               continue;
             }
 
-            fl_print_format("      %[", main->output.stream, main->context.set.important);
+            fl_print_format("      %[", main->output.to.stream, main->context.set.important);
             switch (j) {
               case controller_rule_action_type_execute_freeze:
-                f_print_terminated(controller_string_freeze_s, main->output.stream);
+                f_print_terminated(controller_string_freeze_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_kill:
-                f_print_terminated(controller_string_kill_s, main->output.stream);
+                f_print_terminated(controller_string_kill_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_pause:
-                f_print_terminated(controller_string_pause_s, main->output.stream);
+                f_print_terminated(controller_string_pause_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_reload:
-                f_print_terminated(controller_string_reload_s, main->output.stream);
+                f_print_terminated(controller_string_reload_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_restart:
-                f_print_terminated(controller_string_restart_s, main->output.stream);
+                f_print_terminated(controller_string_restart_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_resume:
-                f_print_terminated(controller_string_resume_s, main->output.stream);
+                f_print_terminated(controller_string_resume_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_start:
-                f_print_terminated(controller_string_start_s, main->output.stream);
+                f_print_terminated(controller_string_start_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_stop:
-                f_print_terminated(controller_string_stop_s, main->output.stream);
+                f_print_terminated(controller_string_stop_s, main->output.to.stream);
                 break;
 
               case controller_rule_action_type_execute_thaw:
-                f_print_terminated(controller_string_thaw_s, main->output.stream);
+                f_print_terminated(controller_string_thaw_s, main->output.to.stream);
                 break;
 
               default:
                 break;
             }
 
-            fl_print_format("%] %s", main->output.stream, main->context.set.important, k ? controller_string_success_s : controller_string_failure_s);
-            fl_print_format(" %s %ul %s %ul", main->output.stream, controller_string_delay_s, rerun_item->delay, controller_string_max_s, rerun_item->max);
+            fl_print_format("%] %s", main->output.to.stream, main->context.set.important, k ? controller_string_success_s : controller_string_failure_s);
+            fl_print_format(" %s %ul %s %ul", main->output.to.stream, controller_string_delay_s, rerun_item->delay, controller_string_max_s, rerun_item->max);
 
             if (!k && (item->reruns[j].is & controller_rule_rerun_is_failure_reset) || k && (item->reruns[j].is & controller_rule_rerun_is_success_reset)) {
-              fl_print_format(" %s", main->output.stream, controller_string_reset_s);
+              fl_print_format(" %s", main->output.to.stream, controller_string_reset_s);
             }
 
-            f_print_terminated(f_string_eol_s, main->output.stream);
+            f_print_terminated(f_string_eol_s, main->output.to.stream);
           } // for
         } // for
-        fl_print_format("    }%c", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("    }%c", main->output.to.stream, f_string_eol_s[0]);
 
-        fl_print_format("    %[%s%]", main->output.stream, main->context.set.important, controller_string_pid_file_s, main->context.set.important);
+        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_string_pid_file_s, main->context.set.important);
         if (item->pid_file.used) {
-          fl_print_format(" %Q", main->output.stream, item->pid_file);
+          fl_print_format(" %Q", main->output.to.stream, item->pid_file);
         }
-        f_print_terminated(f_string_eol_s, main->output.stream);
+        f_print_terminated(f_string_eol_s, main->output.to.stream);
 
-        fl_print_format("    %[%s%]", main->output.stream, main->context.set.important, controller_string_with_s, main->context.set.important);
+        fl_print_format("    %[%s%]", main->output.to.stream, main->context.set.important, controller_string_with_s, main->context.set.important);
         if (item->with & controller_with_full_path) {
-          fl_print_format(" %s", main->output.stream, controller_string_full_path_s);
+          fl_print_format(" %s", main->output.to.stream, controller_string_full_path_s);
         }
-        f_print_terminated(f_string_eol_s, main->output.stream);
+        f_print_terminated(f_string_eol_s, main->output.to.stream);
 
         for (j = 0; j < item->actions.used; ++j) {
 
           action = &item->actions.array[j];
 
-          fl_print_format("    %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
-          fl_print_format("      %[%s%] %q%c", main->output.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
+          fl_print_format("    %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_action_s, main->context.set.important, f_string_eol_s[0]);
+          fl_print_format("      %[%s%] %q%c", main->output.to.stream, main->context.set.important, controller_string_type_s, main->context.set.important, controller_rule_action_type_name(action->type), f_string_eol_s[0]);
 
           if (item->type == controller_rule_item_type_script || item->type == controller_rule_item_type_utility) {
-            fl_print_format("      %[%s%] {%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
+            fl_print_format("      %[%s%] {%c", main->output.to.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, f_string_eol_s[0]);
 
             parameter = &action->parameters.array[0];
 
             if (parameter->used) {
-              f_print_terminated("        ", main->output.stream);
+              f_print_terminated("        ", main->output.to.stream);
 
               for (k = 0; k < parameter->used; ++k) {
 
                 if (parameter->string[k] == f_fss_eol) {
                   if (k + 1 < parameter->used) {
-                    f_print_terminated(f_string_eol_s, main->output.stream);
-                    f_print_terminated("        ", main->output.stream);
+                    f_print_terminated(f_string_eol_s, main->output.to.stream);
+                    f_print_terminated("        ", main->output.to.stream);
                   }
                 }
                 else {
-                  f_print_character_safely(parameter->string[k], main->output.stream);
+                  f_print_character_safely(parameter->string[k], main->output.to.stream);
                 }
               } // for
 
-              f_print_terminated(f_string_eol_s, main->output.stream);
+              f_print_terminated(f_string_eol_s, main->output.to.stream);
             }
 
-            fl_print_format("      }%c", main->output.stream, f_string_eol_s[0]);
+            fl_print_format("      }%c", main->output.to.stream, f_string_eol_s[0]);
           }
           else {
             for (k = 0; k < action->parameters.used; ++k) {
-              fl_print_format("      %[%s%] %Q%c", main->output.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
+              fl_print_format("      %[%s%] %Q%c", main->output.to.stream, main->context.set.important, controller_string_parameter_s, main->context.set.important, action->parameters.array[k], f_string_eol_s[0]);
             } // for
           }
 
-          fl_print_format("    }%c", main->output.stream, f_string_eol_s[0]);
+          fl_print_format("    }%c", main->output.to.stream, f_string_eol_s[0]);
         } // for
 
-        fl_print_format("  }%c", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("  }%c", main->output.to.stream, f_string_eol_s[0]);
       } // for
     }
 
-    fl_print_format("}%c", main->output.stream, f_string_eol_s[0]);
+    fl_print_format("}%c", main->output.to.stream, f_string_eol_s[0]);
 
-    controller_print_unlock_flush(main->output, global.thread);
+    controller_print_unlock_flush(main->output.to, global.thread);
   }
 #endif // _di_controller_rule_validate_
 

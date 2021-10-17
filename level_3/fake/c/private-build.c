@@ -168,8 +168,8 @@ extern "C" {
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Copying %S.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, label, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Copying %S.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, label, main.context.set.important, f_string_eol_s[0]);
     }
 
      macro_f_string_dynamic_t_resize(*status, path_source, source.used);
@@ -186,7 +186,11 @@ extern "C" {
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
     if (main.error.verbosity == f_console_verbosity_verbose) {
-      recurse.output = main.output;
+      recurse.output.stream = main.output.to.stream;
+      recurse.output.id = main.output.to.id;
+      recurse.output.flag = main.output.to.flag;
+      recurse.output.size_read = main.output.to.size_read;
+      recurse.output.size_write = main.output.to.size_write;
       recurse.verbose = fake_verbose_print_copy;
     }
 
@@ -345,7 +349,7 @@ extern "C" {
         }
 
         if (main.error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Copied file '%Q' to '%Q'.%c", main.output.stream, path_source, destination_file, f_string_eol_s[0]);
+          fll_print_format("Copied file '%Q' to '%Q'.%c", main.output.to.stream, path_source, destination_file, f_string_eol_s[0]);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -418,8 +422,8 @@ extern "C" {
       &path_headers,
     };
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Creating base build directories.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Creating base build directories.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     for (uint8_t i = 0; i < 15; ++i) {
@@ -471,7 +475,7 @@ extern "C" {
       }
 
       if (main.error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("Created directory '%Q'.%c", main.output.stream, directorys[i], f_string_eol_s[0]);
+        fll_print_format("Created directory '%Q'.%c", main.output.to.stream, directorys[i], f_string_eol_s[0]);
       }
     } // for
 
@@ -775,8 +779,8 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Compiling shared library.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Compiling shared library.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -1118,7 +1122,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%c", main.output.to.stream, parameter_file_path, parameter_file_name_major, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1153,7 +1157,7 @@ extern "C" {
       *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
       if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
+        fll_print_format("Linked file '%S' to '%S'.%c", main.output.to.stream, parameter_file_path, parameter_file_name_minor, f_string_eol_s[0]);
       }
       else if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_file_found) {
@@ -1187,7 +1191,7 @@ extern "C" {
         *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
         if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
+          fll_print_format("Linked file '%S' to '%S'.%c", main.output.to.stream, parameter_file_path, parameter_file_name_micro, f_string_eol_s[0]);
         }
         else if (F_status_is_error(*status)) {
           if (F_status_set_fine(*status) == F_file_found) {
@@ -1221,7 +1225,7 @@ extern "C" {
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
           if (F_status_is_error_not(*status) && main.error.verbosity == f_console_verbosity_verbose) {
-            fll_print_format("Linked file '%S' to '%S'.%c", main.output.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
+            fll_print_format("Linked file '%S' to '%S'.%c", main.output.to.stream, parameter_file_path, parameter_file_name_nano, f_string_eol_s[0]);
           }
           else if (F_status_is_error(*status)) {
             if (F_status_set_fine(*status) == F_file_found) {
@@ -1250,8 +1254,8 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Compiling static library.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Compiling static library.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -2853,8 +2857,8 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_library.used) return 0;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Compiling static objects.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Compiling static objects.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
@@ -2974,7 +2978,7 @@ extern "C" {
           }
 
           if (main.error.verbosity == f_console_verbosity_verbose) {
-            fll_print_format("Directory '%Q' created.%c", main.output.stream, destination_path, f_string_eol_s[0]);
+            fll_print_format("Directory '%Q' created.%c", main.output.to.stream, destination_path, f_string_eol_s[0]);
           }
         }
         else if (F_status_is_error(*status)) {
@@ -3069,14 +3073,14 @@ extern "C" {
     fake_build_load_setting(*main, setting_file, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
-      if (main->error.verbosity != f_console_verbosity_quiet) {
-        flockfile(main->output.stream);
+      if (main->output.verbosity != f_console_verbosity_quiet) {
+        flockfile(main->output.to.stream);
 
-        fl_print_format("%c%[Building project%] ", main->output.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
-        fl_print_format("%[%Q%]", main->output.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
-        fl_print_format("%[.%]%c", main->output.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+        fl_print_format("%c%[Building project%] ", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
+        fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, data_build.setting.project_name, main->context.set.notable);
+        fl_print_format("%[.%]%c", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->output.to.stream);
       }
     }
 
@@ -3187,8 +3191,8 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Compiling shared program.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Compiling shared program.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -3290,8 +3294,8 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage.string) == F_true || *status == F_child) return main.child;
     if (!data_build.setting.build_sources_program.used) return 0;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c%[Compiling static program.%]%c", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c%[Compiling static program.%]%c", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important, f_string_eol_s[0]);
     }
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;

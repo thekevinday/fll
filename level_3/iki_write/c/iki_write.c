@@ -7,41 +7,41 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_print_help_
-  f_status_t iki_write_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t iki_write_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, iki_write_name_long, iki_write_version);
+    fll_program_print_help_header(file, context, iki_write_name_long, iki_write_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, iki_write_short_file, iki_write_long_file, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send output to.");
-    fll_program_print_help_option(output, context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The content to output.");
-    fll_program_print_help_option(output, context, iki_write_short_double, iki_write_long_double, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
-    fll_program_print_help_option(output, context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The object to output.");
-    fll_program_print_help_option(output, context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
+    fll_program_print_help_option(file, context, iki_write_short_file, iki_write_long_file, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send file to.");
+    fll_program_print_help_option(file, context, iki_write_short_content, iki_write_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The content to file.");
+    fll_program_print_help_option(file, context, iki_write_short_double, iki_write_long_double, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
+    fll_program_print_help_option(file, context, iki_write_short_object, iki_write_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The object to file.");
+    fll_program_print_help_option(file, context, iki_write_short_single, iki_write_long_single, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
 
-    fll_program_print_help_usage(output, context, iki_write_name, f_string_empty_s);
+    fll_program_print_help_usage(file, context, iki_write_name, f_string_empty_s);
 
-    fl_print_format(" %[Notes:%]%c", output.stream, context.set.important, context.set.important, f_string_eol_s[0]);
-    fl_print_format("  This program will accept object and content strings to generate an IKI string, such as %[object:\"content\"%].%c", output.stream, context.set.notable, context.set.notable, f_string_eol_s[0]);
+    fl_print_format(" %[Notes:%]%c", file.stream, context.set.important, context.set.important, f_string_eol_s[0]);
+    fl_print_format("  This program will accept object and content strings to generate an IKI string, such as %[object:\"content\"%].%c", file.stream, context.set.notable, context.set.notable, f_string_eol_s[0]);
 
-    fl_print_format("  Each object must have a content (and each content must have an object).%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  Each object must have a content (and each content must have an object).%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When piping main to this program, a single end of line (\\n) must be used to separate each object from each content.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  Furthermore, each object must be followed by a content.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When piping main to this program, a single end of line (\\n) must be used to separate each object from each content.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  Furthermore, each object must be followed by a content.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -100,18 +100,22 @@ extern "C" {
         }
 
         if (choice == iki_write_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == iki_write_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == iki_write_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == iki_write_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -121,24 +125,24 @@ extern "C" {
     }
 
     if (main->parameters[iki_write_parameter_help].result == f_console_result_found) {
-      iki_write_print_help(main->output, main->context);
+      iki_write_print_help(main->output.to, main->context);
 
       iki_write_main_delete(main);
       return F_none;
     }
 
     if (main->parameters[iki_write_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, iki_write_version);
+      fll_program_print_version(main->output.to, iki_write_version);
 
       iki_write_main_delete(main);
       return F_none;
     }
 
-    f_file_t output = f_file_t_initialize;
+    f_file_t file = f_file_t_initialize;
 
-    output.id = f_type_descriptor_output;
-    output.stream = f_type_output;
-    output.flag = f_file_flag_create | f_file_flag_write_only | f_file_flag_append;
+    file.id = f_type_descriptor_output;
+    file.stream = f_type_output;
+    file.flag = f_file_flag_create | f_file_flag_write_only | f_file_flag_append;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[iki_write_parameter_file].result == f_console_result_additional) {
@@ -158,10 +162,10 @@ extern "C" {
         else {
           const f_array_length_t location = main->parameters[iki_write_parameter_file].values.array[0];
 
-          output.id = -1;
-          output.stream = 0;
+          file.id = -1;
+          file.stream = 0;
 
-          status = f_file_stream_open(arguments.argv[location], 0, &output);
+          status = f_file_stream_open(arguments.argv[location], 0, &file);
 
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.argv[location], "open", fll_error_file_type_file);
@@ -345,10 +349,10 @@ extern "C" {
               }
             }
 
-            status = iki_write_process(*main, output, object, content, quote, &escaped);
+            status = iki_write_process(*main, file, object, content, quote, &escaped);
             if (F_status_is_error(status)) break;
 
-            fll_print_character(f_string_eol_s[0], output.stream);
+            fll_print_character(f_string_eol_s[0], file.stream);
 
             object_ended = F_false;
           }
@@ -405,15 +409,15 @@ extern "C" {
           content.used = strnlen(content.string, f_console_parameter_size);
           content.size = content.used;
 
-          status = iki_write_process(*main, output, object, content, quote, &escaped);
+          status = iki_write_process(*main, file, object, content, quote, &escaped);
           if (F_status_is_error(status)) break;
 
-          fll_print_character(f_string_eol_s[0], output.stream);
+          fll_print_character(f_string_eol_s[0], file.stream);
         } // for
 
         // ensure there is always a newline at the end, unless in quiet mode.
         if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet && main->parameters[iki_write_parameter_file].result == f_console_result_none) {
-          fll_print_character(f_string_eol_s[0], output.stream);
+          fll_print_character(f_string_eol_s[0], file.stream);
         }
       }
 
@@ -421,8 +425,8 @@ extern "C" {
     }
 
     if (main->parameters[iki_write_parameter_file].result == f_console_result_additional) {
-      if (output.id != -1) {
-        f_file_stream_close(F_true, &output);
+      if (file.id != -1) {
+        f_file_stream_close(F_true, &file);
       }
     }
 

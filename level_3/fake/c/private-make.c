@@ -1106,8 +1106,8 @@ extern "C" {
       return F_signal;
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet) {
-      fll_print_format("%c$[Making project.%]%c", main->output.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+    if (main->output.verbosity != f_console_verbosity_quiet) {
+      fll_print_format("%c$[Making project.%]%c", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important, f_string_eol_s[0]);
     }
 
     f_status_t status = F_none;
@@ -1995,14 +1995,14 @@ extern "C" {
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
-    if (main->error.verbosity != f_console_verbosity_quiet) {
-      flockfile(main->output.stream);
+    if (main->output.verbosity != f_console_verbosity_quiet) {
+      flockfile(main->output.to.stream);
 
-      fl_print_format("%c%[Processing Section '%]", main->output.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
-      fl_print_format("%[%Q%]", main->output.stream, main->context.set.notable, section->name, main->context.set.notable);
-      fl_print_format("%['.%]%c", main->output.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
+      fl_print_format("%c%[Processing Section '%]", main->output.to.stream, f_string_eol_s[0], main->context.set.important, main->context.set.important);
+      fl_print_format("%[%Q%]", main->output.to.stream, main->context.set.notable, section->name, main->context.set.notable);
+      fl_print_format("%['.%]%c", main->output.to.stream, main->context.set.important, main->context.set.important, f_string_eol_s[0]);
 
-      funlockfile(main->output.stream);
+      funlockfile(main->output.to.stream);
     }
 
     if (!section->objects.used) {
@@ -2382,13 +2382,13 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        flockfile(main->output.stream);
+        flockfile(main->output.to.stream);
 
-        fl_print_format("%cBreaking as '", main->output.stream, f_string_eol_s[0]);
-        fl_print_format("%[%S%]", main->output.stream, main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success, main->context.set.notable);
-        fl_print_format("'.%c", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("%cBreaking as '", main->output.to.stream, f_string_eol_s[0]);
+        fl_print_format("%[%S%]", main->output.to.stream, main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success, main->context.set.notable);
+        fl_print_format("'.%c", main->output.to.stream, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->output.to.stream);
       }
 
       return 0;
@@ -2443,7 +2443,7 @@ extern "C" {
       f_array_length_t destination_length = 0;
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = main->output;
+        recurse.output = main->output.to;
         recurse.verbose = fake_verbose_print_clone;
       }
 
@@ -2502,12 +2502,12 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (main->error.verbosity == f_console_verbosity_verbose) {
-            flockfile(main->output.stream);
+            flockfile(main->output.to.stream);
 
-            fl_print_format("%cCloned '%[%Q%]' to '", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable);
-            fl_print_format("%[%S%]'.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, destination, main->context.set.notable, f_string_eol_s[0]);
+            fl_print_format("%cCloned '%[%Q%]' to '", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable);
+            fl_print_format("%[%S%]'.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, destination, main->context.set.notable, f_string_eol_s[0]);
 
-            funlockfile(main->output.stream);
+            funlockfile(main->output.to.stream);
           }
         }
         else if (F_status_is_error(status_file)) {
@@ -2549,7 +2549,7 @@ extern "C" {
       macro_f_mode_t_set_default_umask(mode, main->umask);
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = main->output;
+        recurse.output = main->output.to;
         recurse.verbose = fake_verbose_print_copy;
       }
 
@@ -2608,12 +2608,12 @@ extern "C" {
             *status = F_status_set_error(F_failure);
           }
           else if (main->error.verbosity == f_console_verbosity_verbose) {
-            flockfile(main->output.stream);
+            flockfile(main->output.to.stream);
 
-            fl_print_format("%cCopied '%[%Q%]", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable);
-            fl_print_format("' to '%[%S%]'.%c", main->output.stream, main->context.set.notable, destination, main->context.set.notable, f_string_eol_s[0]);
+            fl_print_format("%cCopied '%[%Q%]", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable);
+            fl_print_format("' to '%[%S%]'.%c", main->output.to.stream, main->context.set.notable, destination, main->context.set.notable, f_string_eol_s[0]);
 
-            funlockfile(main->output.stream);
+            funlockfile(main->output.to.stream);
           }
         }
         else if (F_status_is_error(status_file)) {
@@ -2639,7 +2639,7 @@ extern "C" {
         fll_error_print(data_make->error, F_status_set_fine(*status), "f_environment_set", F_true);
       }
       else if (main->error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("%cDefined environment variable '%[%Q%]'.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[0], main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("%cDefined environment variable '%[%Q%]'.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[0], main->context.set.notable, f_string_eol_s[0]);
       }
 
       return 0;
@@ -2684,7 +2684,7 @@ extern "C" {
 
           if (F_status_set_fine(*status) == F_file_found_not) {
             if (main->error.verbosity == f_console_verbosity_verbose) {
-              fll_print_format("%cThe directory '%[%Q%]' does not exist.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
+              fll_print_format("%cThe directory '%[%Q%]' does not exist.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
             }
 
             *status = F_none;
@@ -2695,7 +2695,7 @@ extern "C" {
             return 0;
           }
           else if (main->error.verbosity == f_console_verbosity_verbose) {
-            fll_print_format("%cRemoved '%[%Q%]'.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
+            fll_print_format("%cRemoved '%[%Q%]'.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
           }
         }
         else {
@@ -2703,7 +2703,7 @@ extern "C" {
 
           if (F_status_set_fine(*status) == F_file_found_not) {
             if (main->error.verbosity == f_console_verbosity_verbose) {
-              fll_print_format("%cThe file '%[%Q%]' does not exist.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
+              fll_print_format("%cThe file '%[%Q%]' does not exist.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
             }
 
             *status = F_none;
@@ -2714,7 +2714,7 @@ extern "C" {
             return 0;
           }
           else if (main->error.verbosity == f_console_verbosity_verbose) {
-            fll_print_format("%cRemoved '%[%Q%]'.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
+            fll_print_format("%cRemoved '%[%Q%]'.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
           }
         }
       } // for
@@ -2757,7 +2757,7 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("%cExiting as '%[%S%]'.%c", main->output.stream, f_string_eol_s[0], main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success, main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("%cExiting as '%[%S%]'.%c", main->output.to.stream, f_string_eol_s[0], main->context.set.notable, arguments.used ? arguments.array[0].string : fake_make_operation_argument_success, main->context.set.notable, f_string_eol_s[0]);
       }
 
       return 0;
@@ -2792,23 +2792,23 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        flockfile(main->output.stream);
+        flockfile(main->output.to.stream);
 
-        f_print_terminated("Set failure state to '", main->output.stream);
+        f_print_terminated("Set failure state to '", main->output.to.stream);
 
         if (data_make->setting_make.fail == fake_make_operation_fail_type_exit) {
-          fl_print_format("%[%s%]", main->output.stream, main->context.set.notable, fake_make_operation_argument_exit, main->context.set.notable);
+          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.notable, fake_make_operation_argument_exit, main->context.set.notable);
         }
         else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn) {
-          fl_print_format("%[%s%]", main->output.stream, main->context.set.notable, fake_make_operation_argument_warn, main->context.set.notable);
+          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.notable, fake_make_operation_argument_warn, main->context.set.notable);
         }
         else if (data_make->setting_make.fail == fake_make_operation_fail_type_ignore) {
-          fl_print_format("%[%s%]", main->output.stream, main->context.set.notable, fake_make_operation_argument_ignore, main->context.set.notable);
+          fl_print_format("%[%s%]", main->output.to.stream, main->context.set.notable, fake_make_operation_argument_ignore, main->context.set.notable);
         }
 
-        fl_print_format("'.%c", main->output.stream, f_string_eol_s[0]);
+        fl_print_format("'.%c", main->output.to.stream, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->output.to.stream);
       }
 
       return 0;
@@ -2842,12 +2842,12 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_role_change", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file);
         }
         else if (main->error.verbosity == f_console_verbosity_verbose) {
-          flockfile(main->output.stream);
+          flockfile(main->output.to.stream);
 
-          fl_print_format("Changed group of '%[%s%]", main->output.stream, main->context.set.notable, arguments.array[i], main->context.set.notable);
-          fl_print_format("' to %[%ul%].%c", main->output.stream, main->context.set.notable, id, main->context.set.notable, f_string_eol_s[0]);
+          fl_print_format("Changed group of '%[%s%]", main->output.to.stream, main->context.set.notable, arguments.array[i], main->context.set.notable);
+          fl_print_format("' to %[%ul%].%c", main->output.to.stream, main->context.set.notable, id, main->context.set.notable, f_string_eol_s[0]);
 
-          funlockfile(main->output.stream);
+          funlockfile(main->output.to.stream);
         }
       } // for
 
@@ -2882,12 +2882,12 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "fll_file_role_change_all", F_true, arguments.array[i].string, "change group of", fll_error_file_type_file);
         }
         else if (main->error.verbosity == f_console_verbosity_verbose) {
-          flockfile(main->output.stream);
+          flockfile(main->output.to.stream);
 
-          fl_print_format("Changed group of '%[%s%]", main->output.stream, main->context.set.notable, arguments.array[i], main->context.set.notable);
-          fl_print_format("' to %[%ul%].%c", main->output.stream, main->context.set.notable, id, main->context.set.notable, f_string_eol_s[0]);
+          fl_print_format("Changed group of '%[%s%]", main->output.to.stream, main->context.set.notable, arguments.array[i], main->context.set.notable);
+          fl_print_format("' to %[%ul%].%c", main->output.to.stream, main->context.set.notable, id, main->context.set.notable, f_string_eol_s[0]);
 
-          funlockfile(main->output.stream);
+          funlockfile(main->output.to.stream);
         }
       } // for
 
@@ -3384,12 +3384,12 @@ extern "C" {
         fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, arguments.array[1].string, "create link", fll_error_file_type_file);
       }
       else if (main->error.verbosity == f_console_verbosity_verbose) {
-        flockfile(main->output.stream);
+        flockfile(main->output.to.stream);
 
-        fl_print_format("Created symbolic link from '%[%Q%]", main->output.stream, main->context.set.notable, arguments.array[1], main->context.set.notable);
-        fl_print_format("' to %[%Q%].%c", main->output.stream, main->context.set.notable, arguments.array[0], main->context.set.notable, f_string_eol_s[0]);
+        fl_print_format("Created symbolic link from '%[%Q%]", main->output.to.stream, main->context.set.notable, arguments.array[1], main->context.set.notable);
+        fl_print_format("' to %[%Q%].%c", main->output.to.stream, main->context.set.notable, arguments.array[0], main->context.set.notable, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->output.to.stream);
       }
 
       return 0;
@@ -3431,7 +3431,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Changed mode of '%Q' to %#@u.%c", main->output.stream, arguments.array[i], mode, f_string_eol_s[0]);
+          fll_print_format("Changed mode of '%Q' to %#@u.%c", main->output.to.stream, arguments.array[i], mode, f_string_eol_s[0]);
         }
       } // for
 
@@ -3473,7 +3473,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Changed mode of '%Q' to %#@u.%c", main->output.stream, arguments.array[i], mode, f_string_eol_s[0]);
+          fll_print_format("Changed mode of '%Q' to %#@u.%c", main->output.to.stream, arguments.array[i], mode, f_string_eol_s[0]);
         }
       } // for
 
@@ -3489,7 +3489,7 @@ extern "C" {
       f_array_length_t destination_length = 0;
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        recurse.output = main->output;
+        recurse.output = main->output.to;
         recurse.verbose = fake_verbose_print_move;
       }
 
@@ -3597,7 +3597,7 @@ extern "C" {
           break;
         }
         else if (main->error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Changed owner of '%Q' to %u.%c", main->output.stream, arguments.array[i], id, f_string_eol_s[0]);
+          fll_print_format("Changed owner of '%Q' to %u.%c", main->output.to.stream, arguments.array[i], id, f_string_eol_s[0]);
         }
       } // for
 
@@ -3632,7 +3632,7 @@ extern "C" {
           fll_error_file_print(data_make->error, F_status_set_fine(*status), "fll_file_role_change_all", F_true, arguments.array[i].string, "change owner of", fll_error_file_type_file);
         }
         else if (main->error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Changed owner of '%Q' to %u.%c", main->output.stream, arguments.array[i], id, f_string_eol_s[0]);
+          fll_print_format("Changed owner of '%Q' to %u.%c", main->output.to.stream, arguments.array[i], id, f_string_eol_s[0]);
         }
       } // for
 
@@ -3661,27 +3661,27 @@ extern "C" {
           return 0;
         }
 
-        fll_print_format("Changed to project path '%[%Q%]'.%c", main->output.stream, main->context.set.notable, data_make->path_cache, main->context.set.notable, f_string_eol_s[0]);
+        fll_print_format("Changed to project path '%[%Q%]'.%c", main->output.to.stream, main->context.set.notable, data_make->path_cache, main->context.set.notable, f_string_eol_s[0]);
       }
 
       return 0;
     }
 
     if (operation == fake_make_operation_type_print) {
-      flockfile(main->output.stream);
+      flockfile(main->output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
-        f_print_dynamic(arguments.array[i], main->output.stream);
+        f_print_dynamic(arguments.array[i], main->output.to.stream);
 
         if (i + 1 < arguments.used) {
-          f_print_character(f_string_space_s[0], main->output.stream);
+          f_print_character(f_string_space_s[0], main->output.to.stream);
         }
       } // for
 
-      f_print_character(f_string_space_s[0], main->output.stream);
+      f_print_character(f_string_space_s[0], main->output.to.stream);
 
-      funlockfile(main->output.stream);
+      funlockfile(main->output.to.stream);
 
       return 0;
     }
@@ -3771,7 +3771,7 @@ extern "C" {
             return 0;
           }
 
-          fll_print_format("Changed to project path '%[%Q%]'.%c", main->output.stream, main->context.set.notable, data_make->path_cache, main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("Changed to project path '%[%Q%]'.%c", main->output.to.stream, main->context.set.notable, data_make->path_cache, main->context.set.notable, f_string_eol_s[0]);
         }
 
         ++data_make->path.stack.used;
@@ -3791,7 +3791,7 @@ extern "C" {
       }
 
       if (main->error.verbosity == f_console_verbosity_verbose) {
-        fll_print_format("Changed to project path ''.%c", main->output.stream, f_string_eol_s[0]);
+        fll_print_format("Changed to project path ''.%c", main->output.to.stream, f_string_eol_s[0]);
       }
 
       // clear stack, except for the project root.
@@ -3840,7 +3840,7 @@ extern "C" {
         }
 
         if (main->error.verbosity == f_console_verbosity_verbose) {
-          fll_print_format("Touched '%[%Q%]'.%c", main->output.stream, main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
+          fll_print_format("Touched '%[%Q%]'.%c", main->output.to.stream, main->context.set.notable, arguments.array[i], main->context.set.notable, f_string_eol_s[0]);
         }
       } // for
     }
@@ -3876,23 +3876,23 @@ extern "C" {
     }
 
     if (main.error.verbosity == f_console_verbosity_verbose) {
-      flockfile(main.output.stream);
+      flockfile(main.output.to.stream);
 
-      f_print_dynamic_safely(program, main.output.stream);
+      f_print_dynamic_safely(program, main.output.to.stream);
 
       for (f_array_length_t i = 0; i < arguments.used; ++i) {
 
         if (arguments.array[i].used) {
-          fll_print_format(" %Q", main.output.stream, arguments.array[i]);
+          fll_print_format(" %Q", main.output.to.stream, arguments.array[i]);
         }
       } // for
 
-      f_print_character(f_string_eol_s[0], main.output.stream);
+      f_print_character(f_string_eol_s[0], main.output.to.stream);
 
-      funlockfile(main.output.stream);
+      funlockfile(main.output.to.stream);
 
       // flush to stdout before executing command.
-      fflush(main.output.stream);
+      fflush(main.output.to.stream);
     }
 
     int return_code = 0;
@@ -4561,7 +4561,6 @@ extern "C" {
         if (fl_string_dynamic_compare_string(fake_make_operation_argument_exit, arguments.array[0], fake_make_operation_argument_exit_length) == F_equal_to_not) {
           if (fl_string_dynamic_compare_string(fake_make_operation_argument_warn, arguments.array[0], fake_make_operation_argument_warn_length) == F_equal_to_not) {
             if (fl_string_dynamic_compare_string(fake_make_operation_argument_ignore, arguments.array[0], fake_make_operation_argument_ignore_length) == F_equal_to_not) {
-
               if (data_make->error.verbosity != f_console_verbosity_quiet && data_make->error.to.stream) {
                 flockfile(data_make->error.to.stream);
 

@@ -120,7 +120,7 @@ extern "C" {
     f_array_lengths_t remaining;
     bool process_pipe;
 
-    f_file_t output;
+    fl_print_t output;
     fl_print_t error;
     fl_print_t warning;
 
@@ -132,8 +132,8 @@ extern "C" {
       status_code_console_parameter_t_initialize, \
       f_array_lengths_t_initialize, \
       F_false, \
-      macro_f_file_t_initialize2(f_type_output, f_type_descriptor_output, f_file_flag_write_only), \
       fl_print_t_initialize, \
+      macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
       f_color_context_t_initialize, \
     }
@@ -142,7 +142,7 @@ extern "C" {
 /**
  * Print help.
  *
- * @param output
+ * @param file
  *   The file to print to.
  * @param context
  *   The color context settings.
@@ -151,7 +151,7 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_status_code_print_help_
-  extern f_status_t status_code_print_help(const f_file_t output, const f_color_context_t context);
+  extern f_status_t status_code_print_help(const f_file_t file, const f_color_context_t context);
 #endif // _di_status_code_print_help_
 
 /**

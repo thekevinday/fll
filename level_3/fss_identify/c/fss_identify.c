@@ -7,51 +7,51 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_identify_print_help_
-  f_status_t fss_identify_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t fss_identify_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, fss_identify_name_long, fss_identify_version);
+    fll_program_print_help_header(file, context, fss_identify_name_long, fss_identify_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, fss_identify_short_content, fss_identify_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier content (the 4-digit hexidecimal type code).");
-    fll_program_print_help_option(output, context, fss_identify_short_object, fss_identify_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Identifier object (the name).");
+    fll_program_print_help_option(file, context, fss_identify_short_content, fss_identify_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the Identifier content (the 4-digit hexidecimal type code).");
+    fll_program_print_help_option(file, context, fss_identify_short_object, fss_identify_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Identifier object (the name).");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, fss_identify_short_line, fss_identify_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the Identifier at the given line.");
-    fll_program_print_help_option(output, context, fss_identify_short_name, fss_identify_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
-    fll_program_print_help_option(output, context, fss_identify_short_total, fss_identify_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
+    fll_program_print_help_option(file, context, fss_identify_short_line, fss_identify_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the Identifier at the given line.");
+    fll_program_print_help_option(file, context, fss_identify_short_name, fss_identify_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select Object with this name.");
+    fll_program_print_help_option(file, context, fss_identify_short_total, fss_identify_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
 
-    fll_program_print_help_usage(output, context, fss_identify_name, "filename(s)");
+    fll_program_print_help_usage(file, context, fss_identify_name, "filename(s)");
 
-    fl_print_format("  The %[%s%s%] parameter refers to the output lines and not the lines in a given file.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%] parameter refers to the file lines and not the lines in a given file.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  If neither the %[%s%s%] nor", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
-    fl_print_format(" %[%s%s%] are specified, then the default behavior is to print both.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  If neither the %[%s%s%] nor", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
+    fl_print_format(" %[%s%s%] are specified, then the default behavior is to print both.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When specifying the %[%s%s%] parameter, neither the", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_total, context.set.notable);
-    fl_print_format(" %[%s%s%] nor the", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
-    fl_print_format(" %[%s%s%] parameter may be specified.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When specifying the %[%s%s%] parameter, neither the", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_total, context.set.notable);
+    fl_print_format(" %[%s%s%] nor the", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter may be specified.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  An FSS file is identified by the following format: '%[# Object-Content%]'", output.stream, context.set.notable, context.set.notable);
-    fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  Whitespace must follow this pound character.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  There may be multiple Object and Content pairs, separated by whitspace, such as: \"# fss-0002 fss-0000 iki-0002\".%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  An FSS file is identified by the following format: '%[# Object-Content%]'", file.stream, context.set.notable, context.set.notable);
+    fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  Whitespace must follow this pound character.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  There may be multiple Object and Content pairs, separated by whitspace, such as: \"# fss-0002 fss-0000 iki-0002\".%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -110,18 +110,22 @@ extern "C" {
         }
 
         if (choice == fss_identify_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_identify_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_identify_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_identify_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -131,7 +135,7 @@ extern "C" {
     }
 
     if (main->parameters[fss_identify_parameter_help].result == f_console_result_found) {
-      fss_identify_print_help(main->output, main->context);
+      fss_identify_print_help(main->output.to, main->context);
 
       fss_identify_main_delete(main);
 
@@ -139,7 +143,7 @@ extern "C" {
     }
 
     if (main->parameters[fss_identify_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, fss_identify_version);
+      fll_program_print_version(main->output.to, fss_identify_version);
 
       fss_identify_main_delete(main);
 
@@ -321,7 +325,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters[fss_identify_parameter_total].result == f_console_result_found) {
-        fll_print_format("%ul%c", main->output.stream, data.total, f_string_eol_s[0]);
+        fll_print_format("%ul%c", main->output.to.stream, data.total, f_string_eol_s[0]);
       }
     }
 

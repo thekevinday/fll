@@ -7,110 +7,110 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_basic_read_print_help_
-  f_status_t fss_basic_read_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t fss_basic_read_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, fss_basic_read_name_long, fss_basic_read_version);
+    fll_program_print_help_header(file, context, fss_basic_read_name_long, fss_basic_read_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select Object at this numeric index.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_content, fss_basic_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Content (default).");
-    fll_program_print_help_option(output, context, fss_basic_read_short_columns, fss_basic_read_long_columns, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the total number of columns.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_delimit, fss_basic_read_long_delimit, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Designate how to handle applying delimits.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select Object at this numeric depth.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Include empty Content when processing.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print only the Content at the given line.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Select Object with this name.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the Object.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_pipe, fss_basic_read_long_pipe, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print using the special pipe format.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_raw, fss_basic_read_long_raw, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Print with the original quotes and escapes.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Select sub-Content at this index.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
-    fll_program_print_help_option(output, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_at, fss_basic_read_long_at, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Select Object at this numeric index.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_content, fss_basic_read_long_content, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the Content (default).");
+    fll_program_print_help_option(file, context, fss_basic_read_short_columns, fss_basic_read_long_columns, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the total number of columns.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_delimit, fss_basic_read_long_delimit, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Designate how to handle applying delimits.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_depth, fss_basic_read_long_depth, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select Object at this numeric depth.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_empty, fss_basic_read_long_empty, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Include empty Content when processing.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_line, fss_basic_read_long_line, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print only the Content at the given line.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_name, fss_basic_read_long_name, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Select Object with this name.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_object, fss_basic_read_long_object, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the Object.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_pipe, fss_basic_read_long_pipe, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print using the special pipe format.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_raw, fss_basic_read_long_raw, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Print with the original quotes and escapes.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_select, fss_basic_read_long_select, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Select sub-Content at this index.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_total, fss_basic_read_long_total, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
+    fll_program_print_help_option(file, context, fss_basic_read_short_trim, fss_basic_read_long_trim, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
 
-    fll_program_print_help_usage(output, context, fss_basic_read_name, "filename(s)");
+    fll_program_print_help_usage(file, context, fss_basic_read_name, "filename(s)");
 
-    fl_print_format(" %[Notes:%]%c", output.stream, context.set.important, context.set.important, f_string_eol_s[0]);
+    fl_print_format(" %[Notes:%]%c", file.stream, context.set.important, context.set.important, f_string_eol_s[0]);
 
-    fl_print_format("  This program will print the Content associated with the given Object and Content main based on the FSS-0000 Basic standard.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  This program will print the Content associated with the given Object and Content main based on the FSS-0000 Basic standard.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  All numeric positions (indexes) start at 0 instead of 1.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  For example, a file of 17 lines would range from 0 to 16.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  All numeric positions (indexes) start at 0 instead of 1.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  For example, a file of 17 lines would range from 0 to 16.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When using the %[%s%s%] option, an order of operations is enforced on the parameters.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  When using the %[%s%s%] option, an order of operations is enforced on the parameters.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
 
-    fl_print_format("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  When this order of operations is in effect, parameters to the right of a depth parameter are influenced by that depth parameter:%c", file.stream, f_string_eol_s[0]);
 
-    fl_print_format("    %[%s%s%]: An Object index at the specified depth.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%s%]: A new depth within the specified depth, indexed from the root.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    %[%s%s%]: An Object name at the specified depth.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: An Object index at the specified depth.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: A new depth within the specified depth, indexed from the root.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    %[%s%s%]: An Object name at the specified depth.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameter %[%s%s%] must be in numeric order, but values in between may be skipped.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] must be in numeric order, but values in between may be skipped.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("    ('-d 0 -a 1 -d 2 -a 2' would specify index 1 at depth 0, any index at depth 1, and index 2 at depth 2.)%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("    ('-d 2 -a 1 -d 0 -a 2' would be invalid because depth 2 is before depth 1.)%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameter %[%s%s%] selects a Content column.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] selects a Content column.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  Specify both %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_object, context.set.notable);
-    fl_print_format(" and the %[%s%s%] parameters to get the total objects.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_total, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  Specify both %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_object, context.set.notable);
+    fl_print_format(" and the %[%s%s%] parameters to get the total objects.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_total, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When both %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable);
-    fl_print_format(" and %[%s%s%] parameters are specified (at the same depth),", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable);
-    fl_print_format(" the %[%s%s%] parameter value will be treated as a position relative to the specified", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable);
-    fl_print_format(" %[%s%s%] parameter value.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When both %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable);
+    fl_print_format(" and %[%s%s%] parameters are specified (at the same depth),", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable);
+    fl_print_format(" the %[%s%s%] parameter value will be treated as a position relative to the specified", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_at, context.set.notable);
+    fl_print_format(" %[%s%s%] parameter value.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_name, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  This program may support parameters, such as %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable);
-    fl_print_format(" or %[%s%s%], even if not supported by the standard.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  This is done to help ensure consistency for scripting.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  This program may support parameters, such as %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable);
+    fl_print_format(" or %[%s%s%], even if not supported by the standard.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  This is done to help ensure consistency for scripting.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  For parameters like %[%s%s%],", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable);
-    fl_print_format(" if the standard doesn't support nested Content, then only a depth of 0 would be valid.%c", output.stream, f_string_eol_s[0]);
+    fl_print_format("  For parameters like %[%s%s%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth, context.set.notable);
+    fl_print_format(" if the standard doesn't support nested Content, then only a depth of 0 would be valid.%c", file.stream, f_string_eol_s[0]);
 
-    fl_print_format("  For parameters like %[%s%s%],", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable);
-    fl_print_format(" if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  For parameters like %[%s%s%],", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable);
+    fl_print_format(" if the standard doesn't support multiple Content groups, then only a select of 0 would be valid.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameter %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_trim, context.set.notable);
-    fl_print_format(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_trim, context.set.notable);
+    fl_print_format(" will remove leading and trailing whitespaces when selecting objects or when printing objects.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When specifying both the %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_object, context.set.notable);
-    fl_print_format(" parameter and the %[%s%s%] parameter, the entire Object and Content are printed, including the formatting.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_content, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  Both the Object and Content printed are already escaped.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  Both the Object and Content are separated by a space.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When specifying both the %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_object, context.set.notable);
+    fl_print_format(" parameter and the %[%s%s%] parameter, the entire Object and Content are printed, including the formatting.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_content, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  Both the Object and Content printed are already escaped.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  Both the Object and Content are separated by a space.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameter %[%s%s%] accepts the following:%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  - %[%s%]: Do not apply delimits.%c", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_none, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  - %[%s%]: (default) Apply all delimits.%c", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_all, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  - %[%s%]: Apply delimits for Objects.%c", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_object, context.set.notable, f_string_eol_s[0]);
-    fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  - A number, 0 or greater, followed by a %[%s%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%c", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_greater, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
-    fl_print_format("  - A number, 0 or lesser, followed by a %[%s%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%c%c", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_lesser, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameter %[%s%s%] accepts the following:%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: Do not apply delimits.%c", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_none, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: (default) Apply all delimits.%c", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_all, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - %[%s%]: Apply delimits for Objects.%c", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_object, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or greater: apply delimits for Content at the specified depth.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or greater, followed by a %[%s%]: (such as '1+') apply delimits for Content at the specified depth and any greater depth (numerically).%c", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_greater, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  - A number, 0 or lesser, followed by a %[%s%]: (such as '1-') apply delimits for Content at the specified depth and any lesser depth (numerically).%c%c", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_lesser, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The %[%s%s%] parameter may be specified multiple times to customize the delimit behavior.%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable, f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%] parameter may be specified multiple times to customize the delimit behavior.%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable, f_string_eol_s[0]);
 
-    fl_print_format("  The %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable);
-    fl_print_format(" values %[%s%]", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_none, context.set.notable);
-    fl_print_format(" and %[%s%],", output.stream, context.set.notable, fss_basic_read_delimit_mode_name_all, context.set.notable);
-    fl_print_format(" overrule all other delimit values.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit, context.set.notable);
+    fl_print_format(" values %[%s%]", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_none, context.set.notable);
+    fl_print_format(" and %[%s%],", file.stream, context.set.notable, fss_basic_read_delimit_mode_name_all, context.set.notable);
+    fl_print_format(" overrule all other delimit values.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  The parameters %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_columns, context.set.notable);
-    fl_print_format(" and %[%s%s%]", output.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable);
-    fl_print_format(" refer to a Content column.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%c", output.stream, f_string_eol_s[0]);
-    fl_print_format("  This is not to be confused with a depth.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  The parameters %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_columns, context.set.notable);
+    fl_print_format(" and %[%s%s%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select, context.set.notable);
+    fl_print_format(" refer to a Content column.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%c", file.stream, f_string_eol_s[0]);
+    fl_print_format("  This is not to be confused with a depth.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -165,18 +165,22 @@ extern "C" {
         }
 
         if (choice == fss_basic_read_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == fss_basic_read_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == fss_basic_read_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == fss_basic_read_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -186,14 +190,14 @@ extern "C" {
     }
 
     if (main->parameters[fss_basic_read_parameter_help].result == f_console_result_found) {
-      fss_basic_read_print_help(main->output, main->context);
+      fss_basic_read_print_help(main->output.to, main->context);
 
       fss_basic_read_main_delete(main);
       return status;
     }
 
     if (main->parameters[fss_basic_read_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, fss_basic_read_version);
+      fll_program_print_version(main->output.to, fss_basic_read_version);
 
       fss_basic_read_main_delete(main);
       return status;

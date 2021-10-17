@@ -7,64 +7,64 @@ extern "C" {
 #endif
 
 #ifndef _di_byte_dump_print_help_
-  f_status_t byte_dump_print_help(const f_file_t output, const f_color_context_t context) {
+  f_status_t byte_dump_print_help(const f_file_t file, const f_color_context_t context) {
 
-    flockfile(output.stream);
+    flockfile(file.stream);
 
-    fll_program_print_help_header(output, context, byte_dump_name_long, byte_dump_version);
+    fll_program_print_help_header(file, context, byte_dump_name_long, byte_dump_version);
 
-    fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not output in color.");
-    fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal output.");
-    fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
+    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
+    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not file in color.");
+    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, inceasing verbosity beyond normal file.");
+    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Display binary representation.");
-    fll_program_print_help_option(output, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display decimal representation.");
-    fll_program_print_help_option(output, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Display duodecimal representation.");
-    fll_program_print_help_option(output, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Display hexadecimal representation.");
-    fll_program_print_help_option(output, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Display octal representation.");
-    fll_program_print_help_option(output, context, byte_dump_short_unicode, byte_dump_long_unicode, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display using Unicode representation for valid Unicode (like: U+0000).");
+    fll_program_print_help_option(file, context, byte_dump_short_binary, byte_dump_long_binary, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Display binary representation.");
+    fll_program_print_help_option(file, context, byte_dump_short_decimal, byte_dump_long_decimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display decimal representation.");
+    fll_program_print_help_option(file, context, byte_dump_short_duodecimal, byte_dump_long_duodecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Display duodecimal representation.");
+    fll_program_print_help_option(file, context, byte_dump_short_hexidecimal, byte_dump_long_hexidecimal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Display hexadecimal representation.");
+    fll_program_print_help_option(file, context, byte_dump_short_octal, byte_dump_long_octal, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Display octal representation.");
+    fll_program_print_help_option(file, context, byte_dump_short_unicode, byte_dump_long_unicode, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Display using Unicode representation for valid Unicode (like: U+0000).");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Start reading at this byte offset.");
-    fll_program_print_help_option(output, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Stop reading at this (inclusive) byte offset.");
-    fll_program_print_help_option(output, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Set number of columns of Bytes to display.");
+    fll_program_print_help_option(file, context, byte_dump_short_first, byte_dump_long_first, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Start reading at this byte offset.");
+    fll_program_print_help_option(file, context, byte_dump_short_last, byte_dump_long_last, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Stop reading at this (inclusive) byte offset.");
+    fll_program_print_help_option(file, context, byte_dump_short_width, byte_dump_long_width, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Set number of columns of Bytes to display.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fll_program_print_help_option(output, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Include a column of text when displaying the bytes.");
-    fll_program_print_help_option(output, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use a placeholder character instead of a space for placeholders.");
+    fll_program_print_help_option(file, context, byte_dump_short_text, byte_dump_long_text, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Include a column of text when displaying the bytes.");
+    fll_program_print_help_option(file, context, byte_dump_short_placeholder, byte_dump_long_placeholder, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Use a placeholder character instead of a space for placeholders.");
 
-    f_print_character(f_string_eol_s[0], output.stream);
-    f_print_character(f_string_eol_s[0], output.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
+    f_print_character(f_string_eol_s[0], file.stream);
 
-    fl_print_format(" %[Special Options:%] ", output.stream, context.set.important, context.set.important);
+    fl_print_format(" %[Special Options:%] ", file.stream, context.set.important, context.set.important);
 
-    fll_program_print_help_option_long(output, context, byte_dump_long_normal, f_console_symbol_long_enable_s, " Display UTF-8 symbols for ASCII control codes.");
-    fll_program_print_help_option_long(output, context, byte_dump_long_simple, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
-    fll_program_print_help_option_long(output, context, byte_dump_long_classic, f_console_symbol_long_enable_s, "Display periods for ASCII control codes.");
+    fll_program_print_help_option_long(file, context, byte_dump_long_normal, f_console_symbol_long_enable_s, " Display UTF-8 symbols for ASCII control codes.");
+    fll_program_print_help_option_long(file, context, byte_dump_long_simple, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
+    fll_program_print_help_option_long(file, context, byte_dump_long_classic, f_console_symbol_long_enable_s, "Display periods for ASCII control codes.");
 
-    fll_program_print_help_usage(output, context, byte_dump_name, "filename(s)");
+    fll_program_print_help_usage(file, context, byte_dump_name, "filename(s)");
 
-    fl_print_format("  When using the %[%s%s%] option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When using the %[%s%s%] option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_text, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the %[%s%s%] option is used).%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  Special UTF-8 characters and non-spacing UTF-8 characters may be replaced with a space (or a placeholder when the %[%s%s%] option is used).%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_placeholder, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.%c%c", output.stream, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  UTF-8 \"Combining\" characters might have a space appended to allow a proper display but this may cause copy and paste issues.%c%c", file.stream, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When %[%s%s%] is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When %[%s%s%] is used, any UTF-8 sequences will still be printed in full should any part is found within the requested range.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    fl_print_format("  When using the %[%s%s%] option, invalid Unicode will fallback to being displayed using one of the other modes.%c%c", output.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
+    fl_print_format("  When using the %[%s%s%] option, invalid Unicode will fallback to being displayed using one of the other modes.%c%c", file.stream, context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_unicode, context.set.notable, f_string_eol_s[0], f_string_eol_s[0]);
 
-    funlockfile(output.stream);
+    funlockfile(file.stream);
 
     return F_none;
   }
@@ -122,18 +122,22 @@ extern "C" {
         }
 
         if (choice == byte_dump_parameter_verbosity_quiet) {
+          main->output.verbosity = f_console_verbosity_quiet;
           main->error.verbosity = f_console_verbosity_quiet;
           main->warning.verbosity = f_console_verbosity_quiet;
         }
         else if (choice == byte_dump_parameter_verbosity_normal) {
+          main->output.verbosity = f_console_verbosity_normal;
           main->error.verbosity = f_console_verbosity_normal;
           main->warning.verbosity = f_console_verbosity_normal;
         }
         else if (choice == byte_dump_parameter_verbosity_verbose) {
+          main->output.verbosity = f_console_verbosity_verbose;
           main->error.verbosity = f_console_verbosity_verbose;
           main->warning.verbosity = f_console_verbosity_verbose;
         }
         else if (choice == byte_dump_parameter_verbosity_debug) {
+          main->output.verbosity = f_console_verbosity_debug;
           main->error.verbosity = f_console_verbosity_debug;
           main->warning.verbosity = f_console_verbosity_debug;
         }
@@ -201,14 +205,14 @@ extern "C" {
     }
 
     if (main->parameters[byte_dump_parameter_help].result == f_console_result_found) {
-      byte_dump_print_help(main->output, main->context);
+      byte_dump_print_help(main->output.to, main->context);
 
       byte_dump_main_delete(main);
       return F_none;
     }
 
     if (main->parameters[byte_dump_parameter_version].result == f_console_result_found) {
-      fll_program_print_version(main->output, byte_dump_version);
+      fll_program_print_version(main->output.to, byte_dump_version);
 
       byte_dump_main_delete(main);
       return F_none;
@@ -361,30 +365,30 @@ extern "C" {
         file.id = f_type_descriptor_input;
         file.stream = f_type_input;
 
-        flockfile(main->output.stream);
+        flockfile(main->output.to.stream);
 
-        f_print_terminated(f_string_eol_s, main->output.stream);
-        fl_print_format("%[Piped Byte Dump: (in ", main->output.stream, main->context.set.title);
+        f_print_terminated(f_string_eol_s, main->output.to.stream);
+        fl_print_format("%[Piped Byte Dump: (in ", main->output.to.stream, main->context.set.title);
 
         if (main->mode == byte_dump_mode_hexidecimal) {
-          f_print_terminated("Hexidecimal", main->output.stream);
+          f_print_terminated("Hexidecimal", main->output.to.stream);
         }
         else if (main->mode == byte_dump_mode_duodecimal) {
-          f_print_terminated("Duodecimal", main->output.stream);
+          f_print_terminated("Duodecimal", main->output.to.stream);
         }
         else if (main->mode == byte_dump_mode_octal) {
-          f_print_terminated("Octal", main->output.stream);
+          f_print_terminated("Octal", main->output.to.stream);
         }
         else if (main->mode == byte_dump_mode_binary) {
-          f_print_terminated("Binary", main->output.stream);
+          f_print_terminated("Binary", main->output.to.stream);
         }
         else if (main->mode == byte_dump_mode_decimal) {
-          f_print_terminated("Decimal", main->output.stream);
+          f_print_terminated("Decimal", main->output.to.stream);
         }
 
-        fl_print_format(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
+        fl_print_format(")%]%c", main->output.to.stream, main->context.set.title, f_string_eol_s[0]);
 
-        funlockfile(main->output.stream);
+        funlockfile(main->output.to.stream);
 
         status = byte_dump_file(*main, 0, file);
 
@@ -439,32 +443,32 @@ extern "C" {
             return status;
           }
 
-          flockfile(main->output.stream);
+          flockfile(main->output.to.stream);
 
-          f_print_terminated(f_string_eol_s, main->output.stream);
-          fl_print_format("%[Byte Dump of: %]%[", main->output.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fll_print_safely_terminated(arguments.argv[main->remaining.array[counter]], main->output.stream);
-          fl_print_format("%] %[(in ", main->output.stream, main->context.set.notable, main->context.set.title);
+          f_print_terminated(f_string_eol_s, main->output.to.stream);
+          fl_print_format("%[Byte Dump of: %]%[", main->output.to.stream, main->context.set.title, main->context.set.title, main->context.set.notable);
+          fll_print_safely_terminated(arguments.argv[main->remaining.array[counter]], main->output.to.stream);
+          fl_print_format("%] %[(in ", main->output.to.stream, main->context.set.notable, main->context.set.title);
 
           if (main->mode == byte_dump_mode_hexidecimal) {
-            f_print_terminated("Hexidecimal", main->output.stream);
+            f_print_terminated("Hexidecimal", main->output.to.stream);
           }
           else if (main->mode == byte_dump_mode_duodecimal) {
-            f_print_terminated("Duodecimal", main->output.stream);
+            f_print_terminated("Duodecimal", main->output.to.stream);
           }
           else if (main->mode == byte_dump_mode_octal) {
-            f_print_terminated("Octal", main->output.stream);
+            f_print_terminated("Octal", main->output.to.stream);
           }
           else if (main->mode == byte_dump_mode_binary) {
-            f_print_terminated("Binary", main->output.stream);
+            f_print_terminated("Binary", main->output.to.stream);
           }
           else if (main->mode == byte_dump_mode_decimal) {
-            f_print_terminated("Decimal", main->output.stream);
+            f_print_terminated("Decimal", main->output.to.stream);
           }
 
-          fl_print_format(")%]%c", main->output.stream, main->context.set.title, f_string_eol_s[0]);
+          fl_print_format(")%]%c", main->output.to.stream, main->context.set.title, f_string_eol_s[0]);
 
-          funlockfile(main->output.stream);
+          funlockfile(main->output.to.stream);
 
           status = byte_dump_file(*main, arguments.argv[main->remaining.array[counter]], file);
 

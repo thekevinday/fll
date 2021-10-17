@@ -15,14 +15,14 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (main.error.verbosity != f_console_verbosity_quiet) {
-      flockfile(main.output.stream);
+    if (main.output.verbosity != f_console_verbosity_quiet) {
+      flockfile(main.output.to.stream);
 
-      fl_print_format("%c%[Deleting all files within build directory '%]", main.output.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important);
-      fl_print_format("%[%Q%]", main.output.stream, main.context.set.notable, main.path_build, main.context.set.notable);
-      fl_print_format("%[.%]%c", main.output.stream, main.context.set.important, main.context.set.important, f_string_eol_s[0]);
+      fl_print_format("%c%[Deleting all files within build directory '%]", main.output.to.stream, f_string_eol_s[0], main.context.set.important, main.context.set.important);
+      fl_print_format("%[%Q%]", main.output.to.stream, main.context.set.notable, main.path_build, main.context.set.notable);
+      fl_print_format("%[.%]%c", main.output.to.stream, main.context.set.important, main.context.set.important, f_string_eol_s[0]);
 
-      funlockfile(main.output.stream);
+      funlockfile(main.output.to.stream);
     }
 
     if (fake_signal_received(main)) {
@@ -38,13 +38,13 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not) {
       if (main.error.verbosity == f_console_verbosity_verbose) {
-        flockfile(main.output.stream);
+        flockfile(main.output.to.stream);
 
-        f_print_terminated("The build directory '", main.output.stream);
-        fl_print_format("%[%Q%]", main.output.stream, main.context.set.notable, main.path_build, main.context.set.notable);
-        fl_print_format("' does not exist.%c", main.output.stream, f_string_eol_s[0]);
+        f_print_terminated("The build directory '", main.output.to.stream);
+        fl_print_format("%[%Q%]", main.output.to.stream, main.context.set.notable, main.path_build, main.context.set.notable);
+        fl_print_format("' does not exist.%c", main.output.to.stream, f_string_eol_s[0]);
 
-        funlockfile(main.output.stream);
+        funlockfile(main.output.to.stream);
       }
 
       status = F_none;
